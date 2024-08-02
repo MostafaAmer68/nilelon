@@ -1,0 +1,96 @@
+import 'package:flutter/material.dart';
+import 'package:nilelon/resources/appstyles_manager.dart';
+import 'package:nilelon/resources/color_manager.dart';
+import 'package:nilelon/utils/navigation.dart';
+import 'package:nilelon/widgets/cards/store_order/recieved_store_card.dart';
+import 'package:nilelon/features/store_flow/ordered_store_details/ordered_store_details_view.dart';
+
+class RecievedStoreView extends StatelessWidget {
+  const RecievedStoreView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: ColorManager.primaryW,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Icon(
+                    Icons.history,
+                    color: ColorManager.primaryO,
+                  ),
+                  const SizedBox(
+                    width: 4,
+                  ),
+                  GestureDetector(
+                      onTap: () {},
+                      child: Text(
+                        'History',
+                        style: AppStylesManager.customTextStyleO,
+                      )),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                  itemCount: 9,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: ReceivedStoreCard(
+                        image: 'assets/images/arrived2.png',
+                        title: 'Order 42076 has arrived to Customer Address.',
+                        quantity: '1',
+                        onTap: () {
+                          navigateTo(
+                              context: context,
+                              screen: const OrderedStoreDetailsView(
+                                items: [
+                                  {
+                                    'images': ['assets/images/cloth1.png'],
+                                    'name': 'Cream Hoodie',
+                                    'storeName': 'By Nagham',
+                                    'rating': '4.8',
+                                    'price': '370.00',
+                                    'size': 'L',
+                                    'quan': '1',
+                                  },
+                                  {
+                                    'images': ['assets/images/cloth1.png'],
+                                    'name': 'Cream Hoodie',
+                                    'storeName': 'By Nagham',
+                                    'rating': '4.8',
+                                    'price': '370.00',
+                                    'size': 'L',
+                                    'quan': '1',
+                                  },
+                                  {
+                                    'images': ['assets/images/cloth1.png'],
+                                    'name': 'Cream Hoodie',
+                                    'storeName': 'By Nagham',
+                                    'rating': '4.8',
+                                    'price': '370.00',
+                                    'size': 'L',
+                                    'quan': '1',
+                                  }
+                                ],
+                                index: 2,
+                              ));
+                        },
+                      ),
+                    );
+                  }),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

@@ -1,0 +1,32 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame 881">
+<g id="Group 8908">
+<path id="Rectangle 881" d="M3.6333 8.5C3.6333 7.39543 4.52873 6.5 5.6333 6.5H17.6333C18.7379 6.5 19.6333 7.39543 19.6333 8.5V20.5H3.6333V8.5Z" fill="#FFD15C"/>
+<rect id="Rectangle 882" x="3.6333" y="20.5" width="26" height="2" fill="#334A5E"/>
+<g id="Group 8903">
+<rect id="Rectangle 883" x="19.6333" y="16.5" width="9" height="4" fill="#FF5449"/>
+<path id="Rectangle 884" d="M19.6333 10.5H25.0919C26.5584 10.5 27.81 11.5602 28.0511 13.0068L28.6333 16.5H19.6333V10.5Z" fill="#FF5449"/>
+</g>
+<path id="Rectangle 885" d="M22.6333 11.5H24.939C25.9167 11.5 26.7511 12.2068 26.9118 13.1712L27.1333 14.5H22.6333V11.5Z" fill="#E5E5E5"/>
+<path id="Ellipse 146" d="M27.6333 22C27.6333 21.0717 27.2646 20.1815 26.6082 19.5251C25.9518 18.8687 25.0616 18.5 24.1333 18.5C23.205 18.5 22.3148 18.8687 21.6584 19.5251C21.002 20.1815 20.6333 21.0717 20.6333 22L24.1333 22H27.6333Z" fill="#334A5E"/>
+<path id="Ellipse 148" d="M12.6333 22C12.6333 21.0717 12.2646 20.1815 11.6082 19.5251C10.9518 18.8687 10.0616 18.5 9.1333 18.5C8.20504 18.5 7.3148 18.8687 6.65843 19.5251C6.00205 20.1815 5.6333 21.0717 5.6333 22L9.1333 22H12.6333Z" fill="#334A5E"/>
+<g id="Group 8904">
+<circle id="Ellipse 147" cx="9.1333" cy="22" r="2.5" fill="#40596B"/>
+<circle id="Ellipse 149" cx="9.1333" cy="22" r="1.5" fill="#ACB3BA"/>
+</g>
+<g id="Group 8905">
+<circle id="Ellipse 147_2" cx="24.1333" cy="22" r="2.5" fill="#40596B"/>
+<circle id="Ellipse 149_2" cx="24.1333" cy="22" r="1.5" fill="#ACB3BA"/>
+</g>
+<path id="Vector 90" d="M27.1333 14.5L22.6333 11.5V14.5H27.1333Z" fill="#C4C4C4"/>
+<g id="Group 8906">
+<rect id="Rectangle 886" x="8.6333" y="6.5" width="5" height="5" fill="#F2F2F2"/>
+<path id="Rectangle 887" d="M9.1333 12L9.6333 11.5H8.6333L9.1333 12Z" fill="#F2F2F2"/>
+<path id="Rectangle 888" d="M10.1333 12L10.6333 11.5H9.6333L10.1333 12Z" fill="#F2F2F2"/>
+<path id="Rectangle 889" d="M11.1333 12L11.6333 11.5H10.6333L11.1333 12Z" fill="#F2F2F2"/>
+<path id="Rectangle 890" d="M12.1333 12L12.6333 11.5H11.6333L12.1333 12Z" fill="#F2F2F2"/>
+<path id="Rectangle 891" d="M13.1333 12L13.6333 11.5H12.6333L13.1333 12Z" fill="#F2F2F2"/>
+</g>
+</g>
+</g>
+</svg>

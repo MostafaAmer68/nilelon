@@ -1,0 +1,24 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nilelon/features/shared/products_data/cubit/get_followed_state/get_followed_products_state.dart';
+import 'package:nilelon/features/shared/products_data/cubit/get_new_in_state/get_new_in_state.dart';
+import 'package:nilelon/features/shared/products_data/cubit/get_random_state/get_random_state.dart';
+import 'package:nilelon/features/shared/products_data/cubit/get_store_products/get_store_products_state.dart';
+
+part 'products_state.freezed.dart';
+
+@freezed
+class ProductsState with _$ProductsState {
+  const factory ProductsState({
+    required GetFollowedProductsState getFollowedProducts,
+    required GetNewInProductsState getNewInProducts,
+    required GetRandomProductsState getRandomProducts,
+    required GetStoreProductsState getStoreProducts,
+  }) = _ProductsState;
+
+  factory ProductsState.initial() => const ProductsState(
+        getFollowedProducts: GetFollowedProductsState.initial(),
+        getNewInProducts: GetNewInProductsState.initial(),
+        getRandomProducts: GetRandomProductsState.initial(),
+        getStoreProducts: GetStoreProductsState.initial(),
+      );
+}

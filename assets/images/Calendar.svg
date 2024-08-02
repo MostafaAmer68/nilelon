@@ -1,0 +1,11 @@
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Calendar">
+<path id="Vector" d="M7.03125 5.15625C5.39166 5.15625 4.0625 6.48541 4.0625 8.125V12.9688C4.0625 14.6083 5.39166 15.9375 7.03125 15.9375H10H12.9688C14.6083 15.9375 15.9375 14.6083 15.9375 12.9688V8.125C15.9375 6.48541 14.6083 5.15625 12.9688 5.15625H11.4844H10H9.14062M7.65625 6.25V4.0625M12.3438 6.25V4.0625M4.375 9.53125H15.8594" stroke="url(#paint0_linear_73_3615)" stroke-width="0.75" stroke-linecap="round"/>
+</g>
+<defs>
+<linearGradient id="paint0_linear_73_3615" x1="4.0625" y1="5.01674" x2="16.773" y2="6.24734" gradientUnits="userSpaceOnUse">
+<stop stop-color="#44C9E1"/>
+<stop offset="1" stop-color="#F59022"/>
+</linearGradient>
+</defs>
+</svg>
