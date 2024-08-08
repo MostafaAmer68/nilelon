@@ -13,8 +13,9 @@ class ClosetRepoImpl extends ClosetRepo {
   ClosetRepoImpl(this._service);
 
   @override
-  Future<Either<FailureService, void>> addProductToCloset(String productId, String closetId) {
-    return _service.addProductToCloset(productId,closetId);
+  Future<Either<FailureService, void>> addProductToCloset(
+      String productId, String closetId) {
+    return _service.addProductToCloset(productId, closetId);
   }
 
   @override
@@ -29,22 +30,24 @@ class ClosetRepoImpl extends ClosetRepo {
   }
 
   @override
-  Future<Either<FailureService, void>> deleteCloset() {
-    return _service.deleteCloset();
+  Future<Either<FailureService, void>> deleteCloset(String closetListId) {
+    return _service.deleteCloset(closetListId);
   }
 
   @override
-  Future<Either<FailureService, void>> deleteProductFromCloset() {
-    return _service.deleteProductFromCloset();
+  Future<Either<FailureService, void>> deleteProductFromCloset(
+      String closetListId, String productId) {
+    return _service.deleteProductFromCloset(closetListId, productId);
   }
 
   @override
-  Future<Either<FailureService, void>> emptyCloset() {
-    return _service.emptyCloset();
+  Future<Either<FailureService, void>> emptyCloset(String closetListId) {
+    return _service.emptyCloset(closetListId);
   }
 
   @override
-  Future<Either<FailureService, List<ProductModel>>> getClosetItem(String closetId) {
+  Future<Either<FailureService, List<ProductModel>>> getClosetItem(
+      String closetId) {
     return _service.getClosetItem(closetId);
   }
 

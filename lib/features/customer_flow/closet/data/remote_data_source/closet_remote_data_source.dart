@@ -87,10 +87,12 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
   }
 
   @override
-  Future<Either<FailureService, Response>> deleteCloset() async {
-    final Response data = await _apiService.post(
-      endPoint: EndPoint.deleteClosetUrl,
-    );
+  Future<Either<FailureService, Response>> deleteCloset(
+      String closetListId) async {
+    final Response data =
+        await _apiService.delete(endPoint: EndPoint.deleteClosetUrl, query: {
+      'closetListId': closetListId,
+    });
     if (data.statusCode == HttpStatus.ok) {
       return data.data;
     } else if (data.statusCode == HttpStatus.badRequest) {
@@ -106,10 +108,13 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
   }
 
   @override
-  Future<Either<FailureService, Response>> deleteProductFromCloset() async {
-    final Response data = await _apiService.post(
-      endPoint: EndPoint.deleteProductFromCloset,
-    );
+  Future<Either<FailureService, Response>> deleteProductFromCloset(
+      String closetListId, String productId) async {
+    final Response data = await _apiService
+        .delete(endPoint: EndPoint.deleteProductFromCloset, query: {
+      'producId': productId,
+      'closetListId': closetListId,
+    });
     if (data.statusCode == HttpStatus.ok) {
       return data.data;
     } else if (data.statusCode == HttpStatus.badRequest) {
@@ -125,10 +130,12 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
   }
 
   @override
-  Future<Either<FailureService, Response>> emptyCloset() async {
-    final Response data = await _apiService.post(
-      endPoint: EndPoint.emptyCartUrl,
-    );
+  Future<Either<FailureService, Response>> emptyCloset(
+      String closetListId) async {
+    final Response data =
+        await _apiService.post(endPoint: EndPoint.emptyCartUrl, query: {
+      'closetListId': closetListId,
+    });
     if (data.statusCode == HttpStatus.ok) {
       return data.data;
     } else if (data.statusCode == HttpStatus.badRequest) {

@@ -45,6 +45,36 @@ class ClosetCubit extends Cubit<ClosetState> {
     });
   }
 
+  Future<void> deletCloset(String closetId) async {
+    emit(const ClosetState.loading());
+    final data = await repo.deleteCloset(closetId);
+    data.fold((error) {
+      emit(const ClosetState.failure());
+    }, (response) {
+      emit(const ClosetState.success());
+    });
+  }
+
+  Future<void> deletFromCloset(String closetId, String productId) async {
+    emit(const ClosetState.loading());
+    final data = await repo.deleteProductFromCloset(closetId, productId);
+    data.fold((error) {
+      emit(const ClosetState.failure());
+    }, (response) {
+      emit(const ClosetState.successDelete());
+    });
+  }
+
+  Future<void> emptyCloset(String closetId) async {
+    emit(const ClosetState.loading());
+    final data = await repo.emptyCloset(closetId);
+    data.fold((error) {
+      emit(const ClosetState.failure());
+    }, (response) {
+      emit(const ClosetState.success());
+    });
+  }
+
   Future<void> addProductToClosets(String productId, String closetId) async {
     emit(const ClosetState.loading());
     final data = await repo.addProductToCloset(productId, closetId);

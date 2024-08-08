@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/features/customer_flow/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/resources/const_functions.dart';
@@ -9,7 +10,9 @@ import 'package:nilelon/widgets/price_and_rating_row/price_and_rating_row.dart';
 import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
 
 GestureDetector sectionSmallCard(
-    {required context, required ProductModel product}) {
+    {required context,
+    required ProductModel product,
+    required String closetId}) {
   return GestureDetector(
     onTap: () {
       // navigateTo(
@@ -47,16 +50,22 @@ GestureDetector sectionSmallCard(
               Positioned(
                   top: 5,
                   right: 5,
-                  child: Container(
-                    width: 28,
-                    height: 28,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: ColorManager.primaryO),
-                    child: const Icon(
-                      Iconsax.trash,
-                      color: ColorManager.primaryW,
-                      size: 18,
+                  child: InkWell(
+                    onTap: () {
+                      ClosetCubit.get(context)
+                          .deletFromCloset(closetId, product.id!);
+                    },
+                    child: Container(
+                      width: 28,
+                      height: 28,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: ColorManager.primaryO),
+                      child: const Icon(
+                        Iconsax.trash,
+                        color: ColorManager.primaryW,
+                        size: 18,
+                      ),
                     ),
                   ))
             ],

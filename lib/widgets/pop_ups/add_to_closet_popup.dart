@@ -54,7 +54,7 @@ Future addToClosetDialog(
                         const SizedBox(height: 20),
                         BlocBuilder<ClosetCubit, ClosetState>(
                           builder: (context, state) {
-                            return state.when(initial: () {
+                            return state.whenOrNull(initial: () {
                               return const Text('Waiting to Get Closets');
                             }, loading: () {
                               return const Center(
@@ -82,7 +82,7 @@ Future addToClosetDialog(
                             }, failure: () {
                               return const Text(
                                   'there are error try again later');
-                            });
+                            })!;
                           },
                         )
                       ],

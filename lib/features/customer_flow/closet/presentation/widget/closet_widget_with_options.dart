@@ -50,7 +50,7 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                 if (result == 'Rename') {
                   renameSectionDialog(context);
                 } else if (result == 'Delete') {
-                  showDeleteSectionAlert(context);
+                  showDeleteSectionAlert(context, closet);
                 } else if (result == 'Show Items') {
                   navigateTo(
                       context: context,

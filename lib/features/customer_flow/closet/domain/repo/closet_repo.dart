@@ -9,9 +9,10 @@ abstract class ClosetRepo {
   Future<Either<FailureService, void>> createCloset(CreateCloset model);
   Future<Either<FailureService, void>> addProductToCloset(
       String productId, String closetId);
-  Future<Either<FailureService, void>> deleteProductFromCloset();
-  Future<Either<FailureService, void>> deleteCloset();
-  Future<Either<FailureService, void>> emptyCloset();
+  Future<Either<FailureService, void>> deleteProductFromCloset(
+      String closetListId, String productId);
+  Future<Either<FailureService, void>> deleteCloset(String closetListId);
+  Future<Either<FailureService, void>> emptyCloset(String closetListId);
   Future<Either<FailureService, void>> addProductToDefaultCloset(
       String productId);
   Future<Either<FailureService, List<ClosetModel>>> getCustomerCloset();

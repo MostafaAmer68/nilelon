@@ -59,27 +59,31 @@ class _ClosetViewState extends State<ClosetView> {
                 children: [
                   BlocBuilder<ClosetCubit, ClosetState>(
                     builder: (context, state) {
-                      return state.when(initial: () {
-                        return const Text('No Closets has been added yet');
-                      }, loading: () {
-                        return const Center(child: CircularProgressIndicator());
-                      }, success: () {
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: ClosetCubit.get(context).closets.length,
-                            itemBuilder: (context, index) {
-                              final closet =
-                                  ClosetCubit.get(context).closets[index];
-                              return ClosetsWidgetWithOptions(
-                                closet: closet,
-                                onTap: () {
-                                  //  ClosetCubit.get(context).addProductToClosets(productId)
-                                },
-                              );
-                            });
-                      }, failure: () {
-                        return const Icon(Icons.error);
-                      });
+                      return state.whenOrNull(
+                        loading: () {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        },
+                        success: () {
+                          return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  ClosetCubit.get(context).closets.length,
+                              itemBuilder: (context, index) {
+                                final closet =
+                                    ClosetCubit.get(context).closets[index];
+                                return ClosetsWidgetWithOptions(
+                                  closet: closet,
+                                  onTap: () {
+                                    //  ClosetCubit.get(context).addProductToClosets(productId)
+                                  },
+                                );
+                              });
+                        },
+                        failure: () {
+                          return const Icon(Icons.error);
+                        },
+                      )!;
                     },
                   ),
                 ],

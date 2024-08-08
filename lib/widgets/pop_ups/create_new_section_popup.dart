@@ -58,15 +58,13 @@ Future createNewSectionDialog(
                 ),
                 BlocListener<ClosetCubit, ClosetState>(
                   listener: (context, state) {
-                    state.when(
-                      initial: () {},
-                      loading: () {
+                    state.mapOrNull(
+                      loading: (_) {
                         BotToast.showLoading();
                       },
-                      success: () {
+                      success: (_) {
                         BotToast.closeAllLoading();
                       },
-                      failure: () {},
                     );
                   },
                   child: Row(
