@@ -12,7 +12,7 @@ class HiveKeys {
   static const String skipOnboarding = 'skipOnboarding';
   static const String isStore = 'isStore';
   static const String token = 'apiToken';
-  static const String idToken = 'idToken';
+  static const String userId = 'idToken';
   static const String name = 'name';
   static const String role = 'role';
   static const String categories = 'categories';

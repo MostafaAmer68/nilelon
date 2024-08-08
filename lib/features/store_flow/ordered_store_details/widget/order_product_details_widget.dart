@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/widgets/divider/default_divider.dart';
-import 'package:nilelon/features/customer_flow/products_view/product_details/widget/image_banner.dart';
+import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
 
 class OrderProductDetailsWidget extends StatelessWidget {
   const OrderProductDetailsWidget({

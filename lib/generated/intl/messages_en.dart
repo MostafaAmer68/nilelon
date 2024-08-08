@@ -160,6 +160,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Email Changed Successfully!"),
         "emailOrPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Email Or Phone Number"),
+        "emptyCart": MessageLookupByLibrary.simpleMessage("Empty cart"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
         "enterConfirmPassword":
             MessageLookupByLibrary.simpleMessage("Enter Confirm Password"),

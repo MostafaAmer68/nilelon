@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/features/shared/products_data/cubit/products_cubit/products_cubit.dart';
-import 'package:nilelon/features/shared/products_data/cubit/products_cubit/products_state.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/resources/color_manager.dart';
@@ -23,12 +25,12 @@ class DiscoverView extends StatefulWidget {
 }
 
 class _DiscoverViewState extends State<DiscoverView> {
-  int newInPage = 5;
-  int newInPageSize = 1;
+  int newInPage = 1;
+  int newInPageSize = 10;
   bool newInIsLoadMore = false;
   ScrollController scrollController = ScrollController();
-  int handPage = 5;
-  int handPageSize = 1;
+  int handPage = 1;
+  int handPageSize = 10;
   bool handIsLoadMore = false;
   ScrollController handScrollController = ScrollController();
 
@@ -218,15 +220,15 @@ class _DiscoverViewState extends State<DiscoverView> {
                                 itemCount: handIsLoadMore
                                     ? productsList.length + 1
                                     : productsList.length,
-                                itemBuilder: (context, sizeIndex) {
-                                  if (sizeIndex == productsList.length &&
+                                itemBuilder: (context, index) {
+                                  if (index == productsList.length &&
                                       handIsLoadMore) {
                                     return buildShimmerIndicatorSmall();
                                   } else {
                                     return Container(
                                       child: smallCardC(
                                         context: context,
-                                        model: productsList[sizeIndex],
+                                        model: productsList[index],
                                       ),
                                     );
                                   }

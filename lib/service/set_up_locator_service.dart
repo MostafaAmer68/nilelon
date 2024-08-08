@@ -3,10 +3,13 @@ import 'package:get_it/get_it.dart';
 import 'package:nilelon/features/categories/data/datasources/category_services.dart';
 import 'package:nilelon/features/categories/data/repositories/category_repo_impl.dart';
 import 'package:nilelon/features/categories/domain/repositories/category_repo.dart';
-import 'package:nilelon/features/customer_flow/cart/remote_data_source/cart_remote_data_source.dart';
-import 'package:nilelon/features/customer_flow/cart/repos_impl/cart_repos_impl.dart';
-import 'package:nilelon/features/shared/products_data/remote_data_source/products_remote_data_source.dart';
-import 'package:nilelon/features/shared/products_data/product_repo_impl/products_repos_impl.dart';
+import 'package:nilelon/features/customer_flow/cart/data/remote_data_source/cart_remote_data_source.dart';
+import 'package:nilelon/features/customer_flow/cart/data/repos_impl/cart_repos_impl.dart';
+import 'package:nilelon/features/customer_flow/closet/data/remote_data_source/closet_remote_data_source.dart';
+import 'package:nilelon/features/customer_flow/closet/data/repo_impl/closet_repo_impl.dart';
+import 'package:nilelon/features/customer_flow/closet/domain/repo/closet_repo.dart';
+import 'package:nilelon/features/product/data/datasources/products_remote_data_source.dart';
+import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/auth/data/remote_data_source/auth_remote_data_source.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
 import 'package:nilelon/features/store_flow/analytics/remote_data_source/analytics_remote_data_source.dart';
@@ -17,11 +20,11 @@ import 'package:nilelon/service/network/api_service.dart';
 
 final locatorService = GetIt.instance;
 void setUpLocatorService() {
-  locatorService.registerSingleton<ApiService>(
-    ApiService(
-      dio: Dio(),
-    ),
-  );
+  locatorService.registerSingleton<ApiService>(ApiService(dio: Dio()));
+  locatorService
+      .registerSingleton(ClosetRemoteDataSourceImpl(locatorService()));
+  locatorService
+      .registerSingleton<ClosetRepoImpl>(ClosetRepoImpl(locatorService()));
   locatorService.registerSingleton(CategoryServices(Dio()));
   locatorService
       .registerSingleton<CategoryRepo>(CategoryRepoImpl(locatorService()));
@@ -31,6 +34,7 @@ void setUpLocatorService() {
   locatorService.registerSingleton<AuthReposImpl>(
     AuthReposImpl(locatorService<AuthRemoteDataSourceImpl>()),
   );
+  // chose category
   locatorService.registerSingleton<ChooseCategoryRemoteDataSourceImpl>(
     ChooseCategoryRemoteDataSourceImpl(
         apiService: locatorService<ApiService>()),

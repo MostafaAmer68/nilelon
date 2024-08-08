@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/features/customer_flow/closet/presentation/cubit/closet_cubit.dart';
+import 'package:nilelon/features/customer_flow/section_details/section_details_view.dart';
 import 'package:nilelon/resources/const_functions.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/features/customer_flow/home/widget/closet_widget.dart';
 import 'package:nilelon/widgets/pop_ups/create_new_section_popup.dart';
 
+import '../../features/customer_flow/closet/presentation/widget/closet_widget_with_options.dart';
+import '../../utils/navigation.dart';
+
 Future addToClosetDialog(
   BuildContext context,
+  String productid,
 ) {
+  ClosetCubit.get(context).getclosets();
   return showModalBottomSheet(
     isScrollControlled: true,
     useSafeArea: true,
@@ -44,24 +52,39 @@ Future addToClosetDialog(
                               .copyWith(fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 20),
-                        const ClosetsWidget(),
-                        const SizedBox(height: 16),
-                        const ClosetsWidget(),
-                        const SizedBox(height: 16),
-                        const ClosetsWidget(),
-                        const SizedBox(height: 16),
-                        const ClosetsWidget(),
-                        const SizedBox(height: 16),
-                        const ClosetsWidget(),
-                        const SizedBox(height: 16),
-                        const ClosetsWidget(),
-                        const SizedBox(height: 16),
-                        const ClosetsWidget(),
-                        const SizedBox(height: 16),
-                        const ClosetsWidget(),
-                        const SizedBox(height: 16),
-                        const ClosetsWidget(),
-                        const SizedBox(height: 16),
+                        BlocBuilder<ClosetCubit, ClosetState>(
+                          builder: (context, state) {
+                            return state.when(initial: () {
+                              return const Text('Waiting to Get Closets');
+                            }, loading: () {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }, success: () {
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      ClosetCubit.get(context).closets.length,
+                                  itemBuilder: (context, index) {
+                                    final closet =
+                                        ClosetCubit.get(context).closets[index];
+                                    return ClosetsWidgetWithOptions(
+                                      closet: closet,
+                                      onTap: () {
+                                        ClosetCubit.get(context)
+                                            .addProductToClosets(
+                                                productid,
+                                                ClosetCubit.get(context)
+                                                    .closets[index]
+                                                    .id);
+                                      },
+                                    );
+                                  });
+                            }, failure: () {
+                              return const Text(
+                                  'there are error try again later');
+                            });
+                          },
+                        )
                       ],
                     ),
                   ),

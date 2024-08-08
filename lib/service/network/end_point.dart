@@ -16,24 +16,28 @@ class EndPoint {
   static const String customerGoogleRegisterUrl =
       '/Authentication/ExternalRegister';
 
-  //todo categories urls
-  static const String categoriesUrl = '/Category/GetAllCategoreis';
-
   //todo Customer Cart Urls
-  static const String getCartByCustomerIdUrl = '/Cart/GetCartByCustomerId?id=';
+  static const String getCartByCustomerIdUrl = '/Cart/GetCartByCustomerId';
   static const String deleteFromCartUrl = '/Cart/DeleteItemFromCart';
   static const String updateQuantityCartUrl = '/Cart/ChangeItemQuantity';
+  static const String addToCartUrl = '/Cart/AddToCart';
+  static const String emptyCartUrl = '/Cart/EmptyCart';
 
   //todo Customer Closet Urls
-  static const String getClosetUrl = '/Closet/GetCustomerClosets?customerId=';
+  static const String createClosetUrl = '/Closet/CreateCloset';
+  static const String addProductToClosetUrl = '/Closet/AddProductToCloset';
+  static const String deleteProductFromCloset = '/Closet/DeleteFromCloset';
+  static const String deleteClosetUrl = '/Closet/DeleteCloset';
+  static const String emptyClosetUrl = '/Closet/EmptyCloset';
+  static const String addProductToDefaultClosetUrl =
+      '/Closet/AddProductToDefaultCloset';
+  static const String getCustomerClosetUrl = '/Closet/GetCustomerClosets';
+  static const String getClosetItemsUrl = '/Closet/GetClosetItems';
 
   //todo Customer Products Urls
-  static const String getFollowedProductsUrl =
-      '/Product/GetFollowedProducts?CustomerId=';
-  static const String getNewProductsUrl =
-      '/Product/GetNewNProducts?CustomerId=';
-  static const String getRandomProductsUrl =
-      '/Product/GetRandomProducts?CustomerId=';
+  static const String getFollowedProductsUrl = '/Product/GetFollowedProducts';
+  static const String getNewProductsUrl = '/Product/GetNewNProducts';
+  static const String getRandomProductsUrl = '/Product/GetRandomProducts';
 
   //todo Static Product Queries Urls
   static const String page = '&page=';

@@ -1,31 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/resources/const_functions.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
 import 'package:nilelon/widgets/price_and_rating_row/price_and_rating_row.dart';
-import 'package:nilelon/features/customer_flow/products_view/product_details/view/product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
 
-GestureDetector sectionSmallCard({required context}) {
-  List<String> images = ['assets/images/saveToCloset.png'];
-  String name = 'T-Shirt';
-  String storeName = 'By Nagham';
-  String rating = '4.8';
-  String price = '370.90';
+GestureDetector sectionSmallCard(
+    {required context, required ProductModel product}) {
   return GestureDetector(
     onTap: () {
-      navigateTo(
-          context: context,
-          screen: ProductDetailsView(
-            images: images,
-            name: name,
-            storeName: storeName,
-            rating: rating,
-            price: price,
-            status: 'Out of Stock',
-            reviews: const [],
-          ));
+      // navigateTo(
+      //     context: context,
+      //     screen: ProductDetailsView(
+      //       // images: images,
+      //       // name: name,
+      //       // storeName: storeName,
+      //       // rating: rating,
+      //       // price: price,
+      //       // status: 'Out of Stock',
+      //       // reviews: const [],
+      //     ));
     },
     child: Container(
       clipBehavior: Clip.antiAlias,
@@ -41,8 +38,11 @@ GestureDetector sectionSmallCard({required context}) {
               Container(
                 height: 160,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(images[0]), fit: BoxFit.fill)),
+                  image: DecorationImage(
+                    image: NetworkImage(product.productImages![0].url!),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
               Positioned(
                   top: 5,
@@ -64,12 +64,14 @@ GestureDetector sectionSmallCard({required context}) {
           const SizedBox(
             height: 8,
           ),
-          PriceAndRatingRow(price: '$price L.E', rating: rating),
+          PriceAndRatingRow(
+              price: '${product.productVariants![0].price!} L.E',
+              rating: product.rating.toString()),
           const SizedBox(
             height: 4,
           ),
           Text(
-            name,
+            product.name.toString(),
             style: AppStylesManager.customTextStyleG5,
           ),
         ],

@@ -18,7 +18,7 @@ abstract class AuthRemoteDataSource {
   // Future<void> forgetPasswordAuth(ForgetPasswordModel entity);
   // Future<void> resetPasswordAuth(ResetPasswordModel entity);
   // Future<void> deleteAccountAuth();
-  // Future changeAccountNameAuth(String username, String phoneNumber);
+  // Future changeAccountNameAuth(String username, String phoneNumber);aa
 }
 
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
@@ -29,7 +29,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   Future<String> loginAuth(LoginModel entity, context) async {
     final data = await apiService.postAuth(
         endPoint: EndPoint.loginUrl, body: entity.toJson());
-    print(data);
     if (data.statusCode == 200) {
       return data.data as String;
     } else if (data.statusCode == 400) {
@@ -57,6 +56,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       errorAlert(context, errorMessage);
       throw Exception('Customer Register failed: $errorMessage');
     } else {
+      errorAlert(context, data.statusMessage!);
       // Handle other status codes if necessary
       throw Exception(
           'Failed to Customer Register: Unexpected status code ${data.statusCode}');

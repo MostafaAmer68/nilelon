@@ -4,8 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/features/categories/presentation/bloc/categories_bloc.dart';
-import 'package:nilelon/features/shared/products_data/cubit/products_cubit/products_cubit.dart';
-import 'package:nilelon/features/shared/products_data/product_repo_impl/products_repos_impl.dart';
+import 'package:nilelon/features/customer_flow/cart/data/repos_impl/cart_repos_impl.dart';
+import 'package:nilelon/features/customer_flow/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/customer_flow/closet/data/repo_impl/closet_repo_impl.dart';
+import 'package:nilelon/features/customer_flow/closet/presentation/cubit/closet_cubit.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
+import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
 import 'package:nilelon/features/shared/splash/splash_view.dart';
@@ -45,6 +49,12 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CategoriesBloc>(
           create: (context) => CategoriesBloc(),
+        ),
+        BlocProvider<ClosetCubit>(
+          create: (context) => ClosetCubit(locatorService<ClosetRepoImpl>()),
+        ),
+        BlocProvider<CartCubit>(
+          create: (context) => CartCubit(locatorService<CartReposImpl>()),
         ),
       ],
       child: ScreenUtilInit(

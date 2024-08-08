@@ -8,7 +8,7 @@ import 'package:nilelon/utils/navigation.dart';
 import 'package:nilelon/widgets/alert/logout_alert.dart';
 import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/widgets/divider/default_divider.dart';
-import 'package:nilelon/features/customer_flow/closet/view/closet_view.dart';
+import 'package:nilelon/features/customer_flow/closet/presentation/view/closet_view.dart';
 import 'package:nilelon/features/customer_flow/order_management/widgets/top_tab_bar.dart';
 import 'package:nilelon/features/customer_flow/profile/widget/profile_list_view.dart';
 import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';

@@ -1,5 +1,8 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/features/customer_flow/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/resources/const_functions.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
@@ -43,13 +46,9 @@ Future createNewSectionDialog(
                 ),
                 TextFormField(
                   keyboardType: TextInputType.name,
+                  controller: ClosetCubit.get(context).closetName,
                   decoration: InputDecoration(
-                    // fillColor: AppStyles.primaryW,
                     focusColor: ColorManager.primaryG,
-                    // border: OutlineInputBorder(borderSide: BorderSide.none,
-                    //   borderRadius: BorderRadius.circular(12),
-                    // ),
-
                     hintText: 'Section Name',
                     hintStyle: AppStylesManager.customTextStyleG2,
                   ),
@@ -57,18 +56,40 @@ Future createNewSectionDialog(
                 SizedBox(
                   height: 16.h,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ButtonBuilder(
-                      text: 'Save',
-                      ontap: () {
-                        print(MediaQuery.of(context).viewInsets.bottom);
+                BlocListener<ClosetCubit, ClosetState>(
+                  listener: (context, state) {
+                    state.when(
+                      initial: () {},
+                      loading: () {
+                        BotToast.showLoading();
                       },
-                      width: screenWidth(context, 0.28),
-                      height: 45.h,
-                    )
-                  ],
+                      success: () {
+                        BotToast.closeAllLoading();
+                      },
+                      failure: () {},
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ButtonBuilder(
+                        text: 'Save',
+                        ontap: () {
+                          ClosetCubit.get(context).createCloset();
+                        },
+                        width: screenWidth(context, 0.28),
+                        height: 45.h,
+                      ),
+                      ButtonBuilder(
+                        text: 'Close',
+                        ontap: () {
+                          Navigator.pop(context);
+                        },
+                        width: screenWidth(context, 0.28),
+                        height: 45.h,
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),

@@ -7,7 +7,7 @@ import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
 import 'package:nilelon/widgets/button/button_builder.dart';
 import 'package:nilelon/widgets/price_and_rating_row/price_and_rating_row.dart';
-import 'package:nilelon/features/customer_flow/products_view/product_details/view/product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
 import 'package:svg_flutter/svg.dart';
 
 GestureDetector wideCard({required void Function() onTap, required context}) {
@@ -18,17 +18,11 @@ GestureDetector wideCard({required void Function() onTap, required context}) {
   String price = '370.90';
   return GestureDetector(
     onTap: () {
-      navigateTo(
-          context: context,
-          screen: ProductDetailsView(
-            images: images,
-            name: name,
-            storeName: storeName,
-            rating: rating,
-            price: price,
-            status: 'In Stock',
-            reviews: const [],
-          ));
+      // navigateTo(
+      //     context: context,
+      //     screen: ProductDetailsView(
+      //       product: model,
+      //     ));
     },
     child: SizedBox(
       width: screenWidth(context, 0.9),

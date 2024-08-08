@@ -8,8 +8,8 @@ import 'package:nilelon/utils/navigation.dart';
 import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/widgets/divider/default_divider.dart';
 import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/features/customer_flow/products_view/product_details/widget/image_banner.dart';
-import 'package:nilelon/features/customer_flow/products_view/product_details/widget/rating_container.dart';
+import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
+import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
 import 'package:nilelon/features/store_flow/store_profile_store/store_profile_store.dart';
 
 class StoreProductDetailsView extends StatefulWidget {

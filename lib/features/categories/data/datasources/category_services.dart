@@ -8,6 +8,6 @@ part 'category_services.g.dart';
 abstract class CategoryServices {
   factory CategoryServices(Dio dio) = _CategoryServices;
 
-  @POST(EndPoint.categoriesUrl)
+  @POST(EndPoint.getAllCategoriesUrl)
   Future<HttpResponse> fetchCategories();
 }

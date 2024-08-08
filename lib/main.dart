@@ -17,7 +17,7 @@ void main() async {
       false,
     );
   }
-  print(HiveStorage.get(HiveKeys.idToken));
+  print(HiveStorage.get(HiveKeys.userId));
   Bloc.observer = SimpleBlocObserver();
   setUpLocatorService();
   if (HiveStorage.get(HiveKeys.skipOnboarding) == null) {

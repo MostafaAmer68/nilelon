@@ -3,44 +3,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/data/hive_stroage.dart';
-import 'package:nilelon/features/customer_flow/cart/cubit/cart_cubit.dart';
-import 'package:nilelon/features/customer_flow/cart/model/change_quantity_model.dart';
+import 'package:nilelon/features/customer_flow/cart/domain/model/get_cart_model/cart_item.dart';
+import 'package:nilelon/features/customer_flow/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/customer_flow/cart/domain/model/change_quantity_model.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/resources/const_functions.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/features/customer_flow/products_view/product_details/view/product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
 import 'package:nilelon/widgets/button/small_button.dart';
 
 class CartCard extends StatefulWidget {
-  const CartCard(
-      {super.key,
-      required this.counter,
-      required this.size,
-      required this.color,
-      required this.productId,
-      required this.cartId});
-  final int counter;
-  final String size;
-  final int color;
-  final String productId;
-  final String cartId;
+  const CartCard({
+    super.key,
+    required this.cart,
+  });
+  final CartItem cart;
   @override
   State<CartCard> createState() => _CartCardState();
 }
 
 class _CartCardState extends State<CartCard> {
-  List<String> images = ['assets/images/cloth1.png'];
-  String name = 'Cream Hoodie';
-  String size = 'L';
-  String rating = '4.8';
-  String price = '370.90';
   int localCounter = 1;
   bool isEnabled = true;
   @override
   void initState() {
-    localCounter = widget.counter;
+    localCounter = widget.cart.quantity!;
     super.initState();
   }
 
@@ -64,17 +54,11 @@ class _CartCardState extends State<CartCard> {
       children: [
         GestureDetector(
           onTap: () {
-            navigateTo(
-                context: context,
-                screen: ProductDetailsView(
-                  images: images,
-                  name: name,
-                  storeName: size,
-                  rating: rating,
-                  price: price,
-                  status: lang.inStock,
-                  reviews: const [],
-                ));
+            // navigateTo(
+            //     context: context,
+            //     screen: ProductDetailsView(
+            //    product: model,
+            //     ));
           },
           child: SizedBox(
             width: screenWidth(context, 0.9),
@@ -106,7 +90,8 @@ class _CartCardState extends State<CartCard> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
                         image: DecorationImage(
-                            image: AssetImage(images[0]), fit: BoxFit.cover)),
+                            image: AssetImage('assets/images/app_logo.png'),
+                            fit: BoxFit.cover)),
                   ),
                   const SizedBox(
                     width: 4,
@@ -124,7 +109,7 @@ class _CartCardState extends State<CartCard> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  name,
+                                  widget.cart.productName!,
                                   style: AppStylesManager.customTextStyleBl7
                                       .copyWith(fontSize: 1.sw > 600 ? 22 : 14),
                                   overflow: TextOverflow.ellipsis,
@@ -144,7 +129,7 @@ class _CartCardState extends State<CartCard> {
                           //   height: 12,
                           // ),
                           Text(
-                            '${lang.size} $size',
+                            '${lang.size} ${widget.cart.size!}',
                             style: AppStylesManager.customTextStyleG5,
                           ),
                           const SizedBox(
@@ -154,7 +139,7 @@ class _CartCardState extends State<CartCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '$price L.E',
+                                '${widget.cart.price!} L.E',
                                 style: AppStylesManager.customTextStyleO2,
                               ),
                               const Spacer(),
@@ -178,10 +163,10 @@ class _CartCardState extends State<CartCard> {
                                               .updateQuantityCart(
                                                   ChangeQuantityModel(
                                             customrId: HiveStorage.get(
-                                                HiveKeys.idToken),
-                                            size: widget.size,
-                                            color: widget.color,
-                                            productId: widget.productId,
+                                                HiveKeys.userId),
+                                            size: widget.cart.size,
+                                            color: widget.cart.color!,
+                                            productId: widget.cart.productId,
                                             quantity: localCounter,
                                           ));
                                         },
@@ -207,10 +192,10 @@ class _CartCardState extends State<CartCard> {
                                     BlocProvider.of<CartCubit>(context)
                                         .updateQuantityCart(ChangeQuantityModel(
                                       customrId:
-                                          HiveStorage.get(HiveKeys.idToken),
-                                      size: widget.size,
-                                      color: widget.color,
-                                      productId: widget.productId,
+                                          HiveStorage.get(HiveKeys.userId),
+                                      size: widget.cart.size,
+                                      color: widget.cart.color!,
+                                      productId: widget.cart.productId,
                                       quantity: localCounter,
                                     ));
                                   },

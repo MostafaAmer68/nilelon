@@ -166,6 +166,16 @@ class S {
     );
   }
 
+  /// `Empty cart`
+  String get emptyCart {
+    return Intl.message(
+      'Empty cart',
+      name: 'emptyCart',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Shop As A Guest`
   String get shopAsAGuest {
     return Intl.message(

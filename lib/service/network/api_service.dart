@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:nilelon/service/network/end_point.dart';
 
@@ -28,19 +30,15 @@ class ApiService {
   //   return response.data;
   // }
 
-  Future<dynamic> get({required String endPoint}) async {
+  Future<dynamic> get({required String endPoint, query}) async {
     dio.interceptors.add(CustomLogInterceptor());
 
     var response = await dio.get(
       '${EndPoint.baseUrl}$endPoint',
+      queryParameters: query,
       options: Options(
         validateStatus: (status) {
-          return status! == 200 ||
-              status == 201 ||
-              status == 204 ||
-              status == 400 ||
-              status == 401 ||
-              status == 404;
+          return getStatus(status!);
         },
       ),
     );
@@ -77,17 +75,38 @@ class ApiService {
       queryParameters: query,
       options: Options(
         validateStatus: (status) {
-          return status! == 200 ||
-              status == 201 ||
-              status == 204 ||
-              status == 400 ||
-              status == 401 ||
-              status == 404 ||
-              status == 500;
+          return getStatus(status!);
         },
       ),
     );
     return response;
+  }
+
+  Future<Response> post(
+      {required String endPoint, dynamic data, dynamic query}) async {
+    dio.interceptors.add(CustomLogInterceptor());
+
+    final response = await dio.post(
+      '${EndPoint.baseUrl}$endPoint',
+      data: data,
+      queryParameters: query,
+      options: Options(
+        validateStatus: (status) {
+          return getStatus(status!);
+        },
+      ),
+    );
+    return response;
+  }
+
+  bool getStatus(int status) {
+    return status == HttpStatus.ok ||
+        status == HttpStatus.created ||
+        status == HttpStatus.noContent ||
+        status == HttpStatus.badRequest ||
+        status == HttpStatus.unauthorized ||
+        status == HttpStatus.notFound ||
+        status == HttpStatus.internalServerError;
   }
 
   Future<dynamic> put({
@@ -100,12 +119,7 @@ class ApiService {
       '${EndPoint.baseUrl}$endPoint',
       options: Options(
         validateStatus: (status) {
-          return status! == 200 ||
-              status == 201 ||
-              status == 204 ||
-              status == 400 ||
-              status == 401 ||
-              status == 404;
+          return getStatus(status!);
         },
       ),
       data: data,
@@ -116,20 +130,17 @@ class ApiService {
   Future<dynamic> delete({
     required endPoint,
     dynamic body,
+    dynamic query,
   }) async {
     dio.interceptors.add(CustomLogInterceptor());
 
     var response = await dio.delete(
       '${EndPoint.baseUrl}$endPoint',
       data: body,
+      queryParameters: query,
       options: Options(
         validateStatus: (status) {
-          return status! == 200 ||
-              status == 201 ||
-              status == 204 ||
-              status == 400 ||
-              status == 401 ||
-              status == 404;
+          return getStatus(status!);
         },
       ),
     );

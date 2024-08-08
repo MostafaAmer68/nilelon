@@ -42,7 +42,7 @@ class _CustomerHotPicksViewState extends State<CustomerHotPicksView> {
                   ),
                   wideCard(
                       onTap: () {
-                        addToClosetDialog(context);
+                        // addToClosetDialog(context,);
                       },
                       context: context),
                 ],

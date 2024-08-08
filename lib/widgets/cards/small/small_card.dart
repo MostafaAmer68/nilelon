@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/features/shared/products_data/models/product_model.dart';
+import 'package:nilelon/features/product/domain/models/product_model.dart';
 
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
+import 'package:nilelon/widgets/pop_ups/add_to_closet_popup.dart';
 import 'package:nilelon/widgets/price_and_rating_row/price_and_rating_row.dart';
-import 'package:nilelon/features/customer_flow/products_view/product_details/view/product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
 
 import '../../../resources/color_manager.dart';
 
@@ -16,16 +17,11 @@ GestureDetector smallCardC({
   return GestureDetector(
     onTap: () {
       navigateTo(
-          context: context,
-          screen: ProductDetailsView(
-            images: [model.productVariants![0].productImages![0].url!],
-            name: model.name!,
-            storeName: model.storeName!,
-            rating: model.rating.toString(),
-            price: model.productVariants![0].price.toString(),
-            status: 'Out of Stock',
-            reviews: const [],
-          ));
+        context: context,
+        screen: ProductDetailsView(
+          product: model,
+        ),
+      );
     },
     child: Container(
       clipBehavior: Clip.antiAlias,
@@ -53,20 +49,24 @@ GestureDetector smallCardC({
                 height: 150.h,
                 decoration: BoxDecoration(
                     image: DecorationImage(
-                        image: NetworkImage(
-                            model.productVariants![0].productImages![0].url!),
+                        image: NetworkImage(model.productImages![0].url!),
                         fit: BoxFit.fill)),
               ),
               Positioned(
                   top: 10.h,
-                  child: Container(
-                    width: 24.w,
-                    height: 24.w,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                          image:
-                              AssetImage('assets/images/closet_following.png'),
-                          fit: BoxFit.fill),
+                  child: InkWell(
+                    onTap: () {
+                      addToClosetDialog(context, model.id!);
+                    },
+                    child: Container(
+                      width: 24.w,
+                      height: 24.w,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage(
+                                'assets/images/closet_following.png'),
+                            fit: BoxFit.fill),
+                      ),
                     ),
                   ))
             ],
@@ -97,19 +97,7 @@ GestureDetector smallCard({required context, required}) {
   String rating = '4.8';
   String price = '370.90';
   return GestureDetector(
-    onTap: () {
-      navigateTo(
-          context: context,
-          screen: ProductDetailsView(
-            images: images,
-            name: name,
-            storeName: storeName,
-            rating: rating,
-            price: price,
-            status: 'Out of Stock',
-            reviews: const [],
-          ));
-    },
+    onTap: () {},
     child: Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),

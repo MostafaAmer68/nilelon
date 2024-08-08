@@ -4,7 +4,7 @@ import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/resources/const_functions.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/features/customer_flow/products_view/product_details/view/product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
 
 GestureDetector marketOffersCard({required context}) {
   List<String> images = ['assets/images/saveToCloset.png'];
@@ -16,17 +16,17 @@ GestureDetector marketOffersCard({required context}) {
   String discount = '20';
   return GestureDetector(
     onTap: () {
-      navigateTo(
-          context: context,
-          screen: ProductDetailsView(
-            images: images,
-            name: name,
-            storeName: storeName,
-            rating: rating,
-            price: price,
-            status: 'Out of Stock',
-            reviews: const [],
-          ));
+      // navigateTo(
+      //     context: context,
+      //     screen: ProductDetailsView(
+      //       images: images,
+      //       name: name,
+      //       storeName: storeName,
+      //       rating: rating,
+      //       price: price,
+      //       status: 'Out of Stock',
+      //       reviews: const [],
+      //     ));
     },
     child: Container(
       clipBehavior: Clip.antiAlias,

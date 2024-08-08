@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,6 +51,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(LoginFailure(failure.errorMsg));
     }, (response) {
       emit(VerificationCodeSent());
+      log(response);
       HiveStorage.set(HiveKeys.token, response);
     });
   }
@@ -70,6 +73,10 @@ class AuthCubit extends Cubit<AuthState> {
       emit(LoginFailure(failure.errorMsg));
     }, (response) {
       emit(VerificationSuccess());
+      if (HiveStorage.get(HiveKeys.isStore)) {
+      } else {
+        AuthCubit.get(context).authCustomerRegister(context);
+      }
       HiveStorage.set(HiveKeys.token, response);
     });
   }
@@ -114,7 +121,7 @@ class AuthCubit extends Cubit<AuthState> {
         decodedToken['Full Name'],
       );
       HiveStorage.set(
-        HiveKeys.idToken,
+        HiveKeys.userId,
         decodedToken['Id'],
       );
 
@@ -143,26 +150,29 @@ class AuthCubit extends Cubit<AuthState> {
     }, (response) {
       Map<String, dynamic> decodedToken = JwtDecoder.decode(response);
 
-      HiveStorage.set(
-        HiveKeys.role,
-        decodedToken['Role'],
-      );
-      HiveStorage.set(
-        HiveKeys.name,
-        decodedToken['Full Name'],
-      );
-      HiveStorage.set(
-        HiveKeys.idToken,
-        decodedToken['Id'],
-      );
-      HiveStorage.set(
-        HiveKeys.token,
-        response,
-      );
-      print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
+      saveData(decodedToken, response);
       emit(CustomerRegisterSuccess(response));
       BlocProvider.of<ChooseCategoryCubit>(context).getCategories();
     });
+  }
+
+  void saveData(Map<String, dynamic> decodedToken, String response) {
+    HiveStorage.set(
+      HiveKeys.role,
+      decodedToken['Role'],
+    );
+    HiveStorage.set(
+      HiveKeys.name,
+      decodedToken['Full Name'],
+    );
+    HiveStorage.set(
+      HiveKeys.userId,
+      decodedToken['Id'],
+    );
+    HiveStorage.set(
+      HiveKeys.token,
+      response,
+    );
   }
 
   Future<void> authStoreRegister(context) async {
@@ -188,7 +198,6 @@ class AuthCubit extends Cubit<AuthState> {
         HiveKeys.token,
         response,
       );
-      print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
       emit(StoreRegisterSuccess(response));
       BlocProvider.of<ChooseCategoryCubit>(context).getCategories();
     });

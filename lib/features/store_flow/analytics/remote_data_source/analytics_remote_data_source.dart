@@ -19,7 +19,7 @@ class AnalyticsRemoteDataSourceImpl extends AnalyticsRemoteDataSource {
   @override
   Future<AnalyticsResponseModel> getNoOfItemsSold() async {
     final data = await apiService.get(
-      endPoint: '${EndPoint.noOfItemsSold}${HiveStorage.get(HiveKeys.idToken)}',
+      endPoint: '${EndPoint.noOfItemsSold}${HiveStorage.get(HiveKeys.userId)}',
     );
     print(data);
     if (data.statusCode == 200) {
@@ -39,8 +39,7 @@ class AnalyticsRemoteDataSourceImpl extends AnalyticsRemoteDataSource {
   @override
   Future<AnalyticsResponseModel> getNoOfOrdersSold() async {
     final data = await apiService.get(
-      endPoint:
-          '${EndPoint.noOfOrdersSold}${HiveStorage.get(HiveKeys.idToken)}',
+      endPoint: '${EndPoint.noOfOrdersSold}${HiveStorage.get(HiveKeys.userId)}',
     );
     print(data);
     if (data.statusCode == 200) {
@@ -61,7 +60,7 @@ class AnalyticsRemoteDataSourceImpl extends AnalyticsRemoteDataSource {
   Future<AnalyticsResponseModel> getTotalIncomeSold() async {
     final data = await apiService.get(
       endPoint:
-          '${EndPoint.totalIncomeSold}${HiveStorage.get(HiveKeys.idToken)}',
+          '${EndPoint.totalIncomeSold}${HiveStorage.get(HiveKeys.userId)}',
     );
     print(data);
     if (data.statusCode == 200) {
@@ -82,7 +81,7 @@ class AnalyticsRemoteDataSourceImpl extends AnalyticsRemoteDataSource {
   Future<AnalyticsResponseModel> getNoOfFollowersSold() async {
     final data = await apiService.get(
       endPoint:
-          '${EndPoint.noOfFollowersSold}${HiveStorage.get(HiveKeys.idToken)}',
+          '${EndPoint.noOfFollowersSold}${HiveStorage.get(HiveKeys.userId)}',
     );
     print(data);
     if (data.statusCode == 200) {
@@ -103,7 +102,7 @@ class AnalyticsRemoteDataSourceImpl extends AnalyticsRemoteDataSource {
   Future<AnalyticsResponseModel> getNoOfNotificationSold() async {
     final data = await apiService.get(
       endPoint:
-          '${EndPoint.noOfNotificationSold}${HiveStorage.get(HiveKeys.idToken)}',
+          '${EndPoint.noOfNotificationSold}${HiveStorage.get(HiveKeys.userId)}',
     );
     print(data);
     if (data.statusCode == 200) {

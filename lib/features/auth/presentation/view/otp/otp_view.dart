@@ -11,6 +11,10 @@ import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/widgets/text_form_field/text_field/text_field_pin.dart';
 
+import '../../../../../utils/navigation.dart';
+import '../../../../../widgets/pop_ups/success_creation_popup.dart';
+import '../../../../shared/recommendation/recommendation_view.dart';
+
 class OtpView extends StatefulWidget {
   const OtpView(
       {super.key,
@@ -77,10 +81,25 @@ class _OtpViewState extends State<OtpView> {
       listener: (context, state) {
         if (state is VerificationSuccess) {
           if (HiveStorage.get(HiveKeys.isStore)) {
-            AuthCubit.get(context).authStoreRegister(context);
+          
           } else {
             AuthCubit.get(context).authCustomerRegister(context);
           }
+        } else if (state is CustomerRegisterSuccess) {
+          successCreationDialog(
+            isDismissible: false,
+            context: context,
+            highlightedText: lang.signUpSuccessfully,
+            regularText:
+                lang.youWillBeMovedToHomeScreenRightNowEnjoyTheFeatures,
+            buttonText: lang.letsStart,
+            ontap: () {
+              navigateAndRemoveUntil(
+                context: context,
+                screen: const RecommendationView(),
+              );
+            },
+          );
         }
       },
       child: Scaffold(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/features/customer_flow/closet/view/closet_view.dart';
+import 'package:nilelon/features/customer_flow/closet/presentation/view/closet_view.dart';
 import 'package:nilelon/features/customer_flow/notification/notification_view.dart';
 import 'package:svg_flutter/svg.dart';
 
