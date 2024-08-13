@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/features/customer_flow/closet/presentation/cubit/closet_cubit.dart';
+import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/features/customer_flow/section_details/section_details_view.dart';
 import 'package:nilelon/resources/const_functions.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/features/customer_flow/home/widget/closet_widget.dart';
 import 'package:nilelon/widgets/pop_ups/create_new_section_popup.dart';
 
-import '../../features/customer_flow/closet/presentation/widget/closet_widget_with_options.dart';
+import '../../features/closet/presentation/widget/closet_widget_with_options.dart';
 import '../../utils/navigation.dart';
 
 Future addToClosetDialog(

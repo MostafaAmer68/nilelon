@@ -16,9 +16,10 @@ import 'package:nilelon/widgets/text_form_field/text_field/const_text_form_field
 import 'package:nilelon/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/auth/presentation/view/otp/otp_view.dart';
 import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.dart';
-import 'package:nilelon/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/features/shared/recommendation/recommendation_view.dart';
 import 'package:svg_flutter/svg.dart';
+
+import '../../../../../widgets/pop_ups/success_creation_popup.dart';
 
 class CustomerRegisterView extends StatefulWidget {
   const CustomerRegisterView({super.key});
@@ -54,7 +55,48 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
     return BlocListener<AuthCubit, AuthState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is VerificationCodeSent) {
+          BotToast.closeAllLoading();
+          navigateTo(
+            context: context,
+            screen: OtpView(
+              name: lang.confirmYourEmail,
+              phoneOrEmail: AuthCubit.get(context).emailController.text,
+              buttonName: lang.verifyAndCreateAccount,
+              onSuccess: () {
+                AuthCubit.get(context).authCustomerRegister(context);
+              },
+              resend: () {
+                AuthCubit.get(context).resetPasswordEmail(context);
+              },
+            ),
+          );
+        }
+        if (state is CustomerRegisterSuccess) {
+          successCreationDialog(
+            isDismissible: false,
+            context: context,
+            highlightedText: lang.signUpSuccessfully,
+            regularText:
+                lang.youWillBeMovedToHomeScreenRightNowEnjoyTheFeatures,
+            buttonText: lang.letsStart,
+            ontap: () {
+              navigateAndRemoveUntil(
+                context: context,
+                screen: const RecommendationView(),
+              );
+            },
+          );
+        }
+        if (state is LoginLoading) {
+          BotToast.showLoading();
+        }
+        if (state is LoginFailure) {
+          BotToast.closeAllLoading();
+          BotToast.showText(text: state.errorMessage);
+        }
+      },
       child: Scaffold(
         backgroundColor: ColorManager.primaryW,
         appBar: AppBar(
@@ -183,17 +225,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
               GradientButtonBuilder(
                 text: lang.register,
                 ontap: () {
-                  navigateTo(
-                    context: context,
-                    screen: OtpView(
-                      name: lang.confirmYourEmail,
-                      phoneOrEmail: AuthCubit.get(context).emailController.text,
-                      buttonName: lang.verifyAndCreateAccount,
-                      ontap: () {
-                        AuthCubit.get(context).validateOtp(context);
-                      },
-                    ),
-                  );
+                  AuthCubit.get(context).confirmRegisteration(context);
                 },
                 width: screenWidth(context, 0.92),
               ),

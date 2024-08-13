@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/data/hive_stroage.dart';
 import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
-import 'package:nilelon/features/shared/shop_or_sell/shop_or_sell_view.dart';
+import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
 import 'package:nilelon/resources/color_manager.dart';
@@ -26,7 +26,7 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
     // BlocProvider.of(context)
     Timer(const Duration(seconds: 3), () {
-      HiveStorage.get(HiveKeys.skipOnboarding) == false
+      HiveStorage.get(HiveKeys.skipOnboarding)
           ? navigateAndRemoveUntil(
               context: context,
               screen: BlocProvider<OnBoardingCubit>(
@@ -36,7 +36,7 @@ class _SplashViewState extends State<SplashView> {
           : HiveStorage.get(HiveKeys.token) == null
               ? navigateAndRemoveUntil(
                   context: context, screen: const ShopOrSellView())
-              : HiveStorage.get(HiveKeys.isStore) == true
+              : HiveStorage.get(HiveKeys.isStore)
                   ? navigateAndRemoveUntil(
                       context: context, screen: const StoreBottomTabBar())
                   : navigateAndRemoveUntil(

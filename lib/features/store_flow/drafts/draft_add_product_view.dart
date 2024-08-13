@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/features/store_flow/add_product/model/product_data/product_data.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
+import 'package:nilelon/features/product/domain/models/product_data/product_data.dart';
 import 'package:nilelon/features/store_flow/drafts/drafts_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/color_manager.dart';
@@ -23,13 +25,13 @@ import 'package:nilelon/widgets/text_form_field/text_field/const_text_form_field
 import 'package:nilelon/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/data/hive_stroage.dart';
-import 'package:nilelon/features/store_flow/add_product/model/add_product/add_product_model.dart';
-import 'package:nilelon/features/store_flow/add_product/widget/add_container.dart';
-import 'package:nilelon/features/store_flow/add_product/widget/color_circle.dart';
-import 'package:nilelon/features/store_flow/add_product/widget/image_container.dart';
-import 'package:nilelon/features/store_flow/add_product/widget/size_container.dart';
-import 'package:nilelon/features/store_flow/add_product/widget/table_headers.dart';
-import 'package:nilelon/features/store_flow/add_product/widget/total_row.dart';
+import 'package:nilelon/features/product/domain/models/add_product/add_product_model.dart';
+import 'package:nilelon/features/product/presentation/widgets/add_container.dart';
+import 'package:nilelon/features/product/presentation/widgets/color_circle.dart';
+import 'package:nilelon/features/product/presentation/widgets/image_container.dart';
+import 'package:nilelon/features/product/presentation/widgets/size_container.dart';
+import 'package:nilelon/features/product/presentation/widgets/table_headers.dart';
+import 'package:nilelon/features/product/presentation/widgets/total_row.dart';
 
 class DraftAddProductView extends StatefulWidget {
   const DraftAddProductView({
@@ -148,85 +150,85 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
   @override
   void initState() {
     _initializeLists();
-    nonEditableVarients.addAll(widget.data.product.varieantsList);
+    nonEditableVarients.addAll(widget.data.product.variants);
     xsController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget.data.product.varieantsList[selectedIndex].allSizesList[0]
-                .amount
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[0].quantity
+                .toString()
             : '0');
     sController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget.data.product.varieantsList[selectedIndex].allSizesList[1]
-                .amount
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[1].quantity
+                .toString()
             : '0');
     mController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget.data.product.varieantsList[selectedIndex].allSizesList[2]
-                .amount
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[2].quantity
+                .toString()
             : '0');
     lController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget.data.product.varieantsList[selectedIndex].allSizesList[3]
-                .amount
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[3].quantity
+                .toString()
             : '0');
     xlController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget.data.product.varieantsList[selectedIndex].allSizesList[4]
-                .amount
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[4].quantity
+                .toString()
             : '0');
     xxlController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget.data.product.varieantsList[selectedIndex].allSizesList[5]
-                .amount
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[5].quantity
+                .toString()
             : '0');
     xxxlController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget.data.product.varieantsList[selectedIndex].allSizesList[6]
-                .amount
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[6].quantity
+                .toString()
             : '0');
     xsPriceController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget
-                .data.product.varieantsList[selectedIndex].allSizesList[0].price
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[0].price
+                .toString()
             : '0');
     sPriceController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget
-                .data.product.varieantsList[selectedIndex].allSizesList[1].price
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[1].price
+                .toString()
             : '0');
     mPriceController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget
-                .data.product.varieantsList[selectedIndex].allSizesList[2].price
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[2].price
+                .toString()
             : '0');
     lPriceController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget
-                .data.product.varieantsList[selectedIndex].allSizesList[3].price
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[3].price
+                .toString()
             : '0');
     xlPriceController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget
-                .data.product.varieantsList[selectedIndex].allSizesList[4].price
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[4].price
+                .toString()
             : '0');
     xxlPriceController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget
-                .data.product.varieantsList[selectedIndex].allSizesList[5].price
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[5].price
+                .toString()
             : '0');
     xxxlPriceController = TextEditingController(
-        text: widget.data.product.varieantsList.isNotEmpty
-            ? widget
-                .data.product.varieantsList[selectedIndex].allSizesList[6].price
+        text: widget.data.product.variants.isNotEmpty
+            ? widget.data.product.variants[selectedIndex].sizes[6].price
+                .toString()
             : '0');
     priceController = TextEditingController(
       text: widget.data.productPrice,
     );
     productNameController = TextEditingController(
-      text: widget.data.product.productName,
+      text: widget.data.product.name,
     );
     productDescriptionController = TextEditingController(
-      text: widget.data.product.productDescription,
+      text: widget.data.product.description,
     );
     selectedValue = widget.data.product.type;
 
@@ -648,100 +650,93 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
                 isActivated: isActivated ? isSubmit : !isSubmit,
                 ontap: () {
                   if (HiveStorage.get(HiveKeys.varients) == null) {
-                    ProductVarieants productVarieants = ProductVarieants(
-                        color: selectedColor.toRadixString(16),
-                        imagesList: const [
-                          '', //image == null ? File('') : image!,
-                          '', //image1 == null ? File('') : image1!,
-                          '', //image2 == null ? File('') : image2!,
-                          '', //image3 == null ? File('') : image3!
-                        ],
-                        allSizesList: [
-                          AllSizes(
-                            size: 'XS',
-                            price: (xsPriceController.text != '')
-                                ? xsPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (xsController.text == ''
-                                    ? 0
-                                    : int.parse(xsController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'S',
-                            price: (sPriceController.text != '')
-                                ? sPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (sController.text == ''
-                                    ? 0
-                                    : int.parse(sController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'M',
-                            price: (mPriceController.text != '')
-                                ? mPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (mController.text == ''
-                                    ? 0
-                                    : int.parse(mController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'L',
-                            price: (lPriceController.text != '')
-                                ? lPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (lController.text == ''
-                                    ? 0
-                                    : int.parse(lController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'XL',
-                            price: (xlPriceController.text != '')
-                                ? xlPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (xlController.text == ''
-                                    ? 0
-                                    : int.parse(xlController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'XXL',
-                            price: (xxlPriceController.text != '')
-                                ? xxlPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (xxlController.text == ''
-                                    ? 0
-                                    : int.parse(xxlController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'XXXL',
-                            price: (xxlPriceController.text != '')
-                                ? xxxlPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (xxxlController.text == ''
-                                    ? 0
-                                    : int.parse(xxxlController.text))
-                                .toString(),
-                          ),
-                        ]);
+                    Variant productVarieants =
+                        Variant(color: selectedColor, images: [
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                    ], sizes: [
+                      SizeModel(
+                        size: 'XS',
+                        price: (xsPriceController.text != '')
+                            ? num.parse(priceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(priceController.text),
+                        quantity: (xsController.text == ''
+                            ? 0
+                            : int.parse(xsController.text)),
+                      ),
+                      SizeModel(
+                        size: 'S',
+                        price: (sPriceController.text != '')
+                            ? num.parse(sPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(sPriceController.text),
+                        quantity: (sController.text == ''
+                            ? 0
+                            : int.parse(sController.text)),
+                      ),
+                      SizeModel(
+                        size: 'M',
+                        price: (mPriceController.text != '')
+                            ? num.parse(mPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(mPriceController.text),
+                        quantity: (mController.text == ''
+                            ? 0
+                            : int.parse(mController.text)),
+                      ),
+                      SizeModel(
+                        size: 'L',
+                        price: (lPriceController.text != '')
+                            ? num.parse(lPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(lPriceController.text),
+                        quantity: (lController.text == ''
+                            ? 0
+                            : int.parse(lController.text)),
+                      ),
+                      SizeModel(
+                        size: 'XL',
+                        price: (xlPriceController.text != '')
+                            ? num.parse(xlPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(xlPriceController.text),
+                        quantity: (xlController.text == ''
+                            ? 0
+                            : int.parse(xlController.text)),
+                      ),
+                      SizeModel(
+                        size: 'XXL',
+                        price: (xxlPriceController.text != '')
+                            ? num.parse(xxlPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(xxlPriceController.text),
+                        quantity: (xxlController.text == ''
+                            ? 0
+                            : int.parse(xxlController.text)),
+                      ),
+                      SizeModel(
+                        size: 'XXXL',
+                        price: (xxlPriceController.text != '')
+                            ? num.parse(xxxlPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(xxxlPriceController.text),
+                        quantity: (xxxlController.text == ''
+                            ? 0
+                            : int.parse(xxxlController.text)),
+                      ),
+                    ]);
                     var proVar;
                     for (var element in nonEditableVarients) {
                       if (selectedColor.toRadixString(16) == element.color) {
@@ -749,107 +744,99 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
                       }
                     }
                     nonEditableVarients.remove(proVar);
-                    HiveStorage.set(HiveKeys.varients,
-                        <ProductVarieants>[productVarieants]);
+                    HiveStorage.set(
+                        HiveKeys.varients, <Variant>[productVarieants]);
                     nonEditableVarients.add(productVarieants);
                   } else {
                     List varients = [];
                     varients = HiveStorage.get(HiveKeys.varients);
-                    ProductVarieants productVarieants = ProductVarieants(
-                        color: selectedColor.toRadixString(16),
-                        imagesList: const [
-                          '', //image == null ? File('') : image!,
-                          '', //image == null ? File('') : image!,
-                          '', //image1 == null ? File('') : image1!,
-                          '', //image2 == null ? File('') : image2!,
-                          '', //image3 == null ? File('') : image3!
-                        ],
-                        allSizesList: [
-                          AllSizes(
-                            size: 'XS',
-                            price: (xsPriceController.text != '')
-                                ? xsPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (xsController.text == ''
-                                    ? 0
-                                    : int.parse(xsController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'S',
-                            price: (sPriceController.text != '')
-                                ? sPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (sController.text == ''
-                                    ? 0
-                                    : int.parse(sController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'M',
-                            price: (mPriceController.text != '')
-                                ? mPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (mController.text == ''
-                                    ? 0
-                                    : int.parse(mController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'L',
-                            price: (lPriceController.text != '')
-                                ? lPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (lController.text == ''
-                                    ? 0
-                                    : int.parse(lController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'XL',
-                            price: (xlPriceController.text != '')
-                                ? xlPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (xlController.text == ''
-                                    ? 0
-                                    : int.parse(xlController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'XXL',
-                            price: (xxlPriceController.text != '')
-                                ? xxlPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (xxlController.text == ''
-                                    ? 0
-                                    : int.parse(xxlController.text))
-                                .toString(),
-                          ),
-                          AllSizes(
-                            size: 'XXXL',
-                            price: (xxlPriceController.text != '')
-                                ? xxxlPriceController.text
-                                : priceController.text == ''
-                                    ? '0'
-                                    : priceController.text,
-                            amount: (xxxlController.text == ''
-                                    ? 0
-                                    : int.parse(xxxlController.text))
-                                .toString(),
-                          ),
-                        ]);
+                    Variant productVarieants =
+                        Variant(color: selectedColor, images: [
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                      ImageModel(image: ''),
+                    ], sizes: [
+                      SizeModel(
+                        size: 'XS',
+                        price: (xsPriceController.text != '')
+                            ? num.parse(priceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(priceController.text),
+                        quantity: (xsController.text == ''
+                            ? 0
+                            : int.parse(xsController.text)),
+                      ),
+                      SizeModel(
+                        size: 'S',
+                        price: (sPriceController.text != '')
+                            ? num.parse(sPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(sPriceController.text),
+                        quantity: (sController.text == ''
+                            ? 0
+                            : int.parse(sController.text)),
+                      ),
+                      SizeModel(
+                        size: 'M',
+                        price: (mPriceController.text != '')
+                            ? num.parse(mPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(mPriceController.text),
+                        quantity: (mController.text == ''
+                            ? 0
+                            : int.parse(mController.text)),
+                      ),
+                      SizeModel(
+                        size: 'L',
+                        price: (lPriceController.text != '')
+                            ? num.parse(lPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(lPriceController.text),
+                        quantity: (lController.text == ''
+                            ? 0
+                            : int.parse(lController.text)),
+                      ),
+                      SizeModel(
+                        size: 'XL',
+                        price: (xlPriceController.text != '')
+                            ? num.parse(xlPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(xlPriceController.text),
+                        quantity: (xlController.text == ''
+                            ? 0
+                            : int.parse(xlController.text)),
+                      ),
+                      SizeModel(
+                        size: 'XXL',
+                        price: (xxlPriceController.text != '')
+                            ? num.parse(xxlPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(xxlPriceController.text),
+                        quantity: (xxlController.text == ''
+                            ? 0
+                            : int.parse(xxlController.text)),
+                      ),
+                      SizeModel(
+                        size: 'XXXL',
+                        price: (xxlPriceController.text != '')
+                            ? num.parse(xxxlPriceController.text)
+                            : priceController.text == ''
+                                ? 0
+                                : num.parse(xxxlPriceController.text),
+                        quantity: (xxxlController.text == ''
+                            ? 0
+                            : int.parse(xxxlController.text)),
+                      ),
+                    ]);
                     var proVar;
                     for (var element in nonEditableVarients) {
                       if (selectedColor.toRadixString(16) == element.color) {
@@ -992,7 +979,7 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
       void Function() onTap,
       bool isEdit,
       TextEditingController defaultPriceController,
-      TextEditingController amountController) {
+      TextEditingController quantityController) {
     return GestureDetector(
       onTap: onTap,
       child: Column(
@@ -1008,9 +995,10 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
               children: [
                 sizeContainer(context, size),
                 TextFormFieldBuilder(
-                  label:
-                      amountController.text == '' ? '0' : amountController.text,
-                  controller: amountController,
+                  label: quantityController.text == ''
+                      ? '0'
+                      : quantityController.text,
+                  controller: quantityController,
                   type: TextInputType.number,
                   textAlign: TextAlign.center,
                   height: 50,
@@ -1070,7 +1058,7 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
       BuildContext context,
       String size,
       TextEditingController defaultPriceController,
-      TextEditingController amountController) {
+      TextEditingController quantityController) {
     return Column(
       children: [
         Padding(
@@ -1084,8 +1072,9 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
             children: [
               sizeContainer(context, size),
               ConstTextFieldBuilder(
-                label:
-                    amountController.text == '' ? '0' : amountController.text,
+                label: quantityController.text == ''
+                    ? '0'
+                    : quantityController.text,
                 textAlign: TextAlign.center,
                 height: 50,
                 style: AppStylesManager.customTextStyleG2,
@@ -1133,18 +1122,19 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
           onTap: () {
             if (HiveStorage.get(HiveKeys.productData) == null) {
               if (HiveStorage.get(HiveKeys.varients) == null) {
-                List<ProductVarieants> varients = [];
+                List<Variant> varients = [];
                 HiveStorage.set(
                   HiveKeys.productData,
                   <ProductData>[
                     ProductData(
-                      product: AddProductModel(
-                        categoryName: widget.categoryName,
-                        productName: productNameController.text,
+                      product: ProductModel(
+                        categoryID: widget.categoryName,
+                        name: productNameController.text,
                         type: selectedValue.toString(),
-                        productDescription: productDescriptionController.text,
-                        varieantsList: varients,
-                        sizeGuideImage: '',
+                        description: productDescriptionController.text,
+                        variants: varients,
+                        sizeguide: '',
+                        storeId: '',
                       ),
                       isEditable: generateIsEditableList(colors, isNonEditable),
                       productPrice: priceController.text, //[],
@@ -1154,20 +1144,21 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
                 AppLogs.infoLog('check 1');
                 HiveStorage.remove(HiveKeys.varients);
               } else {
-                List varients = [];
+                List<Variant> varients = [];
                 varients = HiveStorage.get(HiveKeys.varients);
                 HiveStorage.set(
                   HiveKeys.productData,
                   <ProductData>[
                     ProductData(
                       productPrice: priceController.text,
-                      product: AddProductModel(
-                        categoryName: widget.categoryName,
-                        productName: productNameController.text,
+                      product: ProductModel(
+                        categoryID: widget.categoryName,
+                        name: productNameController.text,
                         type: selectedValue.toString(),
-                        productDescription: productDescriptionController.text,
-                        varieantsList: varients,
-                        sizeGuideImage: '',
+                        description: productDescriptionController.text,
+                        variants: varients,
+                        sizeguide: '',
+                        storeId: '',
                       ),
                       isEditable: generateIsEditableList(colors, isNonEditable),
                     ),
@@ -1178,20 +1169,23 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
               }
             } else {
               if (HiveStorage.get(HiveKeys.varients) == null) {
-                List<ProductVarieants> varients = [];
+                List<Variant> varients = [];
                 List data = [];
                 data = HiveStorage.get(HiveKeys.productData);
                 data.remove(data[widget.selectionIndex]);
                 data.add(
                   ProductData(
                     productPrice: priceController.text,
-                    product: AddProductModel(
-                      categoryName: widget.categoryName,
-                      productName: productNameController.text,
+                    product: ProductModel(
+                      categoryID: widget.categoryName,
+                      name: productNameController.text,
                       type: selectedValue.toString(),
-                      productDescription: productDescriptionController.text,
-                      varieantsList: varients,
-                      sizeGuideImage: '',
+                      description: productDescriptionController.text,
+                      variants: varients,
+                      sizeguide: '',
+                      storeId: JwtDecoder.decode(
+                          HiveStorage.get<UserModel>(HiveKeys.userModel)
+                              .token)['id'],
                     ),
                     isEditable: generateIsEditableList(colors, isNonEditable),
                   ),
@@ -1203,20 +1197,21 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
                 AppLogs.infoLog('check 3');
                 HiveStorage.remove(HiveKeys.varients);
               } else {
-                List<ProductVarieants> varients = [];
+                List<Variant> varients = [];
                 varients = HiveStorage.get(HiveKeys.varients);
                 List data = [];
                 data = HiveStorage.get(HiveKeys.productData);
                 data.remove(data[widget.selectionIndex]);
                 data.add(ProductData(
                   productPrice: priceController.text,
-                  product: AddProductModel(
-                    categoryName: widget.categoryName,
-                    productName: productNameController.text,
+                  product: ProductModel(
+                    categoryID: widget.categoryName,
+                    name: productNameController.text,
                     type: selectedValue.toString(),
-                    productDescription: productDescriptionController.text,
-                    varieantsList: varients,
-                    sizeGuideImage: '',
+                    description: productDescriptionController.text,
+                    variants: varients,
+                    sizeguide: '',
+                    storeId: '',
                   ),
                   isEditable: generateIsEditableList(colors, isNonEditable),
                 ));
@@ -1279,35 +1274,35 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
           for (var varieant in nonEditableVarients) {
             if (varieant.color.toLowerCase() ==
                 selectedColor.toRadixString(16)) {
-              if (varieant.allSizesList.isNotEmpty) {
-                xsController = TextEditingController(
-                    text: varieant.allSizesList[0].amount);
-                sController = TextEditingController(
-                    text: varieant.allSizesList[1].amount);
-                mController = TextEditingController(
-                    text: varieant.allSizesList[2].amount);
-                lController = TextEditingController(
-                    text: varieant.allSizesList[3].amount);
-                xlController = TextEditingController(
-                    text: varieant.allSizesList[4].amount);
-                xxlController = TextEditingController(
-                    text: varieant.allSizesList[5].amount);
-                xxxlController = TextEditingController(
-                    text: varieant.allSizesList[6].amount);
+              if (varieant.sizes.isNotEmpty) {
+                xsController =
+                    TextEditingController(text: varieant.sizes[0].quantity);
+                sController =
+                    TextEditingController(text: varieant.sizes[1].quantity);
+                mController =
+                    TextEditingController(text: varieant.sizes[2].quantity);
+                lController =
+                    TextEditingController(text: varieant.sizes[3].quantity);
+                xlController =
+                    TextEditingController(text: varieant.sizes[4].quantity);
+                xxlController =
+                    TextEditingController(text: varieant.sizes[5].quantity);
+                xxxlController =
+                    TextEditingController(text: varieant.sizes[6].quantity);
                 xsPriceController =
-                    TextEditingController(text: varieant.allSizesList[0].price);
+                    TextEditingController(text: varieant.sizes[0].price);
                 sPriceController =
-                    TextEditingController(text: varieant.allSizesList[1].price);
+                    TextEditingController(text: varieant.sizes[1].price);
                 mPriceController =
-                    TextEditingController(text: varieant.allSizesList[2].price);
+                    TextEditingController(text: varieant.sizes[2].price);
                 lPriceController =
-                    TextEditingController(text: varieant.allSizesList[3].price);
+                    TextEditingController(text: varieant.sizes[3].price);
                 xlPriceController =
-                    TextEditingController(text: varieant.allSizesList[4].price);
+                    TextEditingController(text: varieant.sizes[4].price);
                 xxlPriceController =
-                    TextEditingController(text: varieant.allSizesList[5].price);
+                    TextEditingController(text: varieant.sizes[5].price);
                 xxxlPriceController =
-                    TextEditingController(text: varieant.allSizesList[6].price);
+                    TextEditingController(text: varieant.sizes[6].price);
               }
             } else {
               xsController = TextEditingController(text: '0');

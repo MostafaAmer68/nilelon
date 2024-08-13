@@ -10,7 +10,7 @@ import 'package:nilelon/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/widgets/dot_indicators/gradient_dot.dart';
 import 'package:nilelon/widgets/dot_indicators/gradient_dot_active.dart';
 import 'package:nilelon/features/shared/onboarding/onboarding_cubit/onboarding_cubit.dart';
-import 'package:nilelon/features/shared/shop_or_sell/shop_or_sell_view.dart';
+import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({super.key});

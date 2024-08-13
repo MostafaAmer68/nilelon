@@ -65,7 +65,7 @@ class RecommendationView extends StatelessWidget {
                       'assets/images/shop_for_women.png',
                       'Shop for Women',
                       () {
-                        HiveStorage.set(HiveKeys.shopFor, 'Shop for Women');
+                        HiveStorage.set(HiveKeys.shopFor, 'Female');
                         navigateAndRemoveUntil(
                           context: context,
                           screen: const CustomerBottomTabBar(),
@@ -80,7 +80,7 @@ class RecommendationView extends StatelessWidget {
                       'assets/images/shop_for_man.png',
                       'Shop for Man',
                       () {
-                        HiveStorage.set(HiveKeys.shopFor, 'Shop for Man');
+                        HiveStorage.set(HiveKeys.shopFor, 'Male');
                         navigateAndRemoveUntil(
                           context: context,
                           screen: const CustomerBottomTabBar(),

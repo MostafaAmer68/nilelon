@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/features/customer_flow/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/customer_flow/cart/data/repos_impl/cart_repos_impl.dart';
+import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/service/set_up_locator_service.dart';
 import 'package:nilelon/widgets/icon_with_gradient/icon_with_gradient.dart';
 import 'package:nilelon/widgets/rating/cubit/review_cubit.dart';
-import 'package:nilelon/features/customer_flow/cart/presentation/view/cart_view.dart';
+import 'package:nilelon/features/cart/presentation/view/cart_view.dart';
 import 'package:nilelon/features/customer_flow/products_view/discover/view/discover_view.dart';
 import 'package:nilelon/features/customer_flow/home/view/customer_home_view.dart';
-import 'package:nilelon/features/customer_flow/profile/view/profile_view.dart';
+import 'package:nilelon/features/profile/presentation/pages/profile_view.dart';
 
 class CustomerBottomTabBar extends StatefulWidget {
   const CustomerBottomTabBar({super.key});

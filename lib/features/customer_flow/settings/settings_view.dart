@@ -11,7 +11,7 @@ import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/auth/presentation/view/edit_account/edit_account_view.dart';
 import 'package:nilelon/features/shared/language/language_view.dart';
-import 'package:nilelon/features/customer_flow/profile/widget/profile_list_view.dart';
+import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 import 'package:nilelon/features/auth/presentation/view/security_view.dart';
 
 class SettingsView extends StatelessWidget {

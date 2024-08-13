@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/features/customer_flow/closet/domain/model/closet_model.dart';
-import 'package:nilelon/features/customer_flow/closet/presentation/cubit/closet_cubit.dart';
+import 'package:nilelon/features/closet/domain/model/closet_model.dart';
+import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/resources/const_functions.dart';

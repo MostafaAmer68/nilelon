@@ -6,14 +6,14 @@ import 'package:nilelon/features/product/domain/repositories/products_repos.dart
 import 'package:nilelon/service/failure_service.dart';
 
 class ProductsReposImpl extends ProductsRepos {
-  final ProductsRemoteDataSource productsRemoteDataSource;
+  final ProductsRemoteDataSourceImpl productsRemoteDataSource;
   ProductsReposImpl(this.productsRemoteDataSource);
   @override
   Future<Either<FailureService, ProductsResponseModel>> getFollowedProducts(
       int page, int productSize) async {
     try {
       final result =
-          await productsRemoteDataSource.getFollowedItems(page, productSize);
+          await productsRemoteDataSource.getFollowedProducts(page, productSize);
       return Right(result);
     } catch (e) {
       if (e is DioException) {
@@ -30,7 +30,7 @@ class ProductsReposImpl extends ProductsRepos {
       int page, int productSize) async {
     try {
       final result =
-          await productsRemoteDataSource.getNewInItems(page, productSize);
+          await productsRemoteDataSource.getNewInProducts(page, productSize);
       return Right(result);
     } catch (e) {
       if (e is DioException) {
@@ -43,11 +43,45 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, ProductsResponseModel>> getHandPickedItems(
+  Future<Either<FailureService, ProductsResponseModel>> getRandomProduct(
       int page, int productSize) async {
     try {
       final result =
-          await productsRemoteDataSource.getHandPickedItems(page, productSize);
+          await productsRemoteDataSource.getRandomProducts(page, productSize);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        // print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      // print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, ProductsResponseModel>> getNewInProductsGuest(
+      int page, int productSize) async {
+    try {
+      final result = await productsRemoteDataSource.getNewInProductsGuest(
+          page, productSize);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        // print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      // print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, ProductsResponseModel>> getRandomProductsGuest(
+      int page, int productSize) async {
+    try {
+      final result = await productsRemoteDataSource.getRandomProductsGuest(
+          page, productSize);
       return Right(result);
     } catch (e) {
       if (e is DioException) {

@@ -35,7 +35,7 @@ class _ImageBannerState extends State<ImageBanner> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
-                      image: AssetImage(widget.images[index]),
+                      image: NetworkImage(widget.images[index]),
                       fit: BoxFit.cover)),
             );
           },

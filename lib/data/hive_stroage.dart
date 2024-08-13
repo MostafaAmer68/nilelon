@@ -1,12 +1,14 @@
 import 'package:hive_flutter/adapters.dart';
-import 'package:nilelon/features/store_flow/add_product/model/add_product/add_product_model.dart';
-import 'package:nilelon/features/store_flow/add_product/model/product_data/product_data.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
+import 'package:nilelon/features/product/domain/models/add_product/add_product_model.dart';
+import 'package:nilelon/features/product/domain/models/product_data/product_data.dart';
 import 'package:nilelon/features/store_flow/choose_category/choose_category_model/result.dart';
 
 class HiveKeys {
   // static const String product = 'product';
   static const String productData = 'productData';
   static const String varients = 'varient';
+  static const String email = 'email';
   static const String shopFor = 'ShopFor';
   static const String isArabic = 'isArabic';
   static const String skipOnboarding = 'skipOnboarding';
@@ -16,6 +18,7 @@ class HiveKeys {
   static const String name = 'name';
   static const String role = 'role';
   static const String categories = 'categories';
+  static const String userModel = 'userModel';
 
   // static const String languageCode = 'language_code';
   // static const String themeCode = 'theme_code';
@@ -28,20 +31,24 @@ class HiveStorage {
 
   static Future<void> init() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(ProductVarieantsAdapter());
-    Hive.registerAdapter(AddProductModelAdapter());
-    Hive.registerAdapter(AllSizesAdapter());
+    Hive.registerAdapter(VariantAdapter());
+    Hive.registerAdapter(ProductModelAdapter());
+    Hive.registerAdapter(SizeModelAdapter());
     Hive.registerAdapter(ProductDataAdapter());
     Hive.registerAdapter(ResultAdapter());
+    Hive.registerAdapter(UserModelAdapter());
+    Hive.registerAdapter(CustomerModelAdapter());
+    Hive.registerAdapter(StoreModelAdapter());
+    Hive.registerAdapter(BaseUserDataAdapter());
 
     box = await Hive.openBox('myBox');
   }
 
-  static dynamic get(String key) {
+  static T get<T extends dynamic>(String key) {
     try {
       return box.get(key, defaultValue: null);
     } catch (e) {
-      return null;
+      rethrow;
     }
   }
 

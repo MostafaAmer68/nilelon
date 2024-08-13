@@ -1,9 +1,12 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/customer_register_model.dart';
@@ -22,6 +25,7 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this.authRepos) : super(AuthInitial());
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   bool gender = false;
   DateTime? date;
@@ -32,18 +36,180 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController repNameController = TextEditingController();
   TextEditingController repPhoneController = TextEditingController();
   TextEditingController wareHouseAddressController = TextEditingController();
+  TextEditingController sloganController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
-  TextEditingController codeController1 = TextEditingController();
-  TextEditingController codeController2 = TextEditingController();
-  TextEditingController codeController3 = TextEditingController();
-  TextEditingController codeController4 = TextEditingController();
-  TextEditingController codeController5 = TextEditingController();
-  TextEditingController codeController6 = TextEditingController();
+  String code = '';
+  File image = File('');
+  String base64Image = '';
+  final picker = ImagePicker();
 
-  Future<void> confirmRegisteration(context) async {
+  Future<void> convertImageToBase64(image) async {
+    if (image == null) return;
+
+    // Convert the image to base64
+    final bytes = await image!.readAsBytes();
+    base64Image = base64Encode(bytes);
+    emit(PickImageSuccess());
+  }
+
+  Future<void> pickImage(ImageSource imageSource) async {
+    emit(PickImageLoading());
+    final pickedFile = await picker.pickImage(source: imageSource);
+
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+      await convertImageToBase64(image);
+    }
+  }
+
+  Future<void> updateStoreInfo(context) async {
     emit(LoginLoading());
 
-    var result = await authRepos.confirmRegisteration(
+    var result = await authRepos.updateStoreInfo(
+      repNameController.text,
+      phoneController.text,
+      websiteLinkController.text,
+      context,
+    );
+
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(UpdateStoreSuccess());
+    });
+  }
+
+  Future<void> updateStore(context) async {
+    emit(LoginLoading());
+
+    var result = await authRepos.updateStore(
+      base64Image,
+      nameController.text,
+      sloganController.text,
+      context,
+    );
+
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(UpdateStoreSuccess());
+    });
+  }
+
+  Future<void> updateCustomer(context) async {
+    emit(LoginLoading());
+
+    var result = await authRepos.updateCustomer(
+      base64Image,
+      nameController.text,
+      context,
+    );
+
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(UpdateStoreSuccess());
+    });
+  }
+
+  Future<void> changePassword(context) async {
+    emit(ResetPasswordLoading());
+
+    var result = await authRepos.changePassword(
+      passwordController.text,
+      newPasswordController.text,
+      context,
+    );
+
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(ResetPasswordSuccess());
+      HiveStorage.set(HiveKeys.token, '');
+    });
+  }
+
+  Future<void> resetEmail(context) async {
+    emit(LoginLoading());
+
+    var result = await authRepos.resetEmailDetails(
+      emailController.text,
+      context,
+    );
+
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(ResetEmailSuccess());
+      HiveStorage.set(HiveKeys.token, '');
+    });
+  }
+
+  Future<void> sendOtpEmail(context) async {
+    emit(LoginLoading());
+
+    var result = await authRepos.resetEmail(
+      emailController.text,
+      context,
+    );
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(VerificationCodeSent());
+      HiveStorage.set(HiveKeys.token, response);
+    });
+  }
+
+  Future<void> resetPhone(context) async {
+    emit(LoginLoading());
+
+    // var result = await authRepos.resetPhone(
+    //   emailController.text,
+    //   context,
+    // );
+
+    // result.fold((failure) {
+    //   emit(LoginFailure(failure.errorMsg));
+    // }, (response) {
+    //   emit(ResetEmailSuccess());
+    //   HiveStorage.set(HiveKeys.token, '');
+    // });
+  }
+
+  Future<void> sendOtpPhone(context) async {
+    emit(LoginLoading());
+
+    var result = await authRepos.resetEmail(
+      emailController.text,
+      context,
+    );
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(VerificationCodeSent());
+      HiveStorage.set(HiveKeys.token, response);
+    });
+  }
+
+  Future<void> resetPasswordPhone(context) async {
+    emit(LoginLoading());
+
+    var result = await authRepos.resetPasswordPhone(
+      phoneController.text,
+      context,
+    );
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(VerificationCodeSent());
+      HiveStorage.set(HiveKeys.token, response);
+    });
+  }
+
+  Future<void> resetPasswordEmail(context) async {
+    emit(LoginLoading());
+
+    var result = await authRepos.resetPasswordEmail(
       emailController.text,
       context,
     );
@@ -56,14 +222,40 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
+  Future<void> forgotPassword(context) async {
+    emit(ResetPasswordLoading());
+
+    var result = await authRepos.forgotPassword(
+      HiveStorage.get(HiveKeys.token),
+      emailController.text,
+      newPasswordController.text,
+      context,
+    );
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(ResetPasswordSuccess());
+    });
+  }
+
+  Future<void> confirmRegisteration(context) async {
+    emit(LoginLoading());
+
+    var result = await authRepos.confirmRegisteration(
+      emailController.text,
+      context,
+    );
+    result.fold((failure) {
+      emit(LoginFailure(failure.errorMsg));
+    }, (response) {
+      emit(VerificationCodeSent());
+      HiveStorage.set(HiveKeys.token, response);
+    });
+  }
+
   Future<void> validateOtp(context) async {
     emit(LoginLoading());
-    String code = codeController1.text +
-        codeController2.text +
-        codeController3.text +
-        codeController4.text +
-        codeController5.text +
-        codeController6.text;
+
     var result = await authRepos.validateOtp(
       code,
       HiveStorage.get(HiveKeys.token),
@@ -73,11 +265,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(LoginFailure(failure.errorMsg));
     }, (response) {
       emit(VerificationSuccess());
-      if (HiveStorage.get(HiveKeys.isStore)) {
-      } else {
-        AuthCubit.get(context).authCustomerRegister(context);
-      }
-      HiveStorage.set(HiveKeys.token, response);
     });
   }
 
@@ -97,38 +284,6 @@ class AuthCubit extends Cubit<AuthState> {
     }, (response) {
       emit(const LoginSuccess('Login Successfully'));
       BlocProvider.of<ChooseCategoryCubit>(context).getCategories();
-      Map<String, dynamic> decodedToken = JwtDecoder.decode(response);
-
-      HiveStorage.set(
-        HiveKeys.role,
-        decodedToken['Role'],
-      );
-      print(decodedToken['Role']);
-      print(decodedToken['Id']);
-      if (decodedToken['Role'] == 'Customer') {
-        HiveStorage.set(
-          HiveKeys.isStore,
-          false,
-        );
-      } else {
-        HiveStorage.set(
-          HiveKeys.isStore,
-          true,
-        );
-      }
-      HiveStorage.set(
-        HiveKeys.name,
-        decodedToken['Full Name'],
-      );
-      HiveStorage.set(
-        HiveKeys.userId,
-        decodedToken['Id'],
-      );
-
-      HiveStorage.set(
-        HiveKeys.token,
-        response,
-      );
     });
   }
 
@@ -150,29 +305,9 @@ class AuthCubit extends Cubit<AuthState> {
     }, (response) {
       Map<String, dynamic> decodedToken = JwtDecoder.decode(response);
 
-      saveData(decodedToken, response);
       emit(CustomerRegisterSuccess(response));
       BlocProvider.of<ChooseCategoryCubit>(context).getCategories();
     });
-  }
-
-  void saveData(Map<String, dynamic> decodedToken, String response) {
-    HiveStorage.set(
-      HiveKeys.role,
-      decodedToken['Role'],
-    );
-    HiveStorage.set(
-      HiveKeys.name,
-      decodedToken['Full Name'],
-    );
-    HiveStorage.set(
-      HiveKeys.userId,
-      decodedToken['Id'],
-    );
-    HiveStorage.set(
-      HiveKeys.token,
-      response,
-    );
   }
 
   Future<void> authStoreRegister(context) async {
@@ -181,7 +316,7 @@ class AuthCubit extends Cubit<AuthState> {
         StoreRegisterModel(
           fullName: nameController.text,
           email: emailController.text,
-          phoneNumber: '+${phoneController.text}',
+          phoneNumber: '+2${phoneController.text}',
           profileLink: profileLinkController.text,
           websiteLink: websiteLinkController.text,
           repName: repNameController.text,
@@ -259,72 +394,4 @@ class AuthCubit extends Cubit<AuthState> {
       print(error);
     }
   }
-
-  // Future<void> authVerifyUser() async {
-  //   emit(VerifyUserLoading());
-  //   var result = await authRepos.otpVerifyUserRepos(
-  //     codeController1.text +
-  //         codeController2.text +
-  //         codeController3.text +
-  //         codeController4.text +
-  //         codeController5.text,
-  //     HiveStorage.get(
-  //       HiveKeys.username,
-  //     ),
-  //   );
-  //   result.fold((failure) {
-  //     emit(VerifyUserFailure(failure.errorMsg));
-  //   }, (response) {
-  //     emit(VerifyUserSuccess());
-  //   });
-  // }
-
-  // Future<void> authForgetPassword() async {
-  //   emit(ForgetPasswordLoading());
-  //   var result = await authRepos.forgetPasswordAuth(ForgetPasswordModel(
-  //       phoneNumber: '$countryCode${phoneController.text}'));
-  //   HiveStorage.set(HiveKeys.phone, '$countryCode${phoneController.text}');
-  //   result.fold((failure) {
-  //     emit(ForgetPasswordFailure(failure.errorMsg));
-  //   }, (response) {
-  //     emit(ForgetPasswordSuccess());
-  //   });
-  // }
-
-  // Future<void> authResetPassword() async {
-  //   emit(ResetPasswordLoading());
-  //   var result = await authRepos.resetPasswordAuth(ResetPasswordModel(
-  //     phoneNumber: HiveStorage.get(HiveKeys.phone),
-  //     password: passwordController.text,
-  //     code: HiveStorage.get(HiveKeys.otp),
-  //   ));
-  //   result.fold((failure) {
-  //     emit(ResetPasswordFailure(failure.errorMsg));
-  //   }, (response) {
-  //     emit(ResetPasswordSuccess());
-  //   });
-  // }
-
-  // Future<void> authDeleteAccount() async {
-  //   emit(DeleteAccountLoading());
-  //   var result = await authRepos.deleteAccountAuth();
-  //   result.fold((failure) {
-  //     emit(DeleteAccountFailure(failure.errorMsg));
-  //   }, (response) {
-  //     emit(DeleteAccountSuccess());
-  //   });
-  // }
-
-  // Future<void> changeAccountName() async {
-  //   emit(ChangeAccountNameLoading());
-  //   var result = await authRepos.changeAccountNameAuth(
-  //     emailController.text,
-  //     phoneController.text,
-  //   );
-  //   result.fold((failure) {
-  //     emit(ChangeAccountNameFailure(failure.errorMsg));
-  //   }, (response) {
-  //     emit(ChangeAccountNameSuccess());
-  //   });
-  // }
 }

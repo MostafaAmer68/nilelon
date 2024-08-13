@@ -9,7 +9,7 @@ import 'package:nilelon/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/auth/presentation/view/change_email_number/change_email_number.dart';
 import 'package:nilelon/features/auth/presentation/view/change_password/change_password.dart';
 import 'package:nilelon/features/auth/presentation/view/change_phone_number/change_phone_number.dart';
-import 'package:nilelon/features/customer_flow/profile/widget/profile_list_view.dart';
+import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 
 class SecurityView extends StatelessWidget {
   const SecurityView({super.key});

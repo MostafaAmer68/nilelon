@@ -12,10 +12,10 @@ import 'package:nilelon/widgets/button/button_builder.dart';
 import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/shared/language/language_view.dart';
-import 'package:nilelon/features/customer_flow/profile/widget/profile_list_view.dart';
+import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 import 'package:nilelon/features/auth/presentation/view/security_view.dart';
-import 'package:nilelon/features/store_flow/edit_store_info/edit_store_info_view.dart';
-import 'package:nilelon/features/store_flow/edit_store_profile/edit_store_profile_view.dart';
+import 'package:nilelon/features/profile/presentation/pages/edit_store_info/edit_store_info_view.dart';
+import 'package:nilelon/features/profile/presentation/pages/edit_store_profile/edit_store_profile_view.dart';
 
 class StoreSettingsView extends StatelessWidget {
   const StoreSettingsView({super.key});

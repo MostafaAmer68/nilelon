@@ -142,6 +142,7 @@ class _LoginViewState extends State<LoginView> {
                         isLoading = true;
                       });
                     } else if (state is LoginSuccess) {
+                      BotToast.closeAllLoading();
                       setState(() {
                         isLoading = false;
                       });

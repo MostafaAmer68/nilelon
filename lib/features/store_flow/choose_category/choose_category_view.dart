@@ -9,7 +9,7 @@ import 'package:nilelon/utils/navigation.dart';
 import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/widgets/divider/default_divider.dart';
 import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/features/store_flow/add_product/view/add_product_view.dart';
+import 'package:nilelon/features/product/presentation/cubit/add_product_view.dart';
 import 'package:nilelon/features/store_flow/choose_category/widget/category_items.dart';
 
 class ChooseProductView extends StatelessWidget {

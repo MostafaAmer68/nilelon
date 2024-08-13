@@ -4,10 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/features/categories/presentation/bloc/categories_bloc.dart';
-import 'package:nilelon/features/customer_flow/cart/data/repos_impl/cart_repos_impl.dart';
-import 'package:nilelon/features/customer_flow/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/customer_flow/closet/data/repo_impl/closet_repo_impl.dart';
-import 'package:nilelon/features/customer_flow/closet/presentation/cubit/closet_cubit.dart';
+import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
+import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/closet/data/repo_impl/closet_repo_impl.dart';
+import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
+import 'package:nilelon/features/product/presentation/cubit/cubit/addproduct_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
@@ -19,7 +20,6 @@ import 'package:nilelon/features/store_flow/choose_category/repos_impl/choose_ca
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/service/set_up_locator_service.dart';
 import 'package:nilelon/widgets/rating/cubit/review_cubit.dart';
-import 'package:nilelon/features/auth/presentation/view/store_register/cubit/store_register_cubit.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -44,9 +44,6 @@ class MyApp extends StatelessWidget {
         BlocProvider<RatingCubit>(
           create: (context) => RatingCubit(),
         ),
-        BlocProvider<StoreRegisterCubit>(
-          create: (context) => StoreRegisterCubit(),
-        ),
         BlocProvider<CategoriesBloc>(
           create: (context) => CategoriesBloc(),
         ),
@@ -55,6 +52,13 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<CartCubit>(
           create: (context) => CartCubit(locatorService<CartReposImpl>()),
+        ),
+        BlocProvider<ProductsCubit>(
+          create: (context) =>
+              ProductsCubit(locatorService<ProductsReposImpl>()),
+        ),
+        BlocProvider<AddproductCubit>(
+          create: (context) => AddproductCubit(),
         ),
       ],
       child: ScreenUtilInit(

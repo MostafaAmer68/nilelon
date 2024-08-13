@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/data/hive_stroage.dart';
@@ -21,11 +22,13 @@ class OtpView extends StatefulWidget {
       required this.name,
       required this.phoneOrEmail,
       required this.buttonName,
-      required this.ontap});
+      required this.onSuccess,
+      required this.resend});
   final String name;
   final String phoneOrEmail;
   final String buttonName;
-  final void Function() ontap;
+  final void Function() onSuccess;
+  final void Function() resend;
   @override
   State<OtpView> createState() => _OtpViewState();
 }
@@ -38,7 +41,7 @@ class _OtpViewState extends State<OtpView> {
   @override
   void initState() {
     startTimer();
-    AuthCubit.get(context).confirmRegisteration(context);
+
     super.initState();
   }
 
@@ -80,26 +83,10 @@ class _OtpViewState extends State<OtpView> {
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is VerificationSuccess) {
-          if (HiveStorage.get(HiveKeys.isStore)) {
-          
-          } else {
-            AuthCubit.get(context).authCustomerRegister(context);
-          }
-        } else if (state is CustomerRegisterSuccess) {
-          successCreationDialog(
-            isDismissible: false,
-            context: context,
-            highlightedText: lang.signUpSuccessfully,
-            regularText:
-                lang.youWillBeMovedToHomeScreenRightNowEnjoyTheFeatures,
-            buttonText: lang.letsStart,
-            ontap: () {
-              navigateAndRemoveUntil(
-                context: context,
-                screen: const RecommendationView(),
-              );
-            },
-          );
+          widget.onSuccess();
+        }
+        if (state is LoginFailure) {
+          BotToast.closeAllLoading();
         }
       },
       child: Scaffold(
@@ -155,12 +142,12 @@ class _OtpViewState extends State<OtpView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    textPin(context, AuthCubit.get(context).codeController1),
-                    textPin(context, AuthCubit.get(context).codeController2),
-                    textPin(context, AuthCubit.get(context).codeController3),
-                    textPin(context, AuthCubit.get(context).codeController4),
-                    textPin(context, AuthCubit.get(context).codeController5),
-                    textPin(context, AuthCubit.get(context).codeController6),
+                    PinCodeView(
+                      onCompleted: (code) {
+                        AuthCubit.get(context).code = code;
+                      },
+                      length: 6,
+                    ),
                   ],
                 ),
               ),
@@ -170,7 +157,7 @@ class _OtpViewState extends State<OtpView> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              isValid = false;
+                              widget.resend;
                               resendTime = 59;
                               startTimer();
                               setState(() {});
@@ -207,7 +194,9 @@ class _OtpViewState extends State<OtpView> {
               ),
               GradientButtonBuilder(
                 text: widget.buttonName,
-                ontap: widget.ontap,
+                ontap: () {
+                  AuthCubit.get(context).validateOtp(context);
+                },
                 width: screenWidth(context, 0.92),
               )
             ],

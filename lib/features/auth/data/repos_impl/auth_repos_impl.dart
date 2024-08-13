@@ -13,7 +13,7 @@ class AuthReposImpl extends AuthRepos {
 
   AuthReposImpl(this.authRemoteDataSource);
   @override
-  Future<Either<FailureService, String>> loginRepos(
+  Future<Either<FailureService, void>> loginRepos(
       LoginModel model, context) async {
     try {
       final result = await authRemoteDataSource.loginAuth(model, context);
@@ -119,89 +119,191 @@ class AuthReposImpl extends AuthRepos {
     }
   }
 
-  // @override
-  // Future<Either<FailureService, void>> otpVerifyUserRepos(
-  //     String code, String username) async {
-  //   try {
-  //     final result =
-  //         await authRemoteDataSource.otpVerifyUserAuth(code, username);
-  //     // HiveStorage( HiveKeys.email, value: result.data.email);
-  //     return Right(result);
-  //   } catch (e) {
-  //     if (e is DioException) {
-  //       print(e.toString());
-  //       return left(ServerFailure.fromDioException(e));
-  //     }
-  //     print(e.toString());
-  //     return left(ServerFailure(e.toString()));
-  //   }
-  // }
+  @override
+  Future<Either<FailureService, String>> changePassword(
+      String oldPassword, String newPassword, context) async {
+    try {
+      final result = await authRemoteDataSource.changePassword(
+          oldPassword, newPassword, context);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
 
-  // @override
-  // Future<Either<FailureService, void>> forgetPasswordAuth(
-  //     ForgetPasswordModel entity) async {
-  //   try {
-  //     final result = await authRemoteDataSource.forgetPasswordAuth(entity);
-  //     // HiveStorage( HiveKeys.email, value: result.data.email);
-  //     return Right(result);
-  //   } catch (e) {
-  //     if (e is DioException) {
-  //       print(e.toString());
-  //       return left(ServerFailure.fromDioException(e));
-  //     }
-  //     print(e.toString());
-  //     return left(ServerFailure(e.toString()));
-  //   }
-  // }
+  @override
+  Future<Either<FailureService, String>> forgotPassword(
+      String token, String targetValue, String newValue, context) async {
+    try {
+      final result = await authRemoteDataSource.forgotPassword(
+          token, targetValue, newValue, context);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
 
-  // @override
-  // Future<Either<FailureService, void>> resetPasswordAuth(
-  //     ResetPasswordModel entity) async {
-  //   try {
-  //     final result = await authRemoteDataSource.resetPasswordAuth(entity);
-  //     // HiveStorage( HiveKeys.email, value: result.data.email);
-  //     return Right(result);
-  //   } catch (e) {
-  //     if (e is DioException) {
-  //       print(e.toString());
-  //       return left(ServerFailure.fromDioException(e));
-  //     }
-  //     print(e.toString());
-  //     return left(ServerFailure(e.toString()));
-  //   }
-  // }
+  @override
+  Future<Either<FailureService, String>> resetEmail(
+      String newValue, context) async {
+    try {
+      final result = await authRemoteDataSource.resetEmail(newValue, context);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
 
-  // @override
-  // Future<Either<FailureService, void>> deleteAccountAuth() async {
-  //   try {
-  //     final result = await authRemoteDataSource.deleteAccountAuth();
-  //     // HiveStorage( HiveKeys.email, value: result.data.email);
-  //     return Right(result);
-  //   } catch (e) {
-  //     if (e is DioException) {
-  //       print(e.toString());
-  //       return left(ServerFailure.fromDioException(e));
-  //     }
-  //     print(e.toString());
-  //     return left(ServerFailure(e.toString()));
-  //   }
-  // }
+  @override
+  Future<Either<FailureService, String>> resetEmailDetails(
+      String newValue, context) async {
+    try {
+      final result =
+          await authRemoteDataSource.resetEmailDetails(newValue, context);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
 
-  // @override
-  // Future<Either<FailureService, Map<String, dynamic>>> changeAccountNameAuth(
-  //     String username, String phoneNumber) async {
-  //   try {
-  //     final result = await authRemoteDataSource.changeAccountNameAuth(
-  //         username, phoneNumber);
-  //     // HiveStorage( HiveKeys.email, value: result.data.email);
-  //     return Right(result);
-  //   } catch (e) {
-  //     if (e is DioException) {
-  //       print(e.toString());
-  //       return left(ServerFailure.fromDioException(e));
-  //     }
-  //     print(e.toString());
-  //     return left(ServerFailure(e.toString()));
-  //   }
-  // }
+  @override
+  Future<Either<FailureService, String>> resetPasswordEmail(
+      String email, context) async {
+    try {
+      final result =
+          await authRemoteDataSource.resetPasswordEmail(email, context);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, String>> resetPasswordPhone(
+      String phone, context) async {
+    try {
+      final result =
+          await authRemoteDataSource.resetPasswordPhone(phone, context);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, String>> resetPhone(
+      String tergetSend, String newValue, context) async {
+    try {
+      final result =
+          await authRemoteDataSource.resetPhone(tergetSend, newValue, context);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, String>> resetPhoneDetails(
+      String token, String targetValue, String newValue, context) async {
+    try {
+      final result = await authRemoteDataSource.resetPhoneDetails(
+          token, targetValue, newValue, context);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, String>> updateStore(
+      String profilePic, String name, String storeSlogan, context) async {
+    try {
+      final result = await authRemoteDataSource.updateStore(
+          profilePic, name, storeSlogan, context);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, String>> updateStoreInfo(
+      String repName, String repNumber, String webLink, context) async {
+    try {
+      final result = await authRemoteDataSource.updateStoreInfo(
+          repName, repNumber, webLink, context);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, String>> updateCustomer(
+      String profilePic, String name, context) async {
+    try {
+      final result =
+          await authRemoteDataSource.updateCustomer(profilePic, name, context);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
 }

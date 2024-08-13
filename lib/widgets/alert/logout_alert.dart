@@ -8,7 +8,7 @@ import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
 import 'package:nilelon/widgets/button/button_builder.dart';
 import 'package:nilelon/widgets/button/gradient_button_builder.dart';
-import 'package:nilelon/features/shared/shop_or_sell/shop_or_sell_view.dart';
+import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
 
 Future logoutAlert(context) => showDialog(
     context: context,

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/features/customer_flow/closet/presentation/cubit/closet_cubit.dart';
-import 'package:nilelon/features/customer_flow/closet/presentation/view/closet_view.dart';
+import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
+import 'package:nilelon/features/closet/presentation/view/closet_view.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
@@ -20,7 +20,7 @@ import 'package:nilelon/features/product/presentation/widgets/rating_container.d
 import 'package:nilelon/widgets/rating/view/rating_dialog.dart';
 import 'package:nilelon/features/customer_flow/store_profile_customer/store_profile_customer.dart';
 
-import '../../../customer_flow/closet/presentation/widget/closet_widget_with_options.dart';
+import '../../../closet/presentation/widget/closet_widget_with_options.dart';
 
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({

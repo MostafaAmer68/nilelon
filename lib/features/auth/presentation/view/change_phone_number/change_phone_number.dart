@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
@@ -54,16 +55,19 @@ class ChangePhoneNumber extends StatelessWidget {
                           name: lang.verifyPhoneNumber,
                           phoneOrEmail: 'Ra****@gmail.com',
                           buttonName: lang.verify,
-                          ontap: () {
+                          onSuccess: () {
                             successCreationDialog(
-                                context: context,
-                                highlightedText:
-                                    lang.phoneNumberChangedSuccessfully,
-                                regularText: lang
-                                    .yourPhoneNumberHasBeenChangedSuccessfullyWeWillLetYouKnowIfThereAnyProblem,
-                                buttonText: 'Ok',
-                                ontap: () {});
-                          },
+                              context: context,
+                              highlightedText:
+                                  lang.phoneNumberChangedSuccessfully,
+                              regularText: lang
+                                  .yourPhoneNumberHasBeenChangedSuccessfullyWeWillLetYouKnowIfThereAnyProblem,
+                              buttonText: 'Ok',
+                              ontap: () {},
+                            );
+                          }, resend: () { 
+                              AuthCubit.get(context).resetPasswordEmail(context);
+                           },
                         ));
                   })
             ],

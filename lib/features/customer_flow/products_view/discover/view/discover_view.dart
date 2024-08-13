@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/data/hive_stroage.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -36,10 +37,15 @@ class _DiscoverViewState extends State<DiscoverView> {
 
   @override
   void initState() {
-    BlocProvider.of<ProductsCubit>(context)
-        .getNewInProducts(newInPage, newInPageSize);
-    BlocProvider.of<ProductsCubit>(context)
-        .getRandomProducts(newInPage, newInPageSize);
+    if (HiveStorage.get(HiveKeys.userId) != null) {
+      ProductsCubit.get(context).getNewInProducts(newInPage, newInPageSize);
+      ProductsCubit.get(context).getRandomProducts(newInPage, newInPageSize);
+    } else {
+      ProductsCubit.get(context)
+          .getNewInProductsGuest(newInPage, newInPageSize);
+      ProductsCubit.get(context)
+          .getRandomProductsGuest(newInPage, newInPageSize);
+    }
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -63,8 +69,13 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     newInPage = newInPage + 1;
-    await BlocProvider.of<ProductsCubit>(context)
-        .getNewInProductsPagination(newInPage, newInPageSize);
+    if (HiveStorage.get(HiveKeys.userId) != null) {
+      ProductsCubit.get(context)
+          .getNewInProductsPagination(newInPage, newInPageSize);
+    } else {
+      ProductsCubit.get(context)
+          .getNewInProductsGuestPagination(newInPage, newInPageSize);
+    }
     setState(() {
       newInIsLoadMore = false;
     });
@@ -76,8 +87,13 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     handPage = handPage + 1;
-    await BlocProvider.of<ProductsCubit>(context)
-        .getRandomProductsPagination(newInPage, newInPageSize);
+    if (HiveStorage.get(HiveKeys.userId) != null) {
+      ProductsCubit.get(context)
+          .getRandomProductsPagination(newInPage, newInPageSize);
+    } else {
+      ProductsCubit.get(context)
+          .getRandomProductsGuestPagination(newInPage, newInPageSize);
+    }
     setState(() {
       handIsLoadMore = false;
     });

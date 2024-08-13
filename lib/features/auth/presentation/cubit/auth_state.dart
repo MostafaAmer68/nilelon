@@ -11,6 +11,18 @@ class AuthInitial extends AuthState {}
 
 class LoginLoading extends AuthState {}
 
+class ResetPasswordLoading extends AuthState {}
+
+class ResetPasswordSuccess extends AuthState {}
+
+class ResetEmailSuccess extends AuthState {}
+
+class PickImageLoading extends AuthState {}
+
+class PickImageSuccess extends AuthState {}
+
+class UpdateStoreSuccess extends AuthState {}
+
 class LoginSuccess extends AuthState {
   final String successMSG;
 

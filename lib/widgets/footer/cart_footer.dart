@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilelon/features/customer_flow/cart/domain/model/get_cart_model/cart_item.dart';
-import 'package:nilelon/features/customer_flow/cart/domain/model/get_cart_model/get_cart_model.dart';
-import 'package:nilelon/features/customer_flow/cart/domain/model/get_cart_model/result.dart';
-import 'package:nilelon/features/customer_flow/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
+import 'package:nilelon/features/cart/domain/model/get_cart_model/get_cart_model.dart';
+import 'package:nilelon/features/cart/domain/model/get_cart_model/result.dart';
+import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/const_functions.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';

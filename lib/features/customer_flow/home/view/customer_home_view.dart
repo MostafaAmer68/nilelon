@@ -43,14 +43,16 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
 
   @override
   void initState() {
-    BlocProvider.of<ProductsCubit>(context).getFollowedProducts(page, pageSize);
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-              scrollController.position.maxScrollExtent &&
-          !isLoadMore) {
-        getMoreData();
-      }
-    });
+    if (HiveStorage.get(HiveKeys.userId) != null) {
+      ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
+      scrollController.addListener(() {
+        if (scrollController.position.pixels ==
+                scrollController.position.maxScrollExtent &&
+            !isLoadMore) {
+          getMoreData();
+        }
+      });
+    }
     super.initState();
   }
 
@@ -60,8 +62,9 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
     });
 
     page = page + 1;
-    await BlocProvider.of<ProductsCubit>(context)
-        .getFollowedProductsPagination(page, pageSize);
+    if (HiveStorage.get(HiveKeys.userId) != null) {
+      ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
+    }
     setState(() {
       isLoadMore = false;
     });

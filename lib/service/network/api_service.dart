@@ -1,100 +1,35 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:nilelon/service/network/end_point.dart';
 
 class ApiService {
   final Dio dio;
 
   ApiService({
     required this.dio,
-  });
-
-  // Future<Map<String, dynamic>> getWithToken({
-  //   required String endPoint,
-  //   required String token,
-  //   Map<String, dynamic>? query,
-  // }) async {
-  //   dio.options.headers = {
-  //     "Authorization": 'Bearer $token',
-  //   };
-  //   var response = await dio.get(
-  //     '${EndPoint().baseUrl}$endPoint',
-  //     queryParameters: query,
-  //     options: Options(
-  //       validateStatus: (status) {
-  //         return status! == 200 || status == 201 || status == 400;
-  //       },
-  //     ),
-  //   );
-  //   return response.data;
-  // }
-
-  Future<dynamic> get({required String endPoint, query}) async {
+  }) {
     dio.interceptors.add(CustomLogInterceptor());
-
-    var response = await dio.get(
-      '${EndPoint.baseUrl}$endPoint',
-      queryParameters: query,
-      options: Options(
-        validateStatus: (status) {
-          return getStatus(status!);
-        },
-      ),
+    dio.options.copyWith(
+      validateStatus: (status) {
+        return getStatus(status!);
+      },
     );
-    return response;
   }
 
-  // Future<Map<String, dynamic>> postWithToken({
-  //   required String endPoint,
-  //   required dynamic body,
-  //   required String token,
-  // }) async {
-  //   dio.options.headers = {
-  //     "Authorization": 'Bearer $token',
-  //   };
-  //   var response = await dio.post(
-  //     '${EndPoint().baseUrl}$endPoint',
-  //     data: body,
-  //     options: Options(
-  //       validateStatus: (status) {
-  //         return status! == 200 || status == 201 || status == 400;
-  //       },
-  //     ),
-  //   );
-  //   return response.data;
-  // }
-
-  Future<Response> postAuth(
-      {required String endPoint, dynamic body, dynamic query}) async {
-    dio.interceptors.add(CustomLogInterceptor());
-
-    final response = await dio.post(
-      '${EndPoint.baseUrl}$endPoint',
-      data: body,
+  Future<Response> get({required String endPoint, query}) async {
+    var response = await dio.get(
+      endPoint,
       queryParameters: query,
-      options: Options(
-        validateStatus: (status) {
-          return getStatus(status!);
-        },
-      ),
     );
     return response;
   }
 
   Future<Response> post(
-      {required String endPoint, dynamic data, dynamic query}) async {
-    dio.interceptors.add(CustomLogInterceptor());
-
+      {required String endPoint, dynamic body, dynamic query}) async {
     final response = await dio.post(
-      '${EndPoint.baseUrl}$endPoint',
-      data: data,
+      endPoint,
+      data: body,
       queryParameters: query,
-      options: Options(
-        validateStatus: (status) {
-          return getStatus(status!);
-        },
-      ),
     );
     return response;
   }
@@ -109,40 +44,26 @@ class ApiService {
         status == HttpStatus.internalServerError;
   }
 
-  Future<dynamic> put({
+  Future<Response> put({
     required endPoint,
     dynamic data,
   }) async {
-    dio.interceptors.add(CustomLogInterceptor());
-
     var response = await dio.put(
-      '${EndPoint.baseUrl}$endPoint',
-      options: Options(
-        validateStatus: (status) {
-          return getStatus(status!);
-        },
-      ),
+      endPoint,
       data: data,
     );
     return response;
   }
 
-  Future<dynamic> delete({
+  Future<Response> delete({
     required endPoint,
     dynamic body,
     dynamic query,
   }) async {
-    dio.interceptors.add(CustomLogInterceptor());
-
     var response = await dio.delete(
-      '${EndPoint.baseUrl}$endPoint',
+      endPoint,
       data: body,
       queryParameters: query,
-      options: Options(
-        validateStatus: (status) {
-          return getStatus(status!);
-        },
-      ),
     );
     return response;
   }

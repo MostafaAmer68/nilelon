@@ -10,7 +10,7 @@ import 'products_state.dart';
 class ProductsCubit extends Cubit<ProductsState> {
   final ProductsRepos productsRepos;
   ProductsCubit(this.productsRepos) : super(ProductsState.initial());
-
+  static ProductsCubit get(context) => BlocProvider.of<ProductsCubit>(context);
   //?*********************************************************************************
   //! Get Followed
   //?*********************************************************************************
@@ -88,7 +88,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   Future<void> getRandomProducts(int page, int productSize) async {
     emit(state.copyWith(
         getRandomProducts: const GetRandomProductsState.loading()));
-    var result = await productsRepos.getHandPickedItems(page, productSize);
+    var result = await productsRepos.getRandomProduct(page, productSize);
     result.fold((failure) {
       emit(state.copyWith(
           getRandomProducts: GetRandomProductsState.failure(failure.errorMsg)));
@@ -103,7 +103,71 @@ class ProductsCubit extends Cubit<ProductsState> {
   Future<void> getRandomProductsPagination(int page, int productSize) async {
     emit(state.copyWith(
         getRandomProducts: const GetRandomProductsState.loading()));
-    var result = await productsRepos.getHandPickedItems(page, productSize);
+    var result = await productsRepos.getRandomProduct(page, productSize);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getRandomProducts: GetRandomProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      emit(state.copyWith(
+          getRandomProducts:
+              GetRandomProductsState.success(response.result ?? [])));
+    });
+  }
+
+  Future<void> getNewInProductsGuest(int page, int productSize) async {
+    emit(state.copyWith(
+        getNewInProducts: const GetNewInProductsState.loading()));
+    var result = await productsRepos.getNewInProductsGuest(page, productSize);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getNewInProducts: GetNewInProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      emit(state.copyWith(
+          getNewInProducts:
+              GetNewInProductsState.success(response.result ?? [])));
+    });
+  }
+
+  //todo Get New In Products Pagination
+  Future<void> getNewInProductsGuestPagination(
+      int page, int productSize) async {
+    emit(state.copyWith(
+        getNewInProducts: const GetNewInProductsState.loading()));
+    var result = await productsRepos.getNewInProductsGuest(page, productSize);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getNewInProducts: GetNewInProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      emit(state.copyWith(
+          getNewInProducts: GetNewInProductsState.success(response.result!)));
+    });
+  }
+
+  //?*********************************************************************************
+  //! Get Random
+  //?*********************************************************************************
+
+  //todo Get Random Products
+  Future<void> getRandomProductsGuest(int page, int productSize) async {
+    emit(state.copyWith(
+        getRandomProducts: const GetRandomProductsState.loading()));
+    var result = await productsRepos.getNewInProductsGuest(page, productSize);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getRandomProducts: GetRandomProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      emit(state.copyWith(
+          getRandomProducts:
+              GetRandomProductsState.success(response.result ?? [])));
+    });
+  }
+
+  //todo Get Random Products Pagination
+  Future<void> getRandomProductsGuestPagination(
+      int page, int productSize) async {
+    emit(state.copyWith(
+        getRandomProducts: const GetRandomProductsState.loading()));
+    var result = await productsRepos.getNewInProductsGuest(page, productSize);
     result.fold((failure) {
       emit(state.copyWith(
           getRandomProducts: GetRandomProductsState.failure(failure.errorMsg)));
