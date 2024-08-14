@@ -99,6 +99,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     if (data.statusCode == 200) {
       var userData;
       HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
+      HiveStorage.set(HiveKeys.token, data.data['token']);
       if (data.data['role'] != 'Store') {
         userData = UserModel<CustomerModel>.fromMap(data.data);
       } else {

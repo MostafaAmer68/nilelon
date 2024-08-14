@@ -31,9 +31,8 @@ class UserModel<T extends BaseUserData> extends Equatable {
       token: map['token'] as String,
       role: map['role'] as String,
       userData: map['role'] == 'Store'
-          ? StoreModel.fromMap(map['storeDto'] as Map<String, dynamic>) as T
-          : CustomerModel.fromMap(map['customerDto'] as Map<String, dynamic>)
-              as T,
+          ? StoreModel.fromMap(map['data'] as Map<String, dynamic>) as T
+          : CustomerModel.fromMap(map['data'] as Map<String, dynamic>) as T,
     );
   }
 }

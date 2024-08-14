@@ -49,22 +49,6 @@ class ProductModel {
       'variants': variants.map((x) => x.toMap()).toList(),
     };
   }
-
-  factory ProductModel.fromMap(Map<String, dynamic> map) {
-    return ProductModel(
-      name: map['name'] as String,
-      description: map['description'] as String,
-      type: map['type'] as String,
-      storeId: map['storeId'] as String,
-      categoryID: map['categoryID'] as String,
-      sizeguide: map['sizeguide'] as String,
-      variants: List<Variant>.from(
-        (map['variants'] as List<int>).map<Variant>(
-          (x) => Variant.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
-  }
 }
 
 @HiveType(typeId: 1)
@@ -73,7 +57,7 @@ class Variant {
   final int color;
 
   @HiveField(1)
-  final List<ImageModel> images;
+  final List<String> images;
 
   @HiveField(2)
   final List<SizeModel> sizes;
@@ -87,51 +71,13 @@ class Variant {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'color': color,
-      'images': images.map((x) => x.toMap()).toList(),
+      'images': images.map((x) => x).toList(),
       'sizes': sizes.map((x) => x.toMap()).toList(),
     };
-  }
-
-  factory Variant.fromMap(Map<String, dynamic> map) {
-    return Variant(
-      color: map['color'] as int,
-      images: List<ImageModel>.from(
-        (map['images'] as List<int>).map<ImageModel>(
-          (x) => ImageModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-      sizes: List<SizeModel>.from(
-        (map['sizes'] as List<int>).map<SizeModel>(
-          (x) => SizeModel.fromMap(x as Map<String, dynamic>),
-        ),
-      ),
-    );
   }
 }
 
 @HiveType(typeId: 2)
-class ImageModel {
-  @HiveField(0)
-  final String image;
-
-  ImageModel({
-    required this.image,
-  });
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'image': image,
-    };
-  }
-
-  factory ImageModel.fromMap(Map<String, dynamic> map) {
-    return ImageModel(
-      image: map['image'] as String,
-    );
-  }
-}
-
-@HiveType(typeId: 3)
 class SizeModel {
   @HiveField(0)
   final String size;
@@ -154,13 +100,5 @@ class SizeModel {
       'price': price,
       'quantity': quantity,
     };
-  }
-
-  factory SizeModel.fromMap(Map<String, dynamic> map) {
-    return SizeModel(
-      size: map['size'] as String,
-      price: map['price'] as num,
-      quantity: map['quantity'] as int,
-    );
   }
 }

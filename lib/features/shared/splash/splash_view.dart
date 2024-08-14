@@ -26,7 +26,7 @@ class _SplashViewState extends State<SplashView> {
     super.initState();
     // BlocProvider.of(context)
     Timer(const Duration(seconds: 3), () {
-      HiveStorage.get(HiveKeys.skipOnboarding)
+      !HiveStorage.get(HiveKeys.skipOnboarding)
           ? navigateAndRemoveUntil(
               context: context,
               screen: BlocProvider<OnBoardingCubit>(

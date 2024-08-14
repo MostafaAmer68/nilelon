@@ -17,6 +17,8 @@ import 'package:nilelon/features/auth/domain/repos/auth_repos.dart';
 import 'package:nilelon/features/store_flow/choose_category/cubit/choose_category_cubit.dart';
 import 'package:nilelon/utils/app_logs.dart';
 
+import '../../../../core/helper.dart';
+
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -43,14 +45,7 @@ class AuthCubit extends Cubit<AuthState> {
   String base64Image = '';
   final picker = ImagePicker();
 
-  Future<void> convertImageToBase64(image) async {
-    if (image == null) return;
-
-    // Convert the image to base64
-    final bytes = await image!.readAsBytes();
-    base64Image = base64Encode(bytes);
-    emit(PickImageSuccess());
-  }
+ 
 
   Future<void> pickImage(ImageSource imageSource) async {
     emit(PickImageLoading());
@@ -58,7 +53,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
-      await convertImageToBase64(image);
+    base64Image=  await convertImageToBase64(image);
     }
   }
 

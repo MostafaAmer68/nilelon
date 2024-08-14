@@ -2,8 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:nilelon/features/product/domain/models/products_response_model.dart';
 import 'package:nilelon/features/product/data/datasources/products_remote_data_source.dart';
-import 'package:nilelon/features/product/domain/repositories/products_repos.dart';
 import 'package:nilelon/service/failure_service.dart';
+
+import '../../domain/repositories/products_repos.dart';
 
 class ProductsReposImpl extends ProductsRepos {
   final ProductsRemoteDataSourceImpl productsRemoteDataSource;

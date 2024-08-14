@@ -7,7 +7,7 @@ GestureDetector addContainer(
   return GestureDetector(
     onTap: onTap,
     child: Container(
-      width: width ?? screenWidth(context, 0.17),
+      width: width ?? screenWidth(context, 0.21),
       height: height ??
           screenWidth(context, 0.21), //height ?? screenWidth(context, 0.45),
       padding: const EdgeInsets.all(16),

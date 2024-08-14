@@ -70,7 +70,7 @@ class VariantAdapter extends TypeAdapter<Variant> {
     };
     return Variant(
       color: fields[0] as int,
-      images: (fields[1] as List).cast<ImageModel>(),
+      images: (fields[1] as List).cast<String>(),
       sizes: (fields[2] as List).cast<SizeModel>(),
     );
   }
@@ -98,43 +98,9 @@ class VariantAdapter extends TypeAdapter<Variant> {
           typeId == other.typeId;
 }
 
-class ImageModelAdapter extends TypeAdapter<ImageModel> {
-  @override
-  final int typeId = 2;
-
-  @override
-  ImageModel read(BinaryReader reader) {
-    final numOfFields = reader.readByte();
-    final fields = <int, dynamic>{
-      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
-    };
-    return ImageModel(
-      image: fields[0] as String,
-    );
-  }
-
-  @override
-  void write(BinaryWriter writer, ImageModel obj) {
-    writer
-      ..writeByte(1)
-      ..writeByte(0)
-      ..write(obj.image);
-  }
-
-  @override
-  int get hashCode => typeId.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is ImageModelAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
-}
-
 class SizeModelAdapter extends TypeAdapter<SizeModel> {
   @override
-  final int typeId = 3;
+  final int typeId = 2;
 
   @override
   SizeModel read(BinaryReader reader) {
@@ -144,7 +110,7 @@ class SizeModelAdapter extends TypeAdapter<SizeModel> {
     };
     return SizeModel(
       size: fields[0] as String,
-      price: fields[1] as int,
+      price: fields[1] as num,
       quantity: fields[2] as int,
     );
   }

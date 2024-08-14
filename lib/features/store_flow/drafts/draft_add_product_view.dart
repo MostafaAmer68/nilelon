@@ -652,12 +652,12 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
                   if (HiveStorage.get(HiveKeys.varients) == null) {
                     Variant productVarieants =
                         Variant(color: selectedColor, images: [
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
+                      ''
+                          ''
+                          ''
+                          ''
+                          ''
+                          ''
                     ], sizes: [
                       SizeModel(
                         size: 'XS',
@@ -752,12 +752,12 @@ class _DraftAddProductViewState extends State<DraftAddProductView> {
                     varients = HiveStorage.get(HiveKeys.varients);
                     Variant productVarieants =
                         Variant(color: selectedColor, images: [
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
-                      ImageModel(image: ''),
+                      ''
+                          ''
+                          ''
+                          ''
+                          ''
+                          ''
                     ], sizes: [
                       SizeModel(
                         size: 'XS',

@@ -12,8 +12,17 @@ import 'package:nilelon/resources/const_functions.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
 
-Future<File?> cameraDialog(BuildContext context) async {
-  Completer<File?> completer = Completer<File?>();
+Future<File?> pickImage(ImageSource source) async {
+  var pickedImage = await ImagePicker().pickImage(source: source);
+  if (pickedImage != null) {
+    return File(pickedImage.path);
+  } else {
+    return null;
+  }
+}
+
+Future<File> cameraDialog(BuildContext context) async {
+  Completer<File> completer = Completer<File>();
 
   await showCupertinoModalPopup<void>(
     barrierDismissible: false,
@@ -30,8 +39,11 @@ Future<File?> cameraDialog(BuildContext context) async {
           child: CupertinoActionSheet(
             actions: [
               CupertinoActionSheetAction(
-                onPressed: () {
-                  AuthCubit.get(context).pickImage(ImageSource.camera);
+                onPressed: () async {
+                  // AuthCubit.get(context).pickImage(ImageSource.camera);
+                  File? image = await pickImage(ImageSource.camera);
+                  completer.complete(image);
+                  navigatePop(context: context);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +64,10 @@ Future<File?> cameraDialog(BuildContext context) async {
               ),
               CupertinoActionSheetAction(
                 onPressed: () async {
-                  AuthCubit.get(context).pickImage(ImageSource.gallery);
+                  // AuthCubit.get(context).pickImage(ImageSource.gallery);
+                  File? image = await pickImage(ImageSource.gallery);
+                  completer.complete(image);
+                  navigatePop(context: context);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +89,7 @@ Future<File?> cameraDialog(BuildContext context) async {
             ],
             cancelButton: CupertinoActionSheetAction(
               onPressed: () {
-                completer.complete(null);
+                completer.complete(File(''));
                 navigatePop(context: context);
               },
               child: Text(

@@ -9,8 +9,9 @@ GestureDetector imageContainer(
   return GestureDetector(
     onTap: onTap,
     child: Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       width: width ?? screenWidth(context, 0.21),
-      height: height ?? screenWidth(context, 0.21),
+      height: height ?? screenWidth(context, 0.17),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
           color: ColorManager.primaryB5,

@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
@@ -27,6 +30,8 @@ import 'package:nilelon/features/product/presentation/widgets/size_container.dar
 import 'package:nilelon/features/product/presentation/widgets/table_headers.dart';
 import 'package:nilelon/features/product/presentation/widgets/total_row.dart';
 
+import '../../../../core/helper.dart';
+import '../../../../core/sizes_consts.dart';
 import 'cubit/addproduct_cubit.dart';
 
 class AddProductView extends StatefulWidget {
@@ -43,7 +48,18 @@ class _AddProductViewState extends State<AddProductView> {
   @override
   void initState() {
     super.initState();
+
     cubit = AddproductCubit.get(context);
+    cubit.sizes = SizeTypes.values
+        .map(
+          (e) => {
+            'size': e.name,
+            'isEdit': false,
+            'quantityController': TextEditingController(),
+            'priceController': TextEditingController(),
+          },
+        )
+        .toList();
   }
 
   @override
@@ -58,19 +74,22 @@ class _AddProductViewState extends State<AddProductView> {
         hasIcon: false,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.all(16.0.sp),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const DefaultDivider(),
-              SizedBox(height: 24.h),
-              _buildAddToDraft(lang.addToDraft),
-              _buildProductForm(lang),
-              _buildProductDetailsSection(lang),
-              _buildSubmitSection(lang),
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const DefaultDivider(),
+            SizedBox(height: 24.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.sp),
+              child: _buildAddToDraft(lang.addToDraft),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.sp),
+              child: _buildProductForm(lang),
+            ),
+            _buildProductDetailsSection(lang),
+            _buildSubmitSection(lang),
+          ],
         ),
       ),
     );
@@ -105,6 +124,7 @@ class _AddProductViewState extends State<AddProductView> {
     );
   }
 
+  //product form
   Widget _buildProductForm(S lang) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -163,6 +183,7 @@ class _AddProductViewState extends State<AddProductView> {
     );
   }
 
+  // size guid image
   Widget _buildSizeGuideImageSection(S lang) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +193,7 @@ class _AddProductViewState extends State<AddProductView> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            cubit.sizeGuideImage == null
+            cubit.sizeGuideImage.path.isEmpty
                 ? addContainer(
                     () async {
                       cubit.sizeGuideImage = await cameraDialog(context);
@@ -187,7 +208,7 @@ class _AddProductViewState extends State<AddProductView> {
                       cubit.sizeGuideImage = await cameraDialog(context);
                       setState(() {});
                     },
-                    cubit.sizeGuideImage!,
+                    cubit.sizeGuideImage,
                     context,
                     screenWidth(context, 0.3),
                     screenWidth(context, 0.3),
@@ -203,7 +224,10 @@ class _AddProductViewState extends State<AddProductView> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _buildProductColorSection(lang.productColors),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.sp),
+          child: _buildProductColorSection(lang.productColors),
+        ),
         _buildSizeVariantSection(lang),
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -262,8 +286,15 @@ class _AddProductViewState extends State<AddProductView> {
           () {
             cubit.selectedIndex = index;
             cubit.selectedColor = cubit.colors[cubit.selectedIndex];
-            _initializeSizeControllers();
 
+            _initializeSihzeControllers();
+            if (!cubit.isNonEditable[cubit.selectedIndex]) {
+              cubit.isSubmit = false;
+              cubit.isAdd = false;
+            } else {
+              cubit.isAdd = true;
+              cubit.isSubmit = true;
+            }
             setState(() {});
           },
           cubit.colors[index],
@@ -275,47 +306,28 @@ class _AddProductViewState extends State<AddProductView> {
     );
   }
 
-  void _initializeSizeControllers() {
-    cubit.sizes = [
-      {'size': 'XS', "isEdit": false},
-      {'size': 'S', "isEdit": false},
-      {'size': 'M', "isEdit": false},
-      {'size': 'L', "isEdit": false},
-      {'size': 'XL', "isEdit": false},
-      {'size': 'XXL', "isEdit": false},
-      {'size': 'XXXL', "isEdit": false},
-    ];
+  void _initializeSihzeControllers() {
+    cubit.sizes = SizeTypes.values
+        .map(
+          (e) => {
+            'size': e.name,
+            'isEdit': false,
+            'quantityController': TextEditingController(),
+            'priceController': TextEditingController(),
+          },
+        )
+        .toList();
     for (var variant in cubit.nonEditableVarients) {
       if (variant.color == cubit.selectedColor) {
         if (variant.sizes.isNotEmpty) {
-          cubit.xsController =
-              TextEditingController(text: variant.sizes[0].quantity.toString());
-          cubit.sController =
-              TextEditingController(text: variant.sizes[1].quantity.toString());
-          cubit.mController =
-              TextEditingController(text: variant.sizes[2].quantity.toString());
-          cubit.lController =
-              TextEditingController(text: variant.sizes[3].quantity.toString());
-          cubit.xlController =
-              TextEditingController(text: variant.sizes[4].quantity.toString());
-          cubit.xxlController =
-              TextEditingController(text: variant.sizes[5].quantity.toString());
-          cubit.xxxlController =
-              TextEditingController(text: variant.sizes[6].quantity.toString());
-          cubit.xsPriceController =
-              TextEditingController(text: variant.sizes[0].price.toString());
-          cubit.sPriceController =
-              TextEditingController(text: variant.sizes[1].price.toString());
-          cubit.mPriceController =
-              TextEditingController(text: variant.sizes[2].price.toString());
-          cubit.lPriceController =
-              TextEditingController(text: variant.sizes[3].price.toString());
-          cubit.xlPriceController =
-              TextEditingController(text: variant.sizes[4].price.toString());
-          cubit.xxlPriceController =
-              TextEditingController(text: variant.sizes[5].price.toString());
-          cubit.xxxlPriceController =
-              TextEditingController(text: variant.sizes[6].price.toString());
+          for (var item in variant.sizes) {
+            for (var itemSize in cubit.sizes) {
+              itemSize['quantityController'] =
+                  TextEditingController(text: item.quantity.toString());
+              itemSize['priceController'] =
+                  TextEditingController(text: item.price.toString());
+            }
+          }
         }
       } else {
         _resetSizeControllers();
@@ -324,27 +336,11 @@ class _AddProductViewState extends State<AddProductView> {
   }
 
   void _resetSizeControllers() {
-    cubit.xsController = TextEditingController(text: '0');
-    cubit.sController = TextEditingController(text: '0');
-    cubit.mController = TextEditingController(text: '0');
-    cubit.lController = TextEditingController(text: '0');
-    cubit.xlController = TextEditingController(text: '0');
-    cubit.xxlController = TextEditingController(text: '0');
-    cubit.xxxlController = TextEditingController(text: '0');
-    cubit.xsPriceController =
-        TextEditingController(text: cubit.priceController.text);
-    cubit.sPriceController =
-        TextEditingController(text: cubit.priceController.text);
-    cubit.mPriceController =
-        TextEditingController(text: cubit.priceController.text);
-    cubit.lPriceController =
-        TextEditingController(text: cubit.priceController.text);
-    cubit.xlPriceController =
-        TextEditingController(text: cubit.priceController.text);
-    cubit.xxlPriceController =
-        TextEditingController(text: cubit.priceController.text);
-    cubit.xxxlPriceController =
-        TextEditingController(text: cubit.priceController.text);
+    for (var item in cubit.sizes) {
+      item['quantityController'] = TextEditingController(text: '0');
+      item['priceController'] =
+          TextEditingController(text: cubit.priceController.text);
+    }
   }
 
   Widget _buildEditableVariantSection(String total) {
@@ -405,7 +401,7 @@ class _AddProductViewState extends State<AddProductView> {
           _buildEditIcon(),
           SizedBox(width: 8.w),
           Text(editSizes, style: AppStylesManager.customTextStyleB),
-          Spacer(),
+          const Spacer(),
           _buildDeleteIcon(deleteAlertStr),
         ],
       ),
@@ -427,7 +423,7 @@ class _AddProductViewState extends State<AddProductView> {
 
   void _removeNonEditableVariant() {
     for (var element in cubit.nonEditableVarients) {
-      if (cubit.selectedColor.toRadixString(16) == element.color) {
+      if (cubit.selectedColor == element.color) {
         List varients = HiveStorage.get(HiveKeys.varients);
         varients.remove(element);
         HiveStorage.set(HiveKeys.varients, varients);
@@ -460,7 +456,7 @@ class _AddProductViewState extends State<AddProductView> {
     Variant? proVar;
     List varients = HiveStorage.get(HiveKeys.varients);
     for (var element in cubit.nonEditableVarients) {
-      if (cubit.selectedColor.toRadixString(16) == element.color) {
+      if (cubit.selectedColor == element.color) {
         proVar = element;
       }
     }
@@ -492,7 +488,7 @@ class _AddProductViewState extends State<AddProductView> {
           ),
           SizedBox(width: 8.w),
           Text(addSizes, style: AppStylesManager.customTextStyleB),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );
@@ -502,9 +498,9 @@ class _AddProductViewState extends State<AddProductView> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.94,
+        width: MediaQuery.of(context).size.width * 1,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             _buildSubmitButton(submitStr),
             _buildUploadButton(uploadStr),
@@ -558,62 +554,52 @@ class _AddProductViewState extends State<AddProductView> {
   void _updateExistingVariant() {
     List varients = HiveStorage.get(HiveKeys.varients);
     Variant productVarieants = _createProductVariant();
-    cubit.nonEditableVarients.removeWhere(
-        (element) => element.color == cubit.selectedColor.toRadixString(16));
+    cubit.nonEditableVarients
+        .removeWhere((element) => element.color == cubit.selectedColor);
     varients.add(productVarieants);
     HiveStorage.set(HiveKeys.varients, varients);
     cubit.nonEditableVarients.add(productVarieants);
   }
 
   Variant _createProductVariant() {
+    final Completer<String> image = Completer();
+    List<String> images = [];
+    for (var img in cubit.images) {
+      convertImageToBase64(img).then((value) async {
+        image.complete(value);
+        images.add((await image.future));
+      });
+    }
     return Variant(
       color: cubit.selectedColor,
-      images: [
-        ImageModel(image: 'image'),
-        ImageModel(image: 'image'),
-        ImageModel(image: 'image'),
-        ImageModel(image: 'image'),
-        ImageModel(image: 'image'),
-        ImageModel(image: 'image'),
-      ],
-      sizes: [
-        _createSizeData('XS', cubit.xsController, cubit.xsPriceController),
-        _createSizeData('S', cubit.sController, cubit.sPriceController),
-        _createSizeData('M', cubit.mController, cubit.mPriceController),
-        _createSizeData('L', cubit.lController, cubit.lPriceController),
-        _createSizeData('XL', cubit.xlController, cubit.xlPriceController),
-        _createSizeData('XXL', cubit.xxlController, cubit.xxlPriceController),
-        _createSizeData(
-            'XXXL', cubit.xxxlController, cubit.xxxlPriceController),
-      ],
-    );
-  }
-
-  SizeModel _createSizeData(String size, TextEditingController amountController,
-      TextEditingController priceController) {
-    return SizeModel(
-      size: size,
-      price: priceController.text.isNotEmpty
-          ? num.parse(cubit.priceController.text)
-          : cubit.priceController.text.isEmpty
-              ? 0
-              : num.parse(cubit.priceController.text),
-      quantity: (amountController.text.isEmpty
-          ? 0
-          : int.parse(amountController.text)),
+      images: images,
+      sizes: List<SizeModel>.from(
+        cubit.sizes.map(
+          (e) => SizeModel(
+            size: e['size'],
+            price: num.parse(e['priceController'].text.isEmpty
+                ? '0'
+                : e['priceController'].text),
+            quantity: int.parse(e['quantityController'].text.isEmpty
+                ? '0'
+                : e['quantityController'].text),
+          ),
+        ),
+      ).toList(),
     );
   }
 
   void _resetSizeControllersToDefault() {
-    cubit.sizes = [
-      {'size': 'XS', "isEdit": false},
-      {'size': 'S', "isEdit": false},
-      {'size': 'M', "isEdit": false},
-      {'size': 'L', "isEdit": false},
-      {'size': 'XL', "isEdit": false},
-      {'size': 'XXL', "isEdit": false},
-      {'size': 'XXXL', "isEdit": false},
-    ];
+    cubit.sizes = SizeTypes.values
+        .map(
+          (e) => {
+            'size': e.name,
+            'isEdit': false,
+            'quantityController': TextEditingController(),
+            'priceController': TextEditingController(),
+          },
+        )
+        .toList();
   }
 
   Widget _buildSizeListView() {
@@ -638,7 +624,7 @@ class _AddProductViewState extends State<AddProductView> {
       },
       child: Column(
         children: [
-          _buildSizeRowContent(index, true),
+          _buildSizeRowContent(index, cubit.sizes[index]['isEdit']),
         ],
       ),
     );
@@ -653,8 +639,10 @@ class _AddProductViewState extends State<AddProductView> {
   }
 
   Widget _buildSizeRowContent(int index, bool isEditable) {
-    TextEditingController amountController = _getAmountController(index);
-    TextEditingController priceController = _getPriceController(index);
+    TextEditingController quantityController =
+        cubit.sizes[index]['quantityController'];
+    TextEditingController priceController =
+        cubit.sizes[index]['priceController'];
 
     return Padding(
       padding: const EdgeInsets.only(
@@ -666,7 +654,7 @@ class _AddProductViewState extends State<AddProductView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           sizeContainer(context, cubit.sizes[index]['size'] as String),
-          _buildAmountTextField(amountController),
+          _buildAmountTextField(quantityController),
           isEditable
               ? _buildPriceTextField(priceController)
               : _buildPriceText(index, priceController),
@@ -675,47 +663,47 @@ class _AddProductViewState extends State<AddProductView> {
     );
   }
 
-  TextEditingController _getAmountController(int index) {
-    switch (index) {
-      case 0:
-        return cubit.xsController;
-      case 1:
-        return cubit.sController;
-      case 2:
-        return cubit.mController;
-      case 3:
-        return cubit.lController;
-      case 4:
-        return cubit.xlController;
-      case 5:
-        return cubit.xxlController;
-      case 6:
-        return cubit.xxxlController;
-      default:
-        return TextEditingController();
-    }
-  }
+  // TextEditingController _getQuantityController(int index) {
+  //   switch (index) {
+  //     case 0:
+  //       return cubit.xsController;
+  //     case 1:
+  //       return cubit.sController;
+  //     case 2:
+  //       return cubit.mController;
+  //     case 3:
+  //       return cubit.lController;
+  //     case 4:
+  //       return cubit.xlController;
+  //     case 5:
+  //       return cubit.xxlController;
+  //     case 6:
+  //       return cubit.xxxlController;
+  //     default:
+  //       return TextEditingController();
+  //   }
+  // }
 
-  TextEditingController _getPriceController(int index) {
-    switch (index) {
-      case 0:
-        return cubit.xsPriceController;
-      case 1:
-        return cubit.sPriceController;
-      case 2:
-        return cubit.mPriceController;
-      case 3:
-        return cubit.lPriceController;
-      case 4:
-        return cubit.xlPriceController;
-      case 5:
-        return cubit.xxlPriceController;
-      case 6:
-        return cubit.xxxlPriceController;
-      default:
-        return TextEditingController();
-    }
-  }
+  // TextEditingController _getPriceController(int index) {
+  //   switch (index) {
+  //     case 0:
+  //       return cubit.xsPriceController;
+  //     case 1:
+  //       return cubit.sPriceController;
+  //     case 2:
+  //       return cubit.mPriceController;
+  //     case 3:
+  //       return cubit.lPriceController;
+  //     case 4:
+  //       return cubit.xlPriceController;
+  //     case 5:
+  //       return cubit.xxlPriceController;
+  //     case 6:
+  //       return cubit.xxxlPriceController;
+  //     default:
+  //       return TextEditingController();
+  //   }
+  // }
 
   Widget _buildAmountTextField(TextEditingController amountController) {
     return TextFormFieldBuilder(
@@ -768,14 +756,26 @@ class _AddProductViewState extends State<AddProductView> {
   Widget _buildImageRow() {
     return SizedBox(
       height: screenWidth(context, 0.21),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildImageContainer(0),
-          _buildImageContainer(1),
-          _buildImageContainer(2),
-          _buildImageContainer(3),
-        ],
+      width: screenWidth(context, 1),
+      child: ListView.builder(
+        itemCount: cubit.images.length + 1,
+        itemBuilder: (context, index) {
+          return index == cubit.images.length
+              ? addContainer(
+                  () async {
+                    if (cubit.isAdd) {
+                      cubit.images.add((await cameraDialog(context)));
+
+                      setState(() {});
+                    }
+                  },
+                  context,
+                  null,
+                  null,
+                )
+              : _buildImageContainer(index);
+        },
+        scrollDirection: Axis.horizontal,
       ),
     );
   }
@@ -785,58 +785,57 @@ class _AddProductViewState extends State<AddProductView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildImageContainer(0, isEditable: false),
-          _buildImageContainer(1, isEditable: false),
-          _buildImageContainer(2, isEditable: false),
-          _buildImageContainer(3, isEditable: false),
+          addContainer(() async {
+            if (cubit.isAdd) {
+              cubit.images.add((await cameraDialog(context)));
+
+              setState(() {});
+            }
+          }, context, null, null),
+          addContainer(() async {
+            if (cubit.isAdd) {
+              cubit.images.add((await cameraDialog(context)));
+
+              setState(() {});
+            }
+          }, context, null, null),
+          addContainer(() async {
+            if (cubit.isAdd) {
+              cubit.images.add((await cameraDialog(context)));
+
+              setState(() {});
+            }
+          }, context, null, null),
+          addContainer(() async {
+            if (cubit.isAdd) {
+              cubit.images.add((await cameraDialog(context)));
+
+              setState(() {});
+            }
+          }, context, null, null),
         ],
       ),
     );
   }
 
-  Widget _buildImageContainer(int index, {bool isEditable = true}) {
-    final images = [
-      cubit.image,
-      cubit.image1,
-      cubit.image2,
-      cubit.image3,
-    ];
-
-    return images[index] == null
-        ? addContainer(
-            () async {
-              if (isEditable) {
-                images[index] = await cameraDialog(context);
-                setState(() {});
-              }
-            },
-            context,
-            null,
-            null,
-          )
-        : imageContainer(
-            () async {
-              if (isEditable) {
-                images[index] = await cameraDialog(context);
-                setState(() {});
-              }
-            },
-            images[index]!,
-            context,
-            null,
-            null,
-          );
+  Widget _buildImageContainer(index, {bool isEditable = true}) {
+    return imageContainer(
+      () async {
+        if (isEditable) {
+          cubit.images[index] = (await cameraDialog(context));
+          setState(() {});
+        }
+      },
+      cubit.images[index],
+      context,
+      null,
+      null,
+    );
   }
 
   int _calculateTotalSizes() {
-    return [
-      cubit.xsController,
-      cubit.sController,
-      cubit.mController,
-      cubit.lController,
-      cubit.xlController,
-      cubit.xxlController,
-      cubit.xxxlController,
-    ].fold(0, (sum, controller) => sum + (int.tryParse(controller.text) ?? 0));
+    return cubit.sizes
+        .map((e) => (e['quantityController'] as TextEditingController).text)
+        .fold(0, (sum, controller) => sum + (int.tryParse(controller) ?? 0));
   }
 }
