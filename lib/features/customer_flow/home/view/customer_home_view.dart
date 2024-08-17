@@ -6,8 +6,6 @@ import 'package:nilelon/data/hive_stroage.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
-import 'package:nilelon/features/product/domain/models/product_image.dart';
-import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/resources/color_manager.dart';
@@ -16,8 +14,7 @@ import 'package:nilelon/utils/navigation.dart';
 import 'package:nilelon/widgets/scaffold_image.dart';
 import 'package:nilelon/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/widgets/text_form_field/text_field/const_text_form_field.dart';
-import 'package:nilelon/widgets/pop_ups/add_to_closet_popup.dart';
-import 'package:nilelon/features/customer_flow/products_view/hot_picks/customer_hot_picks_view.dart';
+import 'package:nilelon/features/product/presentation/widgets/hot_picks_widget.dart';
 import 'package:nilelon/features/product/presentation/pages/following_view_all.dart';
 import 'package:nilelon/widgets/banner/banner_product.dart';
 import 'package:nilelon/widgets/custom_app_bar/home_custom_app_bar.dart';
@@ -25,8 +22,6 @@ import 'package:nilelon/widgets/cards/small/small_card.dart';
 import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/widgets/cards/wide/wide_card.dart';
 import 'package:nilelon/features/customer_flow/search/view/search_view.dart';
-
-import '../../../product/domain/models/product_variant.dart';
 
 class CustomerHomeView extends StatefulWidget {
   const CustomerHomeView({super.key});
@@ -69,25 +64,6 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
       isLoadMore = false;
     });
   }
-
-  List<ProductModel> products = const [
-    ProductModel(
-      name: 'test',
-      description: '45akdjf ;akdf ;alkdfk aj;kl',
-      productVariants: [
-        ProductVariant(
-          price: 2034,
-        ),
-      ],
-      productImages: [
-        ProductImage(
-            url:
-                'https://plus.unsplash.com/premium_photo-1676637000058-96549206fe71?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aW1hZ2V8ZW58MHx8MHx8fDA%3D'),
-      ],
-      storeName: 'test',
-      rating: 3,
-    )
-  ];
 
   @override
   Widget build(BuildContext context) {

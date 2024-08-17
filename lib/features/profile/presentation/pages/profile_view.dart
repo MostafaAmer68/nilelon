@@ -14,6 +14,8 @@ import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.
 import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
 import 'package:nilelon/features/customer_flow/settings/settings_view.dart';
 
+import '../../../auth/domain/model/user_model.dart';
+
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
@@ -44,7 +46,7 @@ class ProfileView extends StatelessWidget {
                       width: 12,
                     ),
                     Text(
-                      'Hi, ${HiveStorage.get(HiveKeys.name)}',
+                      'Hi, ${HiveStorage.get<UserModel>(HiveKeys.userModel).getUserData<CustomerModel>().name}',
                       style: AppStylesManager.customTextStyleBl8
                           .copyWith(fontWeight: FontWeight.w600),
                     ),

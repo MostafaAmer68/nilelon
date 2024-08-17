@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/features/product/domain/models/product_data/product_data.dart';
-import 'package:nilelon/features/store_flow/drafts/draft_add_product_view.dart';
+import 'package:nilelon/features/product/presentation/pages/draft_add_product_view.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/resources/color_manager.dart';
 import 'package:nilelon/resources/const_functions.dart';

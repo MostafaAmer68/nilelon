@@ -10,7 +10,7 @@ import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/customer_flow/search/widget/search_section_items.dart';
 import 'package:nilelon/features/store_flow/sections_view.dart/store_sections_view.dart';
 import 'package:nilelon/features/store_flow/see_more_stores/view/see_more_stores_store_view.dart';
-import 'package:nilelon/features/store_flow/store_profile_store/store_profile_store.dart';
+import 'package:nilelon/features/profile/presentation/pages/store_profile_store.dart';
 
 class StoreSearchView extends StatelessWidget {
   const StoreSearchView({super.key});

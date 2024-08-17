@@ -5,7 +5,7 @@ import 'package:nilelon/resources/const_functions.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
 import 'package:nilelon/utils/navigation.dart';
 import 'package:nilelon/widgets/price_and_rating_row/price_and_rating_row.dart';
-import 'package:nilelon/features/store_flow/product_details/view/store_product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/store_product_details_view.dart';
 
 GestureDetector marketWideCard({required context}) {
   List<String> images = ['assets/images/cloth1.png'];

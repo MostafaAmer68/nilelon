@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
@@ -55,7 +56,15 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
     final lang = S.of(context);
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
+        if (state is LoginLoading) {
+          BotToast.showLoading();
+        }
+        if (state is LoginFailure) {
+          BotToast.closeAllLoading();
+          BotToast.showText(text: state.errorMessage);
+        }
         if (state is VerificationCodeSent) {
+          BotToast.closeAllLoading();
           navigateTo(
             context: context,
             screen: OtpView(
@@ -72,6 +81,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
           );
         }
         if (state is StoreRegisterSuccess) {
+          BotToast.closeAllLoading();
           successCreationDialog(
             isDismissible: false,
             context: context,

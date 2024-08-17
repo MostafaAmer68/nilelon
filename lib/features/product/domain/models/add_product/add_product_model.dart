@@ -1,12 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:hive/hive.dart';
 
 part 'add_product_model.g.dart';
 
 @HiveType(typeId: 0)
-class ProductModel {
+class AddProductModel {
   @HiveField(0)
   final String name;
 
@@ -28,7 +27,7 @@ class ProductModel {
   @HiveField(6)
   final List<Variant> variants;
 
-  ProductModel({
+  AddProductModel({
     required this.name,
     required this.description,
     required this.type,

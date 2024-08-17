@@ -1,8 +1,8 @@
 import 'package:hive_flutter/adapters.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
+import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/product/domain/models/add_product/add_product_model.dart';
 import 'package:nilelon/features/product/domain/models/product_data/product_data.dart';
-import 'package:nilelon/features/store_flow/choose_category/choose_category_model/result.dart';
 
 class HiveKeys {
   // static const String product = 'product';
@@ -14,6 +14,7 @@ class HiveKeys {
   static const String skipOnboarding = 'skipOnboarding';
   static const String isStore = 'isStore';
   static const String token = 'apiToken';
+  static const String clientToken = 'clientToken';
   static const String userId = 'idToken';
   static const String name = 'name';
   static const String role = 'role';
@@ -32,7 +33,7 @@ class HiveStorage {
   static Future<void> init() async {
     await Hive.initFlutter();
     Hive.registerAdapter(VariantAdapter());
-    Hive.registerAdapter(ProductModelAdapter());
+    Hive.registerAdapter(AddProductModelAdapter());
     Hive.registerAdapter(SizeModelAdapter());
     Hive.registerAdapter(ProductDataAdapter());
     Hive.registerAdapter(ResultAdapter());

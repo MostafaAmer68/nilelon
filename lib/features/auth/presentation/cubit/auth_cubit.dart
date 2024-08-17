@@ -14,7 +14,7 @@ import 'package:nilelon/features/auth/domain/model/external_google_model.dart';
 import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
 import 'package:nilelon/features/auth/domain/repos/auth_repos.dart';
-import 'package:nilelon/features/store_flow/choose_category/cubit/choose_category_cubit.dart';
+import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:nilelon/utils/app_logs.dart';
 
 import '../../../../core/helper.dart';
@@ -45,15 +45,13 @@ class AuthCubit extends Cubit<AuthState> {
   String base64Image = '';
   final picker = ImagePicker();
 
- 
-
   Future<void> pickImage(ImageSource imageSource) async {
     emit(PickImageLoading());
     final pickedFile = await picker.pickImage(source: imageSource);
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
-    base64Image=  await convertImageToBase64(image);
+      base64Image = await convertImageToBase64(image);
     }
   }
 
@@ -278,7 +276,7 @@ class AuthCubit extends Cubit<AuthState> {
       emit(LoginFailure(failure.errorMsg));
     }, (response) {
       emit(const LoginSuccess('Login Successfully'));
-      BlocProvider.of<ChooseCategoryCubit>(context).getCategories();
+      BlocProvider.of<CategoryCubit>(context).getCategories();
     });
   }
 
@@ -301,7 +299,7 @@ class AuthCubit extends Cubit<AuthState> {
       Map<String, dynamic> decodedToken = JwtDecoder.decode(response);
 
       emit(CustomerRegisterSuccess(response));
-      BlocProvider.of<ChooseCategoryCubit>(context).getCategories();
+      BlocProvider.of<CategoryCubit>(context).getCategories();
     });
   }
 
@@ -329,7 +327,7 @@ class AuthCubit extends Cubit<AuthState> {
         response,
       );
       emit(StoreRegisterSuccess(response));
-      BlocProvider.of<ChooseCategoryCubit>(context).getCategories();
+      BlocProvider.of<CategoryCubit>(context).getCategories();
     });
   }
 
@@ -349,7 +347,7 @@ class AuthCubit extends Cubit<AuthState> {
       );
       print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
       emit(StoreGoogleRegisterSuccess(response));
-      BlocProvider.of<ChooseCategoryCubit>(context).getCategories();
+      BlocProvider.of<CategoryCubit>(context).getCategories();
     });
   }
 

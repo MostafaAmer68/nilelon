@@ -18,7 +18,7 @@ class ProductDataAdapter extends TypeAdapter<ProductData> {
     };
     return ProductData(
       productPrice: fields[2] as String,
-      product: fields[0] as ProductModel,
+      product: fields[0] as AddProductModel,
       isEditable: (fields[1] as List)
           .map((dynamic e) => (e as Map).cast<String, bool>())
           .toList(),

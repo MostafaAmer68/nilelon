@@ -11,7 +11,7 @@ import 'package:nilelon/widgets/cards/wide/market_wide_card.dart';
 import 'package:nilelon/widgets/text_form_field/text_field/const_text_form_field.dart';
 import 'package:nilelon/widgets/banner/banner_product.dart';
 import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/features/shared/new_in_view_all/new_in_view_all.dart';
+import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.dart';
 import 'package:nilelon/features/store_flow/hot_picks/store_hot_picks_view.dart';
 import 'package:nilelon/features/store_flow/search/view/store_search_view.dart';
 

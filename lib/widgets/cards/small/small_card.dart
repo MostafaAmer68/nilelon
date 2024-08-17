@@ -48,15 +48,20 @@ GestureDetector smallCardC({
               Container(
                 height: 150.h,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: NetworkImage(model.productImages![0].url!),
-                        fit: BoxFit.fill)),
+                  image: DecorationImage(
+                    image: model.productImages.isEmpty
+                        ? const AssetImage(
+                            'assets/images/1-Nilelon f logo d.png')
+                        : NetworkImage(model.productImages[0].url),
+                    fit: BoxFit.fill,
+                  ),
+                ),
               ),
               Positioned(
                   top: 10.h,
                   child: InkWell(
                     onTap: () {
-                      addToClosetDialog(context, model.id!);
+                      addToClosetDialog(context, model.id);
                     },
                     child: Container(
                       width: 24.w,
@@ -75,13 +80,13 @@ GestureDetector smallCardC({
             height: 8,
           ),
           PriceAndRatingRow(
-              price: '${model.productVariants![0].price} L.E',
-              rating: model.rating!.toString()),
+              price: '${model.productVariants[0].price} L.E',
+              rating: model.rating.toString()),
           const SizedBox(
             height: 4,
           ),
           Text(
-            model.name!,
+            model.name,
             style: AppStylesManager.customTextStyleG5,
           ),
         ],

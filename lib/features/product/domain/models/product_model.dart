@@ -1,95 +1,143 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+class ProductModel {
+  final String id;
+  final String name;
+  final String description;
+  final String categoryID;
+  final String sizeguide;
+  final bool isInCloset;
+  final num rating;
+  final num inStock;
+  final String storeName;
+  final String storeId;
+  final List<ProductVariant> productVariants;
+  final List<ProductImage> productImages;
 
-import 'package:equatable/equatable.dart';
-
-import 'product_image.dart';
-import 'product_variant.dart';
-
-class ProductModel extends Equatable {
-  final String? id;
-  final String? name;
-  final String? description;
-  final String? categoryId;
-  final String? sizeguide;
-  final DateTime? createdOn;
-  final bool? isInCloset;
-  final num? rating;
-  final num? inStock;
-  final String? storeName;
-  final String? storeId;
-  final List<ProductVariant>? productVariants;
-  final List<ProductImage>? productImages;
-
-  const ProductModel({
-    this.id,
-    this.name,
-    this.description,
-    this.categoryId,
-    this.sizeguide,
-    this.createdOn,
-    this.isInCloset,
-    this.rating,
-    this.inStock,
-    this.storeName,
-    this.storeId,
-    this.productVariants,
-    this.productImages,
+  ProductModel({
+    required this.id,
+    required this.name,
+    required this.description,
+    required this.categoryID,
+    required this.sizeguide,
+    required this.isInCloset,
+    required this.rating,
+    required this.inStock,
+    required this.storeName,
+    required this.storeId,
+    required this.productVariants,
+    required this.productImages,
   });
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-        id: json['id'] as String?,
-        name: json['name'] as String?,
-        description: json['description'] as String?,
-        categoryId: json['categoryID'] as String?,
-        sizeguide: json['sizeguide'] as String?,
-        createdOn: json['createdOn'] == null
-            ? null
-            : DateTime.parse(json['createdOn'] as String),
-        isInCloset: json['isInCloset'] as bool?,
-        rating: json['rating'] as num?,
-        inStock: json['inStock'] as num?,
-        storeName: json['storeName'] as String?,
-        storeId: json['storeId'] as String?,
-        productVariants: (json['productVariants'] as List<dynamic>?)
-            ?.map((e) => ProductVariant.fromJson(e as Map<String, dynamic>))
-            .toList(),
-        productImages: (json['productImages'] as List<dynamic>?)
-            ?.map((e) => ProductImage.fromJson(e as Map<String, dynamic>))
-            .toList(),
-      );
+  factory ProductModel.fromJson(Map<String, dynamic> json) {
+    return ProductModel(
+      id: json['id'],
+      name: json['name'],
+      description: json['description'],
+      categoryID: json['categoryID'],
+      sizeguide: json['sizeguide'],
+      isInCloset: json['isInCloset'],
+      rating: json['rating'],
+      inStock: json['inStock'],
+      storeName: json['storeName'] ?? '',
+      storeId: json['storeId'],
+      productVariants: (json['productVariants'] as List)
+          .map((i) => ProductVariant.fromJson(i))
+          .toList(),
+      productImages: (json['productImages'] as List)
+          .map((i) => ProductImage.fromJson(i))
+          .toList(),
+    );
+  }
 
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'description': description,
-        'categoryID': categoryId,
-        'sizeguide': sizeguide,
-        'createdOn': createdOn?.toIso8601String(),
-        'isInCloset': isInCloset,
-        'rating': rating,
-        'inStock': inStock,
-        'storeName': storeName,
-        'storeId': storeId,
-        'productVariants': productVariants?.map((e) => e.toJson()).toList(),
-        'productImages': productImages?.map((e) => e.toJson()).toList(),
-      };
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'categoryID': categoryID,
+      'sizeguide': sizeguide,
+      'isInCloset': isInCloset,
+      'rating': rating,
+      'inStock': inStock,
+      'storeName': storeName,
+      'storeId': storeId,
+      'productVariants': productVariants.map((i) => i.toJson()).toList(),
+      'productImages': productImages.map((i) => i.toJson()).toList(),
+    };
+  }
+}
 
-  @override
-  List<Object?> get props {
-    return [
-      id,
-      name,
-      description,
-      categoryId,
-      sizeguide,
-      createdOn,
-      isInCloset,
-      rating,
-      inStock,
-      storeName,
-      storeId,
-      productVariants,
-      productImages
-    ];
+class ProductVariant {
+  final String productId;
+  final num price;
+  final num discountRate;
+  final num newPrice;
+  final String size;
+  final num quantity;
+  final String color;
+
+  ProductVariant({
+    required this.productId,
+    required this.price,
+    required this.discountRate,
+    required this.newPrice,
+    required this.size,
+    required this.quantity,
+    required this.color,
+  });
+
+  factory ProductVariant.fromJson(Map<String, dynamic> json) {
+    return ProductVariant(
+      productId: json['productId'],
+      price: json['price'],
+      discountRate: json['discountRate'],
+      newPrice: json['newPrice'],
+      size: json['size'],
+      quantity: json['quantity'],
+      color: json['color'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'productId': productId,
+      'price': price,
+      'discountRate': discountRate,
+      'newPrice': newPrice,
+      'size': size,
+      'quantity': quantity,
+      'color': color,
+    };
+  }
+}
+
+class ProductImage {
+  final String productId;
+  final String url;
+  final String description;
+  final String color;
+
+  ProductImage({
+    required this.productId,
+    required this.url,
+    required this.description,
+    required this.color,
+  });
+
+  factory ProductImage.fromJson(Map<String, dynamic> json) {
+    return ProductImage(
+      productId: json['productId'],
+      url: json['url'],
+      description: json['description'] ?? '',
+      color: json['color'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'productId': productId,
+      'url': url,
+      'description': description,
+      'color': color,
+    };
   }
 }

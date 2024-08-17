@@ -26,6 +26,8 @@ class UserModel<T extends BaseUserData> extends Equatable {
         role,
       ];
 
+  TModel getUserData<TModel>() => userData as TModel;
+
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
       token: map['token'] as String,

@@ -6,7 +6,7 @@ part 'product_data.g.dart';
 @HiveType(typeId: 20)
 class ProductData extends Equatable {
   @HiveField(0)
-  final ProductModel product;
+  final AddProductModel product;
   @HiveField(1)
   final List<Map<String, bool>> isEditable;
   @HiveField(2)

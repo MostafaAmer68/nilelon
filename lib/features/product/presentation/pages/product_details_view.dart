@@ -1,8 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
-import 'package:nilelon/features/closet/presentation/view/closet_view.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/resources/appstyles_manager.dart';
@@ -20,8 +20,6 @@ import 'package:nilelon/features/product/presentation/widgets/rating_container.d
 import 'package:nilelon/widgets/rating/view/rating_dialog.dart';
 import 'package:nilelon/features/customer_flow/store_profile_customer/store_profile_customer.dart';
 
-import '../../../closet/presentation/widget/closet_widget_with_options.dart';
-
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({
     super.key,
@@ -33,12 +31,15 @@ class ProductDetailsView extends StatefulWidget {
 }
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
-  var s = true;
-  var m = false;
-  var l = false;
-  var xl = false;
   int counter = 1;
   bool isEnabled = true;
+  late List<bool> sizes;
+  @override
+  void initState() {
+    sizes = widget.product.productVariants.map((e) => false).toList();
+    super.initState();
+  }
+
   void incrementCounter() {
     setState(() {
       counter++;
@@ -51,6 +52,25 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     });
   }
 
+  int getColorValue(String colorString, String component) {
+    // Remove the "Color [" prefix and "]" suffix
+    colorString = colorString.replaceAll("Color [", "").replaceAll("]", "");
+
+    // Split the string by ", " to get individual components
+    List<String> components = colorString.split(", ");
+
+    // Iterate through the components to find the desired one
+    for (String comp in components) {
+      List<String> keyValue = comp.split("=");
+      if (keyValue[0] == component) {
+        return int.parse(keyValue[1]); // Convert the value to an integer
+      }
+    }
+
+    // Return 0 if the component is not found (default value)
+    return 0;
+  }
+
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -60,7 +80,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           title: lang.productDetails,
           icon: Icons.share_outlined,
           onPressed: () {
-            addToClosetDialog(context, widget.product.id!);
+            addToClosetDialog(context, widget.product.id);
           },
           context: context),
       body: SingleChildScrollView(
@@ -69,7 +89,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           children: [
             const DefaultDivider(),
             ImageBanner(
-              images: widget.product.productImages!.map((e) => e.url!).toList(),
+              images: widget.product.productImages.map((e) => e.url).toList(),
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -81,7 +101,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       nameAndPriceRow(context),
                       const Spacer(),
                       Text(
-                        '${widget.product.productVariants![0].price} L.E',
+                        '${widget.product.productVariants[0].price} L.E',
                         style: AppStylesManager.customTextStyleO4,
                       ),
                     ],
@@ -90,7 +110,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                     height: 24,
                   ),
                   Text(
-                    widget.product.description!,
+                    widget.product.description,
                     style: AppStylesManager.customTextStyleG18.copyWith(
                       fontWeight: FontWeightManager.regular400,
                     ),
@@ -108,66 +128,20 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       ),
                       Container(
                         margin: const EdgeInsets.only(top: 10),
-                        child: Row(
-                          children: [
-                            sizeContainer(
-                              context,
-                              () {
-                                s = true;
-                                m = false;
-                                l = false;
-                                xl = false;
-                                setState(() {});
-                              },
-                              "S",
-                              s,
-                            ),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            sizeContainer(
-                              context,
-                              () {
-                                s = false;
-                                m = true;
-                                l = false;
-                                xl = false;
-                                setState(() {});
-                              },
-                              "M",
-                              m,
-                            ),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            sizeContainer(
-                              context,
-                              () {
-                                s = false;
-                                m = false;
-                                l = true;
-                                xl = false;
-                                setState(() {});
-                              },
-                              "L",
-                              l,
-                            ),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            sizeContainer(
-                              context,
-                              () {
-                                s = false;
-                                m = false;
-                                l = false;
-                                xl = true;
-                                setState(() {});
-                              },
-                              "XL",
-                              xl,
-                            ),
-                          ],
+                        child: ToggleButtons(
+                          selectedColor:
+                              AppStylesManager.customTextStyleO.color,
+                          selectedBorderColor: ColorManager.primaryR2,
+                          textStyle: AppStylesManager.customTextStyleG11,
+                          onPressed: (index) {
+                            sizes = sizes.map((e) => false).toList();
+                            sizes[index] = !sizes[index];
+                            setState(() {});
+                          },
+                          isSelected: sizes,
+                          children: widget.product.productVariants
+                              .map((e) => Text(e.size))
+                              .toList(),
                         ),
                       ),
                     ],
@@ -182,54 +156,32 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         style: AppStylesManager.customTextStyleG10,
                       ),
                       const Spacer(),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: 24.w,
-                          height: 24.w,
-                          decoration: const BoxDecoration(
-                              color: ColorManager.primaryL2,
-                              shape: BoxShape.circle),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: 24.w,
-                          height: 24.w,
-                          decoration: const BoxDecoration(
-                              color: ColorManager.primaryL4,
-                              shape: BoxShape.circle),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: 24.w,
-                          height: 24.w,
-                          decoration: const BoxDecoration(
-                            color: ColorManager.primaryG15,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          width: 24.w,
-                          height: 24.w,
-                          decoration: const BoxDecoration(
-                              color: ColorManager.primaryO,
-                              shape: BoxShape.circle),
+                      SizedBox(
+                        width: 200,
+                        height: 60,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: widget.product.productVariants.length,
+                          itemBuilder: (context, index) {
+                            final variant =
+                                widget.product.productVariants[index];
+                            return InkWell(
+                              onTap: () {},
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 6),
+                                width: 24.w,
+                                height: 24.w,
+                                decoration: BoxDecoration(
+                                    color: Color.fromRGBO(
+                                        getColorValue(variant.color, 'R'),
+                                        getColorValue(variant.color, 'G'),
+                                        getColorValue(variant.color, 'B'),
+                                        1),
+                                    shape: BoxShape.circle),
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ],
@@ -237,7 +189,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   SizedBox(
                     height: 20.h,
                   ),
-                  widget.product.inStock! > 0
+                  widget.product.inStock > 0
                       ? Row(
                           children: [
                             Text(
@@ -327,7 +279,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.product.name!,
+          widget.product.name,
           style: AppStylesManager.customTextStyleBl6,
         ),
         const SizedBox(
@@ -340,12 +292,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 navigateTo(
                     context: context,
                     screen: StoreProfileCustomer(
-                        storeName: widget.product.name!,
+                        storeName: widget.product.name,
                         image: 'assets/images/brand1.png',
                         description: 'Shop for Women'));
               },
               child: Text(
-                widget.product.storeName!,
+                widget.product.storeName,
                 style: AppStylesManager.customTextStyleG9,
               ),
             ),
@@ -357,7 +309,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               color: ColorManager.primaryO2,
               size: 20,
             ),
-            Text(widget.product.rating!.toString())
+            Text(widget.product.rating.toString())
           ],
         )
       ],
@@ -370,7 +322,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       onTap: onTap,
       child: Container(
         height: 35.w,
-        width: 35.w,
+        width: 60.w,
         decoration: BoxDecoration(
           color: isSelected ? ColorManager.primaryR2 : ColorManager.primaryW,
           border: Border.all(

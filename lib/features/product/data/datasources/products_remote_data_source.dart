@@ -1,8 +1,15 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/domain/models/add_product/add_product_model.dart';
+import 'package:nilelon/features/product/domain/models/create_review_model.dart';
+import 'package:nilelon/features/product/domain/models/create_variant_image.dart';
+import 'package:nilelon/features/product/domain/models/create_variant_model.dart';
+import 'package:nilelon/features/product/domain/models/delete_image_variant.dart';
+import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
 import 'package:nilelon/features/product/domain/models/products_response_model.dart';
 import 'package:nilelon/service/network/api_service.dart';
 import 'package:nilelon/service/network/end_point.dart';
@@ -151,13 +158,132 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
-  Future<ProductsResponseModel> createProduct(ProductModel product) async {
+  Future<void> createProduct(AddProductModel product) async {
+    log(product.toMap().toString());
     final data = await apiService.post(
       endPoint: EndPoint.createProductUrl,
       body: product.toMap(),
     );
     if (data.statusCode == 200) {
-      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+      // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get Random failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+    }
+  }
+
+  Future<void> createReview(CreateReviewModel review) async {
+    log(review.toMap().toString());
+    final data = await apiService.post(
+      endPoint: EndPoint.createReviewUrl,
+      body: review.toMap(),
+    );
+    if (data.statusCode == 201) {
+      // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get Random failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+    }
+  }
+
+  Future<void> createVariant(CreateVariant review) async {
+    log(review.toMap().toString());
+    final data = await apiService.post(
+      endPoint: EndPoint.createProductVariantUrl,
+      body: review.toMap(),
+    );
+    if (data.statusCode == 201) {
+      // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get Random failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+    }
+  }
+
+  Future<void> createVariantImage(CreateVariantImage review) async {
+    log(review.toMap().toString());
+    final data = await apiService.post(
+      endPoint: EndPoint.createProductImagesUrl,
+      body: review.toMap(),
+    );
+    if (data.statusCode == 201) {
+      // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get Random failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+    }
+  }
+
+  Future<void> deleteVariant(DeleteVariant review) async {
+    log(review.toMap().toString());
+    final data = await apiService.post(
+      endPoint: EndPoint.deleteProductVariantUrl,
+      body: review.toMap(),
+    );
+    if (data.statusCode == 201) {
+      // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get Random failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+    }
+  }
+
+  Future<void> deleteVariantImage(DeleteVariantImage review) async {
+    log(review.toMap().toString());
+    final data = await apiService.post(
+      endPoint: EndPoint.createReviewUrl,
+      body: review.toMap(),
+    );
+    if (data.statusCode == 201) {
+      // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get Random failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+    }
+  }
+
+  Future<void> getReviewsForProduct(String productId) async {
+    final data = await apiService.post(
+      endPoint: '${EndPoint.createReviewUrl}/$productId',
+    );
+    if (data.statusCode == 200) {
+      // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;

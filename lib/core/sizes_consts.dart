@@ -7,3 +7,4 @@ enum SizeTypes {
   XXL,
   XXXL,
 }
+

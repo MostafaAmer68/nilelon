@@ -146,7 +146,7 @@ class _LoginViewState extends State<LoginView> {
                       setState(() {
                         isLoading = false;
                       });
-                      !HiveStorage.get(HiveKeys.isStore)
+                      HiveStorage.get(HiveKeys.isStore)
                           ? navigateAndRemoveUntil(
                               context: context,
                               screen: const StoreBottomTabBar())
@@ -167,9 +167,6 @@ class _LoginViewState extends State<LoginView> {
                       setState(() {
                         isLoading = false;
                       });
-                      BotToast.showText(
-                        text: 'Something went wrong, please try again later',
-                      );
                     }
                   },
                   child: GradientButtonBuilder(

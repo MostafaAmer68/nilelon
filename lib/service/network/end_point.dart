@@ -39,6 +39,20 @@ class EndPoint {
   static const String addToCartUrl = '/Cart/AddToCart';
   static const String emptyCartUrl = '/Cart/EmptyCart';
 
+  //payment urls
+  static const String getClientTokenUrl = '/PaymentService/GetClientToken';
+  static const String makeTransactionUrl = '/PaymentService/MakeTransaction';
+  static const String makeTransactionWithPaymentUrl =
+      '/PaymentService/MakeTransactionWithPayment';
+  static const String refundTransactionUrl =
+      '/PaymentService/RefundTransaction';
+  static const String addPayment = '/PaymentService/AddPayment';
+  static const String getPaymentMethods = '/PaymentService/GetPaymentMethods';
+
+  // reviews urls
+  static const String createReviewUrl = '/Review/CreateReview';
+  static const String getReviewsForProductUrl = '/Review/GetReviewsForProduct';
+
   //order urls
   static const String getCustomerOrderUrl = 'Order/GetCustomerOrders';
   static const String getStoreOrderUrl = 'Order/GetStoreOrder';

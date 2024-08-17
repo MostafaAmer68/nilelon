@@ -74,6 +74,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
           );
         }
         if (state is CustomerRegisterSuccess) {
+          BotToast.closeAllLoading();
           successCreationDialog(
             isDismissible: false,
             context: context,

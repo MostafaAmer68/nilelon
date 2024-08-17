@@ -97,11 +97,13 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final data = await apiService.post(
         endPoint: EndPoint.loginUrl, body: entity.toJson());
     if (data.statusCode == 200) {
-      var userData;
-      HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
+      UserModel userData;
+      // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
       HiveStorage.set(HiveKeys.token, data.data['token']);
       if (data.data['role'] != 'Store') {
         userData = UserModel<CustomerModel>.fromMap(data.data);
+        HiveStorage.set(
+            HiveKeys.shopFor, data.data['data']['productsChoice'] == 'Male');
       } else {
         userData = UserModel<StoreModel>.fromMap(data.data);
       }
