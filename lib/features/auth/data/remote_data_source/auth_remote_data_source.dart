@@ -143,7 +143,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<String> storeRegisterAuth(StoreRegisterModel entity, context) async {
     final data = await apiService.post(
-        endPoint: EndPoint.customerRegisterUrl, body: entity.toJson());
+        endPoint: EndPoint.storeRegisterUrl, body: entity.toJson());
     if (data.statusCode == 200) {
       return data.data as String;
     } else if (data.statusCode == 400) {
