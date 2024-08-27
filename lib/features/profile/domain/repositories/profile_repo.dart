@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:nilelon/features/profile/data/models/store_profile.dart';
 
-import '../../../../service/failure_service.dart';
+import '../../../../core/service/failure_service.dart';
 
 abstract class ProfileRepo {
   Future<Either<FailureService, String>> updateStoreInfo(
@@ -19,5 +20,11 @@ abstract class ProfileRepo {
     String name,
     String storeSlogan,
     context,
+  );
+  Future<Either<FailureService, StoreProfile>> getStoreById(
+    String storeId,
+  );
+  Future<Either<FailureService, void>> followStore(
+    String storeId,
   );
 }

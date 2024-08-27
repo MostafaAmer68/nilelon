@@ -53,7 +53,7 @@ class AddProductModel {
 @HiveType(typeId: 1)
 class Variant {
   @HiveField(0)
-  final int color;
+  final String color;
 
   @HiveField(1)
   final List<String> images;

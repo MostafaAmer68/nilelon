@@ -4,15 +4,15 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/domain/model/create_closet.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 
-import 'package:nilelon/service/failure_service.dart';
-import 'package:nilelon/service/network/api_service.dart';
+import 'package:nilelon/core/service/failure_service.dart';
+import 'package:nilelon/core/service/network/api_service.dart';
 
-import '../../../../service/network/end_point.dart';
+import '../../../../core/service/network/end_point.dart';
 import '../../domain/repo/closet_repo.dart';
 
 class ClosetRemoteDataSourceImpl extends ClosetRepo {

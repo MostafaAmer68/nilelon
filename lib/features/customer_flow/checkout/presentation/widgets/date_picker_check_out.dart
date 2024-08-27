@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 
 Future datePickerCheckOut(BuildContext context) async {
   return await showMonthPicker(

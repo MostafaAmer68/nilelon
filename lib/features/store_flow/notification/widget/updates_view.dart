@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/widgets/cards/notification/notify_card.dart';
-import 'package:nilelon/widgets/cards/notification/notify_viewed_card.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/widgets/cards/notification/notify_card.dart';
+import 'package:nilelon/core/widgets/cards/notification/notify_viewed_card.dart';
 
 class UpdatesView extends StatelessWidget {
   const UpdatesView({super.key});

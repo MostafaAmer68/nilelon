@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/order/presentation/widgets/ordered_view.dart';
 import 'package:nilelon/features/order/presentation/widgets/received_store_view.dart';
 import 'package:nilelon/features/order/presentation/widgets/shipped_store_view.dart';
@@ -16,6 +18,13 @@ class OrderTabBar extends StatefulWidget {
 
 class _OrderTabBarState extends State<OrderTabBar> {
   int selectedIndex = 0;
+  late final OrderCubit cubit;
+  @override
+  void initState() {
+    cubit = OrderCubit.get(context);
+   
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

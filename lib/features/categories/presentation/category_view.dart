@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
-import 'package:nilelon/features/product/presentation/pages/drafits_product_page.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/utils/app_logs.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
-import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/features/product/presentation/cubit/add_product_view.dart';
+import 'package:nilelon/features/product/presentation/pages/draft_product_page.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/utils/app_logs.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
+import 'package:nilelon/features/product/presentation/pages/add_product_page.dart';
 import 'package:nilelon/features/categories/presentation/widget/category_items.dart';
 
 import '../domain/model/result.dart';
@@ -55,8 +55,9 @@ class _ChooseProductViewState extends State<ChooseProductView> {
             buttonWidget: GestureDetector(
                 onTap: () {
                   AppLogs.infoLog(
-                      HiveStorage.get(HiveKeys.productData).toString());
-                  navigateTo(context: context, screen: const DraftsView());
+                      HiveStorage.get(HiveKeys.draftProduct).toString());
+                  navigateTo(
+                      context: context, screen: const DraftProductPage());
                 },
                 child: Text(
                   lang.drafts,
@@ -66,19 +67,20 @@ class _ChooseProductViewState extends State<ChooseProductView> {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: (HiveStorage.get(HiveKeys.categories) as List).isEmpty
+              child: HiveStorage.get<List>(HiveKeys.categories).isEmpty
                   ? const Center(child: Text('No Category added yet!!'))
                   : GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 230,
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 4.0,
-                              mainAxisSpacing: 12),
+                        mainAxisExtent: 230,
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 4.0,
+                        mainAxisSpacing: 12,
+                      ),
                       itemCount:
-                          (HiveStorage.get(HiveKeys.categories) as List).length,
+                          HiveStorage.get<List>(HiveKeys.categories).length,
                       itemBuilder: (context, sizeIndex) {
-                        final category = (HiveStorage.get<List<Result>>(
+                        final category = (HiveStorage.get<List>(
                             HiveKeys.categories))[sizeIndex];
 
                         return Column(

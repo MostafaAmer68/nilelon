@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 
 part 'switch_language_event.dart';
 part 'switch_language_state.dart';

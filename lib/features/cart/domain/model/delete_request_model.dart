@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class DeleteRequestModel extends Equatable {
-  final int? color;
+  final String? color;
   final String? size;
   final String? productId;
   final String? customrId;
@@ -15,7 +15,7 @@ class DeleteRequestModel extends Equatable {
 
   factory DeleteRequestModel.fromJson(Map<String, dynamic> json) {
     return DeleteRequestModel(
-      color: json['color'] as int?,
+      color: json['color'] as String?,
       size: json['size'] as String?,
       productId: json['productId'] as String?,
       customrId: json['customrId'] as String?,

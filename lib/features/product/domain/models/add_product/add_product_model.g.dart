@@ -69,7 +69,7 @@ class VariantAdapter extends TypeAdapter<Variant> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Variant(
-      color: fields[0] as int,
+      color: fields[0].toString(),
       images: (fields[1] as List).cast<String>(),
       sizes: (fields[2] as List).cast<SizeModel>(),
     );

@@ -1,11 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
 import 'package:nilelon/features/cart/domain/model/change_quantity_model.dart';
 import 'package:nilelon/features/cart/domain/model/delete_request_model.dart';
 import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
 import 'package:nilelon/features/cart/domain/repos/cart_repos.dart';
+
+import '../../domain/model/get_cart_model/get_cart_model.dart';
 
 part 'cart_state.dart';
 
@@ -24,6 +26,7 @@ class CartCubit extends Cubit<CartState> {
     });
   }
 
+  late GetCartModel cartItems;
   Future<void> addToCart(AddToCartModel model) async {
     emit(CartLoading());
 
@@ -42,6 +45,7 @@ class CartCubit extends Cubit<CartState> {
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
+      cartItems = response;
       emit(GetCartSuccess(items: response.result?.items ?? []));
     });
   }

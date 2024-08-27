@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 class CartItem extends Equatable {
   final int? quantity;
   final String? size;
-  final int? color;
+  final String? color;
   final String? productId;
   final String? cartId;
   final num? price;
@@ -25,7 +25,7 @@ class CartItem extends Equatable {
   factory CartItem.fromJson(Map<String, dynamic> json) => CartItem(
         quantity: json['quantity'] as int?,
         size: json['size'] as String?,
-        color: json['color'] as int?,
+        color: json['color'] as String?,
         productId: json['productId'] as String?,
         cartId: json['cartId'] as String?,
         price: json['price'] != null ? json['price'] as num : null,

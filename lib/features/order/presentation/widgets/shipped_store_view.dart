@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/cards/store_order/shipped_store_card.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/cards/store_order/shipped_store_card.dart';
 import 'package:nilelon/features/order/presentation/pages/ordered_store_details_view.dart';
 
-class ShippedStoreView extends StatelessWidget {
+import '../../../../core/data/hive_stroage.dart';
+import '../cubit/order_cubit.dart';
+
+class ShippedStoreView extends StatefulWidget {
   const ShippedStoreView({super.key});
+
+  @override
+  State<ShippedStoreView> createState() => _ShippedStoreViewState();
+}
+
+class _ShippedStoreViewState extends State<ShippedStoreView> {
+  late final OrderCubit cubit;
+  @override
+  void initState() {
+    cubit = OrderCubit.get(context);
+    if (HiveStorage.get(HiveKeys.isStore)) {
+      cubit.getStoreOrder('shipped');
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

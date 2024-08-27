@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:nilelon/service/failure_service.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 
 import '../model/category_model.dart';
 

@@ -1,8 +1,11 @@
-import 'package:nilelon/service/network/api_service.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:nilelon/core/service/network/api_service.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
+import 'package:nilelon/features/profile/data/models/store_profile.dart';
 
-import '../../../../data/hive_stroage.dart';
-import '../../../../service/network/end_point.dart';
-import '../../../../widgets/alert/error_alert.dart';
+import '../../../../core/data/hive_stroage.dart';
+import '../../../../core/service/network/end_point.dart';
+import '../../../../core/widgets/alert/error_alert.dart';
 
 class ProfileRemoteData {
   final ApiService _apiService;
@@ -65,6 +68,42 @@ class ProfileRemoteData {
       // Handle other status codes if necessary
       final errorMessage = response.data;
       errorAlert(context, errorMessage);
+      throw Exception(' $errorMessage');
+    }
+  }
+
+  Future<StoreProfile> getStoreById(String storeId) async {
+    final response = await _apiService.get(
+      endPoint: EndPoint.getStoreByIdUrl,
+      query: {
+        "id": storeId,
+      },
+    );
+    if (response.statusCode == 200) {
+      return StoreProfile.fromMap(response.data['result']);
+    } else {
+      // Handle other status codes if necessary
+      final errorMessage = response.data;
+      // errorAlert(context, errorMessage);
+      throw Exception(' $errorMessage');
+    }
+  }
+
+  Future<void> followStore(storeId) async {
+    final response = await _apiService.post(
+      endPoint: EndPoint.follow,
+      body: {
+        'isNotify': false,
+        "storeId": storeId,
+        "customerId": JwtDecoder.decode(
+            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+      },
+    );
+    if (response.statusCode == 200) {
+    } else {
+      // Handle other status codes if necessary
+      final errorMessage = response.data;
+      // errorAlert(context, errorMessage);
       throw Exception(' $errorMessage');
     }
   }

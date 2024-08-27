@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
 import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/shared/onboarding/onboarding_cubit/onboarding_cubit.dart';
 import 'package:nilelon/features/shared/onboarding/screen/onboarding_view.dart';
 

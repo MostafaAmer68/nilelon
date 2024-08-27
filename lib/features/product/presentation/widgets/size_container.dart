@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 
 Container sizeContainer(
   BuildContext context,
@@ -9,7 +9,7 @@ Container sizeContainer(
 ) {
   return Container(
     height: 46.h,
-    width: 46.h,
+    width: 80.h,
     decoration: BoxDecoration(
       color: ColorManager.primaryW,
       border: Border.all(

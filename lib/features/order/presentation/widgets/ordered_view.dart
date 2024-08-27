@@ -1,13 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/alert/shipped_alert.dart';
-import 'package:nilelon/widgets/cards/store_order/ordered_store_card.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/alert/shipped_alert.dart';
+import 'package:nilelon/core/widgets/cards/store_order/ordered_store_card.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/order/presentation/pages/ordered_store_details_view.dart';
 
-class OrderedView extends StatelessWidget {
+class OrderedView extends StatefulWidget {
   const OrderedView({super.key});
+
+  @override
+  State<OrderedView> createState() => _OrderedViewState();
+}
+
+class _OrderedViewState extends State<OrderedView> {
+  late final OrderCubit cubit;
+  @override
+  void initState() {
+    cubit = OrderCubit.get(context);
+    if (HiveStorage.get(HiveKeys.isStore)) {
+      cubit.getStoreOrder('ordered');
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +33,7 @@ class OrderedView extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 12.h),
         child: ListView.builder(
-            itemCount: 9,
+            itemCount: cubit.storeOrders.length,
             itemBuilder: (context, index) {
               return Padding(
                 padding:

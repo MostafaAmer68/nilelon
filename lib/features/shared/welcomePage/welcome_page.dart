@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/shared/recommendation/recommendation_view.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/button/button_builder.dart';
-import 'package:nilelon/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/button/button_builder.dart';
+import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/auth/presentation/view/login/login_view.dart';
 
 class ShopOrSellView extends StatelessWidget {

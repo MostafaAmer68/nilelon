@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/features/customer_flow/see_more_stores/view/see_more_stores_view.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/filter/static_lists.dart';
-import 'package:nilelon/widgets/text_form_field/text_field/text_form_field_builder.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/filter/static_lists.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/customer_flow/search/widget/search_section_items.dart';
 import 'package:nilelon/features/customer_flow/sections_view.dart/sections_view.dart';
-import 'package:nilelon/features/customer_flow/store_profile_customer/store_profile_customer.dart';
-import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
+import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
+import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
@@ -107,13 +107,13 @@ class SearchView extends StatelessWidget {
       String image, context, String name, String description) {
     return GestureDetector(
       onTap: () {
-        navigateTo(
-            context: context,
-            screen: StoreProfileCustomer(
-              storeName: name,
-              image: image,
-              description: description,
-            ));
+        // navigateTo(
+        //     context: context,
+        //     screen: StoreProfileCustomer(
+        //       storeName: name,
+        //       image: image,
+        //       description: description,
+        //     ));
       },
       child: Container(
         decoration: ShapeDecoration(

@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/cards/store_order/recieved_store_card.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/cards/store_order/recieved_store_card.dart';
 import 'package:nilelon/features/order/presentation/pages/ordered_store_details_view.dart';
 
-class RecievedStoreView extends StatelessWidget {
+import '../../../../core/data/hive_stroage.dart';
+import '../cubit/order_cubit.dart';
+
+class RecievedStoreView extends StatefulWidget {
   const RecievedStoreView({super.key});
+
+  @override
+  State<RecievedStoreView> createState() => _RecievedStoreViewState();
+}
+
+class _RecievedStoreViewState extends State<RecievedStoreView> {
+  late final OrderCubit cubit;
+  @override
+  void initState() {
+    cubit = OrderCubit.get(context);
+    if (HiveStorage.get(HiveKeys.isStore)) {
+      cubit.getStoreOrder('received');
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

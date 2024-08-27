@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:nilelon/features/payments/domain/models/add_payment_model.dart';
 import 'package:nilelon/features/payments/domain/models/make_transaction_model.dart';
 import 'package:nilelon/features/payments/domain/models/make_transaction_payment_model.dart';
-import 'package:nilelon/service/failure_service.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 
 abstract class PaymentRepo {
   Future<Either<ServerFailure, void>> getClientToken();

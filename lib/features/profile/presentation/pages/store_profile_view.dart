@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/cards/small/small_card.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_settings_view.dart';
-import 'package:nilelon/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+
+import '../../../categories/domain/model/result.dart';
 
 class StoreProfileView extends StatefulWidget {
   const StoreProfileView({
@@ -25,16 +27,9 @@ class StoreProfileView extends StatefulWidget {
 }
 
 class _StoreProfileViewState extends State<StoreProfileView> {
-  List<String> items = [
-    'All Items',
-    'T-Shirts',
-    'Jackets',
-    'Sneakers',
-    'Pants'
-  ];
   int _selectedIndex = 0;
-  int page = 5;
-  int pageSize = 1;
+  int page = 1;
+  int pageSize = 100;
   bool isLoadMore = false;
   ScrollController scrollController = ScrollController();
 
@@ -87,7 +82,9 @@ class _StoreProfileViewState extends State<StoreProfileView> {
             const SizedBox(
               height: 30,
             ),
-            circleItems('assets/images/brand1.png'),
+            circleItems(HiveStorage.get<UserModel>(HiveKeys.userModel)
+                .getUserData<StoreModel>()
+                .profilePic),
             const SizedBox(
               height: 16,
             ),
@@ -156,9 +153,12 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>
-                          filterContainer(items[index], index),
-                      itemCount: items.length,
+                      itemBuilder: (context, index) => filterContainer(
+                          HiveStorage.get<List>(HiveKeys.categories)[index]
+                              .name!,
+                          index),
+                      itemCount:
+                          HiveStorage.get<List>(HiveKeys.categories).length,
                     ),
                   ),
                 ),
@@ -197,9 +197,14 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                               mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                             ),
                             shrinkWrap: true,
-                            itemCount: isLoadMore
-                                ? productsList.length + 1
-                                : productsList.length,
+                            itemCount: productsList
+                                .where((e) =>
+                                    e.categoryID ==
+                                    HiveStorage.get<List>(
+                                            HiveKeys.categories)[_selectedIndex]
+                                        .id!)
+                                .toList()
+                                .length,
                             itemBuilder: (context, sizeIndex) {
                               if (sizeIndex == productsList.length &&
                                   isLoadMore) {
@@ -208,7 +213,13 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                                 return Container(
                                   child: smallCardC(
                                     context: context,
-                                    model: productsList[sizeIndex],
+                                    model: productsList
+                                        .where((e) =>
+                                            e.categoryID ==
+                                            HiveStorage.get<List>(HiveKeys
+                                                    .categories)[_selectedIndex]
+                                                .id!)
+                                        .toList()[sizeIndex],
                                   ),
                                 );
                               }
@@ -232,6 +243,8 @@ class _StoreProfileViewState extends State<StoreProfileView> {
         setState(() {
           _selectedIndex = index;
           // _indexName = name;
+          ProductsCubit.get(context).getStoreProductsPagination(1, 100);
+          setState(() {});
         });
       },
       child: _selectedIndex == index
@@ -299,7 +312,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
       ),
       child: CircleAvatar(
         radius: 50,
-        backgroundImage: AssetImage(image),
+        backgroundImage: NetworkImage(image),
       ),
     );
   }

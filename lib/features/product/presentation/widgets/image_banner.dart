@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:nilelon/resources/const_functions.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 
 class ImageBanner extends StatefulWidget {
   final List<String> images;

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/custom_app_bar/market_custom_app_bar.dart';
-import 'package:nilelon/widgets/cards/small/market_small_card.dart';
-import 'package:nilelon/widgets/cards/wide/market_wide_card.dart';
-import 'package:nilelon/widgets/text_form_field/text_field/const_text_form_field.dart';
-import 'package:nilelon/widgets/banner/banner_product.dart';
-import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/market_custom_app_bar.dart';
+import 'package:nilelon/core/widgets/cards/small/market_small_card.dart';
+import 'package:nilelon/core/widgets/cards/wide/market_wide_card.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
+import 'package:nilelon/core/widgets/banner/banner_product.dart';
+import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.dart';
 import 'package:nilelon/features/store_flow/hot_picks/store_hot_picks_view.dart';
 import 'package:nilelon/features/store_flow/search/view/store_search_view.dart';
@@ -110,8 +110,8 @@ class StoreMarketView extends StatelessWidget {
                   itemCount: 7,
                   itemBuilder: (context, sizeIndex) {
                     return Container(
-                      child: marketSmallCard(context: context),
-                    );
+                        // child: marketSmallCard(context: context),
+                        );
                   },
                 ),
               ),

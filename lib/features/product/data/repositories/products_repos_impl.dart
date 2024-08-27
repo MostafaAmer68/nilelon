@@ -8,15 +8,16 @@ import 'package:nilelon/features/product/domain/models/delete_image_variant.dart
 import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
 import 'package:nilelon/features/product/domain/models/products_response_model.dart';
 import 'package:nilelon/features/product/data/datasources/products_remote_data_source.dart';
-import 'package:nilelon/service/failure_service.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 
+import '../../domain/models/product_model.dart';
 import '../../domain/repositories/products_repos.dart';
 
 class ProductsReposImpl extends ProductsRepos {
   final ProductsRemoteDataSourceImpl productsRemoteDataSource;
   ProductsReposImpl(this.productsRemoteDataSource);
   @override
-  Future<Either<FailureService, ProductsResponseModel>> getFollowedProducts(
+  Future<Either<FailureService, List<ProductModel>>> getFollowedProducts(
       int page, int productSize) async {
     try {
       final result =
@@ -24,7 +25,7 @@ class ProductsReposImpl extends ProductsRepos {
       return Right(result);
     } catch (e) {
       if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
+        return left(ServerFailure(e.toString()));
       }
       return left(ServerFailure(e.toString()));
     }

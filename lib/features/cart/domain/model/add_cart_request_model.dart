@@ -7,7 +7,7 @@ import 'package:equatable/equatable.dart';
 class AddToCartModel extends Equatable {
   final int quantity;
   final String size;
-  final int color;
+  final String color;
   final String productId;
   final String customerId;
   const AddToCartModel({
@@ -43,7 +43,7 @@ class AddToCartModel extends Equatable {
     return AddToCartModel(
       quantity: map['quantity'] as int,
       size: map['size'] as String,
-      color: map['color'] as int,
+      color: map['color'] as String,
       productId: map['productId'] as String,
       customerId: map['customerId'] as String,
     );

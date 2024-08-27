@@ -7,20 +7,24 @@ import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/closet/data/repo_impl/closet_repo_impl.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
+import 'package:nilelon/features/order/data/repositories/order_repo_impl.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/payments/data/repositories/payment_repo_impl.dart';
 import 'package:nilelon/features/payments/presentation/cubit/payment_cubit.dart';
-import 'package:nilelon/features/product/presentation/cubit/cubit/add_product_cubit.dart';
+import 'package:nilelon/features/product/presentation/cubit/add_product/add_product_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
+import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
+import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/features/shared/splash/splash_view.dart';
 import 'package:nilelon/features/store_flow/analytics/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:nilelon/features/categories/data/repos_impl/category_repos_impl.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/service/set_up_locator_service.dart';
-import 'package:nilelon/widgets/rating/cubit/review_cubit.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/service/set_up_locator_service.dart';
+import 'package:nilelon/core/widgets/rating/cubit/review_cubit.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -59,12 +63,18 @@ class MyApp extends StatelessWidget {
           create: (context) =>
               ProductsCubit(locatorService<ProductsReposImpl>()),
         ),
-        BlocProvider<AddproductCubit>(
+        BlocProvider<AddProductCubit>(
           create: (context) =>
-              AddproductCubit(locatorService<ProductsReposImpl>()),
+              AddProductCubit(locatorService<ProductsReposImpl>()),
         ),
         BlocProvider<PaymentCubit>(
           create: (context) => PaymentCubit(locatorService<PaymentRepoImpl>()),
+        ),
+        BlocProvider<OrderCubit>(
+          create: (context) => OrderCubit(locatorService<OrderRepoImpl>()),
+        ),
+        BlocProvider<ProfileCubit>(
+          create: (context) => ProfileCubit(locatorService<ProfileRepoIMpl>()),
         ),
       ],
       child: ScreenUtilInit(

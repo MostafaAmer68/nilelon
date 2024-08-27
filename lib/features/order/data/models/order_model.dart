@@ -3,81 +3,188 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class OrderModel extends Equatable {
-  final int total;
-  final String phoneNum;
-  final num discount;
-  final String type;
-  final String shippingMethodId;
-  final String customerId;
+class CustomerOrder extends Equatable {
+  final String id;
+  final String date;
+  final double total;
+  final double discount;
+  final String promoCodeName;
   final String governate;
-  final String transactionId;
-  final Map<String, dynamic> customerAddressDTO;
-  final List<Map<String, dynamic>> orderProductVeriants;
-  const OrderModel({
+  final String status;
+  final String phoneNumber;
+  final String shippingCost;
+  final String customerId;
+  final List<OrderProductVariant> orderProductVariants;
+
+  const CustomerOrder({
+    required this.id,
+    required this.date,
     required this.total,
-    required this.phoneNum,
     required this.discount,
-    required this.type,
-    required this.shippingMethodId,
-    required this.customerId,
+    required this.promoCodeName,
     required this.governate,
-    required this.transactionId,
-    required this.customerAddressDTO,
-    required this.orderProductVeriants,
+    required this.status,
+    required this.phoneNumber,
+    required this.shippingCost,
+    required this.customerId,
+    required this.orderProductVariants,
   });
 
   @override
   List<Object> get props {
     return [
+      id,
+      date,
       total,
-      phoneNum,
       discount,
-      type,
-      shippingMethodId,
-      customerId,
+      promoCodeName,
       governate,
-      transactionId,
-      customerAddressDTO,
-      orderProductVeriants,
+      status,
+      phoneNumber,
+      shippingCost,
+      customerId,
+      orderProductVariants,
     ];
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'id': id,
+      'date': date,
       'total': total,
-      'phoneNum': phoneNum,
       'discount': discount,
-      'type': type,
-      'shippingMethodId': shippingMethodId,
-      'customerId': customerId,
+      'promoCodeName': promoCodeName,
       'governate': governate,
-      'transactionId': transactionId,
-      'customerAddressDTO': customerAddressDTO,
-      'orderProductVeriants': orderProductVeriants,
+      'status': status,
+      'phoneNumber': phoneNumber,
+      'shippingCost': shippingCost,
+      'customerId': customerId,
+      'orderProductVariants':
+          orderProductVariants.map((x) => x.toMap()).toList(),
     };
   }
 
-  factory OrderModel.fromMap(Map<String, dynamic> map) {
-    return OrderModel(
-      total: map['total'] as int,
-      phoneNum: map['phoneNum'] as String,
-      discount: map['discount'] as num,
-      type: map['type'] as String,
-      shippingMethodId: map['shippingMethodId'] as String,
-      customerId: map['customerId'] as String,
+  factory CustomerOrder.fromMap(Map<String, dynamic> map) {
+    return CustomerOrder(
+      id: map['id'] as String,
+      date: map['date'] as String,
+      total: map['total'] as double,
+      discount: map['discount'] as double,
+      promoCodeName: map['promoCodeName'] as String,
       governate: map['governate'] as String,
-      transactionId: map['transactionId'] as String,
-      customerAddressDTO: Map<String, dynamic>.from(
-          (map['customerAddressDTO'] as Map<String, dynamic>)),
-      orderProductVeriants: List<Map<String, dynamic>>.from(
-        map['orderProductVeriants'].map<Map<String, dynamic>>((x) => x),
+      status: map['status'] as String,
+      phoneNumber: map['phoneNumber'] as String,
+      shippingCost: map['shippingCost'] as String,
+      customerId: map['customerId'] as String,
+      orderProductVariants: List<OrderProductVariant>.from(
+        (map['orderProductVariants'] as List<int>).map<OrderProductVariant>(
+          (x) => OrderProductVariant.fromMap(x as Map<String, dynamic>),
+        ),
       ),
     );
   }
+}
 
-  String toJson() => json.encode(toMap());
+class StoreOrder extends Equatable {
+  final String id;
+  final String date;
+  final List<OrderProductVariant> orderProductVariants;
 
-  factory OrderModel.fromJson(String source) =>
-      OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  const StoreOrder({
+    required this.id,
+    required this.date,
+    required this.orderProductVariants,
+  });
+
+  @override
+  List<Object> get props => [id, date, orderProductVariants];
+
+  factory StoreOrder.fromMap(Map<String, dynamic> map) {
+    return StoreOrder(
+      id: map['id'] as String,
+      date: map['date'] as String,
+      orderProductVariants: List<OrderProductVariant>.from(
+        (map['orderProductVariants'] as List<int>).map<OrderProductVariant>(
+          (x) => OrderProductVariant.fromMap(x as Map<String, dynamic>),
+        ),
+      ),
+    );
+  }
+}
+
+class OrderProductVariant extends Equatable {
+  final String orderId;
+  final String productId;
+  final String productName;
+  final double productRate;
+  final String size;
+  final String color;
+  final int quantity;
+  final double price;
+  final String storeName;
+  final String storeId;
+  final List<String> urls;
+
+  const OrderProductVariant({
+    required this.orderId,
+    required this.productId,
+    required this.productName,
+    required this.productRate,
+    required this.size,
+    required this.color,
+    required this.quantity,
+    required this.price,
+    required this.storeName,
+    required this.storeId,
+    required this.urls,
+  });
+
+  @override
+  List<Object> get props {
+    return [
+      orderId,
+      productId,
+      productName,
+      productRate,
+      size,
+      color,
+      quantity,
+      price,
+      storeName,
+      storeId,
+      urls,
+    ];
+  }
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'orderId': orderId,
+      'productId': productId,
+      'productName': productName,
+      'productRate': productRate,
+      'size': size,
+      'color': color,
+      'quantity': quantity,
+      'price': price,
+      'storeName': storeName,
+      'storeId': storeId,
+      'urls': urls,
+    };
+  }
+
+  factory OrderProductVariant.fromMap(Map<String, dynamic> map) {
+    return OrderProductVariant(
+      orderId: map['orderId'] as String,
+      productId: map['productId'] as String,
+      productName: map['productName'] as String,
+      productRate: map['productRate'] as double,
+      size: map['size'] as String,
+      color: map['color'] as String,
+      quantity: map['quantity'] as int,
+      price: map['price'] as double,
+      storeName: map['storeName'] as String,
+      storeId: map['storeId'] as String,
+      urls: List<String>.from(map['urls'] as List<String>),
+    );
+  }
 }

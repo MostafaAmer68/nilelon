@@ -1,20 +1,21 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/button/gradient_button_builder.dart';
-import 'package:nilelon/widgets/text_form_field/text_and_form_field_column/with_icon/text_and_form_field_column_with_icon.dart';
-import 'package:nilelon/widgets/text_form_field/text_and_form_field_column/with_icon/text_and_form_field_column_with_icon_hide.dart';
-import 'package:nilelon/widgets/text_form_field/text_field/const_text_form_field.dart';
-import 'package:nilelon/widgets/text_form_field/text_field/text_form_field_builder.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/with_icon/text_and_form_field_column_with_icon.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/with_icon/text_and_form_field_column_with_icon_hide.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/auth/presentation/view/otp/otp_view.dart';
 import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.dart';
-import 'package:nilelon/widgets/pop_ups/success_creation_popup.dart';
+import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
 class StoreRegisterView extends StatefulWidget {
@@ -72,7 +73,9 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               phoneOrEmail: AuthCubit.get(context).emailController.text,
               buttonName: lang.verifyAndCreateAccount,
               onSuccess: () {
-                AuthCubit.get(context).authStoreRegister(context);
+                if(HiveStorage.get(HiveKeys.isStore)){
+                     AuthCubit.get(context).authStoreRegister(context);
+                }
               },
               resend: () {
                 AuthCubit.get(context).confirmRegisteration(context);

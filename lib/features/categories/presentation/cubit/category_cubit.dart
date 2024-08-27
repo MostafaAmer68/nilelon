@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/categories/domain/model/result.dart';
 
 import '../../domain/repos/category_repos.dart';
 
@@ -13,12 +14,12 @@ class CategoryCubit extends Cubit<CategoryState> {
   Future<void> getCategories() async {
     emit(CategoryLoading());
 
-    var result = await categoryRepos.getCategoryRepos();
+    final result = await categoryRepos.getCategoryRepos();
     result.fold((failure) {
       emit(CategoryFailure(failure.errorMsg));
     }, (response) {
       emit(CategorySuccess());
-      HiveStorage.set(
+      HiveStorage.set<List<Result>>(
         HiveKeys.categories,
         response.result ?? [],
       );

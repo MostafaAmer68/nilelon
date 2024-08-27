@@ -1,10 +1,9 @@
 enum SizeTypes {
-  XS,
-  S,
-  M,
-  L,
-  XL,
-  XXL,
-  XXXL,
+  XSmall,
+  Small,
+  Medium,
+  Large,
+  XLarge,
+  XXLarge,
+  XXXLarge,
 }
-

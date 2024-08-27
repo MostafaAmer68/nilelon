@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_braintree/flutter_braintree.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/payments/data/repositories/payment_repo_impl.dart';
 import 'package:nilelon/features/payments/domain/models/add_payment_model.dart';
@@ -89,5 +92,29 @@ class PaymentCubit extends Cubit<PaymentState> {
     }, (r) {
       emit(const PaymentState.success());
     });
+  }
+
+  Future<void> dropInPayment() async {
+    emit(const PaymentState.loading());
+    try {
+      await getClientToken();
+      final request = BraintreeDropInRequest(
+        clientToken: HiveStorage.get<String>(HiveKeys.clientToken),
+        collectDeviceData: true,
+        googlePaymentRequest: BraintreeGooglePaymentRequest(
+          totalPrice: '4.20',
+          currencyCode: 'USD',
+          billingAddressRequired: false,
+        ),
+        paypalRequest: BraintreePayPalRequest(
+          amount: '4.20',
+          displayName: 'Example company',
+        ),
+      );
+      BraintreeDropInResult? result = await BraintreeDropIn.start(request);
+      log(result!.paymentMethodNonce.typeLabel);
+    } catch (e) {
+      emit(const PaymentState.failure());
+    }
   }
 }

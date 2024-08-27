@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/product/presentation/pages/hand_picked_view_all.dart';
-import 'package:nilelon/widgets/cards/small/small_card.dart';
-import 'package:nilelon/widgets/shimmer_indicator/build_shimmer.dart';
-import 'package:nilelon/widgets/view_all_row/view_all_row.dart';
+import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.dart';
 
 class DiscoverView extends StatefulWidget {

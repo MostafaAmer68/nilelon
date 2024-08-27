@@ -3,18 +3,13 @@ import 'dart:async';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilelon/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/widgets/button/gradient_button_builder.dart';
-import 'package:nilelon/widgets/text_form_field/text_field/text_field_pin.dart';
-
-import '../../../../../utils/navigation.dart';
-import '../../../../../widgets/pop_ups/success_creation_popup.dart';
-import '../../../../shared/recommendation/recommendation_view.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_field/text_field_pin.dart';
 
 class OtpView extends StatefulWidget {
   const OtpView(

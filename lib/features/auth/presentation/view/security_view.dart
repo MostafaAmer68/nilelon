@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/auth/presentation/view/change_email_number/change_email_number.dart';
 import 'package:nilelon/features/auth/presentation/view/change_password/change_password.dart';
 import 'package:nilelon/features/auth/presentation/view/change_phone_number/change_phone_number.dart';

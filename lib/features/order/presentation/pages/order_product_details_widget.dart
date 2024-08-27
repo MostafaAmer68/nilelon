@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
 
 class OrderProductDetailsWidget extends StatelessWidget {

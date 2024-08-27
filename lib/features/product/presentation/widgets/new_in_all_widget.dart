@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/widgets/cards/small/market_small_card.dart';
-import 'package:nilelon/widgets/cards/small/small_card.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
-import 'package:nilelon/widgets/filter/category_container.dart';
-import 'package:nilelon/widgets/filter/filter_container.dart';
-import 'package:nilelon/widgets/filter/static_lists.dart';
-import 'package:nilelon/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/widgets/cards/small/market_small_card.dart';
+import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/widgets/filter/category_container.dart';
+import 'package:nilelon/core/widgets/filter/filter_container.dart';
+import 'package:nilelon/core/widgets/filter/static_lists.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 class NewInViewAll extends StatefulWidget {
   const NewInViewAll({super.key, required this.isStore});
@@ -90,8 +90,8 @@ class _NewInViewAllState extends State<NewInViewAll> {
                     itemCount: 7,
                     itemBuilder: (context, sizeIndex) {
                       return Container(
-                        child: marketSmallCard(context: context),
-                      );
+                          // child: marketSmallCard(context: context),
+                          );
                     },
                   )
                 : BlocBuilder<ProductsCubit, ProductsState>(

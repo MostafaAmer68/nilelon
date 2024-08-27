@@ -1,9 +1,11 @@
 import 'dart:io';
 
-import 'package:nilelon/data/hive_stroage.dart';
-import 'package:nilelon/features/order/data/models/order_model.dart';
-import 'package:nilelon/service/network/api_service.dart';
-import 'package:nilelon/service/network/end_point.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/order/data/models/create_order_model.dart';
+import 'package:nilelon/core/service/network/api_service.dart';
+import 'package:nilelon/core/service/network/end_point.dart';
+
+import '../models/order_model.dart';
 
 class OrderService {
   final ApiService _apiService;
@@ -22,7 +24,7 @@ class OrderService {
     throw response.data['result'];
   }
 
-  Future<void> getStoreOrder(String orderStatus) async {
+  Future<List<StoreOrder>> getStoreOrder(String orderStatus) async {
     final response = await _apiService.post(
       endPoint: EndPoint.getStoreOrderUrl,
       query: {
@@ -32,12 +34,12 @@ class OrderService {
     );
 
     if (response.statusCode == HttpStatus.ok) {
-      return;
+      return List<StoreOrder>.from(response.data);
     }
     throw response.data['result'];
   }
 
-  Future<void> getCustomerOrder(String orderStatus) async {
+  Future<List<CustomerOrder>> getCustomerOrder(String orderStatus) async {
     final response = await _apiService.post(
       endPoint: EndPoint.getCustomerOrderUrl,
       query: {
@@ -47,12 +49,12 @@ class OrderService {
     );
 
     if (response.statusCode == HttpStatus.ok) {
-      return;
+      return List<CustomerOrder>.from(response.data);
     }
     throw response.data['result'];
   }
 
-  Future<void> getStoreOrderByDate(String date) async {
+  Future<List<StoreOrder>> getStoreOrderByDate(String date) async {
     final response = await _apiService.post(
       endPoint: EndPoint.getStoreOderByDateUrl,
       query: {
@@ -62,7 +64,7 @@ class OrderService {
     );
 
     if (response.statusCode == HttpStatus.ok) {
-      return;
+      return List<StoreOrder>.from(response.data);
     }
     throw response.data['result'];
   }

@@ -1,72 +1,65 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/order/data/repositories/order_repo_impl.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
+
+import '../../../../../order/data/models/create_order_model.dart';
 
 part 'checkout_state.dart';
 
 class CheckOutCubit extends Cubit<CheckOutState> {
-  CheckOutCubit() : super(CheckOutInitial());
+  final OrderRepoImpl _orderRepo;
+  CheckOutCubit(this._orderRepo) : super(CheckOutInitial());
   static CheckOutCubit get(context) => BlocProvider.of(context);
   TextEditingController phoneController = TextEditingController();
-  TextEditingController parentPhoneController = TextEditingController();
-  // TextEditingController governmentController = TextEditingController();
-  TextEditingController facultyController = TextEditingController();
-  String roomType = '';
-  String period = '';
-  String periodShow = '';
-  String payment = '';
-  String? government;
-  DateTime? startDate;
-  DateTime? endDate;
-  String? startFormatedDate;
-  String? endFormatedDate;
-  // Future<void> postBooking(DataBooking entity) async {
-  //   emit(BookingLoading());
+  TextEditingController addressLine1 = TextEditingController();
+  TextEditingController addressLine2 = TextEditingController();
+  TextEditingController streetAddress = TextEditingController();
+  TextEditingController unitNumber = TextEditingController();
+  TextEditingController landmark = TextEditingController();
+  TextEditingController city = TextEditingController();
+  TextEditingController governate = TextEditingController();
 
-  //   var result = await bookingRepos.postBooking(entity);
-  //   result.fold((failure) {
-  //     emit(BookingFailure(failure.errorMsg));
-  //   }, (response) {
-  //     emit(BookingSuccess());
-
-  //     print(
-  //         'BBBBBBBBBBBBBBBOooooooooooooooookiiiiiiiiindf suuuuuuuuuucccccccccceeeeeessss');
-  //   });
-  // }
-
-  // Future<void> getBooked() async {
-  //   emit(BookedLoading());
-  //   List<String> name = [];
-  //   var result = await bookingRepos.getBooking();
-  //   // var result2 = await bookingRepos.getBookingDetails(roomId);
-  //   result.fold((failure) {
-  //     emit(BookedFailure(failure.errorMsg));
-  //   }, (response) async {
-  //     print('ffffffffffffffffffffffffffffffffffff');
-  //     print(response);
-  //     if (response.data != null && response.data!.isNotEmpty) {
-  //       for (var i = 0; i < response.data!.length; i++) {
-  //         String bookedDetail = await getBookedDetails(response.data![i].room!);
-  //         name.add(bookedDetail);
-  //         print(name);
-  //       }
-  //     }
-  //     emit(BookedSuccess(data: response.data ?? [], dataname: name));
-  //     print(
-  //         'BBBBBBBBBBBBBBBOooooooooooooooookiiiiiiiiindf geeeeeeeeeeeettttttt');
-  //   });
-  // }
-
-  // Future<String> getBookedDetails(String roomId) async {
-  //   var result = await bookingRepos.getBookingDetails(roomId);
-  //   String detail = result.fold(
-  //     (failure) {
-  //       return "";
-  //     },
-  //     (response) {
-  //       return response.data!.type!;
-  //     },
-  //   );
-  //   return detail;
-  // }
+  Future<void> createOrder(context) async {
+    emit(CheckOutLoading());
+    try {
+      OrderCubit.get(context).createOrder(
+        OrderModel(
+          total: 0,
+          phoneNum: phoneController.text,
+          discount: 0,
+          type: '',
+          shippingMethodId: '',
+          customerId: HiveStorage.get(HiveKeys.userId),
+          governate: governate.text,
+          transactionId: '',
+          customerAddressDTO: {
+            "addressLine1": addressLine1.text,
+            "addressLine2": addressLine2.text,
+            "city": city.text,
+            "unitNumber": unitNumber.text,
+            "streetNumber": streetAddress.text,
+            "nearestLandMark": landmark.text,
+          },
+          orderProductVeriants: CartCubit.get(context)
+              .cartItems
+              .result!
+              .items!
+              .map((e) => {
+                    "size": e.size!,
+                    "color": e.color!,
+                    "productId": e.productId!,
+                    "quantity": e.quantity!,
+                    "price": e.price!
+                  })
+              .toList(),
+        ),
+      );
+    } catch (e) {
+      emit(CheckOutFailure(e.toString()));
+    }
+  }
 }

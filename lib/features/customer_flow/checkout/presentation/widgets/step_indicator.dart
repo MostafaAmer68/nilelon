@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/resources/color_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 
 class StepIndicator extends StatelessWidget {
   final int totalSteps;

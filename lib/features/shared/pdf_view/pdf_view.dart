@@ -4,8 +4,8 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:nilelon/features/shared/pdf_view/build_table_row.dart';
 import 'package:nilelon/features/shared/pdf_view/headers_list.dart';
 import 'package:nilelon/features/shared/pdf_view/make_pdf.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class NilelonPdfView extends StatefulWidget {

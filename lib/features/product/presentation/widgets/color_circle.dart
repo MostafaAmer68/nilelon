@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/features/product/presentation/widgets/color_circle_checked_item.dart';
 import 'package:nilelon/features/product/presentation/widgets/color_circle_item.dart';
-import 'package:nilelon/resources/color_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 
-GestureDetector colorCircle(void Function() onTap, int color,
+GestureDetector colorCircle(void Function() onTap, String color,
     int? selectedIndex, int index, bool isEditable) {
   return GestureDetector(
     onTap: onTap,
     child: Padding(
       padding: const EdgeInsets.only(right: 14),
       child: isEditable && (selectedIndex == null || selectedIndex != index)
-          ? colorCircleCheckedItem(color)
+          ? colorCircleCheckedItem(int.parse(color))
           : isEditable
               ? Container(
                   width: 40.h,
@@ -24,10 +24,10 @@ GestureDetector colorCircle(void Function() onTap, int color,
                       width: 2,
                     ),
                   ),
-                  child: colorCircleCheckedItem(color),
+                  child: colorCircleCheckedItem(int.parse(color)),
                 )
               : selectedIndex == null || selectedIndex != index
-                  ? colorCircleItem(color)
+                  ? colorCircleItem(int.parse(color))
                   : Container(
                       width: 40.h,
                       height: 40.h,
@@ -39,7 +39,7 @@ GestureDetector colorCircle(void Function() onTap, int color,
                           width: 2,
                         ),
                       ),
-                      child: colorCircleItem(color),
+                      child: colorCircleItem(int.parse(color)),
                     ),
     ),
   );

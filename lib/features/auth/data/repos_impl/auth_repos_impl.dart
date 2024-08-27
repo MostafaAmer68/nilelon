@@ -6,7 +6,7 @@ import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
 import 'package:nilelon/features/auth/data/remote_data_source/auth_remote_data_source.dart';
 import 'package:nilelon/features/auth/domain/repos/auth_repos.dart';
-import 'package:nilelon/service/failure_service.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 
 class AuthReposImpl extends AuthRepos {
   final AuthRemoteDataSource authRemoteDataSource;

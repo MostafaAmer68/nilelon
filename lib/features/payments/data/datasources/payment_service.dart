@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/payments/domain/models/add_payment_model.dart';
 import 'package:nilelon/features/payments/domain/models/make_transaction_model.dart';
-import 'package:nilelon/service/network/api_service.dart';
-import 'package:nilelon/service/network/end_point.dart';
+import 'package:nilelon/core/service/network/api_service.dart';
+import 'package:nilelon/core/service/network/end_point.dart';
 
 import '../../domain/models/make_transaction_payment_model.dart';
 

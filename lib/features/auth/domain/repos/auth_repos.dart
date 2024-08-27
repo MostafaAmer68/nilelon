@@ -3,7 +3,7 @@ import 'package:nilelon/features/auth/domain/model/customer_register_model.dart'
 import 'package:nilelon/features/auth/domain/model/external_google_model.dart';
 import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
-import 'package:nilelon/service/failure_service.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 
 abstract class AuthRepos {
   Future<Either<FailureService, void>> loginRepos(LoginModel model, context);

@@ -8,14 +8,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/customer_register_model.dart';
 import 'package:nilelon/features/auth/domain/model/external_google_model.dart';
 import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
 import 'package:nilelon/features/auth/domain/repos/auth_repos.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
-import 'package:nilelon/utils/app_logs.dart';
+import 'package:nilelon/core/utils/app_logs.dart';
 
 import '../../../../core/helper.dart';
 
@@ -74,9 +74,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> updateStore(context) async {
     emit(LoginLoading());
-
+    final base64 = await convertImageToBase64(image);
     var result = await authRepos.updateStore(
-      base64Image,
+      base64,
       nameController.text,
       sloganController.text,
       context,
@@ -91,9 +91,9 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> updateCustomer(context) async {
     emit(LoginLoading());
-
+    final base64 = await convertImageToBase64(image);
     var result = await authRepos.updateCustomer(
-      base64Image,
+      base64,
       nameController.text,
       context,
     );
@@ -306,19 +306,20 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> authStoreRegister(context) async {
     emit(StoreRegisterLoading());
     var result = await authRepos.storeRegisterRepos(
-        StoreRegisterModel(
-          fullName: nameController.text,
-          email: emailController.text,
-          phoneNumber: '+2${phoneController.text}',
-          profileLink: profileLinkController.text,
-          websiteLink: websiteLinkController.text,
-          repName: repNameController.text,
-          repPhone: repNameController.text,
-          warehouseAddress: wareHouseAddressController.text,
-          password: passwordController.text,
-          confirmPassword: confirmPasswordController.text,
-        ),
-        context);
+      StoreRegisterModel(
+        fullName: nameController.text,
+        email: emailController.text,
+        phoneNumber: '+2${phoneController.text}',
+        profileLink: profileLinkController.text,
+        websiteLink: websiteLinkController.text,
+        repName: repNameController.text,
+        repPhone: repNameController.text,
+        warehouseAddress: wareHouseAddressController.text,
+        password: passwordController.text,
+        confirmPassword: confirmPasswordController.text,
+      ),
+      context,
+    );
     result.fold((failure) {
       emit(StoreRegisterFailure(failure.errorMsg));
     }, (response) {

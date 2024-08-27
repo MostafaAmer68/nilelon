@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 class ChangeQuantityModel extends Equatable {
   final int? quantity;
-  final int? color;
+  final String? color;
   final String? size;
   final String? productId;
   final String? customrId;
@@ -18,7 +18,7 @@ class ChangeQuantityModel extends Equatable {
   factory ChangeQuantityModel.fromJson(Map<String, dynamic> json) {
     return ChangeQuantityModel(
       quantity: json['quantity'] as int?,
-      color: json['color'] as int?,
+      color: json['color'] as String?,
       size: json['size'] as String?,
       productId: json['productId'] as String?,
       customrId: json['customrId'] as String?,

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
 
 class ClosetsWidget extends StatelessWidget {
   const ClosetsWidget({

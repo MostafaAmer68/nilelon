@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/widgets/cards/customer_order_management/recieved_card.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/widgets/cards/customer_order_management/recieved_card.dart';
 
 class RecievedView extends StatelessWidget {
   const RecievedView({super.key});

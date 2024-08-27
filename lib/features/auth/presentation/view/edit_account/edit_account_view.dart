@@ -3,22 +3,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/button/button_builder.dart';
-import 'package:nilelon/widgets/button/gradient_button_builder.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
-import 'package:nilelon/widgets/pop_ups/camera_popup.dart';
-import 'package:nilelon/widgets/pop_ups/success_creation_popup.dart';
-import 'package:nilelon/widgets/text_form_field/text_field/text_form_field_builder.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/button/button_builder.dart';
+import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/widgets/pop_ups/camera_popup.dart';
+import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-class EditAccountView extends StatelessWidget {
+class EditAccountView extends StatefulWidget {
   const EditAccountView({super.key});
+
+  @override
+  State<EditAccountView> createState() => _EditAccountViewState();
+}
+
+class _EditAccountViewState extends State<EditAccountView> {
+  late final AuthCubit cubit;
+  @override
+  void initState() {
+    cubit = AuthCubit.get(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +52,8 @@ class EditAccountView extends StatelessWidget {
             BotToast.closeAllLoading();
             successCreationDialog(
                 context: context,
-                highlightedText: 'Info has been updated successfully',
+                highlightedText:
+                    'Info has been updated successfully \n please relogin to update your info ',
                 regularText: '',
                 buttonText: lang.save,
                 ontap: () {
@@ -70,7 +83,7 @@ class EditAccountView extends StatelessWidget {
                     ),
                     TextFormFieldBuilder(
                       label: lang.enterYourName,
-                      controller: TextEditingController(),
+                      controller: cubit.nameController,
                       type: TextInputType.text,
                       width: screenWidth(context, 1),
                       isIcon: false,
@@ -79,76 +92,6 @@ class EditAccountView extends StatelessWidget {
                           height: 20,
                           padding: const EdgeInsets.all(12),
                           child: SvgPicture.asset('assets/images/profile.svg')),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Text(
-                      lang.email,
-                      style: AppStylesManager.customTextStyleBl5,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.enterYourEmail,
-                      controller: TextEditingController(),
-                      type: TextInputType.emailAddress,
-                      width: screenWidth(context, 1),
-                      isIcon: false,
-                      prefixWidget: Container(
-                          width: 20,
-                          height: 20,
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(
-                              'assets/images/sms-tracking.svg')),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Text(
-                      lang.address,
-                      style: AppStylesManager.customTextStyleBl5,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.address,
-                      controller: TextEditingController(),
-                      type: TextInputType.text,
-                      width: screenWidth(context, 1),
-                      isIcon: true,
-                      prefix: Icons.location_on,
-                      prefixWidget: Container(
-                          width: 20,
-                          height: 20,
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset('assets/images/profile.svg')),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
-                    Text(
-                      lang.phoneNumber,
-                      style: AppStylesManager.customTextStyleBl5,
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.enterYourPhoneNumber,
-                      controller: TextEditingController(),
-                      type: TextInputType.emailAddress,
-                      width: screenWidth(context, 1),
-                      isIcon: true,
-                      prefix: Icons.phone,
-                      prefixWidget: Container(
-                          width: 20,
-                          height: 20,
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(
-                              'assets/images/sms-tracking.svg')),
                     ),
                     const SizedBox(
                       height: 40,
@@ -199,9 +142,11 @@ class EditAccountView extends StatelessWidget {
           Container(
             width: 100.w,
             height: 100.w,
-            decoration: const ShapeDecoration(
+            decoration: ShapeDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/profile.png'),
+                image: cubit.image.path.isEmpty
+                    ? const AssetImage('assets/images/profile.png')
+                    : FileImage(cubit.image),
                 fit: BoxFit.contain,
               ),
               shape: CircleBorder(
@@ -217,8 +162,9 @@ class EditAccountView extends StatelessWidget {
               bottom: 2,
               right: 2,
               child: GestureDetector(
-                onTap: () {
-                  cameraDialog(context);
+                onTap: () async {
+                  cubit.image = await cameraDialog(context);
+                  setState(() {});
                 },
                 child: Container(
                     width: 24.w,

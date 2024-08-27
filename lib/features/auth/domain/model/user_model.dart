@@ -1,6 +1,6 @@
-import 'package:hive/hive.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-import 'dart:convert';
+import 'package:hive/hive.dart';
 
 // Register the adapters for Hive
 part 'user_model.g.dart';
@@ -10,11 +10,14 @@ class UserModel<T extends BaseUserData> extends Equatable {
   @HiveField(0)
   final String token;
   @HiveField(1)
-  final String role;
+  final String id;
   @HiveField(2)
+  final String role;
+  @HiveField(3)
   final T userData;
 
   const UserModel({
+    required this.id,
     required this.token,
     required this.role,
     required this.userData,
@@ -22,6 +25,7 @@ class UserModel<T extends BaseUserData> extends Equatable {
 
   @override
   List<Object> get props => [
+        id,
         token,
         role,
       ];
@@ -35,6 +39,21 @@ class UserModel<T extends BaseUserData> extends Equatable {
       userData: map['role'] == 'Store'
           ? StoreModel.fromMap(map['data'] as Map<String, dynamic>) as T
           : CustomerModel.fromMap(map['data'] as Map<String, dynamic>) as T,
+      id: map['id'] as String,
+    );
+  }
+
+  UserModel<T> copyWith({
+    String? token,
+    String? id,
+    String? role,
+    T? userData,
+  }) {
+    return UserModel<T>(
+      token: token ?? this.token,
+      id: id ?? this.id,
+      role: role ?? this.role,
+      userData: userData ?? this.userData,
     );
   }
 }
@@ -103,10 +122,28 @@ class StoreModel extends BaseUserData {
       email: map['email'] as String,
       phoneNumber: map['phoneNumber'] as String,
       repName: map['repName'] as String,
-      storeSlogan: map['storeSlogan'] as String,
+      storeSlogan: map['storeSlogan'] ?? '',
       repPhone: map['repPhone'] as String,
       warehouseAddress: map['warehouseAddress'] as String,
       profilePic: map['profilePic'] as String,
+    );
+  }
+
+  StoreModel copyWith({
+    String? repName,
+    String? storeSlogan,
+    String? repPhone,
+    String? warehouseAddress,
+  }) {
+    return StoreModel(
+      name: super.name,
+      email: super.email,
+      phoneNumber: super.phoneNumber,
+      profilePic: super.profilePic,
+      repName: repName ?? this.repName,
+      storeSlogan: storeSlogan ?? this.storeSlogan,
+      repPhone: repPhone ?? this.repPhone,
+      warehouseAddress: warehouseAddress ?? this.warehouseAddress,
     );
   }
 }
@@ -152,6 +189,22 @@ class CustomerModel extends BaseUserData {
       gender: map['gender'] as String,
       productsChoice: map['productsChoice'] as String,
       profilePic: map['profilePic'] as String,
+    );
+  }
+
+  CustomerModel copyWith({
+    String? dateOfBirth,
+    String? gender,
+    String? productsChoice,
+  }) {
+    return CustomerModel(
+      name: super.name,
+      email: super.email,
+      phoneNumber: super.phoneNumber,
+      profilePic: super.profilePic,
+      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      gender: gender ?? this.gender,
+      productsChoice: productsChoice ?? this.productsChoice,
     );
   }
 }

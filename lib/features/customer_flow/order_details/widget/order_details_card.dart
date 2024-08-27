@@ -1,20 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
+
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
 
 class OrderDetailsCard extends StatelessWidget {
   const OrderDetailsCard({
     super.key,
+    required this.cartItem,
   });
-
+  final CartItem cartItem;
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
     return Container(
       width: screenWidth(context, 0.92),
-      // height: 70,
       decoration: ShapeDecoration(
         color: ColorManager.primaryW,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -52,7 +55,7 @@ class OrderDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'T-Shirt',
+                          cartItem.productName!,
                           style: AppStylesManager.customTextStyleBl8,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -80,7 +83,7 @@ class OrderDetailsCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      '370.90 L.E',
+                      cartItem.price!.toString(),
                       style: AppStylesManager.customTextStyleO3,
                     ),
                     const SizedBox(

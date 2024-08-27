@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/widgets/cards/offers/market_offers_card.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
-import 'package:nilelon/widgets/cards/offers/offers_card.dart';
-import 'package:nilelon/widgets/filter/category_container.dart';
-import 'package:nilelon/widgets/filter/filter_container.dart';
-import 'package:nilelon/widgets/filter/static_lists.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/widgets/cards/offers/market_offers_card.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/widgets/cards/offers/offers_card.dart';
+import 'package:nilelon/core/widgets/filter/category_container.dart';
+import 'package:nilelon/core/widgets/filter/filter_container.dart';
+import 'package:nilelon/core/widgets/filter/static_lists.dart';
 
 class OffersView extends StatefulWidget {
   const OffersView({super.key, required this.isStore});

@@ -3,27 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/utils/navigation.dart';
-import 'package:nilelon/widgets/button/button_builder.dart';
-import 'package:nilelon/widgets/button/gradient_button_builder.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
-import 'package:nilelon/widgets/pop_ups/camera_popup.dart';
-import 'package:nilelon/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/button/button_builder.dart';
+import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/widgets/pop_ups/camera_popup.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
 
-import '../../../../widgets/pop_ups/success_creation_popup.dart';
+import '../../../../core/widgets/pop_ups/success_creation_popup.dart';
 
-class EditStoreProfileView extends StatelessWidget {
+class EditStoreProfileView extends StatefulWidget {
   const EditStoreProfileView({super.key});
 
   @override
+  State<EditStoreProfileView> createState() => _EditStoreProfileViewState();
+}
+
+class _EditStoreProfileViewState extends State<EditStoreProfileView> {
+  @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-
     return Scaffold(
       backgroundColor: ColorManager.primaryW,
       appBar: customAppBar(
@@ -44,7 +48,8 @@ class EditStoreProfileView extends StatelessWidget {
             BotToast.closeAllLoading();
             successCreationDialog(
                 context: context,
-                highlightedText: 'Info has been updated successfully',
+                highlightedText:
+                    'Info has been updated successfully\nplease relogin to update your info',
                 regularText: '',
                 buttonText: lang.save,
                 ontap: () {
@@ -150,8 +155,9 @@ class EditStoreProfileView extends StatelessWidget {
             bottom: 2,
             right: 2,
             child: GestureDetector(
-              onTap: () {
-                cameraDialog(context);
+              onTap: () async {
+                AuthCubit.get(context).image = await cameraDialog(context);
+                setState(() {});
               },
               child: Container(
                 width: 24,

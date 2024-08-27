@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:nilelon/service/network/end_point.dart';
+import 'package:nilelon/core/service/network/end_point.dart';
 import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 

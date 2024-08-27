@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/resources/const_functions.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/widgets/text_form_field/text_field/text_form_field_builder.dart';
-import 'package:nilelon/widgets/cards/brand/brand_card.dart';
+import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
+import 'package:nilelon/core/widgets/cards/brand/brand_card.dart';
 
 class SeeMoreStoresView extends StatelessWidget {
   const SeeMoreStoresView({super.key});

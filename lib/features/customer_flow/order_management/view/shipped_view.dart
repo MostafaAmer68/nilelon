@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/widgets/cards/customer_order_management/shipped_card.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/widgets/cards/customer_order_management/shipped_card.dart';
 
 class ShippedView extends StatelessWidget {
   const ShippedView({super.key});

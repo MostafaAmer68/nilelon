@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
-import 'package:nilelon/resources/color_manager.dart';
-import 'package:nilelon/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/widgets/cards/small/market_small_card.dart';
-import 'package:nilelon/widgets/divider/default_divider.dart';
-import 'package:nilelon/widgets/pop_ups/customer_store_popup.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/core/widgets/cards/small/market_small_card.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/widgets/pop_ups/customer_store_popup.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
+
+import '../../../categories/domain/model/result.dart';
+import '../../../product/presentation/cubit/products_cubit/products_state.dart';
 
 class StoreProfileStore extends StatefulWidget {
   const StoreProfileStore(
@@ -20,13 +27,12 @@ class StoreProfileStore extends StatefulWidget {
 }
 
 class _StoreProfileStoreState extends State<StoreProfileStore> {
-  List<String> items = [
-    'All Items',
-    'T-Shirts',
-    'Jackets',
-    'Sneakers',
-    'Pants'
-  ];
+  @override
+  void initState() {
+    ProductsCubit.get(context).getStoreProducts(1, 1000);
+    super.initState();
+  }
+
   int _selectedIndex = 0;
   // String _indexName = 'All Items';
   @override
@@ -87,9 +93,14 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                     child: ListView.builder(
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>
-                          filterContainer(items[index], index),
-                      itemCount: items.length,
+                      itemBuilder: (context, index) => filterContainer(
+                          HiveStorage.get<List<Result>>(
+                                  HiveKeys.categories)[index]
+                              .name!,
+                          index),
+                      itemCount:
+                          HiveStorage.get<List<Result>>(HiveKeys.categories)
+                              .length,
                     ),
                   ),
                 ),
@@ -97,19 +108,52 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
             ),
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20.0,
-                    mainAxisExtent: 220,
-                    mainAxisSpacing: 12),
-                shrinkWrap: true,
-                itemCount: 7,
-                itemBuilder: (context, sizeIndex) {
-                  return Container(
-                    child: marketSmallCard(context: context),
-                  );
+              child: BlocBuilder<ProductsCubit, ProductsState>(
+                builder: (context, state) {
+                  return state.getStoreProducts.when(
+                    initial: () {
+                      return const Text('Waiting we traing to get products');
+                    },
+                    loading: () {
+                      return buildShimmerIndicatorGrid();
+                    },
+                    failure: (erro) {
+                      return Text(erro);
+                    },
+                    success: (products) {
+                      return GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 20.0,
+                                mainAxisExtent: 220,
+                                mainAxisSpacing: 12),
+                        shrinkWrap: true,
+                        itemCount: products
+                            .where((e) =>
+                                e.categoryID ==
+                                HiveStorage.get<List<Result>>(
+                                        HiveKeys.categories)[_selectedIndex]
+                                    .id!)
+                            .toList()
+                            .length,
+                        itemBuilder: (context, index) {
+                          return Container(
+                            child: marketSmallCard(
+                                context: context,
+                                product: products
+                                    .where((e) =>
+                                        e.categoryID ==
+                                        HiveStorage.get<List<Result>>(HiveKeys
+                                                .categories)[_selectedIndex]
+                                            .id!)
+                                    .toList()[index]),
+                          );
+                        },
+                      );
+                    },
+                  )!;
                 },
               ),
             ),
@@ -125,6 +169,8 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
         setState(() {
           _selectedIndex = index;
           // _indexName = name;
+          ProductsCubit.get(context).getStoreProducts(1, 100);
+          setState(() {});
         });
       },
       child: _selectedIndex == index

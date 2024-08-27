@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
 
 class RatingContainer extends StatelessWidget {
   const RatingContainer({

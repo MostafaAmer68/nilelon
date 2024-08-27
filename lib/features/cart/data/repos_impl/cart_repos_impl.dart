@@ -6,7 +6,7 @@ import 'package:nilelon/features/cart/domain/model/delete_request_model.dart';
 import 'package:nilelon/features/cart/domain/model/get_cart_model/get_cart_model.dart';
 import 'package:nilelon/features/cart/data/remote_data_source/cart_remote_data_source.dart';
 import 'package:nilelon/features/cart/domain/repos/cart_repos.dart';
-import 'package:nilelon/service/failure_service.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 
 class CartReposImpl extends CartRepos {
   final CartRemoteDataSource _cartRemoteDataSource;
@@ -19,7 +19,7 @@ class CartReposImpl extends CartRepos {
     } catch (e) {
       if (e is DioException) {
         // print(e.toString());
-        return left(ServerFailure.fromDioException(e));
+        return left(ServerFailure(e.toString()));
       }
       // print(e.toString());
       return left(ServerFailure(e.toString()));
@@ -35,7 +35,7 @@ class CartReposImpl extends CartRepos {
     } catch (e) {
       if (e is DioException) {
         // print(e.toString());
-        return left(ServerFailure.fromDioException(e));
+        return left(ServerFailure(e.toString()));
       }
       // print(e.toString());
       return left(ServerFailure(e.toString()));
@@ -51,7 +51,7 @@ class CartReposImpl extends CartRepos {
     } catch (e) {
       if (e is DioException) {
         // print(e.toString());
-        return left(ServerFailure.fromDioException(e));
+        return left(ServerFailure(e.toString()));
       }
       // print(e.toString());
       return left(ServerFailure(e.toString()));
@@ -66,7 +66,7 @@ class CartReposImpl extends CartRepos {
     } catch (e) {
       if (e is DioException) {
         // print(e.toString());
-        return left(ServerFailure.fromDioException(e));
+        return left(ServerFailure(e.toString()));
       }
       // print(e.toString());
       return left(ServerFailure(e.toString()));
@@ -81,7 +81,7 @@ class CartReposImpl extends CartRepos {
     } catch (e) {
       if (e is DioException) {
         // print(e.toString());
-        return left(ServerFailure.fromDioException(e));
+        return left(ServerFailure(e.toString()));
       }
       // print(e.toString());
       return left(ServerFailure(e.toString()));

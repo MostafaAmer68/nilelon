@@ -1,6 +1,6 @@
 import 'package:nilelon/features/categories/domain/model/category_model.dart';
-import 'package:nilelon/service/network/api_service.dart';
-import 'package:nilelon/service/network/end_point.dart';
+import 'package:nilelon/core/service/network/api_service.dart';
+import 'package:nilelon/core/service/network/end_point.dart';
 
 class CategoryRemoteDataSourceImpl {
   final ApiService apiService;

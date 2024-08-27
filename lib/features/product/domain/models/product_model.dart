@@ -93,7 +93,7 @@ class ProductVariant {
       newPrice: json['newPrice'],
       size: json['size'],
       quantity: json['quantity'],
-      color: json['color'],
+      color: json['color'].toString(),
     );
   }
 

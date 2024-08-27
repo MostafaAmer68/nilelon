@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/customer_register_model.dart';
 import 'package:nilelon/features/auth/domain/model/external_google_model.dart';
 import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
-import 'package:nilelon/service/network/api_service.dart';
-import 'package:nilelon/service/network/end_point.dart';
-import 'package:nilelon/widgets/alert/error_alert.dart';
+import 'package:nilelon/core/service/network/api_service.dart';
+import 'package:nilelon/core/service/network/end_point.dart';
+import 'package:nilelon/core/widgets/alert/error_alert.dart';
 
 abstract class AuthRemoteDataSource {
   Future<void> loginAuth(
@@ -108,6 +109,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         userData = UserModel<StoreModel>.fromMap(data.data);
       }
       HiveStorage.set(HiveKeys.userModel, userData);
+      // HiveStorage.set(HiveKeys.userId, JwtDecoder.decode(data.data['id']));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -143,7 +145,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   @override
   Future<String> storeRegisterAuth(StoreRegisterModel entity, context) async {
     final data = await apiService.post(
-        endPoint: EndPoint.customerRegisterUrl, body: entity.toJson());
+        endPoint: EndPoint.storeRegisterUrl, body: entity.toJson());
     if (data.statusCode == 200) {
       return data.data as String;
     } else if (data.statusCode == 400) {
@@ -284,7 +286,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final response =
         await apiService.post(endPoint: EndPoint.resetEmailUrl, body: {
       "tergetSend": HiveStorage.get(HiveKeys.email),
-      "userId": HiveStorage.get(HiveKeys.userId),
+      "userId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       "newValue": newValue,
     });
     if (response.statusCode == 200) {
@@ -306,7 +308,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final response =
         await apiService.post(endPoint: EndPoint.resetPhoneUrl, body: {
       "tergetSend": tergetSend,
-      "userId": HiveStorage.get(HiveKeys.userId),
+      "userId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       "newValue": newValue,
     });
     if (response.statusCode == 200) {
@@ -373,7 +375,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       String oldPassword, String newPassword, context) async {
     final response =
         await apiService.post(endPoint: EndPoint.changePasswordUrl, body: {
-      'id': HiveStorage.get(HiveKeys.userId),
+      'id': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'oldPassword': oldPassword,
       'newPassword': newPassword,
     });
@@ -393,7 +395,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final response = await apiService.put(
       endPoint: EndPoint.updateStoreInfoUrl,
       data: {
-        "storeId": HiveStorage.get(HiveKeys.userId),
+        "storeId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "repName": repName,
         "repNumber": repNumber,
         "websiteLink": webLink
@@ -415,7 +417,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final response = await apiService.put(
       endPoint: EndPoint.updateStoreUrl,
       data: {
-        "storeId": HiveStorage.get(HiveKeys.userId),
+        "storeId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "profilePic": profilePic,
         "name": name,
         "storeSlogan": storeSlogan
@@ -436,7 +438,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final response = await apiService.put(
       endPoint: EndPoint.updateCustomerUrl,
       data: {
-        "id": HiveStorage.get(HiveKeys.userId),
+        "id": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "profilePicture": profilePic,
         "name": name,
       },

@@ -1,7 +1,9 @@
-import 'package:nilelon/data/hive_stroage.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/store_flow/analytics/model/analytics_response_model.dart';
-import 'package:nilelon/service/network/api_service.dart';
-import 'package:nilelon/service/network/end_point.dart';
+import 'package:nilelon/core/service/network/api_service.dart';
+import 'package:nilelon/core/service/network/end_point.dart';
 
 abstract class AnalyticsRemoteDataSource {
   Future<AnalyticsResponseModel> getNoOfItemsSold();
@@ -19,7 +21,11 @@ class AnalyticsRemoteDataSourceImpl extends AnalyticsRemoteDataSource {
   @override
   Future<AnalyticsResponseModel> getNoOfItemsSold() async {
     final data = await apiService.get(
-      endPoint: '${EndPoint.noOfItemsSold}${HiveStorage.get(HiveKeys.userId)}',
+      endPoint: EndPoint.noOfItemsSold,
+      query: {
+        'storeId': JwtDecoder.decode(
+            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+      },
     );
     print(data);
     if (data.statusCode == 200) {
@@ -39,7 +45,11 @@ class AnalyticsRemoteDataSourceImpl extends AnalyticsRemoteDataSource {
   @override
   Future<AnalyticsResponseModel> getNoOfOrdersSold() async {
     final data = await apiService.get(
-      endPoint: '${EndPoint.noOfOrdersSold}${HiveStorage.get(HiveKeys.userId)}',
+      endPoint: EndPoint.noOfOrdersSold,
+      query: {
+        'storeId': JwtDecoder.decode(
+            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+      },
     );
     print(data);
     if (data.statusCode == 200) {

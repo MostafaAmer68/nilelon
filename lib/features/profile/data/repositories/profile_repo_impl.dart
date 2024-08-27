@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:nilelon/features/profile/data/models/store_profile.dart';
 
-import '../../../../service/failure_service.dart';
+import '../../../../core/service/failure_service.dart';
 import '../../domain/repositories/profile_repo.dart';
 import '../datasources/profile_remote_data.dart';
 
@@ -45,6 +46,39 @@ class ProfileRepoIMpl implements ProfileRepo {
     try {
       final result =
           await _profile.changePassword(oldPassword, newPassword, context);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, StoreProfile>> getStoreById(
+      String storeId) async {
+    try {
+      final result = await _profile.getStoreById(storeId);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, void>> followStore(String storeId) async {
+    try {
+      final result = await _profile.followStore(storeId);
       // HiveStorage( HiveKeys.email, value: result.data.email);
       return Right(result);
     } catch (e) {

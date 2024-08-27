@@ -1,8 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:nilelon/features/order/data/datasources/order_service.dart';
+import 'package:nilelon/features/order/data/models/create_order_model.dart';
 import 'package:nilelon/features/order/data/models/order_model.dart';
 import 'package:nilelon/features/order/domain/repositories/order_repo.dart';
-import 'package:nilelon/service/failure_service.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 
 class OrderRepoImpl extends OrderRepo {
   final OrderService _orderService;
@@ -33,7 +34,7 @@ class OrderRepoImpl extends OrderRepo {
   }
 
   @override
-  Future<Either<ServerFailure, void>> getCustomerOrder(
+  Future<Either<ServerFailure, List<CustomerOrder>>> getCustomerOrder(
       String orderStatus) async {
     try {
       final result = await _orderService.getCustomerOrder(orderStatus);
@@ -44,7 +45,8 @@ class OrderRepoImpl extends OrderRepo {
   }
 
   @override
-  Future<Either<ServerFailure, void>> getStoreOrder(String orderStatus) async {
+  Future<Either<ServerFailure, List<StoreOrder>>> getStoreOrder(
+      String orderStatus) async {
     try {
       final result = await _orderService.getStoreOrder(orderStatus);
       return Right(result);
@@ -54,7 +56,8 @@ class OrderRepoImpl extends OrderRepo {
   }
 
   @override
-  Future<Either<ServerFailure, void>> getStoreOrderByDate(String date) async {
+  Future<Either<ServerFailure, List<StoreOrder>>> getStoreOrderByDate(
+      String date) async {
     try {
       final result = await _orderService.getStoreOrderByDate(date);
       return Right(result);

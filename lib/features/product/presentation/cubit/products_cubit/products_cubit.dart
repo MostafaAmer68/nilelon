@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/features/product/domain/models/create_review_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_followed_state/get_followed_products_state.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_new_in_state/get_new_in_state.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_random_state/get_random_state.dart';
@@ -9,6 +11,7 @@ import 'products_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState> {
   final ProductsRepos productsRepos;
+
   ProductsCubit(this.productsRepos) : super(ProductsState.initial());
   static ProductsCubit get(context) => BlocProvider.of<ProductsCubit>(context);
   //?*********************************************************************************
@@ -16,6 +19,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   //?*********************************************************************************
 
   //todo Get Followed Products
+  final TextEditingController comment = TextEditingController();
   Future<void> getFollowedProducts(int page, int productSize) async {
     emit(state.copyWith(
         getFollowedProducts: const GetFollowedProductsState.loading()));
@@ -26,10 +30,23 @@ class ProductsCubit extends Cubit<ProductsState> {
               GetFollowedProductsState.failure(failure.errorMsg)));
     }, (response) {
       emit(state.copyWith(
-          getFollowedProducts:
-              GetFollowedProductsState.success(response.result ?? [])));
+          getFollowedProducts: GetFollowedProductsState.success(response)));
     });
   }
+
+  // Future<void> createReview() async {
+  //   emit(state.copyWith(
+  //       getFollowedProducts: const GetFollowedProductsState.loading()));
+  //   // var result = await productsRepos.createReview(CreateReviewModel(comment: comment.text, rate: rate, productId: productId, customerId: customerId));
+  //   result.fold((failure) {
+  //     emit(state.copyWith(
+  //         getFollowedProducts:
+  //             GetFollowedProductsState.failure(failure.errorMsg)));
+  //   }, (response) {
+  //     emit(state.copyWith(
+  //         getFollowedProducts: GetFollowedProductsState.success(response)));
+  //   });
+  // }
 
   //todo Get Followed Products Pagination
   Future<void> getFollowedProductsPagination(int page, int productSize) async {
@@ -42,8 +59,7 @@ class ProductsCubit extends Cubit<ProductsState> {
               GetFollowedProductsState.failure(failure.errorMsg)));
     }, (response) {
       emit(state.copyWith(
-          getFollowedProducts:
-              GetFollowedProductsState.success(response.result!)));
+          getFollowedProducts: GetFollowedProductsState.success(response)));
     });
   }
 
