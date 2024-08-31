@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:nilelon/features/order/data/datasources/order_service.dart';
 import 'package:nilelon/features/order/data/models/create_order_model.dart';
 import 'package:nilelon/features/order/data/models/order_model.dart';
+import 'package:nilelon/features/order/data/models/shipping_method.dart';
 import 'package:nilelon/features/order/domain/repositories/order_repo.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 
@@ -60,6 +61,17 @@ class OrderRepoImpl extends OrderRepo {
       String date) async {
     try {
       final result = await _orderService.getStoreOrderByDate(date);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, List<ShippingMethod>>>
+      getShippingMethod() async {
+    try {
+      final result = await _orderService.getShippingMethod();
       return Right(result);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

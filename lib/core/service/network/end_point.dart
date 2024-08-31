@@ -53,6 +53,9 @@ class EndPoint {
   static const String createReviewUrl = '/Review/CreateReview';
   static const String getReviewsForProductUrl = '/Review/GetReviewsForProduct';
 
+  //shipping method
+  static const String getShippingMethodUrl =
+      '/ShippingMethod/GetShippingMethods';
   //order urls
   static const String getCustomerOrderUrl = 'Order/GetCustomerOrders';
   static const String getStoreOrderUrl = 'Order/GetStoreOrder';
@@ -108,7 +111,7 @@ class EndPoint {
   static const String loginUrl = '/Authentication/Login';
 
   //todo Category Urls
-  static const String getAllCategoriesUrl = '/Category/GetAllCategoreis';
+  static const String getAllCategoriesUrl = '/Category/GetAllCategories';
 
   //todo Products Urls
   static const String getStoreProductsUrl = '/Product/GetStoreProducts';

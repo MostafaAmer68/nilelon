@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 
-GestureDetector imageContainer(
-    void Function() onTap, File file, context, double? width, double? height) {
+GestureDetector imageContainer(void Function() onTap, String file, context,
+    double? width, double? height) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
@@ -14,9 +14,15 @@ GestureDetector imageContainer(
       height: height ?? screenWidth(context, 0.17),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-          color: ColorManager.primaryB5,
-          borderRadius: BorderRadius.circular(16),
-          image: DecorationImage(image: FileImage(file), fit: BoxFit.fill)),
+        color: ColorManager.primaryB5,
+        borderRadius: BorderRadius.circular(16),
+        image: DecorationImage(
+          image: file.contains('https')
+              ? NetworkImage(file)
+              : FileImage(File(file)),
+          fit: BoxFit.fill,
+        ),
+      ),
     ),
   );
 }

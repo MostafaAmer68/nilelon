@@ -4,6 +4,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/order/data/models/create_order_model.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
+import 'package:nilelon/features/order/data/models/shipping_method.dart';
 
 import '../models/order_model.dart';
 
@@ -50,6 +51,17 @@ class OrderService {
 
     if (response.statusCode == HttpStatus.ok) {
       return List<CustomerOrder>.from(response.data);
+    }
+    throw response.data['result'];
+  }
+
+  Future<List<ShippingMethod>> getShippingMethod() async {
+    final response = await _apiService.post(
+      endPoint: EndPoint.getShippingMethodUrl,
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      return List<ShippingMethod>.from(response.data['result']);
     }
     throw response.data['result'];
   }

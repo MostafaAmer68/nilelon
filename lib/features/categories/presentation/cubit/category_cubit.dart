@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -16,6 +18,7 @@ class CategoryCubit extends Cubit<CategoryState> {
 
     final result = await categoryRepos.getCategoryRepos();
     result.fold((failure) {
+      log(failure.errorMsg);
       emit(CategoryFailure(failure.errorMsg));
     }, (response) {
       emit(CategorySuccess());

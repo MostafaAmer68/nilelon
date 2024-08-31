@@ -12,6 +12,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/product/domain/models/product_data/draft_product_model.dart';
+import 'package:nilelon/features/product/domain/models/product_model.dart';
 
 import '../../../../../core/sizes_consts.dart';
 import '../../../../../core/utils/app_logs.dart';
@@ -86,7 +87,7 @@ class AddProductCubit extends Cubit<AddproductState> {
   bool isActivated = false;
   bool isAdd = false;
 
-  List<String> items = ['Male', 'Female', 'Both'];
+  List<String> items = ['Male', 'Female', 'UniSex'];
   final ProductsReposImpl _product;
 
   AddProductCubit(this._product) : super(const AddproductState.initial());
@@ -256,6 +257,38 @@ class AddProductCubit extends Cubit<AddproductState> {
             // log(sizes[i]['priceController'].text);
             // log(sizes[i]['size'].text);
           }
+        }
+      }
+
+      // } else {
+      // resetSizeControllers();
+      // }
+    }
+  }
+
+  void initializeVarientsEdit(ProductModel product) {
+    sizes = SizeTypes.values
+        .map(
+          (e) => {
+            'size': e.name,
+            'isEdit': false,
+            'quantityController': TextEditingController(),
+            'priceController': TextEditingController(),
+          },
+        )
+        .toList();
+    priceController.text = product.productVariants.first.price.toString();
+    productNameController.text = product.name;
+    productDescriptionController.text = product.description;
+
+    for (var variant in product.productVariants) {
+      // if (variant.sizes.isNotEmpty) {
+      if (variant.color == selectedColor.substring(2)) {
+        for (int i = 0; i < sizes.length; i++) {
+          sizes[i]['quantityController'] =
+              TextEditingController(text: variant.quantity.toString());
+          sizes[i]['priceController'] =
+              TextEditingController(text: variant.price.toString());
         }
       }
 

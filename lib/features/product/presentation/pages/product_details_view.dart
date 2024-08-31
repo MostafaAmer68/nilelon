@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -13,6 +14,7 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/footer/add_to_footer.dart';
 import 'package:nilelon/core/widgets/pop_ups/add_to_closet_popup.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
+import 'package:nilelon/features/product/presentation/pages/edit_product_page.dart';
 import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
 import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
 import 'package:nilelon/core/widgets/rating/view/rating_dialog.dart';
@@ -72,14 +74,50 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     final lang = S.of(context);
     return Scaffold(
       backgroundColor: ColorManager.primaryW,
-      appBar: customAppBar(
-        title: lang.productDetails,
-        icon: Icons.share_outlined,
-        onPressed: () {
-          addToClosetDialog(context, widget.product.id);
-        },
-        context: context,
-      ),
+      appBar: !HiveStorage.get(HiveKeys.isStore)
+          ? customAppBar(
+              title: lang.productDetails,
+              icon: Icons.share_outlined,
+              onPressed: () {
+                addToClosetDialog(context, widget.product.id);
+              },
+              context: context,
+            )
+          : AppBar(
+              backgroundColor: ColorManager.primaryW,
+              leading: IconButton(
+                  onPressed: () => navigatePop(context: context),
+                  icon: const Icon(Icons.arrow_back)),
+              title: Text(
+                lang.productDetails,
+                style: AppStylesManager.customTextStyleBl6,
+              ),
+              centerTitle: true,
+              actions: [
+                PopupMenuButton<String>(
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        value: 'delete',
+                        child: Text(lang.delete),
+                      ),
+                      PopupMenuItem(
+                        value: 'update',
+                        child: Text(lang.updateDraft),
+                      ),
+                    ];
+                  },
+                  onSelected: (value) {
+                    if (value == 'delete') {
+                    } else if (value == 'update') {
+                      navigateTo(
+                          context: context,
+                          screen: EditProductpage(product: widget.product));
+                    }
+                  },
+                ),
+              ],
+            ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

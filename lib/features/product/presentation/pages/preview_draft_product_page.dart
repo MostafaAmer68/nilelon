@@ -212,7 +212,7 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
                       cubit.sizeGuideImage = await cameraDialog(context);
                       setState(() {});
                     },
-                    cubit.sizeGuideImage,
+                    cubit.sizeGuideImage.path,
                     context,
                     screenWidth(context, 0.3),
                     screenWidth(context, 0.3),
@@ -663,7 +663,7 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
           setState(() {});
         }
       },
-      cubit.images[index],
+      cubit.images[index].path,
       context,
       null,
       null,

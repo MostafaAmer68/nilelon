@@ -31,7 +31,7 @@ class CheckOutCubit extends Cubit<CheckOutState> {
           total: 0,
           phoneNum: phoneController.text,
           discount: 0,
-          type: '',
+          type: 'selectOption',
           shippingMethodId: '',
           customerId: HiveStorage.get(HiveKeys.userId),
           governate: governate.text,
@@ -58,6 +58,16 @@ class CheckOutCubit extends Cubit<CheckOutState> {
               .toList(),
         ),
       );
+    } catch (e) {
+      emit(CheckOutFailure(e.toString()));
+    }
+  }
+
+  Future getShippingMethod(context) async {
+    try {
+      emit(CheckOutLoading());
+      OrderCubit.get(context).getShippingMethod();
+      emit(CheckOutSuccess());
     } catch (e) {
       emit(CheckOutFailure(e.toString()));
     }

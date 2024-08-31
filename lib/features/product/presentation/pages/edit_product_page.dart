@@ -19,31 +19,31 @@ import 'package:nilelon/core/widgets/pop_ups/camera_popup.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/presentation/widgets/add_container.dart';
 import 'package:nilelon/features/product/presentation/widgets/color_circle.dart';
 import 'package:nilelon/features/product/presentation/widgets/image_container.dart';
 import 'package:nilelon/features/product/presentation/widgets/size_container.dart';
-import 'package:nilelon/features/product/presentation/widgets/size_guid_image.dart';
 import 'package:nilelon/features/product/presentation/widgets/table_headers.dart';
 import 'package:nilelon/features/product/presentation/widgets/total_row.dart';
 
-import '../../../../core/sizes_consts.dart';
 import '../cubit/add_product/add_product_cubit.dart';
 
-class AddProductView extends StatefulWidget {
-  const AddProductView({super.key, required this.categoryId});
-  final String categoryId;
+class EditProductpage extends StatefulWidget {
+  const EditProductpage({super.key, required this.product});
+  final ProductModel product;
 
   @override
-  State<AddProductView> createState() => _AddProductViewState();
+  State<EditProductpage> createState() => _AddProductViewState();
 }
 
-class _AddProductViewState extends State<AddProductView> {
+class _AddProductViewState extends State<EditProductpage> {
   late final AddProductCubit cubit;
 
   @override
   void dispose() {
-    // HiveStorage.set(HiveKeys.tempVarients, null);
+    HiveStorage.set(HiveKeys.varients, null);
     super.dispose();
   }
 
@@ -52,30 +52,18 @@ class _AddProductViewState extends State<AddProductView> {
     super.initState();
 
     cubit = AddProductCubit.get(context);
-    cubit.categoryId = widget.categoryId;
-    cubit.sizes = SizeTypes.values
-        .map(
-          (e) => {
-            'size': e.name,
-            'isEdit': false,
-            'quantityController': TextEditingController(),
-            'priceController': TextEditingController(),
-          },
-        )
-        .toList();
+    cubit.initializeVarientsEdit(widget.product);
   }
 
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    // BotToast.closeAllLoading();
     return BlocListener<AddProductCubit, AddproductState>(
       listener: (context, state) {
         state.mapOrNull(loading: (value) {
           BotToast.showLoading();
         }, success: (v) {
           BotToast.closeAllLoading();
-          BotToast.showText(text: 'Product Added successfully');
         }, failure: (r) {
           BotToast.closeAllLoading();
           BotToast.showText(text: r.message);
@@ -94,10 +82,10 @@ class _AddProductViewState extends State<AddProductView> {
             children: [
               const DefaultDivider(),
               SizedBox(height: 24.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                child: _buildAddToDraft(lang.addToDraft),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: 16.sp),
+              //   child: _buildAddToDraft(lang.addToDraft),
+              // ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.sp),
                 child: _buildProductForm(lang),
@@ -127,7 +115,6 @@ class _AddProductViewState extends State<AddProductView> {
             navigatePop(context: context);
 
             // Draft saving logic goes here
-            cubit.saveDraft(context);
 
             navigatePop(context: context);
             // showToast('Saved As Draft');
@@ -174,7 +161,7 @@ class _AddProductViewState extends State<AddProductView> {
           height: 30.h,
         ),
         SizedBox(height: 16.h),
-        SizeGuidImage(lang: lang),
+        _buildSizeGuideImageSection(lang),
       ],
     );
   }
@@ -195,6 +182,40 @@ class _AddProductViewState extends State<AddProductView> {
             setState(() {});
           },
         ),
+        SizedBox(height: 30.h),
+      ],
+    );
+  }
+
+  // size guid image
+  Widget _buildSizeGuideImageSection(S lang) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(lang.sizeGuide, style: AppStylesManager.customTextStyleBl5),
+        SizedBox(height: 12.h),
+        cubit.sizeGuideImage.path.isEmpty || cubit.sizeGuideImage.path.isEmpty
+            ? addContainer(
+                () async {
+                  cubit.sizeGuideImage = await cameraDialog(context);
+                  setState(() {});
+                },
+                context,
+                screenWidth(context, 0.3),
+                screenWidth(context, 0.3),
+              )
+            : imageContainer(
+                () async {
+                  cubit.sizeGuideImage = await cameraDialog(context);
+                  setState(() {});
+                },
+                cubit.sizeGuideImage.path.isEmpty
+                    ? widget.product.sizeguide
+                    : cubit.sizeGuideImage.path,
+                context,
+                screenWidth(context, 0.3),
+                screenWidth(context, 0.3),
+              ),
         SizedBox(height: 30.h),
       ],
     );
@@ -239,7 +260,7 @@ class _AddProductViewState extends State<AddProductView> {
             children: [
               _buildEditRow(lang.editSizesForThisColor,
                   lang.areYouSureYouWantToDeleteAllSizesForThisColor),
-              _buildDisableStack(lang.total),
+              _buildNonEditableStack(lang.total),
             ],
           )
         : cubit.isAdd
@@ -247,7 +268,7 @@ class _AddProductViewState extends State<AddProductView> {
             : Column(
                 children: [
                   _buildAddRow(lang.addSizesForThisColor),
-                  _buildDisableStack(lang.total),
+                  _buildNonEditableStack(lang.total),
                 ],
               );
   }
@@ -267,7 +288,7 @@ class _AddProductViewState extends State<AddProductView> {
             cubit.selectedIndex = index;
             cubit.selectedColor = cubit.colors[cubit.selectedIndex].toString();
 
-            cubit.initializeSizeControllers();
+            cubit.initializeVarientsEdit(widget.product);
             if (!cubit.isNonEditable[cubit.selectedIndex]) {
               cubit.isSubmit = false;
               cubit.isAdd = false;
@@ -302,10 +323,10 @@ class _AddProductViewState extends State<AddProductView> {
     );
   }
 
-  Widget _buildDisableStack(String total) {
+  Widget _buildNonEditableStack(String total) {
     return Stack(
       children: [
-        _buildDisabledVariantSection(total),
+        _buildNonEditableVariantSection(total),
         Container(
           width: double.infinity,
           height: 1.sw > 600 ? 1000 : 770,
@@ -315,7 +336,7 @@ class _AddProductViewState extends State<AddProductView> {
     );
   }
 
-  Widget _buildDisabledVariantSection(String total) {
+  Widget _buildNonEditableVariantSection(String total) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.sp),
       child: SizedBox(
@@ -357,14 +378,21 @@ class _AddProductViewState extends State<AddProductView> {
         cubit.isAdd = true;
         cubit.isSubmit = true;
         cubit.isNonEditable[cubit.selectedIndex] = false;
-        for (var item in cubit.sizes) {
-          item['priceController'] = cubit.priceController;
-        }
-        cubit.removeNonEditableVariant();
+        _removeNonEditableVariant();
         setState(() {});
       },
       child: const Icon(Iconsax.edit_2, size: 22),
     );
+  }
+
+  void _removeNonEditableVariant() {
+    for (var element in cubit.addedVarients) {
+      if (cubit.selectedColor == element.color) {
+        List varients = HiveStorage.get(HiveKeys.varients);
+        varients.remove(element);
+        HiveStorage.set(HiveKeys.varients, varients);
+      }
+    }
   }
 
   Widget _buildDeleteIcon(String deleteAlertStr) {
@@ -399,9 +427,6 @@ class _AddProductViewState extends State<AddProductView> {
               cubit.isAdd = true;
               cubit.isActivated = true;
               cubit.isSubmit = true;
-              for (var item in cubit.sizes) {
-                item['priceController'] = cubit.priceController;
-              }
               setState(() {});
             },
             child: Icon(Iconsax.edit_2, size: 22.r),
@@ -460,9 +485,8 @@ class _AddProductViewState extends State<AddProductView> {
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
         bool isNonEditable = cubit.isNonEditable[cubit.selectedIndex];
-
         return isNonEditable
-            ? _buildDisabledSizeRow(index)
+            ? _buildSizeRowUnEditable(index)
             : _buildSizeRow(index);
       },
     );
@@ -482,7 +506,7 @@ class _AddProductViewState extends State<AddProductView> {
     );
   }
 
-  Widget _buildDisabledSizeRow(int index) {
+  Widget _buildSizeRowUnEditable(int index) {
     return Column(
       children: [
         _buildSizeRowContent(index, false),
@@ -491,6 +515,11 @@ class _AddProductViewState extends State<AddProductView> {
   }
 
   Widget _buildSizeRowContent(int index, bool isEditable) {
+    TextEditingController quantityController =
+        cubit.sizes[index]['quantityController'];
+    TextEditingController priceController =
+        cubit.sizes[index]['priceController'];
+
     return Padding(
       padding: const EdgeInsets.only(
         top: 16,
@@ -501,10 +530,10 @@ class _AddProductViewState extends State<AddProductView> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           sizeContainer(context, cubit.sizes[index]['size'] as String),
-          _buildAmountTextField(cubit.sizes[index]['quantityController']),
+          _buildAmountTextField(quantityController),
           isEditable
-              ? _buildPriceTextField(cubit.sizes[index]['priceController'])
-              : _buildPriceText(index, cubit.sizes[index]['priceController']),
+              ? _buildPriceTextField(priceController)
+              : _buildPriceText(index, priceController),
         ],
       ),
     );

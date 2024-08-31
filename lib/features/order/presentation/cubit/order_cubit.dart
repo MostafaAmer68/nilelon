@@ -31,6 +31,19 @@ class OrderCubit extends Cubit<OrderState> {
     );
   }
 
+  Future<void> getShippingMethod() async {
+    emit(const OrderState.loading());
+    final result = await _orderRepo.getShippingMethod();
+    result.fold(
+      (failure) {
+        emit(const OrderState.failure());
+      },
+      (response) {
+        emit(const OrderState.success());
+      },
+    );
+  }
+
   Future<void> getCustomerOrder(String orderStatus) async {
     emit(const OrderState.loading());
     final result = await _orderRepo.getCustomerOrder(orderStatus);

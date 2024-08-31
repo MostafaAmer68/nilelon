@@ -55,7 +55,7 @@ class _SizeGuidImageState extends State<SizeGuidImage> {
                       cubit.sizeGuideImage = await cameraDialog(context);
                       setState(() {});
                     },
-                    cubit.sizeGuideImage,
+                    cubit.sizeGuideImage.path,
                     context,
                     screenWidth(context, 0.3),
                     screenWidth(context, 0.3),

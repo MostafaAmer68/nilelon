@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -170,6 +171,7 @@ class ProductsRemoteDataSourceImpl {
       endPoint: EndPoint.createProductUrl,
       body: product.toMap(),
     );
+    log(jsonEncode(product.toMap()));
     log(data.data.toString());
     if (data.statusCode == 201) {
       log('fucking success');
