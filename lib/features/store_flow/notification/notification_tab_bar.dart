@@ -6,6 +6,8 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/features/store_flow/notification/widget/requests_view.dart';
 import 'package:nilelon/features/store_flow/notification/widget/updates_view.dart';
 
+import '../../../core/widgets/scaffold_image.dart';
+
 class NotificationTabBar extends StatefulWidget {
   const NotificationTabBar({super.key});
 
@@ -22,8 +24,7 @@ class _NotificationTabBarState extends State<NotificationTabBar> {
 
     return DefaultTabController(
       length: 2,
-      child: Scaffold(
-          backgroundColor: ColorManager.primaryW,
+      child: ScaffoldImage(
           appBar: customAppBar(title: lang.notification, context: context),
           body: Padding(
             padding: const EdgeInsetsDirectional.symmetric(vertical: 12),

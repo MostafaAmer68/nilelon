@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -20,6 +21,10 @@ import 'package:nilelon/features/product/presentation/widgets/rating_container.d
 import 'package:nilelon/core/widgets/rating/view/rating_dialog.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+import '../widgets/color_selector.dart';
+import '../widgets/custom_toggle_button.dart';
+
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({
     super.key,
@@ -32,48 +37,36 @@ class ProductDetailsView extends StatefulWidget {
 }
 
 class _ProductDetailsViewState extends State<ProductDetailsView> {
-  int counter = 1;
   bool isEnabled = true;
-  late List<bool> sizes;
-
+  late List<String> sizes;
+  late final CartCubit cubit;
   @override
   void initState() {
     super.initState();
-    sizes = widget.product.productVariants.map((e) => false).toList();
+    cubit = CartCubit.get(context);
+    cubit.selectedColor = widget.product.productVariants.first.color;
+    cubit.selectedSize = widget.product.productVariants.first.size;
+    sizes = widget.product.productVariants.map((e) => e.size).toList();
   }
 
   void incrementCounter() {
     setState(() {
-      counter++;
+      CartCubit.get(context).counter++;
     });
   }
 
   void decrementCounter() {
     setState(() {
-      if (counter > 1) {
-        counter--;
+      if (CartCubit.get(context).counter > 1) {
+        CartCubit.get(context).counter--;
       }
     });
   }
 
-  // int getColorValue(String colorString, String component) {
-  //   // Extracts the RGB component value from a color string
-  //   colorString = colorString.replaceAll("Color [", "").replaceAll("]", "");
-  //   List<String> components = colorString.split(", ");
-  //   for (String comp in components) {
-  //     List<String> keyValue = comp.split("=");
-  //     if (keyValue[0] == component) {
-  //       return int.parse(keyValue[1]);
-  //     }
-  //   }
-  //   return 0; // Default value if component not found
-  // }
-
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: !HiveStorage.get(HiveKeys.isStore)
           ? customAppBar(
               title: lang.productDetails,
@@ -124,8 +117,23 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           children: [
             const DefaultDivider(),
             ImageBanner(
-                images:
-                    widget.product.productImages.map((e) => e.url).toList()),
+              images: widget.product.productImages.map((e) => e.url).toList(),
+            ),
+            SizedBox(
+              height: 20.h,
+              child: ListView.builder(
+                itemCount: widget.product.productImages.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  final image = widget.product.productImages[index];
+                  return Image.network(
+                    image.url,
+                    fit: BoxFit.cover,
+                    width: 30,
+                  );
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
@@ -176,7 +184,10 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       children: [
         Text(
           widget.product.name,
-          style: AppStylesManager.customTextStyleBl6,
+          style: AppStylesManager.customTextStyleBl6.copyWith(
+            fontSize: 30.sp,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const SizedBox(height: 8),
         Row(
@@ -218,22 +229,13 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text('${lang.size} :', style: AppStylesManager.customTextStyleG10),
-        Container(
-          margin: const EdgeInsets.only(top: 10),
-          child: ToggleButtons(
-            selectedColor: AppStylesManager.customTextStyleO.color,
-            selectedBorderColor: ColorManager.primaryR2,
-            textStyle: AppStylesManager.customTextStyleG11,
-            onPressed: (index) {
-              sizes = List<bool>.filled(sizes.length, false);
-              sizes[index] = !sizes[index];
-              setState(() {});
-            },
-            isSelected: sizes,
-            children: widget.product.productVariants
-                .map((e) => Text(e.size))
-                .toList(),
-          ),
+        SizeToggleButtons(
+          sizes: sizes,
+          selectedSize: cubit.selectedSize,
+          onSizeSelected: (size) {
+            cubit.selectedSize = size;
+            setState(() {});
+          },
         ),
       ],
     );
@@ -244,28 +246,13 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       children: [
         Text('Color :', style: AppStylesManager.customTextStyleG10),
         const Spacer(),
-        SizedBox(
-          width: 200,
-          height: 60,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: widget.product.productVariants.length,
-            itemBuilder: (context, index) {
-              final variant = widget.product.productVariants[index];
-              return InkWell(
-                onTap: () {},
-                child: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 6),
-                  width: 24.w,
-                  height: 24.w,
-                  decoration: BoxDecoration(
-                    color: Color(int.parse('0xff${variant.color}')),
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              );
-            },
-          ),
+        ColorSelector(
+          colors: widget.product.productVariants.map((e) => e.color).toList(),
+          selectedColor: cubit.selectedColor,
+          onColorSelected: (color) {
+            cubit.selectedColor = color;
+            setState(() {});
+          },
         ),
       ],
     );
@@ -279,11 +266,15 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               const Spacer(),
               SmallButton(
                 icon: Iconsax.minus,
-                color: counter == 1 ? ColorManager.primaryG3 : null,
-                onTap: () => counter == 1 ? null : decrementCounter,
+                color: CartCubit.get(context).counter == 1
+                    ? ColorManager.primaryG3
+                    : null,
+                onTap: () => CartCubit.get(context).counter == 1
+                    ? null
+                    : decrementCounter,
               ),
               const SizedBox(width: 8),
-              Text(counter.toString()),
+              Text(CartCubit.get(context).counter.toString()),
               const SizedBox(width: 8),
               SmallButton(
                 icon: Iconsax.add,

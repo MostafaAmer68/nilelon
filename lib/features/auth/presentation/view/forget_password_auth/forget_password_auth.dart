@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/core/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
@@ -13,6 +12,8 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
 import 'package:nilelon/features/auth/presentation/view/otp/otp_view.dart';
 import 'package:nilelon/features/auth/presentation/view/new_password/new_password_view.dart';
+
+import '../../../../../core/widgets/scaffold_image.dart';
 
 class ForgetPasswordAuthView extends StatelessWidget {
   const ForgetPasswordAuthView({super.key, required this.isLogin});
@@ -51,9 +52,8 @@ class ForgetPasswordAuthView extends StatelessWidget {
           BotToast.showLoading();
         }
       },
-      child: Scaffold(
+      child: ScaffoldImage(
         appBar: customAppBar(title: lang.forgetPassword2, context: context),
-        backgroundColor: ColorManager.primaryW,
         body: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/cards/customer_order_management/recieved_card.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class RecievedView extends StatelessWidget {
   const RecievedView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       body: ListView.builder(
           itemCount: 9,
           itemBuilder: (context, index) {

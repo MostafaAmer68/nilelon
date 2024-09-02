@@ -5,7 +5,7 @@ Future<String> convertImageToBase64(File image) async {
   if (image.path.isEmpty) return '';
 
   // Convert the image to base64
-  final bytes = await image!.readAsBytes();
+  final bytes = await image.readAsBytes();
   return base64Encode(bytes);
 }
 

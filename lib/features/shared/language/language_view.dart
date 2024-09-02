@@ -5,6 +5,8 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 
+import '../../../core/widgets/scaffold_image.dart';
+
 class LanguageView extends StatefulWidget {
   const LanguageView({super.key});
 
@@ -22,8 +24,7 @@ class _LanguageViewState extends State<LanguageView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar:
           customAppBar(title: lang.language, context: context, hasIcon: false),
       body: Column(

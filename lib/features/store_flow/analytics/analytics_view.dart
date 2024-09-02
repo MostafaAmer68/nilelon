@@ -23,6 +23,8 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
+import '../../../core/widgets/scaffold_image.dart';
+
 class AnalyticsView extends StatefulWidget {
   const AnalyticsView({super.key});
 
@@ -47,8 +49,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
 
     DateTime? dateStart;
     DateTime? dateEnd;
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
         hasLeading: false,
         title: lang.analytics,

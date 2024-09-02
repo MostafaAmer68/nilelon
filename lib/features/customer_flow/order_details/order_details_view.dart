@@ -10,6 +10,8 @@ import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart
 import 'package:nilelon/features/customer_flow/order_details/widget/order_details_card.dart';
 import 'package:svg_flutter/svg.dart';
 
+import '../../../core/widgets/scaffold_image.dart';
+
 class OrderDetailsView extends StatelessWidget {
   const OrderDetailsView(
       {super.key, required this.index, required this.recievedDate});
@@ -40,8 +42,7 @@ class OrderDetailsView extends StatelessWidget {
       },
     ];
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
         title: lang.orderDetails,
         context: context,

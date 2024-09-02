@@ -14,6 +14,8 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class EditStoreInfoView extends StatelessWidget {
   const EditStoreInfoView({super.key});
 
@@ -21,8 +23,7 @@ class EditStoreInfoView extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
         title: lang.storeInfo,
         context: context,

@@ -12,6 +12,8 @@ import 'package:nilelon/features/product/presentation/widgets/image_banner.dart'
 import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_store.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class StoreProductDetailsView extends StatefulWidget {
   const StoreProductDetailsView(
       {super.key,
@@ -39,8 +41,7 @@ class _StoreProductDetailsViewState extends State<StoreProductDetailsView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
           title: lang.productDetails,
           icon: Icons.share_outlined,

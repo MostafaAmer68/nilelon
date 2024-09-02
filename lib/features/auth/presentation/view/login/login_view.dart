@@ -19,6 +19,8 @@ import 'package:nilelon/features/auth/presentation/view/store_register/store_reg
 import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
+import '../../../../../core/widgets/scaffold_image.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({
     super.key,
@@ -53,10 +55,10 @@ class _LoginViewState extends State<LoginView> {
     final lang = S.of(context);
     final authCubit = AuthCubit.get(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: AppBar(
-        backgroundColor: ColorManager.primaryW,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: Form(
         key: formKey,

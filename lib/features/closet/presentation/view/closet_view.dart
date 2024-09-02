@@ -5,13 +5,13 @@ import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/features/closet/presentation/widget/closet_widget_with_options.dart';
 import 'package:nilelon/core/widgets/pop_ups/create_new_section_popup.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/features/customer_flow/section_details/section_details_view.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class ClosetView extends StatefulWidget {
   const ClosetView({super.key});
@@ -30,8 +30,7 @@ class _ClosetViewState extends State<ClosetView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(title: lang.closet, context: context),
       body: Column(
         children: [

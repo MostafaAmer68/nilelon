@@ -7,7 +7,9 @@ import 'package:nilelon/core/widgets/filter/category_container.dart';
 import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
-import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
+
+import '../../../core/widgets/scaffold_image.dart';
 
 class SectionsView extends StatefulWidget {
   const SectionsView({super.key, required this.selectedCat});
@@ -28,8 +30,7 @@ class _SectionsViewState extends State<SectionsView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: searchAppBar(context, lang.searchByItemBrand),
       body: SingleChildScrollView(
         child: Column(

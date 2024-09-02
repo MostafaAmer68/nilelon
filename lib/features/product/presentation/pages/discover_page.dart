@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/product/presentation/pages/hand_picked_view_all.dart';
-import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class DiscoverView extends StatefulWidget {
   const DiscoverView({super.key});
@@ -35,7 +37,7 @@ class _DiscoverViewState extends State<DiscoverView> {
 
   @override
   void initState() {
-    if (HiveStorage.get(HiveKeys.userId) != null) {
+    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
       ProductsCubit.get(context).getNewInProducts(newInPage, newInPageSize);
       ProductsCubit.get(context).getRandomProducts(newInPage, newInPageSize);
     } else {
@@ -100,8 +102,7 @@ class _DiscoverViewState extends State<DiscoverView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
           title: lang.discover, context: context, hasLeading: false),
       body: SingleChildScrollView(
@@ -167,7 +168,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                                     } else {
                                       return Row(
                                         children: [
-                                          smallCardC(
+                                          productSquarItem(
                                               context: context,
                                               model: productsList[index]),
                                           const SizedBox(
@@ -190,6 +191,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                     });
                   },
                 ),
+                SizedBox(height: 20),
                 ViewAllRow(
                     text: lang.handPicked,
                     assetName: 'assets/images/handPicked.svg',
@@ -240,7 +242,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                                     return buildShimmerIndicatorSmall();
                                   } else {
                                     return Container(
-                                      child: smallCardC(
+                                      child: productSquarItem(
                                         context: context,
                                         model: productsList[index],
                                       ),

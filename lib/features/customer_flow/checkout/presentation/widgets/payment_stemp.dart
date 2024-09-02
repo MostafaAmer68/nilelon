@@ -16,14 +16,14 @@ import 'package:svg_flutter/svg.dart';
 
 import '../cubit/progress_cubit/progress_cubit.dart';
 
-class Page3 extends StatefulWidget {
-  const Page3({super.key});
+class PaymentPage extends StatefulWidget {
+  const PaymentPage({super.key});
 
   @override
-  State<Page3> createState() => _Page3State();
+  State<PaymentPage> createState() => _PaymentPageState();
 }
 
-class _Page3State extends State<Page3> {
+class _PaymentPageState extends State<PaymentPage> {
   bool isLoading = false;
   late DateTime time;
   String? formattedDate;

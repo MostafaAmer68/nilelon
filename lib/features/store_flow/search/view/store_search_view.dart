@@ -12,6 +12,8 @@ import 'package:nilelon/features/store_flow/sections_view.dart/store_sections_vi
 import 'package:nilelon/features/store_flow/see_more_stores/view/see_more_stores_store_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_store.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class StoreSearchView extends StatelessWidget {
   const StoreSearchView({super.key});
 
@@ -43,8 +45,7 @@ class StoreSearchView extends StatelessWidget {
     ];
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: searchAppBar(context, lang.searchByItemBrand),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

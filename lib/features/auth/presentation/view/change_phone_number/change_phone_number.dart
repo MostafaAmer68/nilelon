@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/core/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
@@ -12,16 +11,17 @@ import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
 import 'package:nilelon/features/auth/presentation/view/otp/otp_view.dart';
 
+import '../../../../../core/widgets/scaffold_image.dart';
+
 class ChangePhoneNumber extends StatelessWidget {
   const ChangePhoneNumber({super.key});
 
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
+    return ScaffoldImage(
       appBar: customAppBar(
           title: lang.phoneNumber, context: context, hasIcon: false),
-      backgroundColor: ColorManager.primaryW,
       body: Column(
         children: [
           const DefaultDivider(),
@@ -65,9 +65,10 @@ class ChangePhoneNumber extends StatelessWidget {
                               buttonText: 'Ok',
                               ontap: () {},
                             );
-                          }, resend: () { 
-                              AuthCubit.get(context).resetPasswordEmail(context);
-                           },
+                          },
+                          resend: () {
+                            AuthCubit.get(context).resetPasswordEmail(context);
+                          },
                         ));
                   })
             ],

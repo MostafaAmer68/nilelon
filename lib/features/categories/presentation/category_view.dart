@@ -4,7 +4,6 @@ import 'package:nilelon/features/categories/presentation/cubit/category_cubit.da
 import 'package:nilelon/features/product/presentation/pages/draft_product_page.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/app_logs.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
@@ -13,7 +12,7 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/pages/add_product_page.dart';
 import 'package:nilelon/features/categories/presentation/widget/category_items.dart';
 
-import '../domain/model/result.dart';
+import '../../../core/widgets/scaffold_image.dart';
 
 class ChooseProductView extends StatefulWidget {
   const ChooseProductView({super.key});
@@ -33,8 +32,7 @@ class _ChooseProductViewState extends State<ChooseProductView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
         hasLeading: false,
         title: lang.addProduct,

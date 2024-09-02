@@ -10,6 +10,8 @@ import 'package:nilelon/features/order/presentation/pages/order_product_details_
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:svg_flutter/svg.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class OrderedStoreDetailsView extends StatefulWidget {
   const OrderedStoreDetailsView({
     super.key,
@@ -30,8 +32,7 @@ class _OrderedStoreDetailsViewState extends State<OrderedStoreDetailsView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
           title: lang.orderDetails, hasIcon: false, context: context),
       body: Stack(

@@ -14,6 +14,10 @@ part 'cart_state.dart';
 class CartCubit extends Cubit<CartState> {
   CartCubit(this.cartRepos) : super(CartInitial());
   final CartRepos cartRepos;
+  String selectedSize = '';
+  String selectedColor = '';
+  List<CartItem> tempCartItems = [];
+  int counter = 1;
   static CartCubit get(context) => BlocProvider.of<CartCubit>(context);
   Future<void> emptyCart() async {
     emit(CartLoading());
@@ -46,6 +50,7 @@ class CartCubit extends Cubit<CartState> {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
       cartItems = response;
+
       emit(GetCartSuccess(items: response.result?.items ?? []));
     });
   }
@@ -56,6 +61,7 @@ class CartCubit extends Cubit<CartState> {
     var result = await cartRepos.deleteFromCart(model);
     result.fold((failure) {
       emit(DeleteFromCartFailure(message: failure.errorMsg));
+      emit(GetCartSuccess(items: cartItems.result!.items!));
     }, (response) {
       emit(DeleteFromCartSuccess());
       getCart();

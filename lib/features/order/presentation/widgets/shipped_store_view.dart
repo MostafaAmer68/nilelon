@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/cards/store_order/shipped_store_card.dart';
 import 'package:nilelon/features/order/presentation/pages/ordered_store_details_view.dart';
 
 import '../../../../core/data/hive_stroage.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/order_cubit.dart';
 
 class ShippedStoreView extends StatefulWidget {
@@ -27,8 +27,7 @@ class _ShippedStoreViewState extends State<ShippedStoreView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: ListView.builder(

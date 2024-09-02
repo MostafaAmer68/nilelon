@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -32,7 +31,6 @@ class ApiService {
       data: body,
       queryParameters: query,
     );
-    print(response.data);
     return response;
   }
 
@@ -75,14 +73,11 @@ class CustomLogInterceptor extends LogInterceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // Log request URL and headers
-    print('--> ${options.method} ${options.uri}');
     options.headers.forEach((key, value) {
-      print('$key: $value');
     });
 
     // Log request body if it's present
     if (options.data != null) {
-      print('Request body: ${options.data}');
     }
     super.onRequest(options, handler);
   }

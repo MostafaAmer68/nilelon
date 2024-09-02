@@ -57,11 +57,11 @@ class EndPoint {
   static const String getShippingMethodUrl =
       '/ShippingMethod/GetShippingMethods';
   //order urls
-  static const String getCustomerOrderUrl = 'Order/GetCustomerOrders';
-  static const String getStoreOrderUrl = 'Order/GetStoreOrder';
-  static const String createOrderUlr = 'Order/CreateOrder';
-  static const String changeOrderStateUrl = 'Order/ChangeOrderState';
-  static const String getStoreOderByDateUrl = 'Order/GetStoreOrderByDate';
+  static const String getCustomerOrderUrl = '/Order/GetCustomerOrders';
+  static const String getStoreOrderUrl = '/Order/GetStoreOrder';
+  static const String createOrderUlr = '/Order/CreateOrder';
+  static const String changeOrderStateUrl = '/Order/ChangeOrderState';
+  static const String getStoreOderByDateUrl = '/Order/GetStoreOrderByDate';
 
   //todo Customer Closet Urls
   static const String createClosetUrl = '/Closet/CreateCloset';

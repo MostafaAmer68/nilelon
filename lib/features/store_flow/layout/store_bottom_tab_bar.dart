@@ -14,6 +14,8 @@ import 'package:nilelon/features/order/presentation/pages/order_tab_bar.dart';
 import 'package:nilelon/features/store_flow/store_market/view/store_market_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_view.dart';
 
+import '../../../core/widgets/scaffold_image.dart';
+
 class StoreBottomTabBar extends StatefulWidget {
   const StoreBottomTabBar({super.key});
 
@@ -31,7 +33,7 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
     return DefaultTabController(
       length: 5,
       child: Scaffold(
-          backgroundColor: ColorManager.primaryW,
+          backgroundColor: Colors.white,
           body: Column(
             children: [
               Expanded(

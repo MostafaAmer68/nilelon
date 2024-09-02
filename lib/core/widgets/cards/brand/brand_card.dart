@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
-import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 
 class BrandCard extends StatefulWidget {
   const BrandCard({

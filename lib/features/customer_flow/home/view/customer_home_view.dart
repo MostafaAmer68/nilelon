@@ -18,7 +18,7 @@ import 'package:nilelon/features/product/presentation/widgets/hot_picks_widget.d
 import 'package:nilelon/features/product/presentation/pages/following_view_all.dart';
 import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/home_custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/core/widgets/cards/wide/wide_card.dart';
 import 'package:nilelon/features/customer_flow/search/view/search_view.dart';
@@ -69,7 +69,6 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
     return ScaffoldImage(
-      // backgroundColor: ColorManager.primaryW,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -245,7 +244,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
                                     isLoadMore) {
                                   return buildShimmerIndicatorSmall();
                                 } else {
-                                  return smallCardC(
+                                  return productSquarItem(
                                     context: context,
                                     model: productsList[sizeIndex],
                                   );

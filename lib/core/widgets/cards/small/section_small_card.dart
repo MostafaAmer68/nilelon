@@ -5,9 +5,7 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
-import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
 
 GestureDetector sectionSmallCard(
     {required context,
@@ -42,7 +40,7 @@ GestureDetector sectionSmallCard(
                 height: 160,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: NetworkImage(product.productImages![0].url!),
+                    image: NetworkImage(product.productImages[0].url),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -53,7 +51,7 @@ GestureDetector sectionSmallCard(
                   child: InkWell(
                     onTap: () {
                       ClosetCubit.get(context)
-                          .deletFromCloset(closetId, product.id!);
+                          .deletFromCloset(closetId, product.id);
                     },
                     child: Container(
                       width: 28,
@@ -74,7 +72,7 @@ GestureDetector sectionSmallCard(
             height: 8,
           ),
           PriceAndRatingRow(
-              price: '${product.productVariants![0].price!} L.E',
+              price: '${product.productVariants[0].price} L.E',
               rating: product.rating.toString()),
           const SizedBox(
             height: 4,

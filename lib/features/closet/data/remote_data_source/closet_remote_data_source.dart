@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -181,7 +180,6 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
     );
     if (data.statusCode == HttpStatus.ok) {
       final result = data.data['result'] as List;
-      print(result[0]['id']);
       final List<ClosetModel> closets = [];
       for (var item in result) {
         closets.add(ClosetModel(id: item['id'], name: item['name']));

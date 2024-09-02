@@ -11,7 +11,7 @@
 //   final bool noNotification;
 //   @override
 //   Widget build(BuildContext context) {
-//     return Scaffold(
+//     return ScaffoldImage(
 //       backgroundColor: AppStyles.primaryW,
 //       appBar: customAppBar(title: 'Notification', context: context),
 //       body: Column(

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/cards/wide/market_wide_card.dart';
 import 'package:nilelon/core/widgets/filter/category_container.dart';
 import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
+
+import '../../../core/widgets/scaffold_image.dart';
 
 class StoreHotPicksView extends StatefulWidget {
   const StoreHotPicksView({super.key});
@@ -23,8 +24,7 @@ class _StoreHotPicksViewState extends State<StoreHotPicksView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(title: lang.hotPicks, context: context),
       body: Column(
         children: [

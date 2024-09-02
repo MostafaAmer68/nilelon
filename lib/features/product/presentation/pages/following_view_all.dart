@@ -5,15 +5,15 @@ import 'package:nilelon/features/product/presentation/cubit/products_cubit/produ
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/core/widgets/filter/category_container.dart';
 import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
 import '../../domain/models/product_model.dart';
 
 class FollowingViewAll extends StatefulWidget {
@@ -72,8 +72,7 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(title: lang.following, context: context),
       body: SingleChildScrollView(
         controller: scrollController,
@@ -189,7 +188,7 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
           if (index == productsList.length && isLoadMore) {
             return buildShimmerIndicatorSmall();
           } else {
-            return smallCardC(
+            return productSquarItem(
               context: context,
               model: productsList[index],
             );

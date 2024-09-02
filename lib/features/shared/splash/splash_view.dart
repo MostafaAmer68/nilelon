@@ -14,6 +14,8 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/shared/onboarding/onboarding_cubit/onboarding_cubit.dart';
 import 'package:nilelon/features/shared/onboarding/screen/onboarding_view.dart';
 
+import '../../../core/widgets/scaffold_image.dart';
+
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
 
@@ -48,7 +50,7 @@ class _SplashViewState extends State<SplashView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return ScaffoldImage(
       body: Container(
         decoration: const BoxDecoration(color: ColorManager.primaryB2),
         child: const AnimationExample(),

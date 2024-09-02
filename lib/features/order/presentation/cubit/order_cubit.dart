@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/order/data/models/create_order_model.dart';
 import 'package:nilelon/features/order/data/models/order_model.dart';
+import 'package:nilelon/features/order/data/models/shipping_method.dart';
 import 'package:nilelon/features/order/domain/repositories/order_repo.dart';
 
 import '../../../../core/data/hive_stroage.dart';
@@ -18,6 +21,7 @@ class OrderCubit extends Cubit<OrderState> {
   List<StoreOrder> storeOrders = [];
   List<CustomerOrder> customerOrders = [];
   String selectedStatus = '';
+  List<ShippingMethod> shippingMethods = [];
   Future<void> createOrder(OrderModel order) async {
     emit(const OrderState.loading());
     final result = await _orderRepo.createOrder(order);
@@ -36,9 +40,11 @@ class OrderCubit extends Cubit<OrderState> {
     final result = await _orderRepo.getShippingMethod();
     result.fold(
       (failure) {
+        log(failure.errorMsg);
         emit(const OrderState.failure());
       },
       (response) {
+        shippingMethods = response;
         emit(const OrderState.success());
       },
     );

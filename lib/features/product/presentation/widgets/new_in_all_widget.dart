@@ -8,16 +8,16 @@ import 'package:nilelon/features/product/presentation/cubit/products_cubit/produ
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/small/market_small_card.dart';
-import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/filter/category_container.dart';
 import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class NewInViewAll extends StatefulWidget {
   const NewInViewAll({super.key, required this.isStore});
@@ -66,8 +66,7 @@ class _NewInViewAllState extends State<NewInViewAll> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(title: lang.newIn, context: context),
       body: SingleChildScrollView(
         child: Column(
@@ -136,7 +135,7 @@ class _NewInViewAllState extends State<NewInViewAll> {
                                       return buildShimmerIndicatorSmall();
                                     } else {
                                       return Container(
-                                        child: smallCardC(
+                                        child: productSquarItem(
                                           context: context,
                                           model: productsList[sizeIndex],
                                         ),

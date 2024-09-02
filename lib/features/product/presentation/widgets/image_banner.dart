@@ -35,7 +35,10 @@ class _ImageBannerState extends State<ImageBanner> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
-                      image: NetworkImage(widget.images[index]),
+                      image: widget.images.isEmpty
+                          ? const AssetImage(
+                              'assets/images/1-Nilelon f logo d.png')
+                          : NetworkImage(widget.images[index]),
                       fit: BoxFit.cover)),
             );
           },

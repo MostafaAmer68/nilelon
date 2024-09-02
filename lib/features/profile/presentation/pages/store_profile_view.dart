@@ -9,13 +9,13 @@ import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_settings_view.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
-import '../../../categories/domain/model/result.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class StoreProfileView extends StatefulWidget {
   const StoreProfileView({
@@ -64,8 +64,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
         hasLeading: false,
         title: lang.profile,
@@ -211,7 +210,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                                 return buildShimmerIndicatorSmall();
                               } else {
                                 return Container(
-                                  child: smallCardC(
+                                  child: productSquarItem(
                                     context: context,
                                     model: productsList
                                         .where((e) =>

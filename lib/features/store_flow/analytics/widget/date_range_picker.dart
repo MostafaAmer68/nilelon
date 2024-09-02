@@ -10,6 +10,8 @@ import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class DateRangePicker extends StatefulWidget {
   const DateRangePicker({super.key});
 
@@ -28,7 +30,7 @@ class _DateRangePickerState extends State<DateRangePicker> {
       builder: (context, state) {
         var cubit = BlocProvider.of<ReservationDateCubit>(context);
 
-        return Scaffold(
+        return ScaffoldImage(
           body: SafeArea(
             child: Center(
               child: Column(

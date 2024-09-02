@@ -28,6 +28,7 @@ import 'package:nilelon/features/product/presentation/widgets/size_container.dar
 import 'package:nilelon/features/product/presentation/widgets/table_headers.dart';
 import 'package:nilelon/features/product/presentation/widgets/total_row.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/add_product/add_product_cubit.dart';
 
 class EditProductpage extends StatefulWidget {
@@ -69,8 +70,7 @@ class _AddProductViewState extends State<EditProductpage> {
           BotToast.showText(text: r.message);
         });
       },
-      child: Scaffold(
-        backgroundColor: ColorManager.primaryW,
+      child: ScaffoldImage(
         appBar: customAppBar(
           title: lang.addProduct,
           context: context,
@@ -99,9 +99,6 @@ class _AddProductViewState extends State<EditProductpage> {
     );
   }
 
-  Widget _buildAddToDraft(String addToDraft) {
-    return addToDraftWidget(addToDraft);
-  }
 
   Widget addToDraftWidget(String addToDraft) {
     return ViewAllRow(

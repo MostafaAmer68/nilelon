@@ -21,6 +21,7 @@ import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/widgets/pop_ups/success_creation_popup.dart';
 import '../../../../../core/data/hive_stroage.dart';
+import '../../../../../core/widgets/scaffold_image.dart';
 
 class CustomerRegisterView extends StatefulWidget {
   const CustomerRegisterView({super.key});
@@ -101,10 +102,10 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
           BotToast.showText(text: state.errorMessage);
         }
       },
-      child: Scaffold(
-        backgroundColor: ColorManager.primaryW,
+      child: ScaffoldImage(
         appBar: AppBar(
-          backgroundColor: ColorManager.primaryW,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Column(

@@ -32,7 +32,7 @@ class ProductModel {
       id: json['id'],
       name: json['name'],
       description: json['description'],
-      categoryID: json['categoryID'],
+      categoryID: json['categoryId'],
       sizeguide: json['sizeguide'],
       isInCloset: json['isInCloset'],
       rating: json['rating'],

@@ -3,7 +3,6 @@ import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/presentation/view/forget_password_auth/forget_password_auth.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
@@ -11,6 +10,8 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon_hide.dart';
 import 'package:nilelon/features/auth/presentation/view/new_password/new_password_view.dart';
+
+import '../../../../../core/widgets/scaffold_image.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({super.key});
@@ -23,10 +24,9 @@ class _ChangePasswordState extends State<ChangePassword> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
+    return ScaffoldImage(
       appBar:
           customAppBar(title: lang.password, context: context, hasIcon: false),
-      backgroundColor: ColorManager.primaryW,
       body: Column(
         children: [
           const DefaultDivider(),

@@ -9,13 +9,14 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
 
+import '../../../core/widgets/scaffold_image.dart';
+
 class RecommendationView extends StatelessWidget {
   const RecommendationView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

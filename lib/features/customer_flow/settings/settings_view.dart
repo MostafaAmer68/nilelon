@@ -14,14 +14,15 @@ import 'package:nilelon/features/shared/language/language_view.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 import 'package:nilelon/features/auth/presentation/view/security_view.dart';
 
+import '../../../core/widgets/scaffold_image.dart';
+
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar:
           customAppBar(title: lang.settings, context: context, hasIcon: false),
       body: Column(

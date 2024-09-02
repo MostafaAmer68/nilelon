@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -7,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/customer_register_model.dart';
 import 'package:nilelon/features/auth/domain/model/external_google_model.dart';
@@ -296,7 +294,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold((failure) {
       emit(CustomerRegisterFailure(failure.errorMsg));
     }, (response) {
-      Map<String, dynamic> decodedToken = JwtDecoder.decode(response);
+      // Map<String, dynamic> decodedToken = JwtDecoder.decode(response);
 
       emit(CustomerRegisterSuccess(response));
       BlocProvider.of<CategoryCubit>(context).getCategories();
@@ -346,7 +344,6 @@ class AuthCubit extends Cubit<AuthState> {
         HiveKeys.token,
         response,
       );
-      print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh');
       emit(StoreGoogleRegisterSuccess(response));
       BlocProvider.of<CategoryCubit>(context).getCategories();
     });
@@ -366,16 +363,12 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       if (googleUser == null) {
-        print('User canceled the sign-in');
         return;
       }
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
       AppLogs.scussessLog(googleAuth.toString());
 
-      print('Google Auth: $googleAuth');
-      print('Google Auth idToken: ${googleAuth.idToken}');
-      print('Google Auth accessToken: ${googleAuth.accessToken}');
 
       await authStoreGoogleRegister(
         context,
@@ -385,7 +378,7 @@ class AuthCubit extends Cubit<AuthState> {
       // Send the token to the backend
       // await sendTokenToBackend(googleAuth.idToken!);
     } catch (error) {
-      print(error);
+      throw error;
     }
   }
 }

@@ -7,6 +7,8 @@ import 'package:nilelon/features/customer_flow/order_management/view/in_progress
 import 'package:nilelon/features/customer_flow/order_management/view/recieved_view.dart';
 import 'package:nilelon/features/customer_flow/order_management/view/shipped_view.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class OrderManegementTabBar extends StatefulWidget {
   const OrderManegementTabBar({super.key});
 
@@ -22,8 +24,7 @@ class _OrderManegementTabBarState extends State<OrderManegementTabBar> {
     final lang = S.of(context);
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-          backgroundColor: ColorManager.primaryW,
+      child: ScaffoldImage(
           appBar: customAppBar(
               title: lang.ordersManagement, context: context, hasIcon: false),
           body: Padding(

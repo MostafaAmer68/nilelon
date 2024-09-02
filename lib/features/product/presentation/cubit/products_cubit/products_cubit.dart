@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilelon/features/product/domain/models/create_review_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_followed_state/get_followed_products_state.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_new_in_state/get_new_in_state.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_random_state/get_random_state.dart';

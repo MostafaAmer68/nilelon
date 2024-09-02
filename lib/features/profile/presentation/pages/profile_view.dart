@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/alert/logout_alert.dart';
@@ -14,6 +13,7 @@ import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.
 import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
 import 'package:nilelon/features/customer_flow/settings/settings_view.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
 import '../../../auth/domain/model/user_model.dart';
 
 class ProfileView extends StatelessWidget {
@@ -22,8 +22,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
           title: lang.profile,
           context: context,

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/customer_flow/search/view/search_view.dart';
 
@@ -14,7 +13,8 @@ AppBar customAppBar(
     bool hasLeading = true,
     bool hasIcon = true}) {
   return AppBar(
-    backgroundColor: ColorManager.primaryW,
+    backgroundColor: Colors.transparent,
+    elevation: 0,
     leading: hasLeading
         ? IconButton(
             onPressed: leadingOnPressed ?? () => navigatePop(context: context),

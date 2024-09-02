@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
@@ -11,6 +10,8 @@ import 'package:nilelon/core/widgets/dot_indicators/gradient_dot.dart';
 import 'package:nilelon/core/widgets/dot_indicators/gradient_dot_active.dart';
 import 'package:nilelon/features/shared/onboarding/onboarding_cubit/onboarding_cubit.dart';
 import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({super.key});
@@ -25,8 +26,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     final controller = PageController();
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       body: SafeArea(
         child: Column(
           children: [

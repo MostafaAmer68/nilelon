@@ -1,65 +1,81 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
-import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 
-Container categoryContainer({
+import '../oval_shape.dart';
+
+categoryContainer({
   required BuildContext context,
   required String image,
   required String name,
   required bool isSelected,
 }) {
-  return isSelected
-      ? Container(
-          decoration: BoxDecoration(
-              color: ColorManager.primaryB5,
-              borderRadius: BorderRadius.circular(16)),
-          width: screenWidth(context, 0.22),
-          height: screenWidth(context, 0.22),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: screenWidth(context, 0.22),
-                height: screenWidth(context, 0.22),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  // color: AppStyles.primaryB5,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Image.asset(image),
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 20),
+    child: CustomPaint(
+      painter: CirclePainter(),
+      child: isSelected
+          ? Container(
+              width: 100,
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.orange.shade300.withOpacity(1),
+                    offset: Offset(10, 10),
+                    blurRadius: 0,
+                  ),
+                ],
               ),
-              Text(
-                name,
-                style: AppStylesManager.customTextStyleBl3,
-              )
-            ],
-          ),
-        )
-      : Container(
-          decoration: BoxDecoration(
-              color: ColorManager.primaryW,
-              borderRadius: BorderRadius.circular(16)),
-          width: screenWidth(context, 0.20),
-          height: screenWidth(context, 0.20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: screenWidth(context, 0.20),
-                height: screenWidth(context, 0.20),
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  // color: AppStyles.primaryB5,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Image.asset(image),
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    image, // Use your own image path here
+                    height: 50,
+                    width: 50,
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    name,
+                    style: AppStylesManager.customTextStyleBl3,
+                  ),
+                ],
               ),
-              Text(
-                name,
-                style: AppStylesManager.customTextStyleBl3,
-              )
-            ],
-          ),
-        );
+            )
+          : Container(
+              width: 100,
+              height: 200,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.orange.shade300.withOpacity(0.7),
+                    offset: Offset(10, 10),
+                    blurRadius: 0,
+                  ),
+                ],
+              ),
+              alignment: Alignment.center,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(
+                    image, // Use your own image path here
+                    height: 50,
+                    width: 50,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    name,
+                    style: AppStylesManager.customTextStyleBl3,
+                  ),
+                ],
+              ),
+            ),
+    ),
+  );
 }

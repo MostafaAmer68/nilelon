@@ -7,6 +7,8 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/cards/small/section_small_card.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 
+import '../../../core/widgets/scaffold_image.dart';
+
 class SectionDetailsView extends StatefulWidget {
   const SectionDetailsView({super.key, required this.closet});
   final ClosetModel closet;
@@ -24,8 +26,7 @@ class _SectionDetailsViewState extends State<SectionDetailsView> {
   @override
   Widget build(BuildContext context) {
     BotToast.closeAllLoading();
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(title: widget.closet.name, context: context),
       body: BlocListener<ClosetCubit, ClosetState>(
         listener: (context, state) {

@@ -28,6 +28,7 @@ import 'package:nilelon/features/product/presentation/widgets/table_headers.dart
 import 'package:nilelon/features/product/presentation/widgets/total_row.dart';
 
 import '../../../../core/sizes_consts.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/add_product/add_product_cubit.dart';
 
 class AddProductView extends StatefulWidget {
@@ -81,8 +82,7 @@ class _AddProductViewState extends State<AddProductView> {
           BotToast.showText(text: r.message);
         });
       },
-      child: Scaffold(
-        backgroundColor: ColorManager.primaryW,
+      child: ScaffoldImage(
         appBar: customAppBar(
           title: lang.addProduct,
           context: context,

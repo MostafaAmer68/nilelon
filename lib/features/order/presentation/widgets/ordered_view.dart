@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/alert/shipped_alert.dart';
 import 'package:nilelon/core/widgets/cards/store_order/ordered_store_card.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/order/presentation/pages/ordered_store_details_view.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class OrderedView extends StatefulWidget {
   const OrderedView({super.key});
@@ -28,8 +29,7 @@ class _OrderedViewState extends State<OrderedView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 12.h),
         child: ListView.builder(

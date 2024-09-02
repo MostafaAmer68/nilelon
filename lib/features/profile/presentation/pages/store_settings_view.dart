@@ -17,6 +17,8 @@ import 'package:nilelon/features/auth/presentation/view/security_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/edit_store_info_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/edit_store_profile_view.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class StoreSettingsView extends StatelessWidget {
   const StoreSettingsView({super.key});
 
@@ -24,8 +26,7 @@ class StoreSettingsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar:
           customAppBar(title: lang.settings, context: context, hasIcon: false),
       body: Column(

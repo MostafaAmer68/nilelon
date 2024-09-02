@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/core/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
@@ -13,6 +12,7 @@ import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/
 import 'package:nilelon/features/auth/presentation/view/otp/otp_view.dart';
 
 import '../../../../../core/widgets/pop_ups/success_creation_popup.dart';
+import '../../../../../core/widgets/scaffold_image.dart';
 
 class ChangeEmail extends StatelessWidget {
   const ChangeEmail({super.key});
@@ -60,10 +60,9 @@ class ChangeEmail extends StatelessWidget {
           );
         }
       },
-      child: Scaffold(
+      child: ScaffoldImage(
         appBar:
             customAppBar(title: lang.email, context: context, hasIcon: false),
-        backgroundColor: ColorManager.primaryW,
         body: Column(
           children: [
             const DefaultDivider(),

@@ -6,6 +6,7 @@ import 'package:nilelon/core/widgets/cards/store_order/recieved_store_card.dart'
 import 'package:nilelon/features/order/presentation/pages/ordered_store_details_view.dart';
 
 import '../../../../core/data/hive_stroage.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/order_cubit.dart';
 
 class RecievedStoreView extends StatefulWidget {
@@ -28,8 +29,7 @@ class _RecievedStoreViewState extends State<RecievedStoreView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
         child: Column(

@@ -57,42 +57,26 @@ class _CartFooterState extends State<CartFooter> {
             const SizedBox(
               height: 18,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: screenWidth(context, 0.4),
-                  child: GradientButtonBuilder(
-                    text: lang.emptyCart,
-                    ontap: () {
-                      CartCubit.get(context).emptyCart();
-                    },
-                    width: screenWidth(context, 1),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                SizedBox(
-                  width: screenWidth(context, 0.4),
-                  child: GradientButtonBuilder(
-                    text: lang.checkOut,
-                    ontap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => BlocProvider<ProgressCubit>(
-                            create: (context) => ProgressCubit(),
-                            child: BlocProvider<CheckOutCubit>(
-                              create: (context) => CheckOutCubit(
-                                  locatorService<OrderRepoImpl>()),
-                              child: const ChechOutView(),
-                            ),
-                          ),
+            SizedBox(
+              width: screenWidth(context, 0.9),
+              child: GradientButtonBuilder(
+                text: lang.checkOut,
+                ontap: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => BlocProvider<ProgressCubit>(
+                        create: (context) => ProgressCubit(),
+                        child: BlocProvider<CheckOutCubit>(
+                          create: (context) =>
+                              CheckOutCubit(locatorService<OrderRepoImpl>()),
+                          child: const ChechOutView(),
                         ),
-                      );
-                    },
-                    width: screenWidth(context, 1),
-                  ),
-                ),
-              ],
+                      ),
+                    ),
+                  );
+                },
+                width: screenWidth(context, 1),
+              ),
             ),
           ],
         ),

@@ -18,6 +18,8 @@ import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.d
 import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
+import '../../../../../core/widgets/scaffold_image.dart';
+
 class StoreRegisterView extends StatefulWidget {
   const StoreRegisterView({super.key});
 
@@ -73,8 +75,8 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               phoneOrEmail: AuthCubit.get(context).emailController.text,
               buttonName: lang.verifyAndCreateAccount,
               onSuccess: () {
-                if(HiveStorage.get(HiveKeys.isStore)){
-                     AuthCubit.get(context).authStoreRegister(context);
+                if (HiveStorage.get(HiveKeys.isStore)) {
+                  AuthCubit.get(context).authStoreRegister(context);
                 }
               },
               resend: () {
@@ -99,10 +101,10 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
           );
         }
       },
-      child: Scaffold(
-        backgroundColor: ColorManager.primaryW,
-        appBar: AppBar(
-          backgroundColor: ColorManager.primaryW,
+      child: ScaffoldImage(
+       appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
         ),
         body: SingleChildScrollView(
           child: Column(

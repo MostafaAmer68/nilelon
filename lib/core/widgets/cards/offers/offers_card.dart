@@ -4,15 +4,11 @@ import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
-import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
 
 GestureDetector offersCard({required context}) {
   List<String> images = ['assets/images/saveToCloset.png'];
   String name = 'T-Shirt';
-  String storeName = 'By Nagham';
-  String rating = '4.8';
   String price = '370.90';
   String priceDisc = '400.90';
   String discount = '20';

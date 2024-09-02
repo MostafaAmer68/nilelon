@@ -3,11 +3,12 @@ import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/order/presentation/widgets/ordered_view.dart';
 import 'package:nilelon/features/order/presentation/widgets/received_store_view.dart';
 import 'package:nilelon/features/order/presentation/widgets/shipped_store_view.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class OrderTabBar extends StatefulWidget {
   const OrderTabBar({super.key});
@@ -22,7 +23,7 @@ class _OrderTabBarState extends State<OrderTabBar> {
   @override
   void initState() {
     cubit = OrderCubit.get(context);
-   
+
     super.initState();
   }
 
@@ -32,8 +33,7 @@ class _OrderTabBarState extends State<OrderTabBar> {
 
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-        backgroundColor: ColorManager.primaryW,
+      child: ScaffoldImage(
         appBar: customAppBar(
           title: lang.orders,
           context: context,

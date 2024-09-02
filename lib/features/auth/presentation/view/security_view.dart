@@ -11,6 +11,8 @@ import 'package:nilelon/features/auth/presentation/view/change_password/change_p
 import 'package:nilelon/features/auth/presentation/view/change_phone_number/change_phone_number.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class SecurityView extends StatelessWidget {
   const SecurityView({super.key});
 
@@ -18,10 +20,9 @@ class SecurityView extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
+    return ScaffoldImage(
       appBar:
           customAppBar(title: lang.security, context: context, hasIcon: false),
-      backgroundColor: ColorManager.primaryW,
       body: Column(
         children: [
           const DefaultDivider(),

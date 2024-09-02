@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/cards/notification/notify_gradient_card.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class RequestsView extends StatelessWidget {
   const RequestsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       body: Padding(
         padding: EdgeInsets.symmetric(vertical: 12.h),
         child: ListView.builder(

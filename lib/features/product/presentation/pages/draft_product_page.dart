@@ -11,6 +11,8 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class DraftProductPage extends StatefulWidget {
   const DraftProductPage({super.key});
 
@@ -30,8 +32,7 @@ class _DraftProductPageState extends State<DraftProductPage> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
         title: lang.drafts,
         context: context,
@@ -90,7 +91,8 @@ class _DraftProductPageState extends State<DraftProductPage> {
                               context, lang.areYouSureYouWantToDeleteThisDraft,
                               () {
                             draftsProduct.remove(draftsProduct[index]);
-                            HiveStorage.set(HiveKeys.draftProduct, draftsProduct);
+                            HiveStorage.set(
+                                HiveKeys.draftProduct, draftsProduct);
                             setState(() {});
                             navigatePop(context: context);
                           });

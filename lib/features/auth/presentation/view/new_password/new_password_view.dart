@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/core/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
@@ -11,6 +10,8 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon_hide.dart';
 import 'package:nilelon/features/auth/presentation/view/login/login_view.dart';
+
+import '../../../../../core/widgets/scaffold_image.dart';
 
 class NewPasswordView extends StatefulWidget {
   const NewPasswordView({
@@ -28,10 +29,9 @@ class _NewPasswordViewState extends State<NewPasswordView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
+    return ScaffoldImage(
       appBar:
           customAppBar(title: lang.password, context: context, hasIcon: false),
-      backgroundColor: ColorManager.primaryW,
       body: BlocListener<AuthCubit, AuthState>(
         listener: (context, state) {
           if (state is ResetPasswordLoading) {

@@ -8,6 +8,7 @@ import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 
 class AddToFooter extends StatelessWidget {
   const AddToFooter({super.key, this.visible = true, required this.product});
@@ -31,9 +32,9 @@ class AddToFooter extends StatelessWidget {
                       ontap: () {
                         CartCubit.get(context).addToCart(
                           AddToCartModel(
-                            quantity: 1,
-                            size: product.productVariants[0].size,
-                            color: product.productVariants[0].color,
+                            quantity: CartCubit.get(context).counter,
+                            size: CartCubit.get(context).selectedSize,
+                            color: CartCubit.get(context).selectedColor,
                             productId: product.id,
                             customerId: JwtDecoder.decode(
                                 HiveStorage.get<UserModel>(HiveKeys.userModel)
@@ -44,7 +45,10 @@ class AddToFooter extends StatelessWidget {
                     );
                   },
                 ),
-                ButtonBuilder(text: 'Buy Now', ontap: () {})
+                ButtonBuilder(
+                  text: 'Buy Now',
+                  ontap: () {},
+                )
               ],
             ),
           ),

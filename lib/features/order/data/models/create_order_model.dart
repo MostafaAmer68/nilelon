@@ -46,7 +46,7 @@ class OrderModel extends Equatable {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'total': total,
-      'phoneNum': phoneNum,
+      'phoneNumber': phoneNum,
       'discount': discount,
       'type': type,
       'shippingMethodId': shippingMethodId,
@@ -54,7 +54,7 @@ class OrderModel extends Equatable {
       'governate': governate,
       'transactionId': transactionId,
       'customerAddressDTO': customerAddressDTO,
-      'orderProductVeriants': orderProductVeriants,
+      'orderProductVariants': orderProductVeriants,
     };
   }
 
@@ -80,4 +80,30 @@ class OrderModel extends Equatable {
 
   factory OrderModel.fromJson(String source) =>
       OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  OrderModel copyWith({
+    int? total,
+    String? phoneNum,
+    num? discount,
+    String? type,
+    String? shippingMethodId,
+    String? customerId,
+    String? governate,
+    String? transactionId,
+    Map<String, dynamic>? customerAddressDTO,
+    List<Map<String, dynamic>>? orderProductVeriants,
+  }) {
+    return OrderModel(
+      total: total ?? this.total,
+      phoneNum: phoneNum ?? this.phoneNum,
+      discount: discount ?? this.discount,
+      type: type ?? this.type,
+      shippingMethodId: shippingMethodId ?? this.shippingMethodId,
+      customerId: customerId ?? this.customerId,
+      governate: governate ?? this.governate,
+      transactionId: transactionId ?? this.transactionId,
+      customerAddressDTO: customerAddressDTO ?? this.customerAddressDTO,
+      orderProductVeriants: orderProductVeriants ?? this.orderProductVeriants,
+    );
+  }
 }

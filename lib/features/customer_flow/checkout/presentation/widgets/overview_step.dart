@@ -11,29 +11,30 @@ import 'package:nilelon/core/resources/font_weight_manger.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/drop_down_menu/drop_down_menu.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
 import 'package:nilelon/features/customer_flow/order_details/widget/order_details_card.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 
-class Page1 extends StatefulWidget {
-  const Page1({super.key});
+class OverViewStep extends StatefulWidget {
+  const OverViewStep({super.key});
 
   @override
-  State<Page1> createState() => _Page1State();
+  State<OverViewStep> createState() => _OverViewStepState();
 }
 
-class _Page1State extends State<Page1> {
+class _OverViewStepState extends State<OverViewStep> {
   late GlobalKey<FormState> formKey;
-  List<String> city = ['Cairo', 'Fayoum', 'Giza', 'Alexandria'];
-  String? selectedCity;
-  num totalPrice = 0;
+  String selectedCity = 'Cairo';
   late final CartCubit cubit;
   @override
   void initState() {
     cubit = CartCubit.get(context);
     cubit.getCart();
-
+    OrderCubit.get(context).getShippingMethod();
     formKey = GlobalKey();
     super.initState();
   }
@@ -53,6 +54,9 @@ class _Page1State extends State<Page1> {
               height: 150,
               child: BlocBuilder<CartCubit, CartState>(
                 builder: (context, state) {
+                  if (state is CartLoading) {
+                    return buildShimmerIndicatorSmall();
+                  }
                   return ListView.builder(
                     padding: const EdgeInsetsDirectional.symmetric(
                         vertical: 16, horizontal: 16),
@@ -136,25 +140,35 @@ class _Page1State extends State<Page1> {
                       BlocBuilder<CartCubit, CartState>(
                         builder: (context, state) {
                           if (state is GetCartSuccess) {
-                            if (totalPrice == 0) {
+                            if (CheckOutCubit.get(context).totalPrice == 0) {
                               for (var item in CartCubit.get(context)
                                   .cartItems
                                   .result!
                                   .items!) {
-                                totalPrice += item.price!;
-                                log(item.price!.toString());
+                                CheckOutCubit.get(context).totalPrice +=
+                                    item.price!;
                               }
                             }
                           }
-                          return orderSummaryItems(
-                              lang.order, totalPrice.toString());
+                          return Column(
+                            children: [
+                              orderSummaryItems(
+                                  lang.order,
+                                  CheckOutCubit.get(context)
+                                      .totalPrice
+                                      .toString()),
+                              const Divider(),
+                              orderSummaryItemsWithDropList(
+                                  lang.delivery,
+                                  '${CheckOutCubit.get(context).deliveryPrice} L.E',
+                                  lang),
+                              const Divider(),
+                              orderSummaryItems(lang.total,
+                                  '${CheckOutCubit.get(context).totalPrice} L.E'),
+                            ],
+                          );
                         },
                       ),
-                      const Divider(),
-                      orderSummaryItemsWithDropList(
-                          lang.delivery, '50 L.E', lang),
-                      const Divider(),
-                      orderSummaryItems(lang.total, '650 L.E'),
                     ]),
                   ),
                   const SizedBox(
@@ -226,24 +240,58 @@ class _Page1State extends State<Page1> {
           const SizedBox(
             width: 8,
           ),
-          dropDownMenu(
-              width: screenWidth(context, 0.3),
-              height: screenWidth(context, 0.11),
-              hint: lang.city,
-              style: AppStylesManager.customTextStyleBl.copyWith(
-                fontSize: 8,
-                fontWeight: FontWeightManager.regular400,
-              ),
-              style2: AppStylesManager.customTextStyleBl.copyWith(
-                fontSize: 10,
-                fontWeight: FontWeightManager.regular400,
-              ),
-              selectedValue: selectedCity,
-              items: city,
-              context: context,
-              onChanged: (selectedValue) {
-                selectedCity = selectedValue;
-              }),
+          BlocBuilder<OrderCubit, OrderState>(
+            builder: (context, state) {
+              return state.maybeWhen(orElse: () {
+                return const SizedBox();
+              }, loading: () {
+                return const Center(child: CircularProgressIndicator());
+              }, success: () {
+                return dropDownMenu(
+                    width: screenWidth(context, 0.3),
+                    height: screenWidth(context, 0.11),
+                    hint: lang.city,
+                    style: AppStylesManager.customTextStyleBl.copyWith(
+                      fontSize: 8,
+                      fontWeight: FontWeightManager.regular400,
+                    ),
+                    style2: AppStylesManager.customTextStyleBl.copyWith(
+                      fontSize: 10,
+                      fontWeight: FontWeightManager.regular400,
+                    ),
+                    selectedValue: selectedCity,
+                    items: OrderCubit.get(context)
+                        .shippingMethods
+                        .first
+                        .shippingCosts
+                        .map((e) => e.governate)
+                        .toList(),
+                    context: context,
+                    onChanged: (selectedValue) {
+                      selectedCity = selectedValue ?? '';
+                      CheckOutCubit.get(context).deliveryPrice =
+                          OrderCubit.get(context)
+                              .shippingMethods
+                              .first
+                              .shippingCosts
+                              .firstWhere((e) => e.governate == selectedValue)
+                              .price;
+                      CheckOutCubit.get(context).totalPrice +=
+                          CheckOutCubit.get(context).deliveryPrice;
+                      CheckOutCubit.get(context).selectedShippingMethodId =
+                          OrderCubit.get(context).shippingMethods.first.id;
+                      CheckOutCubit.get(context).selectedGovernate =
+                          OrderCubit.get(context)
+                              .shippingMethods
+                              .first
+                              .shippingCosts
+                              .firstWhere((e) => e.governate == selectedValue)
+                              .governate;
+                      setState(() {});
+                    });
+              });
+            },
+          ),
           const Spacer(),
           Text(
             content,

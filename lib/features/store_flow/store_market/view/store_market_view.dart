@@ -6,7 +6,6 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/market_custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/small/market_small_card.dart';
 import 'package:nilelon/core/widgets/cards/wide/market_wide_card.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
 import 'package:nilelon/core/widgets/banner/banner_product.dart';
@@ -15,6 +14,8 @@ import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.
 import 'package:nilelon/features/store_flow/hot_picks/store_hot_picks_view.dart';
 import 'package:nilelon/features/store_flow/search/view/store_search_view.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class StoreMarketView extends StatelessWidget {
   const StoreMarketView({super.key});
 
@@ -22,8 +23,7 @@ class StoreMarketView extends StatelessWidget {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

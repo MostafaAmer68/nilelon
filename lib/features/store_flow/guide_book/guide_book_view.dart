@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/features/store_flow/guide_book/cubit/guide_book_cubit.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:svg_flutter/svg_flutter.dart';
+
+import '../../../core/widgets/scaffold_image.dart';
 
 class GuideBookView extends StatefulWidget {
   const GuideBookView({super.key});
@@ -44,8 +45,7 @@ class _GuideBookViewState extends State<GuideBookView> {
     final controller = PageController();
     final lang = S.of(context);
 
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
         title: lang.guideBook,
         context: context,

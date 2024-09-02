@@ -10,8 +10,9 @@ import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/customer_flow/search/widget/search_section_items.dart';
 import 'package:nilelon/features/customer_flow/sections_view.dart/sections_view.dart';
-import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
@@ -31,8 +32,7 @@ class SearchView extends StatelessWidget {
       'assets/images/brand3.png',
       'assets/images/brand4.png',
     ];
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: searchAppBar(context, lang.searchByItemBrand),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),

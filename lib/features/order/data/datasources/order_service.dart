@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -16,12 +18,13 @@ class OrderService {
   Future<void> createOrder(OrderModel order) async {
     final response = await _apiService.post(
       endPoint: EndPoint.createOrderUlr,
-      body: order.toJson(),
+      body: order.toMap(),
     );
-
+    log(order.toJson());
     if (response.statusCode == HttpStatus.ok) {
       return;
     }
+    log(response.data['result'].toString());
     throw response.data['result'];
   }
 
@@ -56,12 +59,14 @@ class OrderService {
   }
 
   Future<List<ShippingMethod>> getShippingMethod() async {
-    final response = await _apiService.post(
+    final response = await _apiService.get(
       endPoint: EndPoint.getShippingMethodUrl,
     );
 
     if (response.statusCode == HttpStatus.ok) {
-      return List<ShippingMethod>.from(response.data['result']);
+      return List<ShippingMethod>.from((response.data['result'] as List)
+          .map((e) => ShippingMethod.fromJson(e))
+          .toList());
     }
     throw response.data['result'];
   }

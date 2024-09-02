@@ -11,8 +11,10 @@ import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/pop_ups/customer_store_popup.dart';
-import 'package:nilelon/core/widgets/cards/small/small_card.dart';
+import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
+
+import '../../../../core/widgets/scaffold_image.dart';
 
 class StoreProfileCustomer extends StatefulWidget {
   const StoreProfileCustomer({super.key, required this.storeId});
@@ -44,8 +46,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
         title: cubit.storeProfile!.name,
         context: context,

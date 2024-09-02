@@ -1,9 +1,11 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/cart/domain/model/delete_request_model.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
@@ -20,6 +22,8 @@ import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/core/utils/navigation.dart';
+
+import '../../../../core/widgets/button/gradient_button_builder.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -47,7 +51,16 @@ class CartView extends StatelessWidget {
           const SizedBox(
             height: 8,
           ),
-          BlocBuilder<CartCubit, CartState>(
+          BlocConsumer<CartCubit, CartState>(
+            listener: (context, state) {
+              if (state is DeleteFromCartSuccess) {
+                BotToast.showText(text: 'Item deleted successfully');
+              } else if (state is DeleteFromCartFailure) {
+                BotToast.showText(
+                  text: state.message,
+                );
+              } else {}
+            },
             builder: (context, state) {
               if (state is CartLoading) {
                 return Expanded(
@@ -67,27 +80,16 @@ class CartView extends StatelessWidget {
                       )
                     : Column(
                         children: [
-                          ListView.builder(
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return Expanded(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    BlocListener<CartCubit, CartState>(
-                                      listener: (context, state) {
-                                        if (state is DeleteFromCartSuccess) {
-                                          BotToast.showText(
-                                              text:
-                                                  'Item deleted successfully');
-                                        } else if (state
-                                            is DeleteFromCartFailure) {
-                                          BotToast.showText(
-                                            text: state.message,
-                                          );
-                                        } else {}
-                                      },
-                                      child: Slidable(
+                          SizedBox(
+                            height: screenHeight(context, 0.5),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Expanded(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Slidable(
                                         key: ValueKey(index),
                                         endActionPane: ActionPane(
                                             motion: const BehindMotion(),
@@ -102,8 +104,10 @@ class CartView extends StatelessWidget {
                                                   size: state.items[index].size,
                                                   productId: state
                                                       .items[index].productId,
-                                                  customrId: HiveStorage.get(
-                                                      HiveKeys.userId),
+                                                  customrId: HiveStorage.get<
+                                                              UserModel>(
+                                                          HiveKeys.userModel)
+                                                      .id,
                                                 ),
                                               );
                                             }),
@@ -142,15 +146,47 @@ class CartView extends StatelessWidget {
                                             cart: state.items[index],
                                           ),
                                         ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              );
-                            },
-                            itemCount: state.items.length,
-                            padding: const EdgeInsets.only(bottom: 12),
+                                      )
+                                    ],
+                                  ),
+                                );
+                              },
+                              itemCount: state.items.length,
+                              padding: const EdgeInsets.only(bottom: 5),
+                            ),
                           ),
+                          const Divider(),
+                          Align(
+                            alignment: AlignmentDirectional.centerEnd,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: SizedBox(
+                                width: screenWidth(context, 0.4),
+                                child: OutlinedButton(
+                                  onPressed: () {
+                                    CartCubit.get(context).emptyCart();
+                                  },
+                                  style: OutlinedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: const BorderSide(
+                                        color: ColorManager.primaryR,
+                                      ),
+                                    ),
+                                    backgroundColor: ColorManager.scaffoldBG,
+                                  ),
+                                  child: Text(
+                                    lang.emptyCart,
+                                    style: const TextStyle(
+                                      color: ColorManager.primaryR,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 20),
                         ],
                       );
               } else {

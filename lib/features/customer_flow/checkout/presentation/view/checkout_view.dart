@@ -6,10 +6,13 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
+import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/ordered_success_step.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/overview_step.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/payment_details_step.dart';
+import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/billing_details_step.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/payment_stemp.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/step_indicator.dart';
+
+import '../../../../../core/widgets/scaffold_image.dart';
 
 class ChechOutView extends StatefulWidget {
   const ChechOutView({super.key});
@@ -30,8 +33,7 @@ class _ChechOutViewState extends State<ChechOutView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryG17,
+    return ScaffoldImage(
       appBar:
           customAppBar(title: lang.checkOut, context: context, hasIcon: false),
       body: SingleChildScrollView(
@@ -49,7 +51,7 @@ class _ChechOutViewState extends State<ChechOutView> {
                       color: ColorManager.primaryW,
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: StepIndicator(totalSteps: 2, currentStep: state),
+                        child: StepIndicator(totalSteps: 3, currentStep: state),
                       ),
                     ),
                     Container(
@@ -64,9 +66,10 @@ class _ChechOutViewState extends State<ChechOutView> {
                       child: PageView(
                         controller: ProgressCubit.get(context).pageController,
                         children: const [
-                          Page1(),
-                          Page2(),
-                          Page3(),
+                          OverViewStep(),
+                          BillingDetailsStep(),
+                          OrderedSuccessPage(),
+                          PaymentPage(),
                         ],
                       ),
                     ),

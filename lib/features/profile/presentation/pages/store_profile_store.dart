@@ -10,6 +10,7 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
 import '../../../categories/domain/model/result.dart';
 import '../../../product/presentation/cubit/products_cubit/products_state.dart';
 
@@ -37,8 +38,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
   // String _indexName = 'All Items';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(
         title: widget.storeName,
         context: context,

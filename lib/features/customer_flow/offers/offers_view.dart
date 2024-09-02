@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/cards/offers/market_offers_card.dart';
@@ -10,6 +9,8 @@ import 'package:nilelon/core/widgets/cards/offers/offers_card.dart';
 import 'package:nilelon/core/widgets/filter/category_container.dart';
 import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
+
+import '../../../core/widgets/scaffold_image.dart';
 
 class OffersView extends StatefulWidget {
   const OffersView({super.key, required this.isStore});
@@ -25,8 +26,7 @@ class _OffersViewState extends State<OffersView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: customAppBar(title: lang.offers, context: context),
       body: SingleChildScrollView(
         child: Column(

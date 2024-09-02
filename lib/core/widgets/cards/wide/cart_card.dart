@@ -3,16 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/cart/domain/model/change_quantity_model.dart';
-import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
 import 'package:nilelon/core/widgets/button/small_button.dart';
 
 class CartCard extends StatefulWidget {
@@ -89,7 +87,7 @@ class _CartCardState extends State<CartCard> {
                     height: 1.sw > 600 ? 130 : 100,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                             image: AssetImage('assets/images/app_logo.png'),
                             fit: BoxFit.cover)),
                   ),
@@ -162,8 +160,10 @@ class _CartCardState extends State<CartCard> {
                                           BlocProvider.of<CartCubit>(context)
                                               .updateQuantityCart(
                                                   ChangeQuantityModel(
-                                            customrId: HiveStorage.get(
-                                                HiveKeys.userId),
+                                            customrId:
+                                                HiveStorage.get<UserModel>(
+                                                        HiveKeys.userModel)
+                                                    .id,
                                             size: widget.cart.size,
                                             color: widget.cart.color!,
                                             productId: widget.cart.productId,
@@ -191,8 +191,9 @@ class _CartCardState extends State<CartCard> {
                                     incrementCounter();
                                     BlocProvider.of<CartCubit>(context)
                                         .updateQuantityCart(ChangeQuantityModel(
-                                      customrId:
-                                          HiveStorage.get(HiveKeys.userId),
+                                      customrId: HiveStorage.get<UserModel>(
+                                              HiveKeys.userModel)
+                                          .id,
                                       size: widget.cart.size,
                                       color: widget.cart.color!,
                                       productId: widget.cart.productId,

@@ -7,6 +7,8 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/core/widgets/cards/brand/brand_card.dart';
 
+import '../../../../core/widgets/scaffold_image.dart';
+
 class SeeMoreStoresView extends StatelessWidget {
   const SeeMoreStoresView({super.key});
 
@@ -31,8 +33,7 @@ class SeeMoreStoresView extends StatelessWidget {
       },
     ];
     final lang = S.of(context);
-    return Scaffold(
-      backgroundColor: ColorManager.primaryW,
+    return ScaffoldImage(
       appBar: searchAppBar(context),
       body: Padding(
         padding: const EdgeInsets.all(24.0),

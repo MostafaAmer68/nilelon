@@ -42,7 +42,7 @@ class ShippingMethod {
 
 class ShippingCost {
   final String governate;
-  final int price;
+  final num price;
 
   ShippingCost({
     required this.governate,
