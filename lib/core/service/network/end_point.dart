@@ -98,11 +98,7 @@ class EndPoint {
   static const String storeRegisterUrl = '/Authentication/StoreRegister';
 
   //todo Dashboard For Store Urls
-  static const String noOfItemsSold = '/Dashboard/NumberOdItemsSold';
-  static const String noOfOrdersSold = '/Dashboard/NumberOfOrders';
-  static const String totalIncomeSold = '/Dashboard/TotalIncome';
-  static const String noOfFollowersSold = '/Dashboard/NumberOfFollowers';
-  static const String noOfNotificationSold = '/Dashboard/NumberOfNotifications';
+  static const String getDashboardDataUrl = '/Dashboard/GetDashboardData';
 
   //?*********************************************************************************
 

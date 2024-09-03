@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'get_no_of_followers_sold_state.dart';
+part of 'analytics_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,29 +15,29 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$GetNoOfFollowersSoldState {
+mixin _$AnalyticsState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AnalyticsResponseModel products) success,
-    required TResult Function(String msg) failure,
+    required TResult Function() success,
+    required TResult Function(String errorMessage) failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AnalyticsResponseModel products)? success,
-    TResult? Function(String msg)? failure,
+    TResult? Function()? success,
+    TResult? Function(String errorMessage)? failure,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AnalyticsResponseModel products)? success,
-    TResult Function(String msg)? failure,
+    TResult Function()? success,
+    TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -69,17 +69,16 @@ mixin _$GetNoOfFollowersSoldState {
 }
 
 /// @nodoc
-abstract class $GetNoOfFollowersSoldStateCopyWith<$Res> {
-  factory $GetNoOfFollowersSoldStateCopyWith(GetNoOfFollowersSoldState value,
-          $Res Function(GetNoOfFollowersSoldState) then) =
-      _$GetNoOfFollowersSoldStateCopyWithImpl<$Res, GetNoOfFollowersSoldState>;
+abstract class $AnalyticsStateCopyWith<$Res> {
+  factory $AnalyticsStateCopyWith(
+          AnalyticsState value, $Res Function(AnalyticsState) then) =
+      _$AnalyticsStateCopyWithImpl<$Res, AnalyticsState>;
 }
 
 /// @nodoc
-class _$GetNoOfFollowersSoldStateCopyWithImpl<$Res,
-        $Val extends GetNoOfFollowersSoldState>
-    implements $GetNoOfFollowersSoldStateCopyWith<$Res> {
-  _$GetNoOfFollowersSoldStateCopyWithImpl(this._value, this._then);
+class _$AnalyticsStateCopyWithImpl<$Res, $Val extends AnalyticsState>
+    implements $AnalyticsStateCopyWith<$Res> {
+  _$AnalyticsStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -96,7 +95,7 @@ abstract class _$$InitialImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$InitialImplCopyWithImpl<$Res>
-    extends _$GetNoOfFollowersSoldStateCopyWithImpl<$Res, _$InitialImpl>
+    extends _$AnalyticsStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
       _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
@@ -110,7 +109,7 @@ class _$InitialImpl implements _Initial {
 
   @override
   String toString() {
-    return 'GetNoOfFollowersSoldState.initial()';
+    return 'AnalyticsState.initial()';
   }
 
   @override
@@ -127,8 +126,8 @@ class _$InitialImpl implements _Initial {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AnalyticsResponseModel products) success,
-    required TResult Function(String msg) failure,
+    required TResult Function() success,
+    required TResult Function(String errorMessage) failure,
   }) {
     return initial();
   }
@@ -138,8 +137,8 @@ class _$InitialImpl implements _Initial {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AnalyticsResponseModel products)? success,
-    TResult? Function(String msg)? failure,
+    TResult? Function()? success,
+    TResult? Function(String errorMessage)? failure,
   }) {
     return initial?.call();
   }
@@ -149,8 +148,8 @@ class _$InitialImpl implements _Initial {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AnalyticsResponseModel products)? success,
-    TResult Function(String msg)? failure,
+    TResult Function()? success,
+    TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -197,7 +196,7 @@ class _$InitialImpl implements _Initial {
   }
 }
 
-abstract class _Initial implements GetNoOfFollowersSoldState {
+abstract class _Initial implements AnalyticsState {
   const factory _Initial() = _$InitialImpl;
 }
 
@@ -210,7 +209,7 @@ abstract class _$$LoadingImplCopyWith<$Res> {
 
 /// @nodoc
 class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$GetNoOfFollowersSoldStateCopyWithImpl<$Res, _$LoadingImpl>
+    extends _$AnalyticsStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
       _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
@@ -224,7 +223,7 @@ class _$LoadingImpl implements _Loading {
 
   @override
   String toString() {
-    return 'GetNoOfFollowersSoldState.loading()';
+    return 'AnalyticsState.loading()';
   }
 
   @override
@@ -241,8 +240,8 @@ class _$LoadingImpl implements _Loading {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AnalyticsResponseModel products) success,
-    required TResult Function(String msg) failure,
+    required TResult Function() success,
+    required TResult Function(String errorMessage) failure,
   }) {
     return loading();
   }
@@ -252,8 +251,8 @@ class _$LoadingImpl implements _Loading {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AnalyticsResponseModel products)? success,
-    TResult? Function(String msg)? failure,
+    TResult? Function()? success,
+    TResult? Function(String errorMessage)? failure,
   }) {
     return loading?.call();
   }
@@ -263,8 +262,8 @@ class _$LoadingImpl implements _Loading {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AnalyticsResponseModel products)? success,
-    TResult Function(String msg)? failure,
+    TResult Function()? success,
+    TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -311,7 +310,7 @@ class _$LoadingImpl implements _Loading {
   }
 }
 
-abstract class _Loading implements GetNoOfFollowersSoldState {
+abstract class _Loading implements AnalyticsState {
   const factory _Loading() = _$LoadingImpl;
 }
 
@@ -320,72 +319,45 @@ abstract class _$$SuccessImplCopyWith<$Res> {
   factory _$$SuccessImplCopyWith(
           _$SuccessImpl value, $Res Function(_$SuccessImpl) then) =
       __$$SuccessImplCopyWithImpl<$Res>;
-  @useResult
-  $Res call({AnalyticsResponseModel products});
 }
 
 /// @nodoc
 class __$$SuccessImplCopyWithImpl<$Res>
-    extends _$GetNoOfFollowersSoldStateCopyWithImpl<$Res, _$SuccessImpl>
+    extends _$AnalyticsStateCopyWithImpl<$Res, _$SuccessImpl>
     implements _$$SuccessImplCopyWith<$Res> {
   __$$SuccessImplCopyWithImpl(
       _$SuccessImpl _value, $Res Function(_$SuccessImpl) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? products = null,
-  }) {
-    return _then(_$SuccessImpl(
-      null == products
-          ? _value.products
-          : products // ignore: cast_nullable_to_non_nullable
-              as AnalyticsResponseModel,
-    ));
-  }
 }
 
 /// @nodoc
 
 class _$SuccessImpl implements _Success {
-  const _$SuccessImpl(this.products);
-
-  @override
-  final AnalyticsResponseModel products;
+  const _$SuccessImpl();
 
   @override
   String toString() {
-    return 'GetNoOfFollowersSoldState.success(products: $products)';
+    return 'AnalyticsState.success()';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$SuccessImpl &&
-            (identical(other.products, products) ||
-                other.products == products));
+        (other.runtimeType == runtimeType && other is _$SuccessImpl);
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, products);
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      __$$SuccessImplCopyWithImpl<_$SuccessImpl>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AnalyticsResponseModel products) success,
-    required TResult Function(String msg) failure,
+    required TResult Function() success,
+    required TResult Function(String errorMessage) failure,
   }) {
-    return success(products);
+    return success();
   }
 
   @override
@@ -393,10 +365,10 @@ class _$SuccessImpl implements _Success {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AnalyticsResponseModel products)? success,
-    TResult? Function(String msg)? failure,
+    TResult? Function()? success,
+    TResult? Function(String errorMessage)? failure,
   }) {
-    return success?.call(products);
+    return success?.call();
   }
 
   @override
@@ -404,12 +376,12 @@ class _$SuccessImpl implements _Success {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AnalyticsResponseModel products)? success,
-    TResult Function(String msg)? failure,
+    TResult Function()? success,
+    TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(products);
+      return success();
     }
     return orElse();
   }
@@ -452,13 +424,8 @@ class _$SuccessImpl implements _Success {
   }
 }
 
-abstract class _Success implements GetNoOfFollowersSoldState {
-  const factory _Success(final AnalyticsResponseModel products) = _$SuccessImpl;
-
-  AnalyticsResponseModel get products;
-  @JsonKey(ignore: true)
-  _$$SuccessImplCopyWith<_$SuccessImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _Success implements AnalyticsState {
+  const factory _Success() = _$SuccessImpl;
 }
 
 /// @nodoc
@@ -467,12 +434,12 @@ abstract class _$$FailureImplCopyWith<$Res> {
           _$FailureImpl value, $Res Function(_$FailureImpl) then) =
       __$$FailureImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({String msg});
+  $Res call({String errorMessage});
 }
 
 /// @nodoc
 class __$$FailureImplCopyWithImpl<$Res>
-    extends _$GetNoOfFollowersSoldStateCopyWithImpl<$Res, _$FailureImpl>
+    extends _$AnalyticsStateCopyWithImpl<$Res, _$FailureImpl>
     implements _$$FailureImplCopyWith<$Res> {
   __$$FailureImplCopyWithImpl(
       _$FailureImpl _value, $Res Function(_$FailureImpl) _then)
@@ -481,12 +448,12 @@ class __$$FailureImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? msg = null,
+    Object? errorMessage = null,
   }) {
     return _then(_$FailureImpl(
-      null == msg
-          ? _value.msg
-          : msg // ignore: cast_nullable_to_non_nullable
+      null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -495,14 +462,14 @@ class __$$FailureImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FailureImpl implements _Failure {
-  const _$FailureImpl(this.msg);
+  const _$FailureImpl(this.errorMessage);
 
   @override
-  final String msg;
+  final String errorMessage;
 
   @override
   String toString() {
-    return 'GetNoOfFollowersSoldState.failure(msg: $msg)';
+    return 'AnalyticsState.failure(errorMessage: $errorMessage)';
   }
 
   @override
@@ -510,11 +477,12 @@ class _$FailureImpl implements _Failure {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FailureImpl &&
-            (identical(other.msg, msg) || other.msg == msg));
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, msg);
+  int get hashCode => Object.hash(runtimeType, errorMessage);
 
   @JsonKey(ignore: true)
   @override
@@ -527,10 +495,10 @@ class _$FailureImpl implements _Failure {
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
     required TResult Function() loading,
-    required TResult Function(AnalyticsResponseModel products) success,
-    required TResult Function(String msg) failure,
+    required TResult Function() success,
+    required TResult Function(String errorMessage) failure,
   }) {
-    return failure(msg);
+    return failure(errorMessage);
   }
 
   @override
@@ -538,10 +506,10 @@ class _$FailureImpl implements _Failure {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
-    TResult? Function(AnalyticsResponseModel products)? success,
-    TResult? Function(String msg)? failure,
+    TResult? Function()? success,
+    TResult? Function(String errorMessage)? failure,
   }) {
-    return failure?.call(msg);
+    return failure?.call(errorMessage);
   }
 
   @override
@@ -549,12 +517,12 @@ class _$FailureImpl implements _Failure {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
-    TResult Function(AnalyticsResponseModel products)? success,
-    TResult Function(String msg)? failure,
+    TResult Function()? success,
+    TResult Function(String errorMessage)? failure,
     required TResult orElse(),
   }) {
     if (failure != null) {
-      return failure(msg);
+      return failure(errorMessage);
     }
     return orElse();
   }
@@ -597,10 +565,10 @@ class _$FailureImpl implements _Failure {
   }
 }
 
-abstract class _Failure implements GetNoOfFollowersSoldState {
-  const factory _Failure(final String msg) = _$FailureImpl;
+abstract class _Failure implements AnalyticsState {
+  const factory _Failure(final String errorMessage) = _$FailureImpl;
 
-  String get msg;
+  String get errorMessage;
   @JsonKey(ignore: true)
   _$$FailureImplCopyWith<_$FailureImpl> get copyWith =>
       throw _privateConstructorUsedError;

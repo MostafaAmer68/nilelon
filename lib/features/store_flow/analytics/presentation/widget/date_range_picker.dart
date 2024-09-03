@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart' as intll;
-import 'package:nilelon/features/store_flow/analytics/analytics_view.dart';
+import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
 import 'package:nilelon/features/store_flow/analytics/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -10,7 +10,7 @@ import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-import '../../../../core/widgets/scaffold_image.dart';
+import '../../../../../core/widgets/scaffold_image.dart';
 
 class DateRangePicker extends StatefulWidget {
   const DateRangePicker({super.key});

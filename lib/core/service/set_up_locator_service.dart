@@ -14,8 +14,8 @@ import 'package:nilelon/features/auth/data/remote_data_source/auth_remote_data_s
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
 import 'package:nilelon/features/profile/data/datasources/profile_remote_data.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
-import 'package:nilelon/features/store_flow/analytics/remote_data_source/analytics_remote_data_source.dart';
-import 'package:nilelon/features/store_flow/analytics/repos_impl/analytics_repos_impl.dart';
+import 'package:nilelon/features/store_flow/analytics/data/remote_data_source/analytics_remote_data_source.dart';
+import 'package:nilelon/features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
 import 'package:nilelon/features/categories/data/remote_data_source/category_remote_data_source.dart';
 import 'package:nilelon/features/categories/data/repos_impl/category_repos_impl.dart';
 import 'package:nilelon/core/service/network/api_service.dart';

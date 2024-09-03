@@ -18,7 +18,7 @@ class AnalyticsSmallCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: screenWidth(context, 0.45),
-      height: screenHeight(context, 0.106),
+      height: screenHeight(context, 0.115),
       padding: const EdgeInsets.all(16),
       decoration: ShapeDecoration(
         color: Colors.white,
@@ -40,7 +40,7 @@ class AnalyticsSmallCard extends StatelessWidget {
             style: AppStylesManager.customTextStyleBl13,
           ),
           const SizedBox(
-            height: 4,
+            height: 2,
           ),
           isGreen
               ? Center(
@@ -56,21 +56,21 @@ class AnalyticsSmallCard extends StatelessWidget {
                   ),
                 ),
           const SizedBox(
-            height: 4,
+            height: 2,
           ),
           isGreen
               ? Align(
-                  alignment: Alignment.topRight,
+                  alignment: Alignment.topCenter,
                   child: Text(
                     'Market Average : $average \$',
-                    style: AppStylesManager.customTextStyleG21,
+                    style: AppStylesManager.customTextStyleG20,
                   ),
                 )
               : Align(
-                  alignment: Alignment.topRight,
+                  alignment: Alignment.topCenter,
                   child: Text(
                     'Market Average : $average',
-                    style: AppStylesManager.customTextStyleG21,
+                    style: AppStylesManager.customTextStyleG20,
                   ),
                 )
         ],
