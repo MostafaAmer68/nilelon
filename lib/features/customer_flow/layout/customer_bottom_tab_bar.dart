@@ -14,7 +14,6 @@ import 'package:nilelon/features/product/presentation/pages/discover_page.dart';
 import 'package:nilelon/features/customer_flow/home/view/customer_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_view.dart';
 
-import '../../../core/widgets/scaffold_image.dart';
 
 class CustomerBottomTabBar extends StatefulWidget {
   const CustomerBottomTabBar({super.key});

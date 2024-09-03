@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
-import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/resources/appstyles_manager.dart';
 

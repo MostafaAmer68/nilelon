@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/widget/analytics_rating_row.dart';
+import 'package:nilelon/features/store_flow/analytics/presentation/widget/date_row.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/widget/line_chart_sample.dart';
 import 'package:nilelon/features/store_flow/guide_book/cubit/guide_book_cubit.dart';
 import 'package:nilelon/features/store_flow/guide_book/guide_book_view.dart';
@@ -13,7 +15,6 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/core/widgets/cards/analytics/analytics_big_card.dart';
 import 'package:nilelon/core/widgets/cards/analytics/analytics_small_card.dart';
-import 'package:nilelon/core/widgets/cards/wide/analytics_wide_card.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
@@ -77,28 +78,22 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                       padding: EdgeInsets.all(16.0.sp),
                       child: Column(
                         children: [
-                          buildShimmerIndicatorAnalyticsBigCard(context),
                           const SizedBox(
-                            height: 24,
+                            height: 15,
                           ),
-                          buildShimmerIndicatorAnalyticsBigCard(context),
+                          ViewAllRow(
+                            noPadding: true,
+                            text: lang.bestSeller,
+                            noButton: true,
+                          ),
                           const SizedBox(
                             height: 24,
                           ),
                           SizedBox(
-                            height: 1.sw > 600 ? 220 : 145,
-                            width: screenWidth(context, 1),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) => Padding(
-                                padding: const EdgeInsets.only(right: 8),
-                                child: buildShimmerIndicatorAnalyticsBigCard(
-                                    context),
-                              ),
-                              itemCount: 5,
-                            ),
-                          ),
+                              height: 1.sw > 600 ? 220 : 145,
+                              width: screenWidth(context, 1),
+                              child: buildShimmerIndicatorAnalyticsBigCard(
+                                  context)),
                         ],
                       ),
                     ),
@@ -111,20 +106,15 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                     color: ColorManager.primaryG17,
                     child: Column(
                       children: [
-                        const SizedBox(
-                          height: 24,
-                        ),
                         OutlinedButtonBuilder(
                           text: lang.guideBook,
                           ontap: () {
                             navigateTo(
-                              context: context,
-                              screen: BlocProvider<GuideBookCubit>(
-                                create: (context) => GuideBookCubit(),
-                                child: buildShimmerIndicatorAnalyticsBigCard(
-                                    context),
-                              ),
-                            );
+                                context: context,
+                                screen: BlocProvider<GuideBookCubit>(
+                                  create: (context) => GuideBookCubit(),
+                                  child: const GuideBookView(),
+                                ));
                           },
                           withIcon: true,
                           height: 55.h,
@@ -134,7 +124,19 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                         SizedBox(
                           height: 30.h,
                         ),
-                        buildShimmerIndicatorAnalyticsBigCard(context),
+                        BlocBuilder<ReservationDateCubit, ReservationDateState>(
+                          builder: (context, state) {
+                            var cubit =
+                                BlocProvider.of<ReservationDateCubit>(context);
+                            dateStart = cubit.rangeStart;
+                            dateEnd = cubit.rangeEnd;
+
+                            return DateRow(
+                              dateEnd: dateEnd,
+                              dateStart: dateStart,
+                            );
+                          },
+                        ),
                         SizedBox(
                           height: 16.h,
                         ),
@@ -221,15 +223,18 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                           SizedBox(
                             height: 1.sw > 600 ? 220 : 145,
                             width: screenWidth(context, 1),
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) => Padding(
-                                padding: const EdgeInsets.only(right: 8),
-                                child: analyticsWideCard(context: context),
-                              ),
-                              itemCount: 5,
-                            ),
+                            child: Center(
+                                child:
+                                    Text(cubit.dashboardModel.storeBestseller)),
+                            // ListView.builder(
+                            //   shrinkWrap: true,
+                            //   scrollDirection: Axis.horizontal,
+                            //   itemBuilder: (context, index) => Padding(
+                            //     padding: const EdgeInsets.only(right: 8),
+                            //     child: analyticsWideCard(context: context),
+                            //   ),
+                            //   itemCount: 5,
+                            // ),
                           ),
                         ],
                       ),
@@ -264,19 +269,19 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                         SizedBox(
                           height: 30.h,
                         ),
-                        // BlocBuilder<ReservationDateCubit, ReservationDateState>(
-                        //   builder: (context, state) {
-                        //     var cubit =
-                        //         BlocProvider.of<ReservationDateCubit>(context);
-                        //     dateStart = cubit.rangeStart;
-                        //     dateEnd = cubit.rangeEnd;
+                        BlocBuilder<ReservationDateCubit, ReservationDateState>(
+                          builder: (context, state) {
+                            var cubit =
+                                BlocProvider.of<ReservationDateCubit>(context);
+                            dateStart = cubit.rangeStart;
+                            dateEnd = cubit.rangeEnd;
 
-                        //     return DateRow(
-                        //       dateEnd: dateEnd,
-                        //       dateStart: dateStart,
-                        //     );
-                        //   },
-                        // ),
+                            return DateRow(
+                              dateEnd: dateEnd,
+                              dateStart: dateStart,
+                            );
+                          },
+                        ),
                         SizedBox(
                           height: 16.h,
                         ),

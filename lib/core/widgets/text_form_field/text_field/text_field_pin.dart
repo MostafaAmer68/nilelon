@@ -7,8 +7,7 @@ class PinCodeView extends StatefulWidget {
   final int length;
   final void Function(String)? onCompleted;
 
-  PinCodeView({Key? key, required this.length, this.onCompleted})
-      : super(key: key);
+  const PinCodeView({super.key, required this.length, this.onCompleted});
 
   @override
   _PinCodeViewState createState() => _PinCodeViewState();

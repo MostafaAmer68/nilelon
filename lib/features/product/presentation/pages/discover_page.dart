@@ -191,7 +191,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                     });
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ViewAllRow(
                     text: lang.handPicked,
                     assetName: 'assets/images/handPicked.svg',

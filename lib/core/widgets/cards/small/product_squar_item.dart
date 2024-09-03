@@ -72,7 +72,7 @@ GestureDetector productSquarItem({
               Container(
                 height: 150.h, // Adjusted to fit the design
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.vertical(
+                  borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(15)), // Added to match the image
                   image: DecorationImage(
                     image: model.productImages.isEmpty
@@ -162,7 +162,7 @@ GestureDetector smallCard({required context, required}) {
           BoxShadow(
             color: Colors.orange.shade300.withOpacity(1),
             blurRadius: 20, // Increased blur radius for a softer shadow
-            offset: Offset(
+            offset: const Offset(
                 0, 10), // Adjusted offset to match the shadow in the image
             spreadRadius: 0,
           ),
@@ -181,7 +181,7 @@ GestureDetector smallCard({required context, required}) {
               Container(
                 height: 150.h, // Adjusted to fit the design
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.vertical(
+                  borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(15)), // Added to match the image
                   image: DecorationImage(
                     image: AssetImage(images[0]),

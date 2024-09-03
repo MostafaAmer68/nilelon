@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart' as intll;
 import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
-import 'package:nilelon/features/store_flow/analytics/cubit/reservation_cubit/reservation_date_cubit.dart';
+import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';

@@ -7,7 +7,7 @@ import 'package:equatable/equatable.dart';
 class CreateCloset extends Equatable {
   final String name;
   final String CustomerId;
-  CreateCloset({
+  const CreateCloset({
     required this.name,
     required this.CustomerId,
   });

@@ -1,7 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -23,7 +22,6 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 
-import '../../../../core/widgets/button/gradient_button_builder.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});

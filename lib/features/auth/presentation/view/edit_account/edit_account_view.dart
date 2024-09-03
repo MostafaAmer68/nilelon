@@ -150,7 +150,7 @@ class _EditAccountViewState extends State<EditAccountView> {
                     : FileImage(cubit.image),
                 fit: BoxFit.contain,
               ),
-              shape: CircleBorder(
+              shape: const CircleBorder(
                 side: BorderSide(
                   width: 5,
                   strokeAlign: BorderSide.strokeAlignOutside,

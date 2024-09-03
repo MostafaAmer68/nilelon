@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
-import 'package:nilelon/features/store_flow/analytics/cubit/reservation_cubit/reservation_date_cubit.dart';
+import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -13,7 +13,6 @@ import 'package:nilelon/features/order/presentation/pages/order_tab_bar.dart';
 import 'package:nilelon/features/store_flow/store_market/view/store_market_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_view.dart';
 
-import '../../../core/widgets/scaffold_image.dart';
 import '../analytics/presentation/cubit/analytics_cubit.dart';
 
 class StoreBottomTabBar extends StatefulWidget {

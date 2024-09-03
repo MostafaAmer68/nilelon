@@ -8,7 +8,6 @@ import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
-import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 
 class AddToFooter extends StatelessWidget {
   const AddToFooter({super.key, this.visible = true, required this.product});

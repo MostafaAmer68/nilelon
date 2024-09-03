@@ -1,4 +1,4 @@
-import 'package:jwt_decoder/jwt_decoder.dart';
+// import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/store_flow/analytics/domain/model/analytics_response_model.dart';
@@ -21,6 +21,7 @@ class AnalyticsRemoteDataSourceImpl extends AnalyticsRemoteDataSource {
       'storeId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
     });
     if (data.statusCode == 200) {
+      print(data.data['result']);
       return DashboardModel.fromJson(data.data['result']);
     } else if (data.statusCode == 400) {
       // Handle the bad request response

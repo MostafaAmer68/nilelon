@@ -23,7 +23,7 @@ categoryContainer({
                 boxShadow: [
                   BoxShadow(
                     color: Colors.orange.shade300.withOpacity(1),
-                    offset: Offset(10, 10),
+                    offset: const Offset(10, 10),
                     blurRadius: 0,
                   ),
                 ],
@@ -37,7 +37,7 @@ categoryContainer({
                     height: 50,
                     width: 50,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
                     name,
                     style: AppStylesManager.customTextStyleBl3,
@@ -54,7 +54,7 @@ categoryContainer({
                 boxShadow: [
                   BoxShadow(
                     color: Colors.orange.shade300.withOpacity(0.7),
-                    offset: Offset(10, 10),
+                    offset: const Offset(10, 10),
                     blurRadius: 0,
                   ),
                 ],

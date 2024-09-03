@@ -39,7 +39,7 @@ class EndPoint {
   static const String addToCartUrl = '/Cart/AddToCart';
   static const String emptyCartUrl = '/Cart/EmptyCart';
 
-  //payment urls
+  //todo payment urls
   static const String getClientTokenUrl = '/PaymentService/OrderTransaction';
   static const String makeTransactionUrl = '/PaymentService/MakeTransaction';
   static const String makeTransactionWithPaymentUrl =
@@ -49,14 +49,14 @@ class EndPoint {
   static const String addPayment = '/PaymentService/AddPayment';
   static const String getPaymentMethods = '/PaymentService/GetPaymentMethods';
 
-  // reviews urls
+  //todo reviews urls
   static const String createReviewUrl = '/Review/CreateReview';
   static const String getReviewsForProductUrl = '/Review/GetReviewsForProduct';
 
-  //shipping method
+  //todo shipping method
   static const String getShippingMethodUrl =
       '/ShippingMethod/GetShippingMethods';
-  //order urls
+  //todo order urls
   static const String getCustomerOrderUrl = '/Order/GetCustomerOrders';
   static const String getStoreOrderUrl = '/Order/GetStoreOrder';
   static const String createOrderUlr = '/Order/CreateOrder';
@@ -99,6 +99,11 @@ class EndPoint {
 
   //todo Dashboard For Store Urls
   static const String getDashboardDataUrl = '/Dashboard/GetDashboardData';
+  static const String getChartDataUrl = '/Dashboard/GetChartData?storeId=';
+
+  //todo Dashboard For Store Urls
+  static const String getStartDateUrl = '&startDate=';
+  static const String getEndDateUrl = '&endDate=';
 
   //?*********************************************************************************
 

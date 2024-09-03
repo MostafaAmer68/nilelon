@@ -50,7 +50,7 @@ Widget buildShimmerIndicatorAnalyticsBigCard(context) {
       highlightColor: Colors.grey[100]!,
       child: Container(
         width: screenWidth(context, 0.45),
-        height: screenHeight(context, 0.22),
+        height: screenHeight(context, 0.25),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -64,7 +64,7 @@ Widget buildShimmerIndicatorAnalyticsSmallCard(context) {
       highlightColor: Colors.grey[100]!,
       child: Container(
         width: screenWidth(context, 0.45),
-        height: screenHeight(context, 0.106),
+        height: screenHeight(context, 0.115),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),

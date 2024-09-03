@@ -13,6 +13,7 @@ class AnalyticsReposImpl extends AnalyticsRepos {
   Future<Either<FailureService, DashboardModel>> getDashboardData() async {
     try {
       final result = await analyticsRemoteDataSource.getDashboardData();
+      // print(result);
       return Right(result);
     } catch (e) {
       if (e is DioException) {

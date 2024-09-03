@@ -19,7 +19,7 @@ import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/features/shared/splash/splash_view.dart';
-import 'package:nilelon/features/store_flow/analytics/cubit/reservation_cubit/reservation_date_cubit.dart';
+import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:nilelon/features/categories/data/repos_impl/category_repos_impl.dart';
 import 'package:nilelon/core/generated/l10n.dart';

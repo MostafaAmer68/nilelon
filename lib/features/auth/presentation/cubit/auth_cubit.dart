@@ -378,7 +378,7 @@ class AuthCubit extends Cubit<AuthState> {
       // Send the token to the backend
       // await sendTokenToBackend(googleAuth.idToken!);
     } catch (error) {
-      throw error;
+      rethrow;
     }
   }
 }

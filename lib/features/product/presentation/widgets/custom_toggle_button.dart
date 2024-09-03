@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 
 class SizeToggleButtons extends StatelessWidget {
   final List<String> sizes;
