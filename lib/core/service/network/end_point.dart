@@ -29,8 +29,7 @@ class EndPoint {
   static const String resetEmailDetailUrl = '/Authentication/ResetEmailDetails';
   static const String resetPhoneDetailsUrl =
       '/Authentication/ResetPhoneDetails';
-  static const String customerGoogleRegisterUrl =
-      '/Authentication/ExternalRegister';
+  static const String customerGoogleRegisterUrl = '/Authentication/GoogleRegister';
 
   //todo Customer Cart Urls
   static const String getCartByCustomerIdUrl = '/Cart/GetCartByCustomerId';

@@ -330,12 +330,12 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  Future<void> authStoreGoogleRegister(
-      context, String provider, String idToken) async {
+  Future<void> authStoreGoogleRegister(context, String provider,
+      String profilePic, String name, String email) async {
     emit(StoreGoogleRegisterLoading());
     var result = await authRepos.customerRegisterGoogleAuth(
         ExternalGoogleModel(
-            connectionId: null, provider: provider, idToken: idToken),
+            photo: profilePic, provider: provider, name: name, email: email),
         context);
     result.fold((failure) {
       emit(StoreGoogleRegisterFailure(failure.errorMsg));
@@ -369,11 +369,12 @@ class AuthCubit extends Cubit<AuthState> {
           await googleUser.authentication;
       AppLogs.scussessLog(googleAuth.toString());
 
-
       await authStoreGoogleRegister(
         context,
         'GOOGLE',
-        googleAuth.accessToken.toString(),
+        googleUser.photoUrl??'',
+        googleUser.displayName??"",
+        googleUser.email,
       );
       // Send the token to the backend
       // await sendTokenToBackend(googleAuth.idToken!);

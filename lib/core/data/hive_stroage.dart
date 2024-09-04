@@ -7,6 +7,7 @@ import 'package:nilelon/features/product/domain/models/product_data/draft_produc
 class HiveKeys {
   // static const String product = 'product';
   static const String draftProduct = 'productData';
+  static const String connectionId = 'connectionId';
   static const String varients = 'varient';
   static const String tempVarients = 'tempVarient';
   static const String email = 'email';

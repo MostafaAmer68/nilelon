@@ -207,6 +207,26 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final data = await apiService.post(
         endPoint: EndPoint.customerGoogleRegisterUrl, body: entity.toJson());
     if (data.statusCode == 200) {
+      UserModel userData;
+      // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
+      HiveStorage.set(HiveKeys.token, data.data as String);
+      // userData = UserModel<CustomerModel>(
+      //   id: JwtDecoder.decode(data.data as String)['token'],
+      //   token: data.data as String,
+      //   role: 'Customer',
+      //   userData: CustomerModel(
+      //     name: entity.name!,
+      //     email: entity.email!,
+      //     phoneNumber: entity.phoneNumber!,
+      //     dateOfBirth: entity.birthDate!,
+      //     gender: entity.gender! ? 'Male' : 'Female',
+      //     productsChoice: entity.gender! ? 'Male' : 'Female',
+      //     profilePic: '',
+      //   ),
+      // );
+      HiveStorage.set(HiveKeys.shopFor, false);
+
+      // HiveStorage.set(HiveKeys.userModel, userData);
       return data.data as String;
     } else if (data.statusCode == 400) {
       // Handle the bad request response

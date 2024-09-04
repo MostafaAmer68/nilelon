@@ -2,29 +2,33 @@ import 'package:equatable/equatable.dart';
 
 class ExternalGoogleModel extends Equatable {
   final String? provider;
-  final String? idToken;
-  final String? connectionId;
+  final String? name;
+  final String? email;
+  final String? photo;
 
   const ExternalGoogleModel({
     this.provider,
-    this.idToken,
-    this.connectionId,
+    this.name,
+    this.photo,
+    this.email,
   });
 
   factory ExternalGoogleModel.fromJson(Map<String, dynamic> json) {
     return ExternalGoogleModel(
       provider: json['provider'] as String?,
-      idToken: json['idToken'] as String?,
-      connectionId: json['connectionId'] as String?,
+      name: json['name'] as String?,
+      photo: json['photo'] as String?,
+      email: json['email'] as String?,
     );
   }
 
   Map<String, dynamic> toJson() => {
         'provider': provider,
-        'idToken': idToken,
-        'connectionId': connectionId,
+        'name': name,
+        'photo': photo,
+        'email': email,
       };
 
   @override
-  List<Object?> get props => [provider, idToken, connectionId];
+  List<Object?> get props => [provider, name, photo,email];
 }
