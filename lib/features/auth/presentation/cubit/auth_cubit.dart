@@ -330,13 +330,9 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  Future<void> authStoreGoogleRegister(context, String provider,
-      String profilePic, String name, String email) async {
+  Future<void> singinWithGoogle(context) async {
     emit(StoreGoogleRegisterLoading());
-    var result = await authRepos.customerRegisterGoogleAuth(
-        ExternalGoogleModel(
-            photo: profilePic, provider: provider, name: name, email: email),
-        context);
+    var result = await authRepos.customerRegisterGoogleAuth();
     result.fold((failure) {
       emit(StoreGoogleRegisterFailure(failure.errorMsg));
     }, (response) {
@@ -347,39 +343,5 @@ class AuthCubit extends Cubit<AuthState> {
       emit(StoreGoogleRegisterSuccess(response));
       BlocProvider.of<CategoryCubit>(context).getCategories();
     });
-  }
-
-  final GoogleSignIn _googleSignIn = GoogleSignIn(
-    // serverClientId:
-    //     '839582728023-t0hk32bfb8n9q8vd6mheftnqu8v03im3.apps.googleusercontent.com',
-    scopes: [
-      // 'profile',
-      'https://www.googleapis.com/auth/userinfo.email',
-      'https://www.googleapis.com/auth/userinfo.profile',
-      'https://www.googleapis.com/auth/devstorage.full_control',
-    ],
-  );
-  Future<void> signInWithGoogle(context) async {
-    try {
-      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        return;
-      }
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
-      AppLogs.scussessLog(googleAuth.toString());
-
-      await authStoreGoogleRegister(
-        context,
-        'GOOGLE',
-        googleUser.photoUrl??'',
-        googleUser.displayName??"",
-        googleUser.email,
-      );
-      // Send the token to the backend
-      // await sendTokenToBackend(googleAuth.idToken!);
-    } catch (error) {
-      rethrow;
-    }
   }
 }

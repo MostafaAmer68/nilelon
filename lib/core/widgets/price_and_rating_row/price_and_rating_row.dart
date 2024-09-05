@@ -18,7 +18,7 @@ class PriceAndRatingRow extends StatelessWidget {
         Expanded(
           child: Text(
             price,
-            style: AppStylesManager.customTextStyleO2,
+            style: AppStylesManager.customTextStyleBl2,
           ),
         ),
         Icon(

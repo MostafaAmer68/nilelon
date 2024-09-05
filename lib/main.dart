@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/config/language_bloc/switch_language_bloc.dart';
@@ -7,6 +8,8 @@ import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/service/simple_bloc_observer.dart';
 import 'package:signalr_core/signalr_core.dart';
 
+import 'core/service/notification_service.dart';
+
 final connection = HubConnectionBuilder()
     .withUrl(
       'http://nilelon.somee.com/NileonHub',
@@ -14,7 +17,7 @@ final connection = HubConnectionBuilder()
       HttpConnectionOptions(
         transport: HttpTransportType
             .longPolling, //serverSentEvents, //(Only when I uncomment this line then I can make connection)
-        logging: (level, message) => print('test: $message'),
+        logging: (level, message) {},
       ),
     )
     .withAutomaticReconnect()
@@ -23,6 +26,7 @@ final connection = HubConnectionBuilder()
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveStorage.init();
+  await NotificatoinService().initializeNotification();
   connection.serverTimeoutInMilliseconds = 60000;
   await connection.start()?.catchError((error) {
     print('Connection failed to start: $error');
@@ -30,7 +34,15 @@ void main() async {
     HiveStorage.set(HiveKeys.connectionId, connection.connectionId);
   });
   connection.on('MissYou', (message) {
-    print('New message: $message');
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10,
+        channelKey: 'basic_channel',
+        actionType: ActionType.Default,
+        title: 'Miss you',
+        body: message!.first.toString(),
+      ),
+    );
   });
   connection.onclose((error) {
     print('Connection closed: $error');

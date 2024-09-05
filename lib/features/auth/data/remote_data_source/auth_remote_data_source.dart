@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/customer_register_model.dart';
@@ -36,10 +39,7 @@ abstract class AuthRemoteDataSource {
     String storeSlogan,
     context,
   );
-  Future<String> customerRegisterGoogleAuth(
-    ExternalGoogleModel entity,
-    context,
-  );
+  Future<String> singinWithGoogle();
   Future<String> confirmRegisteration(
     String email,
     context,
@@ -91,6 +91,12 @@ abstract class AuthRemoteDataSource {
 
 class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   final ApiService apiService;
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    scopes: [
+      'email',
+      'https://www.googleapis.com/auth/userinfo.profile',
+    ],
+  );
 
   AuthRemoteDataSourceImpl({required this.apiService});
   @override
@@ -132,7 +138,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
       HiveStorage.set(HiveKeys.token, data.data as String);
       userData = UserModel<CustomerModel>(
-        id: JwtDecoder.decode(data.data as String)['token'],
+        id: JwtDecoder.decode(data.data as String)['id'],
         token: data.data as String,
         role: 'Customer',
         userData: CustomerModel(
@@ -202,41 +208,44 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   }
 
   @override
-  Future<String> customerRegisterGoogleAuth(
-      ExternalGoogleModel entity, context) async {
-    final data = await apiService.post(
-        endPoint: EndPoint.customerGoogleRegisterUrl, body: entity.toJson());
-    if (data.statusCode == 200) {
-      UserModel userData;
-      // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
-      HiveStorage.set(HiveKeys.token, data.data as String);
-      // userData = UserModel<CustomerModel>(
-      //   id: JwtDecoder.decode(data.data as String)['token'],
-      //   token: data.data as String,
-      //   role: 'Customer',
-      //   userData: CustomerModel(
-      //     name: entity.name!,
-      //     email: entity.email!,
-      //     phoneNumber: entity.phoneNumber!,
-      //     dateOfBirth: entity.birthDate!,
-      //     gender: entity.gender! ? 'Male' : 'Female',
-      //     productsChoice: entity.gender! ? 'Male' : 'Female',
-      //     profilePic: '',
-      //   ),
-      // );
-      HiveStorage.set(HiveKeys.shopFor, false);
+  Future<String> singinWithGoogle() async {
+    try {
+      GoogleSignInAccount? account = await _googleSignIn.signIn();
+      if (account != null) {
+        final data = await apiService.post(
+          endPoint: EndPoint.customerGoogleRegisterUrl,
+          body: {
+            "provider": "Google",
+            "name": account.displayName,
+            "email": account.email,
+            "photo": account.photoUrl,
+          },
+        );
+        if (data.statusCode == 200) {
+          // UserModel userData;
+          // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
+          HiveStorage.set(HiveKeys.token, data.data as String);
 
-      // HiveStorage.set(HiveKeys.userModel, userData);
-      return data.data as String;
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      errorAlert(context, errorMessage);
-      throw Exception('Google Register failed: $errorMessage');
-    } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Google Register: Unexpected status code ${data.statusCode}');
+          HiveStorage.set(HiveKeys.shopFor, false);
+
+          // HiveStorage.set(HiveKeys.userModel, userData);
+          return data.data as String;
+        } else if (data.statusCode == 400) {
+          // Handle the bad request response
+          final errorMessage = data.data;
+          // errorAlert(context, errorMessage);
+          throw Exception('Google Register failed: $errorMessage');
+        } else {
+          // Handle other status codes if necessary
+          throw Exception(
+              'Failed to Google Register: Unexpected status code ${data.statusCode}');
+        }
+      } else {
+        throw 'Field to Sign in with google';
+      }
+    } catch (error) {
+      log(error.toString());
+      throw error;
     }
   }
 

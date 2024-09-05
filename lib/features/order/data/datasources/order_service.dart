@@ -15,11 +15,11 @@ class OrderService {
   OrderService(this._apiService);
 
   Future<void> createOrder(OrderModel order) async {
+    log(order.toJson());
     final response = await _apiService.post(
       endPoint: EndPoint.createOrderUlr,
       body: order.toMap(),
     );
-    log(order.toJson());
     if (response.statusCode == HttpStatus.ok) {
       return;
     }

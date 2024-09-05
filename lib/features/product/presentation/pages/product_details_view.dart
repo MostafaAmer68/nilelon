@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/generated/l10n.dart';
@@ -77,7 +78,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               context: context,
             )
           : AppBar(
-              backgroundColor: ColorManager.primaryW,
+              backgroundColor: Colors.transparent,
               leading: IconButton(
                   onPressed: () => navigatePop(context: context),
                   icon: const Icon(Icons.arrow_back)),
@@ -119,19 +120,23 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             ImageBanner(
               images: widget.product.productImages.map((e) => e.url).toList(),
             ),
-            SizedBox(
-              height: 20.h,
-              child: ListView.builder(
-                itemCount: widget.product.productImages.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  final image = widget.product.productImages[index];
-                  return Image.network(
-                    image.url,
-                    fit: BoxFit.cover,
-                    width: 30,
-                  );
-                },
+            const SizedBox(height: 20),
+            Center(
+              child: SizedBox(
+                height: screenHeight(context, 0.07),
+                width: screenWidth(context, 0.3),
+                child: ListView.builder(
+                  itemCount: widget.product.productImages.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    final image = widget.product.productImages[index];
+                    return Image.network(
+                      image.url,
+                      fit: BoxFit.cover,
+                      // width: 30,
+                    );
+                  },
+                ),
               ),
             ),
             Padding(
@@ -226,7 +231,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 
   Widget _buildSizeSelector(S lang) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('${lang.size} :', style: AppStylesManager.customTextStyleG10),
         SizeToggleButtons(
@@ -245,7 +250,6 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     return Row(
       children: [
         Text('Color :', style: AppStylesManager.customTextStyleG10),
-        const Spacer(),
         ColorSelector(
           colors: widget.product.productVariants.map((e) => e.color).toList(),
           selectedColor: cubit.selectedColor,

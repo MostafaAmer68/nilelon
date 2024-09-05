@@ -179,7 +179,7 @@ class ProductsRemoteDataSourceImpl {
     }
 
     throw Exception(
-        'Failed to Get Random: Unexpected status code ${data.statusCode}');
+        'Failed to Get Random: Unexpected status code ${data.data}');
   }
 
   Future<void> createReview(CreateReviewModel review) async {

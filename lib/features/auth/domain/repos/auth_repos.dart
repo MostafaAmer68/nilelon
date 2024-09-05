@@ -47,10 +47,7 @@ abstract class AuthRepos {
     String tokenOtp,
     context,
   );
-  Future<Either<FailureService, String>> customerRegisterGoogleAuth(
-    ExternalGoogleModel model,
-    context,
-  );
+  Future<Either<FailureService, String>> customerRegisterGoogleAuth();
   Future<Either<FailureService, String>> resetPasswordEmail(
     String email,
     context,

@@ -281,7 +281,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                         child:
                             signWithContainer('assets/images/google.svg', () {
                           BlocProvider.of<AuthCubit>(context)
-                              .signInWithGoogle(context);
+                              .singinWithGoogle(context);
                         })),
                   ],
                 ),

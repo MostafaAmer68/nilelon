@@ -159,7 +159,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 16),
                               child: SizedBox(
-                                height: 1.sw > 600 ? 310 : 230,
+                                height: 1.sw > 600 ? 310 : 260,
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
                                     if (index == productsList.length &&
@@ -229,7 +229,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 1.sw > 600 ? 3 : 2,
                                   crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                                  mainAxisExtent: 1.sw > 600 ? 300 : 220,
+                                  mainAxisExtent: 1.sw > 600 ? 300 : 260,
                                   mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                                 ),
                                 shrinkWrap: true,

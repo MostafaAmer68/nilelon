@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -246,6 +245,9 @@ class _OverViewStepState extends State<OverViewStep> {
               }, loading: () {
                 return const Center(child: CircularProgressIndicator());
               }, success: () {
+                if (OrderCubit.get(context).shippingMethods.isEmpty) {
+                  return const Icon(Icons.error);
+                }
                 return dropDownMenu(
                     width: screenWidth(context, 0.3),
                     height: screenWidth(context, 0.11),

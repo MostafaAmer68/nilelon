@@ -66,11 +66,9 @@ class AuthReposImpl extends AuthRepos {
   }
 
   @override
-  Future<Either<FailureService, String>> customerRegisterGoogleAuth(
-      ExternalGoogleModel model, context) async {
+  Future<Either<FailureService, String>> customerRegisterGoogleAuth() async {
     try {
-      final result =
-          await authRemoteDataSource.customerRegisterGoogleAuth(model, context);
+      final result = await authRemoteDataSource.singinWithGoogle();
       // HiveStorage( HiveKeys.email, value: result.data.email);
       return Right(result);
     } catch (e) {

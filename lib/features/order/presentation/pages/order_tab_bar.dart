@@ -41,38 +41,65 @@ class _OrderTabBarState extends State<OrderTabBar> {
           hasLeading: false,
         ),
         body: Padding(
-          padding: const EdgeInsetsDirectional.symmetric(vertical: 12),
+          padding: const EdgeInsetsDirectional.symmetric(
+              vertical: 12, horizontal: 40),
           child: Column(
             children: [
-              TabBar(
-                onTap: (index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
-                },
-                dividerColor: Colors.transparent,
-                labelColor: ColorManager.primaryO,
-                unselectedLabelColor: ColorManager.primaryG,
-                indicatorColor: ColorManager.primaryO,
-                unselectedLabelStyle: AppStylesManager.customTextStyleG2,
-                labelStyle: AppStylesManager.customTextStyleO3,
-                tabs: [
-                  Tab(
-                    child: Text(
-                      lang.ordered,
-                    ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white, // Background color for the tab bar
+                  borderRadius: BorderRadius.circular(25), // Rounded edges
+                  border: Border.all(
+                    color: Colors.orange,
+                    width: 1, 
                   ),
-                  Tab(
-                    child: Text(
-                      lang.shipped,
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Color.fromARGB(255, 255, 214, 153),
+                      offset: Offset(1, 1),
+                      blurRadius: 20,
+                      spreadRadius: 1,
                     ),
+                  ],
+                ),
+                child: TabBar(
+                  onTap: (index) {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                  indicator: BoxDecoration(
+                    color: Colors.orange, // Color of the selected tab
+
+                    borderRadius:
+                        BorderRadius.circular(25), // Rounded indicator
                   ),
-                  Tab(
-                    child: Text(
-                      lang.received,
+                  // labelPadding: EdgeInsets.symmetric(horizontal: 5),
+                  indicatorSize: TabBarIndicatorSize.tab,
+                  dividerColor: Colors.transparent,
+                  labelColor: ColorManager.primaryW,
+                  unselectedLabelColor: ColorManager.primaryG,
+                  indicatorColor: ColorManager.primaryO,
+                  unselectedLabelStyle: AppStylesManager.customTextStyleG2,
+                  labelStyle: AppStylesManager.customTextStyleO3,
+                  tabs: [
+                    Tab(
+                      child: Text(
+                        lang.ordered,
+                      ),
                     ),
-                  ),
-                ],
+                    Tab(
+                      child: Text(
+                        lang.shipped,
+                      ),
+                    ),
+                    Tab(
+                      child: Text(
+                        lang.received,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const Expanded(
                 child: TabBarView(

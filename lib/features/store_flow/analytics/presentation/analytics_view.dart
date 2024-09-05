@@ -220,9 +220,9 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                           const SizedBox(
                             height: 24,
                           ),
-                          SizedBox(
-                            height: 1.sw > 600 ? 220 : 145,
-                            width: screenWidth(context, 1),
+                          Expanded(
+                            // height: 1.sw > 600 ? 220 : 145,
+                            // width: screenWidth(context, 1),
                             child: Center(
                                 child:
                                     Text(cubit.dashboardModel.storeBestseller)),

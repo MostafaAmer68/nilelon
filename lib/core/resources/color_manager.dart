@@ -56,7 +56,7 @@ class ColorManager {
   //********* orange color *********//
   static const Color primaryO = Color(0xFFF59022);
   static const Color primaryO2 = Color(0xFFF2A213);
-  static const Color primaryO3 = Color(0xFFFFDCC1);
+  static const Color primaryO3 = Color.fromARGB(255, 255, 183, 129);
   static const Color primaryO4 = Color(0xFFF89225);
 
   //********* green color *********//

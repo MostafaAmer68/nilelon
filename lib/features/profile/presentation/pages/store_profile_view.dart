@@ -100,34 +100,14 @@ class _StoreProfileViewState extends State<StoreProfileView> {
             Text(
               HiveStorage.get<UserModel>(HiveKeys.userModel)
                   .getUserData<StoreModel>()
-                  .storeSlogan,
+                  .name,
               style: AppStylesManager.customTextStyleG5,
             ),
-            const SizedBox(
-              height: 30,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  children: [
-                    Text('129', style: AppStylesManager.customTextStyleBl8),
-                    Text(
-                      lang.followers,
-                      style: AppStylesManager.customTextStyleG5,
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text('600', style: AppStylesManager.customTextStyleBl8),
-                    Text(
-                      lang.notified,
-                      style: AppStylesManager.customTextStyleG5,
-                    ),
-                  ],
-                ),
-              ],
+            Text(
+              HiveStorage.get<UserModel>(HiveKeys.userModel)
+                  .getUserData<StoreModel>()
+                  .storeSlogan,
+              style: AppStylesManager.customTextStyleG5,
             ),
             const SizedBox(
               height: 30,
@@ -163,6 +143,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                 ),
               ],
             ),
+            const SizedBox(height: 20),
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
                 return state.getStoreProducts.when(initial: () {
@@ -192,7 +173,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1.sw > 600 ? 3 : 2,
                               crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                              mainAxisExtent: 1.sw > 600 ? 320 : 220,
+                              mainAxisExtent: 1.sw > 600 ? 320 : 260,
                               mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                             ),
                             shrinkWrap: true,
@@ -247,14 +228,21 @@ class _StoreProfileViewState extends State<StoreProfileView> {
         });
       },
       child: _selectedIndex == index
-          ? Padding(
+          ? Container(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Container(
                 // height: 30,
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: ColorManager.primaryB2,
-                    border: Border.all(color: ColorManager.primaryB2)),
+                  borderRadius: BorderRadius.circular(30),
+                  color: ColorManager.primaryW,
+                  boxShadow: [
+                    BoxShadow(
+                      color: ColorManager.primaryO2,
+                      offset: Offset(5, 5),
+                    ),
+                  ],
+                  border: Border.all(color: ColorManager.primaryL),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 16,
@@ -263,7 +251,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                     child: Text(
                       name,
                       textAlign: TextAlign.center,
-                      style: AppStylesManager.customTextStyleW4,
+                      style: AppStylesManager.customTextStyleB4,
                     ),
                   ),
                 ),

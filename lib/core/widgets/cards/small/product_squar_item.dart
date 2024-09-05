@@ -28,14 +28,14 @@ GestureDetector productSquarItem({
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius:
-            BorderRadius.circular(15), // Updated to match rounded corners
+            BorderRadius.circular(10), // Updated to match rounded corners
         color: Colors.white,
         boxShadow: const [
           BoxShadow(
-            color: ColorManager.primaryO,
+            color: ColorManager.primaryO3,
             blurRadius: 0, // Increased blur radius for a softer shadow
             offset: Offset(
-                0, 10), // Adjusted offset to match the shadow in the image
+                -7, 7), // Adjusted offset to match the shadow in the image
             spreadRadius: 0,
           )
         ],
@@ -43,10 +43,11 @@ GestureDetector productSquarItem({
       width: 1.sw > 600 ? 270 : 200,
       height: 1.sw > 600
           ? 300
-          : 230, // Adjusted height to match the aspect ratio in the image
+          : 250, // Adjusted height to match the aspect ratio in the image
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
@@ -66,6 +67,7 @@ GestureDetector productSquarItem({
                   .toList(),
             ),
           ),
+          const SizedBox(height: 10),
           Stack(
             alignment: Alignment.topRight,
             children: [
@@ -73,7 +75,7 @@ GestureDetector productSquarItem({
                 height: 150.h, // Adjusted to fit the design
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(15)), // Added to match the image
+                      top: Radius.circular(0)), // Added to match the image
                   image: DecorationImage(
                     image: model.productImages.isEmpty
                         ? const AssetImage(
@@ -136,7 +138,7 @@ GestureDetector productSquarItem({
                 horizontal: 8.0), // Added padding to match image layout
             child: Text(
               model.name,
-              style: AppStylesManager.customTextStyleG5,
+              style: AppStylesManager.customTextStyleG3,
             ),
           ),
         ],
