@@ -23,6 +23,8 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/core/widgets/cards/wide/wide_card.dart';
 import 'package:nilelon/features/customer_flow/search/view/search_view.dart';
 
+import '../../../auth/domain/model/user_model.dart';
+
 class CustomerHomeView extends StatefulWidget {
   const CustomerHomeView({super.key});
 
@@ -38,7 +40,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
 
   @override
   void initState() {
-    if (HiveStorage.get(HiveKeys.userId) != null) {
+    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
       ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
       scrollController.addListener(() {
         if (scrollController.position.pixels ==
@@ -57,7 +59,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
     });
 
     page = page + 1;
-    if (HiveStorage.get(HiveKeys.userId) != null) {
+    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
       ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
     }
     setState(() {

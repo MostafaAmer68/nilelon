@@ -69,7 +69,7 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     newInPage = newInPage + 1;
-    if (HiveStorage.get(HiveKeys.userId) != null) {
+    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id != null) {
       ProductsCubit.get(context)
           .getNewInProductsPagination(newInPage, newInPageSize);
     } else {
@@ -87,7 +87,7 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     handPage = handPage + 1;
-    if (HiveStorage.get(HiveKeys.userId) != null) {
+    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id != null) {
       ProductsCubit.get(context)
           .getRandomProductsPagination(newInPage, newInPageSize);
     } else {

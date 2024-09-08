@@ -16,7 +16,7 @@ class ProfileRemoteData {
       String oldPassword, String newPassword, context) async {
     final response =
         await _apiService.post(endPoint: EndPoint.changePasswordUrl, body: {
-      'id': HiveStorage.get(HiveKeys.userId),
+      'id': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'oldPassword': oldPassword,
       'newPassword': newPassword,
     });
@@ -35,7 +35,7 @@ class ProfileRemoteData {
     final response = await _apiService.put(
       endPoint: EndPoint.updateStoreInfoUrl,
       data: {
-        "storeId": HiveStorage.get(HiveKeys.userId),
+        "storeId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "repName": repName,
         "repNumber": repNumber,
         "websiteLink": webLink
@@ -56,7 +56,7 @@ class ProfileRemoteData {
     final response = await _apiService.put(
       endPoint: EndPoint.updateStoreUrl,
       data: {
-        "storeId": HiveStorage.get(HiveKeys.userId),
+        "storeId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "profilePic": profilePic,
         "name": name,
         "storeSlogan": storeSlogan

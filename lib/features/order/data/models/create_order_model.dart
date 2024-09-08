@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class OrderModel extends Equatable {
+class CreateOrderModel extends Equatable {
   final int total;
   final String phoneNum;
   final num discount;
@@ -14,7 +14,7 @@ class OrderModel extends Equatable {
   final String transactionId;
   final Map<String, dynamic> customerAddressDTO;
   final List<Map<String, dynamic>> orderProductVeriants;
-  const OrderModel({
+  const CreateOrderModel({
     required this.total,
     required this.phoneNum,
     required this.discount,
@@ -58,8 +58,8 @@ class OrderModel extends Equatable {
     };
   }
 
-  factory OrderModel.fromMap(Map<String, dynamic> map) {
-    return OrderModel(
+  factory CreateOrderModel.fromMap(Map<String, dynamic> map) {
+    return CreateOrderModel(
       total: map['total'] as int,
       phoneNum: map['phoneNum'] as String,
       discount: map['discount'] as num,
@@ -78,10 +78,10 @@ class OrderModel extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory OrderModel.fromJson(String source) =>
-      OrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CreateOrderModel.fromJson(String source) =>
+      CreateOrderModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  OrderModel copyWith({
+  CreateOrderModel copyWith({
     int? total,
     String? phoneNum,
     num? discount,
@@ -93,7 +93,7 @@ class OrderModel extends Equatable {
     Map<String, dynamic>? customerAddressDTO,
     List<Map<String, dynamic>>? orderProductVeriants,
   }) {
-    return OrderModel(
+    return CreateOrderModel(
       total: total ?? this.total,
       phoneNum: phoneNum ?? this.phoneNum,
       discount: discount ?? this.discount,

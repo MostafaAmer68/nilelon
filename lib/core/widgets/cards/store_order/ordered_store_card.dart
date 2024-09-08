@@ -4,6 +4,7 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
+import 'package:svg_flutter/svg.dart';
 
 class OrderedCard extends StatelessWidget {
   const OrderedCard({
@@ -14,7 +15,7 @@ class OrderedCard extends StatelessWidget {
     required this.onTap,
     required this.shippedOnTap,
   });
-  final String image;
+  final Widget image;
   final String title;
   final String time;
   final void Function() onTap;
@@ -69,7 +70,7 @@ class OrderedCard extends StatelessWidget {
                         color: Color(0xFFECE7FF),
                         shape: BoxShape.circle,
                       ),
-                      child: Image.asset(image, fit: BoxFit.cover),
+                      child: image,
                     ),
                     const SizedBox(
                       width: 4,

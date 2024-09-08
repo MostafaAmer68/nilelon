@@ -400,7 +400,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     final response =
         await apiService.post(endPoint: EndPoint.resetEmailDetailUrl, body: {
       'token': HiveStorage.get(HiveKeys.token),
-      'targetValue': HiveStorage.get(HiveKeys.userId),
+      'targetValue': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'newValue': newValue,
     });
     if (response.statusCode == 200) {

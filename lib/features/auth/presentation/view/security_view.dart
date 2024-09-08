@@ -26,8 +26,13 @@ class SecurityView extends StatelessWidget {
       body: Column(
         children: [
           const DefaultDivider(),
-          Padding(
+          Container(
             padding: const EdgeInsets.all(16.0),
+            margin: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: ColorManager.primaryW,
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: Column(
               children: [
                 ProfileListTile(

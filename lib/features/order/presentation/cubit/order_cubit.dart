@@ -17,16 +17,16 @@ class OrderCubit extends Cubit<OrderState> {
   final OrderRepo _orderRepo;
   static OrderCubit get(context) => BlocProvider.of(context);
   OrderCubit(this._orderRepo) : super(const OrderState.initial());
-  List<StoreOrder> storeOrders = [];
-  List<CustomerOrder> customerOrders = [];
+  List<OrderModel> storeOrders = [];
+  List<OrderModel> customerOrders = [];
   String selectedStatus = '';
   List<ShippingMethod> shippingMethods = [];
-  Future<void> createOrder(OrderModel order) async {
+  Future<void> createOrder(CreateOrderModel order) async {
     emit(const OrderState.loading());
     final result = await _orderRepo.createOrder(order);
     result.fold(
       (failure) {
-        emit(const OrderState.failure());
+        emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
         emit(const OrderState.success());
@@ -40,7 +40,7 @@ class OrderCubit extends Cubit<OrderState> {
     result.fold(
       (failure) {
         log(failure.errorMsg);
-        emit(const OrderState.failure());
+        emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
         shippingMethods = response;
@@ -54,7 +54,7 @@ class OrderCubit extends Cubit<OrderState> {
     final result = await _orderRepo.getCustomerOrder(orderStatus);
     result.fold(
       (failure) {
-        emit(const OrderState.failure());
+        emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
         customerOrders = response;
@@ -68,7 +68,7 @@ class OrderCubit extends Cubit<OrderState> {
     final result = await _orderRepo.getStoreOrder(orderStatus);
     result.fold(
       (failure) {
-        emit(const OrderState.failure());
+        emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
         storeOrders = response;
@@ -82,7 +82,7 @@ class OrderCubit extends Cubit<OrderState> {
     final result = await _orderRepo.getStoreOrderByDate(date);
     result.fold(
       (failure) {
-        emit(const OrderState.failure());
+        emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
         storeOrders = response;
@@ -91,12 +91,38 @@ class OrderCubit extends Cubit<OrderState> {
     );
   }
 
-  Future<void> changeOrderStatus(String orderId) async {
+  Future<void> changeOrderStatus(String orderId, String status) async {
     emit(const OrderState.loading());
-    final result = await _orderRepo.changeOrderStatus(orderId, selectedStatus);
+    final result = await _orderRepo.changeOrderStatus(orderId, status);
     result.fold(
       (failure) {
-        emit(const OrderState.failure());
+        emit(OrderState.failure(failure.errorMsg));
+      },
+      (response) {
+        emit(const OrderState.success());
+      },
+    );
+  }
+
+  Future<void> getCustomerById(String orderId) async {
+    emit(const OrderState.loading());
+    final result = await _orderRepo.getCustomerOrderById(orderId);
+    result.fold(
+      (failure) {
+        emit(OrderState.failure(failure.errorMsg));
+      },
+      (response) {
+        emit(const OrderState.success());
+      },
+    );
+  }
+
+  Future<void> getStoreById(String orderId) async {
+    emit(const OrderState.loading());
+    final result = await _orderRepo.getStoreOrderById(orderId);
+    result.fold(
+      (failure) {
+        emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
         emit(const OrderState.success());

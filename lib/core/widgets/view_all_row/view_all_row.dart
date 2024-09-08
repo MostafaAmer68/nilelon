@@ -63,23 +63,37 @@ class ViewAllRow extends StatelessWidget {
               ? Container()
               : GestureDetector(
                   onTap: onPressed,
-                  child: buttonWidget ??
-                      Row(
-                        children: [
-                          Text(
-                            buttonText ?? 'View All',
-                            style: AppStylesManager.customTextStyleO,
-                          ),
-                          const SizedBox(
-                            width: 4,
-                          ),
-                          Icon(
-                            Icons.arrow_forward_ios_outlined,
-                            color: ColorManager.primaryO,
-                            size: 12.r,
-                          )
-                        ],
-                      )),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: ColorManager.primaryW,
+                      borderRadius: BorderRadius.circular(15),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: ColorManager.primaryY,
+                          offset: Offset(5, 5),
+                        ),
+                      ],
+                    ),
+                    child: buttonWidget ??
+                        Row(
+                          children: [
+                            Text(
+                              buttonText ?? 'View All',
+                              style: AppStylesManager.customTextStyleO,
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios_outlined,
+                              color: ColorManager.primaryO,
+                              size: 12.r,
+                            )
+                          ],
+                        ),
+                  )),
         ],
       ),
     );

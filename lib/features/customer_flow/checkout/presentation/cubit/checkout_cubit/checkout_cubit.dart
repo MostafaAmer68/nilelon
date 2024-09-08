@@ -1,4 +1,3 @@
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +31,7 @@ class CheckOutCubit extends Cubit<CheckOutState> {
   Future<void> createOrder(context) async {
     emit(CheckOutLoading());
     final result = await _orderRepo.createOrder(
-      OrderModel(
+      CreateOrderModel(
         total: totalPrice.toInt(),
         phoneNum: phoneController.text,
         discount: 0,

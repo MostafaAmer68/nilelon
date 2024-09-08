@@ -28,8 +28,13 @@ class SettingsView extends StatelessWidget {
       body: Column(
         children: [
           const DefaultDivider(),
-          Padding(
+          Container(
             padding: const EdgeInsets.all(16.0),
+            margin: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: ColorManager.primaryW,
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: Column(
               children: [
                 ProfileListTile(
@@ -62,9 +67,6 @@ class SettingsView extends StatelessWidget {
               ],
             ),
           ),
-          const Spacer(
-            flex: 4,
-          ),
           ButtonBuilder(
             text: lang.deleteAccount,
             ontap: () {
@@ -76,9 +78,9 @@ class SettingsView extends StatelessWidget {
                 },
               );
             },
-            width: screenWidth(context, 0.42),
+            width: screenWidth(context, 0.8),
             height: screenHeight(context, 0.06),
-            buttonColor: Colors.transparent,
+            buttonColor: ColorManager.primaryW,
             frameColor: ColorManager.primaryR,
             style: AppStylesManager.customTextStyleB4
                 .copyWith(color: ColorManager.primaryR, fontSize: 16),

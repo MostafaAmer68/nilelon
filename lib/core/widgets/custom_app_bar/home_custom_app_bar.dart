@@ -91,7 +91,8 @@ class HomeCustomAppBar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              navigateTo(context: context, screen: const ClosetView());
+              showModalBottomSheet(
+                  context: context, builder: (context) => const ClosetView());
             },
             child: Container(
               width: 1.sw > 600 ? 40 : 40,

@@ -7,6 +7,7 @@ import 'package:nilelon/features/closet/domain/model/create_closet.dart';
 
 import 'package:nilelon/features/closet/domain/repo/closet_repo.dart';
 
+import '../../../auth/domain/model/user_model.dart';
 import '../../../product/domain/models/product_model.dart';
 import '../../domain/model/closet_model.dart';
 
@@ -36,7 +37,8 @@ class ClosetCubit extends Cubit<ClosetState> {
   Future<void> createCloset() async {
     emit(const ClosetState.loading());
     final data = await repo.createCloset(CreateCloset(
-        name: closetName.text, CustomerId: HiveStorage.get(HiveKeys.userId)));
+        name: closetName.text,
+        CustomerId: HiveStorage.get<UserModel>(HiveKeys.userModel).id));
     data.fold((error) {
       emit(const ClosetState.failure());
     }, (response) {

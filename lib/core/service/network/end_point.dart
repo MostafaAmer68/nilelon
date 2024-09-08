@@ -29,7 +29,8 @@ class EndPoint {
   static const String resetEmailDetailUrl = '/Authentication/ResetEmailDetails';
   static const String resetPhoneDetailsUrl =
       '/Authentication/ResetPhoneDetails';
-  static const String customerGoogleRegisterUrl = '/Authentication/GoogleRegister';
+  static const String customerGoogleRegisterUrl =
+      '/Authentication/GoogleRegister';
 
   //todo Customer Cart Urls
   static const String getCartByCustomerIdUrl = '/Cart/GetCartByCustomerId';
@@ -57,9 +58,11 @@ class EndPoint {
       '/ShippingMethod/GetShippingMethods';
   //todo order urls
   static const String getCustomerOrderUrl = '/Order/GetCustomerOrders';
-  static const String getStoreOrderUrl = '/Order/GetStoreOrder';
+  static const String getStoreOrderUrl = '/Order/GetStoreOrderes';
   static const String createOrderUlr = '/Order/CreateOrder';
   static const String changeOrderStateUrl = '/Order/ChangeOrderState';
+  static const String getOrderDetailsByIdUrl = '/Order/GetOrderDetailsById';
+  static const String getStoreOrderDetailsUrl = '/Order/GetStoreOrderDetails';
   static const String getStoreOderByDateUrl = '/Order/GetStoreOrderByDate';
 
   //todo Customer Closet Urls

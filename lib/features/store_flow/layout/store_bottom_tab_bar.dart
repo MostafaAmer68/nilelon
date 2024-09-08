@@ -9,7 +9,7 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/widgets/icon_with_gradient/icon_with_gradient.dart';
 import 'package:nilelon/features/categories/presentation/category_view.dart';
-import 'package:nilelon/features/order/presentation/pages/order_tab_bar.dart';
+import 'package:nilelon/features/order/presentation/pages/order_store_tab_bar.dart';
 import 'package:nilelon/features/store_flow/store_market/view/store_market_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_view.dart';
 

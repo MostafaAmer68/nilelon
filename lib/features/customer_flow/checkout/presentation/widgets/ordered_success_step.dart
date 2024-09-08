@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
+import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 
 import '../../../../../core/resources/appstyles_manager.dart';
 
@@ -30,7 +31,12 @@ class OrderedSuccessPage extends StatelessWidget {
             style: AppStylesManager.customTextStyleG,
           ),
           const SizedBox(height: 300),
-          GradientButtonBuilder(text: 'Download Receipt', ontap: () {}),
+          // NilelonPdfView(cells: cells, netTotal: netTotal, discount: discount, total: total, delivery: delivery),
+          GradientButtonBuilder(
+              text: 'Download Receipt',
+              ontap: () {
+                CartCubit.get(context).emptyCart();
+              }),
         ],
       ),
     );

@@ -98,35 +98,38 @@ class RecommendationView extends StatelessWidget {
     );
   }
 
-  Stack imageContainer(
+  InkWell imageContainer(
     BuildContext context,
     image,
     buttomText,
     onTap,
   ) {
-    return Stack(
-      alignment: Alignment.centerLeft,
-      children: [
-        Container(
-          width: screenWidth(context, 1),
-          height: 300.sp,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            image:
-                DecorationImage(image: AssetImage(image), fit: BoxFit.fitWidth),
+    return InkWell(
+      onTap: onTap,
+      child: Stack(
+        alignment: Alignment.centerLeft,
+        children: [
+          Container(
+            width: screenWidth(context, 1),
+            height: 300.sp,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              image: DecorationImage(
+                  image: AssetImage(image), fit: BoxFit.fitWidth),
+            ),
           ),
-        ),
-        Positioned(
-          bottom: 20,
-          left: 16,
-          child: ButtonBuilder(
-            text: buttomText,
-            ontap: onTap,
-            width: 140.sp,
-            style: AppStylesManager.customTextStyleW2.copyWith(fontSize: 12.sp),
-          ),
-        ),
-      ],
+          // Positioned(
+          //   bottom: 20,
+          //   left: 16,
+          //   child: ButtonBuilder(
+          //     text: buttomText,
+          //     ontap: onTap,
+          //     width: 140.sp,
+          //     style: AppStylesManager.customTextStyleW2.copyWith(fontSize: 12.sp),
+          //   ),
+          // ),
+        ],
+      ),
     );
   }
 }

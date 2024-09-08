@@ -44,14 +44,8 @@ class ApiService {
         status == HttpStatus.internalServerError;
   }
 
-  Future<Response> put({
-    required endPoint,
-    dynamic data,
-  }) async {
-    var response = await dio.put(
-      endPoint,
-      data: data,
-    );
+  Future<Response> put({required endPoint, dynamic data, dynamic query}) async {
+    var response = await dio.put(endPoint, data: data, queryParameters: query);
     return response;
   }
 
@@ -73,12 +67,10 @@ class CustomLogInterceptor extends LogInterceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     // Log request URL and headers
-    options.headers.forEach((key, value) {
-    });
+    options.headers.forEach((key, value) {});
 
     // Log request body if it's present
-    if (options.data != null) {
-    }
+    if (options.data != null) {}
     super.onRequest(options, handler);
   }
 }

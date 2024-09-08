@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class AddProductCubit extends Cubit<AddproductState> {
         storeId: JwtDecoder.decode(
             HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
       ),
-      isEditable: generateIsEditableList(colors, isNonEditable),
+      isEditable: generateIsEditableList(colors, isVarientAdded),
     );
 
     productDataList.add(newProductData);
@@ -74,7 +75,7 @@ class AddProductCubit extends Cubit<AddproductState> {
     '0xFF170048',
     '0xFF165A11',
   ];
-  List<bool> isNonEditable = List.generate(7, (index) => false);
+  List<bool> isVarientAdded = List.generate(7, (index) => false);
   String selectedColor = '0xFFD80000';
   List<Variant> addedVarients = [];
   List<Map<String, dynamic>> sizes = [];
@@ -82,8 +83,8 @@ class AddProductCubit extends Cubit<AddproductState> {
   String? productType;
   String categoryId = '';
   bool isSubmit = true;
-  bool isActivated = false;
-  bool isAdd = false;
+  bool isNotFirstTimeActivated = false;
+  bool isVarientActive = false;
 
   List<String> items = ['Male', 'Female', 'UniSex'];
   final ProductsReposImpl _product;
@@ -122,24 +123,27 @@ class AddProductCubit extends Cubit<AddproductState> {
   void _updateExistingVariant() {
     final varients = HiveStorage.get<List>(HiveKeys.tempVarients);
     Variant productVarieants = _createProductVariant();
-    addedVarients.removeWhere(
-        (element) => int.parse(element.color) == int.parse(selectedColor));
+    addedVarients
+        .removeWhere((element) => element.color == selectedColor.substring(2));
     varients.add(productVarieants);
+    log(varients.map((e) => (e as Variant).sizes.first.quantity).toString());
     HiveStorage.set(HiveKeys.tempVarients, varients);
     addedVarients.add(productVarieants);
+    log('update');
   }
 
   Future<void> handleSubmit() async {
     // HiveStorage.set(HiveKeys.tempVarients, null);
-    if (HiveStorage.get(HiveKeys.tempVarients) == null) {
+    if (HiveStorage.get<List<Variant>?>(HiveKeys.tempVarients) == null) {
       _saveNewVariant();
     } else {
       _updateExistingVariant();
     }
-    isNonEditable[selectedIndex] = true;
-    isAdd = false;
+    isVarientAdded[selectedIndex] = true;
+    isVarientActive = false;
     isSubmit = false;
     _resetSizeControllersToDefault();
+    initializeSizeControllers();
 
     AppLogs.infoLog(HiveStorage.get(HiveKeys.tempVarients).toString());
   }
@@ -147,11 +151,13 @@ class AddProductCubit extends Cubit<AddproductState> {
   void _saveNewVariant() {
     Variant productVarieants = _createProductVariant();
 
-    addedVarients.removeWhere((element) => (element.color == selectedColor));
+    addedVarients.removeWhere(
+        (element) => (element.color == selectedColor.substring(2)));
     List<Variant> variants = [];
     variants.add(productVarieants);
     HiveStorage.set<List<Variant>>(HiveKeys.tempVarients, variants);
     addedVarients.add(productVarieants);
+    log('save');
   }
 
   Variant _createProductVariant() {
@@ -196,9 +202,57 @@ class AddProductCubit extends Cubit<AddproductState> {
         .toList();
   }
 
+  bool _checkIfVarientEditable() => isVarientAdded[selectedIndex];
+
+  void onSelectedColor(index) {
+    selectedIndex = index;
+    selectedColor = colors[selectedIndex].toString();
+
+    initializeSizeControllers();
+    if (_checkIfVarientEditable()) {
+      isSubmit = false;
+      isVarientActive = false;
+      isNotFirstTimeActivated = true;
+      log('edit');
+    } else if (!_checkIfVarientEditable()) {
+      isSubmit = false;
+      isVarientActive = false;
+      isNotFirstTimeActivated = true;
+      log('edit 3');
+    } else {
+      log('edit 2');
+      isVarientActive = false;
+      isNotFirstTimeActivated = false;
+      isSubmit = true;
+    }
+    log(isVarientAdded[selectedIndex].toString());
+    // setState(() {});
+  }
+
+  void addSize() {
+    isVarientActive = true; // is add for activate variants widget
+    isNotFirstTimeActivated =
+        true; // check for first time variant activated or not
+    isSubmit = true; // for submit or upload button only
+    for (var item in sizes) {
+      item['priceController'] =
+          TextEditingController(text: priceController.text);
+    }
+  }
+
+  void editSize() {
+    isVarientActive = true;
+    isSubmit = true;
+    isVarientAdded[selectedIndex] = false;
+    for (var item in sizes) {
+      item['priceController'] = priceController;
+    }
+    removeNonEditableVariant();
+  }
+
   void deleteVariant() {
     Variant? proVar;
-    List varients = HiveStorage.get(HiveKeys.tempVarients);
+    List varients = HiveStorage.get<List>(HiveKeys.tempVarients);
     for (var element in addedVarients) {
       if (selectedColor == element.color) {
         proVar = element;
@@ -207,10 +261,10 @@ class AddProductCubit extends Cubit<AddproductState> {
     addedVarients.remove(proVar);
     varients.remove(proVar);
     HiveStorage.set(HiveKeys.tempVarients, varients);
-    resetSizeControllers();
+    resetVarientWidget();
 
     if (addedVarients.isEmpty) {
-      isActivated = false;
+      isNotFirstTimeActivated = false;
       isSubmit = true;
     }
   }
@@ -302,31 +356,59 @@ class AddProductCubit extends Cubit<AddproductState> {
           (e) => {
             'size': e.name,
             'isEdit': false,
-            'quantityController': TextEditingController(),
+            'quantityController': TextEditingController(text: '0'),
             'priceController': TextEditingController(),
           },
         )
         .toList();
 
-    for (var variant in addedVarients) {
-      if (variant.color == selectedColor.substring(2)) {
-        if (variant.sizes.isNotEmpty) {
-          for (var item in variant.sizes) {
-            for (int i = 0; i < sizes.length; i++) {
-              sizes[i]['quantityController'] =
-                  TextEditingController(text: item.quantity.toString());
-              sizes[i]['priceController'] =
-                  TextEditingController(text: item.price.toString());
-            }
-          }
-        }
-      } else {
-        resetSizeControllers();
+    // log(addedVarients.map((e) => e.toMap()).toString());
+    // for (var variant in addedVarients) {
+    if (checkIfVarientAlreadyExists(
+      addedVarients.firstWhere(
+        (e) => e.color == selectedColor.substring(2),
+        orElse: () => Variant(
+          color: selectedColor.substring(2),
+          images: [],
+          sizes: [],
+        ),
+      ),
+    )) {
+      log('test check');
+      initializeVarientWidget(
+        addedVarients.firstWhere(
+          (e) => e.color == selectedColor.substring(2),
+          orElse: () => Variant(
+            color: selectedColor.substring(2),
+            images: [],
+            sizes: [],
+          ),
+        ),
+      );
+    } else {
+      log('test check 3');
+      resetVarientWidget();
+    }
+    // }
+  }
+
+  bool checkIfVarientAlreadyExists(Variant variant) =>
+      variant.color == selectedColor.substring(2);
+
+  void initializeVarientWidget(Variant variant) {
+    if (variant.sizes.isNotEmpty) {
+      // log(item.quantity.toString());
+      for (int i = 0; i < sizes.length; i++) {
+        sizes[i]['quantityController'] =
+            TextEditingController(text: variant.sizes[i].quantity.toString());
+
+        sizes[i]['priceController'] =
+            TextEditingController(text: variant.sizes[i].price.toString());
       }
     }
   }
 
-  void resetSizeControllers() {
+  void resetVarientWidget() {
     for (var item in sizes) {
       item['quantityController'] = TextEditingController(text: '0');
       item['priceController'] =

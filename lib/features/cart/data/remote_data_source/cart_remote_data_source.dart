@@ -26,11 +26,9 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
 
   @override
   Future<GetCartModel> getCart() async {
-    final Response data =
-        await apiService.get(endPoint: EndPoint.getCartByCustomerIdUrl, query: {
-      'id': JwtDecoder.decode(
-          HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id']
-    });
+    final Response data = await apiService.get(
+        endPoint: EndPoint.getCartByCustomerIdUrl,
+        query: {'id': HiveStorage.get<UserModel>(HiveKeys.userModel).id});
     if (data.statusCode == HttpStatus.ok) {
       return GetCartModel.fromJson(data.data as Map<String, dynamic>);
     } else if (data.statusCode == HttpStatus.badRequest) {

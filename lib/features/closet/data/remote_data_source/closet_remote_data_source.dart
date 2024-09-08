@@ -12,6 +12,7 @@ import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 
 import '../../../../core/service/network/end_point.dart';
+import '../../../auth/domain/model/user_model.dart';
 import '../../domain/repo/closet_repo.dart';
 
 class ClosetRemoteDataSourceImpl extends ClosetRepo {
@@ -24,7 +25,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
       String productId, String closetId) async {
     final Response data = await _apiService
         .post(endPoint: EndPoint.addProductToClosetUrl, query: {
-      'customerId': HiveStorage.get(HiveKeys.userId),
+      'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'producId': productId,
       'closetListId': closetId,
     });
@@ -47,7 +48,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
       String productId) async {
     final Response data = await _apiService
         .post(endPoint: EndPoint.updateQuantityCartUrl, query: {
-      'customerId': HiveStorage.get(HiveKeys.userId),
+      'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'productId': productId,
     });
     if (data.statusCode == HttpStatus.ok) {
@@ -175,7 +176,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
     final Response data = await _apiService.get(
       endPoint: EndPoint.getCustomerClosetUrl,
       query: {
-        'customerId': HiveStorage.get(HiveKeys.userId),
+        'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       },
     );
     if (data.statusCode == HttpStatus.ok) {

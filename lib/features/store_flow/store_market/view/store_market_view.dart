@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/generated/l10n.dart';
@@ -7,17 +8,34 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/market_custom_app_bar.dart';
 import 'package:nilelon/core/widgets/cards/wide/market_wide_card.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
 import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.dart';
 import 'package:nilelon/features/store_flow/hot_picks/store_hot_picks_view.dart';
 import 'package:nilelon/features/store_flow/search/view/store_search_view.dart';
 
+import '../../../../core/widgets/cards/small/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../product/presentation/cubit/products_cubit/products_state.dart';
 
-class StoreMarketView extends StatelessWidget {
+class StoreMarketView extends StatefulWidget {
   const StoreMarketView({super.key});
+
+  @override
+  State<StoreMarketView> createState() => _StoreMarketViewState();
+}
+
+class _StoreMarketViewState extends State<StoreMarketView> {
+  late final ProductsCubit cubit;
+  @override
+  void initState() {
+    cubit = BlocProvider.of(context);
+    cubit.getNewInProducts(1, 20);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,19 +117,38 @@ class StoreMarketView extends StatelessWidget {
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: GridView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 1.sw > 600 ? 3 : 2,
-                      crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                      mainAxisExtent: 1.sw > 600 ? 320 : 220,
-                      mainAxisSpacing: 1.sw > 600 ? 16 : 12),
-                  shrinkWrap: true,
-                  itemCount: 7,
-                  itemBuilder: (context, sizeIndex) {
-                    return Container(
-                        // child: marketSmallCard(context: context),
+                child: BlocBuilder<ProductsCubit, ProductsState>(
+                  builder: (context, state) {
+                    return state.getNewInProducts.whenOrNull(
+                      failure: (err) {
+                        return const Icon(Icons.error);
+                      },
+                      loading: () {
+                        return buildShimmerIndicatorGrid();
+                      },
+                      success: (result) {
+                        return GridView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 1.sw > 600 ? 3 : 2,
+                                  crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
+                                  mainAxisExtent: 1.sw > 600 ? 320 : 220,
+                                  mainAxisSpacing: 1.sw > 600 ? 16 : 12),
+                          shrinkWrap: true,
+                          itemCount: result.length,
+                          itemBuilder: (context, index) {
+                            final product = result[index];
+                            return Container(
+                              child: marketSmallCard(
+                                context: context,
+                                product: product,
+                              ),
+                            );
+                          },
                         );
+                      },
+                    )!;
                   },
                 ),
               ),

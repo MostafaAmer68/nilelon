@@ -5,12 +5,14 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/customer_flow/order_details/order_details_view.dart';
+import 'package:nilelon/features/order/data/models/order_model.dart';
 
 class RecievedCard extends StatelessWidget {
   const RecievedCard({
     super.key,
+    required this.order,
   });
-
+  final OrderModel order;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -83,13 +85,13 @@ class RecievedCard extends StatelessWidget {
                           style: AppStylesManager.customTextStyleB3,
                         ),
                         Text(
-                          '370 L.E',
+                          '${order.total} L.E',
                           style: AppStylesManager.customTextStyleO
                               .copyWith(fontSize: 1.sw > 600 ? 18 : 10),
                         ),
                         const Spacer(),
                         Text(
-                          '11:56 AM',
+                          order.date,
                           style: AppStylesManager.customTextStyleG7,
                         ),
                       ],

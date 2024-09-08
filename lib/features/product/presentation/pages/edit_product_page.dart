@@ -99,7 +99,6 @@ class _AddProductViewState extends State<EditProductpage> {
     );
   }
 
-
   Widget addToDraftWidget(String addToDraft) {
     return ViewAllRow(
       noText: true,
@@ -252,7 +251,7 @@ class _AddProductViewState extends State<EditProductpage> {
   }
 
   Widget _buildSizeVariantSection(S lang) {
-    return cubit.isNonEditable[cubit.selectedIndex]
+    return cubit.isVarientAdded[cubit.selectedIndex]
         ? Column(
             children: [
               _buildEditRow(lang.editSizesForThisColor,
@@ -260,7 +259,7 @@ class _AddProductViewState extends State<EditProductpage> {
               _buildNonEditableStack(lang.total),
             ],
           )
-        : cubit.isAdd
+        : cubit.isVarientActive
             ? _buildEditableVariantSection(lang.total)
             : Column(
                 children: [
@@ -286,11 +285,11 @@ class _AddProductViewState extends State<EditProductpage> {
             cubit.selectedColor = cubit.colors[cubit.selectedIndex].toString();
 
             cubit.initializeVarientsEdit(widget.product);
-            if (!cubit.isNonEditable[cubit.selectedIndex]) {
+            if (!cubit.isVarientAdded[cubit.selectedIndex]) {
               cubit.isSubmit = false;
-              cubit.isAdd = false;
+              cubit.isVarientActive = false;
             } else {
-              cubit.isAdd = true;
+              cubit.isVarientActive = true;
               cubit.isSubmit = true;
             }
             setState(() {});
@@ -298,7 +297,7 @@ class _AddProductViewState extends State<EditProductpage> {
           cubit.colors[index],
           cubit.selectedIndex,
           index,
-          cubit.isNonEditable[index],
+          cubit.isVarientAdded[index],
         ),
       ),
     );
@@ -372,9 +371,9 @@ class _AddProductViewState extends State<EditProductpage> {
   Widget _buildEditIcon() {
     return GestureDetector(
       onTap: () {
-        cubit.isAdd = true;
+        cubit.isVarientActive = true;
         cubit.isSubmit = true;
-        cubit.isNonEditable[cubit.selectedIndex] = false;
+        cubit.isVarientAdded[cubit.selectedIndex] = false;
         _removeNonEditableVariant();
         setState(() {});
       },
@@ -396,7 +395,7 @@ class _AddProductViewState extends State<EditProductpage> {
     return GestureDetector(
       onTap: () {
         deleteAlert(context, deleteAlertStr, () {
-          cubit.isNonEditable[cubit.selectedIndex] = false;
+          cubit.isVarientAdded[cubit.selectedIndex] = false;
           cubit.deleteVariant();
           navigatePop(context: context);
           setState(() {});
@@ -421,8 +420,8 @@ class _AddProductViewState extends State<EditProductpage> {
         children: [
           GestureDetector(
             onTap: () {
-              cubit.isAdd = true;
-              cubit.isActivated = true;
+              cubit.isVarientActive = true;
+              cubit.isNotFirstTimeActivated = true;
               cubit.isSubmit = true;
               setState(() {});
             },
@@ -455,7 +454,8 @@ class _AddProductViewState extends State<EditProductpage> {
   Widget _buildSubmitButton(String submitStr) {
     return ButtonBuilder(
       text: submitStr,
-      isActivated: cubit.isActivated ? cubit.isSubmit : !cubit.isSubmit,
+      isActivated:
+          cubit.isNotFirstTimeActivated ? cubit.isSubmit : !cubit.isSubmit,
       ontap: () {
         cubit.handleSubmit();
         setState(() {});
@@ -481,7 +481,7 @@ class _AddProductViewState extends State<EditProductpage> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        bool isNonEditable = cubit.isNonEditable[cubit.selectedIndex];
+        bool isNonEditable = cubit.isVarientAdded[cubit.selectedIndex];
         return isNonEditable
             ? _buildSizeRowUnEditable(index)
             : _buildSizeRow(index);
@@ -594,7 +594,7 @@ class _AddProductViewState extends State<EditProductpage> {
           return index == cubit.images.length
               ? addContainer(
                   () async {
-                    if (cubit.isAdd) {
+                    if (cubit.isVarientActive) {
                       cubit.images.add((await cameraDialog(context)));
 
                       setState(() {});
@@ -617,28 +617,28 @@ class _AddProductViewState extends State<EditProductpage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           addContainer(() async {
-            if (cubit.isAdd) {
+            if (cubit.isVarientActive) {
               cubit.images.add((await cameraDialog(context)));
 
               setState(() {});
             }
           }, context, null, null),
           addContainer(() async {
-            if (cubit.isAdd) {
+            if (cubit.isVarientActive) {
               cubit.images.add((await cameraDialog(context)));
 
               setState(() {});
             }
           }, context, null, null),
           addContainer(() async {
-            if (cubit.isAdd) {
+            if (cubit.isVarientActive) {
               cubit.images.add((await cameraDialog(context)));
 
               setState(() {});
             }
           }, context, null, null),
           addContainer(() async {
-            if (cubit.isAdd) {
+            if (cubit.isVarientActive) {
               cubit.images.add((await cameraDialog(context)));
 
               setState(() {});

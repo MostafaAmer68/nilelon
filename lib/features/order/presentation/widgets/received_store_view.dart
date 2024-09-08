@@ -1,28 +1,30 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/core/widgets/cards/store_order/recieved_store_card.dart';
+import 'package:nilelon/core/widgets/alert/shipped_alert.dart';
+import 'package:nilelon/core/widgets/cards/store_order/ordered_store_card.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/order/presentation/pages/ordered_store_details_view.dart';
 
-import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/widgets/scaffold_image.dart';
-import '../cubit/order_cubit.dart';
 
-class RecievedStoreView extends StatefulWidget {
-  const RecievedStoreView({super.key});
+class ReceivedStoreView extends StatefulWidget {
+  const ReceivedStoreView({super.key});
 
   @override
-  State<RecievedStoreView> createState() => _RecievedStoreViewState();
+  State<ReceivedStoreView> createState() => _ReceivedStoreViewState();
 }
 
-class _RecievedStoreViewState extends State<RecievedStoreView> {
+class _ReceivedStoreViewState extends State<ReceivedStoreView> {
   late final OrderCubit cubit;
   @override
   void initState() {
     cubit = OrderCubit.get(context);
     if (HiveStorage.get(HiveKeys.isStore)) {
-      cubit.getStoreOrder('received');
+      cubit.getStoreOrder('Received');
     }
     super.initState();
   }
@@ -30,83 +32,48 @@ class _RecievedStoreViewState extends State<RecievedStoreView> {
   @override
   Widget build(BuildContext context) {
     return ScaffoldImage(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  const Icon(
-                    Icons.history,
-                    color: ColorManager.primaryO,
+      body: BlocListener<OrderCubit, OrderState>(
+        listener: (context, state) {
+        state.mapOrNull(failure: (err) {
+            BotToast.showText(text: err.errMessage);
+          }, loading: (_) {
+            BotToast.showLoading();
+          }, success: (_) {
+            BotToast.closeAllLoading();
+          });
+        },
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 12.h),
+          child: ListView.builder(
+              itemCount: cubit.storeOrders
+                  .where((e) => e.status == 'Received')
+                  .toList()
+                  .length,
+              itemBuilder: (context, index) {
+                final order = cubit.storeOrders
+                    .where((e) => e.status == 'Received')
+                    .toList()[index];
+                return Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: OrderedCard(
+                    image: Image.asset('assets/images/arrived2.png'),
+                    title: 'Order has arrived to Customer Address.',
+                    time: order.date,
+                    onTap: () {
+                      navigateTo(
+                          context: context,
+                          screen: const OrderedStoreDetailsView(
+                            items: [],
+                            index: 0,
+                          ));
+                    },
+                    shippedOnTap: () async {
+                      await shippedAlert(context,order);
+                    },
                   ),
-                  const SizedBox(
-                    width: 4,
-                  ),
-                  GestureDetector(
-                      onTap: () {},
-                      child: Text(
-                        'History',
-                        style: AppStylesManager.customTextStyleO,
-                      )),
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                  itemCount: 9,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      child: ReceivedStoreCard(
-                        image: 'assets/images/arrived2.png',
-                        title: 'Order 42076 has arrived to Customer Address.',
-                        quantity: '1',
-                        onTap: () {
-                          navigateTo(
-                              context: context,
-                              screen: const OrderedStoreDetailsView(
-                                items: [
-                                  {
-                                    'images': ['assets/images/cloth1.png'],
-                                    'name': 'Cream Hoodie',
-                                    'storeName': 'By Nagham',
-                                    'rating': '4.8',
-                                    'price': '370.00',
-                                    'size': 'L',
-                                    'quan': '1',
-                                  },
-                                  {
-                                    'images': ['assets/images/cloth1.png'],
-                                    'name': 'Cream Hoodie',
-                                    'storeName': 'By Nagham',
-                                    'rating': '4.8',
-                                    'price': '370.00',
-                                    'size': 'L',
-                                    'quan': '1',
-                                  },
-                                  {
-                                    'images': ['assets/images/cloth1.png'],
-                                    'name': 'Cream Hoodie',
-                                    'storeName': 'By Nagham',
-                                    'rating': '4.8',
-                                    'price': '370.00',
-                                    'size': 'L',
-                                    'quan': '1',
-                                  }
-                                ],
-                                index: 2,
-                              ));
-                        },
-                      ),
-                    );
-                  }),
-            ),
-          ],
+                );
+              }),
         ),
       ),
     );

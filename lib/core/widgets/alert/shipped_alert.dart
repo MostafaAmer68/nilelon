@@ -7,8 +7,10 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/features/order/data/models/order_model.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 
-Future shippedAlert(context) => showDialog(
+Future shippedAlert(context, OrderModel order) => showDialog(
     context: context,
     builder: (BuildContext context) {
       final lang = S.of(context);
@@ -52,6 +54,8 @@ Future shippedAlert(context) => showDialog(
                   height: screenHeight(context, 0.06),
                   ontap: () {
                     navigatePop(context: context);
+                    OrderCubit.get(context)
+                        .changeOrderStatus(order.id, 'Shipped');
                   }),
             ],
           ),

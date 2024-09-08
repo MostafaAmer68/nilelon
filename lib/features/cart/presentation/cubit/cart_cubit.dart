@@ -7,6 +7,7 @@ import 'package:nilelon/features/cart/domain/model/delete_request_model.dart';
 import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
 import 'package:nilelon/features/cart/domain/repos/cart_repos.dart';
 
+import '../../../auth/domain/model/user_model.dart';
 import '../../domain/model/get_cart_model/get_cart_model.dart';
 
 part 'cart_state.dart';
@@ -22,7 +23,8 @@ class CartCubit extends Cubit<CartState> {
   Future<void> emptyCart() async {
     emit(CartLoading());
 
-    var result = await cartRepos.emptyCart(HiveStorage.get(HiveKeys.userId));
+    var result = await cartRepos
+        .emptyCart(HiveStorage.get<UserModel>(HiveKeys.userModel).id);
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
@@ -37,6 +39,7 @@ class CartCubit extends Cubit<CartState> {
     var result = await cartRepos.addToCart(model);
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
+      print('proudct added');
     }, (response) {
       emit(CartSuccess());
     });
