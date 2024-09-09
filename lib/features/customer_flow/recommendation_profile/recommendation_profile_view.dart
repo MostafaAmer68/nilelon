@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
 
@@ -61,35 +59,40 @@ class RecommendationProfileView extends StatelessWidget {
     );
   }
 
-  Stack imageContainer(
+  GestureDetector imageContainer(
     BuildContext context,
     image,
     buttomText,
     onTap,
   ) {
-    return Stack(
-      alignment: Alignment.centerLeft,
-      children: [
-        Container(
-          width: screenWidth(context, 1),
-          height: 300.sp,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            image:
-                DecorationImage(image: AssetImage(image), fit: BoxFit.fitWidth),
-          ),
+    return
+        // Stack(
+        //   alignment: Alignment.centerLeft,
+        //   children: [
+        GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: screenWidth(context, 1),
+        height: 300.sp,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          image:
+              DecorationImage(image: AssetImage(image), fit: BoxFit.fitWidth),
         ),
-        Positioned(
-          bottom: 20,
-          left: 16,
-          child: ButtonBuilder(
-            text: buttomText,
-            ontap: onTap,
-            width: 160,
-            style: AppStylesManager.customTextStyleW2.copyWith(fontSize: 14),
-          ),
-        ),
-      ],
+      ),
     );
+    // ,
+    //     Positioned(
+    //       bottom: 20,
+    //       left: 16,
+    //       child: ButtonBuilder(
+    //         text: buttomText,
+    //         ontap: onTap,
+    //         width: 160,
+    //         style: AppStylesManager.customTextStyleW2.copyWith(fontSize: 14),
+    //       ),
+    //     ),
+    //   ],
+    // );
   }
 }

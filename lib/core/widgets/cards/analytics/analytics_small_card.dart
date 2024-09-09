@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 
 class AnalyticsSmallCard extends StatelessWidget {
@@ -8,12 +9,12 @@ class AnalyticsSmallCard extends StatelessWidget {
     required this.title,
     required this.number,
     required this.average,
-    this.isGreen = false,
+    this.isOrange = false,
   });
   final String title;
   final int number;
   final int average;
-  final bool isGreen;
+  final bool isOrange;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,8 +22,19 @@ class AnalyticsSmallCard extends StatelessWidget {
       height: screenHeight(context, 0.115),
       padding: const EdgeInsets.all(16),
       decoration: ShapeDecoration(
-        color: Colors.white,
+        // color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        gradient: isOrange
+            ? const LinearGradient(
+                begin: Alignment(-0.66, -0.75),
+                end: Alignment(0.66, 0.75),
+                colors: ColorManager.gradientBoxColors5,
+              )
+            : const LinearGradient(
+                begin: Alignment(-0.66, -0.75),
+                end: Alignment(0.66, 0.75),
+                colors: ColorManager.gradientBoxColors4,
+              ),
         shadows: const [
           BoxShadow(
             color: Color(0x33726363),
@@ -37,40 +49,40 @@ class AnalyticsSmallCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: AppStylesManager.customTextStyleBl13,
+            style: AppStylesManager.customTextStyleW10,
           ),
           const SizedBox(
             height: 2,
           ),
-          isGreen
+          isOrange
               ? Center(
                   child: Text(
                     '$number \$',
-                    style: AppStylesManager.customTextStyleGR,
+                    style: AppStylesManager.customTextStyleW9,
                   ),
                 )
               : Center(
                   child: Text(
                     '$number',
-                    style: AppStylesManager.customTextStyleL4,
+                    style: AppStylesManager.customTextStyleW9,
                   ),
                 ),
           const SizedBox(
             height: 2,
           ),
-          isGreen
+          isOrange
               ? Align(
                   alignment: Alignment.topCenter,
                   child: Text(
                     'Market Average : $average \$',
-                    style: AppStylesManager.customTextStyleG20,
+                    style: AppStylesManager.customTextStyleW11,
                   ),
                 )
               : Align(
                   alignment: Alignment.topCenter,
                   child: Text(
                     'Market Average : $average',
-                    style: AppStylesManager.customTextStyleG20,
+                    style: AppStylesManager.customTextStyleW11,
                   ),
                 )
         ],

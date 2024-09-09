@@ -91,4 +91,27 @@ class ColorManager {
     ColorManager.primaryO,
     ColorManager.primaryO,
   ];
+
+  //********* gradient box color  *********//
+  static const List<Color> gradientBoxColors = [
+    Color(0xFF3FD4A7),
+    Color(0xFF3FB9D4)
+  ];
+  static const List<Color> gradientBoxColors2 = [
+    Color(0xFF451DE6),
+    Color(0xFF1DB6E6)
+  ];
+  static const List<Color> gradientBoxColors3 = [
+    Color(0xFFFF00F4),
+    Color(0xFFFF153F),
+    Color(0xFFFB8EBC)
+  ];
+  static const List<Color> gradientBoxColors4 = [
+    Color(0xFFFF827A),
+    Color(0xFFFFA725)
+  ];
+  static const List<Color> gradientBoxColors5 = [
+    Color(0xFFAB38D4),
+    Color(0xFFD438C4)
+  ];
 }

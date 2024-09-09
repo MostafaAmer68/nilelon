@@ -298,6 +298,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                   number: (cubit.dashboardModel.storeFollowers)
                                       .toInt(),
                                   average: 700,
+                                  index: 0,
                                 ),
                                 const Spacer(),
                                 Column(
@@ -317,7 +318,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                               .dashboardModel.storeTotalIncome)
                                           .toInt(),
                                       average: 700,
-                                      isGreen: true,
+                                      isOrange: true,
                                     ),
                                   ],
                                 )
@@ -340,7 +341,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                 number: (cubit.dashboardModel.storeFollowers)
                                     .toInt(),
                                 average: 700,
-                                isOrange: false,
+                                index: 1,
                               ),
                               AnalyticsBigCard(
                                 title: lang.ofNoified,
@@ -348,6 +349,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                         .storeNumberOfNotifications)
                                     .toInt(),
                                 average: 700,
+                                index: 2,
                               ),
                             ],
                           ),

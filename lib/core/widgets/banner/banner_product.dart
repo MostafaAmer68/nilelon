@@ -46,8 +46,11 @@ class _BannerProductState extends State<BannerProduct> {
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      image: const DecorationImage(
-                          image: AssetImage('assets/images/banner.png'),
+                      image: DecorationImage(
+                          image: widget.isStore
+                              ? const AssetImage(
+                                  'assets/images/hot picks 3_Mesa de trabajo 1 1.png')
+                              : const AssetImage('assets/images/banner.png'),
                           fit: BoxFit.fill)),
                 ),
               );

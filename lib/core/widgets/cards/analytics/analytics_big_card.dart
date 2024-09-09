@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 
 class AnalyticsBigCard extends StatelessWidget {
@@ -8,12 +9,12 @@ class AnalyticsBigCard extends StatelessWidget {
     required this.title,
     required this.number,
     required this.average,
-    this.isOrange = true,
+    required this.index,
   });
   final String title;
   final int number;
   final int average;
-  final bool isOrange;
+  final int index;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,8 +22,25 @@ class AnalyticsBigCard extends StatelessWidget {
       height: screenHeight(context, 0.25),
       padding: const EdgeInsets.all(16),
       decoration: ShapeDecoration(
-        color: Colors.white,
+        // color: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        gradient: index == 0
+            ? const LinearGradient(
+                begin: Alignment(-0.41, -0.91),
+                end: Alignment(0.41, 0.91),
+                colors: ColorManager.gradientBoxColors,
+              )
+            : index == 1
+                ? const LinearGradient(
+                    begin: Alignment(-0.32, -0.95),
+                    end: Alignment(0.32, 0.95),
+                    colors: ColorManager.gradientBoxColors2,
+                  )
+                : const LinearGradient(
+                    begin: Alignment(-0.79, -0.61),
+                    end: Alignment(0.79, 0.61),
+                    colors: ColorManager.gradientBoxColors3,
+                  ),
         shadows: const [
           BoxShadow(
             color: Color(0x33726363),
@@ -37,7 +55,7 @@ class AnalyticsBigCard extends StatelessWidget {
         children: [
           Text(
             title,
-            style: AppStylesManager.customTextStyleBl12,
+            style: AppStylesManager.customTextStyleW6,
           ),
           const SizedBox(
             height: 28,
@@ -45,9 +63,7 @@ class AnalyticsBigCard extends StatelessWidget {
           Center(
             child: Text(
               '$number',
-              style: isOrange
-                  ? AppStylesManager.customTextStyleO6
-                  : AppStylesManager.customTextStyleL5,
+              style: AppStylesManager.customTextStyleW7,
             ),
           ),
           const SizedBox(
@@ -56,7 +72,7 @@ class AnalyticsBigCard extends StatelessWidget {
           Center(
             child: Text(
               'Market Average : $average',
-              style: AppStylesManager.customTextStyleG8,
+              style: AppStylesManager.customTextStyleW8,
             ),
           )
         ],

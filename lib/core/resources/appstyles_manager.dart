@@ -52,6 +52,42 @@ class AppStylesManager {
     fontFamily: 'Nunito Sans',
     fontWeight: FontWeightManager.regular400,
   );
+  static TextStyle customTextStyleW6 = TextStyle(
+    color: ColorManager.primaryW2,
+    fontSize: 1.sw > 600 ? 20 : 12,
+    fontFamily: 'Nunito Sans',
+    fontWeight: FontWeightManager.regular400,
+  );
+  static TextStyle customTextStyleW7 = TextStyle(
+    color: ColorManager.primaryW2,
+    fontSize: 1.sw > 600 ? 48 : 40,
+    fontWeight: FontWeightManager.bold700,
+    fontFamily: 'Nunito Sans',
+  );
+  static TextStyle customTextStyleW8 = TextStyle(
+    color: ColorManager.primaryW2,
+    fontSize: 1.sw > 600 ? 20 : 12,
+    fontFamily: 'Nunito Sans',
+    fontWeight: FontWeightManager.medium500,
+  );
+  static TextStyle customTextStyleW9 = TextStyle(
+    color: ColorManager.primaryW2,
+    fontSize: 1.sw > 600 ? 30 : 22,
+    fontFamily: 'Nunito Sans',
+    fontWeight: FontWeightManager.bold700,
+  );
+  static TextStyle customTextStyleW10 = TextStyle(
+    color: ColorManager.primaryW2,
+    fontSize: 1.sw > 600 ? 18 : 10,
+    fontFamily: 'Nunito Sans',
+    fontWeight: FontWeightManager.regular400,
+  );
+  static TextStyle customTextStyleW11 = TextStyle(
+    color: ColorManager.primaryW2,
+    fontSize: 1.sw > 600 ? 18 : 10,
+    fontFamily: 'Nunito Sans',
+    fontWeight: FontWeightManager.light300,
+  );
 
 //################# Black Styles #################
   static TextStyle customTextStyleBl = TextStyle(

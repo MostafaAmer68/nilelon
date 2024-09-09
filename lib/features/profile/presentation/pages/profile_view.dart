@@ -65,7 +65,7 @@ class ProfileView extends StatelessWidget {
                   height: 16.h,
                 ),
                 Container(
-                  padding: EdgeInsets.all(16.0.sp),
+                  padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
                   decoration: BoxDecoration(
                     color: ColorManager.primaryW,
                     borderRadius: BorderRadius.circular(15),
@@ -111,6 +111,7 @@ class ProfileView extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Container(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
                   decoration: BoxDecoration(
                     color: ColorManager.primaryW,
                     borderRadius: BorderRadius.circular(15),

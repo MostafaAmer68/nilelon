@@ -7,14 +7,12 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/market_custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/wide/market_wide_card.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
 import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.dart';
-import 'package:nilelon/features/store_flow/hot_picks/store_hot_picks_view.dart';
 import 'package:nilelon/features/store_flow/search/view/store_search_view.dart';
 
 import '../../../../core/widgets/cards/small/market_small_card.dart';
@@ -71,37 +69,37 @@ class _StoreMarketViewState extends State<StoreMarketView> {
               const SizedBox(
                 height: 12,
               ),
-              ViewAllRow(
-                text: lang.hotPicks,
-                onPressed: () {
-                  navigateTo(
-                      context: context, screen: const StoreHotPicksView());
-                },
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SizedBox(
-                  height: 1.sw > 600 ? 170.h : 140.h,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) => Row(
-                      children: [
-                        marketWideCard(context: context),
-                        SizedBox(
-                          width: 8.w,
-                        )
-                      ],
-                    ),
-                    itemCount: 5,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
+              // ViewAllRow(
+              //   text: lang.hotPicks,
+              //   onPressed: () {
+              //     navigateTo(
+              //         context: context, screen: const StoreHotPicksView());
+              //   },
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: SizedBox(
+              //     height: 1.sw > 600 ? 170.h : 140.h,
+              //     child: ListView.builder(
+              //       itemBuilder: (context, index) => Row(
+              //         children: [
+              //           marketWideCard(context: context),
+              //           SizedBox(
+              //             width: 8.w,
+              //           )
+              //         ],
+              //       ),
+              //       itemCount: 5,
+              //       scrollDirection: Axis.horizontal,
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
               ViewAllRow(
                 text: lang.newIn,
                 onPressed: () {

@@ -22,7 +22,6 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 
-
 class CartView extends StatelessWidget {
   const CartView({super.key});
 
@@ -63,7 +62,8 @@ class CartView extends StatelessWidget {
               if (state is CartLoading) {
                 return Expanded(
                     child:
-                        SingleChildScrollView(child: buildShimmerIndicator()));
+                        SingleChildScrollView(child: buildShimmerIndicator())
+                        );
               } else if (state is GetCartFailure) {
                 return Text(state.message);
               } else if (state is GetCartSuccess) {
@@ -71,7 +71,7 @@ class CartView extends StatelessWidget {
                     ? Column(
                         children: [
                           SizedBox(
-                            height: screenHeight(context, 0.25),
+                            height: screenHeight(context, 0.35),
                           ),
                           const Text('There is no products in the cart.'),
                         ],
@@ -202,6 +202,7 @@ class CartView extends StatelessWidget {
             }
             if (state is GetCartSuccess) {
               return CartFooter(
+                visible: state.items.isNotEmpty,
                 cartModel: state.items,
               );
             }

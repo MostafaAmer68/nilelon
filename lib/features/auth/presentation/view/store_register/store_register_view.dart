@@ -13,7 +13,6 @@ import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/auth/presentation/view/otp/otp_view.dart';
-import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.dart';
 import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
@@ -101,7 +100,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
         }
       },
       child: ScaffoldImage(
-       appBar: AppBar(
+        appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
         ),
@@ -242,43 +241,43 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               const SizedBox(
                 height: 30,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                        width: screenWidth(context, 0.24),
-                        child: const Divider()),
-                    Text(
-                      'Or sign up with',
-                      style: AppStylesManager.customTextStyleB,
-                    ),
-                    SizedBox(
-                        width: screenWidth(context, 0.24),
-                        child: const Divider()),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    signWithContainer('assets/images/facebook.svg', () {}),
-                    const SizedBox(
-                      width: 24,
-                    ),
-                    signWithContainer('assets/images/google.svg', () {}),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //     children: [
+              //       SizedBox(
+              //           width: screenWidth(context, 0.24),
+              //           child: const Divider()),
+              //       Text(
+              //         'Or sign up with',
+              //         style: AppStylesManager.customTextStyleB,
+              //       ),
+              //       SizedBox(
+              //           width: screenWidth(context, 0.24),
+              //           child: const Divider()),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 30,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       signWithContainer('assets/images/facebook.svg', () {}),
+              //       const SizedBox(
+              //         width: 24,
+              //       ),
+              //       signWithContainer('assets/images/google.svg', () {}),
+              //     ],
+              //   ),
+              // ),
+              // const SizedBox(
+              //   height: 32,
+              // ),
             ],
           ),
         ),

@@ -185,43 +185,45 @@ class _LoginViewState extends State<LoginView> {
               const SizedBox(
                 height: 30,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                        width: screenWidth(context, 0.24),
-                        child: const Divider()),
-                    Text(
-                      lang.orSignInWith,
-                      style: AppStylesManager.customTextStyleB,
-                    ),
-                    SizedBox(
-                        width: screenWidth(context, 0.24),
-                        child: const Divider()),
-                  ],
+              if (HiveStorage.get(HiveKeys.isStore) == false) ...[
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.sp),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                          width: screenWidth(context, 0.24),
+                          child: const Divider()),
+                      Text(
+                        lang.orSignInWith,
+                        style: AppStylesManager.customTextStyleB,
+                      ),
+                      SizedBox(
+                          width: screenWidth(context, 0.24),
+                          child: const Divider()),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    signWithContainer('assets/images/facebook.svg', () {}),
-                    const SizedBox(
-                      width: 24,
-                    ),
-                    signWithContainer('assets/images/google.svg', () {}),
-                  ],
+                const SizedBox(
+                  height: 30,
                 ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // signWithContainer('assets/images/facebook.svg', () {}),
+                      // const SizedBox(
+                      //   width: 24,
+                      // ),
+                      signWithContainer('assets/images/google.svg', () {}),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+              ],
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

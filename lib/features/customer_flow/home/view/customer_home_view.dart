@@ -14,13 +14,11 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
-import 'package:nilelon/features/product/presentation/widgets/hot_picks_widget.dart';
 import 'package:nilelon/features/product/presentation/pages/following_view_all.dart';
 import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/home_custom_app_bar.dart';
 import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/core/widgets/cards/wide/wide_card.dart';
 import 'package:nilelon/features/customer_flow/search/view/search_view.dart';
 
 import '../../../auth/domain/model/user_model.dart';
@@ -132,41 +130,41 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
               SizedBox(
                 height: 16.h,
               ),
-              ViewAllRow(
-                text: lang.hotPicks,
-                onPressed: () {
-                  navigateTo(
-                      context: context, screen: const CustomerHotPicksView());
-                },
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: SizedBox(
-                  height: 170.h,
-                  child: ListView.builder(
-                    itemBuilder: (context, index) => Row(
-                      children: [
-                        wideCard(
-                            onTap: () {
-                              // addToClosetDialog(context);
-                            },
-                            context: context),
-                        SizedBox(
-                          width: 8.w,
-                        )
-                      ],
-                    ),
-                    itemCount: 5,
-                    scrollDirection: Axis.horizontal,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
+              // ViewAllRow(
+              //   text: lang.hotPicks,
+              //   onPressed: () {
+              //     navigateTo(
+              //         context: context, screen: const CustomerHotPicksView());
+              //   },
+              // ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 16),
+              //   child: SizedBox(
+              //     height: 170.h,
+              //     child: ListView.builder(
+              //       itemBuilder: (context, index) => Row(
+              //         children: [
+              //           wideCard(
+              //               onTap: () {
+              //                 // addToClosetDialog(context);
+              //               },
+              //               context: context),
+              //           SizedBox(
+              //             width: 8.w,
+              //           )
+              //         ],
+              //       ),
+              //       itemCount: 5,
+              //       scrollDirection: Axis.horizontal,
+              //     ),
+              //   ),
+              // ),
+              // SizedBox(
+              //   height: 8.h,
+              // ),
               ViewAllRow(
                 text: lang.following,
                 onPressed: () {
@@ -255,7 +253,10 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
                             ),
                           );
                   }, failure: (message) {
-                    return Text(message);
+                    return const SizedBox(
+                        height: 100,
+                        child: Center(
+                            child: Text('There is no following products')));
                   });
                 },
               ),
