@@ -9,6 +9,7 @@ import 'package:nilelon/features/product/domain/models/delete_variant_model.dart
 import 'package:nilelon/features/product/domain/models/products_response_model.dart';
 import 'package:nilelon/features/product/data/datasources/products_remote_data_source.dart';
 import 'package:nilelon/core/service/failure_service.dart';
+import 'package:nilelon/features/product/domain/models/update_product.dart';
 
 import '../../domain/models/product_model.dart';
 import '../../domain/repositories/products_repos.dart';
@@ -181,6 +182,20 @@ class ProductsReposImpl extends ProductsRepos {
       DeleteVariantImage model) async {
     try {
       await productsRemoteDataSource.deleteVariantImage(model);
+      return const Right(null);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure(e.toString()));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, void>> updateProduct(
+      UpdateProduct model) async {
+    try {
+      await productsRemoteDataSource.updateProduct(model);
       return const Right(null);
     } catch (e) {
       if (e is DioException) {

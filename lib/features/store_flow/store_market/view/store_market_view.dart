@@ -15,6 +15,7 @@ import 'package:nilelon/features/product/presentation/cubit/products_cubit/produ
 import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.dart';
 import 'package:nilelon/features/store_flow/search/view/store_search_view.dart';
 
+import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/widgets/cards/small/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../product/presentation/cubit/products_cubit/products_state.dart';
@@ -125,6 +126,20 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                         return buildShimmerIndicatorGrid();
                       },
                       success: (result) {
+                        if (result.isEmpty) {
+                          return SizedBox(
+                            height: 120.h,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'There is no New In products yet.',
+                                  style: AppStylesManager.customTextStyleG2,
+                                ),
+                              ],
+                            ),
+                          );
+                        }
                         return GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           gridDelegate:

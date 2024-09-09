@@ -9,6 +9,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/order/presentation/pages/ordered_store_details_view.dart';
 
+import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class ReceivedStoreView extends StatefulWidget {
@@ -34,7 +35,7 @@ class _ReceivedStoreViewState extends State<ReceivedStoreView> {
     return ScaffoldImage(
       body: BlocListener<OrderCubit, OrderState>(
         listener: (context, state) {
-        state.mapOrNull(failure: (err) {
+          state.mapOrNull(failure: (err) {
             BotToast.showText(text: err.errMessage);
           }, loading: (_) {
             BotToast.showLoading();
@@ -44,36 +45,51 @@ class _ReceivedStoreViewState extends State<ReceivedStoreView> {
         },
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 12.h),
-          child: ListView.builder(
-              itemCount: cubit.storeOrders
-                  .where((e) => e.status == 'Received')
-                  .toList()
-                  .length,
-              itemBuilder: (context, index) {
-                final order = cubit.storeOrders
-                    .where((e) => e.status == 'Received')
-                    .toList()[index];
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: OrderedCard(
-                    image: Image.asset('assets/images/arrived2.png'),
-                    title: 'Order has arrived to Customer Address.',
-                    time: order.date,
-                    onTap: () {
-                      navigateTo(
-                          context: context,
-                          screen: const OrderedStoreDetailsView(
-                            items: [],
-                            index: 0,
-                          ));
-                    },
-                    shippedOnTap: () async {
-                      await shippedAlert(context,order);
-                    },
+          child: cubit.storeOrders.isEmpty
+              ? SizedBox(
+                  height: 120.h,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'There is no Order yet.',
+                          style: AppStylesManager.customTextStyleG2,
+                        ),
+                      ],
+                    ),
                   ),
-                );
-              }),
+                )
+              : ListView.builder(
+                  itemCount: cubit.storeOrders
+                      .where((e) => e.status == 'Received')
+                      .toList()
+                      .length,
+                  itemBuilder: (context, index) {
+                    final order = cubit.storeOrders
+                        .where((e) => e.status == 'Received')
+                        .toList()[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: OrderedCard(
+                        image: Image.asset('assets/images/arrived2.png'),
+                        title: 'Order has arrived to Customer Address.',
+                        time: order.date,
+                        onTap: () {
+                          navigateTo(
+                              context: context,
+                              screen: const OrderedStoreDetailsView(
+                                items: [],
+                                index: 0,
+                              ));
+                        },
+                        shippedOnTap: () async {
+                          await shippedAlert(context, order);
+                        },
+                      ),
+                    );
+                  }),
         ),
       ),
     );

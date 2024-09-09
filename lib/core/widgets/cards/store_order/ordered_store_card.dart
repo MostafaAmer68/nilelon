@@ -4,7 +4,6 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
-import 'package:svg_flutter/svg.dart';
 
 class OrderedCard extends StatelessWidget {
   const OrderedCard({

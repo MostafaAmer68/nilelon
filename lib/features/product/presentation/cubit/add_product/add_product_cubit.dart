@@ -16,6 +16,7 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import '../../../../../core/sizes_consts.dart';
 import '../../../../../core/utils/app_logs.dart';
 import '../../../domain/models/add_product/add_product_model.dart';
+import '../../../domain/models/update_product.dart';
 
 part 'add_product_state.dart';
 part 'add_product_cubit.freezed.dart';
@@ -94,28 +95,63 @@ class AddProductCubit extends Cubit<AddproductState> {
   Future<void> createProduct() async {
     emit(const AddproductState.loading());
     final sizeGuid = await convertImageToBase64(sizeGuideImage);
-    try {
-      final result = await _product.createProduct(
-        AddProductModel(
-          name: productNameController.text,
-          description: productDescriptionController.text,
-          type: productType!,
-          storeId: JwtDecoder.decode(
-              HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
-          categoryID: categoryId,
-          sizeguide: sizeGuid,
-          variants: List<Variant>.from(
-              HiveStorage.get<List>(HiveKeys.tempVarients).map((e) =>
-                  Variant(color: e.color, images: e.images, sizes: e.sizes))),
+    final result = await _product.createProduct(
+      AddProductModel(
+        name: productNameController.text,
+        description: productDescriptionController.text,
+        type: productType!,
+        storeId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+        categoryID: categoryId,
+        sizeguide: sizeGuid,
+        variants: List<Variant>.from(
+          HiveStorage.get<List>(HiveKeys.tempVarients).map(
+            (e) => Variant(color: e.color, images: e.images, sizes: e.sizes),
+          ),
         ),
-      );
-      result.fold((err) {
-        emit(AddproductState.failure(err.errorMsg));
-      }, (res) {
-        HiveStorage.set(HiveKeys.tempVarients, null);
-        emit(const AddproductState.success());
-      });
-    } catch (e) {
+      ),
+    );
+    result.fold((err) {
+      emit(AddproductState.failure(err.errorMsg));
+    }, (res) {
+      HiveStorage.set(HiveKeys.tempVarients, null);
+      emit(const AddproductState.success());
+    });
+    try {} catch (e) {
+      emit(AddproductState.failure(e.toString()));
+    }
+  }
+
+  Future<void> updateProduct(ProductModel product) async {
+    emit(const AddproductState.loading());
+    final sizeGuid = await convertImageToBase64(sizeGuideImage);
+    final result = await _product.updateProduct(
+      UpdateProduct(
+        name: product.name,
+        description: product.description,
+        type: productType!,
+        categoryID: categoryId,
+        sizeguide: sizeGuid,
+        productId: product.id,
+      ).copyWith(
+        name: product.name == productNameController.text
+            ? null
+            : productNameController.text,
+        description: product.description == productDescriptionController.text
+            ? null
+            : productDescriptionController.text,
+        type: productType!,
+        categoryID: product.categoryID,
+        sizeguide: sizeGuid,
+        productId: product.id,
+      ),
+    );
+    result.fold((err) {
+      emit(AddproductState.failure(err.errorMsg));
+    }, (res) {
+      HiveStorage.set(HiveKeys.tempVarients, null);
+      emit(const AddproductState.success());
+    });
+    try {} catch (e) {
       emit(AddproductState.failure(e.toString()));
     }
   }
@@ -134,7 +170,7 @@ class AddProductCubit extends Cubit<AddproductState> {
 
   Future<void> handleSubmit() async {
     // HiveStorage.set(HiveKeys.tempVarients, null);
-    if (HiveStorage.get<List<Variant>?>(HiveKeys.tempVarients) == null) {
+    if (HiveStorage.get<List?>(HiveKeys.tempVarients) == null) {
       _saveNewVariant();
     } else {
       _updateExistingVariant();
@@ -142,6 +178,7 @@ class AddProductCubit extends Cubit<AddproductState> {
     isVarientAdded[selectedIndex] = true;
     isVarientActive = false;
     isSubmit = false;
+
     _resetSizeControllersToDefault();
     initializeSizeControllers();
 
@@ -190,6 +227,7 @@ class AddProductCubit extends Cubit<AddproductState> {
   }
 
   void _resetSizeControllersToDefault() {
+    images.clear();
     sizes = SizeTypes.values
         .map(
           (e) => {
@@ -364,40 +402,39 @@ class AddProductCubit extends Cubit<AddproductState> {
 
     // log(addedVarients.map((e) => e.toMap()).toString());
     // for (var variant in addedVarients) {
-    if (checkIfVarientAlreadyExists(
-      addedVarients.firstWhere(
-        (e) => e.color == selectedColor.substring(2),
-        orElse: () => Variant(
-          color: selectedColor.substring(2),
-          images: [],
-          sizes: [],
-        ),
+    final varient = addedVarients.firstWhere(
+      (e) => e.color == selectedColor.substring(2),
+      orElse: () => Variant(
+        color: selectedColor.substring(2),
+        images: [],
+        sizes: [],
       ),
-    )) {
-      log('test check');
-      initializeVarientWidget(
-        addedVarients.firstWhere(
-          (e) => e.color == selectedColor.substring(2),
-          orElse: () => Variant(
-            color: selectedColor.substring(2),
-            images: [],
-            sizes: [],
-          ),
-        ),
-      );
+    );
+    if (checkIfVarientAlreadyAdded(varient)) {
+      initializeVarientWidget(varient);
     } else {
-      log('test check 3');
       resetVarientWidget();
     }
     // }
   }
 
-  bool checkIfVarientAlreadyExists(Variant variant) =>
+  bool checkIfVarientAlreadyAdded(Variant variant) =>
       variant.color == selectedColor.substring(2);
 
-  void initializeVarientWidget(Variant variant) {
+  void initializeVarientWidget(Variant variant) async {
+    images.clear();
+
+    final Completer<File> result = Completer();
+    for (var item in variant.images) {
+      await convertBase64ToImage(item).then((value) async {
+        result.complete(value);
+        final image = await result.future;
+        images.add(image);
+        log(images.toString());
+      });
+    }
+    log(images.toString());
     if (variant.sizes.isNotEmpty) {
-      // log(item.quantity.toString());
       for (int i = 0; i < sizes.length; i++) {
         sizes[i]['quantityController'] =
             TextEditingController(text: variant.sizes[i].quantity.toString());
@@ -409,6 +446,7 @@ class AddProductCubit extends Cubit<AddproductState> {
   }
 
   void resetVarientWidget() {
+    images.clear();
     for (var item in sizes) {
       item['quantityController'] = TextEditingController(text: '0');
       item['priceController'] =

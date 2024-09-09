@@ -17,7 +17,6 @@ import 'package:nilelon/features/product/presentation/widgets/product_details_wi
 import 'package:nilelon/features/product/presentation/widgets/size_guid_image.dart';
 
 import '../../../../core/data/hive_stroage.dart';
-import '../../../../core/sizes_consts.dart';
 import '../../../../core/widgets/alert/delete_alert.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/add_product/add_product_cubit.dart';
@@ -35,7 +34,7 @@ class _AddProductViewState extends State<AddProductView> {
 
   @override
   void dispose() {
-    // HiveStorage.set(HiveKeys.tempVarients, null);
+    HiveStorage.set(HiveKeys.tempVarients, null);
     super.dispose();
   }
 
@@ -58,6 +57,7 @@ class _AddProductViewState extends State<AddProductView> {
         }, success: (v) {
           BotToast.closeAllLoading();
           BotToast.showText(text: 'Product Added successfully');
+          navigatePop(context: context);
         }, failure: (r) {
           BotToast.closeAllLoading();
           BotToast.showText(text: r.message);
@@ -91,7 +91,6 @@ class _AddProductViewState extends State<AddProductView> {
                 onTapEditButton: () {
                   cubit.editSize();
                   setState(() {});
-                  
                 },
                 onTapDeleteButton: () {
                   deleteAlert(context,
@@ -243,7 +242,7 @@ class _AddProductViewState extends State<AddProductView> {
       ontap: () {
         // AppLogs.infoLog(HiveStorage.get(HiveKeys.varients).toString());
         cubit.createProduct();
-        HiveStorage.set(HiveKeys.tempVarients, null);
+        // HiveStorage.set(HiveKeys.tempVarients, null);
         // navigatePop(context: context);
       },
     );

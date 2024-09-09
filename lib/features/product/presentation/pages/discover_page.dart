@@ -69,7 +69,7 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     newInPage = newInPage + 1;
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id != null) {
+    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
       ProductsCubit.get(context)
           .getNewInProductsPagination(newInPage, newInPageSize);
     } else {
@@ -87,7 +87,7 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     handPage = handPage + 1;
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id != null) {
+    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
       ProductsCubit.get(context)
           .getRandomProductsPagination(newInPage, newInPageSize);
     } else {
@@ -142,50 +142,50 @@ class _DiscoverViewState extends State<DiscoverView> {
                     }, loading: () {
                       return buildShimmerIndicatorRow();
                     }, success: (productsList) {
-                      return productsList.isEmpty
-                          ? SizedBox(
-                              height: 120.h,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'There is no New In products yet.',
-                                    style: AppStylesManager.customTextStyleG2,
-                                  ),
-                                ],
+                      if (productsList.isEmpty) {
+                        return SizedBox(
+                          height: 120.h,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'There is no New In products yet.',
+                                style: AppStylesManager.customTextStyleG2,
                               ),
-                            )
-                          : Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: SizedBox(
-                                height: 1.sw > 600 ? 310 : 260,
-                                child: ListView.builder(
-                                  itemBuilder: (context, index) {
-                                    if (index == productsList.length &&
-                                        newInIsLoadMore) {
-                                      return buildShimmerIndicatorSmall();
-                                    } else {
-                                      return Row(
-                                        children: [
-                                          productSquarItem(
-                                              context: context,
-                                              model: productsList[index]),
-                                          const SizedBox(
-                                            width: 16,
-                                          )
-                                        ],
-                                      );
-                                    }
-                                  },
-                                  itemCount: newInIsLoadMore
-                                      ? productsList.length + 1
-                                      : productsList.length,
-                                  scrollDirection: Axis.horizontal,
-                                  padding: const EdgeInsets.only(right: 8),
-                                ),
-                              ),
-                            );
+                            ],
+                          ),
+                        );
+                      }
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: SizedBox(
+                          height: 1.sw > 600 ? 310 : 260,
+                          child: ListView.builder(
+                            itemBuilder: (context, index) {
+                              if (index == productsList.length &&
+                                  newInIsLoadMore) {
+                                return buildShimmerIndicatorSmall();
+                              } else {
+                                return Row(
+                                  children: [
+                                    productSquarItem(
+                                        context: context,
+                                        model: productsList[index]),
+                                    const SizedBox(
+                                      width: 16,
+                                    )
+                                  ],
+                                );
+                              }
+                            },
+                            itemCount: newInIsLoadMore
+                                ? productsList.length + 1
+                                : productsList.length,
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.only(right: 8),
+                          ),
+                        ),
+                      );
                     }, failure: (message) {
                       return Text(message);
                     });
