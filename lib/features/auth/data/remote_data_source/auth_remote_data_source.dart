@@ -5,7 +5,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/customer_register_model.dart';
-import 'package:nilelon/features/auth/domain/model/external_google_model.dart';
 import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -15,6 +14,8 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/domain/models/products_response_model.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
+
+import '../../domain/models/update_product.dart';
 
 class ProductsRemoteDataSourceImpl {
   final ApiService apiService;
@@ -55,7 +56,6 @@ class ProductsRemoteDataSourceImpl {
       'page': page,
       'pageSize': pageSize,
     });
-    print(data.data);
     if (data.statusCode == 200) {
       return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
     } else if (data.statusCode == 400) {
@@ -171,10 +171,20 @@ class ProductsRemoteDataSourceImpl {
       endPoint: EndPoint.createProductUrl,
       body: product.toMap(),
     );
-    log(jsonEncode(product.toMap()));
-    log(data.data.toString());
     if (data.statusCode == 201) {
-      log('fucking success');
+      return;
+    }
+
+    throw Exception(
+        'Failed to Get Random: Unexpected status code ${data.data}');
+  }
+
+  Future<void> updateProduct(UpdateProduct product) async {
+    final data = await apiService.post(
+      endPoint: EndPoint.updateProductUrl,
+      body: product.toJson(),
+    );
+    if (data.statusCode == 201) {
       return;
     }
 

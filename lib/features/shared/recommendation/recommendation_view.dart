@@ -4,9 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
 
 import '../../../core/widgets/scaffold_image.dart';

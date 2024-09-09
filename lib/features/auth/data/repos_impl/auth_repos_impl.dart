@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:nilelon/features/auth/domain/model/customer_register_model.dart';
-import 'package:nilelon/features/auth/domain/model/external_google_model.dart';
 import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
 import 'package:nilelon/features/auth/data/remote_data_source/auth_remote_data_source.dart';

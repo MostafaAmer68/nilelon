@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class ProductModel {
   final String id;
   final String name;
@@ -63,6 +64,36 @@ class ProductModel {
       'productVariants': productVariants.map((i) => i.toJson()).toList(),
       'productImages': productImages.map((i) => i.toJson()).toList(),
     };
+  }
+
+  ProductModel copyWith({
+    String? id,
+    String? name,
+    String? description,
+    String? categoryID,
+    String? sizeguide,
+    bool? isInCloset,
+    num? rating,
+    num? inStock,
+    String? storeName,
+    String? storeId,
+    List<ProductVariant>? productVariants,
+    List<ProductImage>? productImages,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      categoryID: categoryID ?? this.categoryID,
+      sizeguide: sizeguide ?? this.sizeguide,
+      isInCloset: isInCloset ?? this.isInCloset,
+      rating: rating ?? this.rating,
+      inStock: inStock ?? this.inStock,
+      storeName: storeName ?? this.storeName,
+      storeId: storeId ?? this.storeId,
+      productVariants: productVariants ?? this.productVariants,
+      productImages: productImages ?? this.productImages,
+    );
   }
 }
 

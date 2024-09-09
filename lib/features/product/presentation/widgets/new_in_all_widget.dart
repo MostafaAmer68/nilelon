@@ -17,6 +17,7 @@ import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
+import '../../../../core/widgets/cards/small/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class NewInViewAll extends StatefulWidget {
@@ -76,79 +77,64 @@ class _NewInViewAllState extends State<NewInViewAll> {
               height: 8,
             ),
             filtersColumn(context),
-            widget.isStore
-                ? GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.only(top: 16, bottom: 16),
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1.sw > 600 ? 3 : 2,
-                        crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                        mainAxisExtent: 1.sw > 600 ? 320 : 220,
-                        mainAxisSpacing: 1.sw > 600 ? 16 : 12),
-                    shrinkWrap: true,
-                    itemCount: 7,
-                    itemBuilder: (context, sizeIndex) {
-                      return Container(
-                          // child: marketSmallCard(context: context),
-                          );
-                    },
-                  )
-                : BlocBuilder<ProductsCubit, ProductsState>(
-                    builder: (context, state) {
-                      return state.getNewInProducts.when(initial: () {
-                        return buildShimmerIndicatorGrid();
-                      }, loading: () {
-                        return buildShimmerIndicatorGrid();
-                      }, success: (productsList) {
-                        return productsList.isEmpty
-                            ? SizedBox(
-                                height: 450.h,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'There is no new in products yet.',
-                                      style: AppStylesManager.customTextStyleG2,
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                child: GridView.builder(
-                                  controller: scrollController,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 1.sw > 600 ? 3 : 2,
-                                    crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                                    mainAxisExtent: 1.sw > 600 ? 300 : 220,
-                                    mainAxisSpacing: 1.sw > 600 ? 16 : 12,
-                                  ),
-                                  shrinkWrap: true,
-                                  itemCount: isLoadMore
-                                      ? productsList.length + 1
-                                      : productsList.length,
-                                  itemBuilder: (context, sizeIndex) {
-                                    if (sizeIndex == productsList.length &&
-                                        isLoadMore) {
-                                      return buildShimmerIndicatorSmall();
-                                    } else {
-                                      return Container(
-                                        child: productSquarItem(
-                                          context: context,
-                                          model: productsList[sizeIndex],
-                                        ),
+            BlocBuilder<ProductsCubit, ProductsState>(
+              builder: (context, state) {
+                return state.getNewInProducts.when(initial: () {
+                  return buildShimmerIndicatorGrid();
+                }, loading: () {
+                  return buildShimmerIndicatorGrid();
+                }, success: (productsList) {
+                  return productsList.isEmpty
+                      ? SizedBox(
+                          height: 450.h,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'There is no new in products yet.',
+                                style: AppStylesManager.customTextStyleG2,
+                              ),
+                            ],
+                          ),
+                        )
+                      : Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w),
+                          child: GridView.builder(
+                            controller: scrollController,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1.sw > 600 ? 3 : 2,
+                              crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
+                              mainAxisExtent: 1.sw > 600 ? 300 : 220,
+                              mainAxisSpacing: 1.sw > 600 ? 16 : 12,
+                            ),
+                            shrinkWrap: true,
+                            itemCount: isLoadMore
+                                ? productsList.length + 1
+                                : productsList.length,
+                            itemBuilder: (context, sizeIndex) {
+                              if (sizeIndex == productsList.length &&
+                                  isLoadMore) {
+                                return buildShimmerIndicatorSmall();
+                              } else {
+                                return widget.isStore
+                                    ? marketSmallCard(
+                                        context: context,
+                                        product: productsList[sizeIndex])
+                                    : productSquarItem(
+                                        context: context,
+                                        model: productsList[sizeIndex],
                                       );
-                                    }
-                                  },
-                                ),
-                              );
-                      }, failure: (message) {
-                        return Text(message);
-                      });
-                    },
-                  ),
+                              }
+                            },
+                          ),
+                        );
+                }, failure: (message) {
+                  return Text(message);
+                });
+              },
+            ),
           ],
         ),
       ),

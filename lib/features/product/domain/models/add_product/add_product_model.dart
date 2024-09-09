@@ -48,6 +48,26 @@ class AddProductModel {
       'variants': variants.map((x) => x.toMap()).toList(),
     };
   }
+
+  AddProductModel copyWith({
+    String? name,
+    String? description,
+    String? type,
+    String? storeId,
+    String? categoryID,
+    String? sizeguide,
+    List<Variant>? variants,
+  }) {
+    return AddProductModel(
+      name: name ?? this.name,
+      description: description ?? this.description,
+      type: type ?? this.type,
+      storeId: storeId ?? this.storeId,
+      categoryID: categoryID ?? this.categoryID,
+      sizeguide: sizeguide ?? this.sizeguide,
+      variants: variants ?? this.variants,
+    );
+  }
 }
 
 @HiveType(typeId: 1)

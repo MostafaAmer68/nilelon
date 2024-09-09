@@ -4,10 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/widgets/alert/shipped_alert.dart';
 import 'package:nilelon/core/widgets/cards/store_order/ordered_store_card.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:svg_flutter/svg.dart';
 
+import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../pages/ordered_store_details_view.dart';
@@ -43,36 +43,49 @@ class _ShippedStoreViewState extends State<ShippedStoreView> {
         },
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 12.h),
-          child: ListView.builder(
-              itemCount: cubit.storeOrders
-                  .where((e) => e.status == 'Shipped')
-                  .toList()
-                  .length,
-              itemBuilder: (context, index) {
-                final order = cubit.storeOrders
-                    .where((e) => e.status == 'Shipped')
-                    .toList()[index];
-                return Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: OrderedCard(
-                    image: SvgPicture.asset('assets/images/inProgress.svg'),
-                    title: 'Order is Shipped.',
-                    time: order.date,
-                    onTap: () {
-                      navigateTo(
-                          context: context,
-                          screen: const OrderedStoreDetailsView(
-                            items: [],
-                            index: 0,
-                          ));
-                    },
-                    shippedOnTap: () async {
-                      await shippedAlert(context, order);
-                    },
+          child: cubit.storeOrders.isEmpty
+              ? SizedBox(
+                  height: 120.h,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'There is no Order yet.',
+                        style: AppStylesManager.customTextStyleG2,
+                      ),
+                    ],
                   ),
-                );
-              }),
+                )
+              : ListView.builder(
+                  itemCount: cubit.storeOrders
+                      .where((e) => e.status == 'Shipped')
+                      .toList()
+                      .length,
+                  itemBuilder: (context, index) {
+                    final order = cubit.storeOrders
+                        .where((e) => e.status == 'Shipped')
+                        .toList()[index];
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 8),
+                      child: OrderedCard(
+                        image: SvgPicture.asset('assets/images/inProgress.svg'),
+                        title: 'Order is Shipped.',
+                        time: order.date,
+                        onTap: () {
+                          navigateTo(
+                              context: context,
+                              screen: const OrderedStoreDetailsView(
+                                items: [],
+                                index: 0,
+                              ));
+                        },
+                        shippedOnTap: () async {
+                          await shippedAlert(context, order);
+                        },
+                      ),
+                    );
+                  }),
         ),
       ),
     );

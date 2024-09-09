@@ -9,6 +9,7 @@ import 'package:nilelon/core/service/failure_service.dart';
 
 import '../models/add_product/add_product_model.dart';
 import '../models/product_model.dart';
+import '../models/update_product.dart';
 
 abstract class ProductsRepos {
   Future<Either<FailureService, List<ProductModel>>> getFollowedProducts(
@@ -24,6 +25,7 @@ abstract class ProductsRepos {
   Future<Either<FailureService, ProductsResponseModel>> getStoreProfileItems(
       int page, int productSize);
   Future<Either<FailureService, void>> createProduct(AddProductModel model);
+  Future<Either<FailureService, void>> updateProduct(UpdateProduct model);
   Future<Either<FailureService, void>> createReview(CreateReviewModel model);
   Future<Either<FailureService, void>> deleteVariant(DeleteVariant model);
   Future<Either<FailureService, void>> deleteVariantImage(
