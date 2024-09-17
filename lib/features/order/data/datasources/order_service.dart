@@ -36,15 +36,20 @@ class OrderService {
       query: {
         'storeId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         'status': orderStatus,
-        'pageNumber': 1,
+        'page': 1,
         'pageSize': 100,
       },
     );
-
+    print(response);
     if (response.statusCode == HttpStatus.ok) {
-      return List<OrderModel>.from(
-          response.data['result'].map((e) => OrderModel.fromMap(e)));
+      if (response.data['result'] == []) {
+        return [];
+      } else {
+        return List<OrderModel>.from(
+            response.data['result'].map((e) => OrderModel.fromMap(e)));
+      }
     }
+    // return [];
     throw response.data['result'];
   }
 

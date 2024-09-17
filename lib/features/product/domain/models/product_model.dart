@@ -3,6 +3,8 @@ class ProductModel {
   final String id;
   final String name;
   final String description;
+  final String type;
+
   final String categoryID;
   final String sizeguide;
   final bool isInCloset;
@@ -17,6 +19,7 @@ class ProductModel {
     required this.id,
     required this.name,
     required this.description,
+    required this.type,
     required this.categoryID,
     required this.sizeguide,
     required this.isInCloset,
@@ -33,8 +36,9 @@ class ProductModel {
       id: json['id'],
       name: json['name'],
       description: json['description'],
+      type: json['type'],
       categoryID: json['categoryId'],
-      sizeguide: json['sizeguide'],
+      sizeguide: json['sizeGuide'] ?? '',
       isInCloset: json['isInCloset'],
       rating: json['rating'],
       inStock: json['inStock'],
@@ -70,6 +74,7 @@ class ProductModel {
     String? id,
     String? name,
     String? description,
+    String? type,
     String? categoryID,
     String? sizeguide,
     bool? isInCloset,
@@ -84,6 +89,7 @@ class ProductModel {
       id: id ?? this.id,
       name: name ?? this.name,
       description: description ?? this.description,
+      type: type ?? this.type,
       categoryID: categoryID ?? this.categoryID,
       sizeguide: sizeguide ?? this.sizeguide,
       isInCloset: isInCloset ?? this.isInCloset,

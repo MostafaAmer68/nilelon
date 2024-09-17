@@ -246,7 +246,8 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   //todo Get Offers Products Pagination Guest
-  Future<void> getOffersProductsPaginationGuest(int page, int productSize) async {
+  Future<void> getOffersProductsPaginationGuest(
+      int page, int productSize) async {
     emit(state.copyWith(
         getOffersProducts: const GetOffersProductsState.loading()));
     var result = await productsRepos.getOffersProductsGuest(page, productSize);

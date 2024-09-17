@@ -44,8 +44,7 @@ class _ShippedStoreViewState extends State<ShippedStoreView> {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 12.h),
           child: cubit.storeOrders.isEmpty
-              ? SizedBox(
-                  height: 120.h,
+              ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

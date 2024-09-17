@@ -47,10 +47,10 @@ class _OrderedStoreViewState extends State<OrderedStoreView> {
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 12.h),
           child: cubit.storeOrders.isEmpty
-              ? SizedBox(
-                  height: 120.h,
+              ? Center(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'There is no Order yet.',
