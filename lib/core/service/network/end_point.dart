@@ -83,6 +83,8 @@ class EndPoint {
   static const String getNewProductsGuestUrl = '/Product/GetNewNProductsGuest';
   static const String getRandomProductsGuestUrl =
       '/Product/GetRandomProductsGuest';
+  static const String getCustomersOffersUrl = '/Product/GetOffers';
+  static const String getStoreOffersUrl = '/Product/GetOffersForStore';
 
   //todo Static Product Queries Urls
   static const String page = '&page=';
@@ -127,6 +129,10 @@ class EndPoint {
       '/Product/ChangeProductVariantPriceQuantity';
   static const String deleteProductVariantUrl = '/Product/DeleteProductVariant';
   static const String deleteProductImageUrl = '/Product/DeleteProductImage';
+
+  //todo Recommendation Urls
+  static const String setRecommendationUrl =
+      '/Customer/UpdateProductsChoice?customerId=';
 
   //?*********************************************************************************
 }

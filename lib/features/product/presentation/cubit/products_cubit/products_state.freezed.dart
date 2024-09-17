@@ -24,6 +24,8 @@ mixin _$ProductsState {
       throw _privateConstructorUsedError;
   GetStoreProductsState get getStoreProducts =>
       throw _privateConstructorUsedError;
+  GetOffersProductsState get getOffersProducts =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ProductsStateCopyWith<ProductsState> get copyWith =>
@@ -40,12 +42,14 @@ abstract class $ProductsStateCopyWith<$Res> {
       {GetFollowedProductsState getFollowedProducts,
       GetNewInProductsState getNewInProducts,
       GetRandomProductsState getRandomProducts,
-      GetStoreProductsState getStoreProducts});
+      GetStoreProductsState getStoreProducts,
+      GetOffersProductsState getOffersProducts});
 
   $GetFollowedProductsStateCopyWith<$Res> get getFollowedProducts;
   $GetNewInProductsStateCopyWith<$Res> get getNewInProducts;
   $GetRandomProductsStateCopyWith<$Res> get getRandomProducts;
   $GetStoreProductsStateCopyWith<$Res> get getStoreProducts;
+  $GetOffersProductsStateCopyWith<$Res> get getOffersProducts;
 }
 
 /// @nodoc
@@ -65,6 +69,7 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
     Object? getNewInProducts = null,
     Object? getRandomProducts = null,
     Object? getStoreProducts = null,
+    Object? getOffersProducts = null,
   }) {
     return _then(_value.copyWith(
       getFollowedProducts: null == getFollowedProducts
@@ -83,6 +88,10 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
           ? _value.getStoreProducts
           : getStoreProducts // ignore: cast_nullable_to_non_nullable
               as GetStoreProductsState,
+      getOffersProducts: null == getOffersProducts
+          ? _value.getOffersProducts
+          : getOffersProducts // ignore: cast_nullable_to_non_nullable
+              as GetOffersProductsState,
     ) as $Val);
   }
 
@@ -121,6 +130,15 @@ class _$ProductsStateCopyWithImpl<$Res, $Val extends ProductsState>
       return _then(_value.copyWith(getStoreProducts: value) as $Val);
     });
   }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GetOffersProductsStateCopyWith<$Res> get getOffersProducts {
+    return $GetOffersProductsStateCopyWith<$Res>(_value.getOffersProducts,
+        (value) {
+      return _then(_value.copyWith(getOffersProducts: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -135,7 +153,8 @@ abstract class _$$ProductsStateImplCopyWith<$Res>
       {GetFollowedProductsState getFollowedProducts,
       GetNewInProductsState getNewInProducts,
       GetRandomProductsState getRandomProducts,
-      GetStoreProductsState getStoreProducts});
+      GetStoreProductsState getStoreProducts,
+      GetOffersProductsState getOffersProducts});
 
   @override
   $GetFollowedProductsStateCopyWith<$Res> get getFollowedProducts;
@@ -145,6 +164,8 @@ abstract class _$$ProductsStateImplCopyWith<$Res>
   $GetRandomProductsStateCopyWith<$Res> get getRandomProducts;
   @override
   $GetStoreProductsStateCopyWith<$Res> get getStoreProducts;
+  @override
+  $GetOffersProductsStateCopyWith<$Res> get getOffersProducts;
 }
 
 /// @nodoc
@@ -162,6 +183,7 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
     Object? getNewInProducts = null,
     Object? getRandomProducts = null,
     Object? getStoreProducts = null,
+    Object? getOffersProducts = null,
   }) {
     return _then(_$ProductsStateImpl(
       getFollowedProducts: null == getFollowedProducts
@@ -180,6 +202,10 @@ class __$$ProductsStateImplCopyWithImpl<$Res>
           ? _value.getStoreProducts
           : getStoreProducts // ignore: cast_nullable_to_non_nullable
               as GetStoreProductsState,
+      getOffersProducts: null == getOffersProducts
+          ? _value.getOffersProducts
+          : getOffersProducts // ignore: cast_nullable_to_non_nullable
+              as GetOffersProductsState,
     ));
   }
 }
@@ -191,7 +217,8 @@ class _$ProductsStateImpl implements _ProductsState {
       {required this.getFollowedProducts,
       required this.getNewInProducts,
       required this.getRandomProducts,
-      required this.getStoreProducts});
+      required this.getStoreProducts,
+      required this.getOffersProducts});
 
   @override
   final GetFollowedProductsState getFollowedProducts;
@@ -201,10 +228,12 @@ class _$ProductsStateImpl implements _ProductsState {
   final GetRandomProductsState getRandomProducts;
   @override
   final GetStoreProductsState getStoreProducts;
+  @override
+  final GetOffersProductsState getOffersProducts;
 
   @override
   String toString() {
-    return 'ProductsState(getFollowedProducts: $getFollowedProducts, getNewInProducts: $getNewInProducts, getRandomProducts: $getRandomProducts, getStoreProducts: $getStoreProducts)';
+    return 'ProductsState(getFollowedProducts: $getFollowedProducts, getNewInProducts: $getNewInProducts, getRandomProducts: $getRandomProducts, getStoreProducts: $getStoreProducts, getOffersProducts: $getOffersProducts)';
   }
 
   @override
@@ -219,12 +248,14 @@ class _$ProductsStateImpl implements _ProductsState {
             (identical(other.getRandomProducts, getRandomProducts) ||
                 other.getRandomProducts == getRandomProducts) &&
             (identical(other.getStoreProducts, getStoreProducts) ||
-                other.getStoreProducts == getStoreProducts));
+                other.getStoreProducts == getStoreProducts) &&
+            (identical(other.getOffersProducts, getOffersProducts) ||
+                other.getOffersProducts == getOffersProducts));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, getFollowedProducts,
-      getNewInProducts, getRandomProducts, getStoreProducts);
+      getNewInProducts, getRandomProducts, getStoreProducts, getOffersProducts);
 
   @JsonKey(ignore: true)
   @override
@@ -238,7 +269,8 @@ abstract class _ProductsState implements ProductsState {
           {required final GetFollowedProductsState getFollowedProducts,
           required final GetNewInProductsState getNewInProducts,
           required final GetRandomProductsState getRandomProducts,
-          required final GetStoreProductsState getStoreProducts}) =
+          required final GetStoreProductsState getStoreProducts,
+          required final GetOffersProductsState getOffersProducts}) =
       _$ProductsStateImpl;
 
   @override
@@ -249,6 +281,8 @@ abstract class _ProductsState implements ProductsState {
   GetRandomProductsState get getRandomProducts;
   @override
   GetStoreProductsState get getStoreProducts;
+  @override
+  GetOffersProductsState get getOffersProducts;
   @override
   @JsonKey(ignore: true)
   _$$ProductsStateImplCopyWith<_$ProductsStateImpl> get copyWith =>

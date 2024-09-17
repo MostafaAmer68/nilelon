@@ -187,7 +187,12 @@ class _DiscoverViewState extends State<DiscoverView> {
                         ),
                       );
                     }, failure: (message) {
-                      return Text(message);
+                      return SizedBox(
+                        height: 150.h,
+                        child: Center(
+                          child: Text(message),
+                        ),
+                      );
                     });
                   },
                 ),
@@ -252,7 +257,12 @@ class _DiscoverViewState extends State<DiscoverView> {
                               ),
                             );
                     }, failure: (message) {
-                      return Text(message);
+                      return SizedBox(
+                        height: 200.h,
+                        child: Center(
+                          child: Text(message),
+                        ),
+                      );
                     });
                   },
                 ),

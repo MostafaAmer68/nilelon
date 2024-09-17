@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_followed_state/get_followed_products_state.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_new_in_state/get_new_in_state.dart';
+import 'package:nilelon/features/product/presentation/cubit/get_offers_state/get_new_in_state/get_offers_state.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_random_state/get_random_state.dart';
 import 'package:nilelon/features/product/presentation/cubit/get_store_products/get_store_products_state.dart';
 import 'package:nilelon/features/product/domain/repositories/products_repos.dart';
@@ -73,7 +74,8 @@ class ProductsCubit extends Cubit<ProductsState> {
     var result = await productsRepos.getNewInProducts(page, productSize);
     result.fold((failure) {
       emit(state.copyWith(
-          getNewInProducts: GetNewInProductsState.failure(failure.errorMsg)));
+          getNewInProducts: const GetNewInProductsState.failure(
+              'There is no new in products.')));
     }, (response) {
       emit(state.copyWith(
           getNewInProducts:
@@ -106,7 +108,8 @@ class ProductsCubit extends Cubit<ProductsState> {
     var result = await productsRepos.getRandomProduct(page, productSize);
     result.fold((failure) {
       emit(state.copyWith(
-          getRandomProducts: GetRandomProductsState.failure(failure.errorMsg)));
+          getRandomProducts: const GetRandomProductsState.failure(
+              'There is no hand picked products.')));
     }, (response) {
       emit(state.copyWith(
           getRandomProducts:
@@ -190,6 +193,70 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(state.copyWith(
           getRandomProducts:
               GetRandomProductsState.success(response.result ?? [])));
+    });
+  }
+
+  //?*********************************************************************************
+  //! Get Offers
+  //?*********************************************************************************
+
+  //todo Get Offers Products
+  Future<void> getOffersProducts(int page, int productSize) async {
+    emit(state.copyWith(
+        getOffersProducts: const GetOffersProductsState.loading()));
+    var result = await productsRepos.getOffersProducts(page, productSize);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getOffersProducts: GetOffersProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      emit(state.copyWith(
+          getOffersProducts:
+              GetOffersProductsState.success(response.result ?? [])));
+    });
+  }
+
+  //todo Get Offers Products Pagination
+  Future<void> getOffersProductsPagination(int page, int productSize) async {
+    emit(state.copyWith(
+        getOffersProducts: const GetOffersProductsState.loading()));
+    var result = await productsRepos.getOffersProducts(page, productSize);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getOffersProducts: GetOffersProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      emit(state.copyWith(
+          getOffersProducts:
+              GetOffersProductsState.success(response.result ?? [])));
+    });
+  }
+
+  //todo Get Offers Products Guest
+  Future<void> getOffersProductsGuest(int page, int productSize) async {
+    emit(state.copyWith(
+        getOffersProducts: const GetOffersProductsState.loading()));
+    var result = await productsRepos.getOffersProductsGuest(page, productSize);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getOffersProducts: GetOffersProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      emit(state.copyWith(
+          getOffersProducts:
+              GetOffersProductsState.success(response.result ?? [])));
+    });
+  }
+
+  //todo Get Offers Products Pagination Guest
+  Future<void> getOffersProductsPaginationGuest(int page, int productSize) async {
+    emit(state.copyWith(
+        getOffersProducts: const GetOffersProductsState.loading()));
+    var result = await productsRepos.getOffersProductsGuest(page, productSize);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getOffersProducts: GetOffersProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      emit(state.copyWith(
+          getOffersProducts:
+              GetOffersProductsState.success(response.result ?? [])));
     });
   }
 

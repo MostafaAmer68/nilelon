@@ -204,4 +204,34 @@ class ProductsReposImpl extends ProductsRepos {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<FailureService, ProductsResponseModel>> getOffersProducts(
+      int page, int productSize) async {
+    try {
+      final result = await productsRemoteDataSource.getCustomersOffersProducts(
+          page, productSize);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, ProductsResponseModel>> getOffersProductsGuest(
+      int page, int productSize) async {
+    try {
+      final result = await productsRemoteDataSource.getOffersProductsGuest(
+          page, productSize);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
 }

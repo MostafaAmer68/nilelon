@@ -18,6 +18,8 @@ import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:nilelon/features/shared/recommendation/data/repos_impl/recommendation_repos_impl.dart';
+import 'package:nilelon/features/shared/recommendation/presentation/cubit/recommendation_cubit.dart';
 import 'package:nilelon/features/shared/splash/splash_view.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
@@ -32,6 +34,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider<RecommendationCubit>(
+          create: (context) => RecommendationCubit(locatorService<RecommendationReposImpl>()),
+        ),
         BlocProvider<AuthCubit>(
           create: (context) => AuthCubit(locatorService<AuthReposImpl>()),
         ),

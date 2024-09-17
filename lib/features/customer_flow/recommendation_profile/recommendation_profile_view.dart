@@ -3,9 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
+import 'package:nilelon/features/shared/recommendation/presentation/cubit/recommendation_cubit.dart';
 
 import '../../../core/widgets/scaffold_image.dart';
 
@@ -29,11 +28,9 @@ class RecommendationProfileView extends StatelessWidget {
                   'assets/images/shop_for_women.png',
                   'Shop for Women',
                   () {
-                    HiveStorage.set(HiveKeys.shopFor, 'Shop for Women');
-                    navigateAndRemoveUntil(
-                      context: context,
-                      screen: const CustomerBottomTabBar(),
-                    );
+                    RecommendationCubit.get(context)
+                        .setRecommendation('Female', context);
+                    HiveStorage.set(HiveKeys.shopFor, 'Female');
                   },
                 ),
                 const SizedBox(
@@ -44,11 +41,9 @@ class RecommendationProfileView extends StatelessWidget {
                   'assets/images/shop_for_man.png',
                   'Shop for Man',
                   () {
-                    HiveStorage.set(HiveKeys.shopFor, 'Shop for Man');
-                    navigateAndRemoveUntil(
-                      context: context,
-                      screen: const CustomerBottomTabBar(),
-                    );
+                    RecommendationCubit.get(context)
+                        .setRecommendation('Male', context);
+                    HiveStorage.set(HiveKeys.shopFor, 'Male');
                   },
                 ),
               ],

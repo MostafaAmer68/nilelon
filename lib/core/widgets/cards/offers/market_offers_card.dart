@@ -3,8 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/features/product/domain/models/product_model.dart';
 
-GestureDetector marketOffersCard({required context}) {
+GestureDetector marketOffersCard({required context,required ProductModel product}) {
   List<String> images = ['assets/images/saveToCloset.png'];
   String name = 'T-Shirt';
   String price = '370.90';

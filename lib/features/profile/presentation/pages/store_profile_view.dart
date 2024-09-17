@@ -235,7 +235,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(30),
                   color: ColorManager.primaryW,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: ColorManager.primaryO2,
                       offset: Offset(5, 5),

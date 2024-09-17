@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
@@ -9,6 +11,10 @@ import 'package:nilelon/core/widgets/cards/offers/offers_card.dart';
 import 'package:nilelon/core/widgets/filter/category_container.dart';
 import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 
 import '../../../core/widgets/scaffold_image.dart';
 
@@ -23,6 +29,46 @@ class OffersView extends StatefulWidget {
 class _OffersViewState extends State<OffersView> {
   int selectedGender = 0;
   int selectedCategory = 0;
+  int offersPage = 1;
+  int offersPageSize = 10;
+  bool offersIsLoadMore = false;
+  ScrollController scrollController = ScrollController();
+  @override
+  void initState() {
+    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
+      ProductsCubit.get(context).getOffersProducts(offersPage, offersPageSize);
+    } else {
+      ProductsCubit.get(context)
+          .getOffersProductsGuest(offersPage, offersPageSize);
+    }
+    scrollController.addListener(() {
+      if (scrollController.position.pixels ==
+              scrollController.position.maxScrollExtent &&
+          !offersIsLoadMore) {
+        getMoreOffersData();
+      }
+    });
+    super.initState();
+  }
+
+  getMoreOffersData() async {
+    setState(() {
+      offersIsLoadMore = true;
+    });
+
+    offersPage = offersPage + 1;
+    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
+      ProductsCubit.get(context)
+          .getOffersProductsPagination(offersPage, offersPageSize);
+    } else {
+      ProductsCubit.get(context)
+          .getOffersProductsPaginationGuest(offersPage, offersPageSize);
+    }
+    setState(() {
+      offersIsLoadMore = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -36,39 +82,76 @@ class _OffersViewState extends State<OffersView> {
               height: 8,
             ),
             filtersColumn(context),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: widget.isStore
-                  ? GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1.sw > 600 ? 3 : 2,
-                          crossAxisSpacing: 1.sw > 600 ? 16 : 16.0,
-                          mainAxisExtent: 1.sw > 600 ? 310 : 245,
-                          mainAxisSpacing: 1.sw > 600 ? 16 : 12),
-                      shrinkWrap: true,
-                      itemCount: 7,
-                      itemBuilder: (context, sizeIndex) {
-                        return Container(
-                          child: marketOffersCard(context: context),
-                        );
-                      },
-                    )
-                  : GridView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1.sw > 600 ? 3 : 2,
-                          crossAxisSpacing: 1.sw > 600 ? 16 : 16.0,
-                          mainAxisExtent: 1.sw > 600 ? 415 : 300,
-                          mainAxisSpacing: 1.sw > 600 ? 16 : 12),
-                      shrinkWrap: true,
-                      itemCount: 7,
-                      itemBuilder: (context, sizeIndex) {
-                        return Container(
-                          child: offersCard(context: context),
-                        );
-                      },
+            BlocBuilder<ProductsCubit, ProductsState>(
+              builder: (context, state) {
+                return state.getOffersProducts.when(initial: () {
+                  return buildShimmerIndicatorGrid();
+                }, loading: () {
+                  return buildShimmerIndicatorGrid();
+                }, success: (productsList) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: widget.isStore
+                        ? GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 1.sw > 600 ? 3 : 2,
+                                    crossAxisSpacing: 1.sw > 600 ? 16 : 16.0,
+                                    mainAxisExtent: 1.sw > 600 ? 310 : 245,
+                                    mainAxisSpacing: 1.sw > 600 ? 16 : 12),
+                            shrinkWrap: true,
+                            itemCount: offersIsLoadMore
+                                ? productsList.length + 1
+                                : productsList.length,
+                            itemBuilder: (context, sizeIndex) {
+                              if (sizeIndex == productsList.length &&
+                                  offersIsLoadMore) {
+                                return buildShimmerIndicatorSmall();
+                              } else {
+                                return Container(
+                                  child: marketOffersCard(
+                                      context: context,
+                                      product: productsList[sizeIndex]),
+                                );
+                              }
+                            },
+                          )
+                        : GridView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 1.sw > 600 ? 3 : 2,
+                                    crossAxisSpacing: 1.sw > 600 ? 16 : 16.0,
+                                    mainAxisExtent: 1.sw > 600 ? 415 : 300,
+                                    mainAxisSpacing: 1.sw > 600 ? 16 : 12),
+                            shrinkWrap: true,
+                            itemCount: offersIsLoadMore
+                                ? productsList.length + 1
+                                : productsList.length,
+                            itemBuilder: (context, sizeIndex) {
+                              if (sizeIndex == productsList.length &&
+                                  offersIsLoadMore) {
+                                return buildShimmerIndicatorSmall();
+                              } else {
+                                return Container(
+                                  child: offersCard(
+                                      context: context,
+                                      product: productsList[sizeIndex]),
+                                );
+                              }
+                            },
+                          ),
+                  );
+                }, failure: (message) {
+                  return SizedBox(
+                    height: 200.h,
+                    child: Center(
+                      child: Text(message),
                     ),
+                  );
+                });
+              },
             ),
           ],
         ),

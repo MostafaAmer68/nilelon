@@ -30,7 +30,7 @@ class AddToFooter extends StatelessWidget {
                   listener: (context, state) {
                     if (state is CartSuccess) {
                       BotToast.showCustomText(
-                        duration: Duration(seconds: 4),
+                        duration: const Duration(seconds: 4),
                         toastBuilder: (_) => Card(
                           color: Colors.black87,
                           child: Padding(
@@ -38,16 +38,16 @@ class AddToFooter extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
+                                const Text(
                                   "This is a toast message",
                                   style: TextStyle(color: Colors.white),
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 TextButton(
                                   onPressed: () {
                                     BotToast.closeAllLoading();
                                   },
-                                  child: Text(
+                                  child: const Text(
                                     "View Cart",
                                     style: TextStyle(color: Colors.blue),
                                   ),

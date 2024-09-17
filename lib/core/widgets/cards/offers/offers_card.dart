@@ -5,8 +5,9 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
+import 'package:nilelon/features/product/domain/models/product_model.dart';
 
-GestureDetector offersCard({required context}) {
+GestureDetector offersCard({required context,required ProductModel product}) {
   List<String> images = ['assets/images/saveToCloset.png'];
   String name = 'T-Shirt';
   String price = '370.90';

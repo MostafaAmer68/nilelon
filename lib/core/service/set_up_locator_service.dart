@@ -14,6 +14,8 @@ import 'package:nilelon/features/auth/data/remote_data_source/auth_remote_data_s
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
 import 'package:nilelon/features/profile/data/datasources/profile_remote_data.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
+import 'package:nilelon/features/shared/recommendation/data/remote_data_source/recommendation_remot_data_source.dart';
+import 'package:nilelon/features/shared/recommendation/data/repos_impl/recommendation_repos_impl.dart';
 import 'package:nilelon/features/store_flow/analytics/data/remote_data_source/analytics_remote_data_source.dart';
 import 'package:nilelon/features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
 import 'package:nilelon/features/categories/data/remote_data_source/category_remote_data_source.dart';
@@ -70,5 +72,11 @@ void setUpLocatorService() {
   );
   locatorService.registerSingleton<AnalyticsReposImpl>(
     AnalyticsReposImpl(locatorService<AnalyticsRemoteDataSourceImpl>()),
+  );
+  locatorService.registerSingleton<RecommendationRemotDataSourceImpl>(
+    RecommendationRemotDataSourceImpl(apiService:  locatorService<ApiService>()),
+  );
+  locatorService.registerSingleton<RecommendationReposImpl>(
+    RecommendationReposImpl(locatorService<RecommendationRemotDataSourceImpl>()),
   );
 }

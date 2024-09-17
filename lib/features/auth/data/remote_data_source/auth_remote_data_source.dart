@@ -244,7 +244,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
       }
     } catch (error) {
       log(error.toString());
-      throw error;
+      rethrow;
     }
   }
 

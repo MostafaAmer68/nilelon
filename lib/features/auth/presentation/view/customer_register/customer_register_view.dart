@@ -16,7 +16,7 @@ import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/auth/presentation/view/otp/otp_view.dart';
 import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.dart';
-import 'package:nilelon/features/shared/recommendation/recommendation_view.dart';
+import 'package:nilelon/features/shared/recommendation/presentation/view/recommendation_view.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/widgets/pop_ups/success_creation_popup.dart';

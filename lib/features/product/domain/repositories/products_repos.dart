@@ -24,6 +24,10 @@ abstract class ProductsRepos {
       int page, int productSize);
   Future<Either<FailureService, ProductsResponseModel>> getStoreProfileItems(
       int page, int productSize);
+  Future<Either<FailureService, ProductsResponseModel>> getOffersProducts(
+      int page, int productSize);
+  Future<Either<FailureService, ProductsResponseModel>> getOffersProductsGuest(
+      int page, int productSize);
   Future<Either<FailureService, void>> createProduct(AddProductModel model);
   Future<Either<FailureService, void>> updateProduct(UpdateProduct model);
   Future<Either<FailureService, void>> createReview(CreateReviewModel model);

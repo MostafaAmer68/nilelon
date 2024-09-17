@@ -166,6 +166,79 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
+  Future<ProductsResponseModel> getCustomersOffersProducts(
+      int page, int pageSize) async {
+    final data = await apiService.get(
+      endPoint: EndPoint.getCustomersOffersUrl,
+      query: {
+        'customerId': JwtDecoder.decode(
+            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+        'page': page,
+        'pageSize': pageSize,
+      },
+    );
+    if (data.statusCode == 200) {
+      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get Offers failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Offers: Unexpected status code ${data.statusCode}');
+    }
+  }
+
+  Future<ProductsResponseModel> getOffersProductsGuest(
+      int page, int pageSize) async {
+    final data = await apiService.get(
+      endPoint: EndPoint.getStoreOffersUrl,
+      query: {
+        // 'customerId': JwtDecoder.decode(
+        //     HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+        'page': page,
+        'pageSize': pageSize,
+      },
+    );
+    if (data.statusCode == 200) {
+      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get Offers failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Offers: Unexpected status code ${data.statusCode}');
+    }
+  }
+  // Future<ProductsResponseModel> getRandomProductsGuest(
+  //     int page, int pageSize) async {
+  //   final data = await apiService.get(
+  //     endPoint: EndPoint.getRandomProductsGuestUrl,
+  //     query: {
+  //       'ProductType': HiveStorage.get(HiveKeys.shopFor),
+  //       'page': page,
+  //       'pageSize': pageSize,
+  //     },
+  //   );
+  //   if (data.statusCode == 200) {
+  //     return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+  //   } else if (data.statusCode == 400) {
+  //     // Handle the bad request response
+  //     final errorMessage = data.data;
+  //     // errorAlert(context, errorMessage);
+  //     throw Exception('Get Random failed: $errorMessage');
+  //   } else {
+  //     // Handle other status codes if necessary
+  //     throw Exception(
+  //         'Failed to Get Random: Unexpected status code ${data.statusCode}');
+  //   }
+  // }
+
   Future<void> createProduct(AddProductModel product) async {
     final data = await apiService.post(
       endPoint: EndPoint.createProductUrl,
