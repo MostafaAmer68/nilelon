@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/core/widgets/cards/customer_order_management/shipped_card.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
+import '../../../../core/utils/navigation.dart';
+import '../../../../core/widgets/cards/customer_order_management/ordered_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../pages/order_store_details_view.dart';
 
 class ShippedCustomerView extends StatefulWidget {
   const ShippedCustomerView({super.key});
@@ -59,7 +62,20 @@ class _ShippedCustomerViewState extends State<ShippedCustomerView> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
-                          child: ShippedCard(order: order),
+                          child: OrderCustomerCard(
+                            order: order,
+                            onTap: () {
+                              navigateTo(
+                                  context: context,
+                                  screen: OrderStoreDetailsView(
+                                    index: 2,
+                                    id: order.id,
+                                  ));
+                            },
+                            name: 'Your package is being delivered by courier',
+                            icon: SvgPicture.asset(
+                                'assets/images/inProgress.svg'),
+                          ),
                         );
                       });
             },

@@ -5,14 +5,14 @@ import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
+import 'package:nilelon/features/order/data/models/order_customer_model.dart';
 
 class OrderDetailsCard extends StatelessWidget {
   const OrderDetailsCard({
     super.key,
-    required this.cartItem,
+    required this.product,
   });
-  final CartItem cartItem;
+  final OrderProductVariant product;
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -55,14 +55,14 @@ class OrderDetailsCard extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          cartItem.productName!,
+                          product.productName,
                           style: AppStylesManager.customTextStyleBl8,
                           overflow: TextOverflow.ellipsis,
                         ),
                         Row(
                           children: [
                             Text(
-                              'By Lia Store',
+                              product.storeName,
                               style: AppStylesManager.customTextStyleG5,
                             ),
                             const SizedBox(
@@ -74,7 +74,7 @@ class OrderDetailsCard extends StatelessWidget {
                               size: 20,
                             ),
                             Text(
-                              '4.8',
+                              product.productRate.toString(),
                               style: AppStylesManager.customTextStyleG6,
                             ),
                           ],
@@ -83,7 +83,7 @@ class OrderDetailsCard extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      cartItem.price!.toString(),
+                      product.price.toString(),
                       style: AppStylesManager.customTextStyleO3,
                     ),
                     const SizedBox(
@@ -112,7 +112,7 @@ class OrderDetailsCard extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          "L",
+                          product.size[0],
                           style: AppStylesManager.customTextStyleO,
                         ),
                       ),
@@ -125,7 +125,7 @@ class OrderDetailsCard extends StatelessWidget {
                       style: AppStylesManager.customTextStyleG13,
                     ),
                     Text(
-                      '1',
+                      product.quantity.toString(),
                       style: AppStylesManager.customTextStyleBl9
                           .copyWith(fontSize: 10),
                     ),
@@ -139,8 +139,8 @@ class OrderDetailsCard extends StatelessWidget {
                     Container(
                       width: 20,
                       height: 20,
-                      decoration: const BoxDecoration(
-                          color: ColorManager.primaryL2,
+                      decoration: BoxDecoration(
+                          color: Color(int.parse('0x${product.color}')),
                           shape: BoxShape.circle),
                     ),
                     const Spacer(

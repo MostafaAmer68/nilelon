@@ -19,7 +19,7 @@ import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/home_custom_app_bar.dart';
 import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/features/customer_flow/search/view/search_view.dart';
+import 'package:nilelon/features/search/presentation/pages/search_view.dart';
 
 import '../../../auth/domain/model/user_model.dart';
 

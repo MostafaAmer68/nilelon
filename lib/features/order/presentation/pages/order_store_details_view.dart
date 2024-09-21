@@ -6,26 +6,33 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/order/presentation/pages/order_product_details_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 
-class OrderedStoreDetailsView extends StatefulWidget {
-  const OrderedStoreDetailsView({
+class OrderStoreDetailsView extends StatefulWidget {
+  const OrderStoreDetailsView({
     super.key,
-    required this.items,
+    required this.id,
     required this.index,
   });
-  final List<Map<String, dynamic>> items;
+  final String id;
   final int index;
   @override
-  State<OrderedStoreDetailsView> createState() =>
-      _OrderedStoreDetailsViewState();
+  State<OrderStoreDetailsView> createState() => _OrderStoreDetailsViewState();
 }
 
-class _OrderedStoreDetailsViewState extends State<OrderedStoreDetailsView> {
+class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
+  late final OrderCubit cubit;
+  @override
+  void initState() {
+    cubit = OrderCubit.get(context);
+    super.initState();
+  }
+
   bool isLast = false;
   final controller = PageController();
   @override
@@ -38,28 +45,32 @@ class _OrderedStoreDetailsViewState extends State<OrderedStoreDetailsView> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          PageView.builder(
-            physics: const BouncingScrollPhysics(),
-            controller: controller,
-            onPageChanged: (i) {
-              if (i == widget.items.length - 1 && !isLast) {
-                setState(() => isLast = true);
-              } else if (isLast) {
-                setState(() => isLast = false);
-              }
-            },
-            itemBuilder: (context, index) {
-              return OrderProductDetailsWidget(
-                images: widget.items[index]['images'],
-                name: widget.items[index]['name'],
-                storeName: widget.items[index]['storeName'],
-                rating: widget.items[index]['rating'],
-                price: widget.items[index]['price'],
-                size: widget.items[index]['size'],
-                quan: widget.items[index]['quan'],
-              );
-            },
-            itemCount: widget.items.length,
+          Expanded(
+            child: PageView.builder(
+              physics: const BouncingScrollPhysics(),
+              controller: controller,
+              onPageChanged: (i) {
+                if (i == cubit.customerOrder.orderProductVariants.length - 1 &&
+                    !isLast) {
+                  setState(() => isLast = true);
+                } else if (isLast) {
+                  setState(() => isLast = false);
+                }
+              },
+              itemBuilder: (context, index) {
+                final product = cubit.customerOrder.orderProductVariants[index];
+                return OrderProductDetailsWidget(
+                  images: product.urls,
+                  name: product.productName,
+                  storeName: product.storeName,
+                  rating: product.productRate.toString(),
+                  price: product.price.toString(),
+                  size: product.size,
+                  quan: product.quantity.toString(),
+                );
+              },
+              itemCount: cubit.customerOrder.orderProductVariants.length,
+            ),
           ),
           Positioned(
             top: 1.sw > 600
@@ -78,7 +89,7 @@ class _OrderedStoreDetailsViewState extends State<OrderedStoreDetailsView> {
                     spacing: 5.0,
                     type: WormType.underground,
                   ),
-                  count: widget.items.length,
+                  count: cubit.customerOrder.orderProductVariants.length,
                 ),
               ],
             ),

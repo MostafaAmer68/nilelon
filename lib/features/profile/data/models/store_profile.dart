@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
 class StoreProfile extends Equatable {
+  final String id;
   final String name;
   final String email;
   final String phoneNumber;
@@ -11,9 +12,10 @@ class StoreProfile extends Equatable {
   final String? storeSlogan;
   final String repPhone;
   final String warehouseAddress;
-  final String profilePic;
+  final String? profilePic;
 
   const StoreProfile({
+    required this.id,
     required this.name,
     required this.email,
     required this.phoneNumber,
@@ -27,6 +29,7 @@ class StoreProfile extends Equatable {
   @override
   List<Object> get props {
     return [
+      id,
       name,
       email,
       phoneNumber,
@@ -34,7 +37,7 @@ class StoreProfile extends Equatable {
       storeSlogan!,
       repPhone,
       warehouseAddress,
-      profilePic,
+      profilePic!,
     ];
   }
 
@@ -53,6 +56,7 @@ class StoreProfile extends Equatable {
 
   factory StoreProfile.fromMap(Map<String, dynamic> map) {
     return StoreProfile(
+      id: map['id'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
       phoneNumber: map['phoneNumber'] as String,
@@ -61,7 +65,8 @@ class StoreProfile extends Equatable {
           map['storeSlogan'] != null ? map['storeSlogan'] as String : null,
       repPhone: map['repPhone'] as String,
       warehouseAddress: map['warehouseAddress'] as String,
-      profilePic: map['profilePic'] as String,
+      profilePic:
+          map['profilePic'] != null ? map['profilePic'] as String : null,
     );
   }
 

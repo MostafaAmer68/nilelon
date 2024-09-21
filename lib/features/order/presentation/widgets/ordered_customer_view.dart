@@ -4,8 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/widgets/cards/customer_order_management/ordered_card.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
+import 'package:nilelon/features/order/presentation/pages/order_customer_details.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
+import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class OrderedCustomerView extends StatefulWidget {
@@ -59,7 +62,21 @@ class _OrderedCustomerViewState extends State<OrderedCustomerView> {
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
-                          child: OrderedCard(order: order),
+                          child: OrderCustomerCard(
+                            order: order,
+                            name: 'Your package is being delivered by courier',
+                            icon: SvgPicture.asset(
+                                'assets/images/package accept.svg'),
+                            onTap: () {
+                              navigateTo(
+                                  context: context,
+                                  screen: OrderDetailsView(
+                                    index: 0,
+                                    recievedDate: '',
+                                    id: order.id,
+                                  ));
+                            },
+                          ),
                         );
                       });
             },

@@ -1,14 +1,27 @@
 class OrderStoreModel {
   final String id;
   final DateTime date;
-  final int total;
-  final int discount;
+  final num total;
+  final num discount;
   final String governate;
   final String status;
   final String phoneNumber;
   final String shippingCost;
   final String customerId;
   final List<OrderProductVariant> orderProductVariants;
+
+  factory OrderStoreModel.empty() => OrderStoreModel(
+        id: '',
+        date: DateTime.now(),
+        total: 0,
+        discount: 0,
+        governate: '',
+        status: '',
+        phoneNumber: '',
+        shippingCost: '',
+        customerId: '',
+        orderProductVariants: [],
+      );
 
   OrderStoreModel({
     required this.id,

@@ -11,7 +11,7 @@ import 'package:svg_flutter/svg.dart';
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/scaffold_image.dart';
-import '../pages/ordered_store_details_view.dart';
+import '../pages/order_store_details_view.dart';
 
 class OrderedStoreView extends StatefulWidget {
   const OrderedStoreView({super.key});
@@ -72,7 +72,7 @@ class _OrderedStoreViewState extends State<OrderedStoreView> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
-                      child: OrderedCard(
+                      child: OrderStoreCard(
                         image: SvgPicture.asset(
                             'assets/images/package accept.svg'),
                         title: 'You have new Order.',
@@ -80,8 +80,8 @@ class _OrderedStoreViewState extends State<OrderedStoreView> {
                         onTap: () {
                           navigateTo(
                               context: context,
-                              screen: const OrderedStoreDetailsView(
-                                items: [],
+                              screen:  OrderStoreDetailsView(
+                                id: order.id,
                                 index: 0,
                               ));
                         },

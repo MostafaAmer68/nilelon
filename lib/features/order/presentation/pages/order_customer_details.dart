@@ -6,41 +6,54 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/footer/order_details_footer.dart';
-import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
-import 'package:nilelon/features/customer_flow/order_details/widget/order_details_card.dart';
+import 'package:nilelon/features/order/presentation/widgets/order_product_item.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/scaffold_image.dart';
+import '../cubit/order_cubit.dart';
 
-class OrderDetailsView extends StatelessWidget {
+class OrderDetailsView extends StatefulWidget {
   const OrderDetailsView(
-      {super.key, required this.index, required this.recievedDate});
+      {super.key,
+      required this.index,
+      required this.recievedDate,
+      required this.id});
   final int index;
   final String recievedDate;
+  final String id;
+
+  @override
+  State<OrderDetailsView> createState() => _OrderDetailsViewState();
+}
+
+class _OrderDetailsViewState extends State<OrderDetailsView> {
+  late final OrderCubit cubit;
+  @override
+  void initState() {
+    cubit = OrderCubit.get(context);
+    cubit.getCustomerOrderDetailsById(widget.id);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> items = [
-      {'title': 'Order', 'content': '600 L.E'},
-      {'title': 'Delivery', 'content': '50 L.E'},
-      {'title': 'Total', 'content': '650 L.E'},
-    ];
-    List<Map<String, dynamic>> orderState = [
-      {
+    Map<String, dynamic> orderState = {
+      'Ordered': {
         'title': 'Ordered',
         'icon': 'assets/images/bag-timer.svg',
         'color': ColorManager.primaryL
       },
-      {
+      'Shipped': {
         'title': 'Shipped',
         'icon': 'assets/images/bag-timer2.svg',
         'color': ColorManager.primaryO
       },
-      {
+      'Recived': {
         'title': 'Received',
         'icon': 'assets/images/bag-timer3.svg',
         'color': ColorManager.primaryGR
-      },
-    ];
+      }
+    };
     final lang = S.of(context);
     return ScaffoldImage(
       appBar: customAppBar(
@@ -77,12 +90,8 @@ class OrderDetailsView extends StatelessWidget {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        orderSummaryItems2(
-                            lang.orderDate,
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12)),
-                            )),
+                        orderSummaryItems2(lang.orderDate,
+                            Text(cubit.customerOrder.date.toString())),
                         const DefaultDivider(),
                         orderSummaryItems2(
                           lang.orderState,
@@ -91,13 +100,16 @@ class OrderDetailsView extends StatelessWidget {
                             width: 100,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16),
-                                color: orderState[index]['color']),
+                                color: orderState[cubit.customerOrder.status]
+                                    ['color']),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                SvgPicture.asset(orderState[index]['icon']),
+                                SvgPicture.asset(
+                                    orderState[cubit.customerOrder.status]
+                                        ['icon']),
                                 Text(
-                                  orderState[index]['title'],
+                                  cubit.customerOrder.status,
                                   style: const TextStyle(
                                       color: ColorManager.primaryW),
                                 ),
@@ -109,7 +121,7 @@ class OrderDetailsView extends StatelessWidget {
                         orderSummaryItems2(
                             lang.recievedDate,
                             Text(
-                              recievedDate,
+                              widget.recievedDate,
                               style: AppStylesManager.customTextStyleG,
                             )),
                         const DefaultDivider(),
@@ -123,9 +135,14 @@ class OrderDetailsView extends StatelessWidget {
                         orderSummaryItems2(
                             lang.promoCodeApplied,
                             Text(
-                              lang.yes,
-                              style: AppStylesManager.customTextStyleG
-                                  .copyWith(color: ColorManager.primaryGR),
+                              cubit.customerOrder.promoCodeName != null
+                                  ? lang.yes
+                                  : lang.no,
+                              style: AppStylesManager.customTextStyleG.copyWith(
+                                  color:
+                                      cubit.customerOrder.promoCodeName != null
+                                          ? ColorManager.primaryGR
+                                          : ColorManager.primaryR),
                             )),
                       ],
                     ),
@@ -158,19 +175,19 @@ class OrderDetailsView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         orderSummaryItems(
-                          items[0]['title'],
-                          items[0]['content'],
+                          'Order',
+                          (cubit.customerOrder.total -
+                                  num.parse(cubit.customerOrder.shippingCost))
+                              .toString(),
                         ),
                         const DefaultDivider(),
                         orderSummaryItems(
-                          items[1]['title'],
-                          items[1]['content'],
+                          'Delivery',
+                          cubit.customerOrder.shippingCost,
                         ),
                         const DefaultDivider(),
                         orderSummaryItems(
-                          items[2]['title'],
-                          items[2]['content'],
-                        ),
+                            'Total', cubit.customerOrder.total.toString()),
                       ],
                     ),
                   ),
@@ -233,7 +250,7 @@ class OrderDetailsView extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              '5 Items',
+              '${cubit.customerOrder.orderProductVariants.length} Items',
               style: AppStylesManager.customTextStyleBl8,
             ),
           ),
@@ -247,13 +264,17 @@ class OrderDetailsView extends StatelessWidget {
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 clipBehavior: Clip.none,
-                itemBuilder: (context, index) => const Padding(
-                  padding: EdgeInsets.only(right: 8),
-                  child: OrderDetailsCard(
-                    cartItem: CartItem(productName: '', price: 132),
-                  ),
-                ),
-                itemCount: 10,
+                itemBuilder: (context, index) {
+                  final product =
+                      cubit.customerOrder.orderProductVariants[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: OrderDetailsCard(
+                      product: product,
+                    ),
+                  );
+                },
+                itemCount: cubit.customerOrder.orderProductVariants.length,
               ),
             ),
           )

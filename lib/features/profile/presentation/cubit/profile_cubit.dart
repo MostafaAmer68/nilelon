@@ -11,6 +11,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepoIMpl _profileRepoIMpl;
   ProfileCubit(this._profileRepoIMpl) : super(const ProfileState.initial());
   StoreProfile? storeProfile;
+  List<StoreProfile> stores = [];
+
   Future<void> getStoreById(String storeId) async {
     emit(const ProfileState.loading());
     final result = await _profileRepoIMpl.getStoreById(storeId);
@@ -22,12 +24,26 @@ class ProfileCubit extends Cubit<ProfileState> {
     });
   }
 
+  Future<void> getStores(int page, int pageSize) async {
+    emit(const ProfileState.loading());
+    final result = await _profileRepoIMpl.getStores(page, pageSize);
+    result.fold((er) {
+      emit(const ProfileState.failure());
+    }, (response) {
+      stores = response;
+      emit(const ProfileState.success());
+    });
+  }
+
+  String followStatus = '';
+
   Future<void> followStore(String storeId) async {
     emit(const ProfileState.loading());
     final result = await _profileRepoIMpl.followStore(storeId);
     result.fold((er) {
       emit(const ProfileState.failure());
     }, (response) {
+      followStatus = response;
       emit(const ProfileState.success());
     });
   }

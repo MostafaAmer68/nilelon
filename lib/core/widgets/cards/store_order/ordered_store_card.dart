@@ -5,8 +5,8 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 
-class OrderedCard extends StatelessWidget {
-  const OrderedCard({
+class OrderStoreCard extends StatelessWidget {
+  const OrderStoreCard({
     super.key,
     required this.image,
     required this.title,

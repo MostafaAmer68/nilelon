@@ -1,8 +1,8 @@
 class OrderCustomerModel {
   final String id;
   final DateTime date;
-  final int total;
-  final int discount;
+  final num total;
+  final num discount;
   final String? promoCodeName; // Nullable, since it's null in the JSON
   final String governate;
   final String status;
@@ -10,6 +10,19 @@ class OrderCustomerModel {
   final String shippingCost;
   final String customerId;
   final List<OrderProductVariant> orderProductVariants;
+
+  factory OrderCustomerModel.empty() => OrderCustomerModel(
+        id: '',
+        date: DateTime.now(),
+        total: 0,
+        discount: 0,
+        governate: '',
+        status: '',
+        phoneNumber: '',
+        shippingCost: '',
+        customerId: '',
+        orderProductVariants: [],
+      );
 
   OrderCustomerModel({
     required this.id,
@@ -48,11 +61,11 @@ class OrderProductVariant {
   final String orderId;
   final String productId;
   final String productName;
-  final int productRate;
+  final num productRate;
   final String size;
   final String color;
-  final int quantity;
-  final int price;
+  final num quantity;
+  final num price;
   final String storeName;
   final String storeId;
   final List<String> urls;

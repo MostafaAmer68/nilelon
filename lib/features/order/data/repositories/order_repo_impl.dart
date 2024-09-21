@@ -82,7 +82,7 @@ class OrderRepoImpl extends OrderRepo {
   }
 
   @override
-  Future<Either<ServerFailure, OrderCustomerModel>> getCustomerOrderById(
+  Future<Either<ServerFailure, OrderCustomerModel>> getCustomerOrderDetailsById(
       String orderId) async {
     try {
       final result = await _orderService.getOrderById(orderId);
@@ -93,10 +93,45 @@ class OrderRepoImpl extends OrderRepo {
   }
 
   @override
-  Future<Either<ServerFailure, OrderStoreModel>> getStoreOrderById(
+  Future<Either<ServerFailure, OrderStoreModel>> getStoreOrderDetailsById(
       String orderId) async {
     try {
       final result = await _orderService.getStoreOrderById(orderId);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, bool>> getFreeShipping(
+      String promotionId, String governate) async {
+    try {
+      final result =
+          await _orderService.getFreeShipping(promotionId, governate);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, Map<String, dynamic>>> getOrderDiscount(
+      String promotionId, num oldPrice) async {
+    try {
+      final result =
+          await _orderService.getOrderDiscount(promotionId, oldPrice);
+      return Right(result);
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<ServerFailure, Map<String, dynamic>>> getPromoType(
+      String code) async {
+    try {
+      final result = await _orderService.getPromoCodeType(code);
       return Right(result);
     } catch (e) {
       return Left(ServerFailure(e.toString()));

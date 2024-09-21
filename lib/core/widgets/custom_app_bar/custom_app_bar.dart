@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/features/customer_flow/search/view/search_view.dart';
+import 'package:nilelon/features/search/presentation/pages/search_view.dart';
 
 AppBar customAppBar(
     {required String title,

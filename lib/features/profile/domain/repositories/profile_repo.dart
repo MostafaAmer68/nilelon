@@ -24,7 +24,11 @@ abstract class ProfileRepo {
   Future<Either<FailureService, StoreProfile>> getStoreById(
     String storeId,
   );
-  Future<Either<FailureService, void>> followStore(
+  Future<Either<FailureService, String>> followStore(
     String storeId,
+  );
+  Future<Either<FailureService, List<StoreProfile>>> getStores(
+    int page,
+    int pageSize,
   );
 }

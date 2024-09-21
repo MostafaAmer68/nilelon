@@ -79,7 +79,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                       const SizedBox(
                         height: 30,
                       ),
-                      circleItems(cubit.storeProfile!.profilePic),
+                      circleItems(cubit.storeProfile!.profilePic ?? ''),
                       const SizedBox(
                         height: 16,
                       ),
@@ -101,11 +101,10 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          notFollowing
+                          cubit.followStatus != 'Followed'
                               ? GradientButtonBuilder(
                                   text: lang.follow,
                                   ontap: () {
-                                    notFollowing = !notFollowing;
                                     cubit.followStore(widget.storeId);
                                     setState(() {});
                                   },
@@ -115,7 +114,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                               : OutlinedButtonBuilder(
                                   text: lang.following,
                                   ontap: () {
-                                    notFollowing = !notFollowing;
+                                    cubit.followStore(widget.storeId);
                                     setState(() {});
                                   },
                                   width: screenWidth(context, 0.55),
@@ -193,7 +192,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                       ),
                     ],
                   );
-                });
+                })!;
           },
         ),
       ),

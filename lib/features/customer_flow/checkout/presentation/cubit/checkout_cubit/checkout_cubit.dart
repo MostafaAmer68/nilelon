@@ -22,11 +22,14 @@ class CheckOutCubit extends Cubit<CheckOutState> {
   TextEditingController unitNumber = TextEditingController();
   TextEditingController landmark = TextEditingController();
   TextEditingController city = TextEditingController();
+  TextEditingController promoCode = TextEditingController();
   String selectedGovernate = '';
   String selectedShippingMethodId = '';
   String selectedOption = '';
   num totalPrice = 0;
   num deliveryPrice = 0;
+  num discount = 0;
+  bool isFreeShipping = false;
 
   Future<void> createOrder(context) async {
     emit(CheckOutLoading());
@@ -41,6 +44,7 @@ class CheckOutCubit extends Cubit<CheckOutState> {
         governate: selectedGovernate,
         transactionId: '',
         customerAddressDTO: {
+          "customerId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
           "addressLine1": addressLine1.text,
           "addressLine2": addressLine2.text,
           "city": city.text,
@@ -74,9 +78,69 @@ class CheckOutCubit extends Cubit<CheckOutState> {
     try {
       emit(CheckOutLoading());
       OrderCubit.get(context).getShippingMethod();
+      selectedGovernate = OrderCubit.get(context).shippingMethods.first.name;
+      selectedShippingMethodId =
+          OrderCubit.get(context).shippingMethods.first.id;
       emit(CheckOutSuccess());
     } catch (e) {
       emit(CheckOutFailure(e.toString()));
     }
+  }
+
+  Future getPromoCodeType(context) async {
+    emit(CheckOutLoading());
+    if (promoCode.text.isEmpty) {
+      emit(const CheckOutFailure('Please enter promo code'));
+    }
+    final result = await _orderRepo.getPromoType(promoCode.text);
+
+    result.fold(
+      (failrue) {
+        emit(CheckOutFailure(failrue.errorMsg));
+      },
+      (response) {
+        if (response['type'] == 'OrderDiscount') {
+          getOrderDiscount(context, response['promotionId']);
+        } else if (response['type'] == 'FreeShipping') {
+          getFreeShipping(context, response['promotionId']);
+        }
+      },
+    );
+  }
+
+  Future getFreeShipping(context, promoCodeId) async {
+    emit(CheckOutLoading());
+    final result =
+        await _orderRepo.getFreeShipping(promoCodeId, selectedGovernate);
+
+    result.fold(
+      (failrue) {
+        emit(CheckOutFailure(failrue.errorMsg));
+      },
+      (response) {
+        isFreeShipping = response;
+        if (response) {
+          totalPrice -= deliveryPrice;
+          deliveryPrice = 0;
+        }
+        emit(CheckOutSuccess());
+      },
+    );
+  }
+
+  Future getOrderDiscount(context, promoCodeId) async {
+    emit(CheckOutLoading());
+    final result = await _orderRepo.getOrderDiscount(promoCodeId, totalPrice);
+
+    result.fold(
+      (failrue) {
+        emit(CheckOutFailure(failrue.errorMsg));
+      },
+      (response) {
+        totalPrice = response['newPrice'];
+        discount = response['discount'];
+        emit(CheckOutSuccess());
+      },
+    );
   }
 }

@@ -4,28 +4,27 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/features/customer_flow/order_details/order_details_view.dart';
+import 'package:nilelon/features/order/presentation/pages/order_customer_details.dart';
 import 'package:nilelon/features/order/data/models/order_model.dart';
 import 'package:svg_flutter/svg.dart';
 
-class OrderedCard extends StatelessWidget {
-  const OrderedCard({
+class OrderCustomerCard extends StatelessWidget {
+  const OrderCustomerCard({
     super.key,
     required this.order,
+    required this.onTap,
+    required this.icon,
+    required this.name,
   });
   final OrderModel order;
+  final Widget icon;
+  final String name;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        navigateTo(
-            context: context,
-            screen: const OrderDetailsView(
-              index: 0,
-              recievedDate: '',
-            ));
-      },
+      onTap: onTap,
       child: Container(
         height: 1.sw > 600 ? 110 : 90,
         width: screenWidth(context, 0.9),
@@ -55,7 +54,7 @@ class OrderedCard extends StatelessWidget {
                 color: Color(0xFFECE7FF),
                 shape: BoxShape.circle,
               ),
-              child: SvgPicture.asset('assets/images/package accept.svg'),
+              child: icon,
             ),
             const SizedBox(
               width: 4,
@@ -74,7 +73,7 @@ class OrderedCard extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      'Your package is being delivered by courier',
+                      name,
                       style: AppStylesManager.customTextStyleBl7,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 4,

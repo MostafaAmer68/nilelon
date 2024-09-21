@@ -13,6 +13,24 @@ class EndPoint {
   static const String getCustomerAddressUrl = '/Customer/GetCustomerAddress';
   static const String follow = '/Customer/Follow';
 
+  // search url
+  static const String searchUrl = '/Search/Search';
+  // return urls
+  static const String getCustomerReturensUrl =
+      '/ReturnedVariants/GetCustomerReturns';
+  static const String getCustomerWrongItemDetailsUrl =
+      '/ReturnedVariants/GetCustomerWrongItemDetails';
+  static const String getCustomerMissingItemDetailsUrl =
+      '/ReturnedVariants/GetCustomerMissingItemDetails';
+  static const String getCustomerChangeMindItemDetailsUrl =
+      '/ReturnedVariants/GetCustomerChangedMindItemDetails';
+  static const String createReturnedWrongItem =
+      '/ReturnedVariants/CreateReturnedWrongItem';
+  static const String createReturnedMissingItem =
+      '/ReturnedVariants/CreateReturnedMissingItem';
+  static const String createReturnedChangeMindItem =
+      '/ReturnedVariants/CreateReturnedChangeMindItem';
+
   //todo Authentication For Customer Urls
   static const String customerRegisterUrl = '/Authentication/CustomerRegister';
   static const String validateOTP = '/Authentication/ValidateOTP';
@@ -97,6 +115,7 @@ class EndPoint {
 
   static const String updateStoreInfoUrl = '/Store/UpdateStoreInfo';
   static const String updateStoreUrl = '/Store/UpdateStore';
+  static const String getStoresUrls = '/Store/GetStores';
   static const String getStoreByIdUrl = '/Store/GetStoreById';
   //todo Authentication For Store Urls
   static const String storeRegisterUrl = '/Authentication/StoreRegister';
@@ -129,6 +148,12 @@ class EndPoint {
       '/Product/ChangeProductVariantPriceQuantity';
   static const String deleteProductVariantUrl = '/Product/DeleteProductVariant';
   static const String deleteProductImageUrl = '/Product/DeleteProductImage';
+
+  // promotion
+  static const String getPromoCodeType = '/Promotion/GetPromoCodeType';
+  static const String getOrderDiscount = '/Promotion/GetOrderDiscount';
+  static const String getFreeShipping = '/Promotion/GetFreeShipping';
+  static const String getStoreDiscount = '/Promotion/GetStoreDiscount';
 
   //todo Recommendation Urls
   static const String setRecommendationUrl =

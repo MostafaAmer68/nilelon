@@ -8,6 +8,7 @@ import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
 import 'package:nilelon/features/order/data/models/order_customer_model.dart';
 import 'package:nilelon/features/order/data/models/order_store_model.dart';
+import 'package:nilelon/features/order/data/models/return_model.dart';
 import 'package:nilelon/features/order/data/models/shipping_method.dart';
 
 import '../models/order_model.dart';
@@ -40,7 +41,6 @@ class OrderService {
         'pageSize': 100,
       },
     );
-    print(response);
     if (response.statusCode == HttpStatus.ok) {
       if (response.data['result'] == []) {
         return [];
@@ -53,14 +53,15 @@ class OrderService {
     throw response.data['result'];
   }
 
-  Future<List<OrderModel>> getCustomerOrder(String orderStatus) async {
+  Future<List<OrderModel>> getCustomerOrder(String orderStatus,
+      [page, pageSize]) async {
     final response = await _apiService.get(
       endPoint: EndPoint.getCustomerOrderUrl,
       query: {
         'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         'status': orderStatus,
-        'pageNumber': 1,
-        'pageSize': 100,
+        'page': page ?? 1,
+        'pageSize': pageSize ?? 10,
       },
     );
 
@@ -142,6 +143,147 @@ class OrderService {
 
     if (response.statusCode == HttpStatus.ok) {
       return OrderStoreModel.fromJson(response.data['result']);
+    }
+    throw response.data['result'];
+  }
+
+  Future<Map<String, dynamic>> getPromoCodeType(
+    String code,
+  ) async {
+    final response = await _apiService.get(
+      endPoint: EndPoint.getPromoCodeType,
+      query: {
+        'code': code,
+      },
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      return {
+        'promotionId': response.data['result']['promotionId'],
+        'type': response.data['result']['type'],
+      };
+    }
+    throw response.data['result'];
+  }
+
+  Future<Map<String, dynamic>> getOrderDiscount(
+    String promotionId,
+    num totalOrderPrice,
+  ) async {
+    final response = await _apiService.post(
+      endPoint: EndPoint.getOrderDiscount,
+      body: {
+        'promotionId': promotionId,
+        'oldPrice': totalOrderPrice,
+      },
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      return {
+        'discount': response.data['result']['discount'],
+        'newPrice': response.data['result']['newPrice'],
+      };
+    }
+    throw response.data['result'];
+  }
+
+  Future<bool> getFreeShipping(String code, String governate) async {
+    final response = await _apiService.post(
+        endPoint: EndPoint.getFreeShipping,
+        body: {'promotionId': code, 'governate': governate});
+
+    print(response.data['result'] as bool);
+    if (response.statusCode == HttpStatus.ok) {
+      return response.data['result'] as bool;
+    }
+    throw response.data['result'];
+  }
+
+  Future<List<ReturnModel>> getCustomerReturens() async {
+    final response = await _apiService
+        .post(endPoint: EndPoint.getCustomerReturensUrl, query: {
+      'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+    });
+
+    if (response.statusCode == HttpStatus.ok) {
+      return List<ReturnModel>.from(
+        response.data['result'].map(
+          (e) => ReturnModel.fromMap(e),
+        ),
+      );
+    }
+    throw response.data['result'];
+  }
+
+  Future<void> getCustomerWrongReturn(String returnId) async {
+    final response = await _apiService
+        .post(endPoint: EndPoint.getCustomerWrongItemDetailsUrl, query: {
+      'returnId': returnId,
+    });
+
+    if (response.statusCode == HttpStatus.ok) {
+      // return response.data['result'] as bool;
+    }
+    throw response.data['result'];
+  }
+
+  Future<void> getCustomerMissinItem(String returnId) async {
+    final response = await _apiService.post(
+      endPoint: EndPoint.getCustomerMissingItemDetailsUrl,
+      query: {
+        'returnId': returnId,
+      },
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      // return response.data['result'] as bool;
+    }
+    throw response.data['result'];
+  }
+
+  Future<void> getCustomerChangeMindItemDetails(String returnId) async {
+    final response = await _apiService.post(
+      endPoint: EndPoint.getCustomerChangeMindItemDetailsUrl,
+      query: {
+        'returnId': returnId,
+      },
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      // return response.data['result'] as bool;
+    }
+    throw response.data['result'];
+  }
+
+  Future<void> createReturnWrongItem() async {
+    final response = await _apiService.post(
+      endPoint: EndPoint.getFreeShipping,
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      // return response.data['result'] as bool;
+    }
+    throw response.data['result'];
+  }
+
+  Future<void> createReturnMissingItem() async {
+    final response = await _apiService.post(
+      endPoint: EndPoint.getFreeShipping,
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      // return response.data['result'] as bool;
+    }
+    throw response.data['result'];
+  }
+
+  Future<void> createReturnChangeMindItem() async {
+    final response = await _apiService.post(
+      endPoint: EndPoint.getFreeShipping,
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      // return response.data['result'] as bool;
     }
     throw response.data['result'];
   }

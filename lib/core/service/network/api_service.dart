@@ -16,9 +16,10 @@ class ApiService {
     );
   }
 
-  Future<Response> get({required String endPoint, query}) async {
+  Future<Response> get({required String endPoint, body, query}) async {
     var response = await dio.get(
       endPoint,
+      data: body,
       queryParameters: query,
     );
     return response;

@@ -10,7 +10,7 @@ import 'package:svg_flutter/svg.dart';
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/scaffold_image.dart';
-import '../pages/ordered_store_details_view.dart';
+import '../pages/order_store_details_view.dart';
 
 class ShippedStoreView extends StatefulWidget {
   const ShippedStoreView({super.key});
@@ -67,15 +67,15 @@ class _ShippedStoreViewState extends State<ShippedStoreView> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
-                      child: OrderedCard(
+                      child: OrderStoreCard(
                         image: SvgPicture.asset('assets/images/inProgress.svg'),
                         title: 'Order is Shipped.',
                         time: order.date,
                         onTap: () {
                           navigateTo(
                               context: context,
-                              screen: const OrderedStoreDetailsView(
-                                items: [],
+                              screen: OrderStoreDetailsView(
+                                id: order.id,
                                 index: 0,
                               ));
                         },

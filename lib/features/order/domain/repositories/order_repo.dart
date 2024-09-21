@@ -14,9 +14,9 @@ abstract class OrderRepo {
       String orderStatus);
   Future<Either<ServerFailure, List<OrderModel>>> getStoreOrderByDate(
       String date);
-  Future<Either<ServerFailure, OrderStoreModel>> getStoreOrderById(
+  Future<Either<ServerFailure, OrderStoreModel>> getStoreOrderDetailsById(
       String orderId);
-  Future<Either<ServerFailure, OrderCustomerModel>> getCustomerOrderById(
+  Future<Either<ServerFailure, OrderCustomerModel>> getCustomerOrderDetailsById(
       String orderId);
   Future<Either<ServerFailure, List<OrderModel>>> getCustomerOrder(
       String orderStatus);
@@ -24,5 +24,16 @@ abstract class OrderRepo {
   Future<Either<ServerFailure, void>> changeOrderStatus(
     String orderId,
     String orderStatus,
+  );
+  Future<Either<ServerFailure, Map<String, dynamic>>> getPromoType(
+    String code,
+  );
+  Future<Either<ServerFailure, Map<String, dynamic>>> getOrderDiscount(
+    String promotionId,
+    num oldPrice,
+  );
+  Future<Either<ServerFailure, bool>> getFreeShipping(
+    String promotionId,
+    String governate,
   );
 }

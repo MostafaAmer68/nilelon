@@ -7,7 +7,7 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/features/customer_flow/search/widget/search_section_items.dart';
+import 'package:nilelon/features/search/presentation/widgets/search_section_items.dart';
 import 'package:nilelon/features/store_flow/sections_view.dart/store_sections_view.dart';
 import 'package:nilelon/features/store_flow/see_more_stores/view/see_more_stores_store_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_store.dart';

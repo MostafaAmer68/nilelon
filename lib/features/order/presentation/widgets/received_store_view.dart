@@ -7,7 +7,7 @@ import 'package:nilelon/core/widgets/alert/shipped_alert.dart';
 import 'package:nilelon/core/widgets/cards/store_order/ordered_store_card.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
-import 'package:nilelon/features/order/presentation/pages/ordered_store_details_view.dart';
+import 'package:nilelon/features/order/presentation/pages/order_store_details_view.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/widgets/scaffold_image.dart';
@@ -69,15 +69,15 @@ class _ReceivedStoreViewState extends State<ReceivedStoreView> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
-                      child: OrderedCard(
+                      child: OrderStoreCard(
                         image: Image.asset('assets/images/arrived2.png'),
                         title: 'Order has arrived to Customer Address.',
                         time: order.date,
                         onTap: () {
                           navigateTo(
                               context: context,
-                              screen: const OrderedStoreDetailsView(
-                                items: [],
+                              screen: OrderStoreDetailsView(
+                                id: order.id,
                                 index: 0,
                               ));
                         },
