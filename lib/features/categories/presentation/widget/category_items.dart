@@ -3,6 +3,7 @@ import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 
 class CategoryItems extends StatelessWidget {
   const CategoryItems({
@@ -36,7 +37,7 @@ class CategoryItems extends StatelessWidget {
                 color: ColorManager.primaryB5,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Image.network(image),
+              child: imageReplacer(url: image, fit: BoxFit.fitWidth),
             ),
             const SizedBox(
               height: 8,

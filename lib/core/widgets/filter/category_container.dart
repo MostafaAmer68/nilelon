@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 
 import '../oval_shape.dart';
 
@@ -10,13 +12,14 @@ categoryContainer({
   required bool isSelected,
 }) {
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 20),
+    padding:  EdgeInsets.symmetric(horizontal: 20, vertical: 10.h),
     child: CustomPaint(
       painter: CirclePainter(),
       child: isSelected
           ? Container(
-              width: 100,
-              height: 200,
+              clipBehavior: Clip.none,
+              width: 100.h,
+              height: 200.h,
               decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
@@ -32,8 +35,8 @@ categoryContainer({
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(
-                    image, // Use your own image path here
+                  imageReplacer(
+                    url: image, // Use your own image path here
                     height: 50,
                     width: 50,
                   ),
@@ -46,8 +49,9 @@ categoryContainer({
               ),
             )
           : Container(
-              width: 100,
-              height: 200,
+              width: 100.h,
+              height: 200.h,
+              clipBehavior: Clip.none,
               decoration: BoxDecoration(
                 color: Colors.white,
                 shape: BoxShape.circle,
@@ -63,8 +67,8 @@ categoryContainer({
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(
-                    image, // Use your own image path here
+                  imageReplacer(
+                    url: image, // Use your own image path here
                     height: 50,
                     width: 50,
                   ),

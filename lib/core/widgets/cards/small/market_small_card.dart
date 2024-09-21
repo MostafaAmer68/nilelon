@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/presentation/pages/store_product_details_view.dart';
 
@@ -30,12 +31,18 @@ GestureDetector marketSmallCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             height: 150.h,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(product.productImages.first.url),
-                    fit: BoxFit.fill)),
+            // decoration: BoxDecoration(
+            //     image: DecorationImage(
+            //         image: ,
+            //         fit: BoxFit.fill)),
+            child: imageReplacer(
+              url: product.productImages.first.url,
+              fit: BoxFit.fill,
+              width: 1.sw > 600 ? 270 : 200,
+              height: 1.sw > 600 ? 300 : 220,
+            ),
           ),
           const SizedBox(
             height: 8,

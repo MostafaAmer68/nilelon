@@ -29,12 +29,13 @@ class StoreProfileView extends StatefulWidget {
 class _StoreProfileViewState extends State<StoreProfileView> {
   int _selectedIndex = 0;
   int page = 1;
-  int pageSize = 100;
+  int pageSize = 10;
   bool isLoadMore = false;
   ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
+    // log(DateTime.now().toString());
     BlocProvider.of<ProductsCubit>(context).getStoreProducts(page, pageSize);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -151,15 +152,24 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                 }, loading: () {
                   return buildShimmerIndicatorGrid();
                 }, success: (productsList) {
-                  return productsList.isEmpty
+                  return productsList
+                          .where((e) =>
+                              e.categoryID ==
+                              HiveStorage.get<List>(
+                                      HiveKeys.categories)[_selectedIndex]
+                                  .id!)
+                          .toList()
+                          .isEmpty //productsList.isEmpty
                       ? SizedBox(
-                          height: 350.h,
+                          height: 280.h,
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                'There is no products added yet.',
-                                style: AppStylesManager.customTextStyleG2,
+                              Center(
+                                child: Text(
+                                  'There is no products added yet.',
+                                  style: AppStylesManager.customTextStyleG2,
+                                ),
                               ),
                             ],
                           ),

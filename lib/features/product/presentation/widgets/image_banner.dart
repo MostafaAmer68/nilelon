@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 
 class ImageBanner extends StatefulWidget {
   final List<String> images;
@@ -31,16 +32,20 @@ class _ImageBannerState extends State<ImageBanner> {
                 setState(() {});
               }),
           itemBuilder: (ctx, index, _) {
-            return Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                      image: widget.images.isEmpty
-                          ? const AssetImage(
-                              'assets/images/1-Nilelon f logo d.png')
-                          : NetworkImage(widget.images[index]),
-                      fit: BoxFit.cover)),
-            );
+            return widget.images.isEmpty
+                ? Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        image: const DecorationImage(
+                            image: AssetImage(
+                                'assets/images/1-Nilelon f logo d.png'),
+                            fit: BoxFit.cover)),
+                  )
+                : imageReplacer(
+                    url: widget.images[index],
+                    height: screenHeight(context, 0.5),
+                    width: double.infinity,
+                  );
           },
         ),
       ],

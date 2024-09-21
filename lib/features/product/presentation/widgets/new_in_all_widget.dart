@@ -8,7 +8,7 @@ import 'package:nilelon/features/product/presentation/cubit/products_cubit/produ
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/const_functions.dart';
+// import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
@@ -31,8 +31,8 @@ class NewInViewAll extends StatefulWidget {
 class _NewInViewAllState extends State<NewInViewAll> {
   int selectedGender = 0;
   int selectedCategory = 0;
-  int page = 5;
-  int pageSize = 1;
+  int page = 1;
+  int pageSize = 10;
   bool isLoadMore = false;
   ScrollController scrollController = ScrollController();
 
@@ -147,7 +147,7 @@ class _NewInViewAllState extends State<NewInViewAll> {
         Padding(
           padding: const EdgeInsets.only(left: 8, right: 8),
           child: SizedBox(
-            height: screenWidth(context, 0.28),
+            height: 124.h,
             width: MediaQuery.of(context).size.width,
             child: ListView.builder(
               shrinkWrap: true,
