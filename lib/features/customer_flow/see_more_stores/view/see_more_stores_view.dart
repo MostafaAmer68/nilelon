@@ -42,9 +42,7 @@ class SeeMoreStoresView extends StatelessWidget {
                   return Column(
                     children: [
                       BrandCard(
-                        image: stores[index].profilePic ?? '',
-                        name: stores[index].name,
-                        description: stores[index].storeSlogan ?? '',
+                        store: stores[index],
                       ),
                     ],
                   );

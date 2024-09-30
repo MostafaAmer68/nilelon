@@ -35,6 +35,20 @@ class ProductsCubit extends Cubit<ProductsState> {
     });
   }
 
+  Future<void> getProductByCategory(int page, int productSize) async {
+    emit(state.copyWith(
+        getNewInProducts: const GetNewInProductsState.loading()));
+    var result =
+        await productsRepos.getProductByCategory(categoryId, page, productSize);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getNewInProducts: GetNewInProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      emit(state.copyWith(
+          getNewInProducts: GetNewInProductsState.success(response)));
+    });
+  }
+
   // Future<void> createReview() async {
   //   emit(state.copyWith(
   //       getFollowedProducts: const GetFollowedProductsState.loading()));

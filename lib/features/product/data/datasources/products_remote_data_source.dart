@@ -70,7 +70,7 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
-  Future<ProductsResponseModel> getProductByCategory(
+  Future<List<ProductModel>> getProductByCategory(
       String categoryId, int page, int pageSize) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getProductByCategory, query: {
@@ -79,7 +79,9 @@ class ProductsRemoteDataSourceImpl {
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {
-      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+      return (data.data['result'] as List)
+          .map((e) => ProductModel.fromJson(e))
+          .toList();
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;

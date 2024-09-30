@@ -4,17 +4,17 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
+import 'package:nilelon/features/profile/data/models/store_profile.dart';
+
+import '../../../../features/profile/presentation/pages/store_profile_customer.dart';
+import '../../../utils/navigation.dart';
 
 class BrandCard extends StatefulWidget {
   const BrandCard({
     super.key,
-    required this.image,
-    required this.name,
-    required this.description,
+    required this.store,
   });
-  final String image;
-  final String name;
-  final String description;
+  final StoreProfile store;
 
   @override
   State<BrandCard> createState() => _BrandCardState();
@@ -26,13 +26,11 @@ class _BrandCardState extends State<BrandCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // navigateTo(
-        //     context: context,
-        //     screen: StoreProfileCustomer(
-        //       storeName: widget.name,
-        //       image: widget.image,
-        //       description: widget.description,
-        //     ));
+        navigateTo(
+            context: context,
+            screen: StoreProfileCustomer(
+            storeId:widget.store.id,
+            ));
       },
       child: Container(
         width: screenWidth(context, 0.45),
@@ -61,14 +59,14 @@ class _BrandCardState extends State<BrandCard> {
               ),
               child: CircleAvatar(
                 radius: 30,
-                backgroundImage: AssetImage(widget.image),
+                backgroundImage: NetworkImage(widget.store.profilePic?? ''),
               ),
             ),
             const SizedBox(
               height: 12,
             ),
             Text(
-              widget.name,
+              widget.store.name,
               style: AppStylesManager.customTextStyleBl3
                   .copyWith(fontWeight: FontWeight.w600),
             ),

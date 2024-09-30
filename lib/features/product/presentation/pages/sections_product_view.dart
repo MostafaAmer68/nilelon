@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -6,11 +7,13 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/filter/category_container.dart';
 import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/products_cubit/products_cubit.dart';
+import '../cubit/products_cubit/products_state.dart';
 
 class SectionsProductView extends StatefulWidget {
   const SectionsProductView({
@@ -52,19 +55,30 @@ class _SectionsProductViewState extends State<SectionsProductView> {
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20.0,
-                    mainAxisExtent: 220,
-                    mainAxisSpacing: 12),
-                shrinkWrap: true,
-                itemCount: 7,
-                itemBuilder: (context, sizeIndex) {
-                  return Container(
-                    child: smallCard(context: context),
-                  );
+              child: BlocBuilder<ProductsCubit, ProductsState>(
+                builder: (context, state) {
+                  return state.getNewInProducts.whenOrNull(
+                    loading: () => buildShimmerIndicatorGrid(),
+                    success: (products) => GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 20.0,
+                              mainAxisExtent: 270,
+                              mainAxisSpacing: 12),
+                      shrinkWrap: true,
+                      itemCount: products.length,
+                      itemBuilder: (context, sizeIndex) {
+                        return Container(
+                          child: productSquarItem(
+                            context: context,
+                            model: products[sizeIndex],
+                          ),
+                        );
+                      },
+                    ),
+                  )!;
                 },
               ),
             ),
