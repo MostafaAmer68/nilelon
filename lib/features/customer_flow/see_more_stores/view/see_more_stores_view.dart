@@ -8,30 +8,13 @@ import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_
 import 'package:nilelon/core/widgets/cards/brand/brand_card.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../profile/data/models/store_profile.dart';
 
 class SeeMoreStoresView extends StatelessWidget {
-  const SeeMoreStoresView({super.key});
-
+  const SeeMoreStoresView({super.key, required this.stores});
+  final List<StoreProfile> stores;
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> brand = [
-      {
-        "name": "Sara Baqatyan",
-        "image": "assets/images/brand1.png",
-      },
-      {
-        "name": "Lia Shop",
-        "image": "assets/images/brand2.png",
-      },
-      {
-        "name": "Twixi Shop",
-        "image": "assets/images/brand3.png",
-      },
-      {
-        "name": "Shop with tene",
-        "image": "assets/images/brand4.png",
-      },
-    ];
     final lang = S.of(context);
     return ScaffoldImage(
       appBar: searchAppBar(context),
@@ -54,14 +37,14 @@ class SeeMoreStoresView extends StatelessWidget {
                     crossAxisCount: 2,
                     crossAxisSpacing: 20.0,
                     mainAxisSpacing: 12),
-                itemCount: brand.length,
-                itemBuilder: (context, sizeIndex) {
+                itemCount: stores.length,
+                itemBuilder: (context, index) {
                   return Column(
                     children: [
                       BrandCard(
-                        image: brand[sizeIndex]['image'],
-                        name: brand[sizeIndex]['name'],
-                        description: 'Shop store for woman clothes',
+                        image: stores[index].profilePic ?? '',
+                        name: stores[index].name,
+                        description: stores[index].storeSlogan ?? '',
                       ),
                     ],
                   );

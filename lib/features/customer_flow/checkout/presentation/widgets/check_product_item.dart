@@ -6,7 +6,6 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
-import 'package:nilelon/features/order/data/models/order_customer_model.dart';
 
 class CheckProductItem extends StatelessWidget {
   const CheckProductItem({

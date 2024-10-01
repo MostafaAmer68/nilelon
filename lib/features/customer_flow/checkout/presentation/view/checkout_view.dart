@@ -63,6 +63,7 @@ class _ChechOutViewState extends State<ChechOutView> {
                     ),
                     SizedBox(
                       height: screenHeight(context, 1.3),
+
                       child: PageView(
                         controller: ProgressCubit.get(context).pageController,
                         children: const [

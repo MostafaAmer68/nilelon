@@ -18,6 +18,8 @@ import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:nilelon/features/refund/data/repositories/refund_repo_impl.dart';
+import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/features/search/presentation/cubit/search_cubit.dart';
 import 'package:nilelon/features/shared/recommendation/data/repos_impl/recommendation_repos_impl.dart';
 import 'package:nilelon/features/shared/recommendation/presentation/cubit/recommendation_cubit.dart';
@@ -87,6 +89,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<SearchCubit>(
           create: (context) => SearchCubit(locatorService<SearchRepoImpl>()),
+        ),
+        BlocProvider<RefundCubit>(
+          create: (context) => RefundCubit(locatorService<RefundRepoImpl>()),
         ),
       ],
       child: ScreenUtilInit(

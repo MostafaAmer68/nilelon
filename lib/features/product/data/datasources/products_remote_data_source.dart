@@ -70,6 +70,28 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
+  Future<ProductsResponseModel> getProductByCategory(
+      String categoryId, int page, int pageSize) async {
+    final Response data =
+        await apiService.get(endPoint: EndPoint.getProductByCategory, query: {
+      'categoryId': categoryId,
+      'page': page,
+      'pageSize': pageSize,
+    });
+    if (data.statusCode == 200) {
+      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get New failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get New: Unexpected status code ${data.statusCode}');
+    }
+  }
+
   Future<ProductsResponseModel> getRandomProducts(
       int page, int pageSize) async {
     final data = await apiService.get(

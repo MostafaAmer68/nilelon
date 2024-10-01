@@ -30,15 +30,10 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
         query: {'id': HiveStorage.get<UserModel>(HiveKeys.userModel).id});
     if (data.statusCode == HttpStatus.ok) {
       return GetCartModel.fromJson(data.data as Map<String, dynamic>);
-    } else if (data.statusCode == HttpStatus.badRequest) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Cart failed: $errorMessage');
     } else {
       // Handle other status codes if necessary
       throw Exception(
-          'Failed to Get Cart: Unexpected status code ${data.statusCode}');
+          'Failed to Get Cart: Unexpected status code ${data.data['result']}');
     }
   }
 
@@ -88,17 +83,12 @@ class CartRemoteDataSourceImpl extends CartRemoteDataSource {
       endPoint: EndPoint.addToCartUrl,
       body: model.toJson(),
     );
-    if (data.statusCode == HttpStatus.created) {
+    if (data.statusCode == HttpStatus.ok) {
       return data.data;
-    } else if (data.statusCode == HttpStatus.badRequest) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Add to Cart failed: $errorMessage');
     } else {
       // Handle other status codes if necessary
       throw Exception(
-          'Failed to Add to Cart Cart: Unexpected status code ${data.statusCode}');
+          'Failed to Add to Cart Cart: Unexpected status code ${data.data['result']}');
     }
   }
 

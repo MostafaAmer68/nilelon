@@ -251,7 +251,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       children: [
         Text('Color :', style: AppStylesManager.customTextStyleG10),
         ColorSelector(
-          colors: widget.product.productVariants.map((e) => e.color).toList(),
+          colors: widget.product.productVariants
+              .map((e) => e.color)
+              .toList()
+              .toSet()
+              .toList(),
           selectedColor: cubit.selectedColor,
           onColorSelected: (color) {
             cubit.selectedColor = color;

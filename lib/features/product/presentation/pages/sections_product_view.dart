@@ -9,21 +9,28 @@ import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 
-import '../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/scaffold_image.dart';
+import '../cubit/products_cubit/products_cubit.dart';
 
-class SectionsView extends StatefulWidget {
-  const SectionsView({super.key, required this.selectedCat});
-  final int selectedCat;
+class SectionsProductView extends StatefulWidget {
+  const SectionsProductView({
+    super.key,
+    required this.categoryId,
+  });
+  final String categoryId;
   @override
-  State<SectionsView> createState() => _SectionsViewState();
+  State<SectionsProductView> createState() => _SectionsProductViewState();
 }
 
-class _SectionsViewState extends State<SectionsView> {
+class _SectionsProductViewState extends State<SectionsProductView> {
   int selectedGender = 0;
   int selectedCategory = 0;
+  late final ProductsCubit cubit;
   @override
   void initState() {
-    selectedCategory = widget.selectedCat;
+    cubit = ProductsCubit.get(context);
+    cubit.categoryId = widget.categoryId;
+    // selectedCategory = widget.selectedCat;
     super.initState();
   }
 

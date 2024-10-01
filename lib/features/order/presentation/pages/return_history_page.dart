@@ -11,7 +11,7 @@ class ReturnHistoryPage extends StatefulWidget {
 class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
   @override
   Widget build(BuildContext context) {
-    return ScaffoldImage(
+    return const ScaffoldImage(
       body: Column(),
     );
   }

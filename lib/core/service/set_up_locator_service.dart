@@ -14,6 +14,8 @@ import 'package:nilelon/features/auth/data/remote_data_source/auth_remote_data_s
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
 import 'package:nilelon/features/profile/data/datasources/profile_remote_data.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
+import 'package:nilelon/features/refund/data/datasources/refund_service.dart';
+import 'package:nilelon/features/refund/data/repositories/refund_repo_impl.dart';
 import 'package:nilelon/features/search/data/datasources/search_service.dart';
 import 'package:nilelon/features/search/data/repositories/search_repo_impl.dart';
 import 'package:nilelon/features/shared/recommendation/data/remote_data_source/recommendation_remot_data_source.dart';
@@ -45,6 +47,10 @@ void setUpLocatorService() {
   locatorService.registerSingleton(SearchService(locatorService()));
   locatorService
       .registerSingleton<SearchRepoImpl>(SearchRepoImpl(locatorService()));
+  // search
+  locatorService.registerSingleton(RefundSErvice(locatorService()));
+  locatorService
+      .registerSingleton<RefundRepoImpl>(RefundRepoImpl(locatorService()));
   // payment
   locatorService.registerSingleton(PaymentService(locatorService()));
   locatorService

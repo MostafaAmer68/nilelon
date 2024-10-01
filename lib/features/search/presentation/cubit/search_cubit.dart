@@ -17,7 +17,7 @@ class SearchCubit extends Cubit<SearchState> {
   List<SearchModel> searchResult = [];
 
   // Cache to store search results
-  Map<String, List<SearchModel>> _cache = {};
+  final Map<String, List<SearchModel>> _cache = {};
 
   Future<void> search(String query) async {
     emit(SearchLoading());

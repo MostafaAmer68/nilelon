@@ -125,7 +125,7 @@ class StoreModel extends BaseUserData {
       storeSlogan: map['storeSlogan'] ?? '',
       repPhone: map['repPhone'] as String,
       warehouseAddress: map['warehouseAddress'] as String,
-      profilePic: map['profilePic'] as String,
+      profilePic: map['profilePic'] ?? '',
     );
   }
 
@@ -188,7 +188,7 @@ class CustomerModel extends BaseUserData {
       dateOfBirth: map['dateOfBirth'] as String,
       gender: map['gender'] as String,
       productsChoice: map['productsChoice'] as String,
-      profilePic: map['profilePic'] as String,
+      profilePic: map['profilePic'] ?? '',
     );
   }
 

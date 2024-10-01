@@ -18,6 +18,7 @@ class EndPoint {
   // return urls
   static const String getCustomerReturensUrl =
       '/ReturnedVariants/GetCustomerReturns';
+  static const String getStoreReturensUrl = '/ReturnedVariants/GetStoreReturns';
   static const String getCustomerWrongItemDetailsUrl =
       '/ReturnedVariants/GetCustomerWrongItemDetails';
   static const String getCustomerMissingItemDetailsUrl =
@@ -102,6 +103,7 @@ class EndPoint {
   static const String getRandomProductsGuestUrl =
       '/Product/GetRandomProductsGuest';
   static const String getCustomersOffersUrl = '/Product/GetOffers';
+  static const String getProductByCategory = '/Product/GetProductsByCategory';
   static const String getStoreOffersUrl = '/Product/GetOffersForStore';
 
   //todo Static Product Queries Urls

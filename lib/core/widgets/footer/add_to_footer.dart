@@ -4,9 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/cart/presentation/view/cart_view.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
@@ -39,13 +41,16 @@ class AddToFooter extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 const Text(
-                                  "This is a toast message",
+                                  "Product Added to Cart",
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 const SizedBox(width: 10),
                                 TextButton(
                                   onPressed: () {
                                     BotToast.closeAllLoading();
+                                    navigateTo(
+                                        context: context,
+                                        screen: const CartView());
                                   },
                                   child: const Text(
                                     "View Cart",

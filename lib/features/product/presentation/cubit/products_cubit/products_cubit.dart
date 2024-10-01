@@ -20,6 +20,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   //todo Get Followed Products
   final TextEditingController comment = TextEditingController();
+  String categoryId = '';
   Future<void> getFollowedProducts(int page, int productSize) async {
     emit(state.copyWith(
         getFollowedProducts: const GetFollowedProductsState.loading()));

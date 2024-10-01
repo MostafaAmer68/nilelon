@@ -16,7 +16,6 @@ import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/check_product_item.dart';
-import 'package:nilelon/features/order/presentation/widgets/order_product_item.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 
 class OverViewStep extends StatefulWidget {
@@ -60,7 +59,7 @@ class _OverViewStepState extends State<OverViewStep> {
                   }
                   return ListView.builder(
                     padding: const EdgeInsetsDirectional.symmetric(
-                        vertical: 16, horizontal: 16),
+                        vertical: 16, horizontal: 16,),
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),

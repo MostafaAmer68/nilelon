@@ -3,10 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/features/order/presentation/pages/order_customer_details.dart';
 import 'package:nilelon/features/order/data/models/order_model.dart';
-import 'package:svg_flutter/svg.dart';
 
 class OrderCustomerCard extends StatelessWidget {
   const OrderCustomerCard({
