@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
-import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';

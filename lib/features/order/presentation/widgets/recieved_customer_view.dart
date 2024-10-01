@@ -5,10 +5,10 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/cards/customer_order_management/ordered_card.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
+import 'package:nilelon/features/order/presentation/pages/order_customer_details.dart';
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/scaffold_image.dart';
-import '../pages/order_customer_details.dart';
 
 class ReceivedCustomerView extends StatefulWidget {
   const ReceivedCustomerView({super.key});
@@ -83,7 +83,8 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
                                 onTap: () {
                                   navigateTo(
                                       context: context,
-                                      screen: OrderDetailsView(
+                                      screen: //RefundPage()
+                                          OrderDetailsView(
                                         index: 2,
                                         recievedDate: order.date,
                                         id: order.id,

@@ -2,7 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -59,7 +59,9 @@ class _OverViewStepState extends State<OverViewStep> {
                   }
                   return ListView.builder(
                     padding: const EdgeInsetsDirectional.symmetric(
-                        vertical: 16, horizontal: 16,),
+                      vertical: 16,
+                      horizontal: 16,
+                    ),
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),

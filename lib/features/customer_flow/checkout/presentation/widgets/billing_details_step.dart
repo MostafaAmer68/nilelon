@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -11,7 +11,6 @@ import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
 import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
-
 
 class BillingDetailsStep extends StatefulWidget {
   const BillingDetailsStep({super.key});
@@ -52,7 +51,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
         if (state is CheckOutSuccess) {
           BotToast.closeAllLoading();
           CartCubit.get(context).emptyCart();
-      
+
           progressCubit.nextStep();
         }
       },

@@ -3360,26 +3360,6 @@ class S {
     );
   }
 
-  /// `Missing Item`
-  String get missingItem {
-    return Intl.message(
-      'Missing Item',
-      name: 'missingItem',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Wrong Item`
-  String get wrongItem {
-    return Intl.message(
-      'Wrong Item',
-      name: 'wrongItem',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Contact Us`
   String get contactUs {
     return Intl.message(
@@ -3440,16 +3420,6 @@ class S {
     );
   }
 
-  /// `Changed My Mind`
-  String get ChangedMyMind {
-    return Intl.message(
-      'Changed My Mind',
-      name: 'ChangedMyMind',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Front`
   String get front {
     return Intl.message(
@@ -3500,16 +3470,6 @@ class S {
     );
   }
 
-  /// `Damaged item`
-  String get damagedItem {
-    return Intl.message(
-      'Damaged item',
-      name: 'damagedItem',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Damaged Part`
   String get damagedPart {
     return Intl.message(
@@ -3535,6 +3495,46 @@ class S {
     return Intl.message(
       'Received Color',
       name: 'receivedColor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Changed My Mind`
+  String get ChangedMyMind {
+    return Intl.message(
+      'Changed My Mind',
+      name: 'ChangedMyMind',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong Item`
+  String get wrongItem {
+    return Intl.message(
+      'Wrong Item',
+      name: 'wrongItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Missing Item`
+  String get missingItem {
+    return Intl.message(
+      'Missing Item',
+      name: 'missingItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Damaged item`
+  String get damagedItem {
+    return Intl.message(
+      'Damaged item',
+      name: 'damagedItem',
       desc: '',
       args: [],
     );

@@ -5,7 +5,7 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/product/presentation/cubit/add_product/add_product_cubit.dart';
 import 'package:nilelon/features/product/presentation/widgets/size_container.dart';
 
-import '../../../../core/generated/l10n.dart';
+import 'package:nilelon/generated/l10n.dart';
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/sizes_consts.dart';

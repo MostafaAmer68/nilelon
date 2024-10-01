@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/cards/subscription/subscription_card.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';

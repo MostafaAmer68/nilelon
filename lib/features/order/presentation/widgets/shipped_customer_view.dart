@@ -70,11 +70,13 @@ class _ShippedCustomerViewState extends State<ShippedCustomerView> {
                             onTap: () {
                               navigateTo(
                                   context: context,
-                                  screen: OrderDetailsView(
+                                  screen: 
+                                  OrderDetailsView(
                                     index: 2,
                                     recievedDate: order.date,
                                     id: order.id,
-                                  ));
+                                  )
+                                  );
                             },
                             name: 'Your package is being delivered by courier',
                             icon: SvgPicture.asset(

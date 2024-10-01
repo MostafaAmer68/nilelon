@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:nilelon/features/product/presentation/pages/draft_product_page.dart';
-import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/app_logs.dart';
 import 'package:nilelon/core/utils/navigation.dart';

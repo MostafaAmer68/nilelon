@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../../core/generated/l10n.dart';
+import 'package:nilelon/generated/l10n.dart';
 import '../../../../core/resources/appstyles_manager.dart';
 import '../cubit/add_product/add_product_cubit.dart';
 import 'color_circle.dart';

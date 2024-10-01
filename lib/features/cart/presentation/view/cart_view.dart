@@ -8,7 +8,7 @@ import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/cart/domain/model/delete_request_model.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
-import 'package:nilelon/core/generated/l10n.dart';
+import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
@@ -62,8 +62,7 @@ class CartView extends StatelessWidget {
               if (state is CartLoading) {
                 return Expanded(
                     child:
-                        SingleChildScrollView(child: buildShimmerIndicator())
-                        );
+                        SingleChildScrollView(child: buildShimmerIndicator()));
               } else if (state is GetCartFailure) {
                 return Text(state.message);
               } else if (state is GetCartSuccess) {
