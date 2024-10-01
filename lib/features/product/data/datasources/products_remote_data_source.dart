@@ -120,12 +120,13 @@ class ProductsRemoteDataSourceImpl {
   }
 
   Future<ProductsResponseModel> getStoreProfileItems(
-      int page, int pageSize) async {
+      String storeId, int page, int pageSize) async {
     final data = await apiService.get(
       endPoint: EndPoint.getStoreProductsUrl,
       query: {
-        'storeId': JwtDecoder.decode(
-            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+        'storeId': HiveStorage.get(HiveKeys.isStore)
+            ? HiveStorage.get<UserModel>(HiveKeys.userModel).id
+            : storeId,
         'page': page,
         'pageSize': pageSize,
       },

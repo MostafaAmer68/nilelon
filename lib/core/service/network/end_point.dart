@@ -118,7 +118,8 @@ class EndPoint {
   static const String updateStoreInfoUrl = '/Store/UpdateStoreInfo';
   static const String updateStoreUrl = '/Store/UpdateStore';
   static const String getStoresUrls = '/Store/GetStores';
-  static const String getStoreByIdUrl = '/Store/GetStoreById';
+  static const String getStoreByIdUrl = '/Store/GetStore';
+  static const String getStoreForCustomer = '/Store/GetStoreForCustomer';
   //todo Authentication For Store Urls
   static const String storeRegisterUrl = '/Authentication/StoreRegister';
 

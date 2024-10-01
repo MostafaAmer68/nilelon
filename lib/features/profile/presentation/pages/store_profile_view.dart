@@ -36,7 +36,8 @@ class _StoreProfileViewState extends State<StoreProfileView> {
   @override
   void initState() {
     // log(DateTime.now().toString());
-    BlocProvider.of<ProductsCubit>(context).getStoreProducts(page, pageSize);
+    BlocProvider.of<ProductsCubit>(context)
+        .getStoreProducts('', page, pageSize);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -54,7 +55,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
 
     page = page + 1;
     await BlocProvider.of<ProductsCubit>(context)
-        .getStoreProductsPagination(page, pageSize);
+        .getStoreProductsPagination('', page, pageSize);
     setState(() {
       isLoadMore = false;
     });
@@ -233,7 +234,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
         setState(() {
           _selectedIndex = index;
           // _indexName = name;
-          ProductsCubit.get(context).getStoreProductsPagination(1, 100);
+          ProductsCubit.get(context).getStoreProductsPagination('', 1, 100);
           setState(() {});
         });
       },

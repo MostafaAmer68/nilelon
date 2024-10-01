@@ -12,9 +12,12 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/pop_ups/customer_store_popup.dart';
 import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../product/presentation/cubit/products_cubit/products_state.dart';
 
 class StoreProfileCustomer extends StatefulWidget {
   const StoreProfileCustomer({super.key, required this.storeId});
@@ -39,6 +42,8 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
   void initState() {
     cubit = BlocProvider.of(context);
     cubit.getStoreById(widget.storeId);
+    cubit.getStoreForCustomer(widget.storeId);
+    ProductsCubit.get(context).getStoreProducts(widget.storeId, 1, 100);
     super.initState();
   }
 
@@ -101,11 +106,12 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          cubit.followStatus != 'Followed'
+                          cubit.validationOption['isFollow']
                               ? GradientButtonBuilder(
                                   text: lang.follow,
                                   ontap: () {
                                     cubit.followStore(widget.storeId);
+                                    cubit.getStoreForCustomer(widget.storeId);
                                     setState(() {});
                                   },
                                   width: screenWidth(context, 0.55),
@@ -115,6 +121,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                                   text: lang.following,
                                   ontap: () {
                                     cubit.followStore(widget.storeId);
+                                    cubit.getStoreForCustomer(widget.storeId);
                                     setState(() {});
                                   },
                                   width: screenWidth(context, 0.55),
@@ -173,20 +180,29 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                       ),
                       Padding(
                         padding: const EdgeInsets.all(16.0),
-                        child: GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                                  mainAxisExtent: 220,
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 20.0,
-                                  mainAxisSpacing: 12),
-                          shrinkWrap: true,
-                          itemCount: 7,
-                          itemBuilder: (context, sizeIndex) {
-                            return Container(
-                              child: smallCard(context: context),
-                            );
+                        child: BlocBuilder<ProductsCubit, ProductsState>(
+                          builder: (context, state) {
+                            return state.getStoreProducts.whenOrNull(
+                              loading: () => buildShimmerIndicatorGrid(),
+                              success: (products) => GridView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        mainAxisExtent: 270,
+                                        crossAxisCount: 2,
+                                        crossAxisSpacing: 20.0,
+                                        mainAxisSpacing: 12),
+                                shrinkWrap: true,
+                                itemCount: products.length,
+                                itemBuilder: (context, sizeIndex) {
+                                  return Container(
+                                    child: productSquarItem(
+                                        context: context,
+                                        model: products[sizeIndex]),
+                                  );
+                                },
+                              ),
+                            )!;
                           },
                         ),
                       ),

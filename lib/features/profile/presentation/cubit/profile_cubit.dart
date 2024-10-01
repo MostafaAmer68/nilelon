@@ -12,7 +12,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   ProfileCubit(this._profileRepoIMpl) : super(const ProfileState.initial());
   StoreProfile? storeProfile;
   List<StoreProfile> stores = [];
-
+  Map<String, dynamic> validationOption = {};
   Future<void> getStoreById(String storeId) async {
     emit(const ProfileState.loading());
     final result = await _profileRepoIMpl.getStoreById(storeId);
@@ -20,6 +20,17 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(const ProfileState.failure());
     }, (response) {
       storeProfile = response;
+      emit(const ProfileState.success());
+    });
+  }
+
+  Future<void> getStoreForCustomer(String storeId) async {
+    emit(const ProfileState.loading());
+    final result = await _profileRepoIMpl.getStoreForCustomer(storeId);
+    result.fold((er) {
+      emit(const ProfileState.failure());
+    }, (response) {
+      validationOption = response;
       emit(const ProfileState.success());
     });
   }

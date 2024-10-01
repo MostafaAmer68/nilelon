@@ -26,7 +26,7 @@ abstract class ProductsRepos {
   Future<Either<FailureService, ProductsResponseModel>> getRandomProductsGuest(
       int page, int productSize);
   Future<Either<FailureService, ProductsResponseModel>> getStoreProfileItems(
-      int page, int productSize);
+      String storeId, int page, int productSize);
   Future<Either<FailureService, ProductsResponseModel>> getOffersProducts(
       int page, int productSize);
   Future<Either<FailureService, ProductsResponseModel>> getOffersProductsGuest(

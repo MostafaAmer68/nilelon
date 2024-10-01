@@ -23,7 +23,7 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
   @override
   void initState() {
     cubit = OrderCubit.get(context);
-    cubit.getCustomerOrder('Received');
+    cubit.getCustomerOrder('Delivered');
     super.initState();
   }
 
@@ -68,12 +68,12 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
                         )
                       : ListView.builder(
                           itemCount: cubit.customerOrders
-                              .where((e) => e.status == 'Received')
+                              .where((e) => e.status == 'Delivered')
                               .toList()
                               .length,
                           itemBuilder: (context, index) {
                             final order = cubit.customerOrders
-                                .where((e) => e.status == 'Received')
+                                .where((e) => e.status == 'Delivered')
                                 .toList()[index];
                             return Padding(
                               padding: const EdgeInsets.symmetric(

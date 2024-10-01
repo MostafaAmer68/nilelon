@@ -281,10 +281,12 @@ class ProductsCubit extends Cubit<ProductsState> {
   //?*********************************************************************************
 
   //todo Get Store Products
-  Future<void> getStoreProducts(int page, int productSize) async {
+  Future<void> getStoreProducts(
+      String storeId, int page, int productSize) async {
     emit(state.copyWith(
         getStoreProducts: const GetStoreProductsState.loading()));
-    var result = await productsRepos.getStoreProfileItems(page, productSize);
+    var result =
+        await productsRepos.getStoreProfileItems(storeId, page, productSize);
     result.fold((failure) {
       emit(state.copyWith(
           getStoreProducts: GetStoreProductsState.failure(failure.errorMsg)));
@@ -296,10 +298,12 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   //todo Get Store Products Pagination
-  Future<void> getStoreProductsPagination(int page, int productSize) async {
+  Future<void> getStoreProductsPagination(
+      String storeId, int page, int productSize) async {
     emit(state.copyWith(
         getStoreProducts: const GetStoreProductsState.loading()));
-    var result = await productsRepos.getStoreProfileItems(page, productSize);
+    var result =
+        await productsRepos.getStoreProfileItems(storeId, page, productSize);
     result.fold((failure) {
       emit(state.copyWith(
           getStoreProducts: GetStoreProductsState.failure(failure.errorMsg)));

@@ -31,12 +31,13 @@ class ProductsReposImpl extends ProductsRepos {
       return left(ServerFailure(e.toString()));
     }
   }
+
   @override
   Future<Either<FailureService, List<ProductModel>>> getProductByCategory(
-      String categoryId,int page, int productSize) async {
+      String categoryId, int page, int productSize) async {
     try {
-      final result =
-          await productsRemoteDataSource.getProductByCategory(categoryId,page, productSize);
+      final result = await productsRemoteDataSource.getProductByCategory(
+          categoryId, page, productSize);
       return Right(result);
     } catch (e) {
       if (e is DioException) {
@@ -108,10 +109,10 @@ class ProductsReposImpl extends ProductsRepos {
 
   @override
   Future<Either<FailureService, ProductsResponseModel>> getStoreProfileItems(
-      int page, int productSize) async {
+      String storeId, int page, int productSize) async {
     try {
       final result = await productsRemoteDataSource.getStoreProfileItems(
-          page, productSize);
+          storeId, page, productSize);
       return Right(result);
     } catch (e) {
       if (e is DioException) {

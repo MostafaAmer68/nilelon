@@ -10,6 +10,9 @@ abstract class ProfileRepo {
     String webLink,
     context,
   );
+
+  Future<Either<FailureService, Map<String, dynamic>>> getStoreForCustomer(
+      String storeId);
   Future<Either<FailureService, String>> changePassword(
     String oldPassword,
     String newPassword,

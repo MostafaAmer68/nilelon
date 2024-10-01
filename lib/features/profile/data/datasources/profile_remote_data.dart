@@ -77,11 +77,32 @@ class ProfileRemoteData {
     final response = await _apiService.get(
       endPoint: EndPoint.getStoreByIdUrl,
       query: {
-        "id": storeId,
+        "storeId": storeId,
       },
     );
     if (response.statusCode == 200) {
       return StoreProfile.fromMap(response.data['result']);
+    } else {
+      // Handle other status codes if necessary
+      final errorMessage = response.data;
+      // errorAlert(context, errorMessage);
+      throw Exception(' $errorMessage');
+    }
+  }
+
+  Future<Map<String, dynamic>> getStoreForCustomer(String storeId) async {
+    final response = await _apiService.get(
+      endPoint: EndPoint.getStoreForCustomer,
+      query: {
+        "storeId": storeId,
+        "customerId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+      },
+    );
+    if (response.statusCode == 200) {
+      return {
+        'isFollow': response.data['result']['isFollowing'],
+        'isNotify': response.data['result']['isNotified'],
+      };
     } else {
       // Handle other status codes if necessary
       final errorMessage = response.data;
