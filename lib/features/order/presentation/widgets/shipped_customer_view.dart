@@ -10,7 +10,6 @@ import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/cards/customer_order_management/ordered_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../pages/order_customer_details.dart';
-import '../pages/order_store_details_view.dart';
 
 class ShippedCustomerView extends StatefulWidget {
   const ShippedCustomerView({super.key});
@@ -42,11 +41,14 @@ class _ShippedCustomerViewState extends State<ShippedCustomerView> {
                   ? SizedBox(
                       height: 120.h,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'There is no Order yet.',
-                            style: AppStylesManager.customTextStyleG2,
+                          Center(
+                            child: Text(
+                              'There is no Order yet.',
+                              style: AppStylesManager.customTextStyleG2,
+                            ),
                           ),
                         ],
                       ),

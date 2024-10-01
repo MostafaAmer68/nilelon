@@ -38,7 +38,7 @@ class _OrderManegementTabBarState extends State<OrderManegementTabBar> {
                 title: lang.ordersManagement, context: context, hasIcon: false),
             body: Padding(
               padding: const EdgeInsetsDirectional.symmetric(
-                  vertical: 12, horizontal: 30),
+                  vertical: 12, horizontal: 10),
               child: Column(
                 children: [
                   Container(

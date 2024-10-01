@@ -41,11 +41,14 @@ class _OrderedCustomerViewState extends State<OrderedCustomerView> {
                   ? SizedBox(
                       height: 120.h,
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text(
-                            'There is no Order yet.',
-                            style: AppStylesManager.customTextStyleG2,
+                          Center(
+                            child: Text(
+                              'There is no Order yet.',
+                              style: AppStylesManager.customTextStyleG2,
+                            ),
                           ),
                         ],
                       ),

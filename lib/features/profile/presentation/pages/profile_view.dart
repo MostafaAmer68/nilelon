@@ -8,6 +8,7 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/alert/logout_alert.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/closet/presentation/view/closet_view.dart';
 import 'package:nilelon/features/order/presentation/pages/order_customer_tab_bar.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
@@ -45,11 +46,19 @@ class ProfileView extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      const CircleAvatar(
-                        backgroundImage:
-                            AssetImage('assets/images/profile.png'),
-                        radius: 28,
+                      Container(
+                        decoration: const BoxDecoration(shape: BoxShape.circle),
+                        child: imageReplacer(
+                          url: HiveStorage.get<UserModel>(HiveKeys.userModel)
+                              .getUserData<CustomerModel>()
+                              .profilePic,
+                        ),
                       ),
+                      // const CircleAvatar(
+                      //   backgroundImage:
+                      //       AssetImage('assets/images/profile.png'),
+                      //   radius: 28,
+                      // ),
                       const SizedBox(
                         width: 12,
                       ),

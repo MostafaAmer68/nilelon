@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -20,6 +21,8 @@ class OrderCustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final DateFormat formatter = DateFormat('h:mm a');
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -89,7 +92,7 @@ class OrderCustomerCard extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          order.date,
+                          formatter.format(DateTime.parse(order.date)),
                           style: AppStylesManager.customTextStyleG7,
                         ),
                       ],
