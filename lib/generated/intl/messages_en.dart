@@ -402,6 +402,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "resend": MessageLookupByLibrary.simpleMessage("Resend"),
         "resendIn": MessageLookupByLibrary.simpleMessage("Resend In"),
         "returnItem": MessageLookupByLibrary.simpleMessage("Return Item"),
+        "returnedHistory":
+            MessageLookupByLibrary.simpleMessage("Returned History"),
         "reviews": MessageLookupByLibrary.simpleMessage("Reviews"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),
         "saveToCloset": MessageLookupByLibrary.simpleMessage("Save To Closet"),

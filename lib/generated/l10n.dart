@@ -3539,6 +3539,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Returned History`
+  String get returnedHistory {
+    return Intl.message(
+      'Returned History',
+      name: 'returnedHistory',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -345,5 +345,6 @@
   "ChangedMyMind": "Changed My Mind",
   "wrongItem": "Wrong Item",
   "missingItem": "Missing Item",
-  "damagedItem": "Damaged item"
+  "damagedItem": "Damaged item",
+  "returnedHistory": "Returned History"
 }
