@@ -7,12 +7,7 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 
-GestureDetector offersCard({required context,required ProductModel product}) {
-  List<String> images = ['assets/images/saveToCloset.png'];
-  String name = 'T-Shirt';
-  String price = '370.90';
-  String priceDisc = '400.90';
-  String discount = '20';
+GestureDetector offersCard({required context, required ProductModel product}) {
   return GestureDetector(
     onTap: () {
       // navigateTo(
@@ -42,9 +37,9 @@ GestureDetector offersCard({required context,required ProductModel product}) {
         ],
       ),
       width: screenWidth(context, 0.42),
-      height: 1.sw > 600 ? 310 : 245,
+      height: 1.sw > 600 ? 310 : 280,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
             width: screenWidth(context, 0.16),
@@ -56,7 +51,7 @@ GestureDetector offersCard({required context,required ProductModel product}) {
                 color: ColorManager.primaryO),
             child: Center(
                 child: Text(
-              '$discount%',
+              '${product.productVariants.first.discountRate}%',
               style: AppStylesManager.customTextStyleW4,
             )),
           ),
@@ -72,18 +67,38 @@ GestureDetector offersCard({required context,required ProductModel product}) {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
                     image: DecorationImage(
-                        image: AssetImage(images[0]), fit: BoxFit.fill)),
+                        image: NetworkImage(product.productImages[0].url),
+                        fit: BoxFit.fill)),
               ),
               Positioned(
                   top: 5,
                   child: Container(
-                    width: 32,
-                    height: 32,
-                    decoration: const BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(
-                                'assets/images/closet_following.png'),
-                            fit: BoxFit.fill)),
+                    width: 35.w, // Increased size to match the image
+                    height: 35.w,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.shade300.withOpacity(1),
+                            offset: const Offset(
+                                3, 3), // Adjusted shadow to be more subtle
+                            blurRadius: 5,
+                          ),
+                        ],
+                        image: product.isInCloset
+                            ? const DecorationImage(
+                                image: AssetImage(
+                                  'assets/images/closet_following.png',
+                                ),
+                                fit: BoxFit.cover, // Changed to contain
+                              )
+                            : const DecorationImage(
+                                image: AssetImage(
+                                  'assets/images/hanger.png',
+                                ),
+                                fit: BoxFit.cover, // Changed to contain
+                              )),
                   ))
             ],
           ),
@@ -91,7 +106,7 @@ GestureDetector offersCard({required context,required ProductModel product}) {
             height: 12,
           ),
           Text(
-            name,
+            product.name,
             style: AppStylesManager.customTextStyleBl9,
           ),
           const SizedBox(
@@ -102,7 +117,7 @@ GestureDetector offersCard({required context,required ProductModel product}) {
             child: Row(
               children: [
                 Text(
-                  price,
+                  product.productVariants.first.price.toString(),
                   style: AppStylesManager.customTextStyleO3
                       .copyWith(fontWeight: FontWeight.w700),
                 ),
@@ -116,7 +131,10 @@ GestureDetector offersCard({required context,required ProductModel product}) {
                   alignment: Alignment.center,
                   children: [
                     Text(
-                      priceDisc,
+                      (product.productVariants.first.price *
+                              (product.productVariants.first.discountRate /
+                                  100))
+                          .toString(),
                       style: AppStylesManager.customTextStyleG,
                     ),
                     const SizedBox(
