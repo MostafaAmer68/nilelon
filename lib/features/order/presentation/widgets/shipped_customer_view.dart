@@ -9,6 +9,7 @@ import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/cards/customer_order_management/ordered_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../pages/order_customer_details.dart';
 import '../pages/order_store_details_view.dart';
 
 class ShippedCustomerView extends StatefulWidget {
@@ -67,8 +68,9 @@ class _ShippedCustomerViewState extends State<ShippedCustomerView> {
                             onTap: () {
                               navigateTo(
                                   context: context,
-                                  screen: OrderStoreDetailsView(
+                                  screen: OrderDetailsView(
                                     index: 2,
+                                    recievedDate: order.date,
                                     id: order.id,
                                   ));
                             },

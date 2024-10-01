@@ -34,6 +34,7 @@ class _SectionsProductViewState extends State<SectionsProductView> {
     cubit = ProductsCubit.get(context);
     cubit.categoryId = widget.categoryId;
     // selectedCategory = widget.selectedCat;
+    cubit.getProductByCategory(1, 10);
     super.initState();
   }
 
