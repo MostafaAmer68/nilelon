@@ -103,49 +103,74 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                       const SizedBox(
                         height: 30,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          cubit.validationOption['isFollow']
-                              ? GradientButtonBuilder(
-                                  text: lang.follow,
-                                  ontap: () {
-                                    cubit.followStore(widget.storeId);
-                                    cubit.getStoreForCustomer(widget.storeId);
-                                    setState(() {});
-                                  },
-                                  width: screenWidth(context, 0.55),
-                                  height: 38,
-                                )
-                              : OutlinedButtonBuilder(
-                                  text: lang.following,
-                                  ontap: () {
-                                    cubit.followStore(widget.storeId);
-                                    cubit.getStoreForCustomer(widget.storeId);
-                                    setState(() {});
-                                  },
-                                  width: screenWidth(context, 0.55),
-                                  height: 38,
-                                ),
-                          const SizedBox(
-                            width: 16,
-                          ),
-                          Container(
-                            height: 38,
-                            width: 38,
-                            decoration: BoxDecoration(
-                                color: ColorManager.primaryG16,
-                                borderRadius: BorderRadius.circular(12)),
-                            child: IconButton(
-                              icon: const Icon(
-                                Iconsax.notification,
-                                color: ColorManager.primaryO,
-                                size: 18,
+                      BlocBuilder<ProfileCubit, ProfileState>(
+                        builder: (context, state) {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              !cubit.validationOption['isFollow']
+                                  ? GradientButtonBuilder(
+                                      text: lang.follow,
+                                      ontap: () {
+                                        cubit.followStore(widget.storeId);
+                                        cubit.getStoreForCustomer(
+                                            widget.storeId);
+                                        setState(() {});
+                                      },
+                                      width: screenWidth(context, 0.55),
+                                      height: 38,
+                                    )
+                                  : OutlinedButtonBuilder(
+                                      text: lang.following,
+                                      ontap: () {
+                                        cubit.followStore(widget.storeId);
+                                        cubit.getStoreForCustomer(
+                                            widget.storeId);
+                                        setState(() {});
+                                      },
+                                      width: screenWidth(context, 0.55),
+                                      height: 38,
+                                    ),
+                              const SizedBox(
+                                width: 16,
                               ),
-                              onPressed: () {},
-                            ),
-                          ),
-                        ],
+                              Container(
+                                height: 38,
+                                width: 38,
+                                decoration: BoxDecoration(
+                                    color: ColorManager.primaryG16,
+                                    borderRadius: BorderRadius.circular(12)),
+                                child: !cubit.validationOption['isNotify']
+                                    ? IconButton(
+                                        icon: const Icon(
+                                          Iconsax.notification,
+                                          color: ColorManager.primaryO,
+                                          size: 18,
+                                        ),
+                                        onPressed: () {
+                                          cubit.notifyStore(widget.storeId);
+                                          cubit.getStoreForCustomer(
+                                              widget.storeId);
+                                          setState(() {});
+                                        },
+                                      )
+                                    : IconButton(
+                                        icon: const Icon(
+                                          Iconsax.notification,
+                                          color: ColorManager.primaryB,
+                                          size: 18,
+                                        ),
+                                        onPressed: () {
+                                          cubit.notifyStore(widget.storeId);
+                                          cubit.getStoreForCustomer(
+                                              widget.storeId);
+                                          setState(() {});
+                                        },
+                                      ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
                       const SizedBox(
                         height: 30,

@@ -10,6 +10,7 @@ import 'package:nilelon/features/order/presentation/pages/order_store_details_vi
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../pages/order_customer_details.dart';
 
 class ReceivedCustomerView extends StatefulWidget {
   const ReceivedCustomerView({super.key});
@@ -67,7 +68,6 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
                           ),
                         )
                       : ListView.builder(
-                          // scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: cubit.customerOrders
                               .where((e) => e.status == 'Delivered')
@@ -85,8 +85,9 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
                                 onTap: () {
                                   navigateTo(
                                       context: context,
-                                      screen: OrderStoreDetailsView(
+                                      screen: OrderDetailsView(
                                         index: 2,
+                                        recievedDate: order.date,
                                         id: order.id,
                                       ));
                                 },

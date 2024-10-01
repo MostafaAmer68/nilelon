@@ -17,6 +17,7 @@ import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
+import '../../../../core/widgets/cards/offers/offers_card.dart';
 import '../../../../core/widgets/cards/small/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
@@ -106,7 +107,7 @@ class _NewInViewAllState extends State<NewInViewAll> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1.sw > 600 ? 3 : 2,
                               crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                              mainAxisExtent: 1.sw > 600 ? 300 : 220,
+                              mainAxisExtent: 1.sw > 600 ? 300 : 300,
                               mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                             ),
                             shrinkWrap: true,
@@ -122,10 +123,18 @@ class _NewInViewAllState extends State<NewInViewAll> {
                                     ? marketSmallCard(
                                         context: context,
                                         product: productsList[sizeIndex])
-                                    : productSquarItem(
-                                        context: context,
-                                        model: productsList[sizeIndex],
-                                      );
+                                    : productsList[sizeIndex]
+                                                .productVariants
+                                                .first
+                                                .discountRate !=
+                                            0
+                                        ? offersCard(
+                                            context: context,
+                                            product: productsList[sizeIndex])
+                                        : productSquarItem(
+                                            context: context,
+                                            model: productsList[sizeIndex],
+                                          );
                               }
                             },
                           ),

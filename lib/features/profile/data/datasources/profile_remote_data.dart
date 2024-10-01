@@ -129,6 +129,24 @@ class ProfileRemoteData {
     }
   }
 
+  Future<String> notifyStore(storeId) async {
+    final response = await _apiService.post(
+      endPoint: EndPoint.isNotify,
+      query: {
+        "storeId": storeId,
+        "customerId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+      },
+    );
+    if (response.statusCode == 200) {
+      return response.data['result'];
+    } else {
+      // Handle other status codes if necessary
+      final errorMessage = response.data;
+      // errorAlert(context, errorMessage);
+      throw Exception(' $errorMessage');
+    }
+  }
+
   Future<List<StoreProfile>> getStores(int page, int pageSize) async {
     final response = await _apiService.get(
       endPoint: EndPoint.getStoresUrls,

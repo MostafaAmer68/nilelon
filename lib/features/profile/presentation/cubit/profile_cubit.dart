@@ -58,4 +58,14 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(const ProfileState.success());
     });
   }
+
+  Future<void> notifyStore(String storeId) async {
+    emit(const ProfileState.loading());
+    final result = await _profileRepoIMpl.notifyStore(storeId);
+    result.fold((er) {
+      emit(const ProfileState.failure());
+    }, (response) {
+      emit(const ProfileState.success());
+    });
+  }
 }

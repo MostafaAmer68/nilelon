@@ -74,8 +74,9 @@ class ProfileRepoIMpl implements ProfileRepo {
       return left(ServerFailure(e.toString()));
     }
   }
+
   @override
-  Future<Either<FailureService, Map<String,dynamic>>> getStoreForCustomer(
+  Future<Either<FailureService, Map<String, dynamic>>> getStoreForCustomer(
       String storeId) async {
     try {
       final result = await _profile.getStoreForCustomer(storeId);
@@ -95,6 +96,22 @@ class ProfileRepoIMpl implements ProfileRepo {
   Future<Either<FailureService, String>> followStore(String storeId) async {
     try {
       final result = await _profile.followStore(storeId);
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, String>> notifyStore(String storeId) async {
+    try {
+      final result = await _profile.notifyStore(storeId);
       // HiveStorage( HiveKeys.email, value: result.data.email);
       return Right(result);
     } catch (e) {

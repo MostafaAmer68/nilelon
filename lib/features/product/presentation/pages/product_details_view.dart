@@ -47,7 +47,10 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     cubit = CartCubit.get(context);
     cubit.selectedColor = widget.product.productVariants.first.color;
     cubit.selectedSize = widget.product.productVariants.first.size;
-    sizes = widget.product.productVariants.map((e) => e.size).toList();
+    sizes = widget.product.productVariants
+        .where((e) => e.quantity != 0 && e.quantity > 0)
+        .map((e) => e.size)
+        .toList();
   }
 
   void incrementCounter() {
@@ -176,7 +179,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       children: [
         Expanded(child: _buildProductInfo(context)),
         Text(
-          '${widget.product.productVariants[0].price} L.E',
+          '${widget.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price} L.E',
           style: AppStylesManager.customTextStyleO4,
         ),
       ],

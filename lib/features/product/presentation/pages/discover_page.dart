@@ -16,6 +16,7 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.dart';
 
+import '../../../../core/widgets/cards/offers/offers_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class DiscoverView extends StatefulWidget {
@@ -159,23 +160,25 @@ class _DiscoverViewState extends State<DiscoverView> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: SizedBox(
-                          height: 1.sw > 600 ? 310 : 260,
+                          height: 1.sw > 600 ? 310 : 300,
                           child: ListView.builder(
                             itemBuilder: (context, index) {
                               if (index == productsList.length &&
                                   newInIsLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
-                                return Row(
-                                  children: [
-                                    productSquarItem(
+                                return productsList[index]
+                                            .productVariants
+                                            .first
+                                            .discountRate !=
+                                        0
+                                    ? offersCard(
                                         context: context,
-                                        model: productsList[index]),
-                                    const SizedBox(
-                                      width: 16,
-                                    )
-                                  ],
-                                );
+                                        product: productsList[index])
+                                    : productSquarItem(
+                                        context: context,
+                                        model: productsList[index],
+                                      );
                               }
                             },
                             itemCount: newInIsLoadMore
@@ -234,7 +237,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 1.sw > 600 ? 3 : 2,
                                   crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                                  mainAxisExtent: 1.sw > 600 ? 300 : 260,
+                                  mainAxisExtent: 1.sw > 600 ? 300 : 300,
                                   mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                                 ),
                                 shrinkWrap: true,
@@ -246,12 +249,18 @@ class _DiscoverViewState extends State<DiscoverView> {
                                       handIsLoadMore) {
                                     return buildShimmerIndicatorSmall();
                                   } else {
-                                    return Container(
-                                      child: productSquarItem(
-                                        context: context,
-                                        model: productsList[index],
-                                      ),
-                                    );
+                                    return productsList[index]
+                                                .productVariants
+                                                .first
+                                                .discountRate !=
+                                            0
+                                        ? offersCard(
+                                            context: context,
+                                            product: productsList[index])
+                                        : productSquarItem(
+                                            context: context,
+                                            model: productsList[index],
+                                          );
                                   }
                                 },
                               ),
