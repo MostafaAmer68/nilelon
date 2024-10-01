@@ -67,6 +67,8 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
                           ),
                         )
                       : ListView.builder(
+                          // scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
                           itemCount: cubit.customerOrders
                               .where((e) => e.status == 'Delivered')
                               .toList()
