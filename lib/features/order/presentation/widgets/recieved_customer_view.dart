@@ -99,6 +99,7 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
                 },
                 loading: () {
                   return ListView.builder(
+                    shrinkWrap: true,
                     itemCount: 9,
                     itemBuilder: (context, index) {
                       return buildShimmerIndicatorSmall();
