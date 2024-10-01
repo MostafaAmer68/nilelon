@@ -1,8 +1,31 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 
 class NotificatoinService {
+  final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  Future<bool> _requestNotificationPermissions() async {
+    final bool? result = await _flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
+
+    if (result != null && result) {
+      print('Notification permission granted.');
+    } else {
+      print('Notification permission denied.');
+    }
+    return result != null && result;
+  }
+
   Future initializeNotification() async {
+    if (!(await _requestNotificationPermissions())) return;
     AwesomeNotifications().initialize(
       // set the icon to null if you want to use the default app icon
       null,

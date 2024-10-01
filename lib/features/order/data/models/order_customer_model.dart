@@ -19,7 +19,7 @@ class OrderCustomerModel {
         governate: '',
         status: '',
         phoneNumber: '',
-        shippingCost: '',
+        shippingCost: '0',
         customerId: '',
         orderProductVariants: [],
       );

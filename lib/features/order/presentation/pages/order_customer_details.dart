@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/generated/l10n.dart';
+import 'package:nilelon/core/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/footer/order_details_footer.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/order/presentation/widgets/order_product_item.dart';
+import 'package:nilelon/features/refund/presentation/pages/refund_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
@@ -48,8 +51,8 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
         'icon': 'assets/images/bag-timer2.svg',
         'color': ColorManager.primaryO
       },
-      'Recived': {
-        'title': 'Received',
+      'Delivered': {
+        'title': 'Delivered',
         'icon': 'assets/images/bag-timer3.svg',
         'color': ColorManager.primaryGR
       }
@@ -57,10 +60,13 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
     final lang = S.of(context);
     return ScaffoldImage(
       appBar: customAppBar(
-        title: lang.orderDetails,
-        context: context,
-        hasIcon: false,
-      ),
+          title: lang.orderDetails,
+          context: context,
+          hasIcon: cubit.customerOrder.status == 'Delivered',
+          icon: Icons.error,
+          onPressed: () {
+            navigateTo(context: context, screen: const RefundPage());
+          }),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,26 +101,36 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                         const DefaultDivider(),
                         orderSummaryItems2(
                           lang.orderState,
-                          Container(
-                            height: 35,
-                            width: 100,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                color: orderState[cubit.customerOrder.status]
-                                    ['color']),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                SvgPicture.asset(
-                                    orderState[cubit.customerOrder.status]
-                                        ['icon']),
-                                Text(
-                                  cubit.customerOrder.status,
-                                  style: const TextStyle(
-                                      color: ColorManager.primaryW),
+                          BlocBuilder<OrderCubit, OrderState>(
+                            builder: (context, state) {
+                              return state.whenOrNull(
+                                loading: () =>
+                                    const CircularProgressIndicator(),
+                                success: () => Container(
+                                  height: 35,
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                      color:
+                                          orderState[cubit.customerOrder.status]
+                                              ['color']),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      SvgPicture.asset(
+                                          orderState[cubit.customerOrder.status]
+                                              ['icon']),
+                                      Text(
+                                        cubit.customerOrder.status,
+                                        style: const TextStyle(
+                                            color: ColorManager.primaryW),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
+                              )!;
+                            },
                           ),
                         ),
                         const DefaultDivider(),
@@ -171,24 +187,38 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                         )
                       ],
                     ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        orderSummaryItems(
-                          'Order',
-                          (cubit.customerOrder.total -
-                                  num.parse(cubit.customerOrder.shippingCost))
-                              .toString(),
-                        ),
-                        const DefaultDivider(),
-                        orderSummaryItems(
-                          'Delivery',
-                          cubit.customerOrder.shippingCost,
-                        ),
-                        const DefaultDivider(),
-                        orderSummaryItems(
-                            'Total', cubit.customerOrder.total.toString()),
-                      ],
+                    child: BlocBuilder<OrderCubit, OrderState>(
+                      builder: (context, state) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            state.whenOrNull(
+                              loading: () => const CircularProgressIndicator(),
+                              success: () => orderSummaryItems(
+                                'Order',
+                                (cubit.customerOrder.total -
+                                        num.parse(
+                                            cubit.customerOrder.shippingCost))
+                                    .toString(),
+                              ),
+                            )!,
+                            const DefaultDivider(),
+                            state.whenOrNull(
+                              loading: () => const CircularProgressIndicator(),
+                              success: () => orderSummaryItems('Total',
+                                  cubit.customerOrder.total.toString()),
+                            )!,
+                            const DefaultDivider(),
+                            state.whenOrNull(
+                              loading: () => const CircularProgressIndicator(),
+                              success: () => orderSummaryItems(
+                                'Delivery',
+                                cubit.customerOrder.shippingCost,
+                              ),
+                            )!,
+                          ],
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -261,20 +291,28 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
             padding: const EdgeInsets.only(left: 16),
             child: SizedBox(
               height: 120,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                clipBehavior: Clip.none,
-                itemBuilder: (context, index) {
-                  final product =
-                      cubit.customerOrder.orderProductVariants[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: OrderDetailsCard(
-                      product: product,
+              child: BlocBuilder<OrderCubit, OrderState>(
+                builder: (context, state) {
+                  return state.whenOrNull(
+                    loading: () => buildShimmerIndicatorRow(),
+                    success: () => ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      clipBehavior: Clip.none,
+                      itemBuilder: (context, index) {
+                        final product =
+                            cubit.customerOrder.orderProductVariants[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: OrderDetailsCard(
+                            product: product,
+                          ),
+                        );
+                      },
+                      itemCount:
+                          cubit.customerOrder.orderProductVariants.length,
                     ),
-                  );
+                  )!;
                 },
-                itemCount: cubit.customerOrder.orderProductVariants.length,
               ),
             ),
           )
