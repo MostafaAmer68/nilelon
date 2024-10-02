@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -71,7 +73,9 @@ class CustomLogInterceptor extends LogInterceptor {
     options.headers.forEach((key, value) {});
 
     // Log request body if it's present
-    if (options.data != null) {}
+    if (options.data != null) {
+      log(jsonEncode(options.data));
+    }
     super.onRequest(options, handler);
   }
 }

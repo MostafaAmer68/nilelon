@@ -9,31 +9,17 @@ class CreateRetWrongModel {
   final String backImage;
   final String damageImage;
 
-  CreateRetWrongModel(
-    this.orderId,
-    this.productId,
-    this.size,
-    this.color,
-    this.returnedSize,
-    this.returnedColor,
-    this.frontImage,
-    this.backImage,
-    this.damageImage,
-  );
-
-  factory CreateRetWrongModel.fromJson(Map<String, dynamic> json) {
-    return CreateRetWrongModel(
-      json['orderId'],
-      json['productId'],
-      json['size'],
-      json['color'],
-      json['returnedSize'],
-      json['returnedColor'],
-      json['frontImage'],
-      json['backImage'],
-      json['damageImage'],
-    );
-  }
+  CreateRetWrongModel({
+    required this.orderId,
+    required this.productId,
+    required this.size,
+    required this.color,
+    required this.returnedSize,
+    required this.returnedColor,
+    required this.frontImage,
+    required this.backImage,
+    required this.damageImage,
+  });
 
   Map<String, dynamic> toJson() {
     return {

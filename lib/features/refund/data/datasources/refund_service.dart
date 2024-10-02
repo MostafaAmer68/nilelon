@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -19,7 +20,7 @@ class RefundSErvice {
   Future<List<RefundModel>> getRefunds() async {
     final isStore = HiveStorage.get(HiveKeys.isStore);
     final Response data = await _apiService.get(
-        endPoint: isStore
+        endPoint: !isStore
             ? EndPoint.getCustomerReturensUrl
             : EndPoint.getStoreReturensUrl,
         query: {
@@ -38,7 +39,9 @@ class RefundSErvice {
 
   Future<void> createRetMissingItem(CreateRetMissingModel model) async {
     final Response data = await _apiService.post(
-        endPoint: EndPoint.createReturnedMissingItem, body: model.toJson());
+      endPoint: EndPoint.createReturnedMissingItem,
+      body: model.toJson(),
+    );
     if (data.statusCode == HttpStatus.ok) {
     } else {
       // Handle other status codes if necessary

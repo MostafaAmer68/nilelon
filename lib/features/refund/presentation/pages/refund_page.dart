@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
@@ -12,8 +13,20 @@ import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.
 import 'package:nilelon/features/refund/presentation/pages/return_item_page.dart';
 // import 'package:nilelon/generated/l10n.dart';
 
-class RefundPage extends StatelessWidget {
-  const RefundPage({super.key});
+class RefundPage extends StatefulWidget {
+  const RefundPage({super.key, required this.orderId});
+  final String orderId;
+
+  @override
+  State<RefundPage> createState() => _RefundPageState();
+}
+
+class _RefundPageState extends State<RefundPage> {
+  @override
+  void initState() {
+    RefundCubit.get(context).orderId = widget.orderId;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/generated/l10n.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -65,7 +66,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
           hasIcon: cubit.customerOrder.status == 'Delivered',
           icon: Icons.error,
           onPressed: () {
-            navigateTo(context: context, screen: const RefundPage());
+            navigateTo(context: context, screen:  RefundPage(orderId:widget.id));
           }),
       body: SingleChildScrollView(
         child: Column(
