@@ -11,7 +11,6 @@ import 'package:nilelon/core/widgets/footer/order_details_footer.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/order/presentation/widgets/order_product_item.dart';
 import 'package:nilelon/features/refund/presentation/pages/refund_page.dart';
-import 'package:nilelon/generated/l10n.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
