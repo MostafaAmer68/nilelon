@@ -14,6 +14,8 @@ import '../models/update_product.dart';
 abstract class ProductsRepos {
   Future<Either<FailureService, List<ProductModel>>> getProductByCategory(
       String categoryId, int page, int productSize);
+  Future<Either<FailureService, ProductModel>> getProductDetails(
+      String productId);
 
   Future<Either<FailureService, List<ProductModel>>> getFollowedProducts(
       int page, int productSize);

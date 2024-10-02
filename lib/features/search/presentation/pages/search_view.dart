@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/customer_flow/see_more_stores/view/see_more_stores_view.dart';
+import 'package:nilelon/features/search/presentation/widgets/search_delegate.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -19,14 +20,14 @@ import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../profile/presentation/pages/store_profile_customer.dart';
 
-class SearchView extends StatefulWidget {
-  const SearchView({super.key});
+class SearchPage extends StatefulWidget {
+  const SearchPage({super.key});
 
   @override
-  State<SearchView> createState() => _SearchViewState();
+  State<SearchPage> createState() => _SearchPageState();
 }
 
-class _SearchViewState extends State<SearchView> {
+class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     ProfileCubit.get(context).getStores(1, 5);
@@ -180,18 +181,12 @@ class _SearchViewState extends State<SearchView> {
       backgroundColor: ColorManager.primaryW,
       title: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
-        child: TextFormFieldBuilder(
-            label: search,
-            controller: TextEditingController(),
-            textAlignVer: TextAlignVertical.center,
-            type: TextInputType.text,
-            isIcon: false,
-            onchanged: (query) {
-              SearchCubit.get(context).search(query);
-            },
-            height: 40,
-            prefixWidget: const Icon(Iconsax.search_normal),
-            width: screenWidth(context, 1)),
+        child: SearchBar(
+          hintText: search,
+          onTap: () {
+            showSearch(context: context, delegate: SearchView());
+          },
+        ),
       ),
     );
   }

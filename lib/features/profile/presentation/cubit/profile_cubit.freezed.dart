@@ -21,6 +21,7 @@ mixin _$ProfileState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successFollow,
     required TResult Function() failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -29,6 +30,7 @@ mixin _$ProfileState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successFollow,
     TResult? Function()? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -37,6 +39,7 @@ mixin _$ProfileState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successFollow,
     TResult Function()? failure,
     required TResult orElse(),
   }) =>
@@ -46,6 +49,7 @@ mixin _$ProfileState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessFollow value) successFollow,
     required TResult Function(_Failure value) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -54,6 +58,7 @@ mixin _$ProfileState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessFollow value)? successFollow,
     TResult? Function(_Failure value)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -62,6 +67,7 @@ mixin _$ProfileState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessFollow value)? successFollow,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) =>
@@ -127,6 +133,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successFollow,
     required TResult Function() failure,
   }) {
     return initial();
@@ -138,6 +145,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successFollow,
     TResult? Function()? failure,
   }) {
     return initial?.call();
@@ -149,6 +157,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successFollow,
     TResult Function()? failure,
     required TResult orElse(),
   }) {
@@ -164,6 +173,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessFollow value) successFollow,
     required TResult Function(_Failure value) failure,
   }) {
     return initial(this);
@@ -175,6 +185,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessFollow value)? successFollow,
     TResult? Function(_Failure value)? failure,
   }) {
     return initial?.call(this);
@@ -186,6 +197,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessFollow value)? successFollow,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
@@ -241,6 +253,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successFollow,
     required TResult Function() failure,
   }) {
     return loading();
@@ -252,6 +265,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successFollow,
     TResult? Function()? failure,
   }) {
     return loading?.call();
@@ -263,6 +277,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successFollow,
     TResult Function()? failure,
     required TResult orElse(),
   }) {
@@ -278,6 +293,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessFollow value) successFollow,
     required TResult Function(_Failure value) failure,
   }) {
     return loading(this);
@@ -289,6 +305,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessFollow value)? successFollow,
     TResult? Function(_Failure value)? failure,
   }) {
     return loading?.call(this);
@@ -300,6 +317,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessFollow value)? successFollow,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
@@ -355,6 +373,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successFollow,
     required TResult Function() failure,
   }) {
     return success();
@@ -366,6 +385,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successFollow,
     TResult? Function()? failure,
   }) {
     return success?.call();
@@ -377,6 +397,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successFollow,
     TResult Function()? failure,
     required TResult orElse(),
   }) {
@@ -392,6 +413,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessFollow value) successFollow,
     required TResult Function(_Failure value) failure,
   }) {
     return success(this);
@@ -403,6 +425,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessFollow value)? successFollow,
     TResult? Function(_Failure value)? failure,
   }) {
     return success?.call(this);
@@ -414,6 +437,7 @@ class _$SuccessImpl implements _Success {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessFollow value)? successFollow,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {
@@ -426,6 +450,126 @@ class _$SuccessImpl implements _Success {
 
 abstract class _Success implements ProfileState {
   const factory _Success() = _$SuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$SuccessFollowImplCopyWith<$Res> {
+  factory _$$SuccessFollowImplCopyWith(
+          _$SuccessFollowImpl value, $Res Function(_$SuccessFollowImpl) then) =
+      __$$SuccessFollowImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SuccessFollowImplCopyWithImpl<$Res>
+    extends _$ProfileStateCopyWithImpl<$Res, _$SuccessFollowImpl>
+    implements _$$SuccessFollowImplCopyWith<$Res> {
+  __$$SuccessFollowImplCopyWithImpl(
+      _$SuccessFollowImpl _value, $Res Function(_$SuccessFollowImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SuccessFollowImpl implements _SuccessFollow {
+  const _$SuccessFollowImpl();
+
+  @override
+  String toString() {
+    return 'ProfileState.successFollow()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SuccessFollowImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
+    required TResult Function() successFollow,
+    required TResult Function() failure,
+  }) {
+    return successFollow();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
+    TResult? Function()? successFollow,
+    TResult? Function()? failure,
+  }) {
+    return successFollow?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
+    TResult Function()? successFollow,
+    TResult Function()? failure,
+    required TResult orElse(),
+  }) {
+    if (successFollow != null) {
+      return successFollow();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_SuccessFollow value) successFollow,
+    required TResult Function(_Failure value) failure,
+  }) {
+    return successFollow(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessFollow value)? successFollow,
+    TResult? Function(_Failure value)? failure,
+  }) {
+    return successFollow?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_SuccessFollow value)? successFollow,
+    TResult Function(_Failure value)? failure,
+    required TResult orElse(),
+  }) {
+    if (successFollow != null) {
+      return successFollow(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SuccessFollow implements ProfileState {
+  const factory _SuccessFollow() = _$SuccessFollowImpl;
 }
 
 /// @nodoc
@@ -469,6 +613,7 @@ class _$FailureImpl implements _Failure {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successFollow,
     required TResult Function() failure,
   }) {
     return failure();
@@ -480,6 +625,7 @@ class _$FailureImpl implements _Failure {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successFollow,
     TResult? Function()? failure,
   }) {
     return failure?.call();
@@ -491,6 +637,7 @@ class _$FailureImpl implements _Failure {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successFollow,
     TResult Function()? failure,
     required TResult orElse(),
   }) {
@@ -506,6 +653,7 @@ class _$FailureImpl implements _Failure {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessFollow value) successFollow,
     required TResult Function(_Failure value) failure,
   }) {
     return failure(this);
@@ -517,6 +665,7 @@ class _$FailureImpl implements _Failure {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessFollow value)? successFollow,
     TResult? Function(_Failure value)? failure,
   }) {
     return failure?.call(this);
@@ -528,6 +677,7 @@ class _$FailureImpl implements _Failure {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessFollow value)? successFollow,
     TResult Function(_Failure value)? failure,
     required TResult orElse(),
   }) {

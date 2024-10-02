@@ -105,6 +105,7 @@ class EndPoint {
       '/Product/GetRandomProductsGuest';
   static const String getCustomersOffersUrl = '/Product/GetOffers';
   static const String getProductByCategory = '/Product/GetProductsByCategory';
+  static const String getProductById = '/Product/GetProductDetails/';
   static const String getStoreOffersUrl = '/Product/GetOffersForStore';
 
   //todo Static Product Queries Urls

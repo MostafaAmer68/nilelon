@@ -30,7 +30,7 @@ AppBar customAppBar(
           ? IconButton(
               onPressed: onPressed ??
                   () {
-                    navigateTo(context: context, screen: const SearchView());
+                    navigateTo(context: context, screen: const SearchPage());
                   },
               icon: Icon(
                 icon ?? Iconsax.search_normal,

@@ -22,6 +22,7 @@ class ApiService {
     var response = await dio.get(
       endPoint,
       data: body,
+      
       queryParameters: query,
     );
     return response;

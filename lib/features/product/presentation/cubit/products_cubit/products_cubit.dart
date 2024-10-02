@@ -7,6 +7,7 @@ import 'package:nilelon/features/product/presentation/cubit/get_random_state/get
 import 'package:nilelon/features/product/presentation/cubit/get_store_products/get_store_products_state.dart';
 import 'package:nilelon/features/product/domain/repositories/products_repos.dart';
 
+import '../../../domain/models/product_model.dart';
 import 'products_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState> {
@@ -20,6 +21,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   //todo Get Followed Products
   final TextEditingController comment = TextEditingController();
+  ProductModel product = ProductModel.empty();
   String categoryId = '';
   Future<void> getFollowedProducts(int page, int productSize) async {
     emit(state.copyWith(
@@ -32,6 +34,22 @@ class ProductsCubit extends Cubit<ProductsState> {
     }, (response) {
       emit(state.copyWith(
           getFollowedProducts: GetFollowedProductsState.success(response)));
+    });
+  }
+
+  Future<void> getProductDetails(String productId) async {
+    emit(state.copyWith(
+        getFollowedProducts: const GetFollowedProductsState.loading()));
+    var result = await productsRepos.getProductDetails(productId);
+    result.fold((failure) {
+      emit(state.copyWith(
+          getFollowedProducts:
+              GetFollowedProductsState.failure(failure.errorMsg)));
+    }, (response) {
+      product = response;
+      emit(state.copyWith(
+        getFollowedProducts: const GetFollowedProductsState.success([]),
+      ));
     });
   }
 

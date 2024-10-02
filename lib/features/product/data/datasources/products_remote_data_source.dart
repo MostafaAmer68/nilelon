@@ -145,6 +145,27 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
+  Future<ProductModel> getProductDetails(String productId) async {
+    final data = await apiService.get(
+      endPoint: EndPoint.getProductById + productId,
+      query: {
+        'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+      },
+    );
+    if (data.statusCode == 200) {
+      return ProductModel.fromJson(data.data['result']);
+    } else if (data.statusCode == 400) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Exception('Get Store failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Store: Unexpected status code ${data.statusCode}');
+    }
+  }
+
   Future<ProductsResponseModel> getNewInProductsGuest(
       int page, int pageSize) async {
     final Response data =

@@ -249,4 +249,19 @@ class ProductsReposImpl extends ProductsRepos {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<Either<FailureService, ProductModel>> getProductDetails(
+      String productId) async {
+    try {
+      final result =
+          await productsRemoteDataSource.getProductDetails(productId);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
 }

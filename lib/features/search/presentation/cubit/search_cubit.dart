@@ -27,7 +27,7 @@ class SearchCubit extends Cubit<SearchState> {
       // Return cached result
       searchResult = _cache[query]!;
       log('already searched');
-      emit(SearchSuccess());  
+      emit(SearchSuccess());
       return;
     }
 
@@ -45,5 +45,6 @@ class SearchCubit extends Cubit<SearchState> {
         emit(SearchSuccess());
       },
     );
+    print(searchResult);
   }
 }

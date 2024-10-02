@@ -28,7 +28,7 @@ GestureDetector productSquarItem({
       navigateTo(
         context: context,
         screen: ProductDetailsView(
-          product: model,
+          productId: model.id,
         ),
       );
     },

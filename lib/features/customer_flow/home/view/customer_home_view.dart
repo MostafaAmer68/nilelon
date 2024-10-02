@@ -80,7 +80,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
               ),
               GestureDetector(
                 onTap: () {
-                  navigateTo(context: context, screen: const SearchView());
+                  navigateTo(context: context, screen: const SearchPage());
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12.0.sp),

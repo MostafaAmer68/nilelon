@@ -12,6 +12,8 @@ import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:svg_flutter/svg.dart';
 
+import 'return_details_page.dart';
+
 class ReturnHistoryPage extends StatefulWidget {
   const ReturnHistoryPage({super.key});
 
@@ -70,12 +72,12 @@ class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
                           time: formattedDate
                               .format(DateTime.parse(refundItem.date)),
                           onTap: () {
-                            // navigateTo(
-                            //     context: context,
-                            //     screen: OrderStoreDetailsView(
-                            //       id: order.id,
-                            //       index: 0,
-                            //     ));
+                            navigateTo(
+                              context: context,
+                              screen: ReturnHistoryDetailsPage(
+                                refundId: refundItem.id,
+                              ),
+                            );
                           },
                         ),
                       );

@@ -55,6 +55,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(const ProfileState.failure());
     }, (response) {
       followStatus = response;
+      emit(const ProfileState.successFollow());
       emit(const ProfileState.success());
     });
   }
@@ -65,6 +66,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     result.fold((er) {
       emit(const ProfileState.failure());
     }, (response) {
+      emit(const ProfileState.successFollow());
       emit(const ProfileState.success());
     });
   }

@@ -30,7 +30,7 @@ class SearchSectionItems extends StatelessWidget {
               // color: AppStyles.primaryB5,
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Image.asset(image),
+            child: Image.network(image),
           ),
           const SizedBox(
             height: 8,

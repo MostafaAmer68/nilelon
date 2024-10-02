@@ -1,10 +1,13 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -23,15 +26,16 @@ import 'package:nilelon/core/widgets/rating/view/rating_dialog.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
+import '../cubit/products_cubit/products_state.dart';
 import '../widgets/color_selector.dart';
 import '../widgets/custom_toggle_button.dart';
 
 class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({
     super.key,
-    required this.product,
+    required this.productId,
   });
-  final ProductModel product;
+  final String productId;
 
   @override
   State<ProductDetailsView> createState() => _ProductDetailsViewState();
@@ -41,16 +45,13 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   bool isEnabled = true;
   late List<String> sizes;
   late final CartCubit cubit;
+  late final ProductsCubit productCubit;
   @override
   void initState() {
     super.initState();
     cubit = CartCubit.get(context);
-    cubit.selectedColor = widget.product.productVariants.first.color;
-    cubit.selectedSize = widget.product.productVariants.first.size;
-    sizes = widget.product.productVariants
-        .where((e) => e.quantity != 0 && e.quantity > 0)
-        .map((e) => e.size)
-        .toList();
+    productCubit = ProductsCubit.get(context);
+    ProductsCubit.get(context).getProductDetails(widget.productId);
   }
 
   void incrementCounter() {
@@ -70,107 +71,144 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return ScaffoldImage(
-      appBar: !HiveStorage.get(HiveKeys.isStore)
-          ? customAppBar(
-              title: lang.productDetails,
-              icon: Icons.share_outlined,
-              onPressed: () {
-                addToClosetDialog(context, widget.product.id);
-              },
-              context: context,
-            )
-          : AppBar(
-              backgroundColor: Colors.transparent,
-              leading: IconButton(
-                  onPressed: () => navigatePop(context: context),
-                  icon: const Icon(Icons.arrow_back)),
-              title: Text(
-                lang.productDetails,
-                style: AppStylesManager.customTextStyleBl6,
-              ),
-              centerTitle: true,
-              actions: [
-                PopupMenuButton<String>(
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem(
-                        value: 'delete',
-                        child: Text(lang.delete),
-                      ),
-                      PopupMenuItem(
-                        value: 'update',
-                        child: Text(lang.updateDraft),
-                      ),
-                    ];
-                  },
-                  onSelected: (value) {
-                    if (value == 'delete') {
-                    } else if (value == 'update') {
-                      navigateTo(
-                          context: context,
-                          screen: EditProductpage(product: widget.product));
-                    }
-                  },
+    return BlocListener<ProductsCubit, ProductsState>(
+      listener: (context, state) {
+        state.getFollowedProducts.mapOrNull(success: (_) {
+          cubit.selectedColor =
+              productCubit.product.productVariants.first.color;
+          cubit.selectedSize = productCubit.product.productVariants.first.size;
+          sizes = productCubit.product.productVariants
+              .where((e) => e.quantity != 0 && e.quantity > 0)
+              .map((e) => e.size)
+              .toList();
+        });
+      },
+      child: ScaffoldImage(
+        appBar: !HiveStorage.get(HiveKeys.isStore)
+            ? customAppBar(
+                title: lang.productDetails,
+                icon: Icons.share_outlined,
+                onPressed: () {
+                  addToClosetDialog(context, productCubit.product.id);
+                },
+                context: context,
+              )
+            : AppBar(
+                backgroundColor: Colors.transparent,
+                leading: IconButton(
+                    onPressed: () => navigatePop(context: context),
+                    icon: const Icon(Icons.arrow_back)),
+                title: Text(
+                  lang.productDetails,
+                  style: AppStylesManager.customTextStyleBl6,
                 ),
-              ],
-            ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const DefaultDivider(),
-            ImageBanner(
-              images: widget.product.productImages.map((e) => e.url).toList(),
-            ),
-            const SizedBox(height: 20),
-            Center(
-              child: SizedBox(
-                height: screenHeight(context, 0.07),
-                width: screenWidth(context, 0.3),
-                child: ListView.builder(
-                  itemCount: widget.product.productImages.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    final image = widget.product.productImages[index];
-                    return Image.network(
-                      image.url,
-                      fit: BoxFit.cover,
-                      // width: 30,
-                    );
-                  },
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildNameAndPriceRow(context),
-                  const SizedBox(height: 24),
-                  _buildDescription(),
-                  SizedBox(height: 20.h),
-                  _buildSizeSelector(lang),
-                  SizedBox(height: 22.h),
-                  _buildColorSelector(),
-                  SizedBox(height: 20.h),
-                  _buildStockCounter(),
+                centerTitle: true,
+                actions: [
+                  PopupMenuButton<String>(
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem(
+                          value: 'delete',
+                          child: Text(lang.delete),
+                        ),
+                        PopupMenuItem(
+                          value: 'update',
+                          child: Text(lang.updateDraft),
+                        ),
+                      ];
+                    },
+                    onSelected: (value) {
+                      if (value == 'delete') {
+                      } else if (value == 'update') {
+                        navigateTo(
+                            context: context,
+                            screen:
+                                EditProductpage(product: productCubit.product));
+                      }
+                    },
+                  ),
                 ],
               ),
-            ),
-            SizedBox(height: 6.h),
-            _buildReviewSection(lang),
-            const Divider(color: ColorManager.primaryG8, height: 4),
-            const SizedBox(height: 24),
-            const RatingContainer(),
-            const SizedBox(height: 24),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const DefaultDivider(),
+              BlocBuilder<ProductsCubit, ProductsState>(
+                builder: (context, state) {
+                  return state.getFollowedProducts.whenOrNull(
+                    loading: () => const CircularProgressIndicator(),
+                    success: (_) => ImageBanner(
+                      images: productCubit.product.productImages
+                          .map((e) => e.url)
+                          .toList(),
+                    ),
+                  )!;
+                },
+              ),
+              const SizedBox(height: 20),
+              Center(
+                child: SizedBox(
+                  height: screenHeight(context, 0.07),
+                  width: screenWidth(context, 0.3),
+                  child: BlocBuilder<ProductsCubit, ProductsState>(
+                    builder: (context, state) {
+                      return state.getFollowedProducts.whenOrNull(
+                          loading: () => const CircularProgressIndicator(),
+                          success: (_) => ListView.builder(
+                                itemCount:
+                                    productCubit.product.productImages.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  final image =
+                                      productCubit.product.productImages[index];
+                                  return Image.network(
+                                    image.url,
+                                    fit: BoxFit.cover,
+                                    // width: 30,
+                                  );
+                                },
+                              ))!;
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: BlocBuilder<ProductsCubit, ProductsState>(
+                  builder: (context, state) {
+                    return state.getFollowedProducts.whenOrNull(
+                        loading: () => const CircularProgressIndicator(),
+                        success: (_) => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildNameAndPriceRow(context),
+                                const SizedBox(height: 24),
+                                _buildDescription(),
+                                SizedBox(height: 20.h),
+                                _buildSizeSelector(lang),
+                                SizedBox(height: 22.h),
+                                _buildColorSelector(),
+                                SizedBox(height: 20.h),
+                                _buildStockCounter(),
+                              ],
+                            ))!;
+                  },
+                ),
+              ),
+              SizedBox(height: 6.h),
+              _buildReviewSection(lang),
+              const Divider(color: ColorManager.primaryG8, height: 4),
+              const SizedBox(height: 24),
+              const RatingContainer(),
+              const SizedBox(height: 24),
+            ],
+          ),
         ),
+        persistentFooterButtons: [
+          AddToFooter(visible: true, product: productCubit.product),
+        ],
       ),
-      persistentFooterButtons: [
-        AddToFooter(visible: true, product: widget.product),
-      ],
     );
   }
 
@@ -179,7 +217,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       children: [
         Expanded(child: _buildProductInfo(context)),
         Text(
-          '${widget.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price} L.E',
+          '${productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price} L.E',
           style: AppStylesManager.customTextStyleO4,
         ),
       ],
@@ -191,7 +229,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          widget.product.name,
+          productCubit.product.name,
           style: AppStylesManager.customTextStyleBl6.copyWith(
             fontSize: 30.sp,
             fontWeight: FontWeight.bold,
@@ -205,18 +243,18 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 navigateTo(
                   context: context,
                   screen: StoreProfileCustomer(
-                    storeId: widget.product.storeId,
+                    storeId: productCubit.product.storeId,
                   ),
                 );
               },
               child: Text(
-                widget.product.storeName,
+                productCubit.product.storeName,
                 style: AppStylesManager.customTextStyleG9,
               ),
             ),
             const SizedBox(width: 8),
             const Icon(Icons.star, color: ColorManager.primaryO2, size: 20),
-            Text(widget.product.rating.toString()),
+            Text(productCubit.product.rating.toString()),
           ],
         ),
       ],
@@ -225,7 +263,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 
   Widget _buildDescription() {
     return Text(
-      widget.product.description,
+      productCubit.product.description,
       style: AppStylesManager.customTextStyleG18.copyWith(
         fontWeight: FontWeightManager.regular400,
       ),
@@ -254,7 +292,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       children: [
         Text('Color :', style: AppStylesManager.customTextStyleG10),
         ColorSelector(
-          colors: widget.product.productVariants
+          colors: productCubit.product.productVariants
               .map((e) => e.color)
               .toList()
               .toSet()
@@ -270,7 +308,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   }
 
   Widget _buildStockCounter() {
-    return widget.product.inStock > 0
+    return productCubit.product.inStock > 0
         ? Row(
             children: [
               Text('In stock', style: AppStylesManager.customTextStyleL3),

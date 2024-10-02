@@ -52,6 +52,23 @@ class ProductModel {
           .toList(),
     );
   }
+  factory ProductModel.empty() {
+    return ProductModel(
+      id: '',
+      name: '',
+      description: '',
+      type: '',
+      categoryID: '',
+      sizeguide: '',
+      isInCloset: false,
+      rating: 0,
+      inStock: 0,
+      storeName: '',
+      storeId: '',
+      productVariants: [],
+      productImages: [],
+    );
+  }
 
   Map<String, dynamic> toJson() {
     return {
