@@ -6,6 +6,7 @@ import 'package:nilelon/core/widgets/cards/customer_order_management/ordered_car
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/order/presentation/pages/order_customer_details.dart';
+import 'package:nilelon/features/refund/presentation/pages/refund_history_page.dart';
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/scaffold_image.dart';
@@ -34,7 +35,9 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
           Align(
             alignment: AlignmentDirectional.topEnd,
             child: TextButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                navigateTo(context: context, screen: ReturnHistoryPage());
+              },
               icon: const Icon(
                 Icons.history,
                 color: ColorManager.primaryO,

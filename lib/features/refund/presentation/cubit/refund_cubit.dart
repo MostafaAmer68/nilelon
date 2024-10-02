@@ -1,22 +1,25 @@
 import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nilelon/core/helper.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/pop_ups/camera_popup.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:nilelon/features/product/domain/models/product_model.dart';
+import 'package:nilelon/features/order/data/models/order_customer_model.dart';
+import 'package:nilelon/features/refund/data/models/create_ret_change_mind_model.dart';
 import 'package:nilelon/features/refund/data/models/create_ret_missing_model.dart';
+import 'package:nilelon/features/refund/data/models/create_ret_wrong_model.dart';
 import 'package:nilelon/features/refund/data/models/refund_model.dart';
 import 'package:nilelon/features/refund/data/repositories/refund_repo_impl.dart';
 
@@ -24,18 +27,19 @@ part 'refund_state.dart';
 
 class RefundCubit extends Cubit<RefundState> {
   final RefundRepoImpl _refund;
+  static RefundCubit get(context) => BlocProvider.of(context);
   RefundCubit(this._refund) : super(RefundInitial());
   List<RefundModel> refunds = [];
-  List<String>sizes = ['XSmall','Small','Medium','Large','XLarge','XXLarge','XXXLarge'];
+
   String orderId = '';
-  List<ProductModel> selectedProducts = [];
+  List<OrderProductVariant> selectedProducts = [];
   String? selectedValue;
   String? wrongSelectedValue;
-  String selectedColor='0xFFD80000';
-  String selectedSize='XSmall';
-  File? image1;
-  File? image2;
-  File? image3;
+  String selectedColor = '';
+  String selectedSize = '';
+  File? backImage;
+  File? fronImage;
+  File? damageImage;
   Future<File> cameraDialog(BuildContext context) async {
     Completer<File> completer = Completer<File>();
 
@@ -122,14 +126,19 @@ class RefundCubit extends Cubit<RefundState> {
   }
 
   Future<void> createRetMissingItem() async {
+    emit(RefundInitial());
+    if (selectedProducts.isEmpty) {
+      emit(const RefundFailure('Please select 1 of product'));
+      return;
+    }
     emit(RefundLoading());
     if (selectedProducts.length == 1) {
       final selectedProduct = selectedProducts.first;
       final result = await _refund.createRetMissingItem(CreateRetMissingModel(
         orderId,
-        selectedProduct.id,
-        selectedProduct.productVariants.first.size,
-        selectedProduct.productVariants.first.color,
+        selectedProduct.productId,
+        selectedProduct.size,
+        selectedProduct.color,
         '',
       ));
 
@@ -146,10 +155,157 @@ class RefundCubit extends Cubit<RefundState> {
       for (var item in selectedProducts) {
         final result = await _refund.createRetMissingItem(CreateRetMissingModel(
           orderId,
-          item.id,
-          item.productVariants.first.size,
-          item.productVariants.first.color,
+          item.productId,
+          item.size,
+          item.color,
           '',
+        ));
+
+        result.fold(
+          (err) {
+            emit(RefundFailure(err.errorMsg));
+          },
+          (result) {
+            // refunds = result;
+            emit(RefundSuccess());
+          },
+        );
+      }
+    }
+  }
+
+  Future<void> createWrongItem() async {
+    emit(RefundInitial());
+    if (selectedProducts.isEmpty) {
+      emit(const RefundFailure('Please select 1 of product'));
+      return;
+    }
+    log(wrongSelectedValue!);
+    if (wrongSelectedValue == 'Damaged item') {
+      if (fronImage == null || backImage == null || damageImage == null) {
+        emit(const RefundFailure(
+            'please upload 2 photo of product and damaged photo'));
+        return;
+      }
+    }
+    if (wrongSelectedValue == 'Color') {
+      if (selectedColor.isEmpty) {
+        emit(const RefundFailure('please select Color'));
+        return;
+      } else if (fronImage == null || backImage == null) {
+        emit(const RefundFailure('please upload 2 photo of product'));
+        return;
+      }
+    }
+    if (wrongSelectedValue == 'Size') {
+      if (selectedSize.isEmpty) {
+        emit(const RefundFailure('please select Size'));
+        return;
+      } else if (fronImage == null || backImage == null) {
+        emit(const RefundFailure('please upload 2 photo of product'));
+        return;
+      }
+    }
+
+    emit(RefundLoading());
+    final fImage = await convertImageToBase64(fronImage!);
+    final bImage = await convertImageToBase64(backImage!);
+    final String dImage =
+        damageImage != null ? await convertImageToBase64(damageImage!) : '';
+    if (selectedProducts.length == 1) {
+      final selectedProduct = selectedProducts.first;
+      final result = await _refund.createRetWrongItem(CreateRetWrongModel(
+        orderId: orderId,
+        productId: selectedProduct.productId,
+        size: selectedProduct.size,
+        color: selectedProduct.color,
+        returnedColor: selectedColor,
+        returnedSize: selectedSize,
+        frontImage: fImage,
+        backImage: bImage,
+        damageImage: dImage,
+      ));
+
+      result.fold(
+        (err) {
+          emit(RefundFailure(err.errorMsg));
+        },
+        (result) {
+          // refunds = result;
+          emit(RefundSuccess());
+        },
+      );
+    } else {
+      for (var item in selectedProducts) {
+        final result = await _refund.createRetWrongItem(CreateRetWrongModel(
+          orderId: orderId,
+          productId: item.productId,
+          size: item.size,
+          color: item.color,
+          returnedColor: selectedColor,
+          returnedSize: selectedSize,
+          frontImage: fImage,
+          backImage: bImage,
+          damageImage: '',
+        ));
+
+        result.fold(
+          (err) {
+            emit(RefundFailure(err.errorMsg));
+          },
+          (result) {
+            // refunds = result;
+            emit(RefundSuccess());
+          },
+        );
+      }
+    }
+  }
+
+  Future<void> createRetChangeMindModel() async {
+    emit(RefundInitial());
+    if (selectedProducts.isEmpty) {
+      emit(const RefundFailure('Please select 1 of product'));
+      return;
+    }
+    if (fronImage == null || backImage == null) {
+      emit(const RefundFailure('please upload 2 photo of product'));
+      return;
+    }
+    emit(RefundLoading());
+    final fImage = await convertImageToBase64(fronImage!);
+    final bImage = await convertImageToBase64(backImage!);
+    if (selectedProducts.length == 1) {
+      final selectedProduct = selectedProducts.first;
+      final result =
+          await _refund.createRetChangeMindItem(CreateRetChangeMindModel(
+        orderId,
+        selectedProduct.productId,
+        selectedProduct.size,
+        selectedProduct.color,
+        fImage,
+        bImage,
+      ));
+
+      result.fold(
+        (err) {
+          emit(RefundFailure(err.errorMsg));
+        },
+        (result) {
+          // refunds = result;
+          emit(RefundSuccess());
+        },
+      );
+    } else {
+      for (var item in selectedProducts) {
+        final result =
+            await _refund.createRetChangeMindItem(CreateRetChangeMindModel(
+          orderId,
+          item.productId,
+          item.size,
+          item.color,
+          fImage,
+          bImage,
         ));
 
         result.fold(

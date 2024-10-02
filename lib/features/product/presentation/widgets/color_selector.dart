@@ -18,7 +18,7 @@ class ColorSelector extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 55,
-      width: screenHeight(context, 0.38),
+      width: screenHeight(context, 0.33),
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: colors.map((color) {
