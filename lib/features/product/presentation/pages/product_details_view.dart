@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,7 +5,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';

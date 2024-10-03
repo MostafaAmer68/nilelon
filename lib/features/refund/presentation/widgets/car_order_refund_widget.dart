@@ -86,25 +86,28 @@ class _OrderRefundDetailsCardState extends State<OrderRefundDetailsCard> {
                       ],
                     ),
                     const Spacer(),
-                    GradientCheckBox(
-                      value: cubit.selectedProducts.isEmpty
-                          ? false
-                          : cubit.selectedProducts.contains(widget.product),
-                      onChanged: (value) {
-                        if (value) {
-                          if (cubit.selectedProducts.isNotEmpty) {
-                            final index = cubit.selectedProducts
-                                .indexWhere((e) => e == widget.product);
-                            cubit.selectedProducts
-                                .insert(index, widget.product);
+                    Visibility(
+                      visible: widget.product.storeName.isNotEmpty,
+                      child: GradientCheckBox(
+                        value: cubit.selectedProducts.isEmpty
+                            ? false
+                            : cubit.selectedProducts.contains(widget.product),
+                        onChanged: (value) {
+                          if (value) {
+                            if (cubit.selectedProducts.isNotEmpty) {
+                              final index = cubit.selectedProducts
+                                  .indexWhere((e) => e == widget.product);
+                              cubit.selectedProducts
+                                  .insert(index, widget.product);
+                            } else {
+                              cubit.selectedProducts.add(widget.product);
+                            }
                           } else {
-                            cubit.selectedProducts.add(widget.product);
+                            cubit.selectedProducts.remove(widget.product);
                           }
-                        } else {
-                          cubit.selectedProducts.remove(widget.product);
-                        }
-                        setState(() {});
-                      },
+                          setState(() {});
+                        },
+                      ),
                     ),
                     const SizedBox(
                       width: 8,

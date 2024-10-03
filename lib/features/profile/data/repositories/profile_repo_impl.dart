@@ -59,7 +59,7 @@ class ProfileRepoIMpl implements ProfileRepo {
   }
 
   @override
-  Future<Either<FailureService, StoreProfile>> getStoreById(
+  Future<Either<FailureService, StoreProfileModel>> getStoreById(
       String storeId) async {
     try {
       final result = await _profile.getStoreById(storeId);
@@ -125,7 +125,7 @@ class ProfileRepoIMpl implements ProfileRepo {
   }
 
   @override
-  Future<Either<FailureService, List<StoreProfile>>> getStores(
+  Future<Either<FailureService, List<StoreProfileModel>>> getStores(
       int page, int pageSize) async {
     try {
       final result = await _profile.getStores(page, pageSize);

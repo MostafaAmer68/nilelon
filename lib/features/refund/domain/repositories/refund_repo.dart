@@ -4,9 +4,12 @@ import 'package:nilelon/features/refund/data/models/create_ret_change_mind_model
 import 'package:nilelon/features/refund/data/models/create_ret_missing_model.dart';
 import 'package:nilelon/features/refund/data/models/create_ret_wrong_model.dart';
 
+import '../../data/models/refund_details_model.dart';
 import '../../data/models/refund_model.dart';
 
 abstract class RefundRepo {
+  Future<Either<FailureService, ReturnDetailsModel>> getReturnDetails(
+      String returnId, String returnType);
   Future<Either<FailureService, List<RefundModel>>> getRefunds();
   Future<Either<FailureService, void>> createRetMissingItem(
       CreateRetMissingModel userId);

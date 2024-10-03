@@ -58,6 +58,9 @@ class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
                   );
                 }
                 if (state is RefundSuccess) {
+                  if (cubit.refunds.isEmpty) {
+                    return const Text('No Return Items');
+                  }
                   return ListView.builder(
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
@@ -76,6 +79,7 @@ class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
                               context: context,
                               screen: ReturnHistoryDetailsPage(
                                 refundId: refundItem.id,
+                                returnType: refundItem.reason,
                               ),
                             );
                           },

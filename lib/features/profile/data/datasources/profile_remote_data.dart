@@ -73,7 +73,7 @@ class ProfileRemoteData {
     }
   }
 
-  Future<StoreProfile> getStoreById(String storeId) async {
+  Future<StoreProfileModel> getStoreById(String storeId) async {
     final response = await _apiService.get(
       endPoint: EndPoint.getStoreByIdUrl,
       query: {
@@ -81,7 +81,7 @@ class ProfileRemoteData {
       },
     );
     if (response.statusCode == 200) {
-      return StoreProfile.fromMap(response.data['result']);
+      return StoreProfileModel.fromMap(response.data['result']);
     } else {
       // Handle other status codes if necessary
       final errorMessage = response.data;
@@ -147,7 +147,7 @@ class ProfileRemoteData {
     }
   }
 
-  Future<List<StoreProfile>> getStores(int page, int pageSize) async {
+  Future<List<StoreProfileModel>> getStores(int page, int pageSize) async {
     final response = await _apiService.get(
       endPoint: EndPoint.getStoresUrls,
       query: {
@@ -157,8 +157,8 @@ class ProfileRemoteData {
     );
     if (response.statusCode == 200) {
       log(response.data['result'].toString());
-      return List<StoreProfile>.from(
-          response.data['result'].map((e) => StoreProfile.fromMap(e)));
+      return List<StoreProfileModel>.from(
+          response.data['result'].map((e) => StoreProfileModel.fromMap(e)));
     } else {
       // Handle other status codes if necessary
       final errorMessage = response.data;

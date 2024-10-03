@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 
-class StoreProfile extends Equatable {
+class StoreProfileModel extends Equatable {
   final String id;
   final String name;
   final String email;
@@ -14,7 +14,7 @@ class StoreProfile extends Equatable {
   final String warehouseAddress;
   final String? profilePic;
 
-  const StoreProfile({
+  const StoreProfileModel({
     required this.id,
     required this.name,
     required this.email,
@@ -54,8 +54,8 @@ class StoreProfile extends Equatable {
     };
   }
 
-  factory StoreProfile.fromMap(Map<String, dynamic> map) {
-    return StoreProfile(
+  factory StoreProfileModel.fromMap(Map<String, dynamic> map) {
+    return StoreProfileModel(
       id: map['id'] as String,
       name: map['name'] as String,
       email: map['email'] as String,
@@ -72,6 +72,6 @@ class StoreProfile extends Equatable {
 
   String toJson() => json.encode(toMap());
 
-  factory StoreProfile.fromJson(String source) =>
-      StoreProfile.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory StoreProfileModel.fromJson(String source) =>
+      StoreProfileModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

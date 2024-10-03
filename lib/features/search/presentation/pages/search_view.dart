@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/customer_flow/see_more_stores/view/see_more_stores_view.dart';
 import 'package:nilelon/features/search/presentation/widgets/search_delegate.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
-import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
-import 'package:nilelon/features/search/presentation/cubit/search_cubit.dart';
 import 'package:nilelon/features/search/presentation/widgets/search_section_items.dart';
 import 'package:nilelon/features/product/presentation/pages/sections_product_view.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';

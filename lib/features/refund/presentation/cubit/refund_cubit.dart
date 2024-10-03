@@ -20,6 +20,7 @@ import 'package:nilelon/features/order/data/models/order_customer_model.dart';
 import 'package:nilelon/features/refund/data/models/create_ret_change_mind_model.dart';
 import 'package:nilelon/features/refund/data/models/create_ret_missing_model.dart';
 import 'package:nilelon/features/refund/data/models/create_ret_wrong_model.dart';
+import 'package:nilelon/features/refund/data/models/refund_details_model.dart';
 import 'package:nilelon/features/refund/data/models/refund_model.dart';
 import 'package:nilelon/features/refund/data/repositories/refund_repo_impl.dart';
 
@@ -40,6 +41,7 @@ class RefundCubit extends Cubit<RefundState> {
   File? backImage;
   File? fronImage;
   File? damageImage;
+  ReturnDetailsModel returnDetails = ReturnDetailsModel.empty();
   Future<File> cameraDialog(BuildContext context) async {
     Completer<File> completer = Completer<File>();
 
@@ -331,6 +333,21 @@ class RefundCubit extends Cubit<RefundState> {
       },
       (result) {
         refunds = result;
+        emit(RefundSuccess());
+      },
+    );
+  }
+
+  Future<void> getReturnDetails(String returnId, String returnType) async {
+    emit(RefundLoading());
+    final result = await _refund.getReturnDetails(returnId, returnType);
+
+    result.fold(
+      (err) {
+        emit(RefundFailure(err.errorMsg));
+      },
+      (result) {
+        returnDetails = result;
         emit(RefundSuccess());
       },
     );

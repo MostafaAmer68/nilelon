@@ -12,7 +12,7 @@ import '../../../profile/data/models/store_profile.dart';
 
 class SeeMoreStoresView extends StatelessWidget {
   const SeeMoreStoresView({super.key, required this.stores});
-  final List<StoreProfile> stores;
+  final List<StoreProfileModel> stores;
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);

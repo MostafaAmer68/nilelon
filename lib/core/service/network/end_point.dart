@@ -19,6 +19,8 @@ class EndPoint {
   // return urls
   static const String getCustomerReturensUrl =
       '/ReturnedVariants/GetCustomerReturns';
+  static const String getCReturnDetailsUrl =
+      '/ReturnedVariants/GetCustomerReturnDetails';
   static const String getStoreReturensUrl = '/ReturnedVariants/GetStoreReturns';
   static const String getCustomerWrongItemDetailsUrl =
       '/ReturnedVariants/GetCustomerWrongItemDetails';
@@ -126,8 +128,8 @@ class EndPoint {
   static const String storeRegisterUrl = '/Authentication/StoreRegister';
 
   //todo Dashboard For Store Urls
-  static const String getDashboardDataUrl = '/Dashboard/GetDashboardData';
-  static const String getChartDataUrl = '/Dashboard/GetChartData?storeId=';
+  static const String getDashboardDataUrl = '/StoreDashboard/GetDashboardData';
+  static const String getChartDataUrl = '/StoreDashboard/GetChartData';
 
   //todo Dashboard For Store Urls
   static const String getStartDateUrl = '&startDate=';

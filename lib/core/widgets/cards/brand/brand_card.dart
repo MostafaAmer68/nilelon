@@ -14,7 +14,7 @@ class BrandCard extends StatefulWidget {
     super.key,
     required this.store,
   });
-  final StoreProfile store;
+  final StoreProfileModel store;
 
   @override
   State<BrandCard> createState() => _BrandCardState();
@@ -29,7 +29,7 @@ class _BrandCardState extends State<BrandCard> {
         navigateTo(
             context: context,
             screen: StoreProfileCustomer(
-            storeId:widget.store.id,
+              storeId: widget.store.id,
             ));
       },
       child: Container(
@@ -59,7 +59,7 @@ class _BrandCardState extends State<BrandCard> {
               ),
               child: CircleAvatar(
                 radius: 30,
-                backgroundImage: NetworkImage(widget.store.profilePic?? ''),
+                backgroundImage: NetworkImage(widget.store.profilePic ?? ''),
               ),
             ),
             const SizedBox(

@@ -30,7 +30,7 @@ class StoreProfileStore extends StatefulWidget {
 class _StoreProfileStoreState extends State<StoreProfileStore> {
   @override
   void initState() {
-    ProductsCubit.get(context).getStoreProducts('',1, 1000);
+    ProductsCubit.get(context).getStoreProducts('', 1, 1000);
     super.initState();
   }
 
@@ -127,7 +127,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                             const SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
                                 crossAxisSpacing: 20.0,
-                                mainAxisExtent: 220,
+                                mainAxisExtent: 300,
                                 mainAxisSpacing: 12),
                         shrinkWrap: true,
                         itemCount: products
@@ -169,7 +169,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
         setState(() {
           _selectedIndex = index;
           // _indexName = name;
-          ProductsCubit.get(context).getStoreProducts('',1, 100);
+          ProductsCubit.get(context).getStoreProducts('', 1, 100);
           setState(() {});
         });
       },

@@ -10,8 +10,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   static ProfileCubit get(context) => BlocProvider.of(context);
   final ProfileRepoIMpl _profileRepoIMpl;
   ProfileCubit(this._profileRepoIMpl) : super(const ProfileState.initial());
-  StoreProfile? storeProfile;
-  List<StoreProfile> stores = [];
+  StoreProfileModel? storeProfile;
+  List<StoreProfileModel> stores = [];
   Map<String, dynamic> validationOption = {};
   Future<void> getStoreById(String storeId) async {
     emit(const ProfileState.loading());

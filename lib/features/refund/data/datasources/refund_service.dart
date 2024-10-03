@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -11,6 +10,7 @@ import 'package:nilelon/features/refund/data/models/create_ret_wrong_model.dart'
 import 'package:nilelon/features/refund/data/models/refund_model.dart';
 
 import '../../../../core/service/network/end_point.dart';
+import '../models/refund_details_model.dart';
 
 class RefundSErvice {
   final ApiService _apiService;
@@ -30,6 +30,22 @@ class RefundSErvice {
     if (data.statusCode == HttpStatus.ok) {
       return List<RefundModel>.from(
           data.data['result'].map((e) => RefundModel.fromJson(e)));
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Refund: Unexpected status code ${data.data['result']}');
+    }
+  }
+
+  Future<ReturnDetailsModel> getReturnDetails(
+      String returnId, String returnType) async {
+    final Response data =
+        await _apiService.get(endPoint: EndPoint.getCReturnDetailsUrl, query: {
+      'returnId': returnId,
+      'returnType': returnType,
+    });
+    if (data.statusCode == HttpStatus.ok) {
+      return ReturnDetailsModel.fromJson(data.data['result']);
     } else {
       // Handle other status codes if necessary
       throw Exception(

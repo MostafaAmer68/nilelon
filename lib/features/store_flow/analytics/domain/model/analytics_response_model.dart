@@ -20,7 +20,7 @@ class DashboardModel {
   factory DashboardModel.fromJson(Map<String, dynamic> json) {
     return DashboardModel(
       storeFollowers: json['storeFollowers'],
-      storeBestseller: json['storeBestseller'],
+      storeBestseller: json['storeBestseller'] ?? '',
       storeNumberOfItemsSold: json['storeNumberOfItemsSold'],
       storeNumberOfNotifications: json['storeNumberOfNotifications'],
       storeOrdersNumber: json['storeOrdersNumber'],

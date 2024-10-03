@@ -24,14 +24,14 @@ abstract class ProfileRepo {
     String storeSlogan,
     context,
   );
-  Future<Either<FailureService, StoreProfile>> getStoreById(
+  Future<Either<FailureService, StoreProfileModel>> getStoreById(
     String storeId,
   );
   Future<Either<FailureService, String>> followStore(
     String storeId,
   );
   Future<Either<FailureService, String>> notifyStore(String storeId);
-  Future<Either<FailureService, List<StoreProfile>>> getStores(
+  Future<Either<FailureService, List<StoreProfileModel>>> getStores(
     int page,
     int pageSize,
   );

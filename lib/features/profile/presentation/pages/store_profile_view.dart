@@ -184,7 +184,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 1.sw > 600 ? 3 : 2,
                               crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                              mainAxisExtent: 1.sw > 600 ? 320 : 260,
+                              mainAxisExtent: 1.sw > 600 ? 320 : 300,
                               mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                             ),
                             shrinkWrap: true,
