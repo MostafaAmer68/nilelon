@@ -13,6 +13,7 @@ import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
+import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../domain/models/product_model.dart';
 
@@ -39,7 +40,8 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
   }
 
   void _loadInitialData() {
-    BlocProvider.of<ProductsCubit>(context).getFollowedProducts(page, pageSize);
+    BlocProvider.of<ProductsCubit>(context)
+        .getFollowedProductsPagination(page, pageSize);
   }
 
   void _setupScrollListener() {
@@ -82,10 +84,10 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
             _buildFilters(context),
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
-                return state.getFollowedProducts.when(
+                return state.when(
                   initial: buildShimmerIndicatorGrid,
                   loading: buildShimmerIndicatorGrid,
-                  success: (productsList) => _buildProductGrid(productsList),
+                  success: () => _buildProductGrid(ProductsCubit.get(context).products),
                   failure: (message) => Center(child: Text(message)),
                 );
               },
@@ -177,12 +179,7 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
         controller: scrollController,
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1.sw > 600 ? 3 : 2,
-          crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-          mainAxisExtent: 1.sw > 600 ? 300 : 300,
-          mainAxisSpacing: 1.sw > 600 ? 16 : 12,
-        ),
+        gridDelegate: gridDelegate,
         itemCount: isLoadMore ? productsList.length + 1 : productsList.length,
         itemBuilder: (context, index) {
           if (index == productsList.length && isLoadMore) {

@@ -10,9 +10,9 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/search/presentation/widgets/search_section_items.dart';
 import 'package:nilelon/features/store_flow/sections_view.dart/store_sections_view.dart';
 import 'package:nilelon/features/store_flow/see_more_stores/view/see_more_stores_store_view.dart';
-import 'package:nilelon/features/profile/presentation/pages/store_profile_store.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../profile/presentation/pages/store_profile_store.dart';
 
 class StoreSearchView extends StatelessWidget {
   const StoreSearchView({super.key});

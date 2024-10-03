@@ -16,7 +16,8 @@ import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 
-import '../../../core/widgets/scaffold_image.dart';
+import '../../../../core/tools.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class OffersView extends StatefulWidget {
   const OffersView({super.key, required this.isStore});
@@ -36,10 +37,11 @@ class _OffersViewState extends State<OffersView> {
   @override
   void initState() {
     if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
-      ProductsCubit.get(context).getOffersProducts(offersPage, offersPageSize);
+      ProductsCubit.get(context)
+          .getOffersProductsPagination(offersPage, offersPageSize);
     } else {
       ProductsCubit.get(context)
-          .getOffersProductsGuest(offersPage, offersPageSize);
+          .getOffersProductsPaginationGuest(offersPage, offersPageSize);
     }
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -84,35 +86,30 @@ class _OffersViewState extends State<OffersView> {
             filtersColumn(context),
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
-                return state.getOffersProducts.when(initial: () {
+                return state.when(initial: () {
                   return buildShimmerIndicatorGrid();
                 }, loading: () {
                   return buildShimmerIndicatorGrid();
-                }, success: (productsList) {
+                }, success: () {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: widget.isStore
                         ? GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 1.sw > 600 ? 3 : 2,
-                                    crossAxisSpacing: 1.sw > 600 ? 16 : 16.0,
-                                    mainAxisExtent: 1.sw > 600 ? 310 : 245,
-                                    mainAxisSpacing: 1.sw > 600 ? 16 : 12),
+                            gridDelegate: gridDelegate,
                             shrinkWrap: true,
                             itemCount: offersIsLoadMore
-                                ? productsList.length + 1
-                                : productsList.length,
+                                ? ProductsCubit.get(context).products.length + 1
+                                : ProductsCubit.get(context).products.length,
                             itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex == productsList.length &&
+                              if (sizeIndex == ProductsCubit.get(context).products.length &&
                                   offersIsLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
                                 return Container(
                                   child: marketOffersCard(
                                       context: context,
-                                      product: productsList[sizeIndex]),
+                                      product: ProductsCubit.get(context).products[sizeIndex]),
                                 );
                               }
                             },
@@ -127,17 +124,17 @@ class _OffersViewState extends State<OffersView> {
                                     mainAxisSpacing: 1.sw > 600 ? 16 : 12),
                             shrinkWrap: true,
                             itemCount: offersIsLoadMore
-                                ? productsList.length + 1
-                                : productsList.length,
+                                ? ProductsCubit.get(context).products.length + 1
+                                : ProductsCubit.get(context).products.length,
                             itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex == productsList.length &&
+                              if (sizeIndex == ProductsCubit.get(context).products.length &&
                                   offersIsLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
                                 return Container(
                                   child: offersCard(
                                       context: context,
-                                      product: productsList[sizeIndex]),
+                                      product: ProductsCubit.get(context).products[sizeIndex]),
                                 );
                               }
                             },

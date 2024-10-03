@@ -6,6 +6,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_followed_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -14,7 +15,7 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
-import 'package:nilelon/features/product/presentation/pages/following_view_all.dart';
+import 'package:nilelon/features/product/presentation/pages/product_following_view_all.dart';
 import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/home_custom_app_bar.dart';
 import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
@@ -31,40 +32,6 @@ class CustomerHomeView extends StatefulWidget {
 }
 
 class _CustomerHomeViewState extends State<CustomerHomeView> {
-  int page = 5;
-  int pageSize = 1;
-  bool isLoadMore = false;
-  ScrollController scrollController = ScrollController();
-
-  @override
-  void initState() {
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
-      ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
-      scrollController.addListener(() {
-        if (scrollController.position.pixels ==
-                scrollController.position.maxScrollExtent &&
-            !isLoadMore) {
-          getMoreData();
-        }
-      });
-    }
-    super.initState();
-  }
-
-  getMoreData() async {
-    setState(() {
-      isLoadMore = true;
-    });
-
-    page = page + 1;
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
-      ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
-    }
-    setState(() {
-      isLoadMore = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -203,63 +170,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
               // const SizedBox(
               //   height: 50,
               // )
-              BlocBuilder<ProductsCubit, ProductsState>(
-                builder: (context, state) {
-                  return state.getFollowedProducts.when(initial: () {
-                    return buildShimmerIndicatorGrid();
-                  }, loading: () {
-                    return buildShimmerIndicatorGrid();
-                  }, success: (productsList) {
-                    return productsList.isEmpty
-                        ? SizedBox(
-                            height: 180.h,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'you dont followed any store yet.',
-                                  style: AppStylesManager.customTextStyleG2,
-                                ),
-                              ],
-                            ),
-                          )
-                        : Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w),
-                            child: GridView.builder(
-                              controller: scrollController,
-                              physics: const NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 1.sw > 600 ? 3 : 2,
-                                crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                                mainAxisExtent: 1.sw > 600 ? 300 : 300,
-                                mainAxisSpacing: 1.sw > 600 ? 16 : 12,
-                              ),
-                              shrinkWrap: true,
-                              itemCount: isLoadMore
-                                  ? productsList.length + 1
-                                  : productsList.length,
-                              itemBuilder: (context, sizeIndex) {
-                                if (sizeIndex == productsList.length &&
-                                    isLoadMore) {
-                                  return buildShimmerIndicatorSmall();
-                                } else {
-                                  return productSquarItem(
-                                    context: context,
-                                    model: productsList[sizeIndex],
-                                  );
-                                }
-                              },
-                            ),
-                          );
-                  }, failure: (message) {
-                    return const SizedBox(
-                        height: 100,
-                        child: Center(
-                            child: Text('There is no following products')));
-                  });
-                },
-              ),
+              const FollowedProductPage(),
               const SizedBox(height: 30),
             ],
           ),

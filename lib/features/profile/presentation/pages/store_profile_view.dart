@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
@@ -37,7 +38,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
   void initState() {
     // log(DateTime.now().toString());
     BlocProvider.of<ProductsCubit>(context)
-        .getStoreProducts('', page, pageSize);
+        .getStoreProductsPagination('', page, pageSize);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -148,12 +149,13 @@ class _StoreProfileViewState extends State<StoreProfileView> {
             const SizedBox(height: 20),
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
-                return state.getStoreProducts.when(initial: () {
+                return state.when(initial: () {
                   return buildShimmerIndicatorGrid();
                 }, loading: () {
                   return buildShimmerIndicatorGrid();
-                }, success: (productsList) {
-                  return productsList
+                }, success: () {
+                  return ProductsCubit.get(context)
+                          .products
                           .where((e) =>
                               e.categoryID ==
                               HiveStorage.get<List>(
@@ -180,15 +182,10 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                           child: GridView.builder(
                             controller: scrollController,
                             physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1.sw > 600 ? 3 : 2,
-                              crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                              mainAxisExtent: 1.sw > 600 ? 320 : 300,
-                              mainAxisSpacing: 1.sw > 600 ? 16 : 12,
-                            ),
+                            gridDelegate: gridDelegate,
                             shrinkWrap: true,
-                            itemCount: productsList
+                            itemCount: ProductsCubit.get(context)
+                                .products
                                 .where((e) =>
                                     e.categoryID ==
                                     HiveStorage.get<List>(
@@ -197,14 +194,18 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                                 .toList()
                                 .length,
                             itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex == productsList.length &&
+                              if (sizeIndex ==
+                                      ProductsCubit.get(context)
+                                          .products
+                                          .length &&
                                   isLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
                                 return Container(
                                   child: productSquarItem(
                                     context: context,
-                                    model: productsList
+                                    model: ProductsCubit.get(context)
+                                        .products
                                         .where((e) =>
                                             e.categoryID ==
                                             HiveStorage.get<List>(HiveKeys

@@ -9,7 +9,7 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/search/presentation/widgets/search_section_items.dart';
-import 'package:nilelon/features/product/presentation/pages/sections_product_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_sections.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 

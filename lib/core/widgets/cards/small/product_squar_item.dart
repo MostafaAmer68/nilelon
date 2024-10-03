@@ -1,23 +1,18 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
-import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
-import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/pop_ups/add_to_closet_popup.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
-import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
 
+import '../../../../features/product/presentation/pages/product_details_store_page.dart';
 import '../../../color_const.dart';
 import '../../../resources/color_manager.dart';
-import '../../button/button_builder.dart';
 
 GestureDetector productSquarItem({
   required context,
@@ -27,31 +22,28 @@ GestureDetector productSquarItem({
     onTap: () {
       navigateTo(
         context: context,
-        screen: ProductDetailsView(
-          productId: model.id,
-        ),
+        screen: !HiveStorage.get(HiveKeys.isStore)
+            ? ProductDetailsView(productId: model.id)
+            : ProductDetailsStorePage(productId: model.id),
       );
     },
     child: Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         borderRadius:
-            BorderRadius.circular(10), // Updated to match rounded corners
+            BorderRadius.circular(4), // Updated to match rounded corners
         color: Colors.white,
         boxShadow: const [
           BoxShadow(
             color: ColorManager.primaryO3,
-            blurRadius: 0, // Increased blur radius for a softer shadow
-            offset: Offset(
-                -7, 7), // Adjusted offset to match the shadow in the image
+            blurRadius: 0,
+            offset: Offset(-8, 7),
             spreadRadius: 0,
           )
         ],
       ),
       width: 1.sw > 600 ? 270 : 200,
-      height: 1.sw > 600
-          ? 300
-          : 280, // Adjusted height to match the aspect ratio in the image
+      height: 1.sw > 600 ? 300 : 220,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -121,13 +113,13 @@ GestureDetector productSquarItem({
                               image: AssetImage(
                                 'assets/images/closet_following.png',
                               ),
-                              fit: BoxFit.contain, // Changed to contain
+                              fit: BoxFit.cover, // Changed to contain
                             )
                           : const DecorationImage(
                               image: AssetImage(
                                 'assets/images/hanger.png',
                               ),
-                              fit: BoxFit.contain, // Changed to contain
+                              fit: BoxFit.cover, // Changed to contain
                             ),
                     ),
                   ),
@@ -142,8 +134,9 @@ GestureDetector productSquarItem({
             padding: const EdgeInsets.symmetric(
                 horizontal: 8.0), // Added padding to match image layout
             child: PriceAndRatingRow(
-                price: '${model.productVariants[0].price} L.E',
-                rating: model.rating.toString()),
+              price: '${model.productVariants[0].price} L.E',
+              rating: model.rating.toString(),
+            ),
           ),
           const SizedBox(
             height: 4,
@@ -156,60 +149,6 @@ GestureDetector productSquarItem({
               style: AppStylesManager.customTextStyleG3,
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                height: 30.h,
-                width: 30.h,
-                decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      begin: Alignment(1.00, -0.10),
-                      end: Alignment(-1, 0.1),
-                      colors: ColorManager.gradientColors,
-                    ),
-                    color: ColorManager.primaryW,
-                    borderRadius: BorderRadius.circular(12)),
-                child: BlocConsumer<CartCubit, CartState>(
-                  listener: (context, state) {
-                    if (state is CartSuccess) {
-                      BotToast.showText(text: 'Product Added to cart');
-                    }
-                  },
-                  builder: (context, state) {
-                    return state is CartLoading
-                        ? const CircularProgressIndicator()
-                        : IconButton(
-                            icon: Icon(
-                              Iconsax.shopping_cart,
-                              color: ColorManager.primaryW,
-                              size: 14.r,
-                            ),
-                            onPressed: () {
-                              CartCubit.get(context).addToCart(
-                                AddToCartModel(
-                                  quantity: 1,
-                                  size: model.productVariants.first.size,
-                                  color: model.productVariants.first.color,
-                                  productId: model.id,
-                                  customerId: HiveStorage.get<UserModel>(
-                                          HiveKeys.userModel)
-                                      .id,
-                                ),
-                              );
-                            },
-                          );
-                  },
-                ),
-              ),
-              ButtonBuilder(
-                text: 'Buy',
-                ontap: () {},
-                width: 110.h,
-                height: 30.h,
-              )
-            ],
-          )
         ],
       ),
     ),

@@ -5,7 +5,7 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
-import 'package:nilelon/features/product/presentation/pages/store_product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_store_page.dart';
 
 GestureDetector analyticsWideCard({required context}) {
   List<String> images = ['assets/images/cloth1.png'];
@@ -17,14 +17,8 @@ GestureDetector analyticsWideCard({required context}) {
     onTap: () {
       navigateTo(
           context: context,
-          screen: StoreProductDetailsView(
-            images: images,
-            name: name,
-            storeName: soldItems,
-            rating: rating,
-            price: price,
-            status: 'In Stock',
-            reviews: const [],
+          screen: ProductDetailsStorePage(
+            productId: '',
           ));
     },
     child: SizedBox(

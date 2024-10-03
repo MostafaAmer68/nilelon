@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -14,6 +15,7 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/domain/models/products_response_model.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
+import 'package:nilelon/features/product/domain/models/review_model.dart';
 
 import '../../domain/models/update_product.dart';
 
@@ -317,13 +319,23 @@ class ProductsRemoteDataSourceImpl {
       endPoint: EndPoint.createReviewUrl,
       body: review.toMap(),
     );
-    if (data.statusCode == 201) {
+    if (data.statusCode == HttpStatus.ok) {
       // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Random failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Exception(
+          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+    }
+  }
+
+  Future<List<ReviewModel>> getReviews(String productId) async {
+    final data = await apiService.get(
+      endPoint: '${EndPoint.getReviewsForProductUrl}/$productId',
+    );
+    if (data.statusCode == HttpStatus.ok || data.data['isSuccess']) {
+      print(data.data['result']);
+      return List<ReviewModel>.from(
+          data.data['result'].map((e) => ReviewModel.fromMap(e)));
     } else {
       // Handle other status codes if necessary
       throw Exception(

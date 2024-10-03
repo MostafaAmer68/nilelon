@@ -28,7 +28,6 @@ import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reserva
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:nilelon/features/categories/data/repos_impl/category_repos_impl.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
-import 'package:nilelon/core/widgets/rating/cubit/review_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 import 'features/search/data/repositories/search_repo_impl.dart';
@@ -56,9 +55,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ReservationDateCubit>(
           create: (context) => ReservationDateCubit(),
-        ),
-        BlocProvider<RatingCubit>(
-          create: (context) => RatingCubit(),
         ),
         BlocProvider<CategoryCubit>(
           create: (context) =>

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
@@ -21,15 +22,15 @@ import '../../../../core/widgets/cards/offers/offers_card.dart';
 import '../../../../core/widgets/cards/small/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
-class NewInViewAll extends StatefulWidget {
-  const NewInViewAll({super.key, required this.isStore});
+class ProductNewInViewAll extends StatefulWidget {
+  const ProductNewInViewAll({super.key, required this.isStore});
   final bool isStore;
 
   @override
-  State<NewInViewAll> createState() => _NewInViewAllState();
+  State<ProductNewInViewAll> createState() => _ProductNewInViewAllState();
 }
 
-class _NewInViewAllState extends State<NewInViewAll> {
+class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
   int selectedGender = 0;
   int selectedCategory = 0;
   int page = 1;
@@ -39,7 +40,8 @@ class _NewInViewAllState extends State<NewInViewAll> {
 
   @override
   void initState() {
-    BlocProvider.of<ProductsCubit>(context).getNewInProducts(page, pageSize);
+    BlocProvider.of<ProductsCubit>(context)
+        .getNewInProductsPagination(page, pageSize);
     BlocProvider.of<CategoryCubit>(context).getCategories();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -80,12 +82,12 @@ class _NewInViewAllState extends State<NewInViewAll> {
             filtersColumn(context),
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
-                return state.getNewInProducts.when(initial: () {
+                return state.when(initial: () {
                   return buildShimmerIndicatorGrid();
                 }, loading: () {
                   return buildShimmerIndicatorGrid();
-                }, success: (productsList) {
-                  return productsList.isEmpty
+                }, success: () {
+                  return ProductsCubit.get(context).products.isEmpty
                       ? SizedBox(
                           height: 450.h,
                           child: Column(
@@ -103,37 +105,31 @@ class _NewInViewAllState extends State<NewInViewAll> {
                           child: GridView.builder(
                             controller: scrollController,
                             physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1.sw > 600 ? 3 : 2,
-                              crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                              mainAxisExtent: 1.sw > 600 ? 300 : 300,
-                              mainAxisSpacing: 1.sw > 600 ? 16 : 12,
-                            ),
+                            gridDelegate: gridDelegate,
                             shrinkWrap: true,
                             itemCount: isLoadMore
-                                ? productsList.length + 1
-                                : productsList.length,
+                                ? ProductsCubit.get(context).products.length + 1
+                                : ProductsCubit.get(context).products.length,
                             itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex == productsList.length &&
+                              if (sizeIndex == ProductsCubit.get(context).products.length &&
                                   isLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
                                 return widget.isStore
                                     ? marketSmallCard(
                                         context: context,
-                                        product: productsList[sizeIndex])
-                                    : productsList[sizeIndex]
+                                        product: ProductsCubit.get(context).products[sizeIndex])
+                                    : ProductsCubit.get(context).products[sizeIndex]
                                                 .productVariants
                                                 .first
                                                 .discountRate !=
                                             0
                                         ? offersCard(
                                             context: context,
-                                            product: productsList[sizeIndex])
+                                            product: ProductsCubit.get(context).products[sizeIndex])
                                         : productSquarItem(
                                             context: context,
-                                            model: productsList[sizeIndex],
+                                            model: ProductsCubit.get(context).products[sizeIndex],
                                           );
                               }
                             },

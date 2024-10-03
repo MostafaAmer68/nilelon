@@ -4,15 +4,15 @@ import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/ordered_success_step.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/overview_step.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/billing_details_step.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/payment_stemp.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/step_indicator.dart';
+import 'package:nilelon/features/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
+import 'package:nilelon/features/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
+import 'package:nilelon/features/checkout/presentation/widgets/ordered_success_step.dart';
+import 'package:nilelon/features/checkout/presentation/widgets/overview_step.dart';
+import 'package:nilelon/features/checkout/presentation/widgets/billing_details_step.dart';
+import 'package:nilelon/features/checkout/presentation/widgets/payment_stemp.dart';
+import 'package:nilelon/features/checkout/presentation/widgets/step_indicator.dart';
 
-import '../../../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class ChechOutView extends StatefulWidget {
   const ChechOutView({super.key});

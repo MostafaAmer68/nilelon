@@ -43,7 +43,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
     cubit = BlocProvider.of(context);
     cubit.getStoreById(widget.storeId);
     cubit.getStoreForCustomer(widget.storeId);
-    ProductsCubit.get(context).getStoreProducts(widget.storeId, 1, 100);
+    ProductsCubit.get(context).getStoreProductsPagination(widget.storeId, 1, 100);
     super.initState();
   }
 
@@ -242,9 +242,9 @@ class ProductStoreWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
-        return state.getStoreProducts.whenOrNull(
+        return state.whenOrNull(
           loading: () => buildShimmerIndicatorGrid(),
-          success: (products) => GridView.builder(
+          success: () => GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisExtent: 270,
@@ -252,11 +252,11 @@ class ProductStoreWidget extends StatelessWidget {
                 crossAxisSpacing: 20.0,
                 mainAxisSpacing: 12),
             shrinkWrap: true,
-            itemCount: products.length,
+            itemCount: ProductsCubit.get(context).products.length,
             itemBuilder: (context, sizeIndex) {
               return productSquarItem(
                 context: context,
-                model: products[sizeIndex],
+                model: ProductsCubit.get(context).products[sizeIndex],
               );
             },
           ),

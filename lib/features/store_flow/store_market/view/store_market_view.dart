@@ -12,7 +12,7 @@ import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_
 import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
-import 'package:nilelon/features/product/presentation/widgets/new_in_all_widget.dart';
+import 'package:nilelon/features/product/presentation/pages/product_new_in_all_widget.dart';
 import 'package:nilelon/features/store_flow/search/view/store_search_view.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
@@ -32,7 +32,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
   @override
   void initState() {
     cubit = BlocProvider.of(context);
-    cubit.getNewInProducts(1, 20);
+    cubit.getNewInProductsPagination(1, 20);
     super.initState();
   }
 
@@ -106,7 +106,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                 onPressed: () {
                   navigateTo(
                       context: context,
-                      screen: const NewInViewAll(
+                      screen: const ProductNewInViewAll(
                         isStore: true,
                       ));
                 },
@@ -118,15 +118,15 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: BlocBuilder<ProductsCubit, ProductsState>(
                   builder: (context, state) {
-                    return state.getNewInProducts.whenOrNull(
+                    return state.whenOrNull(
                       failure: (err) {
                         return const Icon(Icons.error);
                       },
                       loading: () {
                         return buildShimmerIndicatorGrid();
                       },
-                      success: (result) {
-                        if (result.isEmpty) {
+                      success: () {
+                        if (ProductsCubit.get(context).products.isEmpty) {
                           return SizedBox(
                             height: 120.h,
                             child: Column(
@@ -149,9 +149,10 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                                   mainAxisExtent: 1.sw > 600 ? 320 : 220,
                                   mainAxisSpacing: 1.sw > 600 ? 16 : 12),
                           shrinkWrap: true,
-                          itemCount: result.length,
+                          itemCount: ProductsCubit.get(context).products.length,
                           itemBuilder: (context, index) {
-                            final product = result[index];
+                            final product =
+                                ProductsCubit.get(context).products[index];
                             return Container(
                               child: marketSmallCard(
                                 context: context,

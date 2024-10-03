@@ -13,9 +13,9 @@ import 'package:nilelon/core/widgets/drop_down_menu/drop_down_menu.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/widgets/check_product_item.dart';
+import 'package:nilelon/features/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
+import 'package:nilelon/features/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
+import 'package:nilelon/features/checkout/presentation/widgets/check_product_item.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 
 class OverViewStep extends StatefulWidget {

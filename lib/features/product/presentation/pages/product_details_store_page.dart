@@ -17,7 +17,7 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/footer/add_to_footer.dart';
 import 'package:nilelon/core/widgets/pop_ups/add_to_closet_popup.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/features/product/presentation/pages/edit_product_page.dart';
+import 'package:nilelon/features/product/presentation/pages/product_edit_page.dart';
 import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
 import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
 import 'package:nilelon/core/widgets/rating/view/rating_dialog.dart';
@@ -28,18 +28,19 @@ import '../cubit/products_cubit/products_state.dart';
 import '../widgets/color_selector.dart';
 import '../widgets/custom_toggle_button.dart';
 
-class ProductDetailsView extends StatefulWidget {
-  const ProductDetailsView({
+class ProductDetailsStorePage extends StatefulWidget {
+  const ProductDetailsStorePage({
     super.key,
     required this.productId,
   });
   final String productId;
 
   @override
-  State<ProductDetailsView> createState() => _ProductDetailsViewState();
+  State<ProductDetailsStorePage> createState() =>
+      _ProductDetailsStorePageState();
 }
 
-class _ProductDetailsViewState extends State<ProductDetailsView> {
+class _ProductDetailsStorePageState extends State<ProductDetailsStorePage> {
   bool isEnabled = true;
   late List<String> sizes;
   late final CartCubit cubit;
@@ -50,6 +51,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     cubit = CartCubit.get(context);
     productCubit = ProductsCubit.get(context);
     ProductsCubit.get(context).getProductDetails(widget.productId);
+    // ProductsCubit.get(context).getReviews(widget.productId);
   }
 
   void incrementCounter() {
@@ -71,7 +73,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     final lang = S.of(context);
     return BlocListener<ProductsCubit, ProductsState>(
       listener: (context, state) {
-        state.getFollowedProducts.mapOrNull(success: (_) {
+        state.mapOrNull(success: (_) {
           cubit.selectedColor =
               productCubit.product.productVariants.first.color;
           cubit.selectedSize = productCubit.product.productVariants.first.size;
@@ -134,9 +136,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               const DefaultDivider(),
               BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
-                  return state.getFollowedProducts.whenOrNull(
+                  return state.whenOrNull(
                     loading: () => const CircularProgressIndicator(),
-                    success: (_) => ImageBanner(
+                    success: () => ImageBanner(
                       images: productCubit.product.productImages
                           .map((e) => e.url)
                           .toList(),
@@ -151,9 +153,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   width: screenWidth(context, 0.3),
                   child: BlocBuilder<ProductsCubit, ProductsState>(
                     builder: (context, state) {
-                      return state.getFollowedProducts.whenOrNull(
+                      return state.whenOrNull(
                           loading: () => const CircularProgressIndicator(),
-                          success: (_) => ListView.builder(
+                          success: () => ListView.builder(
                                 itemCount:
                                     productCubit.product.productImages.length,
                                 scrollDirection: Axis.horizontal,
@@ -175,9 +177,9 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 padding: const EdgeInsets.all(20.0),
                 child: BlocBuilder<ProductsCubit, ProductsState>(
                   builder: (context, state) {
-                    return state.getFollowedProducts.whenOrNull(
+                    return state.whenOrNull(
                         loading: () => const CircularProgressIndicator(),
-                        success: (_) => Column(
+                        success: () => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 _buildNameAndPriceRow(context),
@@ -198,7 +200,23 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               _buildReviewSection(lang),
               const Divider(color: ColorManager.primaryG8, height: 4),
               const SizedBox(height: 24),
-              const RatingContainer(),
+              BlocBuilder<ProductsCubit, ProductsState>(
+                builder: (context, state) {
+                  return state.whenOrNull(
+                    loading: () => const CircularProgressIndicator(),
+                    success: () {
+                      return ListView.builder(
+                        itemCount: ProductsCubit.get(context).review.length,
+                        itemBuilder: (context, index) {
+                          final review =
+                              ProductsCubit.get(context).review[index];
+                          return RatingContainer(review: review);
+                        },
+                      );
+                    },
+                  )!;
+                },
+              ),
               const SizedBox(height: 24),
             ],
           ),

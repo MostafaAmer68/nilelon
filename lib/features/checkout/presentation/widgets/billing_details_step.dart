@@ -9,8 +9,8 @@ import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
+import 'package:nilelon/features/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
+import 'package:nilelon/features/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
 
 class BillingDetailsStep extends StatefulWidget {
   const BillingDetailsStep({super.key});

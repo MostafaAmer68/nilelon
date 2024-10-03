@@ -5,7 +5,7 @@ import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 
-import '../../../../../core/resources/appstyles_manager.dart';
+import '../../../../core/resources/appstyles_manager.dart';
 
 class OrderedSuccessPage extends StatelessWidget {
   const OrderedSuccessPage({super.key});

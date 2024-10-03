@@ -30,7 +30,7 @@ class StoreProfileStore extends StatefulWidget {
 class _StoreProfileStoreState extends State<StoreProfileStore> {
   @override
   void initState() {
-    ProductsCubit.get(context).getStoreProducts('', 1, 1000);
+    ProductsCubit.get(context).getStoreProductsPagination('', 1, 1000);
     super.initState();
   }
 
@@ -110,7 +110,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
               padding: const EdgeInsets.all(16.0),
               child: BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
-                  return state.getStoreProducts.when(
+                  return state.when(
                     initial: () {
                       return const Text('Waiting we traing to get products');
                     },
@@ -120,7 +120,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                     failure: (erro) {
                       return Text(erro);
                     },
-                    success: (products) {
+                    success: () {
                       return GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate:
@@ -130,7 +130,8 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                                 mainAxisExtent: 300,
                                 mainAxisSpacing: 12),
                         shrinkWrap: true,
-                        itemCount: products
+                        itemCount: ProductsCubit.get(context)
+                            .products
                             .where((e) =>
                                 e.categoryID ==
                                 HiveStorage.get<List<Result>>(
@@ -142,7 +143,8 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                           return Container(
                             child: marketSmallCard(
                                 context: context,
-                                product: products
+                                product: ProductsCubit.get(context)
+                                    .products
                                     .where((e) =>
                                         e.categoryID ==
                                         HiveStorage.get<List<Result>>(HiveKeys
@@ -169,7 +171,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
         setState(() {
           _selectedIndex = index;
           // _indexName = name;
-          ProductsCubit.get(context).getStoreProducts('', 1, 100);
+          ProductsCubit.get(context).getStoreProductsPagination('', 1, 100);
           setState(() {});
         });
       },

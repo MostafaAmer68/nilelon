@@ -5,7 +5,7 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
-import 'package:nilelon/features/product/presentation/pages/store_product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_store_page.dart';
 
 GestureDetector marketSmallCard(
     {required context, required ProductModel product}) {
@@ -13,14 +13,8 @@ GestureDetector marketSmallCard(
     onTap: () {
       navigateTo(
           context: context,
-          screen: StoreProductDetailsView(
-            images: product.productImages.map((e) => e.url).toList(),
-            name: product.name,
-            storeName: product.storeName,
-            rating: product.rating.toString(),
-            price: product.productVariants.first.price.toString(),
-            status: product.inStock == 0 ? 'Out of Stock' : 'Ins Stock',
-            reviews: const [],
+          screen: ProductDetailsStorePage(
+            productId: product.id,
           ));
     },
     child: Container(

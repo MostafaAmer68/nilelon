@@ -11,6 +11,7 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 
+import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/products_cubit/products_cubit.dart';
 import '../cubit/products_cubit/products_state.dart';
@@ -58,23 +59,19 @@ class _SectionsProductViewState extends State<SectionsProductView> {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
-                  return state.getNewInProducts.whenOrNull(
+                  return state.whenOrNull(
                     loading: () => buildShimmerIndicatorGrid(),
-                    success: (products) => GridView.builder(
+                    success: () => GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 20.0,
-                              mainAxisExtent: 270,
-                              mainAxisSpacing: 12),
+                      gridDelegate: gridDelegate,
                       shrinkWrap: true,
-                      itemCount: products.length,
+                      itemCount: ProductsCubit.get(context).products.length,
                       itemBuilder: (context, sizeIndex) {
                         return Container(
                           child: productSquarItem(
                             context: context,
-                            model: products[sizeIndex],
+                            model:
+                                ProductsCubit.get(context).products[sizeIndex],
                           ),
                         );
                       },

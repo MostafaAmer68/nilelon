@@ -14,6 +14,7 @@ import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
+import '../../../../core/tools.dart';
 import '../../../../core/widgets/cards/offers/offers_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
@@ -35,7 +36,7 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
   @override
   void initState() {
     BlocProvider.of<ProductsCubit>(context)
-        .getRandomProducts(handPage, handPageSize);
+        .getRandomProductsPagination(handPage, handPageSize);
     handScrollController.addListener(() {
       if (handScrollController.position.pixels ==
               handScrollController.position.maxScrollExtent &&
@@ -74,12 +75,12 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
             filtersColumn(context),
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
-                return state.getRandomProducts.when(initial: () {
+                return state.when(initial: () {
                   return buildShimmerIndicatorGrid();
                 }, loading: () {
                   return buildShimmerIndicatorGrid();
-                }, success: (productsList) {
-                  return productsList.isEmpty
+                }, success: () {
+                  return ProductsCubit.get(context).products.isEmpty
                       ? SizedBox(
                           height: 450.h,
                           child: Column(
@@ -97,33 +98,27 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
                           child: GridView.builder(
                             controller: handScrollController,
                             physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 1.sw > 600 ? 3 : 2,
-                              crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                              mainAxisExtent: 1.sw > 600 ? 300 : 300,
-                              mainAxisSpacing: 1.sw > 600 ? 16 : 12,
-                            ),
+                            gridDelegate: gridDelegate,
                             shrinkWrap: true,
                             itemCount: handIsLoadMore
-                                ? productsList.length + 1
-                                : productsList.length,
+                                ? ProductsCubit.get(context).products.length + 1
+                                : ProductsCubit.get(context).products.length,
                             itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex == productsList.length &&
+                              if (sizeIndex == ProductsCubit.get(context).products.length &&
                                   handIsLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
-                                return productsList[sizeIndex]
+                                return ProductsCubit.get(context).products[sizeIndex]
                                             .productVariants
                                             .first
                                             .discountRate !=
                                         0
                                     ? offersCard(
                                         context: context,
-                                        product: productsList[sizeIndex])
+                                        product: ProductsCubit.get(context).products[sizeIndex])
                                     : productSquarItem(
                                         context: context,
-                                        model: productsList[sizeIndex],
+                                        model: ProductsCubit.get(context).products[sizeIndex],
                                       );
                               }
                             },

@@ -1,13 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/features/product/domain/models/review_model.dart';
 
 class RatingContainer extends StatelessWidget {
   const RatingContainer({
     super.key,
+    required this.review,
   });
-
+  final ReviewModel review;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -18,7 +22,7 @@ class RatingContainer extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 20.r,
-            backgroundImage: const AssetImage('assets/images/profile.png'),
+            backgroundImage: NetworkImage(review.profilePic),
           ),
           const SizedBox(
             width: 8,
@@ -42,12 +46,12 @@ class RatingContainer extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Rawan Ahmed',
+                          review.customerName,
                           style: AppStylesManager.customTextStyleBl9,
                         ),
                         const Spacer(),
                         Text(
-                          '10:11 AM',
+                          review.date,
                           style: AppStylesManager.customTextStyleG12,
                         ),
                       ],
@@ -56,7 +60,7 @@ class RatingContainer extends StatelessWidget {
                       height: 4,
                     ),
                     RatingBar.builder(
-                      initialRating: 3.5,
+                      initialRating: review.rate.toDouble(),
                       minRating: 1,
                       ignoreGestures: true,
                       direction: Axis.horizontal,
@@ -75,7 +79,7 @@ class RatingContainer extends StatelessWidget {
                       height: 8,
                     ),
                     Text(
-                      'Lorem ipsum dolor sit amet consectetur. Lorem aenean eget dolor mattis viverra. Sapien quisque donec gravida aenean quam amet rhoncus id. Leo mi nec in tincidunt turpis.',
+                      review.comment,
                       style: AppStylesManager.customTextStyleBl3.copyWith(
                           fontSize: 1.sw > 600 ? 22 : 12,
                           fontWeight: FontWeight.w500),

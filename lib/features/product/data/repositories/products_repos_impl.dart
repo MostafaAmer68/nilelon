@@ -9,6 +9,7 @@ import 'package:nilelon/features/product/domain/models/delete_variant_model.dart
 import 'package:nilelon/features/product/domain/models/products_response_model.dart';
 import 'package:nilelon/features/product/data/datasources/products_remote_data_source.dart';
 import 'package:nilelon/core/service/failure_service.dart';
+import 'package:nilelon/features/product/domain/models/review_model.dart';
 import 'package:nilelon/features/product/domain/models/update_product.dart';
 
 import '../../domain/models/product_model.dart';
@@ -256,6 +257,20 @@ class ProductsReposImpl extends ProductsRepos {
     try {
       final result =
           await productsRemoteDataSource.getProductDetails(productId);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        return left(ServerFailure.fromDioException(e));
+      }
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, List<ReviewModel>>> getReviews(
+      String productId) async {
+    try {
+      final result = await productsRemoteDataSource.getReviews(productId);
       return Right(result);
     } catch (e) {
       if (e is DioException) {

@@ -7,7 +7,7 @@ import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/order/data/repositories/order_repo_impl.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 
-import '../../../../../order/data/models/create_order_model.dart';
+import '../../../../order/data/models/create_order_model.dart';
 
 part 'checkout_state.dart';
 

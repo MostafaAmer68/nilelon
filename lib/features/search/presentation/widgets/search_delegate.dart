@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
-import 'package:nilelon/features/product/presentation/pages/product_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 import 'package:nilelon/features/search/presentation/cubit/search_cubit.dart';
 import 'package:nilelon/features/search/presentation/widgets/search_section_items.dart';

@@ -6,9 +6,9 @@ import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
-import 'package:nilelon/features/customer_flow/checkout/presentation/view/checkout_view.dart';
+import 'package:nilelon/features/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
+import 'package:nilelon/features/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
+import 'package:nilelon/features/checkout/presentation/view/checkout_view.dart';
 import 'package:nilelon/features/order/data/repositories/order_repo_impl.dart';
 
 class CartFooter extends StatefulWidget {
