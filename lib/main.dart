@@ -6,6 +6,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/my_app.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/service/simple_bloc_observer.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:signalr_core/signalr_core.dart';
 
 import 'core/service/notification_service.dart';
@@ -26,7 +27,15 @@ final connection = HubConnectionBuilder()
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await HiveStorage.init();
-  await NotificatoinService().initializeNotification();
+  final result = await Permission.notification.request();
+  if (result.isGranted) {
+    await NotificatoinService().initializeNotification();
+  } else {
+    final result = await Permission.notification.request();
+    if (result.isGranted) {
+      await NotificatoinService().initializeNotification();
+    }
+  }
   connection.serverTimeoutInMilliseconds = 60000;
   await connection.start()?.catchError((error) {
     print('Connection failed to start: $error');

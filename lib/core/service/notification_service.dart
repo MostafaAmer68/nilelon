@@ -25,7 +25,7 @@ class NotificatoinService {
   }
 
   Future initializeNotification() async {
-    if (!(await _requestNotificationPermissions())) return;
+    // if ((await _requestNotificationPermissions())) return;
     AwesomeNotifications().initialize(
       // set the icon to null if you want to use the default app icon
       null,
