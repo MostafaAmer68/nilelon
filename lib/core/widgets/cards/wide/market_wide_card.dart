@@ -17,7 +17,7 @@ GestureDetector marketWideCard({required context}) {
     onTap: () {
       navigateTo(
           context: context,
-          screen: ProductStoreDetailsView(
+          screen: const ProductStoreDetailsView(
             productId: '',
           ));
     },

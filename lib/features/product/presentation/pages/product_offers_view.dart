@@ -12,7 +12,6 @@ import 'package:nilelon/core/widgets/filter/category_container.dart';
 import 'package:nilelon/core/widgets/filter/filter_container.dart';
 import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
-import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 

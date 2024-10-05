@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,10 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
-import 'package:nilelon/core/widgets/drop_down_menu/drop_down_menu.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/features/order/data/models/order_customer_model.dart';
 import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
@@ -19,7 +16,6 @@ import 'package:nilelon/features/refund/presentation/widgets/car_order_refund_wi
 import 'package:nilelon/features/refund/presentation/widgets/wrong_item_widget.dart';
 import 'package:nilelon/generated/l10n.dart';
 
-import '../../../../core/widgets/decoration/decoration_with_fade.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
 import '../../../order/presentation/cubit/order_cubit.dart';
 import '../widgets/change_mind_widget.dart';
@@ -51,11 +47,11 @@ class _ReturnHistoryDetailsPageState extends State<ReturnHistoryDetailsPage> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
     var cubit = BlocProvider.of<RefundCubit>(context);
-    List<String> items = [
-      lang.ChangedMyMind,
-      lang.wrongItem,
-      lang.missingItem,
-    ];
+    // List<String> items = [
+    //   lang.ChangedMyMind,
+    //   lang.wrongItem,
+    //   lang.missingItem,
+    // ];
 
     return ScaffoldImage(
       appBar: customAppBar(

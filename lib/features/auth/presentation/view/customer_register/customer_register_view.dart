@@ -263,10 +263,10 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    signWithContainer('assets/images/facebook.svg', () {}),
-                    const SizedBox(
-                      width: 24,
-                    ),
+                    // signWithContainer('assets/images/facebook.svg', () {}),
+                    // const SizedBox(
+                    //   width: 24,
+                    // ),
                     BlocListener<AuthCubit, AuthState>(
                         listener: (context, state) {
                           if (state is StoreGoogleRegisterLoading) {

@@ -7,7 +7,6 @@ import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/widgets/cards/small/product_squar_item.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
-import '../../../auth/domain/model/user_model.dart';
 import '../cubit/products_cubit/products_cubit.dart';
 import '../cubit/products_cubit/products_state.dart';
 

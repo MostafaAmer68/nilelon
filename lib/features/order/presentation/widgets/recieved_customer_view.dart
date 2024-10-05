@@ -36,7 +36,7 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
             alignment: AlignmentDirectional.topEnd,
             child: TextButton.icon(
               onPressed: () {
-                navigateTo(context: context, screen: ReturnHistoryPage());
+                navigateTo(context: context, screen: const ReturnHistoryPage());
               },
               icon: const Icon(
                 Icons.history,

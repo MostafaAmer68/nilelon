@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/closet/presentation/view/closet_view.dart';
 import 'package:nilelon/features/customer_flow/notification/notification_view.dart';
+import 'package:nilelon/features/profile/presentation/pages/profile_guest_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 class HomeCustomAppBar extends StatelessWidget {
@@ -37,9 +39,13 @@ class HomeCustomAppBar extends StatelessWidget {
             onTap: () {
               navigateTo(
                   context: context,
-                  screen: const NotificationView(
-                    noNotification: false,
-                  ));
+                  screen: HiveStorage.get(HiveKeys.userModel) != null
+                      ? const NotificationView(
+                          noNotification: false,
+                        )
+                      : const ProfileGuestPage(
+                          hasLeading: true,
+                        ));
             },
             child: Container(
               width: 1.sw > 600 ? 40 : 40,
@@ -91,8 +97,15 @@ class HomeCustomAppBar extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              showModalBottomSheet(
-                  context: context, builder: (context) => const ClosetView());
+              HiveStorage.get(HiveKeys.userModel) != null
+                  ? showModalBottomSheet(
+                      context: context,
+                      builder: (context) => const ClosetView())
+                  : navigateTo(
+                      context: context,
+                      screen: const ProfileGuestPage(
+                        hasLeading: true,
+                      ));
             },
             child: Container(
               width: 1.sw > 600 ? 40 : 40,

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/tools.dart';
-import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';

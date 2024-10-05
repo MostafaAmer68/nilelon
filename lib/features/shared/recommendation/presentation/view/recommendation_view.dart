@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/shared/recommendation/presentation/cubit/recommendation_cubit.dart';
 
 import '../../../../../core/utils/navigation.dart';
