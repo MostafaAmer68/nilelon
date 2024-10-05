@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
+import 'package:nilelon/features/profile/presentation/pages/profile_guest_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -12,6 +13,8 @@ import 'package:nilelon/features/cart/presentation/view/cart_view.dart';
 import 'package:nilelon/features/product/presentation/pages/product_discover_page.dart';
 import 'package:nilelon/features/customer_flow/home/view/customer_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_view.dart';
+
+import '../../../core/data/hive_stroage.dart';
 
 class CustomerBottomTabBar extends StatefulWidget {
   const CustomerBottomTabBar({super.key});
@@ -41,13 +44,18 @@ class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
                     //   child:
                     const CustomerHomeView(),
                     // ),
-                    BlocProvider(
-                      create: (context) =>
-                          CartCubit(locatorService<CartReposImpl>())..getCart(),
-                      child: const CartView(),
-                    ),
+                    HiveStorage.get(HiveKeys.userModel) != null
+                        ? BlocProvider(
+                            create: (context) =>
+                                CartCubit(locatorService<CartReposImpl>())
+                                  ..getCart(),
+                            child: const CartView(),
+                          )
+                        : const ProfileGuestPage(),
                     const DiscoverView(),
-                    const ProfileView(),
+                    HiveStorage.get(HiveKeys.userModel) != null
+                        ? const ProfileView()
+                        : const ProfileGuestPage(),
                   ],
                 ),
               ),

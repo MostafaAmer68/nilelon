@@ -47,6 +47,8 @@ class _AddProductViewState extends State<EditProductpage> {
 
     cubit = AddProductCubit.get(context);
     cubit.initializeVarientsEdit(widget.product);
+    cubit.isEdit = true;
+    cubit.productEdit = widget.product;
   }
 
   @override

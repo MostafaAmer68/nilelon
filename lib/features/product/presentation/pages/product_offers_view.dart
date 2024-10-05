@@ -36,7 +36,7 @@ class _OffersViewState extends State<OffersView> {
   ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
       ProductsCubit.get(context)
           .getOffersProductsPagination(offersPage, offersPageSize);
     } else {
@@ -59,7 +59,7 @@ class _OffersViewState extends State<OffersView> {
     });
 
     offersPage = offersPage + 1;
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
       ProductsCubit.get(context)
           .getOffersProductsPagination(offersPage, offersPageSize);
     } else {
@@ -102,14 +102,18 @@ class _OffersViewState extends State<OffersView> {
                                 ? ProductsCubit.get(context).products.length + 1
                                 : ProductsCubit.get(context).products.length,
                             itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex == ProductsCubit.get(context).products.length &&
+                              if (sizeIndex ==
+                                      ProductsCubit.get(context)
+                                          .products
+                                          .length &&
                                   offersIsLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
                                 return Container(
                                   child: marketOffersCard(
                                       context: context,
-                                      product: ProductsCubit.get(context).products[sizeIndex]),
+                                      product: ProductsCubit.get(context)
+                                          .products[sizeIndex]),
                                 );
                               }
                             },
@@ -127,14 +131,18 @@ class _OffersViewState extends State<OffersView> {
                                 ? ProductsCubit.get(context).products.length + 1
                                 : ProductsCubit.get(context).products.length,
                             itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex == ProductsCubit.get(context).products.length &&
+                              if (sizeIndex ==
+                                      ProductsCubit.get(context)
+                                          .products
+                                          .length &&
                                   offersIsLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
                                 return Container(
                                   child: offersCard(
                                       context: context,
-                                      product: ProductsCubit.get(context).products[sizeIndex]),
+                                      product: ProductsCubit.get(context)
+                                          .products[sizeIndex]),
                                 );
                               }
                             },

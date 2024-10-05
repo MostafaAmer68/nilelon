@@ -28,10 +28,13 @@ class AddProductCubit extends Cubit<AddproductState> {
   TextEditingController productNameController = TextEditingController();
   TextEditingController productDescriptionController = TextEditingController();
   List<Map<String, dynamic>> quantityControllers = [];
+  final GlobalKey<FormState> globalKey = GlobalKey<FormState>();
   List<Map<String, dynamic>> priceControllers = [];
 
   File sizeGuideImage = File('');
+  bool isEdit = false;
   List<File> images = [];
+  ProductModel productEdit = ProductModel.empty();
 
   List<Map<String, bool>> generateIsEditableList(
       List<String> colors, List<bool> isEditable) {
@@ -170,19 +173,31 @@ class AddProductCubit extends Cubit<AddproductState> {
 
   Future<void> handleSubmit() async {
     // HiveStorage.set(HiveKeys.tempVarients, null);
-    if (HiveStorage.get<List?>(HiveKeys.tempVarients) == null) {
-      _saveNewVariant();
-    } else {
-      _updateExistingVariant();
+    emit(const AddproductState.initial());
+    List<bool> isLeastOneQuantity = [];
+    for (var e in sizes) {
+      isLeastOneQuantity.add(e['quantityController'].text.isNotEmpty);
     }
-    isVarientAdded[selectedIndex] = true;
-    isVarientActive = false;
-    isSubmit = false;
+    if (globalKey.currentState!.validate() &&
+        sizeGuideImage.path.isNotEmpty &&
+        images.isNotEmpty &&
+        isLeastOneQuantity.contains(true)) {
+      if (HiveStorage.get<List?>(HiveKeys.tempVarients) == null) {
+        _saveNewVariant();
+      } else {
+        _updateExistingVariant();
+      }
+      isVarientAdded[selectedIndex] = true;
+      isVarientActive = false;
+      isSubmit = false;
 
-    _resetSizeControllersToDefault();
-    initializeSizeControllers();
+      _resetSizeControllersToDefault();
+      initializeSizeControllers();
 
-    AppLogs.infoLog(HiveStorage.get(HiveKeys.tempVarients).toString());
+      AppLogs.infoLog(HiveStorage.get(HiveKeys.tempVarients).toString());
+    } else {
+      emit(const AddproductState.failure('please enter valid form'));
+    }
   }
 
   void _saveNewVariant() {
@@ -242,11 +257,17 @@ class AddProductCubit extends Cubit<AddproductState> {
 
   bool _checkIfVarientEditable() => isVarientAdded[selectedIndex];
 
-  void onSelectedColor(index) {
+  void onSelectedColor(
+    index,
+  ) {
     selectedIndex = index;
     selectedColor = colors[selectedIndex].toString();
 
-    initializeSizeControllers();
+    if (isEdit) {
+      initializeVarientsEdit(productEdit);
+    } else {
+      initializeSizeControllers();
+    }
     if (_checkIfVarientEditable()) {
       isSubmit = false;
       isVarientActive = false;
@@ -337,7 +358,7 @@ class AddProductCubit extends Cubit<AddproductState> {
 
     for (var variant in product.product.variants) {
       // if (variant.sizes.isNotEmpty) {
-      if (variant.color == selectedColor.substring(2)) {
+      if (variant.color == selectedColor.toLowerCase().substring(2)) {
         for (var item in variant.sizes) {
           for (int i = 0; i < sizes.length; i++) {
             sizes[i]['quantityController'] =
@@ -370,10 +391,15 @@ class AddProductCubit extends Cubit<AddproductState> {
     priceController.text = product.productVariants.first.price.toString();
     productNameController.text = product.name;
     productDescriptionController.text = product.description;
-
+    isVarientActive = true; // is add for activate variants widget
+    isNotFirstTimeActivated =
+        true; // check for first time variant activated or not
+    isSubmit = true; // for submit or upload button only
+    images = product.productImages.map((e) => File(e.url)).toList();
+    sizeGuideImage = File(product.sizeguide);
     for (var variant in product.productVariants) {
       // if (variant.sizes.isNotEmpty) {
-      if (variant.color == selectedColor.substring(2)) {
+      if (variant.color == (selectedColor.toLowerCase().substring(2))) {
         for (int i = 0; i < sizes.length; i++) {
           sizes[i]['quantityController'] =
               TextEditingController(text: variant.quantity.toString());
@@ -433,7 +459,6 @@ class AddProductCubit extends Cubit<AddproductState> {
         log(images.toString());
       });
     }
-    log(images.toString());
     if (variant.sizes.isNotEmpty) {
       for (int i = 0; i < sizes.length; i++) {
         sizes[i]['quantityController'] =

@@ -24,7 +24,7 @@ GestureDetector productSquarItem({
         context: context,
         screen: !HiveStorage.get(HiveKeys.isStore)
             ? ProductDetailsView(productId: model.id)
-            : ProductDetailsStorePage(productId: model.id),
+            : ProductStoreDetailsView(productId: model.id),
       );
     },
     child: Container(
@@ -87,40 +87,43 @@ GestureDetector productSquarItem({
                   ),
                 ),
               ),
-              Positioned(
-                top: 10.h,
-                right: 10.w, // Added right positioning
-                child: InkWell(
-                  onTap: () {
-                    addToClosetDialog(context, model.id);
-                  },
-                  child: Container(
-                    width: 35.w, // Increased size to match the image
-                    height: 35.w,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.orange.shade300.withOpacity(1),
-                          offset: const Offset(
-                              3, 3), // Adjusted shadow to be more subtle
-                          blurRadius: 5,
-                        ),
-                      ],
-                      image: model.isInCloset
-                          ? const DecorationImage(
-                              image: AssetImage(
-                                'assets/images/closet_following.png',
+              Visibility(
+                visible: !HiveStorage.get(HiveKeys.isStore),
+                child: Positioned(
+                  top: 10.h,
+                  right: 10.w, // Added right positioning
+                  child: InkWell(
+                    onTap: () {
+                      addToClosetDialog(context, model.id);
+                    },
+                    child: Container(
+                      width: 35.w, // Increased size to match the image
+                      height: 35.w,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.shade300.withOpacity(1),
+                            offset: const Offset(
+                                3, 3), // Adjusted shadow to be more subtle
+                            blurRadius: 5,
+                          ),
+                        ],
+                        image: model.isInCloset
+                            ? const DecorationImage(
+                                image: AssetImage(
+                                  'assets/images/closet_following.png',
+                                ),
+                                fit: BoxFit.cover, // Changed to contain
+                              )
+                            : const DecorationImage(
+                                image: AssetImage(
+                                  'assets/images/hanger.png',
+                                ),
+                                fit: BoxFit.cover, // Changed to contain
                               ),
-                              fit: BoxFit.cover, // Changed to contain
-                            )
-                          : const DecorationImage(
-                              image: AssetImage(
-                                'assets/images/hanger.png',
-                              ),
-                              fit: BoxFit.cover, // Changed to contain
-                            ),
+                      ),
                     ),
                   ),
                 ),

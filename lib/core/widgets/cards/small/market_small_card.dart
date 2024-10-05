@@ -13,7 +13,7 @@ GestureDetector marketSmallCard(
     onTap: () {
       navigateTo(
           context: context,
-          screen: ProductDetailsStorePage(
+          screen: ProductStoreDetailsView(
             productId: product.id,
           ));
     },

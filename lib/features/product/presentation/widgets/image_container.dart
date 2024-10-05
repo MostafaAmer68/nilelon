@@ -17,7 +17,7 @@ GestureDetector imageContainer(void Function() onTap, String file, context,
         color: ColorManager.primaryB5,
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: file.contains('https')
+          image: file.contains('https') || file.contains('http')
               ? NetworkImage(file)
               : FileImage(File(file)),
           fit: BoxFit.fill,

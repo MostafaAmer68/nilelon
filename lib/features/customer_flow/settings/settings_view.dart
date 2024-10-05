@@ -14,6 +14,8 @@ import 'package:nilelon/features/shared/language/language_view.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 import 'package:nilelon/features/auth/presentation/view/security_view.dart';
 
+import '../../../core/data/hive_stroage.dart';
+import '../../../core/widgets/alert/logout_alert.dart';
 import '../../../core/widgets/scaffold_image.dart';
 
 class SettingsView extends StatelessWidget {
@@ -63,6 +65,17 @@ class SettingsView extends StatelessWidget {
                   onTap: () {
                     navigateTo(context: context, screen: const SecurityView());
                   },
+                ),
+                Visibility(
+                  visible: HiveStorage.get(HiveKeys.userModel) == null,
+                  child: ProfileListTile(
+                    name: lang.logout,
+                    image: 'assets/images/logout.svg',
+                    isRed: true,
+                    onTap: () {
+                      logoutAlert(context);
+                    },
+                  ),
                 ),
               ],
             ),

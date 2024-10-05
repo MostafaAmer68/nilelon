@@ -58,6 +58,7 @@ class TextFormFieldBuilder extends StatelessWidget {
       child: TextFormField(
         textAlign: textAlign ?? TextAlign.start,
         maxLines: maxlines! ? 1 : null,
+        
         expands: maxlines! ? false : true,
         controller: controller,
         obscureText: obsecure!,

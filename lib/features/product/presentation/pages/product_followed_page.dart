@@ -26,7 +26,7 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
 
   @override
   void initState() {
-    // if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
+    // if (HiveStorage.get(HiveKeys.userModel) != null) {
     ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -45,7 +45,7 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
     });
 
     page = page + 1;
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
       ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
     }
     setState(() {
@@ -86,7 +86,9 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
                         ? ProductsCubit.get(context).products.length + 1
                         : ProductsCubit.get(context).products.length,
                     itemBuilder: (context, sizeIndex) {
-                      if (sizeIndex == ProductsCubit.get(context).products.length && isLoadMore) {
+                      if (sizeIndex ==
+                              ProductsCubit.get(context).products.length &&
+                          isLoadMore) {
                         return buildShimmerIndicatorSmall();
                       } else {
                         return productSquarItem(

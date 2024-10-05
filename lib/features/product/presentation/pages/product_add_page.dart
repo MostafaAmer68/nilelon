@@ -142,39 +142,60 @@ class _AddProductViewState extends State<AddProductView> {
 
   //product form
   Widget _buildProductForm(S lang) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        TextAndFormFieldColumnNoIcon(
-          title: lang.productName,
-          label: lang.enterProductName,
-          controller: cubit.productNameController,
-          type: TextInputType.text,
-          height: 30.h,
-        ),
-        SizedBox(height: 16.h),
-        TextAndFormFieldColumnNoIcon(
-          title: lang.productDescription,
-          label: lang.enterProductDescription,
-          controller: cubit.productDescriptionController,
-          type: TextInputType.text,
-          height: 30.h,
-          maxlines: false,
-          fieldHeight: 170,
-        ),
-        SizedBox(height: 16.h),
-        _buildProductTypeDropdown(lang),
-        SizedBox(height: 16.h),
-        TextAndFormFieldColumnNoIcon(
-          title: lang.productPrice,
-          label: lang.enterProductPrice,
-          controller: cubit.priceController,
-          type: TextInputType.number,
-          height: 30.h,
-        ),
-        SizedBox(height: 16.h),
-        SizeGuidImage(lang: lang),
-      ],
+    return Form(
+      key: cubit.globalKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          TextAndFormFieldColumnNoIcon(
+            title: lang.productName,
+            label: lang.enterProductName,
+            controller: cubit.productNameController,
+            type: TextInputType.text,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'please enter product name';
+              }
+              return null;
+            },
+            height: 30.h,
+          ),
+          SizedBox(height: 16.h),
+          TextAndFormFieldColumnNoIcon(
+            title: lang.productDescription,
+            label: lang.enterProductDescription,
+            controller: cubit.productDescriptionController,
+            type: TextInputType.text,
+            height: 30.h,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'please enter discription';
+              }
+              return null;
+            },
+            maxlines: false,
+            fieldHeight: 170,
+          ),
+          SizedBox(height: 16.h),
+          _buildProductTypeDropdown(lang),
+          SizedBox(height: 16.h),
+          TextAndFormFieldColumnNoIcon(
+            title: lang.productPrice,
+            label: lang.enterProductPrice,
+            controller: cubit.priceController,
+            type: TextInputType.number,
+            validator: (value) {
+              if (value == null || value.isEmpty) {
+                return 'please enter price';
+              }
+              return null;
+            },
+            height: 30.h,
+          ),
+          SizedBox(height: 16.h),
+          SizeGuidImage(lang: lang),
+        ],
+      ),
     );
   }
 

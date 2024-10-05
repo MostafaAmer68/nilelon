@@ -17,7 +17,7 @@ GestureDetector analyticsWideCard({required context}) {
     onTap: () {
       navigateTo(
           context: context,
-          screen: ProductDetailsStorePage(
+          screen: ProductStoreDetailsView(
             productId: '',
           ));
     },

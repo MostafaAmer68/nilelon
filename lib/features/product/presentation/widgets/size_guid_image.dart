@@ -62,6 +62,13 @@ class _SizeGuidImageState extends State<SizeGuidImage> {
                   ),
           ],
         ),
+        Visibility(
+          visible: cubit.sizeGuideImage.path.isEmpty,
+          child: Text(
+            'You must choose size guid image.',
+            style: AppStylesManager.customTextStyleR,
+          ),
+        ),
         SizedBox(height: 30.h),
       ],
     );

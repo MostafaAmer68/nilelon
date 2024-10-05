@@ -216,7 +216,9 @@ class _LoginViewState extends State<LoginView> {
                       // const SizedBox(
                       //   width: 24,
                       // ),
-                      signWithContainer('assets/images/google.svg', () {}),
+                      signWithContainer('assets/images/google.svg', () {
+                        AuthCubit.get(context).singinWithGoogle(context);
+                      }),
                     ],
                   ),
                 ),

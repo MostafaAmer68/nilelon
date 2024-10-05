@@ -85,51 +85,14 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         });
       },
       child: ScaffoldImage(
-        appBar: !HiveStorage.get(HiveKeys.isStore)
-            ? customAppBar(
-                title: lang.productDetails,
-                icon: Icons.share_outlined,
-                onPressed: () {
-                  addToClosetDialog(context, productCubit.product.id);
-                },
-                context: context,
-              )
-            : AppBar(
-                backgroundColor: Colors.transparent,
-                leading: IconButton(
-                    onPressed: () => navigatePop(context: context),
-                    icon: const Icon(Icons.arrow_back)),
-                title: Text(
-                  lang.productDetails,
-                  style: AppStylesManager.customTextStyleBl6,
-                ),
-                centerTitle: true,
-                actions: [
-                  PopupMenuButton<String>(
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem(
-                          value: 'delete',
-                          child: Text(lang.delete),
-                        ),
-                        PopupMenuItem(
-                          value: 'update',
-                          child: Text(lang.updateDraft),
-                        ),
-                      ];
-                    },
-                    onSelected: (value) {
-                      if (value == 'delete') {
-                      } else if (value == 'update') {
-                        navigateTo(
-                            context: context,
-                            screen:
-                                EditProductpage(product: productCubit.product));
-                      }
-                    },
-                  ),
-                ],
-              ),
+        appBar: customAppBar(
+          title: lang.productDetails,
+          icon: Icons.share_outlined,
+          onPressed: () {
+            addToClosetDialog(context, productCubit.product.id);
+          },
+          context: context,
+        ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

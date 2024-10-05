@@ -5,9 +5,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/shared/recommendation/presentation/cubit/recommendation_cubit.dart';
 
+import '../../../../../core/utils/navigation.dart';
 import '../../../../../core/widgets/scaffold_image.dart';
+import '../../../../customer_flow/layout/customer_bottom_tab_bar.dart';
 
 class RecommendationView extends StatelessWidget {
   const RecommendationView({super.key});
@@ -66,9 +69,17 @@ class RecommendationView extends StatelessWidget {
                         'assets/images/shop_for_women.png',
                         'Shop for Women',
                         () {
-                          RecommendationCubit.get(context)
-                              .setRecommendation('Female', context);
-                          HiveStorage.set(HiveKeys.shopFor, 'Female');
+                          if (HiveStorage.get(HiveKeys.userModel) != null) {
+                            RecommendationCubit.get(context)
+                                .setRecommendation('Female', context);
+                          } else {
+                            navigateAndRemoveUntil(
+                              context: context,
+                              screen: const CustomerBottomTabBar(),
+                            );
+
+                            HiveStorage.set(HiveKeys.shopFor, 'Female');
+                          }
                         },
                       ),
                       SizedBox(
@@ -79,10 +90,16 @@ class RecommendationView extends StatelessWidget {
                         'assets/images/shop_for_man.png',
                         'Shop for Man',
                         () {
-                          RecommendationCubit.get(context)
-                              .setRecommendation('Male', context);
-                          HiveStorage.set(HiveKeys.shopFor, 'Male');
-                          
+                          if (HiveStorage.get(HiveKeys.userModel) != null) {
+                            RecommendationCubit.get(context)
+                                .setRecommendation('Male', context);
+                          } else {
+                            navigateAndRemoveUntil(
+                              context: context,
+                              screen: const CustomerBottomTabBar(),
+                            );
+                            HiveStorage.set(HiveKeys.shopFor, 'Male');
+                          }
                         },
                       ),
                     ],

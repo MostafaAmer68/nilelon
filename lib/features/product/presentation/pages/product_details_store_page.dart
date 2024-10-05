@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,24 +24,25 @@ import 'package:nilelon/features/product/presentation/widgets/rating_container.d
 import 'package:nilelon/core/widgets/rating/view/rating_dialog.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 
+import '../../../../core/widgets/button/gradient_button_builder.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/products_cubit/products_state.dart';
 import '../widgets/color_selector.dart';
 import '../widgets/custom_toggle_button.dart';
 
-class ProductDetailsStorePage extends StatefulWidget {
-  const ProductDetailsStorePage({
+class ProductStoreDetailsView extends StatefulWidget {
+  const ProductStoreDetailsView({
     super.key,
     required this.productId,
   });
   final String productId;
 
   @override
-  State<ProductDetailsStorePage> createState() =>
-      _ProductDetailsStorePageState();
+  State<ProductStoreDetailsView> createState() =>
+      _ProductStoreDetailsViewState();
 }
 
-class _ProductDetailsStorePageState extends State<ProductDetailsStorePage> {
+class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
   bool isEnabled = true;
   late List<String> sizes;
   late final CartCubit cubit;
@@ -74,6 +76,7 @@ class _ProductDetailsStorePageState extends State<ProductDetailsStorePage> {
     return BlocListener<ProductsCubit, ProductsState>(
       listener: (context, state) {
         state.mapOrNull(success: (_) {
+          BotToast.closeAllLoading();
           cubit.selectedColor =
               productCubit.product.productVariants.first.color;
           cubit.selectedSize = productCubit.product.productVariants.first.size;
@@ -84,51 +87,41 @@ class _ProductDetailsStorePageState extends State<ProductDetailsStorePage> {
         });
       },
       child: ScaffoldImage(
-        appBar: !HiveStorage.get(HiveKeys.isStore)
-            ? customAppBar(
-                title: lang.productDetails,
-                icon: Icons.share_outlined,
-                onPressed: () {
-                  addToClosetDialog(context, productCubit.product.id);
-                },
-                context: context,
-              )
-            : AppBar(
-                backgroundColor: Colors.transparent,
-                leading: IconButton(
-                    onPressed: () => navigatePop(context: context),
-                    icon: const Icon(Icons.arrow_back)),
-                title: Text(
-                  lang.productDetails,
-                  style: AppStylesManager.customTextStyleBl6,
-                ),
-                centerTitle: true,
-                actions: [
-                  PopupMenuButton<String>(
-                    itemBuilder: (context) {
-                      return [
-                        PopupMenuItem(
-                          value: 'delete',
-                          child: Text(lang.delete),
-                        ),
-                        PopupMenuItem(
-                          value: 'update',
-                          child: Text(lang.updateDraft),
-                        ),
-                      ];
-                    },
-                    onSelected: (value) {
-                      if (value == 'delete') {
-                      } else if (value == 'update') {
-                        navigateTo(
-                            context: context,
-                            screen:
-                                EditProductpage(product: productCubit.product));
-                      }
-                    },
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+              onPressed: () => navigatePop(context: context),
+              icon: const Icon(Icons.arrow_back)),
+          title: Text(
+            lang.productDetails,
+            style: AppStylesManager.customTextStyleBl6,
+          ),
+          centerTitle: true,
+          actions: [
+            PopupMenuButton<String>(
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    value: 'delete',
+                    child: Text(lang.delete),
                   ),
-                ],
-              ),
+                  PopupMenuItem(
+                    value: 'update',
+                    child: Text(lang.updateDraft),
+                  ),
+                ];
+              },
+              onSelected: (value) {
+                if (value == 'delete') {
+                } else if (value == 'update') {
+                  navigateTo(
+                      context: context,
+                      screen: EditProductpage(product: productCubit.product));
+                }
+              },
+            ),
+          ],
+        ),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,6 +199,7 @@ class _ProductDetailsStorePageState extends State<ProductDetailsStorePage> {
                     loading: () => const CircularProgressIndicator(),
                     success: () {
                       return ListView.builder(
+                        shrinkWrap: true,
                         itemCount: ProductsCubit.get(context).review.length,
                         itemBuilder: (context, index) {
                           final review =
@@ -222,7 +216,11 @@ class _ProductDetailsStorePageState extends State<ProductDetailsStorePage> {
           ),
         ),
         persistentFooterButtons: [
-          AddToFooter(visible: true, product: productCubit.product),
+          GradientButtonBuilder(
+            text: 'Apply Offer',
+            width: screenWidth(context, 1),
+            ontap: () {},
+          )
         ],
       ),
     );
@@ -362,7 +360,7 @@ class _ProductDetailsStorePageState extends State<ProductDetailsStorePage> {
         text: lang.reviews,
         noPadding: true,
         onPressed: () {
-          ratingDialog(context);
+          // ratingDialog(context);
         },
         buttonWidget: Text(
           lang.rate,

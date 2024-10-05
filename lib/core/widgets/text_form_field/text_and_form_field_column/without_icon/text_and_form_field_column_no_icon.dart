@@ -15,6 +15,7 @@ class TextAndFormFieldColumnNoIcon extends StatelessWidget {
     this.desc,
     this.maxlines = true,
     this.fieldHeight,
+    this.validator,
   });
   final String title;
   final String label;
@@ -24,7 +25,7 @@ class TextAndFormFieldColumnNoIcon extends StatelessWidget {
   final TextInputType type;
   final String? desc;
   final bool? maxlines;
-
+  final String? Function(String? value)? validator;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -48,6 +49,7 @@ class TextAndFormFieldColumnNoIcon extends StatelessWidget {
         TextFormFieldBuilder(
           label: label,
           controller: controller,
+          validator: validator,
           type: type,
           width: screenWidth(context, 0.92),
           noIcon: true,

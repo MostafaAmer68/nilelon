@@ -40,7 +40,7 @@ class _DiscoverViewState extends State<DiscoverView> {
 
   @override
   void initState() {
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
       ProductsCubit.get(context)
           .getNewInProductsPagination(newInPage, newInPageSize);
       ProductsCubit.get(context)
@@ -74,7 +74,7 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     newInPage = newInPage + 1;
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
       ProductsCubit.get(context)
           .getNewInProductsPagination(newInPage, newInPageSize);
     } else {
@@ -92,7 +92,7 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     handPage = handPage + 1;
-    if (HiveStorage.get<UserModel>(HiveKeys.userModel).id.isNotEmpty) {
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
       ProductsCubit.get(context)
           .getRandomProductsPagination(newInPage, newInPageSize);
     } else {
@@ -201,13 +201,15 @@ class ProductNewInView extends StatelessWidget {
               height: 1.sw > 600 ? 310 : 290,
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  if (index == ProductsCubit.get(context).products.length && newInIsLoadMore) {
+                  if (index == ProductsCubit.get(context).products.length &&
+                      newInIsLoadMore) {
                     return buildShimmerIndicatorSmall();
                   } else {
                     if (checkIsHasDiscount(
                         ProductsCubit.get(context).products, index)) {
                       return offersCard(
-                          context: context, product: ProductsCubit.get(context).products[index]);
+                          context: context,
+                          product: ProductsCubit.get(context).products[index]);
                     }
                     return Padding(
                       padding: const EdgeInsets.all(10),
@@ -283,16 +285,19 @@ class HandPickedView extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: gridDelegate,
               shrinkWrap: true,
-              itemCount:
-                  handIsLoadMore ? ProductsCubit.get(context).products.length : ProductsCubit.get(context).products.length,
+              itemCount: handIsLoadMore
+                  ? ProductsCubit.get(context).products.length
+                  : ProductsCubit.get(context).products.length,
               itemBuilder: (context, index) {
-                if (index == ProductsCubit.get(context).products.length && handIsLoadMore) {
+                if (index == ProductsCubit.get(context).products.length &&
+                    handIsLoadMore) {
                   return buildShimmerIndicatorSmall();
                 } else {
                   if (checkIsHasDiscount(
                       ProductsCubit.get(context).products, index)) {
                     return offersCard(
-                        context: context, product: ProductsCubit.get(context).products[index]);
+                        context: context,
+                        product: ProductsCubit.get(context).products[index]);
                   }
                   return productSquarItem(
                     context: context,

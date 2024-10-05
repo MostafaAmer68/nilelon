@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
-import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
-import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
 import 'package:nilelon/features/product/presentation/pages/product_followed_page.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -13,16 +10,12 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
-import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
 import 'package:nilelon/features/product/presentation/pages/product_following_view_all.dart';
 import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/home_custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/search/presentation/pages/search_view.dart';
-
-import '../../../auth/domain/model/user_model.dart';
 
 class CustomerHomeView extends StatefulWidget {
   const CustomerHomeView({super.key});

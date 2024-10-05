@@ -342,6 +342,13 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
       child: Column(
         children: [
           _buildImageRow(),
+          Visibility(
+            visible: cubit.images.isEmpty,
+            child: Text(
+              'You must choose at least 1 image.',
+              style: AppStylesManager.customTextStyleR,
+            ),
+          ),
           SizedBox(height: 40.h),
           const TableHeaders(),
           _buildSizeListView(),
