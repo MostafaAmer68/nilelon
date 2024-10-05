@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/closet/data/repo_impl/closet_repo_impl.dart';
@@ -32,8 +33,25 @@ import 'package:nilelon/generated/l10n.dart';
 
 import 'features/search/data/repositories/search_repo_impl.dart';
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_MyAppState>()?.restartApp();
+  }
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -98,14 +116,14 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return MaterialApp(
+            key: key,
             debugShowCheckedModeBanner: false,
             // useInheritedMediaQuery: true,
             builder: BotToastInit(),
             // builder: DevicePreview.appBuilder,
-            locale: //HiveStorage.get(HiveKeys.isArabic)
-                // ? const Locale('ar')
-                // :
-                const Locale('en'),
+            locale: HiveStorage.get(HiveKeys.isArabic)
+                ? const Locale('ar')
+                : const Locale('en'),
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,

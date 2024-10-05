@@ -7,6 +7,7 @@ part 'switch_language_state.dart';
 
 class SwitchLanguageCubit
     extends Bloc<SwitchLanguageEvent, SwitchLanguageState> {
+  static SwitchLanguageCubit get(context) => BlocProvider.of(context);
   SwitchLanguageCubit() : super(const SwitchLanguageInitial(false)) {
     on<ArabicLanguageEvent>((event, emit) {
       HiveStorage.set(HiveKeys.isArabic, true);

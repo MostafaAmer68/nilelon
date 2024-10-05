@@ -98,9 +98,7 @@ class SettingsView extends StatelessWidget {
             style: AppStylesManager.customTextStyleB4
                 .copyWith(color: ColorManager.primaryR, fontSize: 16),
           ),
-          const Spacer(
-              // flex: 2,
-              )
+          const Spacer(),
         ],
       ),
     );

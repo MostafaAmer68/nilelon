@@ -71,6 +71,8 @@ class RecommendationView extends StatelessWidget {
                           if (HiveStorage.get(HiveKeys.userModel) != null) {
                             RecommendationCubit.get(context)
                                 .setRecommendation('Female', context);
+
+                            HiveStorage.set(HiveKeys.shopFor, 'Female');
                           } else {
                             navigateAndRemoveUntil(
                               context: context,
@@ -92,6 +94,7 @@ class RecommendationView extends StatelessWidget {
                           if (HiveStorage.get(HiveKeys.userModel) != null) {
                             RecommendationCubit.get(context)
                                 .setRecommendation('Male', context);
+                            HiveStorage.set(HiveKeys.shopFor, 'Male');
                           } else {
                             navigateAndRemoveUntil(
                               context: context,
