@@ -78,7 +78,7 @@ class _OrderRefundDetailsCardState extends State<OrderRefundDetailsCard> {
                         Row(
                           children: [
                             Text(
-                              '${widget.product.price} L.E',
+                              '${widget.product.price} ${S.of(context).le}',
                               style: AppStylesManager.customTextStyleO3,
                             ),
                           ],
@@ -144,7 +144,7 @@ class _OrderRefundDetailsCardState extends State<OrderRefundDetailsCard> {
                       flex: 3,
                     ),
                     Text(
-                      'Qun: ',
+                      '${S.of(context).quantity}: ',
                       style: AppStylesManager.customTextStyleG13,
                     ),
                     Text(
@@ -156,7 +156,7 @@ class _OrderRefundDetailsCardState extends State<OrderRefundDetailsCard> {
                       flex: 3,
                     ),
                     Text(
-                      'Color:  ',
+                      '${S.of(context).color}:  ',
                       style: AppStylesManager.customTextStyleG13,
                     ),
                     Container(

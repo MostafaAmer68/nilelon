@@ -43,7 +43,7 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
         }
         if (state is RefundSuccess) {
           BotToast.closeAllLoading();
-          BotToast.showText(text: 'Refund Report Submeted');
+          BotToast.showText(text: S.of(context).reportSubmited);
         }
         if (state is RefundFailure) {
           BotToast.closeAllLoading();

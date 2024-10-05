@@ -24,7 +24,7 @@ class ProfileGuestPage extends StatelessWidget {
           title: lang.profile,
           context: context,
           hasIcon: false,
-          hasLeading:hasLeading?? false),
+          hasLeading: hasLeading ?? false),
       body: Column(
         children: [
           const DefaultDivider(),
@@ -32,7 +32,7 @@ class ProfileGuestPage extends StatelessWidget {
           SvgPicture.asset('assets/images/amico.svg'),
           const SizedBox(height: 30),
           Text(
-            'You dont`t Have Account sign up\nto enjoy out features.',
+            S.of(context).guestMsg,
             style: AppStylesManager.customTextStyleBl,
           ),
           const SizedBox(height: 30),
@@ -62,9 +62,9 @@ class ProfileGuestPage extends StatelessWidget {
             text: TextSpan(
               style: AppStylesManager.customTextStyleB5,
               children: [
-                const TextSpan(text: 'Already have an account? '),
+                TextSpan(text: S.of(context).alreadyExits),
                 TextSpan(
-                    text: 'Sign in',
+                    text: S.of(context).signIn,
                     style: AppStylesManager.customTextStyleL,
                     recognizer: TapGestureRecognizer()
                       ..onTap = () {

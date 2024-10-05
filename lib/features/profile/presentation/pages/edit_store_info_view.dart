@@ -43,7 +43,7 @@ class EditStoreInfoView extends StatelessWidget {
               BotToast.closeAllLoading();
               successCreationDialog(
                   context: context,
-                  highlightedText: 'Info has been updated successfully',
+                  highlightedText: S.of(context).infoUpdate,
                   regularText: '',
                   buttonText: lang.save,
                   ontap: () {

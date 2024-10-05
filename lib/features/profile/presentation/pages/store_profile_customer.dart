@@ -43,7 +43,8 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
     cubit = BlocProvider.of(context);
     cubit.getStoreById(widget.storeId);
     cubit.getStoreForCustomer(widget.storeId);
-    ProductsCubit.get(context).getStoreProductsPagination(widget.storeId, 1, 100);
+    ProductsCubit.get(context)
+        .getStoreProductsPagination(widget.storeId, 1, 100);
     super.initState();
   }
 
@@ -69,7 +70,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
               BotToast.showLoading();
             }, successFollow: (r) {
               BotToast.closeAllLoading();
-              BotToast.showText(text: 'You are now following this store');
+              BotToast.showText(text: S.of(context).nowFollowing);
             }, success: (r) {
               BotToast.closeAllLoading();
             }, failure: (r) {

@@ -170,7 +170,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                             children: [
                               Center(
                                 child: Text(
-                                  'There is no products added yet.',
+                                  S.of(context).thereNoProduct,
                                   style: AppStylesManager.customTextStyleG2,
                                 ),
                               ),

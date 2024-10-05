@@ -62,7 +62,7 @@ class CheckProductItem extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'By fuck',
+                              'By neotin',
                               style: AppStylesManager.customTextStyleG5,
                             ),
                             const SizedBox(
@@ -121,7 +121,7 @@ class CheckProductItem extends StatelessWidget {
                       flex: 3,
                     ),
                     Text(
-                      'Qun: ',
+                      '${S.of(context).quantity}: ',
                       style: AppStylesManager.customTextStyleG13,
                     ),
                     Text(
@@ -133,7 +133,7 @@ class CheckProductItem extends StatelessWidget {
                       flex: 3,
                     ),
                     Text(
-                      'Color:  ',
+                      '${S.of(context).color}:  ',
                       style: AppStylesManager.customTextStyleG13,
                     ),
                     Container(

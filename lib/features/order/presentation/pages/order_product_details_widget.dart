@@ -5,6 +5,8 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
 
+import '../../../../generated/l10n.dart';
+
 class OrderProductDetailsWidget extends StatelessWidget {
   const OrderProductDetailsWidget({
     super.key,
@@ -70,7 +72,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
                   ),
                   const Spacer(),
                   Text(
-                    '$price L.E',
+                    '$price ${S.of(context).le}',
                     style: AppStylesManager.customTextStyleO4,
                   ),
                 ],
@@ -81,7 +83,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    'Size :  ',
+                    '${S.of(context).size} :  ',
                     style: AppStylesManager.customTextStyleG10,
                   ),
                   const SizedBox(
@@ -108,7 +110,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
                     flex: 3,
                   ),
                   Text(
-                    'Color :',
+                    '${S.of(context).color} :',
                     style: AppStylesManager.customTextStyleG10,
                   ),
                   const SizedBox(
@@ -130,7 +132,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Quan :',
+                    '${S.of(context).quantity}: ',
                     style: AppStylesManager.customTextStyleG10,
                   ),
                   const SizedBox(

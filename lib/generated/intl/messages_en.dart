@@ -59,6 +59,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "After Uploading You Won’t Be Able To Edit Product Name, Description Or Category"),
         "allBrands": MessageLookupByLibrary.simpleMessage("All Brands"),
         "allDrafts": MessageLookupByLibrary.simpleMessage("All Drafts"),
+        "alreadyExits":
+            MessageLookupByLibrary.simpleMessage("Already have an account?"),
         "amount": MessageLookupByLibrary.simpleMessage("Amount"),
         "analytics": MessageLookupByLibrary.simpleMessage("Analytics"),
         "andDontForgetTheTotalNumberOfSalesInTheWholeMarketIsGettingIncreasingWhileWereTalkingWhichMeansTheAverageIsGettingBiggerTooSoHoldOnToYourPositionAndAimForAHigherOne":
@@ -133,7 +135,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create Store Account"),
         "currentPassword":
             MessageLookupByLibrary.simpleMessage("Current Password"),
-        "damagedItem": MessageLookupByLibrary.simpleMessage("Damaged item"),
+        "damagedItem": MessageLookupByLibrary.simpleMessage("d"),
         "damagedPart": MessageLookupByLibrary.simpleMessage("Damaged Part"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "dateOfBirth": MessageLookupByLibrary.simpleMessage("Date Of Birth"),
@@ -233,6 +235,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Explore a vast collection of products from local brands. Get everything you need in one place!"),
         "facebookOrInstagram":
             MessageLookupByLibrary.simpleMessage("Facebook Or Instagram"),
+        "failedRegister":
+            MessageLookupByLibrary.simpleMessage("Failed to register "),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
         "fillThisSurveyToEnhanceYourNextOrderExperience":
             MessageLookupByLibrary.simpleMessage(
@@ -253,6 +257,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
         "gold": MessageLookupByLibrary.simpleMessage("Gold"),
+        "guestMsg": MessageLookupByLibrary.simpleMessage(
+            "You dont`t Have Account sign up\nto enjoy out features."),
         "guideBook": MessageLookupByLibrary.simpleMessage("Guide Book"),
         "handPicked": MessageLookupByLibrary.simpleMessage("Hand Picked"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
@@ -263,6 +269,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "If You Logout Or Unistall The App All Your Drafts Will Be Gone"),
         "inStock": MessageLookupByLibrary.simpleMessage("In Stock"),
+        "infoUpdate": MessageLookupByLibrary.simpleMessage(
+            "Info has been updated successfully"),
+        "infoUpdateReglogin": MessageLookupByLibrary.simpleMessage(
+            "Info has been updated successfully\nplease relogin to update your info"),
         "isANumberThatHelpYouToKnowHowGoodYoureAsABrandHowMuchSalesShouldBeYourNextTargetAndWhereYouAreStandingInYourMarket":
             MessageLookupByLibrary.simpleMessage(
                 "Is A Number That Help You To Know How Good You’re As A Brand How Much Sales Should Be Your Next Target And Where You Are Standing In Your Market"),
@@ -275,12 +285,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "isThereSomthingMissingInYourPackage":
             MessageLookupByLibrary.simpleMessage(
                 "Is There Somthing Missing In Your Package"),
+        "itemDeleteCart":
+            MessageLookupByLibrary.simpleMessage("Item deleted successfully"),
         "jackets": MessageLookupByLibrary.simpleMessage("Jackets"),
         "jeans": MessageLookupByLibrary.simpleMessage("Jeans"),
         "knitWear": MessageLookupByLibrary.simpleMessage("Knit Wear"),
         "kpis": MessageLookupByLibrary.simpleMessage("KPIs"),
         "landmark": MessageLookupByLibrary.simpleMessage("Landmark"),
         "language": MessageLookupByLibrary.simpleMessage("Language"),
+        "le": MessageLookupByLibrary.simpleMessage("L.E"),
         "letsStart": MessageLookupByLibrary.simpleMessage("let’sStart"),
         "logout": MessageLookupByLibrary.simpleMessage("Log Out"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
@@ -300,10 +313,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noDraftsYet": MessageLookupByLibrary.simpleMessage("No Drafts Yet."),
+        "noProductCart": MessageLookupByLibrary.simpleMessage(
+            "There is no products in the cart."),
         "noProductsAddedYet":
             MessageLookupByLibrary.simpleMessage("No Products Added Yet"),
+        "noReturnItems":
+            MessageLookupByLibrary.simpleMessage("No Return Items"),
         "notification": MessageLookupByLibrary.simpleMessage("Notification"),
         "notified": MessageLookupByLibrary.simpleMessage("Notified"),
+        "nowFollowing": MessageLookupByLibrary.simpleMessage(
+            "You are now following this store"),
         "nowYouKnowWhereToAimAndThisIsYourCompassInWhichClusterYoureIsYourMostNeededInformationToStartEvaluatingYourBusiness":
             MessageLookupByLibrary.simpleMessage(
                 "Now You Know Where To Aim And This Is Your Compass In Which Cluster You’re Is Your Most Needed Information To Start Evaluating Your Business"),
@@ -398,6 +417,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "renameSection": MessageLookupByLibrary.simpleMessage("Rename Section"),
         "report": MessageLookupByLibrary.simpleMessage("Report"),
         "reportOrder": MessageLookupByLibrary.simpleMessage("Report Order"),
+        "reportSubmited":
+            MessageLookupByLibrary.simpleMessage("Refund Report Submeted"),
         "requests": MessageLookupByLibrary.simpleMessage("Requests"),
         "resend": MessageLookupByLibrary.simpleMessage("Resend"),
         "resendIn": MessageLookupByLibrary.simpleMessage("Resend In"),
@@ -447,6 +468,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "size": MessageLookupByLibrary.simpleMessage("Size"),
         "sizeGuide": MessageLookupByLibrary.simpleMessage("Size Guide"),
         "sizes": MessageLookupByLibrary.simpleMessage("Sizes"),
+        "smothingWent":
+            MessageLookupByLibrary.simpleMessage("Something went wrong"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
         "storeProfileLinkIsCopied": MessageLookupByLibrary.simpleMessage(
@@ -471,6 +494,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "theBrandsThatHaveNumbersWhichAreEqualToTheMarketAverageAreInBCluster":
             MessageLookupByLibrary.simpleMessage(
                 "The Brands That Have Numbers Which Are Equal To The Market Average Are In Cluster"),
+        "thereNoProduct": MessageLookupByLibrary.simpleMessage(
+            "There is no products added yet."),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalIncome": MessageLookupByLibrary.simpleMessage("Total Income"),
@@ -499,6 +524,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "verifyYourPassword":
             MessageLookupByLibrary.simpleMessage("Verify Your Password"),
         "viewAll": MessageLookupByLibrary.simpleMessage("View All"),
+        "waitingToGet": MessageLookupByLibrary.simpleMessage(
+            "Waiting we traing to get products"),
         "warehouseAddress":
             MessageLookupByLibrary.simpleMessage("Warehouse Address"),
         "weHaveSent6DigitsVerificationCodeTo":

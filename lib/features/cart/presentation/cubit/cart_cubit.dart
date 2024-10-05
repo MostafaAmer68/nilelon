@@ -39,7 +39,6 @@ class CartCubit extends Cubit<CartState> {
     var result = await cartRepos.addToCart(model);
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
-      print('proudct added');
     }, (response) {
       emit(CartSuccess());
     });

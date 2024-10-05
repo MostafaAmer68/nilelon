@@ -51,7 +51,7 @@ class CartView extends StatelessWidget {
           BlocConsumer<CartCubit, CartState>(
             listener: (context, state) {
               if (state is DeleteFromCartSuccess) {
-                BotToast.showText(text: 'Item deleted successfully');
+                BotToast.showText(text: S.of(context).itemDeleteCart);
               } else if (state is DeleteFromCartFailure) {
                 BotToast.showText(
                   text: state.message,
@@ -72,7 +72,7 @@ class CartView extends StatelessWidget {
                           SizedBox(
                             height: screenHeight(context, 0.35),
                           ),
-                          const Text('There is no products in the cart.'),
+                          Text(S.of(context).noProductCart),
                         ],
                       )
                     : Column(
@@ -187,7 +187,7 @@ class CartView extends StatelessWidget {
                         ],
                       );
               } else {
-                return const Text('Something went wrong');
+                return  Text(S.of(context).somthingWent);
               }
             },
           ),

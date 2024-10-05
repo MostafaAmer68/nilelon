@@ -59,7 +59,7 @@ class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
                 }
                 if (state is RefundSuccess) {
                   if (cubit.refunds.isEmpty) {
-                    return const Text('No Return Items');
+                    return Text(S.of(context).noReturnItems);
                   }
                   return ListView.builder(
                     shrinkWrap: true,
@@ -89,7 +89,7 @@ class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
                     itemCount: cubit.refunds.length,
                   );
                 }
-                return const Text('No Return Items yet!');
+                return Text(S.of(context).noReturnItems);
               },
             ),
           )

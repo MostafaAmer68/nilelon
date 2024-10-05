@@ -197,7 +197,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                             state.whenOrNull(
                               loading: () => const CircularProgressIndicator(),
                               success: () => orderSummaryItems(
-                                'Order',
+                                S.of(context).order,
                                 (cubit.customerOrder.total -
                                         num.parse(
                                             cubit.customerOrder.shippingCost))
@@ -214,7 +214,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                             state.whenOrNull(
                               loading: () => const CircularProgressIndicator(),
                               success: () => orderSummaryItems(
-                                'Delivery',
+                                S.of(context).delivery,
                                 cubit.customerOrder.shippingCost,
                               ),
                             )!,

@@ -3530,11 +3530,151 @@ class S {
     );
   }
 
-  /// `Damaged item`
+  /// `d`
   String get damagedItem {
     return Intl.message(
-      'Damaged item',
+      'd',
       name: 'damagedItem',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already have an account?`
+  String get alreadyExits {
+    return Intl.message(
+      'Already have an account?',
+      name: 'alreadyExits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You dont't Have Account sign up\nto enjoy out features.`
+  String get guestMsg {
+    return Intl.message(
+      'You dont`t Have Account sign up\nto enjoy out features.',
+      name: 'guestMsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Info has been updated successfully`
+  String get infoUpdate {
+    return Intl.message(
+      'Info has been updated successfully',
+      name: 'infoUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Info has been updated successfully\nplease relogin to update your info`
+  String get infoUpdateReglogin {
+    return Intl.message(
+      'Info has been updated successfully\nplease relogin to update your info',
+      name: 'infoUpdateReglogin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You are now following this store`
+  String get nowFollowing {
+    return Intl.message(
+      'You are now following this store',
+      name: 'nowFollowing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Waiting we traing to get products`
+  String get waitingToGet {
+    return Intl.message(
+      'Waiting we traing to get products',
+      name: 'waitingToGet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no products added yet.`
+  String get thereNoProduct {
+    return Intl.message(
+      'There is no products added yet.',
+      name: 'thereNoProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Return Items`
+  String get noReturnItems {
+    return Intl.message(
+      'No Return Items',
+      name: 'noReturnItems',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Refund Report Submeted`
+  String get reportSubmited {
+    return Intl.message(
+      'Refund Report Submeted',
+      name: 'reportSubmited',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `L.E`
+  String get le {
+    return Intl.message(
+      'L.E',
+      name: 'le',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to register `
+  String get failedRegister {
+    return Intl.message(
+      'Failed to register ',
+      name: 'failedRegister',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Item deleted successfully`
+  String get itemDeleteCart {
+    return Intl.message(
+      'Item deleted successfully',
+      name: 'itemDeleteCart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no products in the cart.`
+  String get noProductCart {
+    return Intl.message(
+      'There is no products in the cart.',
+      name: 'noProductCart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong`
+  String get smothingWent {
+    return Intl.message(
+      'Something went wrong',
+      name: 'smothingWent',
       desc: '',
       args: [],
     );

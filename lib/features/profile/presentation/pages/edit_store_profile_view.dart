@@ -47,8 +47,7 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
             BotToast.closeAllLoading();
             successCreationDialog(
                 context: context,
-                highlightedText:
-                    'Info has been updated successfully\nplease relogin to update your info',
+                highlightedText: S.of(context).infoUpdateReglogin,
                 regularText: '',
                 buttonText: lang.save,
                 ontap: () {

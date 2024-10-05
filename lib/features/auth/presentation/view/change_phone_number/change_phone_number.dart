@@ -62,7 +62,7 @@ class ChangePhoneNumber extends StatelessWidget {
                                   lang.phoneNumberChangedSuccessfully,
                               regularText: lang
                                   .yourPhoneNumberHasBeenChangedSuccessfullyWeWillLetYouKnowIfThereAnyProblem,
-                              buttonText: 'Ok',
+                              buttonText: S.of(context).ok,
                               ontap: () {},
                             );
                           },

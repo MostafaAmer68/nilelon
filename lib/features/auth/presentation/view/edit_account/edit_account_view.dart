@@ -53,8 +53,7 @@ class _EditAccountViewState extends State<EditAccountView> {
             BotToast.closeAllLoading();
             successCreationDialog(
                 context: context,
-                highlightedText:
-                    'Info has been updated successfully \n please relogin to update your info ',
+                highlightedText: S.of(context).infoUpdateReglogin,
                 regularText: '',
                 buttonText: lang.save,
                 ontap: () {

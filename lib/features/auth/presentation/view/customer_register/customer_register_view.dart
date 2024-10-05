@@ -275,7 +275,8 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                                 context: context,
                                 screen: const RecommendationView());
                           } else if (state is StoreGoogleRegisterFailure) {
-                            BotToast.showText(text: 'Failed to register ');
+                            BotToast.showText(
+                                text: S.of(context).failedRegister);
                           }
                         },
                         child:

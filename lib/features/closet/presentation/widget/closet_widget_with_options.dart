@@ -91,7 +91,7 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                     width: 60.w,
                     height: 25.w,
                     child: Text(
-                      'Empty Closet',
+                      S.of(context).emptyCloseed,
                       style: AppStylesManager.customTextStyleBl3
                           .copyWith(fontWeight: FontWeight.w500),
                     ),

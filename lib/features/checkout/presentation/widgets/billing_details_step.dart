@@ -141,7 +141,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Payment Method',
+          S.of(context).paymentMethod,
           style: AppStylesManager.customTextStyleBl8
               .copyWith(fontWeight: FontWeight.w600),
         ),

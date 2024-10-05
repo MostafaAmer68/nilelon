@@ -9,6 +9,7 @@ import 'package:nilelon/core/widgets/pop_ups/customer_store_popup.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
+import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../categories/domain/model/result.dart';
@@ -112,7 +113,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                 builder: (context, state) {
                   return state.when(
                     initial: () {
-                      return const Text('Waiting we traing to get products');
+                      return  Text(S.of(context).waitingToGet);
                     },
                     loading: () {
                       return buildShimmerIndicatorGrid();
