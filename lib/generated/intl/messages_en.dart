@@ -389,8 +389,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("please enter discription"),
         "plsEnterName":
             MessageLookupByLibrary.simpleMessage("please enter product name"),
+        "plsEnterProfile":
+            MessageLookupByLibrary.simpleMessage("Please enter profile link"),
+        "plsEnterRepName":
+            MessageLookupByLibrary.simpleMessage("please enter rep name"),
+        "plsEnterStoreName":
+            MessageLookupByLibrary.simpleMessage("Please enter store name"),
         "plsEnterValidNumber":
             MessageLookupByLibrary.simpleMessage("Enter a valid number"),
+        "plsEnterwareHouse":
+            MessageLookupByLibrary.simpleMessage("please enter wareHouse"),
         "polices": MessageLookupByLibrary.simpleMessage("Polices"),
         "pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails":
             MessageLookupByLibrary.simpleMessage(

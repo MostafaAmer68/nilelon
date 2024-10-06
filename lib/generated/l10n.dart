@@ -3860,6 +3860,46 @@ class S {
     );
   }
 
+  /// `Please enter profile link`
+  String get plsEnterProfile {
+    return Intl.message(
+      'Please enter profile link',
+      name: 'plsEnterProfile',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter store name`
+  String get plsEnterStoreName {
+    return Intl.message(
+      'Please enter store name',
+      name: 'plsEnterStoreName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter rep name`
+  String get plsEnterRepName {
+    return Intl.message(
+      'please enter rep name',
+      name: 'plsEnterRepName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter wareHouse`
+  String get plsEnterwareHouse {
+    return Intl.message(
+      'please enter wareHouse',
+      name: 'plsEnterwareHouse',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

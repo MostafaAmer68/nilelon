@@ -144,7 +144,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   label: lang.enterYourName,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return S.of(context).fullName;
+                        return S.of(context).enterYourName;
                       }
                       return null;
                     },

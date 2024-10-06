@@ -140,7 +140,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   title: lang.storeName,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return S.of(context).storeName;
+                      return S.of(context).plsEnterStoreName;
                     }
                     return null;
                   },
@@ -170,6 +170,12 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 ),
                 TextAndFormFieldColumnWithIcon(
                   title: lang.storeRepresentativeName,
+                  validator: (value) {
+                    if (value!.isNotEmpty) {
+                      return lang.plsEnterRepName;
+                    }
+                    return null;
+                  },
                   label: lang.storeRepresentativeName,
                   controller: cubit.repNameController,
                   type: TextInputType.text,
@@ -186,7 +192,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   label: lang.enterYourWarehouseAddress,
                   validator: (value) {
                     if (value!.isNotEmpty) {
-                      return lang.warehouseAddress;
+                      return lang.plsEnterwareHouse;
                     }
                     return null;
                   },
@@ -200,7 +206,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   label: lang.enterYourProfileLink,
                   validator: (value) {
                     if (value!.isNotEmpty) {
-                      return lang.profileLink;
+                      return lang.plsEnterProfile;
                     }
                     return null;
                   },

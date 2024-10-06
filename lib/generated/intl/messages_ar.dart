@@ -388,6 +388,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يرجى إدخال الوصف"),
         "plsEnterName":
             MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المنتج"),
+        "plsEnterProfile": MessageLookupByLibrary.simpleMessage(
+            "يرجى إدخال رابط الملف الشخصي"),
+        "plsEnterRepName":
+            MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المندوب"),
+        "plsEnterStoreName":
+            MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المتجر"),
+        "plsEnterwareHouse":
+            MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المستودع"),
         "polices": MessageLookupByLibrary.simpleMessage("السياسات"),
         "pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails":
             MessageLookupByLibrary.simpleMessage(
