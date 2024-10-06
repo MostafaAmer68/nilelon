@@ -3840,6 +3840,16 @@ class S {
     );
   }
 
+  /// `Please valide number`
+  String get plsEnterValidNumber {
+    return Intl.message(
+      'Please valide number',
+      name: 'plsEnterValidNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

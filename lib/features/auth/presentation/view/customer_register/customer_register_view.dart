@@ -327,6 +327,12 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                 label: label,
                 controller: controller,
                 type: type,
+                validator: (value) {
+                  if (value!.length != 11 && !value.startsWith('01')) {
+                    return S.of(context).plsEnterValidNumber;
+                  }
+                  return null;
+                },
                 width: screenWidth(context, 0.75),
                 noIcon: true,
               ),

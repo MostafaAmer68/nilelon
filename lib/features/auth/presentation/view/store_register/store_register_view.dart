@@ -314,6 +314,12 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               TextFormFieldBuilder(
                 label: label,
                 controller: controller,
+                validator: (value) {
+                  if (value!.length != 11 && !value!.startsWith('01')) {
+                    return S.of(context).plsEnterValidNumber;
+                  }
+                  return null;
+                },
                 type: type,
                 width: screenWidth(context, 0.75),
                 noIcon: true,
