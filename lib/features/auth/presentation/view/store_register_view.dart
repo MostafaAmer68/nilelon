@@ -138,6 +138,12 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 ),
                 TextAndFormFieldColumnWithIcon(
                   title: lang.storeName,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return S.of(context).storeName;
+                    }
+                    return null;
+                  },
                   label: lang.enterStoreName,
                   controller: cubit.nameController,
                   type: TextInputType.text,

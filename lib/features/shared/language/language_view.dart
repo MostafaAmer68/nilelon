@@ -27,8 +27,6 @@ class _LanguageViewState extends State<LanguageView> {
 
   @override
   void dispose() {
-    HiveStorage.set(HiveKeys.isArabic, _tempSelectedOption == 'Arabic');
-    MyApp.restartApp(context);
     super.dispose();
   }
 
@@ -37,8 +35,18 @@ class _LanguageViewState extends State<LanguageView> {
     final lang = S.of(context);
 
     return ScaffoldImage(
-      appBar:
-          customAppBar(title: lang.language, context: context, hasIcon: false),
+      appBar: customAppBar(
+          title: lang.language,
+          context: context,
+          hasIcon: false,
+          onPressed: () {
+            if (_tempSelectedOption == 'Arabic') {
+              SwitchLanguageCubit.get(context).add(ArabicLanguageEvent());
+            } else {
+              SwitchLanguageCubit.get(context).add(EnglishLanguageEvent());
+            }
+            MyApp.restartApp(context);
+          }),
       body: Column(
         children: [
           const DefaultDivider(),

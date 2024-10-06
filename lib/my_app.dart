@@ -47,6 +47,7 @@ class _MyAppState extends State<MyApp> {
   Key key = UniqueKey();
 
   void restartApp() {
+    
     setState(() {
       key = UniqueKey();
     });
