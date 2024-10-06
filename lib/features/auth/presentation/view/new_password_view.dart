@@ -9,9 +9,9 @@ import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon_hide.dart';
-import 'package:nilelon/features/auth/presentation/view/login/login_view.dart';
+import 'package:nilelon/features/auth/presentation/view/login_view.dart';
 
-import '../../../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class NewPasswordView extends StatefulWidget {
   const NewPasswordView({

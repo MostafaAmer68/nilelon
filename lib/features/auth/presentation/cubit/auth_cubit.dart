@@ -24,9 +24,6 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
-  bool gender = false;
-  DateTime? date;
-  String? dateFormatted;
   TextEditingController nameController = TextEditingController();
   TextEditingController profileLinkController = TextEditingController();
   TextEditingController websiteLinkController = TextEditingController();
@@ -35,9 +32,15 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController wareHouseAddressController = TextEditingController();
   TextEditingController sloganController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  final GlobalKey<FormState> regFormCuts = GlobalKey<FormState>();
+  final GlobalKey<FormState> regFormSto = GlobalKey<FormState>();
+  final GlobalKey<FormState> loginForm = GlobalKey<FormState>();
   String code = '';
+  String? dateFormatted;
+  DateTime? date;
   File image = File('');
   String base64Image = '';
+  bool gender = false;
   final picker = ImagePicker();
 
   Future<void> pickImage(ImageSource imageSource) async {
@@ -257,6 +260,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> authLogin(context) async {
+    if(!loginForm.currentState!.validate())
     emit(LoginLoading());
 
     var result = await authRepos.loginRepos(

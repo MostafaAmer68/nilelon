@@ -14,14 +14,14 @@ import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/with_icon/text_and_form_field_column_with_icon_hide.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
-import 'package:nilelon/features/auth/presentation/view/otp/otp_view.dart';
+import 'package:nilelon/features/auth/presentation/view/otp_view.dart';
 import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.dart';
 import 'package:nilelon/features/shared/recommendation/presentation/view/recommendation_view.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../../../../../core/widgets/pop_ups/success_creation_popup.dart';
-import '../../../../../core/data/hive_stroage.dart';
-import '../../../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/pop_ups/success_creation_popup.dart';
+import '../../../../core/data/hive_stroage.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class CustomerRegisterView extends StatefulWidget {
   const CustomerRegisterView({super.key});

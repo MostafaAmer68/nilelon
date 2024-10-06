@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:nilelon/features/auth/presentation/view/customer_register/customer_register_view.dart';
-import 'package:nilelon/features/auth/presentation/view/login/login_view.dart';
+import 'package:nilelon/features/auth/presentation/view/customer_register_view.dart';
+import 'package:nilelon/features/auth/presentation/view/login_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';

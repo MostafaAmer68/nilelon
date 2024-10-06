@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/features/auth/presentation/view/login/login_view.dart';
+import 'package:nilelon/features/auth/presentation/view/login_view.dart';
 import 'package:nilelon/features/store_flow/subscription/subscription_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';

@@ -12,11 +12,11 @@ import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/with_icon/text_and_form_field_column_with_icon_hide.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
-import 'package:nilelon/features/auth/presentation/view/otp/otp_view.dart';
+import 'package:nilelon/features/auth/presentation/view/otp_view.dart';
 import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
-import '../../../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class StoreRegisterView extends StatefulWidget {
   const StoreRegisterView({super.key});
@@ -333,7 +333,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 label: label,
                 controller: controller,
                 validator: (value) {
-                  if (value!.length != 11 && !value!.startsWith('01')) {
+                  if (value!.length != 11 && !value.startsWith('01')) {
                     return S.of(context).plsEnterValidNumber;
                   }
                   return null;

@@ -12,13 +12,13 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/with_icon/text_and_form_field_column_with_icon.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/with_icon/text_and_form_field_column_with_icon_hide.dart';
-import 'package:nilelon/features/auth/presentation/view/forget_password_auth/forget_password_auth.dart';
-import 'package:nilelon/features/auth/presentation/view/customer_register/customer_register_view.dart';
-import 'package:nilelon/features/auth/presentation/view/store_register/store_register_view.dart';
+import 'package:nilelon/features/auth/presentation/view/forget_password_auth.dart';
+import 'package:nilelon/features/auth/presentation/view/customer_register_view.dart';
+import 'package:nilelon/features/auth/presentation/view/store_register_view.dart';
 import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
-import '../../../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({

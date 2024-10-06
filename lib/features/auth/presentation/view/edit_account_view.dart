@@ -17,7 +17,7 @@ import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-import '../../../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class EditAccountView extends StatefulWidget {
   const EditAccountView({super.key});
