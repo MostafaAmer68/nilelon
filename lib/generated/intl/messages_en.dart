@@ -201,6 +201,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter Product Price"),
         "enterStoreName":
             MessageLookupByLibrary.simpleMessage("Enter Store Name"),
+        "enterStoreRepresentativeName": MessageLookupByLibrary.simpleMessage(
+            "Enter Store Representative Name"),
         "enterYourCity":
             MessageLookupByLibrary.simpleMessage("Enter Your City"),
         "enterYourEmail":
@@ -388,7 +390,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "plsEnterName":
             MessageLookupByLibrary.simpleMessage("please enter product name"),
         "plsEnterValidNumber":
-            MessageLookupByLibrary.simpleMessage("Please valide number"),
+            MessageLookupByLibrary.simpleMessage("Enter a valid number"),
         "polices": MessageLookupByLibrary.simpleMessage("Polices"),
         "pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails":
             MessageLookupByLibrary.simpleMessage(

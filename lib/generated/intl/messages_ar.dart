@@ -201,6 +201,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل سعر المنتج"),
         "enterStoreName":
             MessageLookupByLibrary.simpleMessage("أدخل اسم المتجر"),
+        "enterStoreRepresentativeName":
+            MessageLookupByLibrary.simpleMessage("أدخل اسم ممثل المحل"),
         "enterYourCity": MessageLookupByLibrary.simpleMessage("أدخل مدينتك"),
         "enterYourEmail":
             MessageLookupByLibrary.simpleMessage("أدخل بريدك الإلكتروني"),

@@ -3840,11 +3840,21 @@ class S {
     );
   }
 
-  /// `Please valide number`
+  /// `Enter a valid number`
   String get plsEnterValidNumber {
     return Intl.message(
-      'Please valide number',
+      'Enter a valid number',
       name: 'plsEnterValidNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter Store Representative Name`
+  String get enterStoreRepresentativeName {
+    return Intl.message(
+      'Enter Store Representative Name',
+      name: 'enterStoreRepresentativeName',
       desc: '',
       args: [],
     );
