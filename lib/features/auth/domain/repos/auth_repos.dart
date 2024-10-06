@@ -46,7 +46,11 @@ abstract class AuthRepos {
     String tokenOtp,
     context,
   );
-  Future<Either<FailureService, String>> customerRegisterGoogleAuth();
+  Future<Either<FailureService, String>> googleRegisterAuth();
+  Future<Either<FailureService, String>> signInGoogleAuth(
+    // String email,
+    // String connectionId,
+  );
   Future<Either<FailureService, String>> resetPasswordEmail(
     String email,
     context,

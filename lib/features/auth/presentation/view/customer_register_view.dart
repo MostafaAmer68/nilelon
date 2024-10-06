@@ -287,12 +287,12 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                     // ),
                     BlocListener<AuthCubit, AuthState>(
                         listener: (context, state) {
-                          if (state is StoreGoogleRegisterLoading) {
-                          } else if (state is StoreGoogleRegisterSuccess) {
+                          if (state is GoogleRegisterLoading) {
+                          } else if (state is GoogleRegisterSuccess) {
                             navigateAndRemoveUntil(
                                 context: context,
                                 screen: const RecommendationView());
-                          } else if (state is StoreGoogleRegisterFailure) {
+                          } else if (state is GoogleRegisterFailure) {
                             BotToast.showText(
                                 text: S.of(context).failedRegister);
                           }
@@ -300,7 +300,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                         child:
                             signWithContainer('assets/images/google.svg', () {
                           BlocProvider.of<AuthCubit>(context)
-                              .singinWithGoogle(context);
+                              .signUpWithGoogle(context);
                         })),
                   ],
                 ),

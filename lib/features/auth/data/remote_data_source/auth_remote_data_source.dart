@@ -38,7 +38,11 @@ abstract class AuthRemoteDataSource {
     String storeSlogan,
     context,
   );
-  Future<String> singinWithGoogle();
+  Future<String> signUpWithGoogle();
+  Future<String> signInWithGoogle(
+      // String email,
+      // String connectionId,
+      );
   Future<String> confirmRegisteration(
     String email,
     context,
@@ -207,45 +211,98 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   }
 
   @override
-  Future<String> singinWithGoogle() async {
-    try {
-      GoogleSignInAccount? account = await _googleSignIn.signIn();
-      if (account != null) {
-        final data = await apiService.post(
-          endPoint: EndPoint.customerGoogleRegisterUrl,
-          body: {
-            "provider": "Google",
-            "name": account.displayName,
-            "email": account.email,
-            "photo": account.photoUrl,
-          },
+  Future<String> signUpWithGoogle() async {
+    GoogleSignInAccount? account = await _googleSignIn.signIn();
+    if (account != null) {
+      final data = await apiService.post(
+        endPoint: EndPoint.customerGoogleRegisterUrl,
+        body: account.photoUrl != null
+            ? {
+                "provider": "Google",
+                "name": account.displayName,
+                "email": account.email,
+                "photo": account.photoUrl,
+              }
+            : {
+                "provider": "Google",
+                "name": account.displayName,
+                "email": account.email,
+              },
+      );
+      if (data.statusCode == 200) {
+        UserModel userData;
+        // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
+        HiveStorage.set(HiveKeys.token, data.data as String);
+        userData = UserModel<CustomerModel>(
+          id: JwtDecoder.decode(data.data as String)['id'],
+          token: data.data as String,
+          role: 'Customer',
+          userData: CustomerModel(
+            name: account.displayName ?? '',
+            email: account.email,
+            phoneNumber: '',
+            dateOfBirth: '',
+            gender: 'Male',
+            productsChoice: 'Male',
+            profilePic: account.photoUrl ?? '',
+          ),
         );
-        if (data.statusCode == 200) {
-          // UserModel userData;
-          // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
-          HiveStorage.set(HiveKeys.token, data.data as String);
+        HiveStorage.set(HiveKeys.shopFor, false);
 
-          HiveStorage.set(HiveKeys.shopFor, false);
-
-          // HiveStorage.set(HiveKeys.userModel, userData);
-          return data.data as String;
-        } else if (data.statusCode == 400) {
-          // Handle the bad request response
-          final errorMessage = data.data;
-          // errorAlert(context, errorMessage);
-          throw Exception('Google Register failed: $errorMessage');
-        } else {
-          // Handle other status codes if necessary
-          throw Exception(
-              'Failed to Google Register: Unexpected status code ${data.statusCode}');
-        }
+        HiveStorage.set(HiveKeys.userModel, userData);
+        return data.data as String;
+      } else if (data.statusCode == 400) {
+        // Handle the bad request response
+        final errorMessage = data.data;
+        // errorAlert(context, errorMessage);
+        throw Exception('Customer Register failed: $errorMessage');
       } else {
-        throw 'Field to Sign in with google';
+        // errorAlert(context, data.statusMessage!);
+        // Handle other status codes if necessary
+        throw Exception(
+            'Failed to Customer Register: Unexpected status code ${data.statusCode}');
       }
-    } catch (error) {
-      log(error.toString());
-      rethrow;
     }
+    return 'Something went wrong';
+  }
+
+  @override
+  Future<String> signInWithGoogle() async {
+    GoogleSignInAccount? account = await _googleSignIn.signIn();
+    if (account != null) {
+      final data = await apiService.post(
+        endPoint: EndPoint.loginUrl,
+        body: {
+          'email': account.email,
+          'connectionId': '',
+          'password': '',
+        },
+      );
+      if (data.statusCode == 200) {
+        UserModel userData;
+        // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
+        HiveStorage.set(HiveKeys.token, data.data['token']);
+        if (data.data['role'] != 'Store') {
+          userData = UserModel<CustomerModel>.fromMap(data.data);
+          HiveStorage.set(
+              HiveKeys.shopFor, data.data['data']['productsChoice'] == 'Male');
+        } else {
+          userData = UserModel<StoreModel>.fromMap(data.data);
+        }
+        HiveStorage.set(HiveKeys.userModel, userData);
+        // HiveStorage.set(HiveKeys.userId, JwtDecoder.decode(data.data['id']));
+      } else if (data.statusCode == 400) {
+        // Handle the bad request response
+        final errorMessage = data.data;
+        // errorAlert(context, errorMessage);
+        throw Exception('Login failed: $errorMessage');
+      } else {
+        // Handle other status codes if necessary
+        throw Exception(
+            'Failed to login: Unexpected status code ${data.statusCode}');
+      }
+    }
+    return 'Something went wrong';
   }
 
   @override

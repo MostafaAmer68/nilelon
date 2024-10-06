@@ -331,17 +331,32 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  Future<void> singinWithGoogle(context) async {
-    emit(StoreGoogleRegisterLoading());
-    var result = await authRepos.customerRegisterGoogleAuth();
+  Future<void> signUpWithGoogle(context) async {
+    emit(GoogleRegisterLoading());
+    var result = await authRepos.googleRegisterAuth();
     result.fold((failure) {
-      emit(StoreGoogleRegisterFailure(failure.errorMsg));
+      emit(GoogleRegisterFailure(failure.errorMsg));
     }, (response) {
-      HiveStorage.set(
-        HiveKeys.token,
-        response,
-      );
-      emit(StoreGoogleRegisterSuccess(response));
+      // HiveStorage.set(
+      //   HiveKeys.token,
+      //   response,
+      // );
+      emit(GoogleRegisterSuccess(response));
+      BlocProvider.of<CategoryCubit>(context).getCategories();
+    });
+  }
+
+  Future<void> signInWithGoogle(context) async {
+    emit(GoogleInLoading());
+    var result = await authRepos.signInGoogleAuth();
+    result.fold((failure) {
+      emit(GoogleInFailure(failure.errorMsg));
+    }, (response) {
+      // HiveStorage.set(
+      //   HiveKeys.token,
+      //   response,
+      // );
+      emit(GoogleInSuccess(response));
       BlocProvider.of<CategoryCubit>(context).getCategories();
     });
   }

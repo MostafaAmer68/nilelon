@@ -65,9 +65,29 @@ class AuthReposImpl extends AuthRepos {
   }
 
   @override
-  Future<Either<FailureService, String>> customerRegisterGoogleAuth() async {
+  Future<Either<FailureService, String>> googleRegisterAuth() async {
     try {
-      final result = await authRemoteDataSource.singinWithGoogle();
+      final result = await authRemoteDataSource.signUpWithGoogle();
+      // HiveStorage( HiveKeys.email, value: result.data.email);
+      return Right(result);
+    } catch (e) {
+      if (e is DioException) {
+        print(e.toString());
+        return left(ServerFailure.fromDioException(e));
+      }
+      print(e.toString());
+      return left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<FailureService, String>> signInGoogleAuth(
+    // String email,
+    // String connectionId,
+  ) async {
+    try {
+      final result =
+          await authRemoteDataSource.signInWithGoogle();
       // HiveStorage( HiveKeys.email, value: result.data.email);
       return Right(result);
     } catch (e) {
