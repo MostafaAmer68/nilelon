@@ -187,9 +187,7 @@ class _LoginViewState extends State<LoginView> {
                     child: GradientButtonBuilder(
                       text: lang.signIn,
                       ontap: () {
-                        if (formKey.currentState!.validate()) {
-                          authCubit.authLogin(context);
-                        }
+                        authCubit.authLogin(context);
                       },
                       isLoading: isLoading,
                       width: screenWidth(context, 1),
@@ -199,7 +197,6 @@ class _LoginViewState extends State<LoginView> {
                 const SizedBox(
                   height: 30,
                 ),
-<<<<<<< HEAD
                 if (HiveStorage.get(HiveKeys.isStore) == false) ...[
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -218,38 +215,6 @@ class _LoginViewState extends State<LoginView> {
                             child: const Divider()),
                       ],
                     ),
-=======
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // signWithContainer('assets/images/facebook.svg', () {}),
-                      // const SizedBox(
-                      //   width: 24,
-                      // ),
-                      BlocListener<AuthCubit, AuthState>(
-                          listener: (context, state) {
-                            if (state is GoogleInLoading) {
-                            } else if (state is GoogleInSuccess) {
-                              navigateAndRemoveUntil(
-                                  context: context,
-                                  screen: const RecommendationView());
-                            } else if (state is GoogleInFailure) {
-                              BotToast.showText(
-                                  text: S.of(context).failedRegister);
-                            }
-                          },
-                          child:
-                              signWithContainer('assets/images/google.svg', () {
-                            BlocProvider.of<AuthCubit>(context)
-                                .signInWithGoogle(context);
-                          })),
-                      // signWithContainer('assets/images/google.svg', () {
-                      //   AuthCubit.get(context).signUpWithGoogle(context);
-                      // }),
-                    ],
->>>>>>> 4b83917ab1b8bf5bc9b3e4cbe740d5e32d9c463c
                   ),
                   const SizedBox(
                     height: 30,
