@@ -218,12 +218,12 @@ class _LoginViewState extends State<LoginView> {
                       // ),
                       BlocListener<AuthCubit, AuthState>(
                           listener: (context, state) {
-                            if (state is GoogleRegisterLoading) {
-                            } else if (state is GoogleRegisterSuccess) {
+                            if (state is GoogleInLoading) {
+                            } else if (state is GoogleInSuccess) {
                               navigateAndRemoveUntil(
                                   context: context,
                                   screen: const RecommendationView());
-                            } else if (state is GoogleRegisterFailure) {
+                            } else if (state is GoogleInFailure) {
                               BotToast.showText(
                                   text: S.of(context).failedRegister);
                             }
@@ -231,7 +231,7 @@ class _LoginViewState extends State<LoginView> {
                           child:
                               signWithContainer('assets/images/google.svg', () {
                             BlocProvider.of<AuthCubit>(context)
-                                .signUpWithGoogle(context);
+                                .signInWithGoogle(context);
                           })),
                       // signWithContainer('assets/images/google.svg', () {
                       //   AuthCubit.get(context).signUpWithGoogle(context);

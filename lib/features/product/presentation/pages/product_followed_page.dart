@@ -19,7 +19,7 @@ class FollowedProductPage extends StatefulWidget {
 }
 
 class _FollowedProductPageState extends State<FollowedProductPage> {
-  int page = 5;
+  int page = 1;
   int pageSize = 5;
   bool isLoadMore = false;
   ScrollController scrollController = ScrollController();
