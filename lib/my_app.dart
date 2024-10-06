@@ -47,7 +47,6 @@ class _MyAppState extends State<MyApp> {
   Key key = UniqueKey();
 
   void restartApp() {
-    
     setState(() {
       key = UniqueKey();
     });
@@ -56,6 +55,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
+      // key: key,
       providers: [
         BlocProvider<RecommendationCubit>(
           create: (context) =>
@@ -122,8 +122,7 @@ class _MyAppState extends State<MyApp> {
             // useInheritedMediaQuery: true,
             builder: BotToastInit(),
             // builder: DevicePreview.appBuilder,
-            locale: HiveStorage.get(HiveKeys.isArabic) &&
-                    HiveStorage.get(HiveKeys.isArabic) != null
+            locale: HiveStorage.get(HiveKeys.isArabic)
                 ? const Locale('ar')
                 : const Locale('en'),
             localizationsDelegates: const [

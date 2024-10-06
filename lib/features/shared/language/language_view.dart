@@ -26,6 +26,13 @@ class _LanguageViewState extends State<LanguageView> {
   ];
 
   @override
+  void initState() {
+    _tempSelectedOption =
+        HiveStorage.get(HiveKeys.isArabic) ? 'Arabic' : 'English';
+    super.initState();
+  }
+
+  @override
   void dispose() {
     super.dispose();
   }
@@ -36,68 +43,61 @@ class _LanguageViewState extends State<LanguageView> {
 
     return ScaffoldImage(
       appBar: customAppBar(
-          title: lang.language,
-          context: context,
-          hasIcon: false,
-          onPressed: () {
-            if (_tempSelectedOption == 'Arabic') {
-              SwitchLanguageCubit.get(context).add(ArabicLanguageEvent());
-            } else {
-              SwitchLanguageCubit.get(context).add(EnglishLanguageEvent());
-            }
-            MyApp.restartApp(context);
-          }),
+        title: lang.language,
+        context: context,
+        hasIcon: false,
+      ),
       body: Column(
         children: [
           const DefaultDivider(),
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: BlocBuilder<SwitchLanguageCubit, SwitchLanguageState>(
-              builder: (context, state) {
-                return Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: options
-                      .map((option) => Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4),
-                            child: Container(
-                              decoration: ShapeDecoration(
-                                color: const Color(0xFFFBF9F9),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                shadows: const [
-                                  BoxShadow(
-                                    color: Color(0x33726363),
-                                    blurRadius: 4,
-                                    offset: Offset(0, 4),
-                                    spreadRadius: 0,
-                                  )
-                                ],
-                              ),
-                              child: Center(
-                                child: RadioListTile(
-                                  title: Text(
-                                    option,
-                                    style: AppStylesManager.customTextStyleBl9,
-                                  ),
-                                  value: option,
-                                  activeColor: ColorManager.primaryO,
-                                  groupValue: _tempSelectedOption,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 6,
-                                  ),
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _tempSelectedOption = value!;
-                                    });
-                                  },
-                                ),
-                              ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: options
+                  .map((option) => Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4),
+                        child: Container(
+                          decoration: ShapeDecoration(
+                            color: const Color(0xFFFBF9F9),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
                             ),
-                          ))
-                      .toList(),
-                );
-              },
+                            shadows: const [
+                              BoxShadow(
+                                color: Color(0x33726363),
+                                blurRadius: 4,
+                                offset: Offset(0, 4),
+                                spreadRadius: 0,
+                              )
+                            ],
+                          ),
+                          child: Center(
+                            child: RadioListTile(
+                              title: Text(
+                                option,
+                                style: AppStylesManager.customTextStyleBl9,
+                              ),
+                              value: option,
+                              activeColor: ColorManager.primaryO,
+                              groupValue: _tempSelectedOption,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 6,
+                              ),
+                              onChanged: (value) {
+                                setState(() {
+                                  _tempSelectedOption = value!;
+                                  HiveStorage.set(HiveKeys.isArabic,
+                                      _tempSelectedOption == 'Arabic');
+
+                                  MyApp.restartApp(context);
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      ))
+                  .toList(),
             ),
           ),
         ],

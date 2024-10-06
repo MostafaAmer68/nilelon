@@ -142,12 +142,12 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                 TextAndFormFieldColumnWithIcon(
                   title: lang.fullName,
                   label: lang.enterYourName,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return S.of(context).fullName;
-                    }
-                    return null;
-                  },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return S.of(context).fullName;
+                      }
+                      return null;
+                    },
                   controller: AuthCubit.get(context).nameController,
                   type: TextInputType.text,
                   image: 'assets/images/profile.svg',

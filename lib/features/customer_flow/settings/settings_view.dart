@@ -20,9 +20,10 @@ import '../../../core/widgets/scaffold_image.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
+
     final lang = S.of(context);
     return ScaffoldImage(
       appBar:
