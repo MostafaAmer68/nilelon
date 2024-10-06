@@ -144,6 +144,12 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               TextAndFormFieldColumnWithIcon(
                 title: lang.email,
                 label: lang.enterYourEmail,
+                validator: (value) {
+                  if (!value!.endsWith('.com') && !value.contains('@')) {
+                    return S.of(context).enterYourEmailToVerification;
+                  }
+                  return null;
+                },
                 controller: cubit.emailController,
                 type: TextInputType.emailAddress,
                 image: 'assets/images/sms-tracking.svg',
@@ -193,6 +199,12 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               TextAndFormFieldColumnWithIconHide(
                 title: lang.password,
                 label: lang.enterYourPassowrd,
+                validator: (value) {
+                  if (value!.length > 8 && !value.contains('@')) {
+                    return S.of(context).enterYourPassowrd;
+                  }
+                  return null;
+                },
                 controller: cubit.passwordController,
                 type: TextInputType.text,
                 image: 'assets/images/lock.svg',
@@ -200,6 +212,12 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               TextAndFormFieldColumnWithIconHide(
                 title: lang.confirmPassword,
                 label: lang.confirmYourPassword,
+                validator: (value) {
+                  if (value!.length > 8 && !value.contains('@')) {
+                    return S.of(context).enterYourPassowrd;
+                  }
+                  return null;
+                },
                 controller: cubit.confirmPasswordController,
                 type: TextInputType.text,
                 image: 'assets/images/lock.svg',

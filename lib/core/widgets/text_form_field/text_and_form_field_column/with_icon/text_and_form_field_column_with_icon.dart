@@ -12,6 +12,7 @@ class TextAndFormFieldColumnWithIcon extends StatelessWidget {
     required this.label,
     required this.image,
     required this.controller,
+    this.validator,
     required this.type,
     this.spaceHeight,
     this.desc,
@@ -22,6 +23,7 @@ class TextAndFormFieldColumnWithIcon extends StatelessWidget {
   final TextEditingController controller;
   final TextInputType type;
   final double? spaceHeight;
+  final String? Function(String? value)? validator;
   final String? desc;
 
   @override
@@ -50,6 +52,7 @@ class TextAndFormFieldColumnWithIcon extends StatelessWidget {
             label: label,
             controller: controller,
             type: type,
+            validator: validator,
             width: screenWidth(context, 1),
             isIcon: false,
             prefixWidget: Container(

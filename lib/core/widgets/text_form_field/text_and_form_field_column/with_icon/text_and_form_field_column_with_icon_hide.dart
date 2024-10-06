@@ -14,6 +14,7 @@ class TextAndFormFieldColumnWithIconHide extends StatefulWidget {
     required this.label,
     required this.image,
     required this.controller,
+    this.validator,
     required this.type,
     this.spaceHeight,
     this.desc,
@@ -23,6 +24,7 @@ class TextAndFormFieldColumnWithIconHide extends StatefulWidget {
   final String image;
   final TextEditingController controller;
   final TextInputType type;
+  final String? Function(String? value)? validator;
   final double? spaceHeight;
   final String? desc;
 
@@ -68,6 +70,7 @@ class _TextAndFormFieldColumnWithIconHideState
             textDirection: TextDirection.ltr,
             child: TextFormFieldBuilder(
               label: widget.label,
+              validator: widget.validator,
               controller: widget.controller,
               type: widget.type,
               width: screenWidth(context, 0.92),
