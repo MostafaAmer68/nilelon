@@ -216,9 +216,26 @@ class _LoginViewState extends State<LoginView> {
                       // const SizedBox(
                       //   width: 24,
                       // ),
-                      signWithContainer('assets/images/google.svg', () {
-                        AuthCubit.get(context).singinWithGoogle(context);
-                      }),
+                      BlocListener<AuthCubit, AuthState>(
+                          listener: (context, state) {
+                            if (state is GoogleRegisterLoading) {
+                            } else if (state is GoogleRegisterSuccess) {
+                              navigateAndRemoveUntil(
+                                  context: context,
+                                  screen: const RecommendationView());
+                            } else if (state is GoogleRegisterFailure) {
+                              BotToast.showText(
+                                  text: S.of(context).failedRegister);
+                            }
+                          },
+                          child:
+                              signWithContainer('assets/images/google.svg', () {
+                            BlocProvider.of<AuthCubit>(context)
+                                .signUpWithGoogle(context);
+                          })),
+                      // signWithContainer('assets/images/google.svg', () {
+                      //   AuthCubit.get(context).signUpWithGoogle(context);
+                      // }),
                     ],
                   ),
                 ),

@@ -67,18 +67,32 @@ class StoreRegisterFailure extends AuthState {
   const StoreRegisterFailure(this.errorMessage);
 }
 
-class StoreGoogleRegisterLoading extends AuthState {}
+class GoogleRegisterLoading extends AuthState {}
 
-class StoreGoogleRegisterSuccess extends AuthState {
+class GoogleRegisterSuccess extends AuthState {
   final String successMessage;
 
-  const StoreGoogleRegisterSuccess(this.successMessage);
+  const GoogleRegisterSuccess(this.successMessage);
 }
 
-class StoreGoogleRegisterFailure extends AuthState {
+class GoogleRegisterFailure extends AuthState {
   final String errorMessage;
 
-  const StoreGoogleRegisterFailure(this.errorMessage);
+  const GoogleRegisterFailure(this.errorMessage);
+}
+
+class GoogleInLoading extends AuthState {}
+
+class GoogleInSuccess extends AuthState {
+  final String successMessage;
+
+  const GoogleInSuccess(this.successMessage);
+}
+
+class GoogleInFailure extends AuthState {
+  final String errorMessage;
+
+  const GoogleInFailure(this.errorMessage);
 }
 
 // class VerifyUserLoading extends AuthState {}
