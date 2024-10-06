@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/resources/appstyles_manager.dart';
@@ -68,7 +69,7 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'you dont followed any store yet.',
+                        S.of(context).noFollowingAnyStore,
                         style: AppStylesManager.customTextStyleG2,
                       ),
                     ],
@@ -99,9 +100,9 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
                   ),
                 );
         }, failure: (message) {
-          return const SizedBox(
+          return SizedBox(
               height: 100,
-              child: Center(child: Text('There is no following products')));
+              child: Center(child: Text(S.of(context).noProductFollow)));
         });
       },
     );

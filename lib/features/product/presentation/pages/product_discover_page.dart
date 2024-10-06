@@ -187,7 +187,7 @@ class ProductNewInView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'There is no New In products yet.',
+                    S.of(context).noProductNewIn,
                     style: AppStylesManager.customTextStyleG2,
                   ),
                 ],
@@ -270,7 +270,7 @@ class HandPickedView extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'There is no Hand Picked in products yet.',
+                    S.of(context).noProductHandPicked,
                     style: AppStylesManager.customTextStyleG2,
                   ),
                 ],

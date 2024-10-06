@@ -282,7 +282,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              '${cubit.customerOrder.orderProductVariants.length} Items',
+              '${cubit.customerOrder.orderProductVariants.length} ${S.of(context).items}',
               style: AppStylesManager.customTextStyleBl8,
             ),
           ),

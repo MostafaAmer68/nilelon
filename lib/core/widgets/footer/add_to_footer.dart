@@ -13,6 +13,8 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 
+import '../../../generated/l10n.dart';
+
 class AddToFooter extends StatelessWidget {
   const AddToFooter({super.key, this.visible = true, required this.product});
   final bool visible;
@@ -40,8 +42,8 @@ class AddToFooter extends StatelessWidget {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Text(
-                                  "Product Added to Cart",
+                                Text(
+                                  S.of(context).productAddedToCart,
                                   style: TextStyle(color: Colors.white),
                                 ),
                                 const SizedBox(width: 10),
@@ -52,8 +54,8 @@ class AddToFooter extends StatelessWidget {
                                         context: context,
                                         screen: const CartView());
                                   },
-                                  child: const Text(
-                                    "View Cart",
+                                  child: Text(
+                                    S.of(context).viewCart,
                                     style: TextStyle(color: Colors.blue),
                                   ),
                                 ),
@@ -68,7 +70,9 @@ class AddToFooter extends StatelessWidget {
                   },
                   builder: (context, state) {
                     return GradientButtonBuilder(
-                      text: state is CartLoading ? 'Loading...' : 'Add To Cart',
+                      text: state is CartLoading
+                          ? S.of(context).loading
+                          : S.of(context).addToCart,
                       ontap: () {
                         CartCubit.get(context).addToCart(
                           AddToCartModel(
@@ -86,7 +90,7 @@ class AddToFooter extends StatelessWidget {
                   },
                 ),
                 ButtonBuilder(
-                  text: 'Buy Now',
+                  text: S.of(context).buyNow,
                   ontap: () {},
                   buttonColor: ColorManager.primaryW,
                   frameColor: ColorManager.gradientColors.first,

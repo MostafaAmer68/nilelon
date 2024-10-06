@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/generated/l10n.dart';
 import 'package:svg_flutter/svg.dart';
 
 class ViewAllRow extends StatelessWidget {
@@ -80,7 +81,7 @@ class ViewAllRow extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              buttonText ?? 'View All',
+                              buttonText ?? S.of(context).viewAll,
                               style: AppStylesManager.customTextStyleO,
                             ),
                             const SizedBox(

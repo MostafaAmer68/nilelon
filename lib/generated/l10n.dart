@@ -3680,6 +3680,166 @@ class S {
     );
   }
 
+  /// `Empty closet`
+  String get emptyCloset {
+    return Intl.message(
+      'Empty closet',
+      name: 'emptyCloset',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Items`
+  String get items {
+    return Intl.message(
+      'Items',
+      name: 'items',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product Added successfully`
+  String get productAdded {
+    return Intl.message(
+      'Product Added successfully',
+      name: 'productAdded',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter product name`
+  String get plsEnterName {
+    return Intl.message(
+      'please enter product name',
+      name: 'plsEnterName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter discription`
+  String get plsEnterDesc {
+    return Intl.message(
+      'please enter discription',
+      name: 'plsEnterDesc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter price`
+  String get PlsEnterPrice {
+    return Intl.message(
+      'please enter price',
+      name: 'PlsEnterPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply offer`
+  String get applyOffer {
+    return Intl.message(
+      'Apply offer',
+      name: 'applyOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no New In products yet.`
+  String get noProductNewIn {
+    return Intl.message(
+      'There is no New In products yet.',
+      name: 'noProductNewIn',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no Hand Picked in products yet.`
+  String get noProductHandPicked {
+    return Intl.message(
+      'There is no Hand Picked in products yet.',
+      name: 'noProductHandPicked',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you dont followed any store yet.`
+  String get noFollowingAnyStore {
+    return Intl.message(
+      'you dont followed any store yet.',
+      name: 'noFollowingAnyStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no following products`
+  String get noProductFollow {
+    return Intl.message(
+      'There is no following products',
+      name: 'noProductFollow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You must choose size guid image.`
+  String get youMustSelectGuidImage {
+    return Intl.message(
+      'You must choose size guid image.',
+      name: 'youMustSelectGuidImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You must choose at least 1 image.`
+  String get youMustSelectOneImage {
+    return Intl.message(
+      'You must choose at least 1 image.',
+      name: 'youMustSelectOneImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Product added to cart`
+  String get productAddedToCart {
+    return Intl.message(
+      'Product added to cart',
+      name: 'productAddedToCart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View cart`
+  String get viewCart {
+    return Intl.message(
+      'View cart',
+      name: 'viewCart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Loading...`
+  String get loading {
+    return Intl.message(
+      'Loading...',
+      name: 'loading',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

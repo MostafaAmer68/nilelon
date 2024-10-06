@@ -87,7 +87,8 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
                 return state.when(
                   initial: buildShimmerIndicatorGrid,
                   loading: buildShimmerIndicatorGrid,
-                  success: () => _buildProductGrid(ProductsCubit.get(context).products),
+                  success: () =>
+                      _buildProductGrid(ProductsCubit.get(context).products),
                   failure: (message) => Center(child: Text(message)),
                 );
               },
@@ -166,7 +167,7 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
         height: 450.h,
         child: Center(
           child: Text(
-            'There is no followed products yet.',
+            S.of(context).noProductFollow,
             style: AppStylesManager.customTextStyleG2,
           ),
         ),

@@ -56,7 +56,7 @@ class _AddProductViewState extends State<AddProductView> {
           BotToast.showLoading();
         }, success: (v) {
           BotToast.closeAllLoading();
-          BotToast.showText(text: 'Product Added successfully');
+          BotToast.showText(text: S.of(context).productAdded);
           navigatePop(context: context);
         }, failure: (r) {
           BotToast.closeAllLoading();
@@ -154,7 +154,7 @@ class _AddProductViewState extends State<AddProductView> {
             type: TextInputType.text,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'please enter product name';
+                return S.of(context).plsEnterName;
               }
               return null;
             },
@@ -169,7 +169,7 @@ class _AddProductViewState extends State<AddProductView> {
             height: 30.h,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'please enter discription';
+                return S.of(context).plsEnterDesc;
               }
               return null;
             },
@@ -186,7 +186,7 @@ class _AddProductViewState extends State<AddProductView> {
             type: TextInputType.number,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'please enter price';
+                return S.of(context).PlsEnterPrice;
               }
               return null;
             },

@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يرجى تحميل صورتين واضحتين"),
         "PleaseUpload3ClearPhotos":
             MessageLookupByLibrary.simpleMessage("يرجى تحميل 3 صور واضحة"),
+        "PlsEnterPrice":
+            MessageLookupByLibrary.simpleMessage("يرجى إدخال السعر"),
         "Skip": MessageLookupByLibrary.simpleMessage("تخطي"),
         "ToKnowHowItWorksYouOnlyNeedToImagineThatWeareClusteringTheBrandsBasedOnComparingTheirNumbersToTheMarketAverageNumbersInEveryFactorInThisPage":
             MessageLookupByLibrary.simpleMessage(
@@ -58,12 +60,15 @@ class MessageLookup extends MessageLookupByLibrary {
                 "بعد التحميل، لن تتمكن من تعديل اسم المنتج أو وصفه أو فئته"),
         "allBrands": MessageLookupByLibrary.simpleMessage("جميع الماركات"),
         "allDrafts": MessageLookupByLibrary.simpleMessage("جميع المسودات"),
+        "alreadyExits":
+            MessageLookupByLibrary.simpleMessage("لديك حساب بالفعل؟"),
         "amount": MessageLookupByLibrary.simpleMessage("الكمية"),
         "analytics": MessageLookupByLibrary.simpleMessage("تحليلات"),
         "andDontForgetTheTotalNumberOfSalesInTheWholeMarketIsGettingIncreasingWhileWereTalkingWhichMeansTheAverageIsGettingBiggerTooSoHoldOnToYourPositionAndAimForAHigherOne":
             MessageLookupByLibrary.simpleMessage(
                 "ولا تنس أن العدد الإجمالي للمبيعات في السوق كله في تزايد بينما نتحدث، مما يعني أن المتوسط يزداد أيضًا. لذلك، تمسك بموقعك وهدف لمكانة أعلى"),
         "apply": MessageLookupByLibrary.simpleMessage("تطبيق"),
+        "applyOffer": MessageLookupByLibrary.simpleMessage("تطبيق العرض"),
         "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
         "areYouSureYouWantToAddThisProductToYourDrafts":
             MessageLookupByLibrary.simpleMessage(
@@ -174,6 +179,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailOrPhoneNumber": MessageLookupByLibrary.simpleMessage(
             "البريد الإلكتروني أو رقم الهاتف"),
         "emptyCart": MessageLookupByLibrary.simpleMessage("السلة فارغة"),
+        "emptyCloset": MessageLookupByLibrary.simpleMessage("الخزانة فارغة"),
         "english": MessageLookupByLibrary.simpleMessage("الإنجليزية"),
         "enterConfirmPassword":
             MessageLookupByLibrary.simpleMessage("أدخل تأكيد كلمة المرور"),
@@ -231,6 +237,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "استكشف مجموعة واسعة من المنتجات من الماركات المحلية. احصل على كل ما تحتاجه في مكان واحد!"),
         "facebookOrInstagram":
             MessageLookupByLibrary.simpleMessage("فيسبوك أو إنستغرام"),
+        "failedRegister":
+            MessageLookupByLibrary.simpleMessage("فشل في التسجيل"),
         "feedback": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "fillThisSurveyToEnhanceYourNextOrderExperience":
             MessageLookupByLibrary.simpleMessage(
@@ -251,6 +259,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
         "getStarted": MessageLookupByLibrary.simpleMessage("ابدأ الآن"),
         "gold": MessageLookupByLibrary.simpleMessage("ذهبي"),
+        "guestMsg": MessageLookupByLibrary.simpleMessage(
+            "ليس لديك حساب؟ سجل الآن\nللاستمتاع بميزتنا."),
         "guideBook": MessageLookupByLibrary.simpleMessage("دليل المستخدم"),
         "handPicked": MessageLookupByLibrary.simpleMessage("مختار بعناية"),
         "history": MessageLookupByLibrary.simpleMessage("التاريخ"),
@@ -262,6 +272,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "إذا قمت بتسجيل الخروج أو إلغاء تثبيت التطبيق، ستختفي جميع مسوداتك"),
         "inStock": MessageLookupByLibrary.simpleMessage("متوفر"),
+        "infoUpdate":
+            MessageLookupByLibrary.simpleMessage("تم تحديث المعلومات بنجاح"),
+        "infoUpdateReglogin": MessageLookupByLibrary.simpleMessage(
+            "تم تحديث المعلومات بنجاح\nيرجى إعادة تسجيل الدخول لتحديث معلوماتك"),
         "isANumberThatHelpYouToKnowHowGoodYoureAsABrandHowMuchSalesShouldBeYourNextTargetAndWhereYouAreStandingInYourMarket":
             MessageLookupByLibrary.simpleMessage(
                 "هو رقم يساعدك على معرفة مدى جودتك كعلامة تجارية وكمية المبيعات التي يجب أن تكون هدفك التالي وموقعك في السوق"),
@@ -272,13 +286,18 @@ class MessageLookup extends MessageLookupByLibrary {
                 "هل هناك شيء خاطئ في عناصر طلبك"),
         "isThereSomthingMissingInYourPackage":
             MessageLookupByLibrary.simpleMessage("هل هناك شيء مفقود في طردك"),
+        "itemDeleteCart":
+            MessageLookupByLibrary.simpleMessage("تم حذف العنصر بنجاح"),
+        "items": MessageLookupByLibrary.simpleMessage("العناصر"),
         "jackets": MessageLookupByLibrary.simpleMessage("جاكيتات"),
         "jeans": MessageLookupByLibrary.simpleMessage("جينز"),
         "knitWear": MessageLookupByLibrary.simpleMessage("ملابس محبوكة"),
         "kpis": MessageLookupByLibrary.simpleMessage("مؤشرات الأداء"),
         "landmark": MessageLookupByLibrary.simpleMessage("معلم معروف"),
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
+        "le": MessageLookupByLibrary.simpleMessage("ج.م"),
         "letsStart": MessageLookupByLibrary.simpleMessage("لنبدأ"),
+        "loading": MessageLookupByLibrary.simpleMessage("جارٍ التحميل..."),
         "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "market": MessageLookupByLibrary.simpleMessage("السوق"),
         "measureOfSuccess":
@@ -297,10 +316,24 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("لا"),
         "noDraftsYet":
             MessageLookupByLibrary.simpleMessage("لا توجد مسودات بعد"),
+        "noFollowingAnyStore":
+            MessageLookupByLibrary.simpleMessage("أنت لا تتابع أي متجر بعد."),
+        "noProductCart":
+            MessageLookupByLibrary.simpleMessage("لا توجد منتجات في السلة."),
+        "noProductFollow":
+            MessageLookupByLibrary.simpleMessage("لا توجد منتجات متابعة"),
+        "noProductHandPicked": MessageLookupByLibrary.simpleMessage(
+            "لا توجد منتجات مختارة حتى الآن."),
+        "noProductNewIn": MessageLookupByLibrary.simpleMessage(
+            "لا توجد منتجات جديدة حتى الآن."),
         "noProductsAddedYet":
             MessageLookupByLibrary.simpleMessage("لم تتم إضافة أي منتجات بعد"),
+        "noReturnItems":
+            MessageLookupByLibrary.simpleMessage("لا توجد منتجات للعودة"),
         "notification": MessageLookupByLibrary.simpleMessage("إشعار"),
         "notified": MessageLookupByLibrary.simpleMessage("المبلغون"),
+        "nowFollowing":
+            MessageLookupByLibrary.simpleMessage("أنت الآن تتابع هذا المتجر"),
         "nowYouKnowWhereToAimAndThisIsYourCompassInWhichClusterYoureIsYourMostNeededInformationToStartEvaluatingYourBusiness":
             MessageLookupByLibrary.simpleMessage(
                 "الآن تعرف أين تهدف وهذا هو بوصلة عملك، عنقودك هو المعلومات الأكثر حاجة لتقييم عملك"),
@@ -349,6 +382,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleasesigninwithyourStoreAccount":
             MessageLookupByLibrary.simpleMessage(
                 "يرجى تسجيل الدخول باستخدام حساب المتجر الخاص بك"),
+        "plsEnterDesc":
+            MessageLookupByLibrary.simpleMessage("يرجى إدخال الوصف"),
+        "plsEnterName":
+            MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المنتج"),
         "polices": MessageLookupByLibrary.simpleMessage("السياسات"),
         "pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails":
             MessageLookupByLibrary.simpleMessage(
@@ -358,6 +395,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "printing": MessageLookupByLibrary.simpleMessage("الطباعة"),
         "problemsAtTheShippingProcess":
             MessageLookupByLibrary.simpleMessage("مشاكل في عملية الشحن"),
+        "productAdded":
+            MessageLookupByLibrary.simpleMessage("تم إضافة المنتج بنجاح"),
+        "productAddedToCart":
+            MessageLookupByLibrary.simpleMessage("تم إضافة المنتج إلى العربة"),
         "productColors": MessageLookupByLibrary.simpleMessage("ألوان المنتج"),
         "productDescription":
             MessageLookupByLibrary.simpleMessage("وصف المنتج"),
@@ -397,6 +438,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إعادة تسمية القسم"),
         "report": MessageLookupByLibrary.simpleMessage("إبلاغ"),
         "reportOrder": MessageLookupByLibrary.simpleMessage("الإبلاغ عن الطلب"),
+        "reportSubmited":
+            MessageLookupByLibrary.simpleMessage("تم تقديم تقرير الاسترداد"),
         "requests": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "resend": MessageLookupByLibrary.simpleMessage("إعادة الإرسال"),
         "resendIn": MessageLookupByLibrary.simpleMessage("إعادة الإرسال في"),
@@ -446,6 +489,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "size": MessageLookupByLibrary.simpleMessage("الحجم"),
         "sizeGuide": MessageLookupByLibrary.simpleMessage("دليل المقاسات"),
         "sizes": MessageLookupByLibrary.simpleMessage("المقاسات"),
+        "smothingWent": MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المتجر"),
         "storeProfileLinkIsCopied":
@@ -470,6 +514,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "theBrandsThatHaveNumbersWhichAreEqualToTheMarketAverageAreInBCluster":
             MessageLookupByLibrary.simpleMessage(
                 "العلامات التجارية التي تحتوي على أرقام تعادل متوسط السوق تكون في عنقود B"),
+        "thereNoProduct":
+            MessageLookupByLibrary.simpleMessage("لم يتم إضافة منتجات بعد."),
         "to": MessageLookupByLibrary.simpleMessage("إلى"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalIncome": MessageLookupByLibrary.simpleMessage("الدخل الكلي"),
@@ -498,6 +544,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "verifyYourPassword":
             MessageLookupByLibrary.simpleMessage("تحقق من كلمة المرور"),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
+        "viewCart": MessageLookupByLibrary.simpleMessage("عرض العربة"),
+        "waitingToGet":
+            MessageLookupByLibrary.simpleMessage("ننتظر، نحاول جلب المنتجات"),
         "warehouseAddress":
             MessageLookupByLibrary.simpleMessage("عنوان المستودع"),
         "weHaveSent6DigitsVerificationCodeTo":
@@ -531,6 +580,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "youMustAtLeastFillProductNameAndDescriptionToAddItToDrafts":
             MessageLookupByLibrary.simpleMessage(
                 "يجب أن تملأ اسم المنتج ووصفه على الأقل لإضافته إلى المسودات"),
+        "youMustSelectGuidImage": MessageLookupByLibrary.simpleMessage(
+            "يجب عليك اختيار صورة دليل المقاس."),
+        "youMustSelectOneImage": MessageLookupByLibrary.simpleMessage(
+            "يجب عليك اختيار صورة واحدة على الأقل."),
         "youNeedToMakeSureTheDescriptionYouEnteredIsCorrectCauseItCanNotBeEdited":
             MessageLookupByLibrary.simpleMessage(
                 "تحتاج للتأكد من صحة الوصف الذي أدخلته لأنه لا يمكن تعديله"),

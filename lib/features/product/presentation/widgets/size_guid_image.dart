@@ -65,7 +65,7 @@ class _SizeGuidImageState extends State<SizeGuidImage> {
         Visibility(
           visible: cubit.sizeGuideImage.path.isEmpty,
           child: Text(
-            'You must choose size guid image.',
+            S.of(context).youMustSelectGuidImage,
             style: AppStylesManager.customTextStyleR,
           ),
         ),

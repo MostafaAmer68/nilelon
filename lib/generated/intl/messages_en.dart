@@ -33,6 +33,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please Upload 2 Clear Photos "),
         "PleaseUpload3ClearPhotos": MessageLookupByLibrary.simpleMessage(
             "Please Upload 3 Clear Photos "),
+        "PlsEnterPrice":
+            MessageLookupByLibrary.simpleMessage("please enter price"),
         "Skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "ToKnowHowItWorksYouOnlyNeedToImagineThatWeareClusteringTheBrandsBasedOnComparingTheirNumbersToTheMarketAverageNumbersInEveryFactorInThisPage":
             MessageLookupByLibrary.simpleMessage(
@@ -67,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "And Don’t Forget The Total Number Of Sales In The Whole Market Is Getting Increasing While We’re Talking Which Means The Average Is Getting Bigger Too So Hold On To Your Position And Aim For A Higher One"),
         "apply": MessageLookupByLibrary.simpleMessage("Apply"),
+        "applyOffer": MessageLookupByLibrary.simpleMessage("Apply offer"),
         "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
         "areYouSureYouWantToAddThisProductToYourDrafts":
             MessageLookupByLibrary.simpleMessage(
@@ -178,6 +181,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emailOrPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Email Or Phone Number"),
         "emptyCart": MessageLookupByLibrary.simpleMessage("Empty cart"),
+        "emptyCloset": MessageLookupByLibrary.simpleMessage("Empty closet"),
         "english": MessageLookupByLibrary.simpleMessage("English"),
         "enterConfirmPassword":
             MessageLookupByLibrary.simpleMessage("Enter Confirm Password"),
@@ -287,6 +291,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Is There Somthing Missing In Your Package"),
         "itemDeleteCart":
             MessageLookupByLibrary.simpleMessage("Item deleted successfully"),
+        "items": MessageLookupByLibrary.simpleMessage("Items"),
         "jackets": MessageLookupByLibrary.simpleMessage("Jackets"),
         "jeans": MessageLookupByLibrary.simpleMessage("Jeans"),
         "knitWear": MessageLookupByLibrary.simpleMessage("Knit Wear"),
@@ -295,6 +300,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "le": MessageLookupByLibrary.simpleMessage("L.E"),
         "letsStart": MessageLookupByLibrary.simpleMessage("let’sStart"),
+        "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "logout": MessageLookupByLibrary.simpleMessage("Log Out"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
         "measureOfSuccess":
@@ -313,8 +319,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noDraftsYet": MessageLookupByLibrary.simpleMessage("No Drafts Yet."),
+        "noFollowingAnyStore": MessageLookupByLibrary.simpleMessage(
+            "you dont followed any store yet."),
         "noProductCart": MessageLookupByLibrary.simpleMessage(
             "There is no products in the cart."),
+        "noProductFollow": MessageLookupByLibrary.simpleMessage(
+            "There is no following products"),
+        "noProductHandPicked": MessageLookupByLibrary.simpleMessage(
+            "There is no Hand Picked in products yet."),
+        "noProductNewIn": MessageLookupByLibrary.simpleMessage(
+            "There is no New In products yet."),
         "noProductsAddedYet":
             MessageLookupByLibrary.simpleMessage("No Products Added Yet"),
         "noReturnItems":
@@ -369,6 +383,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleasesigninwithyourStoreAccount":
             MessageLookupByLibrary.simpleMessage(
                 "Please sign in with your Store Account"),
+        "plsEnterDesc":
+            MessageLookupByLibrary.simpleMessage("please enter discription"),
+        "plsEnterName":
+            MessageLookupByLibrary.simpleMessage("please enter product name"),
         "polices": MessageLookupByLibrary.simpleMessage("Polices"),
         "pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails":
             MessageLookupByLibrary.simpleMessage(
@@ -378,6 +396,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "printing": MessageLookupByLibrary.simpleMessage("Printing"),
         "problemsAtTheShippingProcess": MessageLookupByLibrary.simpleMessage(
             "Problems At The Shipping Process"),
+        "productAdded":
+            MessageLookupByLibrary.simpleMessage("Product Added successfully"),
+        "productAddedToCart":
+            MessageLookupByLibrary.simpleMessage("Product added to cart"),
         "productColors": MessageLookupByLibrary.simpleMessage("Product Colors"),
         "productDescription":
             MessageLookupByLibrary.simpleMessage("Product Description"),
@@ -524,6 +546,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "verifyYourPassword":
             MessageLookupByLibrary.simpleMessage("Verify Your Password"),
         "viewAll": MessageLookupByLibrary.simpleMessage("View All"),
+        "viewCart": MessageLookupByLibrary.simpleMessage("View cart"),
         "waitingToGet": MessageLookupByLibrary.simpleMessage(
             "Waiting we traing to get products"),
         "warehouseAddress":
@@ -559,6 +582,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "youMustAtLeastFillProductNameAndDescriptionToAddItToDrafts":
             MessageLookupByLibrary.simpleMessage(
                 "You Must At Least Fill Product Name And Description To Add It To Drafts"),
+        "youMustSelectGuidImage": MessageLookupByLibrary.simpleMessage(
+            "You must choose size guid image."),
+        "youMustSelectOneImage": MessageLookupByLibrary.simpleMessage(
+            "You must choose at least 1 image."),
         "youNeedToMakeSureTheDescriptionYouEnteredIsCorrectCauseItCanNotBeEdited":
             MessageLookupByLibrary.simpleMessage(
                 "You Need To Make Sure The Description You Entered Is Correct Cause It Can Not Be Edited"),

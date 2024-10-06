@@ -345,7 +345,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
           Visibility(
             visible: cubit.images.isEmpty,
             child: Text(
-              'You must choose at least 1 image.',
+              S.of(context).youMustSelectOneImage,
               style: AppStylesManager.customTextStyleR,
             ),
           ),

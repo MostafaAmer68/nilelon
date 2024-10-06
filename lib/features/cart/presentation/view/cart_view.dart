@@ -187,7 +187,7 @@ class CartView extends StatelessWidget {
                         ],
                       );
               } else {
-                return  Text(S.of(context).somthingWent);
+                return Text(S.of(context).smothingWent);
               }
             },
           ),

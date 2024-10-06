@@ -87,7 +87,7 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'There is no Hand Picked in products yet.',
+                                S.of(context).noProductHandPicked,
                                 style: AppStylesManager.customTextStyleG2,
                               ),
                             ],
@@ -104,21 +104,27 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
                                 ? ProductsCubit.get(context).products.length + 1
                                 : ProductsCubit.get(context).products.length,
                             itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex == ProductsCubit.get(context).products.length &&
+                              if (sizeIndex ==
+                                      ProductsCubit.get(context)
+                                          .products
+                                          .length &&
                                   handIsLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
-                                return ProductsCubit.get(context).products[sizeIndex]
+                                return ProductsCubit.get(context)
+                                            .products[sizeIndex]
                                             .productVariants
                                             .first
                                             .discountRate !=
                                         0
                                     ? offersCard(
                                         context: context,
-                                        product: ProductsCubit.get(context).products[sizeIndex])
+                                        product: ProductsCubit.get(context)
+                                            .products[sizeIndex])
                                     : productSquarItem(
                                         context: context,
-                                        model: ProductsCubit.get(context).products[sizeIndex],
+                                        model: ProductsCubit.get(context)
+                                            .products[sizeIndex],
                                       );
                               }
                             },

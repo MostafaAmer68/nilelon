@@ -269,7 +269,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   Widget _buildColorSelector() {
     return Row(
       children: [
-        Text('Color :', style: AppStylesManager.customTextStyleG10),
+        Text('${S.of(context).color}:',
+            style: AppStylesManager.customTextStyleG10),
         ColorSelector(
           colors: productCubit.product.productVariants
               .map((e) => e.color)
@@ -290,7 +291,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     return productCubit.product.inStock > 0
         ? Row(
             children: [
-              Text('In stock', style: AppStylesManager.customTextStyleL3),
+              Text(S.of(context).inStock,
+                  style: AppStylesManager.customTextStyleL3),
               const Spacer(),
               SmallButton(
                 icon: Iconsax.minus,
@@ -311,7 +313,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             ],
           )
         : Text(
-            'Out of stock',
+            S.of(context).outOfStock,
             style: AppStylesManager.customTextStyleL3.copyWith(
               color: ColorManager.primaryR,
             ),
