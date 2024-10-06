@@ -13,6 +13,7 @@ import 'package:nilelon/features/auth/domain/repos/auth_repos.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 
 import '../../../../core/helper.dart';
+import '../../../../generated/l10n.dart';
 
 part 'auth_state.dart';
 
@@ -42,6 +43,8 @@ class AuthCubit extends Cubit<AuthState> {
   String base64Image = '';
   bool gender = false;
   final picker = ImagePicker();
+  final RegExp emailRegex = RegExp(
+      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 
   Future<void> pickImage(ImageSource imageSource) async {
     emit(PickImageLoading());
@@ -230,6 +233,13 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> confirmRegisteration(context) async {
+    if (regFormCuts.currentState != null &&
+            !regFormCuts.currentState!.validate() ||
+        regFormSto.currentState != null &&
+            !regFormSto.currentState!.validate()) {
+      return;
+    }
+
     emit(LoginLoading());
 
     var result = await authRepos.confirmRegisteration(
@@ -260,7 +270,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> authLogin(context) async {
-    if(!loginForm.currentState!.validate())
+    if (!loginForm.currentState!.validate()) return;
     emit(LoginLoading());
 
     var result = await authRepos.loginRepos(
@@ -280,6 +290,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> authCustomerRegister(context) async {
+    if (!regFormCuts.currentState!.validate()) return;
     emit(CustomerRegisterLoading());
     var result = await authRepos.customerRegisterRepos(
         CustomerRegisterModel(
@@ -303,6 +314,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> authStoreRegister(context) async {
+    if (!regFormSto.currentState!.validate()) return;
     emit(StoreRegisterLoading());
     var result = await authRepos.storeRegisterRepos(
       StoreRegisterModel(

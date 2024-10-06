@@ -108,207 +108,222 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
           elevation: 0,
         ),
         body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    lang.createAccount,
-                    style: AppStylesManager.customTextStyleBl4,
+          child: Form(
+            key: AuthCubit.get(context).regFormCuts,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      lang.createAccount,
+                      style: AppStylesManager.customTextStyleBl4,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    lang.registerWithYourValidEmailAddress,
-                    style: AppStylesManager.customTextStyleG,
+                const SizedBox(
+                  height: 8,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      lang.registerWithYourValidEmailAddress,
+                      style: AppStylesManager.customTextStyleG,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              TextAndFormFieldColumnWithIcon(
-                title: lang.fullName,
-                label: lang.enterYourName,
-                controller: AuthCubit.get(context).nameController,
-                type: TextInputType.text,
-                image: 'assets/images/profile.svg',
-              ),
-              TextAndFormFieldColumnWithIcon(
-                title: lang.email,
-                label: lang.enterYourEmail,
-                validator: (value) {
-                  if (!value!.endsWith('.com') && !value.contains('@')) {
-                    return S.of(context).enterYourEmailToVerification;
-                  }
-                  return null;
-                },
-                controller: AuthCubit.get(context).emailController,
-                type: TextInputType.emailAddress,
-                image: 'assets/images/sms-tracking.svg',
-              ),
-              phoneNumber(
-                lang.phoneNumber,
-                '01234567899',
-                AuthCubit.get(context).phoneController,
-                TextInputType.phone,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    lang.gender,
-                    style: AppStylesManager.customTextStyleBl5,
+                const SizedBox(
+                  height: 24,
+                ),
+                TextAndFormFieldColumnWithIcon(
+                  title: lang.fullName,
+                  label: lang.enterYourName,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return S.of(context).fullName;
+                    }
+                    return null;
+                  },
+                  controller: AuthCubit.get(context).nameController,
+                  type: TextInputType.text,
+                  image: 'assets/images/profile.svg',
+                ),
+                TextAndFormFieldColumnWithIcon(
+                  title: lang.email,
+                  label: lang.enterYourEmail,
+                  validator: (value) {
+                    if (!AuthCubit.get(context).emailRegex.hasMatch(value!)) {
+                      return S.of(context).enterYourEmailToVerification;
+                    }
+                    return null;
+                  },
+                  controller: AuthCubit.get(context).emailController,
+                  type: TextInputType.emailAddress,
+                  image: 'assets/images/sms-tracking.svg',
+                ),
+                phoneNumber(
+                  lang.phoneNumber,
+                  '01234567899',
+                  AuthCubit.get(context).phoneController,
+                  TextInputType.phone,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      lang.gender,
+                      style: AppStylesManager.customTextStyleBl5,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 8,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: _gender
-                      .map((option) => genderOptions(context, option))
-                      .toList(),
+                const SizedBox(
+                  height: 8,
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              calender(
-                lang.dateOfBirth,
-                '00/00/0000',
-              ),
-              TextAndFormFieldColumnWithIconHide(
-                title: lang.password,
-                label: lang.enterYourPassowrd,
-                validator: (value) {
-                  if (value!.length > 8 && !value.contains('@')) {
-                    return S.of(context).enterYourPassowrd;
-                  }
-                  return null;
-                },
-                controller: AuthCubit.get(context).passwordController,
-                type: TextInputType.text,
-                image: 'assets/images/lock.svg',
-              ),
-              TextAndFormFieldColumnWithIconHide(
-                title: lang.confirmPassword,
-                label: lang.confirmYourPassword,
-                validator: (value) {
-                  if (value!.length > 8 && !value.contains('@')) {
-                    return S.of(context).enterYourPassowrd;
-                  }
-                  return null;
-                },
-                controller: AuthCubit.get(context).confirmPasswordController,
-                type: TextInputType.text,
-                image: 'assets/images/lock.svg',
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Text.rich(
-                  textAlign: TextAlign.center,
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: lang.byClickingRegisterYouAgreeTo,
-                        style: TextStyle(
-                          color: const Color(0xFF3F484A),
-                          fontSize: 1.sw > 600 ? 18 : 12,
-                          fontFamily: 'Nunito Sans',
-                          fontWeight: FontWeight.w500,
-                          height: 0.11,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: _gender
+                        .map((option) => genderOptions(context, option))
+                        .toList(),
+                  ),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                calender(
+                  lang.dateOfBirth,
+                  '00/00/0000',
+                ),
+                TextAndFormFieldColumnWithIconHide(
+                  title: lang.password,
+                  label: lang.enterYourPassowrd,
+                  validator: (value) {
+                    if (value!.length < 8 && !value.contains('@')) {
+                      return S.of(context).enterYourPassowrd;
+                    }
+                    return null;
+                  },
+                  controller: AuthCubit.get(context).passwordController,
+                  type: TextInputType.text,
+                  image: 'assets/images/lock.svg',
+                ),
+                TextAndFormFieldColumnWithIconHide(
+                  title: lang.confirmPassword,
+                  label: lang.confirmYourPassword,
+                  validator: (value) {
+                    if (value!.length < 8 && !value.contains('@')) {
+                      return S.of(context).enterYourPassowrd;
+                    }
+                    return null;
+                  },
+                  controller: AuthCubit.get(context).confirmPasswordController,
+                  type: TextInputType.text,
+                  image: 'assets/images/lock.svg',
+                ),
+                GestureDetector(
+                  onTap: () {},
+                  child: Text.rich(
+                    textAlign: TextAlign.center,
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: lang.byClickingRegisterYouAgreeTo,
+                          style: TextStyle(
+                            color: const Color(0xFF3F484A),
+                            fontSize: 1.sw > 600 ? 18 : 12,
+                            fontFamily: 'Nunito Sans',
+                            fontWeight: FontWeight.w500,
+                            height: 0.11,
+                          ),
                         ),
+                        TextSpan(
+                          text: lang.ourTermsAndConditionsOfUse,
+                          style: AppStylesManager.customTextStyleL2,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  height: 32,
+                ),
+                GradientButtonBuilder(
+                  text: lang.register,
+                  ontap: () {
+                    if (!AuthCubit.get(context)
+                        .regFormCuts
+                        .currentState!
+                        .validate()) {
+                      return;
+                    }
+                    AuthCubit.get(context).confirmRegisteration(context);
+                  },
+                  width: screenWidth(context, 0.92),
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                          width: screenWidth(context, 0.24),
+                          child: const Divider()),
+                      Text(
+                        lang.orSignUpWith,
+                        style: AppStylesManager.customTextStyleB,
                       ),
-                      TextSpan(
-                        text: lang.ourTermsAndConditionsOfUse,
-                        style: AppStylesManager.customTextStyleL2,
-                      ),
+                      SizedBox(
+                          width: screenWidth(context, 0.24),
+                          child: const Divider()),
                     ],
                   ),
                 ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-              GradientButtonBuilder(
-                text: lang.register,
-                ontap: () {
-                  AuthCubit.get(context).confirmRegisteration(context);
-                },
-                width: screenWidth(context, 0.92),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                        width: screenWidth(context, 0.24),
-                        child: const Divider()),
-                    Text(
-                      lang.orSignUpWith,
-                      style: AppStylesManager.customTextStyleB,
-                    ),
-                    SizedBox(
-                        width: screenWidth(context, 0.24),
-                        child: const Divider()),
-                  ],
+                const SizedBox(
+                  height: 30,
                 ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // signWithContainer('assets/images/facebook.svg', () {}),
-                    // const SizedBox(
-                    //   width: 24,
-                    // ),
-                    BlocListener<AuthCubit, AuthState>(
-                        listener: (context, state) {
-                          if (state is GoogleRegisterLoading) {
-                          } else if (state is GoogleRegisterSuccess) {
-                            navigateAndRemoveUntil(
-                                context: context,
-                                screen: const RecommendationView());
-                          } else if (state is GoogleRegisterFailure) {
-                            BotToast.showText(
-                                text: S.of(context).failedRegister);
-                          }
-                        },
-                        child:
-                            signWithContainer('assets/images/google.svg', () {
-                          BlocProvider.of<AuthCubit>(context)
-                              .signUpWithGoogle(context);
-                        })),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // signWithContainer('assets/images/facebook.svg', () {}),
+                      // const SizedBox(
+                      //   width: 24,
+                      // ),
+                      BlocListener<AuthCubit, AuthState>(
+                          listener: (context, state) {
+                            if (state is GoogleRegisterLoading) {
+                            } else if (state is GoogleRegisterSuccess) {
+                              navigateAndRemoveUntil(
+                                  context: context,
+                                  screen: const RecommendationView());
+                            } else if (state is GoogleRegisterFailure) {
+                              BotToast.showText(
+                                  text: S.of(context).failedRegister);
+                            }
+                          },
+                          child:
+                              signWithContainer('assets/images/google.svg', () {
+                            BlocProvider.of<AuthCubit>(context)
+                                .signUpWithGoogle(context);
+                          })),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(
-                height: 32,
-              ),
-            ],
+                const SizedBox(
+                  height: 32,
+                ),
+              ],
+            ),
           ),
         ),
       ),

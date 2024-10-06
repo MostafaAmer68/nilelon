@@ -121,7 +121,8 @@ class _MyAppState extends State<MyApp> {
             // useInheritedMediaQuery: true,
             builder: BotToastInit(),
             // builder: DevicePreview.appBuilder,
-            locale: HiveStorage.get(HiveKeys.isArabic)
+            locale: HiveStorage.get(HiveKeys.isArabic) &&
+                    HiveStorage.get(HiveKeys.isArabic) != null
                 ? const Locale('ar')
                 : const Locale('en'),
             localizationsDelegates: const [
