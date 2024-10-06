@@ -214,21 +214,22 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
   Future<String> signUpWithGoogle() async {
     GoogleSignInAccount? account = await _googleSignIn.signIn();
     if (account != null) {
-      final data = await apiService.post(
-        endPoint: EndPoint.customerGoogleRegisterUrl,
-        body: account.photoUrl != null
-            ? {
-                "provider": "Google",
-                "name": account.displayName,
-                "email": account.email,
-                "photo": account.photoUrl,
-              }
-            : {
-                "provider": "Google",
-                "name": account.displayName,
-                "email": account.email,
-              },
-      );
+      final data = await apiService
+          .post(endPoint: EndPoint.customerGoogleRegisterUrl, body:
+                  // account.photoUrl != null
+                  //     ?
+                  {
+        "provider": "Google",
+        "name": account.displayName,
+        "email": account.email,
+        "photo": account.photoUrl,
+      }
+              // : {
+              //     "provider": "Google",
+              //     "name": account.displayName,
+              //     "email": account.email,
+              //   },
+              );
       if (data.statusCode == 200) {
         UserModel userData;
         // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');

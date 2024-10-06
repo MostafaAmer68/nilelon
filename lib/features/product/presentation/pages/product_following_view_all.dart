@@ -89,7 +89,10 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
                   loading: buildShimmerIndicatorGrid,
                   success: () =>
                       _buildProductGrid(ProductsCubit.get(context).products),
-                  failure: (message) => Center(child: Text(message)),
+                  failure: (message) => SizedBox(
+                      height: 450.h,
+                      child:
+                          Center(child: Text(S.of(context).noProductFollow))),
                 );
               },
             ),
