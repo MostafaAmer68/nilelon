@@ -138,6 +138,9 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   title: lang.storeName,
                   label: lang.enterStoreName,
                   controller: cubit.nameController,
+                  onChange: (value) {
+                    AuthCubit.get(context).regFormCuts.currentState!.validate();
+                  },
                   type: TextInputType.text,
                   image: 'assets/images/profile.svg',
                   validator: (value) {
@@ -150,10 +153,13 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 title: lang.email,
                 label: lang.enterYourEmail,
                 validator: (value) {
-                  if (!value!.endsWith('.com') && !value.contains('@')) {
+                  if (!AuthCubit.get(context).emailRegex.hasMatch(value!)) {
                     return S.of(context).enterYourEmailToVerification;
                   }
                   return null;
+                },
+                onChange: (value) {
+                  AuthCubit.get(context).regFormCuts.currentState!.validate();
                 },
                 controller: cubit.emailController,
                 type: TextInputType.emailAddress,
@@ -169,6 +175,9 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   title: lang.storeRepresentativeName,
                   label: lang.storeRepresentativeName,
                   controller: cubit.repNameController,
+                  onChange: (value) {
+                    AuthCubit.get(context).regFormCuts.currentState!.validate();
+                  },
                   type: TextInputType.text,
                   image: 'assets/images/user-tag.svg',
                   validator: (value) {
@@ -186,6 +195,15 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               TextAndFormFieldColumnWithIcon(
                 title: lang.warehouseAddress,
                 label: lang.enterYourWarehouseAddress,
+                onChange: (value) {
+                  AuthCubit.get(context).regFormCuts.currentState!.validate();
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return S.of(context).enterYourWarehouseAddress;
+                  }
+                  return null;
+                },
                 controller: cubit.wareHouseAddressController,
                 type: TextInputType.text,
                 image: 'assets/images/location.svg',
@@ -197,6 +215,9 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   controller: cubit.profileLinkController,
                   type: TextInputType.url,
                   image: 'assets/images/Link.svg',
+                  onChange: (value) {
+                    AuthCubit.get(context).regFormCuts.currentState!.validate();
+                  },
                   validator: (value) {
                     if (value!.isEmpty) {
                       return S.of(context).enterYourName;
@@ -215,10 +236,13 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 title: lang.password,
                 label: lang.enterYourPassowrd,
                 validator: (value) {
-                  if (value!.length > 8 && !value.contains('@')) {
+                  if (!AuthCubit.get(context).passwordRegex.hasMatch(value!)) {
                     return S.of(context).enterYourPassowrd;
                   }
                   return null;
+                },
+                onChange: (value) {
+                  AuthCubit.get(context).regFormCuts.currentState!.validate();
                 },
                 controller: cubit.passwordController,
                 type: TextInputType.text,
@@ -228,10 +252,14 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 title: lang.confirmPassword,
                 label: lang.confirmYourPassword,
                 validator: (value) {
-                  if (value!.length > 8 && !value.contains('@')) {
+                  if (!AuthCubit.get(context).passwordRegex.hasMatch(value!) &&
+                      AuthCubit.get(context).passwordController.text != value) {
                     return S.of(context).enterYourPassowrd;
                   }
                   return null;
+                },
+                onChange: (value) {
+                  AuthCubit.get(context).regFormSto.currentState!.validate();
                 },
                 controller: cubit.confirmPasswordController,
                 type: TextInputType.text,

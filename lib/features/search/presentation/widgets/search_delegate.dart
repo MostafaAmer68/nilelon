@@ -18,7 +18,9 @@ class SearchView extends SearchDelegate {
   Widget? buildLeading(BuildContext context) {
     return IconButton(
       onPressed: () {
-        SearchCubit.get(context).search(query);
+        if (query.isNotEmpty) {
+          SearchCubit.get(context).search(query);
+        }
       },
       icon: const Icon(Icons.search),
     );

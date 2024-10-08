@@ -142,12 +142,15 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                 TextAndFormFieldColumnWithIcon(
                   title: lang.fullName,
                   label: lang.enterYourName,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return S.of(context).enterYourName;
-                      }
-                      return null;
-                    },
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return S.of(context).enterYourName;
+                    }
+                    return null;
+                  },
+                  onChange: (value) {
+                    AuthCubit.get(context).regFormCuts.currentState!.validate();
+                  },
                   controller: AuthCubit.get(context).nameController,
                   type: TextInputType.text,
                   image: 'assets/images/profile.svg',
@@ -160,6 +163,9 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                       return S.of(context).enterYourEmailToVerification;
                     }
                     return null;
+                  },
+                  onChange: (value) {
+                    AuthCubit.get(context).regFormCuts.currentState!.validate();
                   },
                   controller: AuthCubit.get(context).emailController,
                   type: TextInputType.emailAddress,
@@ -204,10 +210,15 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   title: lang.password,
                   label: lang.enterYourPassowrd,
                   validator: (value) {
-                    if (value!.length < 8 && !value.contains('@')) {
+                    if (!AuthCubit.get(context)
+                        .passwordRegex
+                        .hasMatch(value!)) {
                       return S.of(context).enterYourPassowrd;
                     }
                     return null;
+                  },
+                  onChange: (value) {
+                    AuthCubit.get(context).regFormCuts.currentState!.validate();
                   },
                   controller: AuthCubit.get(context).passwordController,
                   type: TextInputType.text,
@@ -217,10 +228,17 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   title: lang.confirmPassword,
                   label: lang.confirmYourPassword,
                   validator: (value) {
-                    if (value!.length < 8 && !value.contains('@')) {
+                    if (!AuthCubit.get(context)
+                            .passwordRegex
+                            .hasMatch(value!) &&
+                        AuthCubit.get(context).passwordController.text !=
+                            value) {
                       return S.of(context).enterYourPassowrd;
                     }
                     return null;
+                  },
+                  onChange: (value) {
+                    AuthCubit.get(context).regFormCuts.currentState!.validate();
                   },
                   controller: AuthCubit.get(context).confirmPasswordController,
                   type: TextInputType.text,
