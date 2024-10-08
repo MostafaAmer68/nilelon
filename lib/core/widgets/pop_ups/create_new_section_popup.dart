@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -64,6 +65,8 @@ Future createNewSectionDialog(
                       },
                       success: (_) {
                         BotToast.closeAllLoading();
+                        navigatePop(context: context);
+                        ClosetCubit.get(context).getclosets();
                       },
                     );
                   },

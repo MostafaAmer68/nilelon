@@ -21,6 +21,7 @@ mixin _$ClosetState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successAdded,
     required TResult Function() successDelete,
     required TResult Function() failure,
   }) =>
@@ -30,6 +31,7 @@ mixin _$ClosetState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successAdded,
     TResult? Function()? successDelete,
     TResult? Function()? failure,
   }) =>
@@ -39,6 +41,7 @@ mixin _$ClosetState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successAdded,
     TResult Function()? successDelete,
     TResult Function()? failure,
     required TResult orElse(),
@@ -49,6 +52,7 @@ mixin _$ClosetState {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessAdded value) successAdded,
     required TResult Function(_SuccessDelete value) successDelete,
     required TResult Function(_failure value) failure,
   }) =>
@@ -58,6 +62,7 @@ mixin _$ClosetState {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessAdded value)? successAdded,
     TResult? Function(_SuccessDelete value)? successDelete,
     TResult? Function(_failure value)? failure,
   }) =>
@@ -67,6 +72,7 @@ mixin _$ClosetState {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessAdded value)? successAdded,
     TResult Function(_SuccessDelete value)? successDelete,
     TResult Function(_failure value)? failure,
     required TResult orElse(),
@@ -133,6 +139,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successAdded,
     required TResult Function() successDelete,
     required TResult Function() failure,
   }) {
@@ -145,6 +152,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successAdded,
     TResult? Function()? successDelete,
     TResult? Function()? failure,
   }) {
@@ -157,6 +165,7 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successAdded,
     TResult Function()? successDelete,
     TResult Function()? failure,
     required TResult orElse(),
@@ -173,6 +182,7 @@ class _$InitialImpl implements _Initial {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessAdded value) successAdded,
     required TResult Function(_SuccessDelete value) successDelete,
     required TResult Function(_failure value) failure,
   }) {
@@ -185,6 +195,7 @@ class _$InitialImpl implements _Initial {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessAdded value)? successAdded,
     TResult? Function(_SuccessDelete value)? successDelete,
     TResult? Function(_failure value)? failure,
   }) {
@@ -197,6 +208,7 @@ class _$InitialImpl implements _Initial {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessAdded value)? successAdded,
     TResult Function(_SuccessDelete value)? successDelete,
     TResult Function(_failure value)? failure,
     required TResult orElse(),
@@ -253,6 +265,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successAdded,
     required TResult Function() successDelete,
     required TResult Function() failure,
   }) {
@@ -265,6 +278,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successAdded,
     TResult? Function()? successDelete,
     TResult? Function()? failure,
   }) {
@@ -277,6 +291,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successAdded,
     TResult Function()? successDelete,
     TResult Function()? failure,
     required TResult orElse(),
@@ -293,6 +308,7 @@ class _$LoadingImpl implements _Loading {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessAdded value) successAdded,
     required TResult Function(_SuccessDelete value) successDelete,
     required TResult Function(_failure value) failure,
   }) {
@@ -305,6 +321,7 @@ class _$LoadingImpl implements _Loading {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessAdded value)? successAdded,
     TResult? Function(_SuccessDelete value)? successDelete,
     TResult? Function(_failure value)? failure,
   }) {
@@ -317,6 +334,7 @@ class _$LoadingImpl implements _Loading {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessAdded value)? successAdded,
     TResult Function(_SuccessDelete value)? successDelete,
     TResult Function(_failure value)? failure,
     required TResult orElse(),
@@ -373,6 +391,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successAdded,
     required TResult Function() successDelete,
     required TResult Function() failure,
   }) {
@@ -385,6 +404,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successAdded,
     TResult? Function()? successDelete,
     TResult? Function()? failure,
   }) {
@@ -397,6 +417,7 @@ class _$SuccessImpl implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successAdded,
     TResult Function()? successDelete,
     TResult Function()? failure,
     required TResult orElse(),
@@ -413,6 +434,7 @@ class _$SuccessImpl implements _Success {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessAdded value) successAdded,
     required TResult Function(_SuccessDelete value) successDelete,
     required TResult Function(_failure value) failure,
   }) {
@@ -425,6 +447,7 @@ class _$SuccessImpl implements _Success {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessAdded value)? successAdded,
     TResult? Function(_SuccessDelete value)? successDelete,
     TResult? Function(_failure value)? failure,
   }) {
@@ -437,6 +460,7 @@ class _$SuccessImpl implements _Success {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessAdded value)? successAdded,
     TResult Function(_SuccessDelete value)? successDelete,
     TResult Function(_failure value)? failure,
     required TResult orElse(),
@@ -450,6 +474,132 @@ class _$SuccessImpl implements _Success {
 
 abstract class _Success implements ClosetState {
   const factory _Success() = _$SuccessImpl;
+}
+
+/// @nodoc
+abstract class _$$SuccessAddedImplCopyWith<$Res> {
+  factory _$$SuccessAddedImplCopyWith(
+          _$SuccessAddedImpl value, $Res Function(_$SuccessAddedImpl) then) =
+      __$$SuccessAddedImplCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$SuccessAddedImplCopyWithImpl<$Res>
+    extends _$ClosetStateCopyWithImpl<$Res, _$SuccessAddedImpl>
+    implements _$$SuccessAddedImplCopyWith<$Res> {
+  __$$SuccessAddedImplCopyWithImpl(
+      _$SuccessAddedImpl _value, $Res Function(_$SuccessAddedImpl) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$SuccessAddedImpl implements _SuccessAdded {
+  const _$SuccessAddedImpl();
+
+  @override
+  String toString() {
+    return 'ClosetState.successAdded()';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$SuccessAddedImpl);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initial,
+    required TResult Function() loading,
+    required TResult Function() success,
+    required TResult Function() successAdded,
+    required TResult Function() successDelete,
+    required TResult Function() failure,
+  }) {
+    return successAdded();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initial,
+    TResult? Function()? loading,
+    TResult? Function()? success,
+    TResult? Function()? successAdded,
+    TResult? Function()? successDelete,
+    TResult? Function()? failure,
+  }) {
+    return successAdded?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initial,
+    TResult Function()? loading,
+    TResult Function()? success,
+    TResult Function()? successAdded,
+    TResult Function()? successDelete,
+    TResult Function()? failure,
+    required TResult orElse(),
+  }) {
+    if (successAdded != null) {
+      return successAdded();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Initial value) initial,
+    required TResult Function(_Loading value) loading,
+    required TResult Function(_Success value) success,
+    required TResult Function(_SuccessAdded value) successAdded,
+    required TResult Function(_SuccessDelete value) successDelete,
+    required TResult Function(_failure value) failure,
+  }) {
+    return successAdded(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_Initial value)? initial,
+    TResult? Function(_Loading value)? loading,
+    TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessAdded value)? successAdded,
+    TResult? Function(_SuccessDelete value)? successDelete,
+    TResult? Function(_failure value)? failure,
+  }) {
+    return successAdded?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Initial value)? initial,
+    TResult Function(_Loading value)? loading,
+    TResult Function(_Success value)? success,
+    TResult Function(_SuccessAdded value)? successAdded,
+    TResult Function(_SuccessDelete value)? successDelete,
+    TResult Function(_failure value)? failure,
+    required TResult orElse(),
+  }) {
+    if (successAdded != null) {
+      return successAdded(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SuccessAdded implements ClosetState {
+  const factory _SuccessAdded() = _$SuccessAddedImpl;
 }
 
 /// @nodoc
@@ -493,6 +643,7 @@ class _$SuccessDeleteImpl implements _SuccessDelete {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successAdded,
     required TResult Function() successDelete,
     required TResult Function() failure,
   }) {
@@ -505,6 +656,7 @@ class _$SuccessDeleteImpl implements _SuccessDelete {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successAdded,
     TResult? Function()? successDelete,
     TResult? Function()? failure,
   }) {
@@ -517,6 +669,7 @@ class _$SuccessDeleteImpl implements _SuccessDelete {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successAdded,
     TResult Function()? successDelete,
     TResult Function()? failure,
     required TResult orElse(),
@@ -533,6 +686,7 @@ class _$SuccessDeleteImpl implements _SuccessDelete {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessAdded value) successAdded,
     required TResult Function(_SuccessDelete value) successDelete,
     required TResult Function(_failure value) failure,
   }) {
@@ -545,6 +699,7 @@ class _$SuccessDeleteImpl implements _SuccessDelete {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessAdded value)? successAdded,
     TResult? Function(_SuccessDelete value)? successDelete,
     TResult? Function(_failure value)? failure,
   }) {
@@ -557,6 +712,7 @@ class _$SuccessDeleteImpl implements _SuccessDelete {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessAdded value)? successAdded,
     TResult Function(_SuccessDelete value)? successDelete,
     TResult Function(_failure value)? failure,
     required TResult orElse(),
@@ -613,6 +769,7 @@ class _$failureImpl implements _failure {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
+    required TResult Function() successAdded,
     required TResult Function() successDelete,
     required TResult Function() failure,
   }) {
@@ -625,6 +782,7 @@ class _$failureImpl implements _failure {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
+    TResult? Function()? successAdded,
     TResult? Function()? successDelete,
     TResult? Function()? failure,
   }) {
@@ -637,6 +795,7 @@ class _$failureImpl implements _failure {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
+    TResult Function()? successAdded,
     TResult Function()? successDelete,
     TResult Function()? failure,
     required TResult orElse(),
@@ -653,6 +812,7 @@ class _$failureImpl implements _failure {
     required TResult Function(_Initial value) initial,
     required TResult Function(_Loading value) loading,
     required TResult Function(_Success value) success,
+    required TResult Function(_SuccessAdded value) successAdded,
     required TResult Function(_SuccessDelete value) successDelete,
     required TResult Function(_failure value) failure,
   }) {
@@ -665,6 +825,7 @@ class _$failureImpl implements _failure {
     TResult? Function(_Initial value)? initial,
     TResult? Function(_Loading value)? loading,
     TResult? Function(_Success value)? success,
+    TResult? Function(_SuccessAdded value)? successAdded,
     TResult? Function(_SuccessDelete value)? successDelete,
     TResult? Function(_failure value)? failure,
   }) {
@@ -677,6 +838,7 @@ class _$failureImpl implements _failure {
     TResult Function(_Initial value)? initial,
     TResult Function(_Loading value)? loading,
     TResult Function(_Success value)? success,
+    TResult Function(_SuccessAdded value)? successAdded,
     TResult Function(_SuccessDelete value)? successDelete,
     TResult Function(_failure value)? failure,
     required TResult orElse(),

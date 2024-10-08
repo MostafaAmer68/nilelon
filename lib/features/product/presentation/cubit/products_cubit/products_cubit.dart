@@ -1,6 +1,8 @@
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
 import 'package:nilelon/features/product/domain/repositories/products_repos.dart';
@@ -77,7 +79,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   //todo Get Followed Products Pagination
-  Future<void> getFollowedProductsPagination(int page, int productSize) async {
+  Future<void> getFollowedProducts(int page, int productSize) async {
     emit(const ProductsState.loading());
     var result = await productsRepos.getFollowedProducts(page, productSize);
     result.fold((failure) {
@@ -93,13 +95,20 @@ class ProductsCubit extends Cubit<ProductsState> {
   //?*********************************************************************************
 
   //todo Get New In Products Pagination
-  Future<void> getNewInProductsPagination(int page, int productSize) async {
+  Future<void> getNewInProducts(int page, int productSize) async {
     emit(const ProductsState.loading());
-    var result = await productsRepos.getNewInProducts(page, productSize);
+    late final Either<FailureService, List<ProductModel>> result;
+
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
+      result = await productsRepos.getNewInProducts(page, productSize);
+    } else {
+      result = await productsRepos.getNewInProductsGuest(page, productSize);
+    }
+
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
-      products = response.result!;
+      products = response;
       emit(const ProductsState.success());
     });
   }
@@ -109,57 +118,20 @@ class ProductsCubit extends Cubit<ProductsState> {
   //?*********************************************************************************
 
   //todo Get Random Products
-
-  //todo Get Random Products Pagination
-  Future<void> getRandomProductsPagination(int page, int productSize) async {
+  Future<void> getRandomProducts(int page, int productSize) async {
     emit(const ProductsState.loading());
-    var result = await productsRepos.getRandomProduct(page, productSize);
+    late final Either<FailureService, List<ProductModel>> result;
+
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
+      result = await productsRepos.getRandomProduct(page, productSize);
+    } else {
+      result = await productsRepos.getRandomProductsGuest(page, productSize);
+    }
+
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
-      products = response.result!;
-      emit(const ProductsState.success());
-    });
-  }
-
-  //todo Get New In Products Pagination
-  Future<void> getNewInProductsGuestPagination(
-      int page, int productSize) async {
-    emit(const ProductsState.loading());
-    var result = await productsRepos.getNewInProductsGuest(page, productSize);
-    result.fold((failure) {
-      emit(ProductsState.failure(failure.errorMsg));
-    }, (response) {
-      products = response.result!;
-      emit(const ProductsState.success());
-    });
-  }
-
-  //?*********************************************************************************
-  //! Get Random
-  //?*********************************************************************************
-
-  //todo Get Random Products
-  Future<void> getRandomProductsGuest(int page, int productSize) async {
-    emit(const ProductsState.loading());
-    var result = await productsRepos.getNewInProductsGuest(page, productSize);
-    result.fold((failure) {
-      emit(ProductsState.failure(failure.errorMsg));
-    }, (response) {
-      products = response.result!;
-      emit(const ProductsState.success());
-    });
-  }
-
-  //todo Get Random Products Pagination
-  Future<void> getRandomProductsGuestPagination(
-      int page, int productSize) async {
-    emit(const ProductsState.loading());
-    var result = await productsRepos.getNewInProductsGuest(page, productSize);
-    result.fold((failure) {
-      emit(ProductsState.failure(failure.errorMsg));
-    }, (response) {
-      products = response.result!;
+      products = response;
       emit(const ProductsState.success());
     });
   }
@@ -169,26 +141,20 @@ class ProductsCubit extends Cubit<ProductsState> {
   //?*********************************************************************************
 
   //todo Get Offers Products Pagination
-  Future<void> getOffersProductsPagination(int page, int productSize) async {
+  Future<void> getOffersProducts(int page, int productSize) async {
     emit(const ProductsState.loading());
-    var result = await productsRepos.getOffersProducts(page, productSize);
-    result.fold((failure) {
-      emit(ProductsState.failure(failure.errorMsg));
-    }, (response) {
-      products = response.result!;
-      emit(const ProductsState.success());
-    });
-  }
+    late final Either<FailureService, List<ProductModel>> result;
 
-  //todo Get Offers Products Pagination Guest
-  Future<void> getOffersProductsPaginationGuest(
-      int page, int productSize) async {
-    emit(const ProductsState.loading());
-    var result = await productsRepos.getOffersProductsGuest(page, productSize);
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
+      result = await productsRepos.getOffersProducts(page, productSize);
+    } else {
+      result = await productsRepos.getOffersProductsGuest(page, productSize);
+    }
+
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
-      products = response.result!;
+      products = response;
       emit(const ProductsState.success());
     });
   }
@@ -206,7 +172,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
-      products = response.result!;
+      products = response;
       emit(const ProductsState.success());
     });
   }

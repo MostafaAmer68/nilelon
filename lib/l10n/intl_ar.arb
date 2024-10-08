@@ -377,9 +377,10 @@
   "viewCart": "عرض العربة",
   "loading": "جارٍ التحميل...",
   "enterStoreRepresentativeName": "أدخل اسم ممثل المحل",
-    "plsEnterProfile": "يرجى إدخال رابط الملف الشخصي",
+  "plsEnterProfile": "يرجى إدخال رابط الملف الشخصي",
   "plsEnterStoreName": "يرجى إدخال اسم المتجر",
   "plsEnterRepName": "يرجى إدخال اسم المندوب",
   "plsEnterwareHouse": "يرجى إدخال اسم المستودع",
+   "addedToCloset": "تم اضافة الي الخزنه بنجاح",
   "returnedHistory": "تاريخ الإرجاع"
 }

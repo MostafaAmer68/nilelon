@@ -13,7 +13,6 @@ import 'package:nilelon/features/auth/domain/repos/auth_repos.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 
 import '../../../../core/helper.dart';
-import '../../../../generated/l10n.dart';
 
 part 'auth_state.dart';
 
@@ -45,6 +44,9 @@ class AuthCubit extends Cubit<AuthState> {
   final picker = ImagePicker();
   final RegExp emailRegex = RegExp(
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+  final RegExp passwordRegex = RegExp(
+      r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
+  final RegExp phoneRegex = RegExp(r"^01[0125]\d{8}$");
 
   Future<void> pickImage(ImageSource imageSource) async {
     emit(PickImageLoading());

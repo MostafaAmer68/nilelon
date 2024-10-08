@@ -201,18 +201,16 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                                   isLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
-                                return Container(
-                                  child: productSquarItem(
-                                    context: context,
-                                    model: ProductsCubit.get(context)
-                                        .products
-                                        .where((e) =>
-                                            e.categoryID ==
-                                            HiveStorage.get<List>(HiveKeys
-                                                    .categories)[_selectedIndex]
-                                                .id!)
-                                        .toList()[sizeIndex],
-                                  ),
+                                return productSquarItem(
+                                  context: context,
+                                  model: ProductsCubit.get(context)
+                                      .products
+                                      .where((e) =>
+                                          e.categoryID ==
+                                          HiveStorage.get<List>(HiveKeys
+                                                  .categories)[_selectedIndex]
+                                              .id!)
+                                      .toList()[sizeIndex],
                                 );
                               }
                             },
@@ -223,6 +221,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                 });
               },
             ),
+            const SizedBox(height: 30),
           ],
         ),
       ),

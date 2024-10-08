@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -108,8 +106,8 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         endPoint: EndPoint.loginUrl, body: entity.toJson());
     if (data.statusCode == 200) {
       UserModel userData;
-      // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
-      HiveStorage.set(HiveKeys.token, data.data['token']);
+      HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
+      // HiveStorage.set(HiveKeys.token, data.data['token']);
       if (data.data['role'] != 'Store') {
         userData = UserModel<CustomerModel>.fromMap(data.data);
         HiveStorage.set(
@@ -118,7 +116,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
         userData = UserModel<StoreModel>.fromMap(data.data);
       }
       HiveStorage.set(HiveKeys.userModel, userData);
-      // HiveStorage.set(HiveKeys.userId, JwtDecoder.decode(data.data['id']));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -291,7 +288,6 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
           userData = UserModel<StoreModel>.fromMap(data.data);
         }
         HiveStorage.set(HiveKeys.userModel, userData);
-        // HiveStorage.set(HiveKeys.userId, JwtDecoder.decode(data.data['id']));
       } else if (data.statusCode == 400) {
         // Handle the bad request response
         final errorMessage = data.data;

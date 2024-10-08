@@ -8,7 +8,7 @@ import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_
 import 'package:nilelon/core/widgets/cards/brand/brand_card.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
-import '../../../profile/data/models/store_profile.dart';
+import '../../../profile/data/models/store_profile_model.dart';
 
 class SeeMoreStoresView extends StatelessWidget {
   const SeeMoreStoresView({super.key, required this.stores});

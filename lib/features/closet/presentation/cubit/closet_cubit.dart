@@ -22,6 +22,7 @@ class ClosetCubit extends Cubit<ClosetState> {
     this.repo,
   ) : super(const ClosetState.initial());
   List<ClosetModel> closets = [];
+  ClosetModel closet = const ClosetModel(id: '', name: '');
   List<ProductModel> closetsItem = [];
   Future<void> getclosets() async {
     emit(const ClosetState.loading());
@@ -42,6 +43,7 @@ class ClosetCubit extends Cubit<ClosetState> {
     data.fold((error) {
       emit(const ClosetState.failure());
     }, (response) {
+      getclosets();
       emit(const ClosetState.success());
     });
   }
@@ -82,6 +84,8 @@ class ClosetCubit extends Cubit<ClosetState> {
     data.fold((error) {
       emit(const ClosetState.failure());
     }, (response) {
+      emit(const ClosetState.successAdded());
+      closet = closets.firstWhere((e) => e.id == closetId);
       emit(const ClosetState.success());
     });
   }

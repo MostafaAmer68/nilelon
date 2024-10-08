@@ -99,6 +99,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
                   return state.whenOrNull(
+                    failure: (_) => Text(_),
                     loading: () => const CircularProgressIndicator(),
                     success: () => ImageBanner(
                       images: productCubit.product.productImages
@@ -116,6 +117,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   child: BlocBuilder<ProductsCubit, ProductsState>(
                     builder: (context, state) {
                       return state.whenOrNull(
+                          failure: (_) => Text(_),
                           loading: () => const CircularProgressIndicator(),
                           success: () => ListView.builder(
                                 itemCount:
@@ -140,6 +142,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 child: BlocBuilder<ProductsCubit, ProductsState>(
                   builder: (context, state) {
                     return state.whenOrNull(
+                        failure: (_) => Text(_),
                         loading: () => const CircularProgressIndicator(),
                         success: () => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,6 +168,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
                   return state.whenOrNull(
+                    failure: (_) => Text(_),
                     loading: () => const CircularProgressIndicator(),
                     success: () {
                       return ListView.builder(

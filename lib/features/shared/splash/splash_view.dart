@@ -37,7 +37,7 @@ class _SplashViewState extends State<SplashView> {
                 create: (context) => OnBoardingCubit(),
                 child: const OnBoardingView(),
               ))
-          : HiveStorage.get(HiveKeys.token) == null
+          : HiveStorage.get(HiveKeys.userModel) == null
               ? navigateAndRemoveUntil(
                   context: context, screen: const ShopOrSellView())
               : HiveStorage.get(HiveKeys.isStore)

@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -18,6 +21,7 @@ class SearchSectionItems extends StatelessWidget {
   final double? height;
   @override
   Widget build(BuildContext context) {
+    log(image);
     return GestureDetector(
       onTap: onTap,
       child: Column(
@@ -30,7 +34,11 @@ class SearchSectionItems extends StatelessWidget {
               // color: AppStyles.primaryB5,
               borderRadius: BorderRadius.circular(16),
             ),
-            child: Image.network(image),
+            child: CachedNetworkImage(
+              imageUrl: image,
+              errorWidget: (_, e, er) =>
+                  Image.asset('assets/images/1-Nilelon f logo d.png'),
+            ),
           ),
           const SizedBox(
             height: 8,

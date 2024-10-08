@@ -9,6 +9,7 @@ import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/cart/presentation/view/cart_view.dart';
+import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
@@ -44,7 +45,7 @@ class AddToFooter extends StatelessWidget {
                               children: [
                                 Text(
                                   S.of(context).productAddedToCart,
-                                  style: TextStyle(color: Colors.white),
+                                  style: const TextStyle(color: Colors.white),
                                 ),
                                 const SizedBox(width: 10),
                                 TextButton(
@@ -52,11 +53,13 @@ class AddToFooter extends StatelessWidget {
                                     BotToast.closeAllLoading();
                                     navigateTo(
                                         context: context,
-                                        screen: const CartView());
+                                        screen: const CustomerBottomTabBar(
+                                          index: 1,
+                                        ));
                                   },
                                   child: Text(
                                     S.of(context).viewCart,
-                                    style: TextStyle(color: Colors.blue),
+                                    style: const TextStyle(color: Colors.blue),
                                   ),
                                 ),
                               ],
@@ -74,24 +77,38 @@ class AddToFooter extends StatelessWidget {
                           ? S.of(context).loading
                           : S.of(context).addToCart,
                       ontap: () {
-                        CartCubit.get(context).addToCart(
-                          AddToCartModel(
-                            quantity: CartCubit.get(context).counter,
-                            size: CartCubit.get(context).selectedSize,
-                            color: CartCubit.get(context).selectedColor,
-                            productId: product.id,
-                            customerId:
-                                HiveStorage.get<UserModel>(HiveKeys.userModel)
-                                    .id,
-                          ),
-                        );
+                        if (HiveStorage.get(HiveKeys.userModel) != null) {
+                          CartCubit.get(context).addToCart(
+                            AddToCartModel(
+                              quantity: CartCubit.get(context).counter,
+                              size: CartCubit.get(context).selectedSize,
+                              color: CartCubit.get(context).selectedColor,
+                              productId: product.id,
+                              customerId:
+                                  HiveStorage.get<UserModel>(HiveKeys.userModel)
+                                      .id,
+                            ),
+                          );
+                        } else {
+                          navigateTo(
+                              context: context,
+                              screen: const CustomerBottomTabBar(index: 3));
+                        }
                       },
                     );
                   },
                 ),
                 ButtonBuilder(
                   text: S.of(context).buyNow,
-                  ontap: () {},
+                  ontap: () {
+                    if (HiveStorage.get(HiveKeys.userModel) != null) {
+                      ///TODO:
+                    } else {
+                      navigateTo(
+                          context: context,
+                          screen: const CustomerBottomTabBar(index: 3));
+                    }
+                  },
                   buttonColor: ColorManager.primaryW,
                   frameColor: ColorManager.gradientColors.first,
                   style: AppStylesManager.customTextStyleB4,

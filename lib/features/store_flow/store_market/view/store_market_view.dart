@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -32,7 +34,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
   @override
   void initState() {
     cubit = BlocProvider.of(context);
-    cubit.getNewInProductsPagination(1, 20);
+    cubit.getNewInProducts(1, 20);
     super.initState();
   }
 
@@ -70,37 +72,6 @@ class _StoreMarketViewState extends State<StoreMarketView> {
               const SizedBox(
                 height: 12,
               ),
-              // ViewAllRow(
-              //   text: lang.hotPicks,
-              //   onPressed: () {
-              //     navigateTo(
-              //         context: context, screen: const StoreHotPicksView());
-              //   },
-              // ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16),
-              //   child: SizedBox(
-              //     height: 1.sw > 600 ? 170.h : 140.h,
-              //     child: ListView.builder(
-              //       itemBuilder: (context, index) => Row(
-              //         children: [
-              //           marketWideCard(context: context),
-              //           SizedBox(
-              //             width: 8.w,
-              //           )
-              //         ],
-              //       ),
-              //       itemCount: 5,
-              //       scrollDirection: Axis.horizontal,
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 8,
-              // ),
               ViewAllRow(
                 text: lang.newIn,
                 onPressed: () {
@@ -133,7 +104,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'There is no New In products yet.',
+                                  S.of(context).noProductNewIn,
                                   style: AppStylesManager.customTextStyleG2,
                                 ),
                               ],
@@ -142,21 +113,16 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                         }
                         return GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 1.sw > 600 ? 3 : 2,
-                                  crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                                  mainAxisExtent: 1.sw > 600 ? 320 : 220,
-                                  mainAxisSpacing: 1.sw > 600 ? 16 : 12),
+                          gridDelegate: gridDelegate,
                           shrinkWrap: true,
                           itemCount: ProductsCubit.get(context).products.length,
                           itemBuilder: (context, index) {
                             final product =
                                 ProductsCubit.get(context).products[index];
                             return Container(
-                              child: marketSmallCard(
+                              child: productSquarItem(
                                 context: context,
-                                product: product,
+                                model: product,
                               ),
                             );
                           },
@@ -166,6 +132,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                   },
                 ),
               ),
+              const SizedBox(height: 30),
             ],
           ),
         ),

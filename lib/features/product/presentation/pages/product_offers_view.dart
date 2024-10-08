@@ -35,13 +35,7 @@ class _OffersViewState extends State<OffersView> {
   ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    if (HiveStorage.get(HiveKeys.userModel) != null) {
-      ProductsCubit.get(context)
-          .getOffersProductsPagination(offersPage, offersPageSize);
-    } else {
-      ProductsCubit.get(context)
-          .getOffersProductsPaginationGuest(offersPage, offersPageSize);
-    }
+    ProductsCubit.get(context).getOffersProducts(offersPage, offersPageSize);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -58,13 +52,8 @@ class _OffersViewState extends State<OffersView> {
     });
 
     offersPage = offersPage + 1;
-    if (HiveStorage.get(HiveKeys.userModel) != null) {
-      ProductsCubit.get(context)
-          .getOffersProductsPagination(offersPage, offersPageSize);
-    } else {
-      ProductsCubit.get(context)
-          .getOffersProductsPaginationGuest(offersPage, offersPageSize);
-    }
+    ProductsCubit.get(context).getOffersProducts(offersPage, offersPageSize);
+
     setState(() {
       offersIsLoadMore = false;
     });

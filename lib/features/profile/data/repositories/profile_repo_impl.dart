@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
-import 'package:nilelon/features/profile/data/models/store_profile.dart';
+import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 
 import '../../../../core/service/failure_service.dart';
 import '../../domain/repositories/profile_repo.dart';

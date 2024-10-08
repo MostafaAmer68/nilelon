@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:nilelon/features/profile/data/models/store_profile.dart';
+import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 
 import '../../../../core/service/failure_service.dart';
 

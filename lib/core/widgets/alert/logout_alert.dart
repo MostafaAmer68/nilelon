@@ -37,7 +37,7 @@ Future logoutAlert(context) => showDialog(
             children: [
               ButtonBuilder(
                   text: lang.no,
-                  width: screenWidth(context, 0.32),
+                  width: screenWidth(context, 0.30),
                   height: screenHeight(context, 0.06),
                   buttonColor: Colors.transparent,
                   frameColor: ColorManager.primaryB2,
@@ -46,11 +46,11 @@ Future logoutAlert(context) => showDialog(
                     navigatePop(context: context);
                   }),
               SizedBox(
-                width: 12.w,
+                width: 3.w,
               ),
               GradientButtonBuilder(
                   text: lang.yes,
-                  width: screenWidth(context, 0.32),
+                  width: screenWidth(context, 0.30),
                   height: screenHeight(context, 0.06),
                   ontap: () {
                     HiveStorage.clear();

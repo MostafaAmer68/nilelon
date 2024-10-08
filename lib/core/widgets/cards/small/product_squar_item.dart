@@ -41,7 +41,11 @@ GestureDetector productSquarItem({
           )
         ],
       ),
-      width: 1.sw > 600 ? 270 : 200,
+      width: 1.sw > 600
+          ? 270
+          : 1.sw < 400
+              ? 155
+              : 200,
       height: 1.sw > 600 ? 300 : 220,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

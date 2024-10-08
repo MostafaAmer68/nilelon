@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
@@ -39,17 +38,9 @@ class _DiscoverViewState extends State<DiscoverView> {
 
   @override
   void initState() {
-    if (HiveStorage.get(HiveKeys.userModel) != null) {
-      ProductsCubit.get(context)
-          .getNewInProductsPagination(newInPage, newInPageSize);
-      ProductsCubit.get(context)
-          .getRandomProductsPagination(newInPage, newInPageSize);
-    } else {
-      ProductsCubit.get(context)
-          .getNewInProductsGuestPagination(newInPage, newInPageSize);
-      ProductsCubit.get(context)
-          .getRandomProductsGuest(newInPage, newInPageSize);
-    }
+    ProductsCubit.get(context).getNewInProducts(newInPage, newInPageSize);
+    ProductsCubit.get(context).getRandomProducts(newInPage, newInPageSize);
+
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -73,13 +64,7 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     newInPage = newInPage + 1;
-    if (HiveStorage.get(HiveKeys.userModel) != null) {
-      ProductsCubit.get(context)
-          .getNewInProductsPagination(newInPage, newInPageSize);
-    } else {
-      ProductsCubit.get(context)
-          .getNewInProductsGuestPagination(newInPage, newInPageSize);
-    }
+    ProductsCubit.get(context).getNewInProducts(newInPage, newInPageSize);
     setState(() {
       newInIsLoadMore = false;
     });
@@ -91,13 +76,8 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     handPage = handPage + 1;
-    if (HiveStorage.get(HiveKeys.userModel) != null) {
-      ProductsCubit.get(context)
-          .getRandomProductsPagination(newInPage, newInPageSize);
-    } else {
-      ProductsCubit.get(context)
-          .getRandomProductsGuestPagination(newInPage, newInPageSize);
-    }
+    ProductsCubit.get(context).getRandomProducts(newInPage, newInPageSize);
+
     setState(() {
       handIsLoadMore = false;
     });
@@ -197,7 +177,7 @@ class ProductNewInView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: SizedBox(
-              height: 1.sw > 600 ? 310 : 290,
+              height: 1.sw > 600 ? 310 : 300,
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   if (index == ProductsCubit.get(context).products.length &&

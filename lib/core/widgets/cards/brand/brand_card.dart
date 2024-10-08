@@ -4,7 +4,7 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
-import 'package:nilelon/features/profile/data/models/store_profile.dart';
+import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 
 import '../../../../features/profile/presentation/pages/store_profile_customer.dart';
 import '../../../utils/navigation.dart';

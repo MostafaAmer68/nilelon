@@ -36,7 +36,7 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
   @override
   void initState() {
     BlocProvider.of<ProductsCubit>(context)
-        .getRandomProductsPagination(handPage, handPageSize);
+        .getRandomProducts(handPage, handPageSize);
     handScrollController.addListener(() {
       if (handScrollController.position.pixels ==
               handScrollController.position.maxScrollExtent &&
@@ -54,7 +54,7 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
 
     handPage = handPage + 1;
     await BlocProvider.of<ProductsCubit>(context)
-        .getNewInProductsPagination(handPage, handPageSize);
+        .getNewInProducts(handPage, handPageSize);
     setState(() {
       handIsLoadMore = false;
     });

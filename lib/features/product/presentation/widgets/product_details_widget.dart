@@ -83,7 +83,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
           children: [
             SizedBox(height: 10.h),
             _buildDisabledImages(),
-            SizedBox(height: 40.h),
+            SizedBox(height: 28.h),
             const TableHeaders(),
             _buildSizeListView(),
             totalRow(context, cubit.calculateTotalSizes(), total),

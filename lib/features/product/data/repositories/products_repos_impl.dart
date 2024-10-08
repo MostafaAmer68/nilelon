@@ -6,7 +6,6 @@ import 'package:nilelon/features/product/domain/models/create_variant_image.dart
 import 'package:nilelon/features/product/domain/models/create_variant_model.dart';
 import 'package:nilelon/features/product/domain/models/delete_image_variant.dart';
 import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
-import 'package:nilelon/features/product/domain/models/products_response_model.dart';
 import 'package:nilelon/features/product/data/datasources/products_remote_data_source.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
@@ -49,7 +48,7 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, ProductsResponseModel>> getNewInProducts(
+  Future<Either<FailureService, List<ProductModel>>> getNewInProducts(
       int page, int productSize) async {
     try {
       final result =
@@ -64,7 +63,7 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, ProductsResponseModel>> getRandomProduct(
+  Future<Either<FailureService, List<ProductModel>>> getRandomProduct(
       int page, int productSize) async {
     try {
       final result =
@@ -79,7 +78,7 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, ProductsResponseModel>> getNewInProductsGuest(
+  Future<Either<FailureService, List<ProductModel>>> getNewInProductsGuest(
       int page, int productSize) async {
     try {
       final result = await productsRemoteDataSource.getNewInProductsGuest(
@@ -94,7 +93,7 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, ProductsResponseModel>> getRandomProductsGuest(
+  Future<Either<FailureService, List<ProductModel>>> getRandomProductsGuest(
       int page, int productSize) async {
     try {
       final result = await productsRemoteDataSource.getRandomProductsGuest(
@@ -109,7 +108,7 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, ProductsResponseModel>> getStoreProfileItems(
+  Future<Either<FailureService, List<ProductModel>>> getStoreProfileItems(
       String storeId, int page, int productSize) async {
     try {
       final result = await productsRemoteDataSource.getStoreProfileItems(
@@ -222,7 +221,7 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, ProductsResponseModel>> getOffersProducts(
+  Future<Either<FailureService, List<ProductModel>>> getOffersProducts(
       int page, int productSize) async {
     try {
       final result = await productsRemoteDataSource.getCustomersOffersProducts(
@@ -237,7 +236,7 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, ProductsResponseModel>> getOffersProductsGuest(
+  Future<Either<FailureService, List<ProductModel>>> getOffersProductsGuest(
       int page, int productSize) async {
     try {
       final result = await productsRemoteDataSource.getOffersProductsGuest(

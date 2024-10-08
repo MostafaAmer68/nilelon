@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
-import 'package:nilelon/features/profile/data/models/store_profile.dart';
+import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 
 import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/service/network/end_point.dart';

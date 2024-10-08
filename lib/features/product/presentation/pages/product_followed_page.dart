@@ -27,7 +27,7 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
   @override
   void initState() {
     // if (HiveStorage.get(HiveKeys.userModel) != null) {
-    ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
+    ProductsCubit.get(context).getFollowedProducts(page, pageSize);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -46,7 +46,7 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
 
     page = page + 1;
     if (HiveStorage.get(HiveKeys.userModel) != null) {
-      ProductsCubit.get(context).getFollowedProductsPagination(page, pageSize);
+      ProductsCubit.get(context).getFollowedProducts(page, pageSize);
     }
     setState(() {
       isLoadMore = false;

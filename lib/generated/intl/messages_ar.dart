@@ -52,6 +52,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أضف مقاسات لهذا اللون"),
         "addToCart": MessageLookupByLibrary.simpleMessage("أضف إلى السلة"),
         "addToDraft": MessageLookupByLibrary.simpleMessage("إضافة إلى المسودة"),
+        "addedToCloset":
+            MessageLookupByLibrary.simpleMessage("تم اضافة الي الخزنه بنجاح"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "addressLine1": MessageLookupByLibrary.simpleMessage("العنوان الأول"),
         "addressLine2": MessageLookupByLibrary.simpleMessage("العنوان الثاني"),

@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nilelon/features/profile/data/models/store_profile.dart';
+import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 
 part 'profile_state.dart';

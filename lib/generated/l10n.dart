@@ -3900,6 +3900,16 @@ class S {
     );
   }
 
+  /// `Product Added Successfully`
+  String get addedToCloset {
+    return Intl.message(
+      'Product Added Successfully',
+      name: 'addedToCloset',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

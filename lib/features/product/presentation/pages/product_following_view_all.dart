@@ -40,8 +40,7 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
   }
 
   void _loadInitialData() {
-    BlocProvider.of<ProductsCubit>(context)
-        .getFollowedProductsPagination(page, pageSize);
+    BlocProvider.of<ProductsCubit>(context).getFollowedProducts(page, pageSize);
   }
 
   void _setupScrollListener() {
@@ -64,7 +63,7 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
 
     page += 1;
     await BlocProvider.of<ProductsCubit>(context)
-        .getFollowedProductsPagination(page, pageSize);
+        .getFollowedProducts(page, pageSize);
 
     setState(() {
       isLoadMore = false;

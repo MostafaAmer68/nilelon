@@ -21,152 +21,161 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
+  late final OnBoardingCubit cubit;
+  @override
+  void initState() {
+    cubit = OnBoardingCubit.get(context);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final controller = PageController();
     final lang = S.of(context);
-
-    return ScaffoldImage(
-      body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              width: screenWidth(context, 1),
-              height: screenHeight(context, 0.75),
-              child: PageView.builder(
-                physics: const BouncingScrollPhysics(),
-                onPageChanged: (i) {
-                  OnBoardingCubit.get(context).index = i;
-                  setState(() {});
-                  if (i == 2) {
-                    OnBoardingCubit.get(context).changeisLast(true);
-                  } else if (OnBoardingCubit.get(context).isLast) {
-                    OnBoardingCubit.get(context).changeisLast(false);
-                  }
-                },
-                controller: controller,
-                itemCount: 3,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      Container(
-                        width: screenWidth(context, 1),
-                        height: screenHeight(context, 0.75),
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          // color: AppStyles.primaryW,
-                        ),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: screenHeight(context, 0.06),
-                              width: screenWidth(context, 1),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      HiveStorage.set(
-                                          HiveKeys.skipOnboarding, true);
-                                      navigateAndReplace(
-                                          context: context,
-                                          screen: const ShopOrSellView());
-                                    },
-                                    child: Text(
-                                      lang.Skip,
-                                      style: AppStylesManager.customTextStyleBl,
+    return LayoutBuilder(
+      builder: (context, constraints) => ScaffoldImage(
+        body: SafeArea(
+          child: Column(
+            children: [
+              SizedBox(
+                width: screenWidth(context, 1),
+                height: screenHeight(context, 0.75),
+                child: PageView.builder(
+                  physics: const BouncingScrollPhysics(),
+                  onPageChanged: (i) {
+                    cubit.index = i;
+                    setState(() {});
+                    if (i == 2) {
+                      cubit.changeisLast(true);
+                    } else if (cubit.isLast) {
+                      cubit.changeisLast(false);
+                    }
+                  },
+                  controller: controller,
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        Container(
+                          width: screenWidth(context, 1),
+                          // height: screenHeight(context, 0.6),
+                          padding: const EdgeInsets.all(8.0),
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            // color: AppStyles.primaryW,
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: screenHeight(context, 0.05),
+                                width: screenWidth(context, 1),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        HiveStorage.set(
+                                            HiveKeys.skipOnboarding, true);
+                                        navigateAndReplace(
+                                            context: context,
+                                            screen: const ShopOrSellView());
+                                      },
+                                      child: Text(
+                                        lang.Skip,
+                                        style:
+                                            AppStylesManager.customTextStyleBl,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Column(
-                                children: [
-                                  photoContainer(context),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Text(
-                                    OnBoardingCubit.get(context).index == 0
-                                        ? lang.welcomeToNilelon
-                                        : OnBoardingCubit.get(context).index ==
-                                                1
-                                            ? lang.LocalBrandsLimitlessChoices
-                                            : lang
-                                                .seamlessPaymentsHassleFreeShopping,
-                                    style: AppStylesManager.customTextStyleBl2,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                  const SizedBox(
-                                    height: 8,
-                                  ),
-                                  Text(
-                                    OnBoardingCubit.get(context).index == 0
-                                        ? lang
-                                            .discoverLocalTreasuresAtUnbeatablePricesShopWithEaseAndGetExclusiveDiscount
-                                        : OnBoardingCubit.get(context).index ==
-                                                1
-                                            ? lang
-                                                .exploreAVastCollectionOfProductsFromLocalBrandsGetEverythingYouNeedInOnePlace
-                                            : lang
-                                                .saygoodbyeToComplicatedCheckoutProcessesEnjoyASeamlessPaymentExperienceWithSecureTransactions,
-                                    style: AppStylesManager.customTextStyleBl3,
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: Column(
+                                  children: [
+                                    photoContainer(context),
+                                    const SizedBox(
+                                      height: 15,
+                                    ),
+                                    Text(
+                                      cubit.index == 0
+                                          ? lang.welcomeToNilelon
+                                          : cubit.index == 1
+                                              ? lang.LocalBrandsLimitlessChoices
+                                              : lang
+                                                  .seamlessPaymentsHassleFreeShopping,
+                                      style:
+                                          AppStylesManager.customTextStyleBl2,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(
+                                      height: 8,
+                                    ),
+                                    Text(
+                                      cubit.index == 0
+                                          ? lang
+                                              .discoverLocalTreasuresAtUnbeatablePricesShopWithEaseAndGetExclusiveDiscount
+                                          : cubit.index == 1
+                                              ? lang
+                                                  .exploreAVastCollectionOfProductsFromLocalBrandsGetEverythingYouNeedInOnePlace
+                                              : lang
+                                                  .saygoodbyeToComplicatedCheckoutProcessesEnjoyASeamlessPaymentExperienceWithSecureTransactions,
+                                      style:
+                                          AppStylesManager.customTextStyleBl3,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                },
+                      ],
+                    );
+                  },
+                ),
               ),
-            ),
-            const Spacer(),
-            OnBoardingCubit.get(context).isLast
-                ? ButtonBuilder(
-                    text: lang.getStarted,
-                    ontap: () {
-                      controller.nextPage(
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.bounceOut);
-                      if (OnBoardingCubit.get(context).isLast) {
-                        HiveStorage.set(HiveKeys.skipOnboarding, true);
-                        navigateAndReplace(
-                            context: context, screen: const ShopOrSellView());
-                      }
-                    },
-                  )
-                : GradientButtonBuilder(
-                    text: lang.next,
-                    ontap: () {
-                      controller.nextPage(
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.bounceOut);
-                      if (OnBoardingCubit.get(context).isLast) {
-                        HiveStorage.set(HiveKeys.skipOnboarding, true);
-                        navigateAndReplace(
-                            context: context, screen: const ShopOrSellView());
-                      }
-                    },
-                  ),
-            const Spacer(
-              flex: 3,
-            ),
-            OnBoardingCubit.get(context).index == 0
-                ? firstIndex()
-                : OnBoardingCubit.get(context).index == 1
-                    ? secondIndex()
-                    : thirdIndex(),
-            const Spacer(
-              flex: 4,
-            ),
-          ],
+              const Spacer(),
+              cubit.isLast
+                  ? ButtonBuilder(
+                      text: lang.getStarted,
+                      ontap: () {
+                        controller.nextPage(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.bounceOut);
+                        if (cubit.isLast) {
+                          HiveStorage.set(HiveKeys.skipOnboarding, true);
+                          navigateAndReplace(
+                              context: context, screen: const ShopOrSellView());
+                        }
+                      },
+                    )
+                  : GradientButtonBuilder(
+                      text: lang.next,
+                      ontap: () {
+                        controller.nextPage(
+                            duration: const Duration(milliseconds: 200),
+                            curve: Curves.bounceOut);
+                        if (cubit.isLast) {
+                          HiveStorage.set(HiveKeys.skipOnboarding, true);
+                          navigateAndReplace(
+                              context: context, screen: const ShopOrSellView());
+                        }
+                      },
+                    ),
+              const Spacer(
+                flex: 3,
+              ),
+              cubit.index == 0
+                  ? firstIndex()
+                  : cubit.index == 1
+                      ? secondIndex()
+                      : thirdIndex(),
+              const Spacer(
+                flex: 4,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -191,9 +200,9 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
                   image: DecorationImage(
-                    image: OnBoardingCubit.get(context).index == 0
+                    image: cubit.index == 0
                         ? const AssetImage("assets/images/onboarding1.png")
-                        : OnBoardingCubit.get(context).index == 1
+                        : cubit.index == 1
                             ? const AssetImage("assets/images/onboarding2.png")
                             : const AssetImage("assets/images/onboarding3.png"),
                     fit: BoxFit.cover,

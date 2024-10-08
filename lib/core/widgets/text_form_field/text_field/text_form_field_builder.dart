@@ -28,6 +28,7 @@ class TextFormFieldBuilder extends StatelessWidget {
     this.textAlign,
     this.disabledBorder,
     this.textAlignVer,
+    this.maxLength,
   });
 
   final String label;
@@ -49,6 +50,7 @@ class TextFormFieldBuilder extends StatelessWidget {
   final TextAlign? textAlign;
   final TextAlignVertical? textAlignVer;
   final BorderSide? disabledBorder;
+  final int? maxLength;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -58,7 +60,6 @@ class TextFormFieldBuilder extends StatelessWidget {
       child: TextFormField(
         textAlign: textAlign ?? TextAlign.start,
         maxLines: maxlines! ? 1 : null,
-        
         expands: maxlines! ? false : true,
         controller: controller,
         obscureText: obsecure!,
@@ -69,6 +70,7 @@ class TextFormFieldBuilder extends StatelessWidget {
         validator: validator,
         onChanged: onchanged,
         keyboardType: type,
+        maxLength: maxLength,
         decoration: InputDecoration(
           // fillColor: AppStyles.primaryW,
           // focusColor: ,

@@ -40,8 +40,7 @@ class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
 
   @override
   void initState() {
-    BlocProvider.of<ProductsCubit>(context)
-        .getNewInProductsPagination(page, pageSize);
+    BlocProvider.of<ProductsCubit>(context).getNewInProducts(page, pageSize);
     BlocProvider.of<CategoryCubit>(context).getCategories();
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -60,7 +59,7 @@ class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
 
     page = page + 1;
     await BlocProvider.of<ProductsCubit>(context)
-        .getNewInProductsPagination(page, pageSize);
+        .getNewInProducts(page, pageSize);
     setState(() {
       isLoadMore = false;
     });

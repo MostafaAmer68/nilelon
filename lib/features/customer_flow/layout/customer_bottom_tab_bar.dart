@@ -17,14 +17,20 @@ import 'package:nilelon/features/profile/presentation/pages/profile_view.dart';
 import '../../../core/data/hive_stroage.dart';
 
 class CustomerBottomTabBar extends StatefulWidget {
-  const CustomerBottomTabBar({super.key});
-
+  const CustomerBottomTabBar({super.key, this.index = 0});
+  final int index;
   @override
   State<CustomerBottomTabBar> createState() => _CustomerBottomTabBarState();
 }
 
 class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
   int selectedIndex = 0;
+
+  @override
+  void initState() {
+    selectedIndex = widget.index;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,28 +42,21 @@ class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
           body: Column(
             children: [
               Expanded(
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    // BlocProvider<RatingCubit>(
-                    //   create: (context) => RatingCubit(),
-                    //   child:
-                    const CustomerHomeView(),
-                    // ),
-                    HiveStorage.get(HiveKeys.userModel) != null
-                        ? BlocProvider(
-                            create: (context) =>
-                                CartCubit(locatorService<CartReposImpl>())
-                                  ..getCart(),
-                            child: const CartView(),
-                          )
-                        : const ProfileGuestPage(),
-                    const DiscoverView(),
-                    HiveStorage.get(HiveKeys.userModel) != null
-                        ? const ProfileView()
-                        : const ProfileGuestPage(),
-                  ],
-                ),
+                child: [
+                  const CustomerHomeView(),
+                  HiveStorage.get(HiveKeys.userModel) != null
+                      ? BlocProvider(
+                          create: (context) =>
+                              CartCubit(locatorService<CartReposImpl>())
+                                ..getCart(),
+                          child: const CartView(),
+                        )
+                      : const ProfileGuestPage(),
+                  const DiscoverView(),
+                  HiveStorage.get(HiveKeys.userModel) != null
+                      ? const ProfileView()
+                      : const ProfileGuestPage(),
+                ][selectedIndex],
               ),
               SizedBox(
                 height: 70,

@@ -12,7 +12,6 @@ import 'package:nilelon/features/product/domain/models/create_variant_model.dart
 import 'package:nilelon/features/product/domain/models/delete_image_variant.dart';
 import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
-import 'package:nilelon/features/product/domain/models/products_response_model.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
@@ -33,11 +32,8 @@ class ProductsRemoteDataSourceImpl {
       'pagesize': pageSize,
     });
     if (data.statusCode == 200) {
-      log(page.toString());
-      log(pageSize.toString());
-      return (data.data['result'] as List)
-          .map((e) => ProductModel.fromJson(e))
-          .toList();
+      return List<ProductModel>.from(
+          data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -50,7 +46,7 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
-  Future<ProductsResponseModel> getNewInProducts(int page, int pageSize) async {
+  Future<List<ProductModel>> getNewInProducts(int page, int pageSize) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getNewProductsUrl, query: {
       'CustomerId': JwtDecoder.decode(
@@ -59,7 +55,8 @@ class ProductsRemoteDataSourceImpl {
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {
-      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+      return List<ProductModel>.from(
+          data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -81,9 +78,8 @@ class ProductsRemoteDataSourceImpl {
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {
-      return (data.data['result'] as List)
-          .map((e) => ProductModel.fromJson(e))
-          .toList();
+      return List<ProductModel>.from(
+          data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -96,8 +92,7 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
-  Future<ProductsResponseModel> getRandomProducts(
-      int page, int pageSize) async {
+  Future<List<ProductModel>> getRandomProducts(int page, int pageSize) async {
     final data = await apiService.get(
       endPoint: EndPoint.getRandomProductsUrl,
       query: {
@@ -108,7 +103,8 @@ class ProductsRemoteDataSourceImpl {
       },
     );
     if (data.statusCode == 200) {
-      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+      return List<ProductModel>.from(
+          data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -121,7 +117,7 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
-  Future<ProductsResponseModel> getStoreProfileItems(
+  Future<List<ProductModel>> getStoreProfileItems(
       String storeId, int page, int pageSize) async {
     final data = await apiService.get(
       endPoint: EndPoint.getStoreProductsUrl,
@@ -134,7 +130,8 @@ class ProductsRemoteDataSourceImpl {
       },
     );
     if (data.statusCode == 200) {
-      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+      return List<ProductModel>.from(
+          data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -151,7 +148,9 @@ class ProductsRemoteDataSourceImpl {
     final data = await apiService.get(
       endPoint: EndPoint.getProductById + productId,
       query: {
-        'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+        'customerId': HiveStorage.get(HiveKeys.userModel) != null
+            ? HiveStorage.get<UserModel>(HiveKeys.userModel).id
+            : '',
       },
     );
     if (data.statusCode == 200) {
@@ -168,7 +167,7 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
-  Future<ProductsResponseModel> getNewInProductsGuest(
+  Future<List<ProductModel>> getNewInProductsGuest(
       int page, int pageSize) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getNewProductsGuestUrl, query: {
@@ -177,7 +176,8 @@ class ProductsRemoteDataSourceImpl {
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {
-      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+      return List<ProductModel>.from(
+          data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -190,7 +190,7 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
-  Future<ProductsResponseModel> getRandomProductsGuest(
+  Future<List<ProductModel>> getRandomProductsGuest(
       int page, int pageSize) async {
     final data = await apiService.get(
       endPoint: EndPoint.getRandomProductsGuestUrl,
@@ -201,7 +201,8 @@ class ProductsRemoteDataSourceImpl {
       },
     );
     if (data.statusCode == 200) {
-      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+      return List<ProductModel>.from(
+          data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -214,7 +215,7 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
-  Future<ProductsResponseModel> getCustomersOffersProducts(
+  Future<List<ProductModel>> getCustomersOffersProducts(
       int page, int pageSize) async {
     final data = await apiService.get(
       endPoint: EndPoint.getCustomersOffersUrl,
@@ -226,7 +227,8 @@ class ProductsRemoteDataSourceImpl {
       },
     );
     if (data.statusCode == 200) {
-      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+      return List<ProductModel>.from(
+          data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -239,7 +241,7 @@ class ProductsRemoteDataSourceImpl {
     }
   }
 
-  Future<ProductsResponseModel> getOffersProductsGuest(
+  Future<List<ProductModel>> getOffersProductsGuest(
       int page, int pageSize) async {
     final data = await apiService.get(
       endPoint: EndPoint.getStoreOffersUrl,
@@ -251,7 +253,8 @@ class ProductsRemoteDataSourceImpl {
       },
     );
     if (data.statusCode == 200) {
-      return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
+      return List<ProductModel>.from(
+          data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else if (data.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -263,29 +266,6 @@ class ProductsRemoteDataSourceImpl {
           'Failed to Get Offers: Unexpected status code ${data.statusCode}');
     }
   }
-  // Future<ProductsResponseModel> getRandomProductsGuest(
-  //     int page, int pageSize) async {
-  //   final data = await apiService.get(
-  //     endPoint: EndPoint.getRandomProductsGuestUrl,
-  //     query: {
-  //       'ProductType': HiveStorage.get(HiveKeys.shopFor),
-  //       'page': page,
-  //       'pageSize': pageSize,
-  //     },
-  //   );
-  //   if (data.statusCode == 200) {
-  //     return ProductsResponseModel.fromJson(data.data as Map<String, dynamic>);
-  //   } else if (data.statusCode == 400) {
-  //     // Handle the bad request response
-  //     final errorMessage = data.data;
-  //     // errorAlert(context, errorMessage);
-  //     throw Exception('Get Random failed: $errorMessage');
-  //   } else {
-  //     // Handle other status codes if necessary
-  //     throw Exception(
-  //         'Failed to Get Random: Unexpected status code ${data.statusCode}');
-  //   }
-  // }
 
   Future<void> createProduct(AddProductModel product) async {
     final data = await apiService.post(
@@ -333,7 +313,6 @@ class ProductsRemoteDataSourceImpl {
       endPoint: '${EndPoint.getReviewsForProductUrl}/$productId',
     );
     if (data.statusCode == HttpStatus.ok || data.data['isSuccess']) {
-      print(data.data['result']);
       return List<ReviewModel>.from(
           data.data['result'].map((e) => ReviewModel.fromMap(e)));
     } else {

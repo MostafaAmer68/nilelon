@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
@@ -14,8 +15,8 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class ClosetView extends StatefulWidget {
-  const ClosetView({super.key});
-
+  const ClosetView({super.key, this.productId = ''});
+  final String productId;
   @override
   State<ClosetView> createState() => _ClosetViewState();
 }
@@ -32,64 +33,71 @@ class _ClosetViewState extends State<ClosetView> {
     final lang = S.of(context);
     return ScaffoldImage(
       appBar: customAppBar(title: lang.closet, context: context),
-      body: Column(
-        children: [
-          const Divider(
-            color: ColorManager.primaryG8,
-          ),
-          Column(
-            children: [
-              const SizedBox(
-                height: 16,
-              ),
-              ViewAllRow(
-                text: lang.yourSections,
-                onPressed: () {},
-                buttonWidget: Text(
-                  lang.showItems,
-                  style: AppStylesManager.customTextStyleO,
+      body: BlocListener<ClosetCubit, ClosetState>(
+        listener: (context, state) {},
+        child: Column(
+          children: [
+            const Divider(
+              color: ColorManager.primaryG8,
+            ),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 16,
                 ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  BlocBuilder<ClosetCubit, ClosetState>(
-                    builder: (context, state) {
-                      return state.whenOrNull(
-                        loading: () {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        },
-                        success: () {
-                          return ListView.builder(
-                              shrinkWrap: true,
-                              itemCount:
-                                  ClosetCubit.get(context).closets.length,
-                              itemBuilder: (context, index) {
-                                final closet =
-                                    ClosetCubit.get(context).closets[index];
-                                return ClosetsWidgetWithOptions(
-                                  closet: closet,
-                                  onTap: () {
-                                    //  ClosetCubit.get(context).addProductToClosets(productId)
-                                  },
-                                );
-                              });
-                        },
-                        failure: () {
-                          return const Icon(Icons.error);
-                        },
-                      )!;
-                    },
+                ViewAllRow(
+                  text: lang.yourSections,
+                  onPressed: () {},
+                  buttonWidget: Text(
+                    lang.showItems,
+                    style: AppStylesManager.customTextStyleO,
                   ),
-                ],
-              ),
-            ],
-          )
-        ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    BlocBuilder<ClosetCubit, ClosetState>(
+                      builder: (context, state) {
+                        return state.whenOrNull(
+                          loading: () {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          },
+                          success: () {
+                            return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount:
+                                    ClosetCubit.get(context).closets.length,
+                                itemBuilder: (context, index) {
+                                  final closet =
+                                      ClosetCubit.get(context).closets[index];
+                                  return ClosetsWidgetWithOptions(
+                                    closet: closet,
+                                    onTap: () {
+                                      ClosetCubit.get(context)
+                                          .addProductToClosets(
+                                        widget.productId,
+                                        closet.id,
+                                      );
+                                    },
+                                  );
+                                });
+                          },
+                          failure: () {
+                            return const Icon(Icons.error);
+                          },
+                        )!;
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            )
+          ],
+        ),
       ),
       persistentFooterButtons: [
         ButtonBuilder(

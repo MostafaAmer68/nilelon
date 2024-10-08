@@ -41,7 +41,7 @@ class CartView extends StatelessWidget {
           ViewAllRow(
             text: '',
             onPressed: () {
-              navigateTo(context: context, screen: const ClosetView());
+              navigateTo(context: context, screen:  ClosetView());
             },
             buttonText: lang.yourcloset,
           ),
@@ -78,7 +78,7 @@ class CartView extends StatelessWidget {
                     : Column(
                         children: [
                           SizedBox(
-                            height: screenHeight(context, 0.5),
+                            // height: screenHeight(context, 0.4),
                             child: ListView.builder(
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
@@ -122,9 +122,11 @@ class CartView extends StatelessWidget {
                                                       productId: state
                                                           .items[index]
                                                           .productId,
-                                                      customrId:
-                                                          HiveStorage.get(
-                                                              HiveKeys.userId),
+                                                      customrId: HiveStorage.get<
+                                                                  UserModel>(
+                                                              HiveKeys
+                                                                  .userModel)
+                                                          .id,
                                                     ),
                                                   );
                                                 },
