@@ -4,6 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
 import 'package:nilelon/features/product/presentation/pages/product_followed_page.dart';
+import 'package:nilelon/features/product/presentation/pages/product_handpack_all_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -16,6 +17,8 @@ import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/home_custom_app_bar.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/search/presentation/pages/search_view.dart';
+
+import '../../../product/presentation/pages/product_offers_view.dart';
 
 class CustomerHomeView extends StatefulWidget {
   const CustomerHomeView({super.key});
@@ -87,6 +90,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
                 height: 16,
               ),
               banner(context),
+              smallBanner(context),
               SizedBox(
                 height: 16.h,
               ),
@@ -176,6 +180,28 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
     return BannerProduct(
       height: MediaQuery.of(context).size.height * .60,
       isStore: false,
+      onTap: () {
+        navigateTo(
+            context: context,
+            screen: const OffersView(
+              isStore: false,
+            ));
+      },
+    );
+  }
+
+  BannerProduct smallBanner(BuildContext context) {
+    return BannerProduct(
+      height: MediaQuery.of(context).size.height * .25,
+      isStore: true,
+      onTap: () {
+        navigateTo(
+          context: context,
+          screen: const HandPickedViewAll(
+              // isStore: widget.isStore,
+              ),
+        );
+      },
     );
   }
 }

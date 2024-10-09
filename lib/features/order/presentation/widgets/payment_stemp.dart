@@ -11,10 +11,10 @@ import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_field.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
-import 'package:nilelon/features/checkout/presentation/widgets/date_picker_check_out.dart';
+import 'package:nilelon/features/order/presentation/widgets/date_picker_check_out.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../cubit/progress_cubit/progress_cubit.dart';
+import '../progress_cubit/progress_cubit.dart';
 
 class PaymentPage extends StatefulWidget {
   const PaymentPage({super.key});

@@ -9,10 +9,10 @@ abstract class AnalyticsRemoteDataSource {
   Future<DashboardModel> getDashboardData();
 }
 
-class AnalyticsRemoteDataSourceImpl extends AnalyticsRemoteDataSource {
+class AnalyticsService extends AnalyticsRemoteDataSource {
   final ApiService apiService;
 
-  AnalyticsRemoteDataSourceImpl({required this.apiService});
+  AnalyticsService({required this.apiService});
 
   @override
   Future<DashboardModel> getDashboardData() async {

@@ -103,38 +103,5 @@ class OrderRepoImpl extends OrderRepo {
     }
   }
 
-  @override
-  Future<Either<ServerFailure, bool>> getFreeShipping(
-      String promotionId, String governate) async {
-    try {
-      final result =
-          await _orderService.getFreeShipping(promotionId, governate);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<ServerFailure, Map<String, dynamic>>> getOrderDiscount(
-      String promotionId, num oldPrice) async {
-    try {
-      final result =
-          await _orderService.getOrderDiscount(promotionId, oldPrice);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
-  }
-
-  @override
-  Future<Either<ServerFailure, Map<String, dynamic>>> getPromoType(
-      String code) async {
-    try {
-      final result = await _orderService.getPromoCodeType(code);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
-  }
+  
 }

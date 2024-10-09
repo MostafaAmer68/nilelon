@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/order/presentation/progress_cubit/progress_cubit.dart';
 import 'package:nilelon/features/closet/data/repo_impl/closet_repo_impl.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/features/order/data/repositories/order_repo_impl.dart';
@@ -19,6 +20,8 @@ import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:nilelon/features/promo/data/repositories/promo_repo_impl.dart';
+import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:nilelon/features/refund/data/repositories/refund_repo_impl.dart';
 import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/features/search/presentation/cubit/search_cubit.dart';
@@ -107,6 +110,12 @@ class _MyAppState extends State<MyApp> {
         ),
         BlocProvider<RefundCubit>(
           create: (context) => RefundCubit(locatorService<RefundRepoImpl>()),
+        ),
+        BlocProvider<PromoCubit>(
+          create: (context) => PromoCubit(locatorService<PromoRepoImpl>()),
+        ),
+        BlocProvider<ProgressCubit>(
+          create: (context) => ProgressCubit(),
         ),
       ],
       child: ScreenUtilInit(

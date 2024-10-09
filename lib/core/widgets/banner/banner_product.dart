@@ -6,8 +6,9 @@ import 'package:nilelon/features/product/presentation/pages/product_offers_view.
 
 class BannerProduct extends StatefulWidget {
   final double height;
+  final VoidCallback onTap;
   final bool isStore;
-  const BannerProduct({super.key, required this.height, required this.isStore});
+  const BannerProduct({super.key, required this.height, required this.isStore, required this.onTap});
 
   @override
   State<BannerProduct> createState() => _BannerProductState();
@@ -24,8 +25,6 @@ class _BannerProductState extends State<BannerProduct> {
           CarouselSlider.builder(
             itemCount: 1,
             options: CarouselOptions(
-                // enableInfiniteScroll: false,
-
                 height: widget.height,
                 aspectRatio: 16 / 6,
                 viewportFraction: 1,
@@ -36,22 +35,17 @@ class _BannerProductState extends State<BannerProduct> {
                 }),
             itemBuilder: (ctx, index, _) {
               return GestureDetector(
-                onTap: () {
-                  navigateTo(
-                      context: context,
-                      screen: OffersView(
-                        isStore: widget.isStore,
-                      ));
-                },
+                onTap: widget.onTap,
                 child: Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(
-                          image: widget.isStore
-                              ? const AssetImage(
-                                  'assets/images/hot picks 3_Mesa de trabajo 1 1.png')
-                              : const AssetImage('assets/images/banner.png'),
-                          fit: BoxFit.fill)),
+                    borderRadius: BorderRadius.circular(12),
+                    image: DecorationImage(
+                        image: widget.isStore
+                            ? const AssetImage(
+                                'assets/images/hot picks 3_Mesa de trabajo 1 1.png')
+                            : const AssetImage('assets/images/banner.png'),
+                        fit: BoxFit.cover),
+                  ),
                 ),
               );
             },

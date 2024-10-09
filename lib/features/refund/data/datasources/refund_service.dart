@@ -12,10 +12,10 @@ import 'package:nilelon/features/refund/data/models/refund_model.dart';
 import '../../../../core/service/network/end_point.dart';
 import '../models/refund_details_model.dart';
 
-class RefundSErvice {
+class RefundService {
   final ApiService _apiService;
 
-  RefundSErvice(this._apiService);
+  RefundService(this._apiService);
 
   Future<List<RefundModel>> getRefunds() async {
     final isStore = HiveStorage.get(HiveKeys.isStore);

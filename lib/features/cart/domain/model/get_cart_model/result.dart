@@ -13,7 +13,7 @@ class CartResult extends Equatable {
         id: json['id'] as String?,
         createdTime: json['createdTime'] as String?,
         items: (json['items'] as List<dynamic>?)
-            ?.map((e) => CartItem.fromJson(e as Map<String, dynamic>))
+            ?.map((e) => CartItem.fromMap(e as Map<String, dynamic>))
             .toList(),
       );
 

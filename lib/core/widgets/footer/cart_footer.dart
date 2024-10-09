@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilelon/core/service/set_up_locator_service.dart';
-import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
-import 'package:nilelon/features/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
-import 'package:nilelon/features/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
-import 'package:nilelon/features/checkout/presentation/view/checkout_view.dart';
-import 'package:nilelon/features/order/data/repositories/order_repo_impl.dart';
+import 'package:nilelon/features/order/presentation/pages/checkout_view.dart';
 
 class CartFooter extends StatefulWidget {
-  const CartFooter({super.key, this.visible = true, required this.cartModel});
+  const CartFooter({
+    super.key,
+    this.visible = true,
+  });
   final bool visible;
-  final List<CartItem> cartModel;
 
   @override
   State<CartFooter> createState() => _CartFooterState();
@@ -22,10 +21,13 @@ class CartFooter extends StatefulWidget {
 
 class _CartFooterState extends State<CartFooter> {
   num totalPrice = 0;
+
+  late final CartCubit cubit;
   @override
   void initState() {
-    for (var item in widget.cartModel) {
-      totalPrice += item.price!;
+    cubit = CartCubit.get(context);
+    for (var item in cubit.items) {
+      totalPrice += item.price * item.quantity;
     }
     super.initState();
   }
@@ -34,50 +36,55 @@ class _CartFooterState extends State<CartFooter> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Visibility(
+    return Visibility( 
       visible: widget.visible,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  lang.totalPrice,
-                  style: AppStylesManager.customTextStyleB5,
-                ),
-                Text(
-                  '$totalPrice L.E',
-                  style: AppStylesManager.customTextStyleO5,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 18,
-            ),
-            SizedBox(
-              width: screenWidth(context, 0.9),
-              child: GradientButtonBuilder(
-                text: lang.checkOut,
-                ontap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => BlocProvider<ProgressCubit>(
-                        create: (context) => ProgressCubit(),
-                        child: BlocProvider<CheckOutCubit>(
-                          create: (context) =>
-                              CheckOutCubit(locatorService<OrderRepoImpl>()),
-                          child: const ChechOutView(),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                width: screenWidth(context, 1),
+      child: BlocListener<CartCubit, CartState>(
+        listener: (context, state) {
+          if (state is GetCartSuccess) {
+            totalPrice = 0;
+            for (var item in cubit.selectedItems) {
+              totalPrice += item.price * item.quantity;
+            }
+          }
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    lang.totalPrice,
+                    style: AppStylesManager.customTextStyleB5,
+                  ),
+                  BlocBuilder<CartCubit, CartState>(
+                    builder: (context, state) {
+                      return state is UpdateQuantityCartLoading
+                          ? const CircularProgressIndicator()
+                          : Text(
+                              '$totalPrice ${lang.le}',
+                              style: AppStylesManager.customTextStyleO5,
+                            );
+                    },
+                  )
+                ],
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 18,
+              ),
+              SizedBox(
+                width: screenWidth(context, 0.9),
+                child: GradientButtonBuilder(
+                  text: lang.checkOut,
+                  ontap: () {
+                    navigateTo(context: context, screen: const CheckOutView());
+                  },
+                  width: screenWidth(context, 1),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

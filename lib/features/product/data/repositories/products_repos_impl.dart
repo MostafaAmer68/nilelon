@@ -15,7 +15,7 @@ import '../../domain/models/product_model.dart';
 import '../../domain/repositories/products_repos.dart';
 
 class ProductsReposImpl extends ProductsRepos {
-  final ProductsRemoteDataSourceImpl productsRemoteDataSource;
+  final ProductsService productsRemoteDataSource;
   ProductsReposImpl(this.productsRemoteDataSource);
   @override
   Future<Either<FailureService, List<ProductModel>>> getFollowedProducts(

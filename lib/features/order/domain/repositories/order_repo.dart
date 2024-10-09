@@ -25,15 +25,5 @@ abstract class OrderRepo {
     String orderId,
     String orderStatus,
   );
-  Future<Either<ServerFailure, Map<String, dynamic>>> getPromoType(
-    String code,
-  );
-  Future<Either<ServerFailure, Map<String, dynamic>>> getOrderDiscount(
-    String promotionId,
-    num oldPrice,
-  );
-  Future<Either<ServerFailure, bool>> getFreeShipping(
-    String promotionId,
-    String governate,
-  );
+
 }

@@ -18,10 +18,10 @@ import 'package:nilelon/features/product/domain/models/review_model.dart';
 
 import '../../domain/models/update_product.dart';
 
-class ProductsRemoteDataSourceImpl {
+class ProductsService {
   final ApiService apiService;
 
-  ProductsRemoteDataSourceImpl({required this.apiService});
+  ProductsService({required this.apiService});
 
   Future<List<ProductModel>> getFollowedProducts(int page, int pageSize) async {
     final data =

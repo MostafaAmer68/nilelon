@@ -14,9 +14,6 @@ class CartLoading extends CartState {}
 class CartSuccess extends CartState {}
 
 class GetCartSuccess extends CartState {
-  final List<CartItem> items;
-
-  const GetCartSuccess({required this.items});
 }
 
 class GetCartFailure extends CartState {
@@ -34,6 +31,8 @@ class DeleteFromCartFailure extends CartState {
 }
 
 class UpdateQuantityCartSuccess extends CartState {}
+
+class UpdateQuantityCartLoading extends CartState {}
 
 class UpdateQuantityCartFailure extends CartState {
   final String message;

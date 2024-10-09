@@ -1,7 +1,7 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
+import 'package:nilelon/features/promo/presentation/widgets/txt_field_promo.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -11,11 +11,9 @@ import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/drop_down_menu/drop_down_menu.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
-import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
-import 'package:nilelon/features/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
-import 'package:nilelon/features/checkout/presentation/widgets/check_product_item.dart';
+import 'package:nilelon/features/order/presentation/progress_cubit/progress_cubit.dart';
+import 'package:nilelon/features/order/presentation/widgets/check_product_item.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 
 class OverViewStep extends StatefulWidget {
@@ -27,14 +25,17 @@ class OverViewStep extends StatefulWidget {
 
 class _OverViewStepState extends State<OverViewStep> {
   late GlobalKey<FormState> formKey;
-  String selectedCity = 'Cairo';
-  late final CartCubit cubit;
+
+  late final CartCubit cartCubit;
+  late final OrderCubit cubit;
+  late final PromoCubit promoCubit;
   @override
   void initState() {
-    cubit = CartCubit.get(context);
-    cubit.getCart();
-    OrderCubit.get(context).getShippingMethod();
-    selectedCity = OrderCubit.get(context).shippingMethods.first.name;
+    cartCubit = CartCubit.get(context);
+    cubit = OrderCubit.get(context);
+    promoCubit = PromoCubit.get(context);
+
+    cubit.getShippingMethod();
     formKey = GlobalKey();
     super.initState();
   }
@@ -47,7 +48,6 @@ class _OverViewStepState extends State<OverViewStep> {
       key: formKey,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        // color: ColorManager.primaryG17,
         child: Column(
           children: [
             SizedBox(
@@ -66,13 +66,11 @@ class _OverViewStepState extends State<OverViewStep> {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: CheckProductItem(
-                            cartItem: CartCubit.get(context)
-                                .cartItems
-                                .result!
-                                .items![index]),
+                          cartItem: CartCubit.get(context).selectedItems[index],
+                        ),
                       );
                     },
-                    itemCount: cubit.cartItems.result!.items!.length,
+                    itemCount: cartCubit.items.length,
                     scrollDirection: Axis.horizontal,
                   );
                 },
@@ -87,41 +85,7 @@ class _OverViewStepState extends State<OverViewStep> {
                   const SizedBox(
                     height: 12,
                   ),
-                  Row(
-                    children: [
-                      TextFormFieldBuilder(
-                        label: lang.promoCode,
-                        controller: CheckOutCubit.get(context).promoCode,
-                        type: TextInputType.text,
-                        width: screenWidth(context, 0.65),
-                        noIcon: false,
-                        isIcon: false,
-                        prefixWidget: const Icon(Iconsax.ticket_discount),
-                      ),
-                      const Spacer(),
-                      BlocConsumer<CheckOutCubit, CheckOutState>(
-                        listener: (context, state) {
-                          if (state is CheckOutFailure) {
-                            BotToast.showText(text: 'Promocode invalid');
-                          }
-                          if (state is CheckOutSuccess) {
-                            BotToast.showText(text: 'Promocode applied');
-                          }
-                        },
-                        builder: (context, state) => state is CheckOutLoading
-                            ? const Center(child: CircularProgressIndicator())
-                            : ButtonBuilder(
-                                text: lang.apply,
-                                ontap: () {
-                                  CheckOutCubit.get(context)
-                                      .getPromoCodeType(context);
-                                },
-                                height: 54,
-                                width: screenWidth(context, 0.24),
-                              ),
-                      ),
-                    ],
-                  ),
+                  const TxtFieldPromo(),
                   const SizedBox(
                     height: 30,
                   ),
@@ -157,51 +121,47 @@ class _OverViewStepState extends State<OverViewStep> {
                       BlocBuilder<CartCubit, CartState>(
                         builder: (context, state) {
                           if (state is GetCartSuccess) {
-                            if (CheckOutCubit.get(context).totalPrice == 0) {
-                              for (var item in CartCubit.get(context)
-                                  .cartItems
-                                  .result!
-                                  .items!) {
-                                CheckOutCubit.get(context).totalPrice +=
-                                    item.price!;
+                            if (promoCubit.totalPrice == 0) {
+                              for (var item in CartCubit.get(context).items) {
+                                promoCubit.totalPrice +=
+                                    item.price * item.quantity;
+                                promoCubit.tempTotalPrice +=
+                                    item.price * item.quantity;
                               }
                             }
                           }
                           return Column(
                             children: [
-                              BlocBuilder<CheckOutCubit, CheckOutState>(
+                              BlocBuilder<OrderCubit, OrderState>(
                                 builder: (context, state) {
-                                  return orderSummaryItems(
-                                      lang.order,
-                                      CheckOutCubit.get(context)
-                                          .totalPrice
-                                          .toString());
+                                  return orderSummaryItems(lang.order,
+                                      promoCubit.totalPrice.toString());
                                 },
                               ),
                               const Divider(),
-                              BlocBuilder<CheckOutCubit, CheckOutState>(
+                              BlocBuilder<OrderCubit, OrderState>(
                                 builder: (context, state) {
                                   return orderSummaryItemsWithDropList(
                                       lang.delivery,
-                                      '${CheckOutCubit.get(context).deliveryPrice} L.E',
+                                      '${promoCubit.deliveryPrice} L.E',
                                       lang);
                                 },
                               ),
                               const Divider(),
-                              BlocBuilder<CheckOutCubit, CheckOutState>(
+                              BlocBuilder<OrderCubit, OrderState>(
                                 builder: (context, state) {
                                   return orderSummaryItems(
                                     'Discount',
-                                    '${CheckOutCubit.get(context).discount} L.E',
+                                    '${promoCubit.discount} L.E',
                                   );
                                 },
                               ),
                               const Divider(),
-                              BlocBuilder<CheckOutCubit, CheckOutState>(
+                              BlocBuilder<OrderCubit, OrderState>(
                                 builder: (context, state) {
                                   return orderSummaryItems(
                                       lang.total,
-                                      '${CheckOutCubit.get(context).totalPrice} L.E',
+                                      '${promoCubit.totalPrice} L.E',
                                       AppStylesManager.customTextStyleO5
                                           .copyWith(
                                               fontWeight: FontWeight.w600));
@@ -229,14 +189,15 @@ class _OverViewStepState extends State<OverViewStep> {
                         },
                       ),
                       GradientButtonBuilder(
-                          text: lang.continuePress,
-                          ontap: () {
-                            if (formKey.currentState!.validate()) {
-                              progressCubit.pageController.nextPage(
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.easeInOut);
-                            }
-                          })
+                        text: lang.continuePress,
+                        ontap: () {
+                          if (formKey.currentState!.validate()) {
+                            progressCubit.pageController.nextPage(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInOut);
+                          }
+                        },
+                      )
                     ],
                   ),
                 ],
@@ -273,7 +234,7 @@ class _OverViewStepState extends State<OverViewStep> {
   Padding orderSummaryItemsWithDropList(String title, String content, lang) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: CheckOutCubit.get(context).isFreeShipping
+      child: promoCubit.isFreeShipping
           ? const Text('Free Shipping')
           : Row(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -308,7 +269,7 @@ class _OverViewStepState extends State<OverViewStep> {
                             fontSize: 10,
                             fontWeight: FontWeightManager.regular400,
                           ),
-                          selectedValue: selectedCity,
+                          selectedValue: cubit.selectedCity,
                           items: OrderCubit.get(context)
                               .shippingMethods
                               .first
@@ -317,24 +278,21 @@ class _OverViewStepState extends State<OverViewStep> {
                               .toList(),
                           context: context,
                           onChanged: (selectedValue) {
-                            selectedCity = selectedValue ?? '';
-                            CheckOutCubit.get(context).deliveryPrice =
-                                OrderCubit.get(context)
-                                    .shippingMethods
-                                    .first
-                                    .shippingCosts
-                                    .firstWhere(
-                                        (e) => e.governate == selectedValue)
-                                    .price;
-                            CheckOutCubit.get(context).totalPrice +=
-                                CheckOutCubit.get(context).deliveryPrice;
-                            CheckOutCubit.get(context)
-                                    .selectedShippingMethodId =
+                            cubit.selectedCity = selectedValue ?? '';
+                            promoCubit.deliveryPrice = OrderCubit.get(context)
+                                .shippingMethods
+                                .first
+                                .shippingCosts
+                                .firstWhere((e) => e.governate == selectedValue)
+                                .price;
+                            promoCubit.totalPrice = promoCubit.deliveryPrice +
+                                promoCubit.tempTotalPrice;
+                            OrderCubit.get(context).selectedShippingMethodId =
                                 OrderCubit.get(context)
                                     .shippingMethods
                                     .first
                                     .id;
-                            CheckOutCubit.get(context).selectedGovernate =
+                            OrderCubit.get(context).selectedGovernate =
                                 OrderCubit.get(context)
                                     .shippingMethods
                                     .first

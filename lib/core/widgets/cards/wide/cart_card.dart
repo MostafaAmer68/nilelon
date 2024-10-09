@@ -2,11 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
-import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/cart/domain/model/change_quantity_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -28,7 +25,7 @@ class _CartCardState extends State<CartCard> {
   bool isEnabled = true;
   @override
   void initState() {
-    localCounter = widget.cart.quantity!;
+    localCounter = widget.cart.quantity;
     super.initState();
   }
 
@@ -107,27 +104,27 @@ class _CartCardState extends State<CartCard> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  widget.cart.productName!,
+                                  widget.cart.productName,
                                   style: AppStylesManager.customTextStyleBl7
                                       .copyWith(fontSize: 1.sw > 600 ? 22 : 14),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
                               Checkbox(
-                                  splashRadius: 1.sw > 600 ? 20 : 12,
-                                  value: isEnabled,
-                                  activeColor: ColorManager.primaryO,
-                                  onChanged: (value) {
-                                    isEnabled = !isEnabled;
-                                    setState(() {});
-                                  }),
+                                splashRadius: 1.sw > 600 ? 20 : 12,
+                                value: isEnabled,
+                                activeColor: ColorManager.primaryO,
+                                onChanged: (value) {
+                                  isEnabled = !isEnabled;
+                                  CartCubit.get(context)
+                                      .onSelectedItem(value!, widget.cart);
+                                  setState(() {});
+                                },
+                              ),
                             ],
                           ),
-                          // const SizedBox(
-                          //   height: 12,
-                          // ),
                           Text(
-                            '${lang.size} ${widget.cart.size!}',
+                            '${lang.size} ${widget.cart.size}',
                             style: AppStylesManager.customTextStyleG5,
                           ),
                           const SizedBox(
@@ -137,7 +134,7 @@ class _CartCardState extends State<CartCard> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                '${widget.cart.price!} L.E',
+                                '${widget.cart.price * localCounter} ${lang.le}',
                                 style: AppStylesManager.customTextStyleO2,
                               ),
                               const Spacer(),
@@ -157,18 +154,10 @@ class _CartCardState extends State<CartCard> {
                                         icon: Iconsax.minus,
                                         onTap: () {
                                           decrementCounter();
-                                          BlocProvider.of<CartCubit>(context)
-                                              .updateQuantityCart(
-                                                  ChangeQuantityModel(
-                                            customrId:
-                                                HiveStorage.get<UserModel>(
-                                                        HiveKeys.userModel)
-                                                    .id,
-                                            size: widget.cart.size,
-                                            color: widget.cart.color!,
-                                            productId: widget.cart.productId,
-                                            quantity: localCounter,
-                                          ));
+                                          CartCubit.get(context)
+                                              .updateQuantityCart(widget.cart
+                                                  .copyWith(
+                                                      quantity: localCounter));
                                         },
                                       ),
                               ),
@@ -189,16 +178,9 @@ class _CartCardState extends State<CartCard> {
                                   icon: Iconsax.add,
                                   onTap: () {
                                     incrementCounter();
-                                    BlocProvider.of<CartCubit>(context)
-                                        .updateQuantityCart(ChangeQuantityModel(
-                                      customrId: HiveStorage.get<UserModel>(
-                                              HiveKeys.userModel)
-                                          .id,
-                                      size: widget.cart.size,
-                                      color: widget.cart.color!,
-                                      productId: widget.cart.productId,
-                                      quantity: localCounter,
-                                    ));
+                                    CartCubit.get(context).updateQuantityCart(
+                                        widget.cart
+                                            .copyWith(quantity: localCounter));
                                   },
                                 ),
                               ),

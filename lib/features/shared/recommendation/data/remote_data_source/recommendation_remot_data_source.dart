@@ -8,9 +8,9 @@ abstract class RecommendationRemoteDataSource {
   Future<String> setRecommendation(String gender);
 }
 
-class RecommendationRemotDataSourceImpl extends RecommendationRemoteDataSource {
+class RecommendationService extends RecommendationRemoteDataSource {
   ApiService apiService;
-  RecommendationRemotDataSourceImpl({
+  RecommendationService({
     required this.apiService,
   });
   @override

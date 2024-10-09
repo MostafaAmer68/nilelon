@@ -55,7 +55,7 @@ class CheckProductItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          cartItem.productName!,
+                          cartItem.productName,
                           style: AppStylesManager.customTextStyleBl8,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -83,7 +83,7 @@ class CheckProductItem extends StatelessWidget {
                     ),
                     const Spacer(),
                     Text(
-                      cartItem.price.toString(),
+                      '${cartItem.price * cartItem.quantity} ${lang.le}',
                       style: AppStylesManager.customTextStyleO3,
                     ),
                     const SizedBox(

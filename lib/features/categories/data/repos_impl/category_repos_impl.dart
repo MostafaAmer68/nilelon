@@ -6,7 +6,7 @@ import 'package:nilelon/features/categories/domain/repos/category_repos.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 
 class CategoryReposImpl extends CategoryRepos {
-  final CategoryRemoteDataSourceImpl chooseCategoryRemoteDataSource;
+  final CategoryService chooseCategoryRemoteDataSource;
 
   CategoryReposImpl(this.chooseCategoryRemoteDataSource);
   @override

@@ -21,6 +21,7 @@ import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/widgets/cards/small/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../product/presentation/cubit/products_cubit/products_state.dart';
+import '../../../product/presentation/pages/product_offers_view.dart';
 
 class StoreMarketView extends StatefulWidget {
   const StoreMarketView({super.key});
@@ -144,6 +145,14 @@ class _StoreMarketViewState extends State<StoreMarketView> {
     return BannerProduct(
       height: MediaQuery.of(context).size.height * .2,
       isStore: true,
+      onTap: () {
+        navigateTo(
+          context: context,
+          screen: const OffersView(
+            isStore: true,
+          ),
+        );
+      },
     );
   }
 }

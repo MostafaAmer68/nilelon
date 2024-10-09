@@ -10,7 +10,7 @@ import 'package:nilelon/features/refund/data/models/refund_model.dart';
 import 'package:nilelon/features/refund/domain/repositories/refund_repo.dart';
 
 class RefundRepoImpl implements RefundRepo {
-  final RefundSErvice _refundServcie;
+  final RefundService _refundServcie;
 
   RefundRepoImpl(this._refundServcie);
 

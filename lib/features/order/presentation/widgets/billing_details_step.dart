@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -9,8 +10,7 @@ import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/checkout/presentation/cubit/checkout_cubit/checkout_cubit.dart';
-import 'package:nilelon/features/checkout/presentation/cubit/progress_cubit/progress_cubit.dart';
+import 'package:nilelon/features/order/presentation/progress_cubit/progress_cubit.dart';
 
 class BillingDetailsStep extends StatefulWidget {
   const BillingDetailsStep({super.key});
@@ -27,10 +27,10 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
     'Credit Card',
     'Cash',
   ];
-  late final CheckOutCubit cubit;
+  late final OrderCubit cubit;
   @override
   void initState() {
-    cubit = CheckOutCubit.get(context);
+    cubit = OrderCubit.get(context);
     super.initState();
   }
 
@@ -39,21 +39,20 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
     // BotToast.closeAllLoading();
     final progressCubit = BlocProvider.of<ProgressCubit>(context);
     final lang = S.of(context);
-    return BlocListener<CheckOutCubit, CheckOutState>(
+    return BlocListener<OrderCubit, OrderState>(
       listener: (context, state) {
-        if (state is CheckOutLoading) {
-          BotToast.showLoading();
-        }
-        if (state is CheckOutFailure) {
-          BotToast.closeAllLoading();
-          BotToast.showText(text: state.errorMessage);
-        }
-        if (state is CheckOutSuccess) {
-          BotToast.closeAllLoading();
-          CartCubit.get(context).emptyCart();
+        state.mapOrNull(
+            loading: (_) => BotToast.showLoading(),
+            failure: (_) {
+              BotToast.closeAllLoading();
+              BotToast.showText(text: _.errMessage);
+            },
+            success: (_) {
+              BotToast.closeAllLoading();
+              CartCubit.get(context).emptyCart();
 
-          progressCubit.nextStep();
-        }
+              progressCubit.nextStep();
+            });
       },
       child: Form(
         key: formKey,
@@ -182,8 +181,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
                           ),
                           onChanged: (value) {
                             setState(() {
-                              CheckOutCubit.get(context).selectedOption =
-                                  value!;
+                              cubit.selectedOption = value!;
                               _tempSelectedOption = value;
                             });
                           },

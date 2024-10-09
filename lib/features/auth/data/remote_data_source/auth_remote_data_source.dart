@@ -90,7 +90,7 @@ abstract class AuthRemoteDataSource {
   );
 }
 
-class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
+class AuthService extends AuthRemoteDataSource {
   final ApiService apiService;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: [
@@ -99,7 +99,7 @@ class AuthRemoteDataSourceImpl extends AuthRemoteDataSource {
     ],
   );
 
-  AuthRemoteDataSourceImpl({required this.apiService});
+  AuthService({required this.apiService});
   @override
   Future<void> loginAuth(LoginModel entity, context) async {
     final data = await apiService.post(

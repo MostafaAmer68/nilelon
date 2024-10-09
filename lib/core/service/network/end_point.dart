@@ -161,6 +161,7 @@ class EndPoint {
   static const String getOrderDiscount = '/Promotion/GetOrderDiscount';
   static const String getFreeShipping = '/Promotion/GetFreeShipping';
   static const String getStoreDiscount = '/Promotion/GetStoreDiscount';
+  static const String createPromo = '/Promotion/CreatePromotion';
 
   //todo Recommendation Urls
   static const String setRecommendationUrl =

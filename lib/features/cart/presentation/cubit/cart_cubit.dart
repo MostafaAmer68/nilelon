@@ -8,7 +8,6 @@ import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart
 import 'package:nilelon/features/cart/domain/repos/cart_repos.dart';
 
 import '../../../auth/domain/model/user_model.dart';
-import '../../domain/model/get_cart_model/get_cart_model.dart';
 
 part 'cart_state.dart';
 
@@ -28,11 +27,12 @@ class CartCubit extends Cubit<CartState> {
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
-      emit(const GetCartSuccess(items: []));
+      emit(GetCartSuccess());
     });
   }
 
-  late GetCartModel cartItems;
+  List<CartItem> items = [];
+  List<CartItem> selectedItems = [];
   Future<void> addToCart(AddToCartModel model) async {
     emit(CartLoading());
 
@@ -44,16 +44,29 @@ class CartCubit extends Cubit<CartState> {
     });
   }
 
-  Future<void> getCart() async {
-    emit(CartLoading());
+  void onSelectedItem(bool value, CartItem cart) {
+    emit(UpdateQuantityCartLoading());
+    if (value) {
+      selectedItems.add(cart);
+    } else {
+      selectedItems.remove(cart);
+    }
+    emit(GetCartSuccess());
+  }
 
+  Future<void> getCart([isUpdate = false]) async {
+    if (isUpdate) {
+      emit(UpdateQuantityCartLoading());
+    } else {
+      emit(CartLoading());
+    }
     var result = await cartRepos.getCart();
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
-      cartItems = response;
-
-      emit(GetCartSuccess(items: response.result?.items ?? []));
+      items = response.result!.items!;
+      selectedItems = response.result!.items!;
+      emit(GetCartSuccess());
     });
   }
 
@@ -63,22 +76,28 @@ class CartCubit extends Cubit<CartState> {
     var result = await cartRepos.deleteFromCart(model);
     result.fold((failure) {
       emit(DeleteFromCartFailure(message: failure.errorMsg));
-      emit(GetCartSuccess(items: cartItems.result!.items!));
+      emit(GetCartSuccess());
     }, (response) {
       emit(DeleteFromCartSuccess());
       getCart();
     });
   }
 
-  Future<void> updateQuantityCart(ChangeQuantityModel model) async {
-    emit(CartLoading());
+  Future<void> updateQuantityCart(CartItem cart) async {
+    emit(UpdateQuantityCartLoading());
 
-    var result = await cartRepos.updateQuantityCart(model);
+    var result = await cartRepos.updateQuantityCart(ChangeQuantityModel(
+      customrId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+      size: cart.size,
+      color: cart.color,
+      productId: cart.productId,
+      quantity: cart.quantity,
+    ));
     result.fold((failure) {
       emit(UpdateQuantityCartFailure(message: failure.errorMsg));
     }, (response) {
       emit(UpdateQuantityCartSuccess());
-      getCart();
+      getCart(true);
     });
   }
 }

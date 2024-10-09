@@ -18,10 +18,10 @@ abstract class CartRemoteDataSource {
   Future<void> emptyCart(String customerId);
 }
 
-class CartRemoteDataSourceImpl extends CartRemoteDataSource {
+class CartService extends CartRemoteDataSource {
   final ApiService apiService;
 
-  CartRemoteDataSourceImpl({required this.apiService});
+  CartService({required this.apiService});
 
   @override
   Future<GetCartModel> getCart() async {
