@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
@@ -63,12 +64,7 @@ class _SectionDetailsViewState extends State<SectionDetailsView> {
                     return state.whenOrNull(
                       loading: () => buildShimmerIndicatorGrid(),
                       success: () => GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                childAspectRatio: 0.85,
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 20.0,
-                                mainAxisSpacing: 12),
+                        gridDelegate:gridDelegate,
                         itemCount: ClosetCubit.get(context).closetsItem.length,
                         itemBuilder: (context, index) {
                           return Container(

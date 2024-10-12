@@ -4,6 +4,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
+
+import '../../../../core/resources/color_manager.dart';
 
 class SearchSectionItems extends StatelessWidget {
   const SearchSectionItems({
@@ -24,30 +27,26 @@ class SearchSectionItems extends StatelessWidget {
     log(image);
     return GestureDetector(
       onTap: onTap,
-      child: Column(
-        children: [
-          Container(
-            width: width ?? screenWidth(context, 0.45),
-            height: height ?? screenWidth(context, 0.45),
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              // color: AppStyles.primaryB5,
-              borderRadius: BorderRadius.circular(16),
+      child: Container(
+        width: width ?? screenWidth(context, 0.45),
+        height: height ?? screenWidth(context, 0.45),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: ColorManager.primaryW,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          children: [
+            imageReplacer(url: image),
+            const SizedBox(
+              height: 8,
             ),
-            child: CachedNetworkImage(
-              imageUrl: image,
-              errorWidget: (_, e, er) =>
-                  Image.asset('assets/images/1-Nilelon f logo d.png'),
-            ),
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Text(
-            name,
-            style: AppStylesManager.customTextStyleBl3,
-          )
-        ],
+            Text(
+              name,
+              style: AppStylesManager.customTextStyleBl3,
+            )
+          ],
+        ),
       ),
     );
   }

@@ -12,7 +12,7 @@ categoryContainer({
   required bool isSelected,
 }) {
   return Padding(
-    padding:  EdgeInsets.symmetric(horizontal: 20, vertical: 10.h),
+    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10.h),
     child: CustomPaint(
       painter: CirclePainter(),
       child: isSelected
@@ -36,7 +36,7 @@ categoryContainer({
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   imageReplacer(
-                    url: image, // Use your own image path here
+                    url: image,
                     height: 50,
                     width: 50,
                   ),

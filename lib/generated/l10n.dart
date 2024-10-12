@@ -3910,6 +3910,16 @@ class S {
     );
   }
 
+  /// `No Reviews for this product yet`
+  String get noReviews {
+    return Intl.message(
+      'No Reviews for this product yet',
+      name: 'noReviews',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

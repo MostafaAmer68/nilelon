@@ -17,9 +17,9 @@ class ResultAdapter extends TypeAdapter<Result> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Result(
-      id: fields[0] as String?,
-      name: fields[1] as String?,
-      image: fields[2] as String?,
+      id: fields[0] as String,
+      name: fields[1] as String,
+      image: fields[2] as String,
     );
   }
 

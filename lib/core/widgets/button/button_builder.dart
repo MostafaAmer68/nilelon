@@ -39,10 +39,16 @@ class ButtonBuilder extends StatelessWidget {
                       width: width ?? screenWidth * 0.44,
                       height: height ?? screenHeight * 0.07,
                       decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: frameColor ?? kDefaultIconLightColor,
+                              offset: Offset(4, 4))
+                        ],
                         border: Border.all(
-                            color: frameColor ??
-                                buttonColor ??
-                                ColorManager.primaryB2),
+                          color: frameColor ??
+                              buttonColor ??
+                              ColorManager.primaryB2,
+                        ),
                         borderRadius: BorderRadius.circular(10),
                         color: buttonColor ?? ColorManager.primaryB2,
                       ),

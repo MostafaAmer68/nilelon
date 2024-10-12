@@ -1,114 +1,143 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
-import 'package:nilelon/features/customer_flow/section_details/section_details_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/widgets/alert/show_delete_section_alert.dart';
-import 'package:nilelon/core/widgets/pop_ups/rename_popup.dart';
 
-import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/alert/empty_closets_alert.dart';
+import '../../../../core/widgets/alert/show_delete_section_alert.dart';
+import '../../../../core/widgets/pop_ups/rename_popup.dart';
 
 class ClosetsWidgetWithOptions extends StatelessWidget {
   const ClosetsWidgetWithOptions({
     super.key,
     required this.onTap,
+    // required this.onActionTap,
     required this.closet,
+    this.isPage = false,
   });
   final ClosetModel closet;
+  final bool isPage;
   final void Function() onTap;
+  // final void Function() onActionTap;
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return GestureDetector(
+
+    return InkWell(
       onTap: onTap,
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: Container(
+        // width: screenWidth(context, 0.4),
+        margin: const EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 36),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        decoration: isPage
+            ? BoxDecoration(
+                color: ColorManager.primaryW,
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: const [
+                  BoxShadow(
+                    offset: Offset(2, 8),
+                    color: ColorManager.primaryO3,
+                  ),
+                ],
+              )
+            : null,
+
         child: Row(
           children: [
             Container(
               width: 50.w,
               height: 50.w,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: const DecorationImage(
-                      image: AssetImage('assets/images/saveToCloset.png'),
-                      fit: BoxFit.fill)),
+                borderRadius: BorderRadius.circular(12),
+                image: const DecorationImage(
+                  image: AssetImage('assets/images/saveToCloset.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-            const SizedBox(
-              width: 16,
-            ),
+            const SizedBox(width: 10),
             Text(
               closet.name,
               style: AppStylesManager.customTextStyleBl6,
             ),
             const Spacer(),
-            PopupMenuButton(
-              onSelected: (String result) {
-                if (result == 'Rename') {
-                  renameSectionDialog(context);
-                } else if (result == 'Delete') {
-                  showDeleteSectionAlert(context, closet);
-                } else if (result == 'Show Items') {
-                  navigateTo(
-                      context: context,
-                      screen: SectionDetailsView(
-                        closet: closet,
-                      ));
-                } else if (result == 'Empty closets') {
-                  showEmptyClosetAlert(context, closet);
-                }
+            IconButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  backgroundColor:
+                      Colors.transparent, // Background color of the modal
+                  builder: (context) {
+                    return Container(
+                      padding: const EdgeInsets.all(30),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryW,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Column(
+                              children: [
+                                TextButton(
+                                  child: Text(
+                                    lang.rename,
+                                    style: AppStylesManager.customTextStyleBl6,
+                                  ),
+                                  onPressed: () {
+                                    renameSectionDialog(context);
+                                  },
+                                ),
+                                const Divider(),
+                                TextButton(
+                                  child: Text(
+                                    lang.emptyCloset,
+                                    style: AppStylesManager.customTextStyleR,
+                                  ),
+                                  onPressed: () {
+                                    showEmptyClosetAlert(context, closet);
+                                  },
+                                ),
+                                const Divider(),
+                                TextButton(
+                                  child: Text(
+                                    lang.delete,
+                                    style: AppStylesManager.customTextStyleR,
+                                  ),
+                                  onPressed: () {
+                                    showDeleteSectionAlert(context, closet);
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 50),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryW,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            width: double.infinity,
+                            height: 60,
+                            child: TextButton(
+                              child: Text(
+                                lang.cancel,
+                                style: AppStylesManager.customTextStyleBl10,
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
               },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                PopupMenuItem<String>(
-                  value: 'Show Items',
-                  child: SizedBox(
-                    width: 60.w,
-                    height: 25.w,
-                    child: Text(
-                      lang.showAll,
-                      style: AppStylesManager.customTextStyleBl3
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-                PopupMenuItem<String>(
-                  value: 'Rename',
-                  child: SizedBox(
-                    width: 60.w,
-                    height: 25.w,
-                    child: Text(
-                      lang.rename,
-                      style: AppStylesManager.customTextStyleBl3
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-                PopupMenuItem<String>(
-                  value: 'Empty closets',
-                  child: SizedBox(
-                    width: 60.w,
-                    height: 25.w,
-                    child: Text(
-                      S.of(context).emptyCloset,
-                      style: AppStylesManager.customTextStyleBl3
-                          .copyWith(fontWeight: FontWeight.w500),
-                    ),
-                  ),
-                ),
-                PopupMenuItem<String>(
-                  value: 'Delete',
-                  child: SizedBox(
-                    width: 50.w,
-                    height: 25.w,
-                    child: Text(
-                      lang.delete,
-                      style: AppStylesManager.customTextStyleR,
-                    ),
-                  ),
-                ),
-              ],
               icon: Icon(
                 Icons.more_vert_rounded,
                 size: 20.r,

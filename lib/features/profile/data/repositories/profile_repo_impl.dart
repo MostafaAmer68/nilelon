@@ -84,10 +84,10 @@ class ProfileRepoIMpl implements ProfileRepo {
       return Right(result);
     } catch (e) {
       if (e is DioException) {
-        print(e.toString());
+        // print(e.toString());
         return left(ServerFailure.fromDioException(e));
       }
-      print(e.toString());
+      // print(e.toString());
       return left(ServerFailure(e.toString()));
     }
   }

@@ -7,6 +7,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/cart/domain/model/delete_request_model.dart';
+import 'package:nilelon/features/closet/presentation/view/closet_Page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -14,7 +15,6 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/footer/cart_footer.dart';
 import 'package:nilelon/core/widgets/cards/wide/cart_card.dart';
-import 'package:nilelon/features/closet/presentation/view/closet_view.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
@@ -51,7 +51,7 @@ class _CartViewState extends State<CartView> {
           ViewAllRow(
             text: '',
             onPressed: () {
-              navigateTo(context: context, screen: const ClosetView());
+              navigateTo(context: context, screen: const ClosetPage());
             },
             buttonText: lang.yourcloset,
           ),

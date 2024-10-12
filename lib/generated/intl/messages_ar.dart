@@ -334,6 +334,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لم تتم إضافة أي منتجات بعد"),
         "noReturnItems":
             MessageLookupByLibrary.simpleMessage("لا توجد منتجات للعودة"),
+        "noReviews": MessageLookupByLibrary.simpleMessage(
+            "لا توجد مراجعات لهذا المنتج حتى الآن"),
         "notification": MessageLookupByLibrary.simpleMessage("إشعار"),
         "notified": MessageLookupByLibrary.simpleMessage("المبلغون"),
         "nowFollowing":

@@ -19,6 +19,7 @@ class ColorManager {
   static const Color primaryG = Color(0xFFBFC8CA);
   static const Color primaryG2 = Color(0xFFA4ADAF);
   static const Color primaryG3 = Color(0xFFD0D5DD);
+  static const Color primaryGB3 = Color.fromARGB(255, 219, 228, 231);
   static const Color primaryG4 = Color(0xFF899295);
   static const Color primaryG5 = Color(0xFF929091);
   static const Color primaryG6 = Color(0x3FAEAEAE);

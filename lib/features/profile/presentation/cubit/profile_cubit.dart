@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 
@@ -11,8 +15,13 @@ class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepoIMpl _profileRepoIMpl;
   ProfileCubit(this._profileRepoIMpl) : super(const ProfileState.initial());
   StoreProfileModel? storeProfile;
+  String selectedCategoryId =
+      HiveStorage.get<List<Result>>(HiveKeys.categories).first.id;
   List<StoreProfileModel> stores = [];
-  Map<String, dynamic> validationOption = {};
+  Map<String, dynamic> validationOption = {
+    'isFollow': false,
+    'isNotify': false,
+  };
   Future<void> getStoreById(String storeId) async {
     emit(const ProfileState.loading());
     final result = await _profileRepoIMpl.getStoreById(storeId);
@@ -28,9 +37,11 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(const ProfileState.loading());
     final result = await _profileRepoIMpl.getStoreForCustomer(storeId);
     result.fold((er) {
+      log(er.errorMsg);
       emit(const ProfileState.failure());
     }, (response) {
       validationOption = response;
+      log('this res $validationOption');
       emit(const ProfileState.success());
     });
   }
@@ -56,7 +67,6 @@ class ProfileCubit extends Cubit<ProfileState> {
     }, (response) {
       followStatus = response;
       emit(const ProfileState.successFollow());
-      emit(const ProfileState.success());
     });
   }
 
@@ -67,7 +77,6 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(const ProfileState.failure());
     }, (response) {
       emit(const ProfileState.successFollow());
-      emit(const ProfileState.success());
     });
   }
 }

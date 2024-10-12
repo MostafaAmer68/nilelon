@@ -12,6 +12,7 @@ import 'package:nilelon/features/product/presentation/pages/product_details_page
 import '../../../../features/product/presentation/pages/product_details_store_page.dart';
 import '../../../color_const.dart';
 import '../../../resources/color_manager.dart';
+import '../../replacer/image_replacer.dart';
 
 GestureDetector productSquarItem({
   required context,
@@ -76,19 +77,13 @@ GestureDetector productSquarItem({
             children: [
               Container(
                 height: 150.h, // Adjusted to fit the design
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(0)), // Added to match the image
-                  image: DecorationImage(
-                    image: model.productImages.isEmpty
-                        ? const AssetImage(
-                            'assets/images/1-Nilelon f logo d.png')
-                        : NetworkImage(model.productImages[0].url)
-                            as ImageProvider,
-                    fit: BoxFit
-                        .cover, // Changed to cover to maintain aspect ratio
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(0),
                   ),
                 ),
+                child: imageReplacer(url: model.productImages.first.url),
               ),
               Visibility(
                 visible: !HiveStorage.get(HiveKeys.isStore),

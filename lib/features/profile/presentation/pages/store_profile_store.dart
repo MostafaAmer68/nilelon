@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/cards/small/market_small_card.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
@@ -96,8 +97,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) => filterContainer(
                           HiveStorage.get<List<Result>>(
-                                  HiveKeys.categories)[index]
-                              .name!,
+                              HiveKeys.categories)[index],
                           index),
                       itemCount:
                           HiveStorage.get<List<Result>>(HiveKeys.categories)
@@ -113,7 +113,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                 builder: (context, state) {
                   return state.when(
                     initial: () {
-                      return  Text(S.of(context).waitingToGet);
+                      return Text(S.of(context).waitingToGet);
                     },
                     loading: () {
                       return buildShimmerIndicatorGrid();
@@ -137,7 +137,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                                 e.categoryID ==
                                 HiveStorage.get<List<Result>>(
                                         HiveKeys.categories)[_selectedIndex]
-                                    .id!)
+                                    .id)
                             .toList()
                             .length,
                         itemBuilder: (context, index) {
@@ -148,9 +148,9 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                                     .products
                                     .where((e) =>
                                         e.categoryID ==
-                                        HiveStorage.get<List<Result>>(HiveKeys
+                                        localData<List<Result>>(HiveKeys
                                                 .categories)[_selectedIndex]
-                                            .id!)
+                                            .id)
                                     .toList()[index]),
                           );
                         },
@@ -166,7 +166,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
     );
   }
 
-  GestureDetector filterContainer(String name, int index) {
+  GestureDetector filterContainer(Result category, int index) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -191,7 +191,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                   ),
                   child: Center(
                     child: Text(
-                      name,
+                      category.name,
                       textAlign: TextAlign.center,
                       style: AppStylesManager.customTextStyleW4,
                     ),
@@ -212,7 +212,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                   ),
                   child: Center(
                     child: Text(
-                      name,
+                      category.name,
                       textAlign: TextAlign.center,
                       style: AppStylesManager.customTextStyleB3
                           .copyWith(fontSize: 12, fontWeight: FontWeight.w600),

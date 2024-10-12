@@ -14,8 +14,9 @@ class RatingContainer extends StatelessWidget {
   final ReviewModel review;
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
       padding: EdgeInsets.symmetric(horizontal: 12.sp),
+      margin: EdgeInsets.symmetric(vertical: 6.sp),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

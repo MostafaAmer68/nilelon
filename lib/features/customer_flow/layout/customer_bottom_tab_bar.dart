@@ -45,12 +45,7 @@ class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
                 child: [
                   const CustomerHomeView(),
                   HiveStorage.get(HiveKeys.userModel) != null
-                      ? BlocProvider(
-                          create: (context) =>
-                              CartCubit(locatorService<CartReposImpl>())
-                                ..getCart(),
-                          child: const CartView(),
-                        )
+                      ? const CartView()
                       : const ProfileGuestPage(),
                   const DiscoverView(),
                   HiveStorage.get(HiveKeys.userModel) != null

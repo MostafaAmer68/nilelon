@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 SliverGridDelegateWithFixedCrossAxisCount get gridDelegate =>
@@ -11,3 +12,5 @@ SliverGridDelegateWithFixedCrossAxisCount get gridDelegate =>
     );
 
 lang(context) => S.of(context);
+
+T localData<T>(String key) => HiveStorage.get<T>(key);

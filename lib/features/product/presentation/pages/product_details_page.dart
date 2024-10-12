@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -48,8 +50,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     super.initState();
     cubit = CartCubit.get(context);
     productCubit = ProductsCubit.get(context);
-    ProductsCubit.get(context).getProductDetails(widget.productId);
-    // ProductsCubit.get(context).getReviews(widget.productId);
+    productCubit.getProductDetails(widget.productId);
+    productCubit.getReviews(widget.productId);
   }
 
   void incrementCounter() {
@@ -100,7 +102,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 builder: (context, state) {
                   return state.whenOrNull(
                     failure: (_) => Text(_),
-                    loading: () => const CircularProgressIndicator(),
+                    loading: () => buildShimmerIndicatorSmall(500, 600),
                     success: () => ImageBanner(
                       images: productCubit.product.productImages
                           .map((e) => e.url)
@@ -117,22 +119,22 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   child: BlocBuilder<ProductsCubit, ProductsState>(
                     builder: (context, state) {
                       return state.whenOrNull(
-                          failure: (_) => Text(_),
-                          loading: () => const CircularProgressIndicator(),
-                          success: () => ListView.builder(
-                                itemCount:
-                                    productCubit.product.productImages.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  final image =
-                                      productCubit.product.productImages[index];
-                                  return Image.network(
-                                    image.url,
-                                    fit: BoxFit.cover,
-                                    // width: 30,
-                                  );
-                                },
-                              ))!;
+                        failure: (_) => Text(_),
+                        loading: () => buildShimmerIndicatorRow(),
+                        success: () => ListView.builder(
+                          itemCount: productCubit.product.productImages.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final image =
+                                productCubit.product.productImages[index];
+                            return imageReplacer(
+                              url: image.url,
+                              fit: BoxFit.cover,
+                              // width: 30,
+                            );
+                          },
+                        ),
+                      )!;
                     },
                   ),
                 ),
@@ -143,7 +145,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   builder: (context, state) {
                     return state.whenOrNull(
                         failure: (_) => Text(_),
-                        loading: () => const CircularProgressIndicator(),
+                        loading: () => buildShimmerIndicatorSmall(),
                         success: () => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -169,14 +171,16 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 builder: (context, state) {
                   return state.whenOrNull(
                     failure: (_) => Text(_),
-                    loading: () => const CircularProgressIndicator(),
+                    loading: () => buildShimmerIndicatorSmall(),
                     success: () {
+                      if (productCubit.review.isEmpty) {
+                        return Center(child: Text(lang.noReviews));
+                      }
                       return ListView.builder(
                         shrinkWrap: true,
-                        itemCount: ProductsCubit.get(context).review.length,
+                        itemCount: productCubit.review.length,
                         itemBuilder: (context, index) {
-                          final review =
-                              ProductsCubit.get(context).review[index];
+                          final review = productCubit.review[index];
                           return RatingContainer(review: review);
                         },
                       );

@@ -1,6 +1,6 @@
 List<String> genderFilter = [
-  'Men',
-  'Women',
+  'men',
+  'women',
   'Both',
 ];
 

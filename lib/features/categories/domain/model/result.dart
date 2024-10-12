@@ -1,30 +1,42 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+
 part 'result.g.dart';
 
 @HiveType(typeId: 4)
 class Result extends Equatable {
   @HiveField(0)
-  final String? id;
+  final String id;
   @HiveField(1)
-  final String? name;
+  final String name;
   @HiveField(2)
-  final String? image;
+  final String image;
 
-  const Result({this.id, this.name, this.image});
-
-  factory Result.fromJson(Map<String, dynamic> json) => Result(
-        id: json['id'] as String?,
-        name: json['name'] as String?,
-        image: json['image'] as String?,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'image': image,
-      };
+  const Result({
+    required this.id,
+    required this.name,
+    required this.image,
+  });
 
   @override
-  List<Object?> get props => [id, name, image];
+  List<Object> get props => [id, name, image];
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'name': name,
+      'image': image,
+    };
+  }
+
+  factory Result.fromMap(Map<String, dynamic> map) {
+    return Result(
+      id: map['id'] as String,
+      name: map['name'] as String,
+      image: map['image'] as String,
+    );
+  }
 }

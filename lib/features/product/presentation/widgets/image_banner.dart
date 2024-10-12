@@ -32,20 +32,11 @@ class _ImageBannerState extends State<ImageBanner> {
                 setState(() {});
               }),
           itemBuilder: (ctx, index, _) {
-            return widget.images.isEmpty
-                ? Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        image: const DecorationImage(
-                            image: AssetImage(
-                                'assets/images/1-Nilelon f logo d.png'),
-                            fit: BoxFit.cover)),
-                  )
-                : imageReplacer(
-                    url: widget.images[index],
-                    height: screenHeight(context, 0.5),
-                    width: double.infinity,
-                  );
+            return imageReplacer(
+              url: widget.images[index],
+              height: screenHeight(context, 0.5),
+              width: double.infinity,
+            );
           },
         ),
       ],

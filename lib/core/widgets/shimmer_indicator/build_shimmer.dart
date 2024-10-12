@@ -27,21 +27,22 @@ Widget buildShimmerIndicator() {
   );
 }
 
-Widget buildShimmerIndicatorSmall() {
+Widget buildShimmerIndicatorSmall([double? height, double? width]) {
   return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[100]!,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          width: 1.sw > 600 ? 290 : 220,
-          height: 1.sw > 600 ? 300 : 220,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-          ),
+    baseColor: Colors.grey[300]!,
+    highlightColor: Colors.grey[100]!,
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: width ?? (1.sw > 600 ? 290 : 220),
+        height: height ?? (1.sw > 600 ? 300 : 220),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
         ),
-      ));
+      ),
+    ),
+  );
 }
 
 Widget buildShimmerIndicatorAnalyticsBigCard(context) {

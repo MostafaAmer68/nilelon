@@ -1,27 +1,28 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/features/closet/presentation/widget/closet_widget_with_options.dart';
-import 'package:nilelon/core/widgets/pop_ups/create_new_section_popup.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../customer_flow/section_details/section_details_view.dart';
+import '../widget/create_section_widget.dart';
 
-class ClosetView extends StatefulWidget {
-  const ClosetView({super.key, this.productId = ''});
+class ClosetPage extends StatefulWidget {
+  const ClosetPage({super.key, this.productId = ''});
   final String productId;
   @override
-  State<ClosetView> createState() => _ClosetViewState();
+  State<ClosetPage> createState() => _ClosetViewState();
 }
 
-class _ClosetViewState extends State<ClosetView> {
+class _ClosetViewState extends State<ClosetPage> {
   @override
   void initState() {
     ClosetCubit.get(context).getclosets();
@@ -68,23 +69,25 @@ class _ClosetViewState extends State<ClosetView> {
                           },
                           success: () {
                             return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount:
-                                    ClosetCubit.get(context).closets.length,
-                                itemBuilder: (context, index) {
-                                  final closet =
-                                      ClosetCubit.get(context).closets[index];
-                                  return ClosetsWidgetWithOptions(
-                                    closet: closet,
-                                    onTap: () {
-                                      ClosetCubit.get(context)
-                                          .addProductToClosets(
-                                        widget.productId,
-                                        closet.id,
-                                      );
-                                    },
-                                  );
-                                });
+                              shrinkWrap: true,
+                              itemCount:
+                                  ClosetCubit.get(context).closets.length,
+                              itemBuilder: (context, index) {
+                                final closet =
+                                    ClosetCubit.get(context).closets[index];
+                                return ClosetsWidgetWithOptions(
+                                  isPage: true,
+                                  closet: closet,
+                                  onTap: () {
+                                    navigateTo(
+                                      context: context,
+                                      screen:
+                                          SectionDetailsView(closet: closet),
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           },
                           failure: () {
                             return const Icon(Icons.error);
@@ -100,13 +103,30 @@ class _ClosetViewState extends State<ClosetView> {
         ),
       ),
       persistentFooterButtons: [
-        ButtonBuilder(
+        GradientButtonBuilder(
             text: lang.addNewSection,
             width: screenWidth(context, 0.94),
             ontap: () {
-              createNewSectionDialog(context);
+              showModalBottomSheet(
+                backgroundColor: ColorManager.primaryW,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                ),
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                context: context,
+                builder: (BuildContext context) {
+                  return const CreateNewSection();
+                },
+              );
             })
       ],
     );
   }
+
+  // Future<dynamic> showBtmSheet(BuildContext context) {
+  //   return
+  // }
 }

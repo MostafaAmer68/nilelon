@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/customer_flow/see_more_stores/view/see_more_stores_view.dart';
 import 'package:nilelon/features/search/presentation/widgets/search_delegate.dart';
@@ -92,11 +93,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
             Expanded(
               child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    mainAxisExtent: 220,
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 20.0,
-                    mainAxisSpacing: 12),
+                gridDelegate: gridDelegate,
                 itemCount: HiveStorage.get<List>(HiveKeys.categories).length,
                 itemBuilder: (context, index) {
                   final category =

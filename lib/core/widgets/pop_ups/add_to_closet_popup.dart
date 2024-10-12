@@ -5,9 +5,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/widgets/pop_ups/create_new_section_popup.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 
 import '../../../features/closet/presentation/widget/closet_widget_with_options.dart';
+import '../../../features/closet/presentation/widget/create_section_widget.dart';
 import '../../../features/customer_flow/section_details/section_details_view.dart';
 import '../../../generated/l10n.dart';
 import '../../utils/navigation.dart';
@@ -27,6 +28,14 @@ Future addToClosetDialog(
           state.mapOrNull(
             success: (_) {
               BotToast.closeAllLoading();
+              final productIndex = ProductsCubit.get(context)
+                  .products
+                  .indexWhere((e) => e.id == productid);
+              ProductsCubit.get(context).products[productIndex] =
+                  ProductsCubit.get(context)
+                      .products[productIndex]
+                      .copyWith(isInCloset: true);
+              // navigatePop(context: context);
             },
           );
         },
@@ -147,7 +156,14 @@ Future addToClosetDialog(
                   SizedBox(height: 8.h),
                   GestureDetector(
                     onTap: () {
-                      createNewSectionDialog(context);
+                      showModalBottomSheet(
+                        // isScrollControlled: true,
+                        // useSafeArea: true,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CreateNewSection();
+                        },
+                      );
                     },
                     child: Container(
                       decoration: BoxDecoration(

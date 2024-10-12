@@ -177,7 +177,7 @@ class ProductNewInView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: SizedBox(
-              height: 1.sw > 600 ? 310 : 300,
+              height: 1.sw > 600 ? 310 : 320,
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   if (index == ProductsCubit.get(context).products.length &&
@@ -244,17 +244,9 @@ class HandPickedView extends StatelessWidget {
           return buildShimmerIndicatorGrid();
         }, success: () {
           if (ProductsCubit.get(context).products.isEmpty) {
-            return SizedBox(
-              height: 450.h,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    S.of(context).noProductHandPicked,
-                    style: AppStylesManager.customTextStyleG2,
-                  ),
-                ],
-              ),
+            return Text(
+              S.of(context).noProductHandPicked,
+              style: AppStylesManager.customTextStyleG2,
             );
           }
           return Padding(

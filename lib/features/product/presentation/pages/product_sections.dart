@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -13,6 +14,7 @@ import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
 
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../categories/domain/model/result.dart';
 import '../cubit/products_cubit/products_cubit.dart';
 import '../cubit/products_cubit/products_state.dart';
 
@@ -27,8 +29,10 @@ class SectionsProductView extends StatefulWidget {
 }
 
 class _SectionsProductViewState extends State<SectionsProductView> {
-  int selectedGender = 0;
-  int selectedCategory = 0;
+  String selectedGender = 'Male';
+  String selectedCategory = localData(HiveKeys.categories).first.id;
+  int selectedCategoryIndex = 0;
+  int selectedGenderIndex = 0;
   late final ProductsCubit cubit;
   @override
   void initState() {
@@ -65,13 +69,23 @@ class _SectionsProductViewState extends State<SectionsProductView> {
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: gridDelegate,
                       shrinkWrap: true,
-                      itemCount: ProductsCubit.get(context).products.length,
+                      itemCount: ProductsCubit.get(context)
+                          .products
+                          .where((e) =>
+                              selectedCategory == e.categoryID ||
+                              e.type == selectedGender)
+                          .toList()
+                          .length,
                       itemBuilder: (context, sizeIndex) {
                         return Container(
                           child: productSquarItem(
                             context: context,
-                            model:
-                                ProductsCubit.get(context).products[sizeIndex],
+                            model: ProductsCubit.get(context)
+                                .products
+                                .where((e) =>
+                                    selectedCategory == e.categoryID ||
+                                    e.type == selectedGender)
+                                .toList()[sizeIndex],
                           ),
                         );
                       },
@@ -92,23 +106,24 @@ class _SectionsProductViewState extends State<SectionsProductView> {
         Padding(
           padding: const EdgeInsets.only(left: 8, right: 8),
           child: SizedBox(
-            height: screenWidth(context, 0.28),
+            height: screenWidth(context, 0.34),
             width: MediaQuery.of(context).size.width,
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
-                    selectedCategory = index;
+                    selectedCategory = localData(HiveKeys.categories)[index].id;
+                    selectedCategoryIndex = index;
                     setState(() {});
                   },
                   child: categoryContainer(
                     context: context,
-                    image: categoryFilter[index]['image'],
-                    name: categoryFilter[index]['name'],
-                    isSelected: selectedCategory == index,
+                    image: localData(HiveKeys.categories)[index].image,
+                    name: localData(HiveKeys.categories)[index].name,
+                    isSelected: selectedCategoryIndex == index,
                   )),
-              itemCount: categoryFilter.length,
+              itemCount: localData(HiveKeys.categories).length,
             ),
           ),
         ),
@@ -133,12 +148,13 @@ class _SectionsProductViewState extends State<SectionsProductView> {
                   scrollDirection: Axis.horizontal,
                   itemBuilder: (context, index) => GestureDetector(
                       onTap: () {
-                        selectedGender = index;
+                        selectedGender = genderFilter[index];
+                        selectedGenderIndex = index;
                         setState(() {});
                       },
                       child: filterContainer(
                         genderFilter[index],
-                        selectedGender == index,
+                        selectedGenderIndex == index,
                       )),
                   itemCount: genderFilter.length,
                 ),

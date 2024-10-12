@@ -21,7 +21,7 @@ class CategoryModel extends Equatable {
       isSuccess: json['isSuccess'] as bool?,
       errorMessages: json['errorMessages'] as List<dynamic>?,
       result: (json['result'] as List<dynamic>?)
-          ?.map((e) => Result.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Result.fromMap(e as Map<String, dynamic>))
           .toList(),
     );
   }
@@ -30,7 +30,7 @@ class CategoryModel extends Equatable {
         'statusCode': statusCode,
         'isSuccess': isSuccess,
         'errorMessages': errorMessages,
-        'result': result?.map((e) => e.toJson()).toList(),
+        'result': result?.map((e) => e.toMap()).toList(),
       };
 
   @override

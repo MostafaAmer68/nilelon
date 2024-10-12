@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-class ProductModel {
+import 'package:equatable/equatable.dart';
+
+class ProductModel extends Equatable {
   final String id;
   final String name;
   final String description;
@@ -15,7 +17,7 @@ class ProductModel {
   final List<ProductVariant> productVariants;
   final List<ProductImage> productImages;
 
-  ProductModel({
+  const ProductModel({
     required this.id,
     required this.name,
     required this.description,
@@ -53,7 +55,7 @@ class ProductModel {
     );
   }
   factory ProductModel.empty() {
-    return ProductModel(
+    return const ProductModel(
       id: '',
       name: '',
       description: '',
@@ -117,6 +119,25 @@ class ProductModel {
       productVariants: productVariants ?? this.productVariants,
       productImages: productImages ?? this.productImages,
     );
+  }
+
+  @override
+  List<Object> get props {
+    return [
+      id,
+      name,
+      description,
+      type,
+      categoryID,
+      sizeguide,
+      isInCloset,
+      rating,
+      inStock,
+      storeName,
+      storeId,
+      productVariants,
+      productImages,
+    ];
   }
 }
 
