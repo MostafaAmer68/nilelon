@@ -8,6 +8,8 @@ import 'package:nilelon/features/order/data/models/shipping_method.dart';
 import 'package:nilelon/features/order/domain/repositories/order_repo.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 
+import '../../../../core/service/catch_func.dart';
+
 class OrderRepoImpl extends OrderRepo {
   final OrderService _orderService;
 
@@ -18,90 +20,48 @@ class OrderRepoImpl extends OrderRepo {
     String orderId,
     String orderStatus,
   ) async {
-    try {
-      final result = await _orderService.changeOrderState(orderId, orderStatus);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _orderService.changeOrderState(orderId, orderStatus));
   }
 
   @override
   Future<Either<ServerFailure, void>> createOrder(
       CreateOrderModel order) async {
-    try {
-      final result = await _orderService.createOrder(order);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _orderService.createOrder(order));
   }
 
   @override
   Future<Either<ServerFailure, List<OrderModel>>> getCustomerOrder(
       String orderStatus) async {
-    try {
-      final result = await _orderService.getCustomerOrder(orderStatus);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _orderService.getCustomerOrder(orderStatus));
   }
 
   @override
   Future<Either<ServerFailure, List<OrderModel>>> getStoreOrder(
       String orderStatus) async {
-    try {
-      final result = await _orderService.getStoreOrder(orderStatus);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _orderService.getStoreOrder(orderStatus));
   }
 
   @override
   Future<Either<ServerFailure, List<OrderModel>>> getStoreOrderByDate(
       String date) async {
-    try {
-      final result = await _orderService.getStoreOrderByDate(date);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _orderService.getStoreOrderByDate(date));
   }
 
   @override
   Future<Either<ServerFailure, List<ShippingMethod>>>
       getShippingMethod() async {
-    try {
-      final result = await _orderService.getShippingMethod();
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _orderService.getShippingMethod());
   }
 
   @override
   Future<Either<ServerFailure, OrderCustomerModel>> getCustomerOrderDetailsById(
       String orderId) async {
-    try {
-      final result = await _orderService.getOrderById(orderId);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _orderService.getOrderById(orderId));
   }
 
   @override
   Future<Either<ServerFailure, OrderStoreModel>> getStoreOrderDetailsById(
       String orderId) async {
-    try {
-      final result = await _orderService.getStoreOrderById(orderId);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _orderService.getStoreOrderById(orderId));
   }
-
-  
 }

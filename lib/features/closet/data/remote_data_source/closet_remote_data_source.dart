@@ -8,21 +8,17 @@ import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/domain/model/create_closet.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 
-import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 
 import '../../../../core/service/network/end_point.dart';
 import '../../../auth/domain/model/user_model.dart';
-import '../../domain/repo/closet_repo.dart';
 
-class ClosetRemoteDataSourceImpl extends ClosetRepo {
+class ClosetService {
   final ApiService _apiService;
 
-  ClosetRemoteDataSourceImpl(this._apiService);
+  ClosetService(this._apiService);
 
-  @override
-  Future<Either<FailureService, Response>> addProductToCloset(
-      String productId, String closetId) async {
+  Future<void> addProuctToCloset(String productId, String closetId) async {
     final Response data = await _apiService
         .post(endPoint: EndPoint.addProductToClosetUrl, query: {
       'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
@@ -30,7 +26,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
       'closetListId': closetId,
     });
     if (data.statusCode == HttpStatus.ok) {
-      return Right(data);
+      // return data;
     } else if (data.statusCode == HttpStatus.badRequest) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -43,9 +39,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
     }
   }
 
-  @override
-  Future<Either<FailureService, Response>> addProductToDefaultCloset(
-      String productId) async {
+  Future<void> addProuctToDefaultCloset(String productId) async {
     final Response data = await _apiService
         .post(endPoint: EndPoint.updateQuantityCartUrl, query: {
       'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
@@ -65,15 +59,13 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
     }
   }
 
-  @override
-  Future<Either<FailureService, String>> createCloset(
-      CreateCloset model) async {
+  Future<String> createClset(CreateCloset model) async {
     final Response data = await _apiService.post(
       endPoint: EndPoint.createClosetUrl,
       body: model.toJson(),
     );
     if (data.statusCode == HttpStatus.ok) {
-      return Right(data.data['result']);
+      return data.data['result'];
     } else if (data.statusCode == HttpStatus.badRequest) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -86,9 +78,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
     }
   }
 
-  @override
-  Future<Either<FailureService, Response>> deleteCloset(
-      String closetListId) async {
+  Future<void> deleteCloset(String closetListId) async {
     final Response data =
         await _apiService.delete(endPoint: EndPoint.deleteClosetUrl, query: {
       'closetListId': closetListId,
@@ -107,8 +97,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
     }
   }
 
-  @override
-  Future<Either<FailureService, Response>> deleteProductFromCloset(
+  Future<void> deleteroductFromCloset(
       String closetListId, String productId) async {
     final Response data = await _apiService
         .delete(endPoint: EndPoint.deleteProductFromCloset, query: {
@@ -129,9 +118,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
     }
   }
 
-  @override
-  Future<Either<FailureService, Response>> emptyCloset(
-      String closetListId) async {
+  Future<void> emptyCoset(String closetListId) async {
     final Response data =
         await _apiService.post(endPoint: EndPoint.emptyCartUrl, query: {
       'closetListId': closetListId,
@@ -150,15 +137,13 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
     }
   }
 
-  @override
-  Future<Either<FailureService, List<ProductModel>>> getClosetItem(
-      String closetId) async {
+  Future<List<ProductModel>> getClosetItem(String closetId) async {
     final Response data = await _apiService.get(
         endPoint: EndPoint.getClosetItemsUrl, query: {'closetId': closetId});
     if (data.statusCode == HttpStatus.ok) {
-      return Right((data.data['result'] as List)
+      return (data.data['result'] as List)
           .map((item) => ProductModel.fromJson(item['product']))
-          .toList());
+          .toList();
     } else if (data.statusCode == HttpStatus.badRequest) {
       // Handle the bad request response
       final errorMessage = data.data;
@@ -171,8 +156,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
     }
   }
 
-  @override
-  Future<Either<FailureService, List<ClosetModel>>> getCustomerCloset() async {
+  Future<List<ClosetModel>> getCustomerCloset() async {
     final Response data = await _apiService.get(
       endPoint: EndPoint.getCustomerClosetUrl,
       query: {
@@ -185,7 +169,7 @@ class ClosetRemoteDataSourceImpl extends ClosetRepo {
       for (var item in result) {
         closets.add(ClosetModel(id: item['id'], name: item['name']));
       }
-      return Right(closets);
+      return closets;
     } else if (data.statusCode == HttpStatus.badRequest) {
       // Handle the bad request response
       final errorMessage = data.data;

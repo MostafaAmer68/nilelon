@@ -1,5 +1,5 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
+import 'package:nilelon/core/service/catch_func.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
 import 'package:nilelon/features/cart/domain/model/change_quantity_model.dart';
 import 'package:nilelon/features/cart/domain/model/delete_request_model.dart';
@@ -13,78 +13,28 @@ class CartReposImpl extends CartRepos {
   CartReposImpl(this._cartRemoteDataSource);
   @override
   Future<Either<FailureService, GetCartModel>> getCart() async {
-    try {
-      final result = await _cartRemoteDataSource.getCart();
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        // print(e.toString());
-        return left(ServerFailure(e.toString()));
-      }
-      // print(e.toString());
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _cartRemoteDataSource.getCart());
   }
 
   @override
   Future<Either<FailureService, void>> deleteFromCart(
       DeleteRequestModel model) async {
-    try {
-      final result = await _cartRemoteDataSource.deleteFromCart(model);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        // print(e.toString());
-        return left(ServerFailure(e.toString()));
-      }
-      // print(e.toString());
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _cartRemoteDataSource.deleteFromCart(model));
   }
 
   @override
   Future<Either<FailureService, void>> updateQuantityCart(
       ChangeQuantityModel model) async {
-    try {
-      final result = await _cartRemoteDataSource.updateQuantityCart(model);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        // print(e.toString());
-        return left(ServerFailure(e.toString()));
-      }
-      // print(e.toString());
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _cartRemoteDataSource.updateQuantityCart(model));
   }
 
   @override
   Future<Either<FailureService, void>> addToCart(AddToCartModel model) async {
-    try {
-      final result = await _cartRemoteDataSource.addToCart(model);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        // print(e.toString());
-        return left(ServerFailure(e.toString()));
-      }
-      // print(e.toString());
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _cartRemoteDataSource.addToCart(model));
   }
 
   @override
   Future<Either<FailureService, void>> emptyCart(String customerId) async {
-    try {
-      final result = await _cartRemoteDataSource.emptyCart(customerId);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        // print(e.toString());
-        return left(ServerFailure(e.toString()));
-      }
-      // print(e.toString());
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _cartRemoteDataSource.emptyCart(customerId));
   }
 }

@@ -51,7 +51,7 @@ void setUpLocatorService() {
   ));
 
   //closets
-  locatorService.registerSingleton(ClosetRemoteDataSourceImpl(
+  locatorService.registerSingleton(ClosetService(
     locatorService(),
   ));
   locatorService.registerSingleton<ClosetRepoImpl>(ClosetRepoImpl(
