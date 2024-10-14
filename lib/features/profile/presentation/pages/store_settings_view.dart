@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/features/auth/presentation/view/login_view.dart';
 import 'package:nilelon/features/store_flow/subscription/subscription_view.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -38,7 +39,7 @@ class StoreSettingsView extends StatelessWidget {
               children: [
                 ProfileListTile(
                   name: lang.editProfileInfo,
-                  image: 'assets/images/edit.svg',
+                  image: Assets.assetsImagesEdit,
                   onTap: () {
                     navigateTo(
                         context: context, screen: const EditStoreProfileView());
@@ -46,7 +47,7 @@ class StoreSettingsView extends StatelessWidget {
                 ),
                 ProfileListTile(
                   name: lang.editStoreInfo,
-                  image: 'assets/images/edit.svg',
+                  image: Assets.assetsImagesEdit,
                   onTap: () {
                     navigateTo(
                         context: context, screen: const EditStoreInfoView());
@@ -54,19 +55,19 @@ class StoreSettingsView extends StatelessWidget {
                 ),
                 ProfileListTile(
                   name: lang.language,
-                  image: 'assets/images/Language.svg',
+                  image: Assets.assetsImagesLanguage,
                   onTap: () {
                     navigateTo(context: context, screen: const LanguageView());
                   },
                 ),
                 ProfileListTile(
                   name: lang.polices,
-                  image: 'assets/images/Security.svg',
+                  image: Assets.assetsImagesSecurity,
                   onTap: () {},
                 ),
                 ProfileListTile(
                   name: lang.subscription,
-                  image: 'assets/images/card_2.svg',
+                  image: Assets.assetsImagesCard2,
                   onTap: () {
                     navigateTo(
                         context: context, screen: const SubscriptionView());
@@ -74,14 +75,14 @@ class StoreSettingsView extends StatelessWidget {
                 ),
                 ProfileListTile(
                   name: lang.security,
-                  image: 'assets/images/lock_b.svg',
+                  image: Assets.assetsImagesLockB,
                   onTap: () {
                     navigateTo(context: context, screen: const SecurityView());
                   },
                 ),
                 ProfileListTile(
                   name: lang.logout,
-                  image: 'assets/images/logout.svg',
+                  image: Assets.assetsImagesLogout,
                   isRed: true,
                   onTap: () {
                     logoutAlert(context);

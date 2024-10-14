@@ -6,12 +6,12 @@ import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
 import 'package:nilelon/features/cart/domain/model/change_quantity_model.dart';
 import 'package:nilelon/features/cart/domain/model/delete_request_model.dart';
-import 'package:nilelon/features/cart/domain/model/get_cart_model/get_cart_model.dart';
+import 'package:nilelon/features/cart/domain/model/cart_item.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
 
 abstract class CartRemoteDataSource {
-  Future<GetCartModel> getCart();
+  Future<CartModel> getCart();
   Future<void> deleteFromCart(DeleteRequestModel model);
   Future<void> updateQuantityCart(ChangeQuantityModel model);
   Future<void> addToCart(AddToCartModel model);
@@ -24,12 +24,12 @@ class CartService extends CartRemoteDataSource {
   CartService({required this.apiService});
 
   @override
-  Future<GetCartModel> getCart() async {
+  Future<CartModel> getCart() async {
     final Response data = await apiService.get(
         endPoint: EndPoint.getCartByCustomerIdUrl,
         query: {'id': HiveStorage.get<UserModel>(HiveKeys.userModel).id});
     if (data.statusCode == HttpStatus.ok) {
-      return GetCartModel.fromJson(data.data as Map<String, dynamic>);
+      return CartModel.fromJson(data.data['result']);
     } else {
       // Handle other status codes if necessary
       throw Exception(

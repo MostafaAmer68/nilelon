@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/features/closet/presentation/view/closet_Page.dart';
 import 'package:nilelon/features/closet/presentation/view/closet_sheet_bar_view.dart';
 import 'package:nilelon/features/customer_flow/notification/notification_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_guest_page.dart';
@@ -26,14 +26,14 @@ class HomeCustomAppBar extends StatelessWidget {
             height: 30.w,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/images/1-Nilelon f logo d.png'))),
+                    image: AssetImage(Assets.assetsImagesLogo))),
           ),
           Container(
             width: 90.w,
             height: 30.w,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/images/nilelonEcommerce.png'))),
+                    image: AssetImage(Assets.assetsImagesNotification))),
           ),
           const Spacer(),
           GestureDetector(
@@ -70,7 +70,7 @@ class HomeCustomAppBar extends StatelessWidget {
                     child: SizedBox(
                       width: 1.sw > 600 ? 40 : 30,
                       height: 1.sw > 600 ? 40 : 30,
-                      child: SvgPicture.asset('assets/images/Notification.svg'),
+                      child: SvgPicture.asset(Assets.assetsImagesNotification),
                     ),
                   ),
                   Positioned(
@@ -134,7 +134,7 @@ class HomeCustomAppBar extends StatelessWidget {
                   )
                 ],
               ),
-              child: SvgPicture.asset('assets/images/Closet.svg'),
+              child: SvgPicture.asset(Assets.assetsImagesCloset),
             ),
           )
         ],

@@ -3,6 +3,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -41,20 +42,27 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
   void initState() {
     cubit = BlocProvider.of(context);
     cubit.getStoreById(widget.storeId);
-    cubit.getStoreForCustomer(widget.storeId);
-    ProductsCubit.get(context)
-        .getStoreProductsPagination(widget.storeId, 1, 100);
+
+    ProductsCubit.get(context).getStoreProducts(widget.storeId, 1, 100);
     super.initState();
   }
 
-  // String _indexName = 'All Items';
+  @override
+  void dispose() {
+    cubit.validationOption = {
+      'isFollow': false,
+      'isNotify': false,
+    };
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
     return ScaffoldImage(
       appBar: customAppBar(
         title: cubit.storeProfile == null
-            ? 'loading...'
+            ? lang.loading
             : cubit.storeProfile!.name,
         context: context,
         onPressed: () {
@@ -65,24 +73,70 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
       body: SingleChildScrollView(
         child: BlocConsumer<ProfileCubit, ProfileState>(
           listener: (context, state) {
-            state.mapOrNull(loading: (r) {
-              BotToast.showLoading();
-            }, successFollow: (r) {
-              BotToast.closeAllLoading();
-              cubit.getStoreForCustomer(widget.storeId);
-              BotToast.showText(text: S.of(context).nowFollowing);
-            }, success: (r) {
-              BotToast.closeAllLoading();
-              setState(() {});
-            }, failure: (r) {
-              BotToast.closeAllLoading();
+            state.mapOrNull(initial: (_) {
+              cubit.getStoreById(widget.storeId);
             });
           },
           builder: (context, state) {
             return state.whenOrNull(
               initial: () => const SizedBox(),
-              failure: () => const SizedBox(),
-              loading: () => const Center(child: CircularProgressIndicator()),
+              failure: () => Text(lang.smothingWent),
+              loading: () => Column(
+                children: [
+                  const DefaultDivider(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  buildShimmerIndicatorSmall(),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  buildShimmerIndicatorSmall(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  buildShimmerIndicatorSmall(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  buildShimmerIndicatorSmall(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const DefaultDivider(),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  Row(
+                    children: [
+                      const SizedBox(
+                        width: 16,
+                      ),
+                      const Icon(Icons.tune),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Expanded(
+                        child: SizedBox(
+                          height: 52,
+                          width: MediaQuery.of(context).size.width,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount: 3,
+                            itemBuilder: (context, index) =>
+                                buildShimmerIndicatorSmall(),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: ProductStoreWidget(),
+                  ),
+                ],
+              ),
               success: () {
                 return Column(
                   children: [
@@ -109,7 +163,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                     const SizedBox(
                       height: 30,
                     ),
-                    FollowAndNotifyWidget(lang: lang, storeId: widget.storeId),
+                    FollowAndNotifyWidget(storeId: widget.storeId),
                     const SizedBox(
                       height: 30,
                     ),
@@ -251,6 +305,8 @@ class ProductStoreWidget extends StatelessWidget {
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
         return state.whenOrNull(
+          // initial: () => const SizedBox(),
+          failure: (_) => Text(_),
           loading: () => buildShimmerIndicatorGrid(),
           success: () => GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
@@ -277,13 +333,9 @@ class ProductStoreWidget extends StatelessWidget {
 class FollowAndNotifyWidget extends StatefulWidget {
   const FollowAndNotifyWidget({
     super.key,
-    // required this.cubit,
-    required this.lang,
     required this.storeId,
   });
 
-  // final ProfileCubit cubit;
-  final S lang;
   final String storeId;
 
   @override
@@ -295,75 +347,71 @@ class _FollowAndNotifyWidgetState extends State<FollowAndNotifyWidget> {
   @override
   void initState() {
     cubit = ProfileCubit.get(context);
-    // cubit.getStoreForCustomer(widget.widget.storeId);
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    cubit.validationOption = {};
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        return cubit.validationOption.isEmpty
-            ? const Text('field to follow')
-            : Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  !cubit.validationOption['isFollow']
-                      ? GradientButtonBuilder(
-                          text: widget.lang.follow,
-                          ontap: () {
-                            cubit.followStore(widget.storeId);
-                          },
-                          width: screenWidth(context, 0.55),
-                          height: 38,
-                        )
-                      : OutlinedButtonBuilder(
-                          text: widget.lang.following,
-                          ontap: () {
-                            cubit.followStore(widget.storeId);
-                          },
-                          width: screenWidth(context, 0.55),
-                          height: 38,
-                        ),
-                  const SizedBox(
-                    width: 16,
-                  ),
-                  Container(
-                    height: 38,
-                    width: 38,
-                    decoration: BoxDecoration(
-                        color: ColorManager.primaryG16,
-                        borderRadius: BorderRadius.circular(12)),
-                    child: !cubit.validationOption['isNotify']
-                        ? IconButton(
-                            icon: const Icon(
-                              Iconsax.notification,
-                              color: ColorManager.primaryO,
-                              size: 18,
-                            ),
-                            onPressed: () {
-                              cubit.notifyStore(widget.storeId);
+        return state.whenOrNull(loading: () {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              buildShimmerIndicatorSmall(),
+              const SizedBox(width: 16),
+              buildShimmerIndicatorSmall(),
+            ],
+          );
+        }, success: () {
+          return cubit.validationOption.isEmpty
+              ? const Text('field to follow')
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    !cubit.validationOption['isFollow']
+                        ? GradientButtonBuilder(
+                            text: lang(context).follow,
+                            ontap: () {
+                              cubit.followStore(widget.storeId);
                             },
+                            width: screenWidth(context, 0.55),
+                            height: 38,
                           )
-                        : IconButton(
-                            icon: const Icon(
-                              Iconsax.notification,
-                              color: ColorManager.primaryB,
-                              size: 18,
-                            ),
-                            onPressed: () {
-                              cubit.notifyStore(widget.storeId);
+                        : OutlinedButtonBuilder(
+                            text: lang(context).following,
+                            ontap: () {
+                              cubit.followStore(widget.storeId);
                             },
+                            width: screenWidth(context, 0.55),
+                            height: 38,
                           ),
-                  ),
-                ],
-              );
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        color: ColorManager.primaryG16,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: IconButton(
+                        icon: Image.asset(
+                          !cubit.validationOption['isNotify']
+                              ? Assets.assetsImagesNotifications
+                              : Assets.assetsImagesNotificationsActive,
+                          // fit: BoxFit.cover,
+                        ),
+                        // iconSize: 50,
+                        onPressed: () {
+                          cubit.notifyStore(widget.storeId);
+                        },
+                      ),
+                    ),
+                  ],
+                );
+        })!;
       },
     );
   }

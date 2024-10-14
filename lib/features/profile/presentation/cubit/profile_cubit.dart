@@ -41,8 +41,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(const ProfileState.failure());
     }, (response) {
       validationOption = response;
-      log('this res $validationOption');
-      emit(const ProfileState.success());
+      emit(const ProfileState.initial());
     });
   }
 
@@ -66,7 +65,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(const ProfileState.failure());
     }, (response) {
       followStatus = response;
-      emit(const ProfileState.successFollow());
+      getStoreForCustomer(storeId);
     });
   }
 
@@ -76,7 +75,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     result.fold((er) {
       emit(const ProfileState.failure());
     }, (response) {
-      emit(const ProfileState.successFollow());
+      getStoreForCustomer(storeId);
+      // emit(const ProfileState.successFollow());
     });
   }
 }

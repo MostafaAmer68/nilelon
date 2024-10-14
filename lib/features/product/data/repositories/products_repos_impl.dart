@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:nilelon/features/product/domain/models/add_product/add_product_model.dart';
 import 'package:nilelon/features/product/domain/models/create_review_model.dart';
 import 'package:nilelon/features/product/domain/models/create_variant_image.dart';
@@ -11,271 +10,121 @@ import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
 import 'package:nilelon/features/product/domain/models/update_product.dart';
 
+import '../../../../core/service/catch_func.dart';
 import '../../domain/models/product_model.dart';
 import '../../domain/repositories/products_repos.dart';
 
 class ProductsReposImpl extends ProductsRepos {
-  final ProductsService productsRemoteDataSource;
-  ProductsReposImpl(this.productsRemoteDataSource);
+  final ProductsService _productService;
+  ProductsReposImpl(this._productService);
   @override
   Future<Either<FailureService, List<ProductModel>>> getFollowedProducts(
       int page, int productSize) async {
-    try {
-      final result =
-          await productsRemoteDataSource.getFollowedProducts(page, productSize);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.getFollowedProducts(page, productSize));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getProductByCategory(
       String categoryId, int page, int productSize) async {
-    try {
-      final result = await productsRemoteDataSource.getProductByCategory(
-          categoryId, page, productSize);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() =>
+        _productService.getProductByCategory(categoryId, page, productSize));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getNewInProducts(
       int page, int productSize) async {
-    try {
-      final result =
-          await productsRemoteDataSource.getNewInProducts(page, productSize);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.getNewInProducts(page, productSize));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getRandomProduct(
       int page, int productSize) async {
-    try {
-      final result =
-          await productsRemoteDataSource.getRandomProducts(page, productSize);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.getRandomProducts(page, productSize));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getNewInProductsGuest(
       int page, int productSize) async {
-    try {
-      final result = await productsRemoteDataSource.getNewInProductsGuest(
-          page, productSize);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.getNewInProductsGuest(page, productSize));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getRandomProductsGuest(
       int page, int productSize) async {
-    try {
-      final result = await productsRemoteDataSource.getRandomProductsGuest(
-          page, productSize);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.getRandomProductsGuest(page, productSize));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getStoreProfileItems(
       String storeId, int page, int productSize) async {
-    try {
-      final result = await productsRemoteDataSource.getStoreProfileItems(
-          storeId, page, productSize);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(
+        () => _productService.getStoreProfileItems(storeId, page, productSize));
   }
 
   @override
   Future<Either<FailureService, void>> createProduct(
       AddProductModel model) async {
-    try {
-      await productsRemoteDataSource.createProduct(model);
-      return const Right(null);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.createProduct(model));
   }
 
   @override
   Future<Either<FailureService, void>> createReview(
       CreateReviewModel model) async {
-    try {
-      await productsRemoteDataSource.createReview(model);
-      return const Right(null);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.createReview(model));
   }
 
   @override
   Future<Either<FailureService, void>> createProductVariant(
       CreateVariant model) async {
-    try {
-      await productsRemoteDataSource.createVariant(model);
-      return const Right(null);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.createVariant(model));
   }
 
   @override
   Future<Either<FailureService, void>> createVariantImage(
       CreateVariantImage model) async {
-    try {
-      await productsRemoteDataSource.createVariantImage(model);
-      return const Right(null);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.createVariantImage(model));
   }
 
   @override
   Future<Either<FailureService, void>> deleteVariant(
       DeleteVariant model) async {
-    try {
-      await productsRemoteDataSource.deleteVariant(model);
-      return const Right(null);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.deleteVariant(model));
   }
 
   @override
   Future<Either<FailureService, void>> deleteVariantImage(
       DeleteVariantImage model) async {
-    try {
-      await productsRemoteDataSource.deleteVariantImage(model);
-      return const Right(null);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.deleteVariantImage(model));
   }
 
   @override
   Future<Either<FailureService, void>> updateProduct(
       UpdateProduct model) async {
-    try {
-      await productsRemoteDataSource.updateProduct(model);
-      return const Right(null);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure(e.toString()));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.updateProduct(model));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getOffersProducts(
       int page, int productSize) async {
-    try {
-      final result = await productsRemoteDataSource.getCustomersOffersProducts(
-          page, productSize);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(
+        () => _productService.getCustomersOffersProducts(page, productSize));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getOffersProductsGuest(
       int page, int productSize) async {
-    try {
-      final result = await productsRemoteDataSource.getOffersProductsGuest(
-          page, productSize);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.getOffersProductsGuest(page, productSize));
   }
 
   @override
   Future<Either<FailureService, ProductModel>> getProductDetails(
       String productId) async {
-    try {
-      final result =
-          await productsRemoteDataSource.getProductDetails(productId);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.getProductDetails(productId));
   }
 
   @override
   Future<Either<FailureService, List<ReviewModel>>> getReviews(
       String productId) async {
-    try {
-      final result = await productsRemoteDataSource.getReviews(productId);
-      return Right(result);
-    } catch (e) {
-      if (e is DioException) {
-        return left(ServerFailure.fromDioException(e));
-      }
-      return left(ServerFailure(e.toString()));
-    }
+    return exe(() => _productService.getReviews(productId));
   }
 }

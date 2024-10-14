@@ -1,11 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
+import 'package:nilelon/features/cart/domain/model/cart_item.dart';
 
 class CheckProductItem extends StatelessWidget {
   const CheckProductItem({
@@ -33,14 +34,12 @@ class CheckProductItem extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       child: Row(
         children: [
-          Container(
-            width: 90,
-            height: 110,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: const DecorationImage(
-                    image: AssetImage('assets/images/cloth1.png'),
-                    fit: BoxFit.cover)),
+          SizedBox(
+            width: 100,
+            height: 100,
+            child: imageReplacer(
+              url: cartItem.productImages.first.url,
+            ),
           ),
           const SizedBox(
             width: 8,
@@ -73,10 +72,10 @@ class CheckProductItem extends StatelessWidget {
                               color: ColorManager.primaryO2,
                               size: 20,
                             ),
-                            Text(
-                              '',
-                              style: AppStylesManager.customTextStyleG6,
-                            ),
+                            // Text(
+                            //   '',
+                            //   style: AppStylesManager.customTextStyleG6,
+                            // ),
                           ],
                         ),
                       ],

@@ -10,6 +10,7 @@ import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/auth/presentation/view/login_view.dart';
 
+import '../../../core/constants/assets.dart';
 import '../../../core/widgets/scaffold_image.dart';
 
 class ShopOrSellView extends StatelessWidget {
@@ -32,7 +33,7 @@ class ShopOrSellView extends StatelessWidget {
               height: 60.w,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('assets/images/1-Nilelon f logo d.png'),
+                  image: AssetImage(Assets.assetsImagesLogo),
                   fit: BoxFit.fill,
                 ),
               ),

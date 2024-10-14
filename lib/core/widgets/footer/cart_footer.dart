@@ -26,7 +26,7 @@ class _CartFooterState extends State<CartFooter> {
   @override
   void initState() {
     cubit = CartCubit.get(context);
-    for (var item in cubit.items) {
+    for (var item in cubit.cart.items) {
       totalPrice += item.price * item.quantity;
     }
     super.initState();
@@ -36,13 +36,13 @@ class _CartFooterState extends State<CartFooter> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
 
-    return Visibility( 
+    return Visibility(
       visible: widget.visible,
       child: BlocListener<CartCubit, CartState>(
         listener: (context, state) {
           if (state is GetCartSuccess) {
             totalPrice = 0;
-            for (var item in cubit.selectedItems) {
+            for (var item in cubit.selectedItems.items) {
               totalPrice += item.price * item.quantity;
             }
           }

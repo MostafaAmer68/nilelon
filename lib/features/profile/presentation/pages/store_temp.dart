@@ -32,7 +32,7 @@ class StoreProfileStore extends StatefulWidget {
 class _StoreProfileStoreState extends State<StoreProfileStore> {
   @override
   void initState() {
-    ProductsCubit.get(context).getStoreProductsPagination('', 1, 1000);
+    ProductsCubit.get(context).getStoreProducts('', 1, 1000);
     super.initState();
   }
 
@@ -172,7 +172,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
         setState(() {
           _selectedIndex = index;
           // _indexName = name;
-          ProductsCubit.get(context).getStoreProductsPagination('', 1, 100);
+          ProductsCubit.get(context).getStoreProducts('', 1, 100);
           setState(() {});
         });
       },

@@ -63,13 +63,14 @@ class SeeMoreStoresView extends StatelessWidget {
       title: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4),
         child: TextFormFieldBuilder(
-            label: 'Search by brand ',
-            controller: TextEditingController(),
-            type: TextInputType.text,
-            isIcon: false,
-            height: 40,
-            prefixWidget: const Icon(Iconsax.search_normal),
-            width: screenWidth(context, 1)),
+          label: 'Search by brand ',
+          controller: TextEditingController(),
+          type: TextInputType.text,
+          isIcon: false,
+          height: 40,
+          prefixWidget: const Icon(Iconsax.search_normal),
+          width: screenWidth(context, 1),
+        ),
       ),
     );
   }

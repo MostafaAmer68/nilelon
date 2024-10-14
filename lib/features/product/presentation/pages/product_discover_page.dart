@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
@@ -106,7 +107,7 @@ class _DiscoverViewState extends State<DiscoverView> {
             Column(
               children: [
                 ViewAllRow(
-                    assetName: 'assets/images/newIn.svg',
+                    assetName: Assets.assetsImagesNewIn,
                     noTextIcon: false,
                     text: lang.newIn,
                     onPressed: () {
@@ -123,7 +124,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                 const SizedBox(height: 20),
                 ViewAllRow(
                     text: lang.handPicked,
-                    assetName: 'assets/images/handPicked.svg',
+                    assetName: Assets.assetsImagesHandPicked,
                     noTextIcon: false,
                     onPressed: () {
                       navigateTo(

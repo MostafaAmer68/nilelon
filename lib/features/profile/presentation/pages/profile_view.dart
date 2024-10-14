@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/closet/presentation/view/closet_Page.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -13,7 +14,7 @@ import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/order/presentation/pages/order_customer_tab_bar.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
-import 'package:nilelon/features/customer_flow/settings/settings_view.dart';
+import 'package:nilelon/features/profile/presentation/pages/settings_view.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../auth/domain/model/user_model.dart';
@@ -80,7 +81,7 @@ class ProfileView extends StatelessWidget {
                     children: [
                       ProfileListTile(
                         name: lang.ordersManagement,
-                        image: 'assets/images/bag.svg',
+                        image: Assets.assetsImagesBag,
                         onTap: () {
                           navigateTo(
                               context: context,
@@ -89,7 +90,7 @@ class ProfileView extends StatelessWidget {
                       ),
                       ProfileListTile(
                         name: lang.myCloset,
-                        image: 'assets/images/Closet.svg',
+                        image: Assets.assetsImagesCloset,
                         onTap: () {
                           navigateTo(
                               context: context, screen: const ClosetPage());
@@ -97,7 +98,7 @@ class ProfileView extends StatelessWidget {
                       ),
                       ProfileListTile(
                         name: lang.recommendations,
-                        image: 'assets/images/Recommendation.svg',
+                        image: Assets.assetsImagesRecommendation,
                         onTap: () {
                           navigateTo(
                               context: context,
@@ -106,7 +107,7 @@ class ProfileView extends StatelessWidget {
                       ),
                       ProfileListTile(
                         name: lang.settings,
-                        image: 'assets/images/Settings.svg',
+                        image: Assets.assetsImagesSettings,
                         onTap: () {
                           navigateTo(
                               context: context, screen: const SettingsView());

@@ -53,9 +53,10 @@ class _SearchPageState extends State<SearchPage> {
               ),
               onPressed: () {
                 navigateTo(
-                    context: context,
-                    screen: SeeMoreStoresView(
-                        stores: ProfileCubit.get(context).stores));
+                  context: context,
+                  screen: SeeMoreStoresView(
+                      stores: ProfileCubit.get(context).stores),
+                );
               },
             ),
             Padding(
@@ -64,8 +65,10 @@ class _SearchPageState extends State<SearchPage> {
                 height: 100,
                 child: BlocBuilder<ProfileCubit, ProfileState>(
                   builder: (context, state) {
-                    return state.whenOrNull(
+                    return state.when(
+                      initial: () => Text(lang.smothingWent),
                       loading: () => buildShimmerIndicatorRow(),
+                      failure: () => Text(lang.smothingWent),
                       success: () {
                         return ListView.builder(
                           scrollDirection: Axis.horizontal,
@@ -86,7 +89,7 @@ class _SearchPageState extends State<SearchPage> {
                           itemCount: ProfileCubit.get(context).stores.length,
                         );
                       },
-                    )!;
+                    );
                   },
                 ),
               ),
@@ -127,6 +130,7 @@ class _SearchPageState extends State<SearchPage> {
       String id, String image, context, String name, String description) {
     return GestureDetector(
       onTap: () {
+        ProfileCubit.get(context).getStoreForCustomer(id);
         navigateTo(
           context: context,
           screen: StoreProfileCustomer(

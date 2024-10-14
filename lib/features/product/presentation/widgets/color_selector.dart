@@ -31,7 +31,7 @@ class ColorSelector extends StatelessWidget {
               height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color(int.parse('0xff$color')),
+                color: Color(int.parse('0x$color')),
                 boxShadow: isSelected
                     ? [
                         BoxShadow(

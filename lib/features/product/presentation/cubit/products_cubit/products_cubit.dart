@@ -164,7 +164,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   //?*********************************************************************************
 
   //todo Get Store Products Pagination
-  Future<void> getStoreProductsPagination(
+  Future<void> getStoreProducts(
       String storeId, int page, int productSize) async {
     emit(const ProductsState.loading());
     var result =

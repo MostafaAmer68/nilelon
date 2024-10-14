@@ -5,6 +5,7 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
+import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 
 import '../../../../features/profile/presentation/pages/store_profile_customer.dart';
 import '../../../utils/navigation.dart';
@@ -22,6 +23,14 @@ class BrandCard extends StatefulWidget {
 
 class _BrandCardState extends State<BrandCard> {
   bool notFollowing = true;
+  late final ProfileCubit cubit;
+  @override
+  void initState() {
+    cubit = ProfileCubit.get(context);
+   
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -71,20 +80,18 @@ class _BrandCardState extends State<BrandCard> {
                   .copyWith(fontWeight: FontWeight.w600),
             ),
             const Spacer(),
-            notFollowing
+            !cubit.validationOption['isFollow']
                 ? GradientButtonBuilder(
                     text: 'Follow',
                     ontap: () {
-                      notFollowing = !notFollowing;
-                      setState(() {});
+                      cubit.followStore(widget.store.id);
                     },
                     height: 45,
                   )
                 : OutlinedButtonBuilder(
                     text: 'Following',
                     ontap: () {
-                      notFollowing = !notFollowing;
-                      setState(() {});
+                      cubit.followStore(widget.store.id);
                     },
                     // width: screenWidth(context, 0.55),
                     height: 45,

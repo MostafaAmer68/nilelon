@@ -31,8 +31,11 @@ class _CheckOutViewState extends State<CheckOutView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
     return ScaffoldImage(
-      appBar:
-          customAppBar(title: lang.checkOut, context: context, hasIcon: false),
+      appBar: customAppBar(
+        title: lang.checkOut,
+        context: context,
+        hasIcon: false,
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

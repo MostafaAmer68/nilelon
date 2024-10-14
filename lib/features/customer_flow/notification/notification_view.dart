@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -32,14 +33,17 @@ class NotificationView extends StatelessWidget {
                   ? Container(
                       width: screenWidth(context, 0.5),
                       decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/noNotification.png'))),
+                        image: DecorationImage(
+                          image: AssetImage(
+                            Assets.assetsImagesNoNotification,
+                          ),
+                        ),
+                      ),
                     )
                   : const Column(
                       children: [
                         NotifyGradientCard(
-                          image: 'assets/images/cloth1.png',
+                          image: Assets.assetsImagesCloth1,
                           title: '20% Discount on this item, Don’t miss it.',
                           time: '11:56 AM',
                         ),
@@ -47,7 +51,7 @@ class NotificationView extends StatelessWidget {
                           height: 16,
                         ),
                         NotifyCard(
-                          image: 'assets/images/Arrived.png',
+                          image: Assets.assetsImagesArrived,
                           title: 'Your package is being packed by the sender',
                           time: '11:56 AM',
                         ),
@@ -55,7 +59,7 @@ class NotificationView extends StatelessWidget {
                           height: 16,
                         ),
                         NotifyViewedCard(
-                          image: 'assets/images/arrived2.png',
+                          image: Assets.assetsImagesArrived2,
                           title: 'Your package has arrived at your destination',
                           time: '11:56 AM',
                         )

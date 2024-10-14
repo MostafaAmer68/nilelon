@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/features/auth/presentation/view/login_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -14,16 +15,15 @@ import 'package:nilelon/features/shared/language/language_view.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 import 'package:nilelon/features/auth/presentation/view/security_view.dart';
 
-import '../../../core/data/hive_stroage.dart';
-import '../../../core/widgets/alert/logout_alert.dart';
-import '../../../core/widgets/scaffold_image.dart';
+import '../../../../core/data/hive_stroage.dart';
+import '../../../../core/widgets/alert/logout_alert.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
-
     final lang = S.of(context);
     return ScaffoldImage(
       appBar:
@@ -42,7 +42,7 @@ class SettingsView extends StatelessWidget {
               children: [
                 ProfileListTile(
                   name: lang.editAccount,
-                  image: 'assets/images/edit-2.svg',
+                  image: Assets.assetsImagesEdit2,
                   onTap: () {
                     navigateTo(
                         context: context, screen: const EditAccountView());
@@ -50,19 +50,19 @@ class SettingsView extends StatelessWidget {
                 ),
                 ProfileListTile(
                   name: lang.language,
-                  image: 'assets/images/Language.svg',
+                  image: Assets.assetsImagesLanguage,
                   onTap: () {
                     navigateTo(context: context, screen: const LanguageView());
                   },
                 ),
                 ProfileListTile(
                   name: lang.polices,
-                  image: 'assets/images/Security.svg',
+                  image: Assets.assetsImagesSecurity,
                   onTap: () {},
                 ),
                 ProfileListTile(
                   name: lang.security,
-                  image: 'assets/images/lock_b.svg',
+                  image: Assets.assetsImagesLockB,
                   onTap: () {
                     navigateTo(context: context, screen: const SecurityView());
                   },
@@ -71,7 +71,7 @@ class SettingsView extends StatelessWidget {
                   visible: HiveStorage.get(HiveKeys.userModel) == null,
                   child: ProfileListTile(
                     name: lang.logout,
-                    image: 'assets/images/logout.svg',
+                    image: Assets.assetsImagesLogout,
                     isRed: true,
                     onTap: () {
                       logoutAlert(context);

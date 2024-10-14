@@ -4,7 +4,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
 import 'package:nilelon/features/cart/domain/model/change_quantity_model.dart';
 import 'package:nilelon/features/cart/domain/model/delete_request_model.dart';
-import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
+import 'package:nilelon/features/cart/domain/model/cart_item.dart';
 import 'package:nilelon/features/cart/domain/repos/cart_repos.dart';
 
 import '../../../auth/domain/model/user_model.dart';
@@ -31,8 +31,8 @@ class CartCubit extends Cubit<CartState> {
     });
   }
 
-  List<CartItem> items = [];
-  List<CartItem> selectedItems = [];
+  CartModel cart = CartModel(id: '', items: []);
+  CartModel selectedItems = CartModel(id: '', items: []);
   Future<void> addToCart(AddToCartModel model) async {
     emit(CartLoading());
 
@@ -47,9 +47,9 @@ class CartCubit extends Cubit<CartState> {
   void onSelectedItem(bool value, CartItem cart) {
     emit(UpdateQuantityCartLoading());
     if (value) {
-      selectedItems.add(cart);
+      selectedItems.items.add(cart);
     } else {
-      selectedItems.remove(cart);
+      selectedItems.items.remove(cart);
     }
     emit(GetCartSuccess());
   }
@@ -64,8 +64,8 @@ class CartCubit extends Cubit<CartState> {
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
-      items = response.result!.items!;
-      selectedItems = response.result!.items!;
+      cart = response;
+      selectedItems = response;
       emit(GetCartSuccess());
     });
   }

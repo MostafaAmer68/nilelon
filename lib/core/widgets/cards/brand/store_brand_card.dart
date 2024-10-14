@@ -3,7 +3,7 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/features/profile/presentation/pages/store_profile_store.dart';
+import 'package:nilelon/features/profile/presentation/pages/store_temp.dart';
 
 class StoreBrandCard extends StatefulWidget {
   const StoreBrandCard({

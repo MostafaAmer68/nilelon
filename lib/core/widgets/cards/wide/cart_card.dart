@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/features/cart/domain/model/get_cart_model/cart_item.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
+import 'package:nilelon/features/cart/domain/model/cart_item.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/small_button.dart';
+
+import '../../../../features/product/presentation/pages/product_details_page.dart';
+import '../../../utils/navigation.dart';
 
 class CartCard extends StatefulWidget {
   const CartCard({
@@ -49,11 +53,11 @@ class _CartCardState extends State<CartCard> {
       children: [
         GestureDetector(
           onTap: () {
-            // navigateTo(
-            //     context: context,
-            //     screen: ProductDetailsView(
-            //    product: model,
-            //     ));
+            navigateTo(
+                context: context,
+                screen: ProductDetailsView(
+                  productId: widget.cart.productId,
+                ));
           },
           child: SizedBox(
             width: screenWidth(context, 0.9),
@@ -79,14 +83,12 @@ class _CartCardState extends State<CartCard> {
                   const SizedBox(
                     width: 12,
                   ),
-                  Container(
-                    width: 1.sw > 600 ? 110 : 80,
+                  SizedBox(
+                    width: 1.sw > 600 ? 110 : 100,
                     height: 1.sw > 600 ? 130 : 100,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        image: const DecorationImage(
-                            image: AssetImage('assets/images/app_logo.png'),
-                            fit: BoxFit.cover)),
+                    child: imageReplacer(
+                      url: widget.cart.productImages.first.url,
+                    ),
                   ),
                   const SizedBox(
                     width: 4,

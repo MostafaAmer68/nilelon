@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/store_flow/notification/notification_tab_bar.dart';
@@ -21,14 +22,14 @@ class MarketCustomAppBar extends StatelessWidget {
             height: 30.w,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/images/1-Nilelon f logo d.png'))),
+                    image: AssetImage(Assets.assetsImagesLogo))),
           ),
           Container(
             width: 90.w,
             height: 30.w,
             decoration: const BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage('assets/images/nilelonEcommerce.png'))),
+                    image: AssetImage(Assets.assetsImagesNilelonEcommerce))),
           ),
           const Spacer(),
           GestureDetector(
@@ -43,7 +44,7 @@ class MarketCustomAppBar extends StatelessWidget {
                   SizedBox(
                     width: 1.sw > 600 ? 40 : 30,
                     height: 1.sw > 600 ? 40 : 30,
-                    child: SvgPicture.asset('assets/images/Notification.svg'),
+                    child: SvgPicture.asset(Assets.assetsImagesNotifications),
                   ),
                   Positioned(
                     left: 4,

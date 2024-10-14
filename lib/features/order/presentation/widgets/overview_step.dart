@@ -66,11 +66,12 @@ class _OverViewStepState extends State<OverViewStep> {
                       return Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: CheckProductItem(
-                          cartItem: CartCubit.get(context).selectedItems[index],
+                          cartItem:
+                              CartCubit.get(context).selectedItems.items[index],
                         ),
                       );
                     },
-                    itemCount: cartCubit.items.length,
+                    itemCount: cartCubit.cart.items.length,
                     scrollDirection: Axis.horizontal,
                   );
                 },
@@ -122,7 +123,8 @@ class _OverViewStepState extends State<OverViewStep> {
                         builder: (context, state) {
                           if (state is GetCartSuccess) {
                             if (promoCubit.totalPrice == 0) {
-                              for (var item in CartCubit.get(context).items) {
+                              for (var item
+                                  in CartCubit.get(context).cart.items) {
                                 promoCubit.totalPrice +=
                                     item.price * item.quantity;
                                 promoCubit.tempTotalPrice +=

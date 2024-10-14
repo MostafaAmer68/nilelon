@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:nilelon/core/service/catch_func.dart';
 import 'package:nilelon/features/search/data/datasources/search_service.dart';
 import 'package:nilelon/features/search/data/models/search_model.dart';
 import 'package:nilelon/features/search/domain/repositories/search_repo.dart';
@@ -13,11 +14,6 @@ class SearchRepoImpl implements SearchRepo {
   @override
   @override
   Future<Either<ServerFailure, List<SearchModel>>> search(String query) async {
-    try {
-      final result = await _searchService.search(query);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _searchService.search(query));
   }
 }
