@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/add_product/add_product_cubit.dart';
 import 'package:nilelon/features/product/presentation/widgets/size_container.dart';
 
@@ -11,6 +14,7 @@ import '../../../../core/resources/color_manager.dart';
 import '../../../../core/sizes_consts.dart';
 import '../../../../core/widgets/pop_ups/camera_popup.dart';
 import '../../../../core/widgets/text_form_field/text_field/text_form_field_builder.dart';
+import '../../domain/models/size_variant_controller.dart';
 import 'add_container.dart';
 import 'color_selection_widget.dart';
 import 'image_container.dart';
@@ -22,10 +26,12 @@ class ProductDetailsWidget extends StatefulWidget {
       {super.key,
       required this.onTapAddButton,
       required this.onTapEditButton,
-      required this.onTapDeleteButton});
+      required this.onTapDeleteButton,
+      this.product});
   final VoidCallback onTapAddButton;
   final VoidCallback onTapEditButton;
   final VoidCallback onTapDeleteButton;
+  final ProductModel? product;
 
   @override
   State<ProductDetailsWidget> createState() => _ProductDetailsWidgetState();
@@ -36,16 +42,21 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   @override
   void initState() {
     cubit = AddProductCubit.get(context);
-    cubit.sizes = SizeTypes.values
-        .map(
-          (e) => {
-            'size': e.name,
-            'isEdit': false,
-            'quantityController': TextEditingController(),
-            'priceController': TextEditingController(),
-          },
-        )
-        .toList();
+
+    if (widget.product != null) {
+      cubit.initializeVarientsEdit(widget.product!);
+    } else {
+      cubit.sizes = SizeTypes.values
+          .map(
+            (e) => SizeController(
+              size: e.name,
+              isEdit: false,
+              quantity: TextEditingController(),
+              price: TextEditingController(),
+            ),
+          )
+          .toList();
+    }
     super.initState();
   }
 
@@ -69,7 +80,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
             style: AppStylesManager.customTextStyleG17,
           ),
         ),
-        SizedBox(height: 24.h),
+        SizedBox(height: 20.h),
       ],
     );
   }
@@ -78,7 +89,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.sp),
       child: SizedBox(
-        height: 1.sw > 600 ? 1000 : 770,
+        height: 1.sw > 600 ? 1000 : 800,
         child: Column(
           children: [
             SizedBox(height: 10.h),
@@ -112,35 +123,6 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
         ),
         child: Icon(Iconsax.trash, color: ColorManager.primaryW, size: 18.r),
       ),
-    );
-  }
-
-  Widget _buildAmountTextField(TextEditingController amountController) {
-    return TextFormFieldBuilder(
-      label: amountController.text.isEmpty
-          ? amountController.text
-          : amountController.text,
-      controller: amountController,
-      type: TextInputType.number,
-      textAlign: TextAlign.center,
-      height: 46.h,
-      disabledBorder: const BorderSide(color: ColorManager.primaryB2),
-      width: 1.sw > 600 ? screenWidth(context, 0.4) : screenWidth(context, 0.2),
-      noIcon: true,
-    );
-  }
-
-  Widget _buildPriceTextField(TextEditingController priceController) {
-    return TextFormFieldBuilder(
-      label: priceController.text.isEmpty ? '0' : priceController.text,
-      controller: priceController,
-      type: TextInputType.number,
-      textAlign: TextAlign.center,
-      height: 46.h,
-      disabledBorder: const BorderSide(color: ColorManager.primaryB2),
-      width:
-          1.sw > 600 ? screenWidth(context, 0.15) : screenWidth(context, 0.3),
-      noIcon: true,
     );
   }
 
@@ -225,23 +207,27 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   }
 
   Widget _buildPriceText(int index, TextEditingController priceController) {
-    return SizedBox(
-      width: screenWidth(context, 0.15),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            priceController.text.isNotEmpty
-                ? priceController.text
-                : cubit.priceController.text.isEmpty
-                    ? '0'
-                    : cubit.priceController.text,
-            style: AppStylesManager.customTextStyleO3,
-          ),
-          SizedBox(width: 4.w),
-          const Icon(Iconsax.edit_2, color: ColorManager.primaryG, size: 20),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          priceController.text.isNotEmpty
+              ? priceController.text
+              : cubit.priceC.text.isEmpty
+                  ? '0'
+                  : cubit.priceC.text,
+          style: AppStylesManager.customTextStyleO3,
+        ),
+        // SizedBox(width: 2.w),
+        IconButton(
+          onPressed: () {
+            cubit.sizes[index] = cubit.sizes[index].copyWith(isEdit: true);
+            setState(() {});
+          },
+          icon: const Icon(Iconsax.edit_2,
+              color: ColorManager.primaryG, size: 20),
+        ),
+      ],
     );
   }
 
@@ -249,31 +235,59 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
     return Padding(
       padding: const EdgeInsets.only(
         top: 16,
-        left: 30,
+        left: 20,
         right: 20,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          sizeContainer(context, cubit.sizes[index]['size'] as String),
-          _buildAmountTextField(cubit.sizes[index]['quantityController']),
+          sizeContainer(context, cubit.sizes[index].size),
+          _buildAmountTextField(cubit.sizes[index].quantity),
           isEditable
-              ? _buildPriceTextField(cubit.sizes[index]['priceController'])
-              : _buildPriceText(index, cubit.sizes[index]['priceController']),
+              ? _buildPriceTextField(cubit.sizes[index].price)
+              : _buildPriceText(index, cubit.sizes[index].price),
         ],
       ),
+    );
+  }
+
+  Widget _buildAmountTextField(TextEditingController amountController) {
+    return TextFormFieldBuilder(
+      label: amountController.text,
+      controller: amountController,
+      type: TextInputType.number,
+      textAlign: TextAlign.center,
+      height: 46.h,
+      disabledBorder: const BorderSide(color: ColorManager.primaryB2),
+      width: 1.sw > 600 ? screenWidth(context, 0.4) : screenWidth(context, 0.2),
+      noIcon: true,
+    );
+  }
+
+  Widget _buildPriceTextField(TextEditingController priceController) {
+    return TextFormFieldBuilder(
+      label: priceController.text.isEmpty ? '0' : priceController.text,
+      controller: priceController,
+      type: TextInputType.number,
+      textAlign: TextAlign.center,
+      height: 46.h,
+      disabledBorder: const BorderSide(color: ColorManager.primaryB2),
+      width:
+          1.sw > 600 ? screenWidth(context, 0.15) : screenWidth(context, 0.3),
+      noIcon: true,
     );
   }
 
   Widget _buildSizeRow(int index) {
     return GestureDetector(
       onTap: () {
-        cubit.sizes[index]['isEdit'] = true;
+        cubit.sizes[index] = cubit.sizes[index].copyWith(isEdit: true);
         setState(() {});
+        log(cubit.sizes[index].isEdit.toString());
       },
       child: Column(
         children: [
-          _buildSizeRowContent(index, cubit.sizes[index]['isEdit']),
+          _buildSizeRowContent(index, cubit.sizes[index].isEdit),
         ],
       ),
     );
@@ -293,7 +307,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        bool isNonEditable = cubit.isVarientAdded[cubit.selectedIndex];
+        bool isNonEditable = cubit.isVarientAdded[cubit.selectedColor]!;
 
         return isNonEditable
             ? _buildDisabledSizeRow(index)
@@ -365,7 +379,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
         _buildDisabledVariantSection(total),
         Container(
           width: double.infinity,
-          height: 1.sw > 600 ? 1000 : 770,
+          height: 1.sw > 600 ? 1000 : 800,
           color: ColorManager.primaryG.withOpacity(0.6),
         ),
       ],
@@ -373,7 +387,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   }
 
   Widget _buildSizeVariantSection(S lang) {
-    return cubit.isVarientAdded[cubit.selectedIndex]
+    return cubit.isVarientAdded[cubit.selectedColor]!
         ? Column(
             children: [
               _buildEditRow(lang.editSizesForThisColor,

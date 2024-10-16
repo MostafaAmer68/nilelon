@@ -11,6 +11,10 @@ SliverGridDelegateWithFixedCrossAxisCount get gridDelegate =>
       mainAxisSpacing: 1.sw > 600 ? 16 : 12,
     );
 
-lang(context) => S.of(context);
+S lang(context) => S.of(context);
+
+calcSale(num original, num rate) {
+  return original -(original * rate) ;
+}
 
 T localData<T>(String key) => HiveStorage.get<T>(key);

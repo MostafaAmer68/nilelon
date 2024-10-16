@@ -24,6 +24,7 @@ import 'package:nilelon/features/product/presentation/widgets/rating_container.d
 import 'package:nilelon/core/widgets/rating/view/rating_dialog.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 
+import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/products_cubit/products_state.dart';
 import '../widgets/color_selector.dart';
@@ -75,9 +76,12 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       listener: (context, state) {
         state.mapOrNull(success: (_) {
           BotToast.closeAllLoading();
-          cubit.selectedColor =
-              productCubit.product.productVariants.first.color;
-          cubit.selectedSize = productCubit.product.productVariants.first.size;
+          cubit.selectedColor = productCubit.product.productVariants
+              .firstWhere((e) => e.price != 0)
+              .color;
+          cubit.selectedSize = productCubit.product.productVariants
+              .firstWhere((e) => e.price != 0)
+              .size;
           sizes = productCubit.product.productVariants
               .where((e) => e.quantity != 0 && e.quantity > 0)
               .map((e) => e.size)
@@ -203,9 +207,26 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     return Row(
       children: [
         Expanded(child: _buildProductInfo(context)),
-        Text(
-          '${productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price} L.E',
-          style: AppStylesManager.customTextStyleO4,
+        Column(
+          children: [
+            Text(
+              '${calcSale(productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price, productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).discountRate)} L.E',
+              style: AppStylesManager.customTextStyleO4,
+            ),
+            Visibility(
+              visible: productCubit.product.productVariants
+                      .firstWhere((e) =>
+                          e.color == cubit.selectedColor &&
+                          e.size == cubit.selectedSize)
+                      .discountRate >
+                  0,
+              child: Text(
+                '${productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price} L.E',
+                style: AppStylesManager.customTextStyleO5
+                    .copyWith(decoration: TextDecoration.lineThrough),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -263,7 +284,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       children: [
         Text('${lang.size} :', style: AppStylesManager.customTextStyleG10),
         SizeToggleButtons(
-          sizes: sizes,
+          sizes: productCubit.product.productVariants
+              .map((e) => e.size)
+              .toList()
+              .toSet()
+              .toList(),
           selectedSize: cubit.selectedSize,
           onSizeSelected: (size) {
             cubit.selectedSize = size;

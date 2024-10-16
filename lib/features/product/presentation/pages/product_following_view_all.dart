@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/features/categories/presentation/widget/category_filter_widget.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
-import 'package:nilelon/core/widgets/filter/category_container.dart';
-import 'package:nilelon/core/widgets/filter/filter_container.dart';
-import 'package:nilelon/core/widgets/filter/static_lists.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../categories/presentation/widget/gander_filter_widget copy.dart';
 import '../../domain/models/product_model.dart';
 
 class FollowingViewAll extends StatefulWidget {
@@ -26,21 +24,22 @@ class FollowingViewAll extends StatefulWidget {
 
 class _FollowingViewAllState extends State<FollowingViewAll> {
   int selectedGender = 0;
-  int selectedCategory = 0;
   int page = 1;
+  late final ProductsCubit cubit;
   int pageSize = 10;
   bool isLoadMore = false;
   final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
-    super.initState();
+    cubit = ProductsCubit.get(context);
     _loadInitialData();
     _setupScrollListener();
+    super.initState();
   }
 
   void _loadInitialData() {
-    BlocProvider.of<ProductsCubit>(context).getFollowedProducts(page, pageSize);
+    cubit.getFollowedProducts(page, pageSize);
   }
 
   void _setupScrollListener() {
@@ -62,8 +61,7 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
     });
 
     page += 1;
-    await BlocProvider.of<ProductsCubit>(context)
-        .getFollowedProducts(page, pageSize);
+    cubit.getFollowedProducts(page, pageSize);
 
     setState(() {
       isLoadMore = false;
@@ -86,8 +84,8 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
                 return state.when(
                   initial: buildShimmerIndicatorGrid,
                   loading: buildShimmerIndicatorGrid,
-                  success: () =>
-                      _buildProductGrid(ProductsCubit.get(context).products),
+                  success: () => _buildProductGrid(cubit.filterListByCategory(
+                      cubit.category, ProductsCubit.get(context).products)),
                   failure: (message) => SizedBox(
                       height: 450.h,
                       child:
@@ -106,27 +104,9 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: SizedBox(
-            height: screenWidth(context, 0.28),
-            width: MediaQuery.of(context).size.width,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: categoryFilter.length,
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  setState(() {
-                    selectedCategory = index;
-                  });
-                },
-                child: categoryContainer(
-                  context: context,
-                  image: categoryFilter[index]['image'],
-                  name: categoryFilter[index]['name'],
-                  isSelected: selectedCategory == index,
-                ),
-              ),
-            ),
+          child: CategoryFilterWidget(
+            selectedCategory: cubit.category,
+            onSelected: (category) {},
           ),
         ),
         const SizedBox(height: 16),
@@ -136,24 +116,12 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
             const Icon(Icons.tune),
             const SizedBox(width: 8),
             Expanded(
-              child: SizedBox(
-                height: 52,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: genderFilter.length,
-                  itemBuilder: (context, index) => GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        selectedGender = index;
-                      });
-                    },
-                    child: filterContainer(
-                      genderFilter[index],
-                      selectedGender == index,
-                    ),
-                  ),
-                ),
+              child: GendarFilterWidget(
+                selectedCategory: cubit.gendar,
+                onSelected: (gendar) {
+                  cubit.gendar = gendar;
+                  setState(() {});
+                },
               ),
             ),
           ],
@@ -190,7 +158,7 @@ class _FollowingViewAllState extends State<FollowingViewAll> {
           } else {
             return productSquarItem(
               context: context,
-              model: productsList[index],
+              product: productsList[index],
             );
           }
         },

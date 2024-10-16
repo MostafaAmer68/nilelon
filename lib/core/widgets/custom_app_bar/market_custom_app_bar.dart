@@ -4,7 +4,6 @@ import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/store_flow/notification/notification_tab_bar.dart';
-import 'package:svg_flutter/svg.dart';
 
 class MarketCustomAppBar extends StatelessWidget {
   const MarketCustomAppBar({
@@ -44,7 +43,7 @@ class MarketCustomAppBar extends StatelessWidget {
                   SizedBox(
                     width: 1.sw > 600 ? 40 : 30,
                     height: 1.sw > 600 ? 40 : 30,
-                    child: SvgPicture.asset(Assets.assetsImagesNotifications),
+                    child: Image.asset(Assets.assetsImagesNotifications),
                   ),
                   Positioned(
                     left: 4,

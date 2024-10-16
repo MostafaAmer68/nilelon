@@ -11,20 +11,20 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/small_button.dart';
 
-import '../../../../features/product/presentation/pages/product_details_page.dart';
-import '../../../utils/navigation.dart';
+import '../../pages/product_details_page.dart';
+import '../../../../../core/utils/navigation.dart';
 
-class CartCard extends StatefulWidget {
-  const CartCard({
+class CartItemCard extends StatefulWidget {
+  const CartItemCard({
     super.key,
     required this.cart,
   });
   final CartItem cart;
   @override
-  State<CartCard> createState() => _CartCardState();
+  State<CartItemCard> createState() => _CartItemCardState();
 }
 
-class _CartCardState extends State<CartCard> {
+class _CartItemCardState extends State<CartItemCard> {
   int localCounter = 1;
   bool isEnabled = true;
   @override
@@ -108,7 +108,9 @@ class _CartCardState extends State<CartCard> {
                                 child: Text(
                                   widget.cart.productName,
                                   style: AppStylesManager.customTextStyleBl7
-                                      .copyWith(fontSize: 1.sw > 600 ? 22 : 14),
+                                      .copyWith(
+                                    fontSize: 1.sw > 600 ? 22 : 14,
+                                  ),
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),

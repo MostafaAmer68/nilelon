@@ -22,7 +22,6 @@ class ApiService {
     var response = await dio.get(
       endPoint,
       data: body,
-      
       queryParameters: query,
     );
     return response;
@@ -48,8 +47,8 @@ class ApiService {
         status == HttpStatus.internalServerError;
   }
 
-  Future<Response> put({required endPoint, dynamic data, dynamic query}) async {
-    var response = await dio.put(endPoint, data: data, queryParameters: query);
+  Future<Response> put({required endPoint, dynamic body, dynamic query}) async {
+    var response = await dio.put(endPoint, data: body, queryParameters: query);
     return response;
   }
 

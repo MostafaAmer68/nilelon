@@ -193,6 +193,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل معلمًا معروفًا"),
         "enterNewPassword":
             MessageLookupByLibrary.simpleMessage("أدخل كلمة مرور جديدة"),
+        "enterOfferPercentage":
+            MessageLookupByLibrary.simpleMessage("أدخل نسبة العرض"),
         "enterPhoneNumber":
             MessageLookupByLibrary.simpleMessage("أدخل رقم الهاتف"),
         "enterProductDescription":
@@ -348,6 +350,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عدد العناصر المباعة"),
         "ofNoified": MessageLookupByLibrary.simpleMessage("عدد المبلغين"),
         "ofOrders": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
+        "offerApplied": MessageLookupByLibrary.simpleMessage(
+            "تم تطبيق العرض على المنتجات المحددة بنجاح!"),
+        "offerPercentage": MessageLookupByLibrary.simpleMessage("نسبة العرض"),
         "offers": MessageLookupByLibrary.simpleMessage("عروض"),
         "offersUnforgettableValue":
             MessageLookupByLibrary.simpleMessage("عروض، قيمة لا تُنسى"),
@@ -478,7 +483,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "security": MessageLookupByLibrary.simpleMessage("الأمان"),
         "seeFeedback": MessageLookupByLibrary.simpleMessage("شاهد الملاحظات"),
         "seeMore": MessageLookupByLibrary.simpleMessage("شاهد المزيد"),
+        "selectAll": MessageLookupByLibrary.simpleMessage("تحديد الكل"),
         "selectType": MessageLookupByLibrary.simpleMessage("اختر النوع"),
+        "selected": MessageLookupByLibrary.simpleMessage("تم تحديد"),
         "sellOnApp": MessageLookupByLibrary.simpleMessage("بيع على التطبيق"),
         "sendFeedback": MessageLookupByLibrary.simpleMessage("إرسال ملاحظات"),
         "settings": MessageLookupByLibrary.simpleMessage("الإعدادات"),
@@ -598,6 +605,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يجب عليك اختيار صورة دليل المقاس."),
         "youMustSelectOneImage": MessageLookupByLibrary.simpleMessage(
             "يجب عليك اختيار صورة واحدة على الأقل."),
+        "youMustSelectOneProduct":
+            MessageLookupByLibrary.simpleMessage("يجب عليك اختيار منتج واحد"),
         "youNeedToMakeSureTheDescriptionYouEnteredIsCorrectCauseItCanNotBeEdited":
             MessageLookupByLibrary.simpleMessage(
                 "تحتاج للتأكد من صحة الوصف الذي أدخلته لأنه لا يمكن تعديله"),

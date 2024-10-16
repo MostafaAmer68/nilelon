@@ -161,7 +161,7 @@ Future addToClosetDialog(
                         // useSafeArea: true,
                         context: context,
                         builder: (BuildContext context) {
-                          return CreateNewSection();
+                          return const CreateNewSection();
                         },
                       );
                     },

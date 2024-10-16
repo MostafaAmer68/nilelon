@@ -150,6 +150,7 @@ class EndPoint {
   static const String createProductVariantUrl = '/Product/CreateProductVariant';
   static const String createProductImagesUrl = '/Product/CreateProductImages';
   static const String updateProductUrl = '/Product/UpdateProduct';
+  static const String changeProductVariantPriceQuantity = '/Product/ChangeProductVariantPriceQuantity';
   static const String deleteProductUrl = '/Product/DeleteProduct';
   static const String changeProductVariantPriceQuantityUrl =
       '/Product/ChangeProductVariantPriceQuantity';

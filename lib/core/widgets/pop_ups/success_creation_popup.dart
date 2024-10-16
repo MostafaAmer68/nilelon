@@ -4,6 +4,8 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 
+import '../../color_const.dart';
+
 Future successCreationDialog(
     {required BuildContext context,
     required String highlightedText,
@@ -17,7 +19,7 @@ Future successCreationDialog(
     context: context,
     builder: (BuildContext context) {
       return Container(
-        height: 500.h,
+        // height: 800.h,
         width: screenWidth(context, 1),
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -31,27 +33,50 @@ Future successCreationDialog(
           child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
+              children: [
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: colorConst
+                        .map(
+                          (e) => Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 1),
+                            width: 10.w,
+                            height: 10.w,
+                            decoration: BoxDecoration(
+                              color: e,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+                const SizedBox(height: 20),
                 Image.asset('assets/images/success_creation.png'),
-                SizedBox(height: 20.h),
+                SizedBox(height: 10.h),
                 Text(
                   highlightedText,
                   style: AppStylesManager.customTextStyleBl4,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20.h),
+                SizedBox(height: 10.h),
                 Text(
                   regularText,
                   style: AppStylesManager.customTextStyleG4,
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 28.h),
+                SizedBox(height: 10.h),
                 GradientButtonBuilder(
                   text: buttonText,
                   ontap: ontap,
                   height: 60.h,
+                  style: AppStylesManager.customTextStyleW,
                   width: screenWidth(context, 1),
-                )
+                ),
+                SizedBox(height: 10.h),
               ],
             ),
           ),

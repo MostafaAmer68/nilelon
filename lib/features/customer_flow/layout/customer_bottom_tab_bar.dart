@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_guest_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
-import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/widgets/icon_with_gradient/icon_with_gradient.dart';
 import 'package:nilelon/features/cart/presentation/view/cart_view.dart';
 import 'package:nilelon/features/product/presentation/pages/product_discover_page.dart';

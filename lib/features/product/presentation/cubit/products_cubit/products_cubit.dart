@@ -7,6 +7,7 @@ import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
 import 'package:nilelon/features/product/domain/repositories/products_repos.dart';
 
+import '../../../../categories/domain/model/result.dart';
 import '../../../domain/models/create_review_model.dart';
 import '../../../domain/models/product_model.dart';
 import 'products_state.dart';
@@ -25,9 +26,32 @@ class ProductsCubit extends Cubit<ProductsState> {
   num rate = 0;
 
   ProductModel product = ProductModel.empty();
+  CategoryModel category = CategoryModel.empty();
+  String gendar = 'All';
   String categoryId = '';
+
   List<ReviewModel> review = [];
   List<ProductModel> products = [];
+  List<ProductModel> productsHandpack = [];
+
+  List<ProductModel> filterListByCategory(
+      CategoryModel selectedCategory, List<ProductModel> products) {
+    return selectedCategory.id.isEmpty
+        ? products
+        : products
+            .where((e) =>
+                e.categoryID == selectedCategory.id ||
+                gendar == e.type ||
+                gendar == 'All')
+            .toList();
+  }
+
+  List<ProductModel> filterListByGendar(
+      String selectedGendar, List<ProductModel> products) {
+    return selectedGendar.isEmpty
+        ? products
+        : products.where((e) => e.type == selectedGendar).toList();
+  }
 
   Future<void> getProductDetails(String productId) async {
     emit(const ProductsState.loading());
@@ -131,7 +155,20 @@ class ProductsCubit extends Cubit<ProductsState> {
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
-      products = response;
+      productsHandpack = response;
+      emit(const ProductsState.success());
+    });
+  }
+
+  Future<void> deleteProduct(String id) async {
+    emit(const ProductsState.loading());
+    late final Either<FailureService, void> result;
+
+    result = await productsRepos.deleteProduct(id);
+
+    result.fold((failure) {
+      emit(ProductsState.failure(failure.errorMsg));
+    }, (response) {
       emit(const ProductsState.success());
     });
   }

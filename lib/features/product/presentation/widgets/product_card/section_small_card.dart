@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
 
-import '../../../../features/product/presentation/pages/product_details_page.dart';
-import '../../../color_const.dart';
-import '../../../utils/navigation.dart';
-import '../../replacer/image_replacer.dart';
+import '../../../../auth/domain/model/user_model.dart';
+import '../../pages/product_details_page.dart';
+import '../../pages/product_details_store_page.dart';
+import '../../../../../core/color_const.dart';
+import '../../../../../core/data/hive_stroage.dart';
+import '../../../../../core/utils/navigation.dart';
+import '../../../../../core/widgets/replacer/image_replacer.dart';
 
 GestureDetector sectionSmallCard(
     {required context,
@@ -19,10 +23,12 @@ GestureDetector sectionSmallCard(
   return GestureDetector(
     onTap: () {
       navigateTo(
-          context: context,
-          screen: ProductDetailsView(
-            productId: product.id,
-          ));
+        context: context,
+        screen:
+            product.storeId != HiveStorage.get<UserModel>(HiveKeys.userModel).id
+                ? ProductDetailsView(productId: product.id)
+                : ProductStoreDetailsView(productId: product.id),
+      );
     },
     child: Container(
       clipBehavior: Clip.antiAlias,
@@ -112,7 +118,8 @@ GestureDetector sectionSmallCard(
             padding: const EdgeInsets.symmetric(
                 horizontal: 8.0), // Added padding to match image layout
             child: PriceAndRatingRow(
-              price: '${product.productVariants[0].price} L.E',
+              price:
+                  '${product.productVariants.firstWhere((e) => e.price != 0).price} ${lang(context).le}',
               rating: product.rating.toString(),
             ),
           ),
@@ -124,6 +131,8 @@ GestureDetector sectionSmallCard(
                 horizontal: 8.0), // Added padding to match image layout
             child: Text(
               product.name,
+              // overflow: TextOverflow.fade,
+              overflow: TextOverflow.ellipsis,
               style: AppStylesManager.customTextStyleG3,
             ),
           ),

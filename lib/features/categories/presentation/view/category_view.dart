@@ -12,7 +12,7 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/pages/product_add_page.dart';
 import 'package:nilelon/features/categories/presentation/widget/category_items.dart';
 
-import '../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class ChooseProductView extends StatefulWidget {
   const ChooseProductView({super.key});

@@ -42,7 +42,7 @@ class ButtonBuilder extends StatelessWidget {
                         boxShadow: [
                           BoxShadow(
                               color: frameColor ?? kDefaultIconLightColor,
-                              offset: Offset(4, 4))
+                              offset: const Offset(4, 4))
                         ],
                         border: Border.all(
                           color: frameColor ??

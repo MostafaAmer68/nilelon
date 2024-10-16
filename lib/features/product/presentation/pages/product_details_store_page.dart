@@ -4,8 +4,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/widgets/alert/delete_alert.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
+import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -19,8 +21,11 @@ import 'package:nilelon/features/product/presentation/widgets/image_banner.dart'
 import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 
+import '../../../../core/tools.dart';
 import '../../../../core/widgets/button/gradient_button_builder.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
+import '../../../promo/presentation/pages/appy_offer_page.dart';
 import '../cubit/products_cubit/products_state.dart';
 import '../widgets/color_selector.dart';
 import '../widgets/custom_toggle_button.dart';
@@ -108,6 +113,11 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
               },
               onSelected: (value) {
                 if (value == 'delete') {
+                  deleteAlert(context, lang.areYouSureYouWantToDeleteThisDraft,
+                      () {
+                    productCubit.deleteProduct(widget.productId);
+                    navigatePop(context: context);
+                  });
                 } else if (value == 'update') {
                   navigateTo(
                       context: context,
@@ -125,7 +135,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
               BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
                   return state.whenOrNull(
-                    loading: () => const CircularProgressIndicator(),
+                    loading: () => buildShimmerIndicatorSmall(),
                     success: () => ImageBanner(
                       images: productCubit.product.productImages
                           .map((e) => e.url)
@@ -142,7 +152,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                   child: BlocBuilder<ProductsCubit, ProductsState>(
                     builder: (context, state) {
                       return state.whenOrNull(
-                          loading: () => const CircularProgressIndicator(),
+                          loading: () => buildShimmerIndicatorSmall(),
                           success: () => ListView.builder(
                                 itemCount:
                                     productCubit.product.productImages.length,
@@ -166,7 +176,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                 child: BlocBuilder<ProductsCubit, ProductsState>(
                   builder: (context, state) {
                     return state.whenOrNull(
-                        loading: () => const CircularProgressIndicator(),
+                        loading: () => buildShimmerIndicatorSmall(),
                         success: () => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -191,14 +201,13 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
               BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
                   return state.whenOrNull(
-                    loading: () => const CircularProgressIndicator(),
+                    loading: () => buildShimmerIndicatorSmall(),
                     success: () {
                       return ListView.builder(
                         shrinkWrap: true,
-                        itemCount: ProductsCubit.get(context).review.length,
+                        itemCount: productCubit.review.length,
                         itemBuilder: (context, index) {
-                          final review =
-                              ProductsCubit.get(context).review[index];
+                          final review = productCubit.review[index];
                           return RatingContainer(review: review);
                         },
                       );
@@ -214,7 +223,13 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
           GradientButtonBuilder(
             text: S.of(context).applyOffer,
             width: screenWidth(context, 1),
-            ontap: () {},
+            ontap: () {
+              PromoCubit.get(context).selectedProducts.clear();
+              PromoCubit.get(context)
+                  .selectedProducts
+                  .add(productCubit.product);
+              navigateTo(context: context, screen: const ApplyOfferPage());
+            },
           )
         ],
       ),
@@ -225,9 +240,26 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
     return Row(
       children: [
         Expanded(child: _buildProductInfo(context)),
-        Text(
-          '${productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price} L.E',
-          style: AppStylesManager.customTextStyleO4,
+        Column(
+          children: [
+            Text(
+              '${calcSale(productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price, productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).discountRate)} L.E',
+              style: AppStylesManager.customTextStyleO4,
+            ),
+            Visibility(
+              visible: productCubit.product.productVariants
+                      .firstWhere((e) =>
+                          e.color == cubit.selectedColor &&
+                          e.size == cubit.selectedSize)
+                      .discountRate >
+                  0,
+              child: Text(
+                '${productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price} L.E',
+                style: AppStylesManager.customTextStyleO5
+                    .copyWith(decoration: TextDecoration.lineThrough),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -285,7 +317,11 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
       children: [
         Text('${lang.size} :', style: AppStylesManager.customTextStyleG10),
         SizeToggleButtons(
-          sizes: sizes,
+          sizes: productCubit.product.productVariants
+              .map((e) => e.size)
+              .toList()
+              .toSet()
+              .toList(),
           selectedSize: cubit.selectedSize,
           onSizeSelected: (size) {
             cubit.selectedSize = size;

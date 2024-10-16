@@ -3920,6 +3920,66 @@ class S {
     );
   }
 
+  /// `Offer Percentage `
+  String get offerPercentage {
+    return Intl.message(
+      'Offer Percentage ',
+      name: 'offerPercentage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter Offer Percentage `
+  String get enterOfferPercentage {
+    return Intl.message(
+      'Enter Offer Percentage ',
+      name: 'enterOfferPercentage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Select All`
+  String get selectAll {
+    return Intl.message(
+      'Select All',
+      name: 'selectAll',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `selected Items`
+  String get selected {
+    return Intl.message(
+      'selected Items',
+      name: 'selected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offer Applied To The Selected Products Successfully!`
+  String get offerApplied {
+    return Intl.message(
+      'Offer Applied To The Selected Products Successfully!',
+      name: 'offerApplied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your must select one product`
+  String get youMustSelectOneProduct {
+    return Intl.message(
+      'your must select one product',
+      name: 'youMustSelectOneProduct',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

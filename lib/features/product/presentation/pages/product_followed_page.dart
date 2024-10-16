@@ -6,7 +6,7 @@ import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/resources/appstyles_manager.dart';
-import '../../../../core/widgets/cards/small/product_squar_item.dart';
+import '../widgets/product_card/product_squar_item.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
 import '../cubit/products_cubit/products_cubit.dart';
 import '../cubit/products_cubit/products_state.dart';
@@ -93,7 +93,8 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
                       } else {
                         return productSquarItem(
                           context: context,
-                          model: ProductsCubit.get(context).products[sizeIndex],
+                          product:
+                              ProductsCubit.get(context).products[sizeIndex],
                         );
                       }
                     },

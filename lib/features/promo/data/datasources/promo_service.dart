@@ -15,7 +15,7 @@ class PromoService {
         await _api.post(endPoint: EndPoint.createPromo, body: model.toMap());
 
     if (response.statusCode == HttpStatus.ok) {}
-    throw response.data['result'];
+    throw response.data['errorMessages'];
   }
 
   Future<Map<String, dynamic>> getPromoCodeType(
@@ -34,7 +34,7 @@ class PromoService {
         'type': response.data['result']['type'],
       };
     }
-    throw response.data['result'];
+    throw response.data['errorMessages'];
   }
 
   Future<Map<String, dynamic>> getOrderDiscount(
@@ -55,7 +55,7 @@ class PromoService {
         'newPrice': response.data['result']['newPrice'],
       };
     }
-    throw response.data['result'];
+    throw response.data['errorMessages'];
   }
 
   Future<bool> getFreeShipping(String code, String governate) async {
@@ -66,6 +66,6 @@ class PromoService {
     if (response.statusCode == HttpStatus.ok) {
       return response.data['result'] as bool;
     }
-    throw response.data['result'];
+    throw response.data['errorMessages'];
   }
 }

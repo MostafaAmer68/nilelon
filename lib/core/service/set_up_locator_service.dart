@@ -8,7 +8,7 @@ import 'package:nilelon/features/order/data/datasources/order_service.dart';
 import 'package:nilelon/features/order/data/repositories/order_repo_impl.dart';
 import 'package:nilelon/features/payments/data/datasources/payment_service.dart';
 import 'package:nilelon/features/payments/data/repositories/payment_repo_impl.dart';
-import 'package:nilelon/features/product/data/datasources/products_remote_data_source.dart';
+import 'package:nilelon/features/product/data/datasources/products_service.dart';
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/auth/data/remote_data_source/auth_remote_data_source.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
@@ -24,8 +24,8 @@ import 'package:nilelon/features/shared/recommendation/data/remote_data_source/r
 import 'package:nilelon/features/shared/recommendation/data/repos_impl/recommendation_repos_impl.dart';
 import 'package:nilelon/features/store_flow/analytics/data/remote_data_source/analytics_remote_data_source.dart';
 import 'package:nilelon/features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
-import 'package:nilelon/features/categories/data/remote_data_source/category_remote_data_source.dart';
-import 'package:nilelon/features/categories/data/repos_impl/category_repos_impl.dart';
+import 'package:nilelon/features/categories/data/service/category_service.dart';
+import 'package:nilelon/features/categories/data/repo/category_repos_impl.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 
 import 'network/end_point.dart';

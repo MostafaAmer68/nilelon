@@ -43,7 +43,7 @@ Future deleteAlert(
                     height: screenHeight(context, 0.06),
                     buttonColor: Colors.transparent,
                     frameColor: ColorManager.primaryB2,
-                    style: AppStylesManager.customTextStyleB4,
+                    // style: AppStylesManager.customTextStyleW4,
                     ontap: () {
                       navigatePop(context: context);
                     }),

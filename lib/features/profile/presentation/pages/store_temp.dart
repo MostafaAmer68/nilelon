@@ -4,7 +4,7 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/small/market_small_card.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/market_small_card.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/pop_ups/customer_store_popup.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
@@ -96,12 +96,12 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                       shrinkWrap: true,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) => filterContainer(
-                          HiveStorage.get<List<Result>>(
+                          HiveStorage.get<List<CategoryModel>>(
                               HiveKeys.categories)[index],
                           index),
-                      itemCount:
-                          HiveStorage.get<List<Result>>(HiveKeys.categories)
-                              .length,
+                      itemCount: HiveStorage.get<List<CategoryModel>>(
+                              HiveKeys.categories)
+                          .length,
                     ),
                   ),
                 ),
@@ -135,7 +135,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                             .products
                             .where((e) =>
                                 e.categoryID ==
-                                HiveStorage.get<List<Result>>(
+                                HiveStorage.get<List<CategoryModel>>(
                                         HiveKeys.categories)[_selectedIndex]
                                     .id)
                             .toList()
@@ -148,7 +148,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                                     .products
                                     .where((e) =>
                                         e.categoryID ==
-                                        localData<List<Result>>(HiveKeys
+                                        localData<List<CategoryModel>>(HiveKeys
                                                 .categories)[_selectedIndex]
                                             .id)
                                     .toList()[index]),
@@ -166,7 +166,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
     );
   }
 
-  GestureDetector filterContainer(Result category, int index) {
+  GestureDetector filterContainer(CategoryModel category, int index) {
     return GestureDetector(
       onTap: () {
         setState(() {

@@ -129,7 +129,7 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
         TextAndFormFieldColumnNoIcon(
           title: lang.productName,
           label: lang.enterProductName,
-          controller: cubit.productNameController,
+          controller: cubit.productNameC,
           type: TextInputType.text,
           height: 30.h,
         ),
@@ -137,7 +137,7 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
         TextAndFormFieldColumnNoIcon(
           title: lang.productDescription,
           label: lang.enterProductDescription,
-          controller: cubit.productDescriptionController,
+          controller: cubit.productDesC,
           type: TextInputType.text,
           height: 30.h,
           maxlines: false,
@@ -149,7 +149,7 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
         TextAndFormFieldColumnNoIcon(
           title: lang.productPrice,
           label: lang.enterProductPrice,
-          controller: cubit.priceController,
+          controller: cubit.priceC,
           type: TextInputType.number,
           height: 30.h,
         ),

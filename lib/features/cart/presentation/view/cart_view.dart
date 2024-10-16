@@ -15,7 +15,7 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/footer/cart_footer.dart';
-import 'package:nilelon/core/widgets/cards/wide/cart_card.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/cart_item_cart.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
@@ -214,7 +214,7 @@ class CartItemWidget extends StatelessWidget {
                     label: lang(context).delete,
                   ),
                 ]),
-            child: CartCard(
+            child: CartItemCard(
               cart: cart,
             ),
           )

@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
@@ -15,13 +14,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepoIMpl _profileRepoIMpl;
   ProfileCubit(this._profileRepoIMpl) : super(const ProfileState.initial());
   StoreProfileModel? storeProfile;
-  String selectedCategoryId =
-      HiveStorage.get<List<Result>>(HiveKeys.categories).first.id;
   List<StoreProfileModel> stores = [];
   Map<String, dynamic> validationOption = {
     'isFollow': false,
     'isNotify': false,
   };
+  CategoryModel selectedCategory = CategoryModel.empty();
   Future<void> getStoreById(String storeId) async {
     emit(const ProfileState.loading());
     final result = await _profileRepoIMpl.getStoreById(storeId);

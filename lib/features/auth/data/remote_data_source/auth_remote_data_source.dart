@@ -517,7 +517,7 @@ class AuthService extends AuthRemoteDataSource {
       String repName, String repNumber, String webLink, context) async {
     final response = await apiService.put(
       endPoint: EndPoint.updateStoreInfoUrl,
-      data: {
+      body: {
         "storeId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "repName": repName,
         "repNumber": repNumber,
@@ -539,7 +539,7 @@ class AuthService extends AuthRemoteDataSource {
       String profilePic, String name, String storeSlogan, context) async {
     final response = await apiService.put(
       endPoint: EndPoint.updateStoreUrl,
-      data: {
+      body: {
         "storeId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "profilePic": profilePic,
         "name": name,
@@ -560,7 +560,7 @@ class AuthService extends AuthRemoteDataSource {
   Future<String> updateCustomer(String profilePic, String name, context) async {
     final response = await apiService.put(
       endPoint: EndPoint.updateCustomerUrl,
-      data: {
+      body: {
         "id": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "profilePicture": profilePic,
         "name": name,

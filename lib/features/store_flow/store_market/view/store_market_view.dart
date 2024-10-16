@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/tools.dart';
-import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -18,7 +18,6 @@ import 'package:nilelon/features/product/presentation/pages/product_new_in_all_w
 import 'package:nilelon/features/store_flow/search/view/store_search_view.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
-import '../../../../core/widgets/cards/small/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../product/presentation/cubit/products_cubit/products_state.dart';
 import '../../../product/presentation/pages/product_offers_view.dart';
@@ -123,7 +122,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                             return Container(
                               child: productSquarItem(
                                 context: context,
-                                model: product,
+                                product: product,
                               ),
                             );
                           },

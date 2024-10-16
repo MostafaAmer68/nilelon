@@ -228,30 +228,26 @@ class _LoginViewState extends State<LoginView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // signWithContainer('assets/images/facebook.svg', () {}),
-                      // const SizedBox(
-                      //   width: 24,
-                      // ),
                       BlocListener<AuthCubit, AuthState>(
-                          listener: (context, state) {
-                            if (state is GoogleRegisterLoading) {
-                            } else if (state is GoogleRegisterSuccess) {
-                              navigateAndRemoveUntil(
-                                  context: context,
-                                  screen: const RecommendationView());
-                            } else if (state is GoogleRegisterFailure) {
-                              BotToast.showText(
-                                  text: S.of(context).failedRegister);
-                            }
-                          },
-                          child:
-                              signWithContainer('assets/images/google.svg', () {
+                        listener: (context, state) {
+                          if (state is GoogleInLoading) {
+                          } else if (state is GoogleInSuccess) {
+                            navigateAndRemoveUntil(
+                                context: context,
+                                screen: const RecommendationView());
+                          } else if (state is GoogleInFailure) {
+                            BotToast.showText(
+                                text: S.of(context).failedRegister);
+                          }
+                        },
+                        child: signWithContainer(
+                          'assets/images/google.svg',
+                          () {
                             BlocProvider.of<AuthCubit>(context)
-                                .signUpWithGoogle(context);
-                          })),
-                      // signWithContainer('assets/images/google.svg', () {
-                      //   AuthCubit.get(context).signUpWithGoogle(context);
-                      // }),
+                                .signInWithGoogle(context);
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),

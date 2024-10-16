@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:nilelon/core/service/catch_func.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/promo/data/datasources/promo_service.dart';
 import 'package:nilelon/features/promo/data/models/create_promo_model.dart';
@@ -10,41 +11,25 @@ class PromoRepoImpl implements PromoRepo {
 
   PromoRepoImpl(this._service);
   @override
-  Future<void> createPromo(CreatePromo promo) {
-    // TODO: implement createPromo
-    throw UnimplementedError();
+  Future<Either<ServerFailure, void>> createPromo(CreatePromo promo) {
+    return exe(() => _service.createPromo(promo));
   }
 
   @override
   Future<Either<ServerFailure, bool>> getFreeShipping(
       String promotionId, String governate) async {
-    try {
-      final result = await _service.getFreeShipping(promotionId, governate);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _service.getFreeShipping(promotionId, governate));
   }
 
   @override
   Future<Either<ServerFailure, Map<String, dynamic>>> getOrderDiscount(
       String promotionId, num oldPrice) async {
-    try {
-      final result = await _service.getOrderDiscount(promotionId, oldPrice);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _service.getOrderDiscount(promotionId, oldPrice));
   }
 
   @override
   Future<Either<ServerFailure, Map<String, dynamic>>> getPromoType(
       String code) async {
-    try {
-      final result = await _service.getPromoCodeType(code);
-      return Right(result);
-    } catch (e) {
-      return Left(ServerFailure(e.toString()));
-    }
+    return exe(() => _service.getPromoCodeType(code));
   }
 }

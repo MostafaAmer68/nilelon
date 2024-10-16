@@ -383,5 +383,11 @@
   "plsEnterwareHouse": "يرجى إدخال اسم المستودع",
    "addedToCloset": "تم اضافة الي الخزنه بنجاح",
    "noReviews": "لا توجد مراجعات لهذا المنتج حتى الآن",
+   "offerPercentage": "نسبة العرض",
+   "enterOfferPercentage": "أدخل نسبة العرض",
+   "selectAll": "تحديد الكل",
+    "selected": "تم تحديد",
+    "offerApplied": "تم تطبيق العرض على المنتجات المحددة بنجاح!",
+    "youMustSelectOneProduct": "يجب عليك اختيار منتج واحد",
   "returnedHistory": "تاريخ الإرجاع"
 }

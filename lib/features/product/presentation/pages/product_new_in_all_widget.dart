@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/tools.dart';
-import 'package:nilelon/features/categories/domain/model/result.dart';
-import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-// import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
-import 'package:nilelon/core/widgets/filter/category_container.dart';
-import 'package:nilelon/core/widgets/filter/filter_container.dart';
-import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
-import '../../../../core/widgets/cards/offers/offers_card.dart';
-import '../../../../core/widgets/cards/small/market_small_card.dart';
+import '../../../categories/presentation/widget/category_filter_widget.dart';
+import '../../../categories/presentation/widget/gander_filter_widget copy.dart';
+import '../widgets/product_card/offers_card.dart';
+import '../widgets/product_card/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class ProductNewInViewAll extends StatefulWidget {
@@ -31,17 +26,17 @@ class ProductNewInViewAll extends StatefulWidget {
 }
 
 class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
-  int selectedGender = 0;
-  int selectedCategory = 0;
   int page = 1;
+  late final ProductsCubit cubit;
+
   int pageSize = 10;
   bool isLoadMore = false;
   ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
-    BlocProvider.of<ProductsCubit>(context).getNewInProducts(page, pageSize);
-    BlocProvider.of<CategoryCubit>(context).getCategories();
+    cubit = ProductsCubit.get(context);
+    cubit.getNewInProducts(page, pageSize);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -58,8 +53,7 @@ class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
     });
 
     page = page + 1;
-    await BlocProvider.of<ProductsCubit>(context)
-        .getNewInProducts(page, pageSize);
+    cubit.getNewInProducts(page, pageSize);
     setState(() {
       isLoadMore = false;
     });
@@ -86,7 +80,9 @@ class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
                 }, loading: () {
                   return buildShimmerIndicatorGrid();
                 }, success: () {
-                  return ProductsCubit.get(context).products.isEmpty
+                  return cubit
+                          .filterListByCategory(cubit.category, cubit.products)
+                          .isEmpty
                       ? SizedBox(
                           height: 450.h,
                           child: Column(
@@ -107,12 +103,20 @@ class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
                             gridDelegate: gridDelegate,
                             shrinkWrap: true,
                             itemCount: isLoadMore
-                                ? ProductsCubit.get(context).products.length + 1
-                                : ProductsCubit.get(context).products.length,
+                                ? cubit
+                                        .filterListByCategory(
+                                            cubit.category, cubit.products)
+                                        .length +
+                                    1
+                                : cubit
+                                    .filterListByCategory(
+                                        cubit.category, cubit.products)
+                                    .length,
                             itemBuilder: (context, sizeIndex) {
                               if (sizeIndex ==
-                                      ProductsCubit.get(context)
-                                          .products
+                                      cubit
+                                          .filterListByCategory(
+                                              cubit.category, cubit.products)
                                           .length &&
                                   isLoadMore) {
                                 return buildShimmerIndicatorSmall();
@@ -120,22 +124,27 @@ class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
                                 return widget.isStore
                                     ? marketSmallCard(
                                         context: context,
-                                        product: ProductsCubit.get(context)
-                                            .products[sizeIndex])
-                                    : ProductsCubit.get(context)
-                                                .products[sizeIndex]
+                                        product: cubit.filterListByCategory(
+                                            cubit.category,
+                                            cubit.products)[sizeIndex])
+                                    : cubit
+                                                .filterListByCategory(
+                                                    cubit.category,
+                                                    cubit.products)[sizeIndex]
                                                 .productVariants
                                                 .first
                                                 .discountRate !=
                                             0
                                         ? offersCard(
                                             context: context,
-                                            product: ProductsCubit.get(context)
-                                                .products[sizeIndex])
+                                            product: cubit.filterListByCategory(
+                                                cubit.category,
+                                                cubit.products)[sizeIndex])
                                         : productSquarItem(
                                             context: context,
-                                            model: ProductsCubit.get(context)
-                                                .products[sizeIndex],
+                                            product: cubit.filterListByCategory(
+                                                cubit.category,
+                                                cubit.products)[sizeIndex],
                                           );
                               }
                             },
@@ -157,30 +166,12 @@ class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 8, right: 8),
-          child: SizedBox(
-            height: 124.h,
-            width: MediaQuery.of(context).size.width,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {
-                    selectedCategory = index;
-                    setState(() {});
-                  },
-                  child: categoryContainer(
-                    context: context,
-                    image: HiveStorage.get<List<Result>>(
-                            HiveKeys.categories)[index]
-                        .image!,
-                    name: HiveStorage.get<List<Result>>(
-                            HiveKeys.categories)[index]
-                        .name!,
-                    isSelected: selectedCategory == index,
-                  )),
-              itemCount:
-                  HiveStorage.get<List<Result>>(HiveKeys.categories).length,
-            ),
+          child: CategoryFilterWidget(
+            selectedCategory: cubit.category,
+            onSelected: (category) {
+              cubit.category = category;
+              setState(() {});
+            },
           ),
         ),
         const SizedBox(
@@ -195,24 +186,13 @@ class _ProductNewInViewAllState extends State<ProductNewInViewAll> {
             const SizedBox(
               width: 8,
             ),
-            Expanded(
-              child: SizedBox(
-                height: 52,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        selectedGender = index;
-                        setState(() {});
-                      },
-                      child: filterContainer(
-                        genderFilter[index],
-                        selectedGender == index,
-                      )),
-                  itemCount: genderFilter.length,
-                ),
+             Expanded(
+              child: GendarFilterWidget(
+                selectedCategory: cubit.gendar,
+                onSelected: (gendar) {
+                  cubit.gendar = gendar;
+                  setState(() {});
+                },
               ),
             ),
           ],

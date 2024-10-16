@@ -2,21 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
+import 'package:nilelon/features/categories/presentation/widget/category_filter_widget.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
+import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:nilelon/features/profile/presentation/widgets/profile_avater_widget.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_settings_view.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../promo/presentation/pages/offer_product_page.dart';
 
 class StoreProfileView extends StatefulWidget {
   const StoreProfileView({
@@ -28,17 +33,22 @@ class StoreProfileView extends StatefulWidget {
 }
 
 class _StoreProfileViewState extends State<StoreProfileView> {
-  int _selectedIndex = 0;
   int page = 1;
   int pageSize = 10;
   bool isLoadMore = false;
   ScrollController scrollController = ScrollController();
+  late final ProductsCubit pCubit;
+  late final ProfileCubit cubit;
+  late final StoreModel user;
 
   @override
   void initState() {
-    // log(DateTime.now().toString());
-    BlocProvider.of<ProductsCubit>(context)
-        .getStoreProducts('', page, pageSize);
+    user = HiveStorage.get<UserModel>(HiveKeys.userModel)
+        .getUserData<StoreModel>();
+
+    pCubit = ProductsCubit.get(context);
+    cubit = ProfileCubit.get(context);
+    pCubit.getStoreProducts('', page, pageSize);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -55,8 +65,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
     });
 
     page = page + 1;
-    await BlocProvider.of<ProductsCubit>(context)
-        .getStoreProducts('', page, pageSize);
+    pCubit.getStoreProducts('', page, pageSize);
     setState(() {
       isLoadMore = false;
     });
@@ -84,16 +93,14 @@ class _StoreProfileViewState extends State<StoreProfileView> {
             const SizedBox(
               height: 30,
             ),
-            circleItems(HiveStorage.get<UserModel>(HiveKeys.userModel)
-                .getUserData<StoreModel>()
-                .profilePic),
+            ProfileAvater(
+              image: user.profilePic,
+            ),
             const SizedBox(
               height: 16,
             ),
             Text(
-              HiveStorage.get<UserModel>(HiveKeys.userModel)
-                  .getUserData<StoreModel>()
-                  .name,
+              user.name,
               style: AppStylesManager.customTextStyleBl8
                   .copyWith(fontWeight: FontWeight.w700),
             ),
@@ -101,16 +108,19 @@ class _StoreProfileViewState extends State<StoreProfileView> {
               height: 8,
             ),
             Text(
-              HiveStorage.get<UserModel>(HiveKeys.userModel)
-                  .getUserData<StoreModel>()
-                  .name,
+              user.storeSlogan,
               style: AppStylesManager.customTextStyleG5,
             ),
-            Text(
-              HiveStorage.get<UserModel>(HiveKeys.userModel)
-                  .getUserData<StoreModel>()
-                  .storeSlogan,
-              style: AppStylesManager.customTextStyleG5,
+            GradientButtonBuilder(
+              text: lang.applyOffer,
+              ontap: () {
+                navigateTo(
+                  context: context,
+                  screen: const OfferProductPage(),
+                );
+              },
+              height: 50,
+              width: screenWidth(context, 0.7),
             ),
             const SizedBox(
               height: 30,
@@ -129,19 +139,12 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                   width: 8,
                 ),
                 Expanded(
-                  child: SizedBox(
-                    height: 52,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => filterContainer(
-                          HiveStorage.get<List>(HiveKeys.categories)[index]
-                              .name!,
-                          index),
-                      itemCount:
-                          HiveStorage.get<List>(HiveKeys.categories).length,
-                    ),
+                  child: CategoryFilterWidget(
+                    selectedCategory: cubit.selectedCategory,
+                    onSelected: (category) {
+                      cubit.selectedCategory = category;
+                      setState(() {});
+                    },
                   ),
                 ),
               ],
@@ -154,15 +157,10 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                 }, loading: () {
                   return buildShimmerIndicatorGrid();
                 }, success: () {
-                  return ProductsCubit.get(context)
-                          .products
-                          .where((e) =>
-                              e.categoryID ==
-                              HiveStorage.get<List>(
-                                      HiveKeys.categories)[_selectedIndex]
-                                  .id!)
-                          .toList()
-                          .isEmpty //productsList.isEmpty
+                  return pCubit
+                          .filterListByCategory(
+                              cubit.selectedCategory, pCubit.products)
+                          .isEmpty
                       ? SizedBox(
                           height: 280.h,
                           child: Column(
@@ -184,33 +182,25 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate: gridDelegate,
                             shrinkWrap: true,
-                            itemCount: ProductsCubit.get(context)
-                                .products
-                                .where((e) =>
-                                    e.categoryID ==
-                                    HiveStorage.get<List>(
-                                            HiveKeys.categories)[_selectedIndex]
-                                        .id!)
-                                .toList()
+                            itemCount: pCubit
+                                .filterListByCategory(
+                                    cubit.selectedCategory, pCubit.products)
                                 .length,
                             itemBuilder: (context, sizeIndex) {
                               if (sizeIndex ==
-                                      ProductsCubit.get(context)
-                                          .products
+                                      pCubit
+                                          .filterListByCategory(
+                                              cubit.selectedCategory,
+                                              pCubit.products)
                                           .length &&
                                   isLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
                                 return productSquarItem(
                                   context: context,
-                                  model: ProductsCubit.get(context)
-                                      .products
-                                      .where((e) =>
-                                          e.categoryID ==
-                                          HiveStorage.get<List>(HiveKeys
-                                                  .categories)[_selectedIndex]
-                                              .id!)
-                                      .toList()[sizeIndex],
+                                  product: pCubit.filterListByCategory(
+                                      cubit.selectedCategory,
+                                      pCubit.products)[sizeIndex],
                                 );
                               }
                             },
@@ -224,93 +214,6 @@ class _StoreProfileViewState extends State<StoreProfileView> {
             const SizedBox(height: 30),
           ],
         ),
-      ),
-    );
-  }
-
-  GestureDetector filterContainer(String name, int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-          // _indexName = name;
-          ProductsCubit.get(context).getStoreProducts('', 1, 100);
-          setState(() {});
-        });
-      },
-      child: _selectedIndex == index
-          ? Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Container(
-                // height: 30,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: ColorManager.primaryW,
-                  boxShadow: const [
-                    BoxShadow(
-                      color: ColorManager.primaryO2,
-                      offset: Offset(5, 5),
-                    ),
-                  ],
-                  border: Border.all(color: ColorManager.primaryL),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  child: Center(
-                    child: Text(
-                      name,
-                      textAlign: TextAlign.center,
-                      style: AppStylesManager.customTextStyleB4,
-                    ),
-                  ),
-                ),
-              ),
-            )
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Container(
-                // height: 30,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: ColorManager.primaryB2)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  child: Center(
-                    child: Text(
-                      name,
-                      textAlign: TextAlign.center,
-                      style: AppStylesManager.customTextStyleB3
-                          .copyWith(fontSize: 12, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-    );
-  }
-
-  Container circleItems(String image) {
-    return Container(
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(500),
-        ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x33726363),
-            blurRadius: 16,
-            offset: Offset(0, 1),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: CircleAvatar(
-        radius: 50,
-        backgroundImage: NetworkImage(image),
       ),
     );
   }

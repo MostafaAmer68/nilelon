@@ -1,5 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:intl/intl.dart';
+
 class CreatePromo {
   final DateTime startDate;
   final DateTime endDate;
@@ -15,9 +17,9 @@ class CreatePromo {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'startDate': startDate.millisecondsSinceEpoch,
-      'endDate': endDate.millisecondsSinceEpoch,
-      'discountRate': discountRate,
+      'startDate': DateFormat("yyyy-MM-ddTHH:mm:ss.SSS'Z'").format(startDate),
+      'endDate': DateFormat("yyyy-MM-ddTHH:mm:ss.SSS'Z'").format(endDate),
+      'discountRate': discountRate / 100,
       'productIds': productIds,
     };
   }

@@ -5,10 +5,11 @@ import 'package:nilelon/features/product/domain/models/create_variant_image.dart
 import 'package:nilelon/features/product/domain/models/create_variant_model.dart';
 import 'package:nilelon/features/product/domain/models/delete_image_variant.dart';
 import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
-import 'package:nilelon/features/product/data/datasources/products_remote_data_source.dart';
+import 'package:nilelon/features/product/data/datasources/products_service.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
 import 'package:nilelon/features/product/domain/models/update_product.dart';
+import 'package:nilelon/features/product/domain/models/update_variant_model.dart';
 
 import '../../../../core/service/catch_func.dart';
 import '../../domain/models/product_model.dart';
@@ -126,5 +127,16 @@ class ProductsReposImpl extends ProductsRepos {
   Future<Either<FailureService, List<ReviewModel>>> getReviews(
       String productId) async {
     return exe(() => _productService.getReviews(productId));
+  }
+
+  @override
+  Future<Either<FailureService, void>> updateVariant(
+      UpdateVariantsModel model) {
+    return exe(() => _productService.updateVariant(model));
+  }
+
+  @override
+  Future<Either<FailureService, void>> deleteProduct(String id) {
+    return exe(() => _productService.deleteProduct(id));
   }
 }

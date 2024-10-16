@@ -6,6 +6,7 @@ import 'package:nilelon/features/product/domain/models/delete_image_variant.dart
 import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
+import 'package:nilelon/features/product/domain/models/update_variant_model.dart';
 
 import '../models/add_product/add_product_model.dart';
 import '../models/product_model.dart';
@@ -35,10 +36,12 @@ abstract class ProductsRepos {
       int page, int productSize);
   Future<Either<FailureService, void>> createProduct(AddProductModel model);
   Future<Either<FailureService, void>> updateProduct(UpdateProduct model);
+  Future<Either<FailureService, void>> updateVariant(UpdateVariantsModel model);
   Future<Either<FailureService, void>> createReview(CreateReviewModel model);
   Future<Either<FailureService, List<ReviewModel>>> getReviews(
       String productId);
   Future<Either<FailureService, void>> deleteVariant(DeleteVariant model);
+  Future<Either<FailureService, void>> deleteProduct(String id);
   Future<Either<FailureService, void>> deleteVariantImage(
       DeleteVariantImage model);
   Future<Either<FailureService, void>> createProductVariant(

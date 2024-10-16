@@ -6,7 +6,7 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
-import 'package:nilelon/core/widgets/cards/small/section_small_card.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/section_small_card.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 
 import '../../../core/widgets/scaffold_image.dart';

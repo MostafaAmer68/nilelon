@@ -1,10 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/constants/assets.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -12,17 +9,18 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
-import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
+import 'package:nilelon/features/categories/presentation/widget/category_filter_widget.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/pop_ups/customer_store_popup.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:nilelon/features/profile/presentation/widgets/profile_avater_widget.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
-import '../../../categories/domain/model/result.dart';
 import '../../../product/presentation/cubit/products_cubit/products_state.dart';
 
 class StoreProfileCustomer extends StatefulWidget {
@@ -37,7 +35,6 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
   late final ProfileCubit cubit;
 
   bool notFollowing = true;
-  int _selectedIndex = 0;
   @override
   void initState() {
     cubit = BlocProvider.of(context);
@@ -144,7 +141,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                     const SizedBox(
                       height: 30,
                     ),
-                    circleItems(cubit.storeProfile!.profilePic ?? ''),
+                    ProfileAvater(image: cubit.storeProfile!.profilePic ?? ''),
                     const SizedBox(
                       height: 16,
                     ),
@@ -181,20 +178,12 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                           width: 8,
                         ),
                         Expanded(
-                          child: SizedBox(
-                            height: 52,
-                            width: MediaQuery.of(context).size.width,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) => filterContainer(
-                                  HiveStorage.get<List<Result>>(
-                                      HiveKeys.categories)[index],
-                                  index),
-                              itemCount: HiveStorage.get<List<Result>>(
-                                      HiveKeys.categories)
-                                  .length,
-                            ),
+                          child: CategoryFilterWidget(
+                            selectedCategory: cubit.selectedCategory,
+                            onSelected: (category) {
+                              cubit.selectedCategory = category;
+                              setState(() {});
+                            },
                           ),
                         ),
                       ],
@@ -209,86 +198,6 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
             )!;
           },
         ),
-      ),
-    );
-  }
-
-  GestureDetector filterContainer(Result category, int index) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-          // _indexName = name;
-          cubit.selectedCategoryId = category.id;
-          setState(() {});
-        });
-      },
-      child: _selectedIndex == index
-          ? Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Container(
-                // height: 30,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    color: ColorManager.primaryB2,
-                    border: Border.all(color: ColorManager.primaryB2)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  child: Center(
-                    child: Text(
-                      category.name,
-                      textAlign: TextAlign.center,
-                      style: AppStylesManager.customTextStyleW4,
-                    ),
-                  ),
-                ),
-              ),
-            )
-          : Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Container(
-                // height: 30,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: ColorManager.primaryB2)),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  child: Center(
-                    child: Text(
-                      category.name,
-                      textAlign: TextAlign.center,
-                      style: AppStylesManager.customTextStyleB3
-                          .copyWith(fontSize: 12, fontWeight: FontWeight.w600),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-    );
-  }
-
-  Container circleItems(String image) {
-    return Container(
-      decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(500),
-        ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x33726363),
-            blurRadius: 16,
-            offset: Offset(0, 1),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: CircleAvatar(
-        radius: 50,
-        backgroundImage: NetworkImage(image),
       ),
     );
   }
@@ -312,15 +221,18 @@ class ProductStoreWidget extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: gridDelegate,
             shrinkWrap: true,
-            itemCount: ProductsCubit.get(context).products.where((e) {
-              return profileCubit.selectedCategoryId == e.categoryID;
-            }).length,
+            itemCount: ProductsCubit.get(context)
+                .products
+                .where((e) => profileCubit.selectedCategory.id == e.categoryID)
+                .length,
             itemBuilder: (context, sizeIndex) {
               return productSquarItem(
                 context: context,
-                model: ProductsCubit.get(context).products.where((e) {
-                  return profileCubit.selectedCategoryId == e.categoryID;
-                }).toList()[sizeIndex],
+                product: ProductsCubit.get(context)
+                    .products
+                    .where(
+                        (e) => profileCubit.selectedCategory.id == e.categoryID)
+                    .toList()[sizeIndex],
               );
             },
           ),
@@ -354,64 +266,67 @@ class _FollowAndNotifyWidgetState extends State<FollowAndNotifyWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        return state.whenOrNull(loading: () {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              buildShimmerIndicatorSmall(),
-              const SizedBox(width: 16),
-              buildShimmerIndicatorSmall(),
-            ],
-          );
-        }, success: () {
-          return cubit.validationOption.isEmpty
-              ? const Text('field to follow')
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    !cubit.validationOption['isFollow']
-                        ? GradientButtonBuilder(
-                            text: lang(context).follow,
-                            ontap: () {
-                              cubit.followStore(widget.storeId);
-                            },
-                            width: screenWidth(context, 0.55),
-                            height: 38,
-                          )
-                        : OutlinedButtonBuilder(
-                            text: lang(context).following,
-                            ontap: () {
-                              cubit.followStore(widget.storeId);
-                            },
-                            width: screenWidth(context, 0.55),
-                            height: 38,
-                          ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Container(
-                      height: 60,
-                      width: 60,
-                      decoration: BoxDecoration(
-                        color: ColorManager.primaryG16,
-                        borderRadius: BorderRadius.circular(12),
+        return state.whenOrNull(
+          loading: () {
+            return Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                buildShimmerIndicatorSmall(),
+                const SizedBox(width: 16),
+                buildShimmerIndicatorSmall(),
+              ],
+            );
+          },
+          success: () {
+            return cubit.validationOption.isEmpty
+                ? const Text('field to follow')
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      !cubit.validationOption['isFollow']
+                          ? GradientButtonBuilder(
+                              text: lang(context).follow,
+                              ontap: () {
+                                cubit.followStore(widget.storeId);
+                              },
+                              width: screenWidth(context, 0.55),
+                              height: 38,
+                            )
+                          : OutlinedButtonBuilder(
+                              text: lang(context).following,
+                              ontap: () {
+                                cubit.followStore(widget.storeId);
+                              },
+                              width: screenWidth(context, 0.55),
+                              height: 38,
+                            ),
+                      const SizedBox(
+                        width: 16,
                       ),
-                      child: IconButton(
-                        icon: Image.asset(
-                          !cubit.validationOption['isNotify']
-                              ? Assets.assetsImagesNotifications
-                              : Assets.assetsImagesNotificationsActive,
-                          // fit: BoxFit.cover,
+                      Container(
+                        height: 60,
+                        width: 60,
+                        decoration: BoxDecoration(
+                          color: ColorManager.primaryG16,
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        // iconSize: 50,
-                        onPressed: () {
-                          cubit.notifyStore(widget.storeId);
-                        },
+                        child: IconButton(
+                          icon: Image.asset(
+                            !cubit.validationOption['isNotify']
+                                ? Assets.assetsImagesNotifications
+                                : Assets.assetsImagesNotificationsActive,
+                            // fit: BoxFit.cover,
+                          ),
+                          // iconSize: 50,
+                          onPressed: () {
+                            cubit.notifyStore(widget.storeId);
+                          },
+                        ),
                       ),
-                    ),
-                  ],
-                );
-        })!;
+                    ],
+                  );
+          },
+        )!;
       },
     );
   }

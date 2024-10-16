@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:shimmer/shimmer.dart';
 
 Widget buildShimmerIndicator() {
@@ -9,7 +10,6 @@ Widget buildShimmerIndicator() {
     highlightColor: Colors.grey[100]!,
     child: Column(
       children: List.generate(10, (index) {
-      
         return Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
@@ -77,11 +77,7 @@ Widget buildShimmerIndicatorGrid() {
     padding: EdgeInsets.symmetric(horizontal: 16.w),
     child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 1.sw > 600 ? 3 : 2,
-            crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-            mainAxisExtent: 1.sw > 600 ? 300 : 220,
-            mainAxisSpacing: 1.sw > 600 ? 16 : 12),
+        gridDelegate: gridDelegate,
         itemCount: 10,
         shrinkWrap: true,
         itemBuilder: (context, sizeIndex) {

@@ -42,11 +42,19 @@ class _AddProductViewState extends State<EditProductpage> {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
 
     cubit = AddProductCubit.get(context);
-    cubit.initializeVarientsEdit(widget.product);
+
     cubit.isEdit = true;
     cubit.productEdit = widget.product;
   }
@@ -71,32 +79,36 @@ class _AddProductViewState extends State<EditProductpage> {
           context: context,
           hasIcon: false,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const DefaultDivider(),
-              SizedBox(height: 24.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                child: _buildProductForm(lang),
-              ),
-              ProductDetailsWidget(
-                onTapAddButton: () {
-                  cubit.addSize();
-                  setState(() {});
-                },
-                onTapEditButton: () {
-                  cubit.editSize();
-                  setState(() {});
-                },
-                onTapDeleteButton: () {
-                  cubit.deleteVariant();
-                  setState(() {});
-                },
-              ),
-              _buildSubmitSection(lang),
-            ],
+        body: Form(
+          key: cubit.globalKey,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const DefaultDivider(),
+                SizedBox(height: 24.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.sp),
+                  child: _buildProductForm(lang),
+                ),
+                ProductDetailsWidget(
+                  product: widget.product,
+                  onTapAddButton: () {
+                    cubit.addSize();
+                    setState(() {});
+                  },
+                  onTapEditButton: () {
+                    cubit.editSize();
+                    setState(() {});
+                  },
+                  onTapDeleteButton: () {
+                    cubit.deleteVariant();
+                    setState(() {});
+                  },
+                ),
+                _buildSubmitSection(lang),
+              ],
+            ),
           ),
         ),
       ),
@@ -136,7 +148,13 @@ class _AddProductViewState extends State<EditProductpage> {
         TextAndFormFieldColumnNoIcon(
           title: lang.productName,
           label: lang.enterProductName,
-          controller: cubit.productNameController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return lang.enterProductName;
+            }
+            return null;
+          },
+          controller: cubit.productNameC,
           type: TextInputType.text,
           height: 30.h,
         ),
@@ -144,8 +162,14 @@ class _AddProductViewState extends State<EditProductpage> {
         TextAndFormFieldColumnNoIcon(
           title: lang.productDescription,
           label: lang.enterProductDescription,
-          controller: cubit.productDescriptionController,
+          controller: cubit.productDesC,
           type: TextInputType.text,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return lang.enterProductName;
+            }
+            return null;
+          },
           height: 30.h,
           maxlines: false,
           fieldHeight: 170,
@@ -156,7 +180,13 @@ class _AddProductViewState extends State<EditProductpage> {
         TextAndFormFieldColumnNoIcon(
           title: lang.productPrice,
           label: lang.enterProductPrice,
-          controller: cubit.priceController,
+          validator: (value) {
+            if (value!.isEmpty) {
+              return lang.enterProductName;
+            }
+            return null;
+          },
+          controller: cubit.priceC,
           type: TextInputType.number,
           height: 30.h,
         ),
@@ -247,7 +277,11 @@ class _AddProductViewState extends State<EditProductpage> {
       isActivated:
           cubit.isNotFirstTimeActivated ? cubit.isSubmit : !cubit.isSubmit,
       ontap: () {
-        cubit.handleSubmit();
+        if (cubit.isEdit) {
+          cubit.updateVariant(widget.product);
+        } else {
+          cubit.handleSubmit();
+        }
         setState(() {});
       },
     );

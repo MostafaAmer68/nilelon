@@ -44,7 +44,7 @@ class _ProductColorsSelectionState extends State<ProductColorsSelection> {
                 cubit.colors[index],
                 cubit.selectedIndex,
                 index,
-                cubit.isVarientAdded[index],
+                cubit.isVarientAdded.values.toList()[index],
               ),
             ),
           ),

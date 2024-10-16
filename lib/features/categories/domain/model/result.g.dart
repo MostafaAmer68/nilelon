@@ -6,17 +6,17 @@ part of 'result.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ResultAdapter extends TypeAdapter<Result> {
+class ResultAdapter extends TypeAdapter<CategoryModel> {
   @override
   final int typeId = 4;
 
   @override
-  Result read(BinaryReader reader) {
+  CategoryModel read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Result(
+    return CategoryModel(
       id: fields[0] as String,
       name: fields[1] as String,
       image: fields[2] as String,
@@ -24,7 +24,7 @@ class ResultAdapter extends TypeAdapter<Result> {
   }
 
   @override
-  void write(BinaryWriter writer, Result obj) {
+  void write(BinaryWriter writer, CategoryModel obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)

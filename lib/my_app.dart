@@ -30,7 +30,7 @@ import 'package:nilelon/features/shared/recommendation/presentation/cubit/recomm
 import 'package:nilelon/features/shared/splash/splash_view.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
-import 'package:nilelon/features/categories/data/repos_impl/category_repos_impl.dart';
+import 'package:nilelon/features/categories/data/repo/category_repos_impl.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/generated/l10n.dart';
 

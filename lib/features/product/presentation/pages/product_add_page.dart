@@ -84,6 +84,7 @@ class _AddProductViewState extends State<AddProductView> {
                 child: _buildProductForm(lang),
               ),
               ProductDetailsWidget(
+                // product: widget,
                 onTapAddButton: () {
                   cubit.addSize();
                   setState(() {});
@@ -95,7 +96,7 @@ class _AddProductViewState extends State<AddProductView> {
                 onTapDeleteButton: () {
                   deleteAlert(context,
                       lang.areYouSureYouWantToDeleteAllSizesForThisColor, () {
-                    cubit.isVarientAdded[cubit.selectedIndex] = false;
+                    cubit.isVarientAdded[cubit.selectedColor] = false;
                     cubit.deleteVariant();
                     navigatePop(context: context);
                     setState(() {});
@@ -150,7 +151,7 @@ class _AddProductViewState extends State<AddProductView> {
           TextAndFormFieldColumnNoIcon(
             title: lang.productName,
             label: lang.enterProductName,
-            controller: cubit.productNameController,
+            controller: cubit.productNameC,
             type: TextInputType.text,
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -164,7 +165,7 @@ class _AddProductViewState extends State<AddProductView> {
           TextAndFormFieldColumnNoIcon(
             title: lang.productDescription,
             label: lang.enterProductDescription,
-            controller: cubit.productDescriptionController,
+            controller: cubit.productDesC,
             type: TextInputType.text,
             height: 30.h,
             validator: (value) {
@@ -182,7 +183,7 @@ class _AddProductViewState extends State<AddProductView> {
           TextAndFormFieldColumnNoIcon(
             title: lang.productPrice,
             label: lang.enterProductPrice,
-            controller: cubit.priceController,
+            controller: cubit.priceC,
             type: TextInputType.number,
             validator: (value) {
               if (value == null || value.isEmpty) {

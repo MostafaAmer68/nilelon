@@ -12,12 +12,12 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/product/presentation/pages/product_handpack_all_page.dart';
-import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/pages/product_new_in_all_widget.dart';
 
-import '../../../../core/widgets/cards/offers/offers_card.dart';
+import '../widgets/product_card/offers_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class DiscoverView extends StatefulWidget {
@@ -33,14 +33,17 @@ class _DiscoverViewState extends State<DiscoverView> {
   bool newInIsLoadMore = false;
   ScrollController scrollController = ScrollController();
   int handPage = 1;
+  late final ProductsCubit cubit;
+
   int handPageSize = 10;
   bool handIsLoadMore = false;
   ScrollController handScrollController = ScrollController();
 
   @override
   void initState() {
-    ProductsCubit.get(context).getNewInProducts(newInPage, newInPageSize);
-    ProductsCubit.get(context).getRandomProducts(newInPage, newInPageSize);
+    cubit = ProductsCubit.get(context);
+    cubit.getNewInProducts(newInPage, newInPageSize);
+    cubit.getRandomProducts(newInPage, newInPageSize);
 
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -65,7 +68,7 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     newInPage = newInPage + 1;
-    ProductsCubit.get(context).getNewInProducts(newInPage, newInPageSize);
+    cubit.getNewInProducts(newInPage, newInPageSize);
     setState(() {
       newInIsLoadMore = false;
     });
@@ -77,7 +80,7 @@ class _DiscoverViewState extends State<DiscoverView> {
     });
 
     handPage = handPage + 1;
-    ProductsCubit.get(context).getRandomProducts(newInPage, newInPageSize);
+    cubit.getRandomProducts(newInPage, newInPageSize);
 
     setState(() {
       handIsLoadMore = false;
@@ -195,7 +198,7 @@ class ProductNewInView extends StatelessWidget {
                       padding: const EdgeInsets.all(10),
                       child: productSquarItem(
                         context: context,
-                        model: ProductsCubit.get(context).products[index],
+                        product: ProductsCubit.get(context).products[index],
                       ),
                     );
                   }
@@ -244,7 +247,7 @@ class HandPickedView extends StatelessWidget {
         }, loading: () {
           return buildShimmerIndicatorGrid();
         }, success: () {
-          if (ProductsCubit.get(context).products.isEmpty) {
+          if (ProductsCubit.get(context).productsHandpack.isEmpty) {
             return Text(
               S.of(context).noProductHandPicked,
               style: AppStylesManager.customTextStyleG2,
@@ -257,11 +260,9 @@ class HandPickedView extends StatelessWidget {
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: gridDelegate,
               shrinkWrap: true,
-              itemCount: handIsLoadMore
-                  ? ProductsCubit.get(context).products.length
-                  : ProductsCubit.get(context).products.length,
+              itemCount:  ProductsCubit.get(context).productsHandpack.length,
               itemBuilder: (context, index) {
-                if (index == ProductsCubit.get(context).products.length &&
+                if (index == ProductsCubit.get(context).productsHandpack.length &&
                     handIsLoadMore) {
                   return buildShimmerIndicatorSmall();
                 } else {
@@ -269,11 +270,11 @@ class HandPickedView extends StatelessWidget {
                       ProductsCubit.get(context).products, index)) {
                     return offersCard(
                         context: context,
-                        product: ProductsCubit.get(context).products[index]);
+                        product: ProductsCubit.get(context).productsHandpack[index]);
                   }
                   return productSquarItem(
                     context: context,
-                    model: ProductsCubit.get(context).products[index],
+                    product: ProductsCubit.get(context).productsHandpack[index],
                   );
                 }
               },

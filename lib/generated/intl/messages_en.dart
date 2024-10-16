@@ -193,6 +193,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "enterLandmark": MessageLookupByLibrary.simpleMessage("Enter Landmark"),
         "enterNewPassword":
             MessageLookupByLibrary.simpleMessage("Enter New Password"),
+        "enterOfferPercentage":
+            MessageLookupByLibrary.simpleMessage("Enter Offer Percentage "),
         "enterPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Enter Phone Number"),
         "enterProductDescription":
@@ -350,6 +352,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "ofItemsSold": MessageLookupByLibrary.simpleMessage("# of Items Sold"),
         "ofNoified": MessageLookupByLibrary.simpleMessage("# of Noified"),
         "ofOrders": MessageLookupByLibrary.simpleMessage("# of Orders"),
+        "offerApplied": MessageLookupByLibrary.simpleMessage(
+            "Offer Applied To The Selected Products Successfully!"),
+        "offerPercentage":
+            MessageLookupByLibrary.simpleMessage("Offer Percentage "),
         "offers": MessageLookupByLibrary.simpleMessage("Offers"),
         "offersUnforgettableValue":
             MessageLookupByLibrary.simpleMessage("offers,Unforgettable Value"),
@@ -481,7 +487,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "security": MessageLookupByLibrary.simpleMessage("Security"),
         "seeFeedback": MessageLookupByLibrary.simpleMessage("See Feedback"),
         "seeMore": MessageLookupByLibrary.simpleMessage("See More"),
+        "selectAll": MessageLookupByLibrary.simpleMessage("Select All"),
         "selectType": MessageLookupByLibrary.simpleMessage("Select Type"),
+        "selected": MessageLookupByLibrary.simpleMessage("selected Items"),
         "sellOnApp": MessageLookupByLibrary.simpleMessage("Sell On App"),
         "sendFeedback": MessageLookupByLibrary.simpleMessage("Send Feedback"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
@@ -602,6 +610,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You must choose size guid image."),
         "youMustSelectOneImage": MessageLookupByLibrary.simpleMessage(
             "You must choose at least 1 image."),
+        "youMustSelectOneProduct": MessageLookupByLibrary.simpleMessage(
+            "your must select one product"),
         "youNeedToMakeSureTheDescriptionYouEnteredIsCorrectCauseItCanNotBeEdited":
             MessageLookupByLibrary.simpleMessage(
                 "You Need To Make Sure The Description You Entered Is Correct Cause It Can Not Be Edited"),

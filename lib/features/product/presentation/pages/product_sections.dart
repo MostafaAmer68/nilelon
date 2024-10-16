@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/widgets/filter/category_container.dart';
-import 'package:nilelon/core/widgets/filter/filter_container.dart';
-import 'package:nilelon/core/widgets/filter/static_lists.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
-import 'package:nilelon/core/widgets/cards/small/product_squar_item.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
-import '../../../categories/domain/model/result.dart';
 import '../cubit/products_cubit/products_cubit.dart';
 import '../cubit/products_cubit/products_state.dart';
 
@@ -29,8 +24,6 @@ class SectionsProductView extends StatefulWidget {
 }
 
 class _SectionsProductViewState extends State<SectionsProductView> {
-  String selectedGender = 'Male';
-  String selectedCategory = localData(HiveKeys.categories).first.id;
   int selectedCategoryIndex = 0;
   int selectedGenderIndex = 0;
   late final ProductsCubit cubit;
@@ -55,10 +48,6 @@ class _SectionsProductViewState extends State<SectionsProductView> {
             const SizedBox(
               height: 16,
             ),
-            filtersColumn(context),
-            const SizedBox(
-              height: 12,
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: BlocBuilder<ProductsCubit, ProductsState>(
@@ -69,22 +58,14 @@ class _SectionsProductViewState extends State<SectionsProductView> {
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: gridDelegate,
                       shrinkWrap: true,
-                      itemCount: ProductsCubit.get(context)
-                          .products
-                          .where((e) =>
-                              selectedCategory == e.categoryID ||
-                              e.type == selectedGender)
-                          .toList()
-                          .length,
+                      itemCount:
+                          ProductsCubit.get(context).products.toList().length,
                       itemBuilder: (context, sizeIndex) {
                         return Container(
                           child: productSquarItem(
                             context: context,
-                            model: ProductsCubit.get(context)
+                            product: ProductsCubit.get(context)
                                 .products
-                                .where((e) =>
-                                    selectedCategory == e.categoryID ||
-                                    e.type == selectedGender)
                                 .toList()[sizeIndex],
                           ),
                         );
@@ -97,75 +78,6 @@ class _SectionsProductViewState extends State<SectionsProductView> {
           ],
         ),
       ),
-    );
-  }
-
-  Column filtersColumn(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8),
-          child: SizedBox(
-            height: screenWidth(context, 0.34),
-            width: MediaQuery.of(context).size.width,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {
-                    selectedCategory = localData(HiveKeys.categories)[index].id;
-                    selectedCategoryIndex = index;
-                    setState(() {});
-                  },
-                  child: categoryContainer(
-                    context: context,
-                    image: localData(HiveKeys.categories)[index].image,
-                    name: localData(HiveKeys.categories)[index].name,
-                    isSelected: selectedCategoryIndex == index,
-                  )),
-              itemCount: localData(HiveKeys.categories).length,
-            ),
-          ),
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        Row(
-          children: [
-            const SizedBox(
-              width: 16,
-            ),
-            const Icon(Icons.tune),
-            const SizedBox(
-              width: 8,
-            ),
-            Expanded(
-              child: SizedBox(
-                height: 52,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        selectedGender = genderFilter[index];
-                        selectedGenderIndex = index;
-                        setState(() {});
-                      },
-                      child: filterContainer(
-                        genderFilter[index],
-                        selectedGenderIndex == index,
-                      )),
-                  itemCount: genderFilter.length,
-                ),
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-      ],
     );
   }
 

@@ -5,7 +5,6 @@ import 'package:nilelon/features/store_flow/subscription/subscription_view.dart'
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/alert/delete_alert.dart';
 import 'package:nilelon/core/widgets/alert/logout_alert.dart';
@@ -107,8 +106,6 @@ class StoreSettingsView extends StatelessWidget {
             height: screenHeight(context, 0.06),
             buttonColor: Colors.transparent,
             frameColor: ColorManager.primaryR,
-            style: AppStylesManager.customTextStyleB4
-                .copyWith(color: ColorManager.primaryR, fontSize: 16),
           ),
           const Spacer()
         ],

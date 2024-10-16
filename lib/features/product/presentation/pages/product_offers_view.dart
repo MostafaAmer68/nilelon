@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/offers/market_offers_card.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
-import 'package:nilelon/core/widgets/cards/offers/offers_card.dart';
-import 'package:nilelon/core/widgets/filter/category_container.dart';
-import 'package:nilelon/core/widgets/filter/filter_container.dart';
-import 'package:nilelon/core/widgets/filter/static_lists.dart';
+import 'package:nilelon/features/product/presentation/widgets/product_card/offers_card.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../categories/presentation/widget/category_filter_widget.dart';
+import '../../../categories/presentation/widget/gander_filter_widget copy.dart';
 
 class OffersView extends StatefulWidget {
   const OffersView({super.key, required this.isStore});
@@ -27,15 +23,16 @@ class OffersView extends StatefulWidget {
 }
 
 class _OffersViewState extends State<OffersView> {
-  int selectedGender = 0;
-  int selectedCategory = 0;
   int offersPage = 1;
+  late final ProductsCubit cubit;
+
   int offersPageSize = 10;
   bool offersIsLoadMore = false;
   ScrollController scrollController = ScrollController();
   @override
   void initState() {
-    ProductsCubit.get(context).getOffersProducts(offersPage, offersPageSize);
+    cubit = ProductsCubit.get(context);
+    cubit.getOffersProducts(offersPage, offersPageSize);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
               scrollController.position.maxScrollExtent &&
@@ -52,7 +49,7 @@ class _OffersViewState extends State<OffersView> {
     });
 
     offersPage = offersPage + 1;
-    ProductsCubit.get(context).getOffersProducts(offersPage, offersPageSize);
+    cubit.getOffersProducts(offersPage, offersPageSize);
 
     setState(() {
       offersIsLoadMore = false;
@@ -82,59 +79,8 @@ class _OffersViewState extends State<OffersView> {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: widget.isStore
-                        ? GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate: gridDelegate,
-                            shrinkWrap: true,
-                            itemCount: offersIsLoadMore
-                                ? ProductsCubit.get(context).products.length + 1
-                                : ProductsCubit.get(context).products.length,
-                            itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex ==
-                                      ProductsCubit.get(context)
-                                          .products
-                                          .length &&
-                                  offersIsLoadMore) {
-                                return buildShimmerIndicatorSmall();
-                              } else {
-                                return Container(
-                                  child: marketOffersCard(
-                                      context: context,
-                                      product: ProductsCubit.get(context)
-                                          .products[sizeIndex]),
-                                );
-                              }
-                            },
-                          )
-                        : GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 1.sw > 600 ? 3 : 2,
-                                    crossAxisSpacing: 1.sw > 600 ? 16 : 16.0,
-                                    mainAxisExtent: 1.sw > 600 ? 415 : 300,
-                                    mainAxisSpacing: 1.sw > 600 ? 16 : 12),
-                            shrinkWrap: true,
-                            itemCount: offersIsLoadMore
-                                ? ProductsCubit.get(context).products.length + 1
-                                : ProductsCubit.get(context).products.length,
-                            itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex ==
-                                      ProductsCubit.get(context)
-                                          .products
-                                          .length &&
-                                  offersIsLoadMore) {
-                                return buildShimmerIndicatorSmall();
-                              } else {
-                                return Container(
-                                  child: offersCard(
-                                      context: context,
-                                      product: ProductsCubit.get(context)
-                                          .products[sizeIndex]),
-                                );
-                              }
-                            },
-                          ),
+                        ? _buildOfferList(context)
+                        : _buildProductList(),
                   );
                 }, failure: (message) {
                   return SizedBox(
@@ -152,30 +98,77 @@ class _OffersViewState extends State<OffersView> {
     );
   }
 
+  GridView _buildProductList() {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 1.sw > 600 ? 3 : 2,
+          crossAxisSpacing: 1.sw > 600 ? 16 : 16.0,
+          mainAxisExtent: 1.sw > 600 ? 415 : 300,
+          mainAxisSpacing: 1.sw > 600 ? 16 : 12),
+      shrinkWrap: true,
+      itemCount: offersIsLoadMore
+          ? cubit.filterListByCategory(cubit.category, cubit.products).length +
+              1
+          : cubit.filterListByCategory(cubit.category, cubit.products).length,
+      itemBuilder: (context, sizeIndex) {
+        if (sizeIndex ==
+                cubit
+                    .filterListByCategory(cubit.category, cubit.products)
+                    .length &&
+            offersIsLoadMore) {
+          return buildShimmerIndicatorSmall();
+        } else {
+          return Container(
+            child: offersCard(
+                context: context,
+                product: cubit.filterListByCategory(
+                    cubit.category, cubit.products)[sizeIndex]),
+          );
+        }
+      },
+    );
+  }
+
+  GridView _buildOfferList(BuildContext context) {
+    return GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: gridDelegate,
+      shrinkWrap: true,
+      itemCount: offersIsLoadMore
+          ? cubit.filterListByCategory(cubit.category, cubit.products).length +
+              1
+          : cubit.filterListByCategory(cubit.category, cubit.products).length,
+      itemBuilder: (context, sizeIndex) {
+        if (sizeIndex ==
+                cubit
+                    .filterListByCategory(cubit.category, cubit.products)
+                    .length &&
+            offersIsLoadMore) {
+          return buildShimmerIndicatorSmall();
+        } else {
+          return Container(
+            child: offersCard(
+                context: context,
+                product: cubit.filterListByCategory(
+                    cubit.category, cubit.products)[sizeIndex]),
+          );
+        }
+      },
+    );
+  }
+
   Column filtersColumn(BuildContext context) {
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.only(left: 8, right: 8),
-          child: SizedBox(
-            height: screenWidth(context, 0.28),
-            width: MediaQuery.of(context).size.width,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {
-                    selectedCategory = index;
-                    setState(() {});
-                  },
-                  child: categoryContainer(
-                    context: context,
-                    image: categoryFilter[index]['image'],
-                    name: categoryFilter[index]['name'],
-                    isSelected: selectedCategory == index,
-                  )),
-              itemCount: categoryFilter.length,
-            ),
+          child: CategoryFilterWidget(
+            selectedCategory: cubit.category,
+            onSelected: (category) {
+              cubit.category = category;
+              setState(() {});
+            },
           ),
         ),
         const SizedBox(
@@ -193,24 +186,13 @@ class _OffersViewState extends State<OffersView> {
             const SizedBox(
               width: 8,
             ),
-            Expanded(
-              child: SizedBox(
-                height: 52,
-                width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        selectedGender = index;
-                        setState(() {});
-                      },
-                      child: filterContainer(
-                        genderFilter[index],
-                        selectedGender == index,
-                      )),
-                  itemCount: genderFilter.length,
-                ),
+             Expanded(
+              child: GendarFilterWidget(
+                selectedCategory: cubit.gendar,
+                onSelected: (gendar) {
+                  cubit.gendar = gendar;
+                  setState(() {});
+                },
               ),
             ),
           ],

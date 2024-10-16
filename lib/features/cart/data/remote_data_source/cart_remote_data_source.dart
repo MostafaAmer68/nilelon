@@ -61,7 +61,7 @@ class CartService extends CartRemoteDataSource {
   Future<void> updateQuantityCart(ChangeQuantityModel model) async {
     final Response data = await apiService.put(
       endPoint: EndPoint.updateQuantityCartUrl,
-      data: model.toJson(),
+      body: model.toJson(),
     );
     if (data.statusCode == HttpStatus.ok) {
       return data.data;

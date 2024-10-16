@@ -15,6 +15,7 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
+import 'package:nilelon/features/product/domain/models/update_variant_model.dart';
 
 import '../../domain/models/update_product.dart';
 
@@ -34,15 +35,8 @@ class ProductsService {
     if (data.statusCode == 200) {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Followed failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Followed: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -57,15 +51,8 @@ class ProductsService {
     if (data.statusCode == 200) {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get New failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get New: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -80,15 +67,8 @@ class ProductsService {
     if (data.statusCode == 200) {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get New failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get New: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -105,15 +85,8 @@ class ProductsService {
     if (data.statusCode == 200) {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Random failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -132,15 +105,8 @@ class ProductsService {
     if (data.statusCode == 200) {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Store failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Store: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -155,15 +121,8 @@ class ProductsService {
     );
     if (data.statusCode == 200) {
       return ProductModel.fromJson(data.data['result']);
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Store failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Store: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -178,15 +137,8 @@ class ProductsService {
     if (data.statusCode == 200) {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get New failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get New: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -203,15 +155,8 @@ class ProductsService {
     if (data.statusCode == 200) {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Random failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -229,15 +174,8 @@ class ProductsService {
     if (data.statusCode == 200) {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Offers failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Offers: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -255,15 +193,8 @@ class ProductsService {
     if (data.statusCode == 200) {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Offers failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Offers: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -274,23 +205,33 @@ class ProductsService {
     );
     if (data.statusCode == 201) {
       return;
+    } else {
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
-
-    throw Exception(
-        'Failed to Get Random: Unexpected status code ${data.data}');
   }
 
   Future<void> updateProduct(UpdateProduct product) async {
-    final data = await apiService.post(
+    final data = await apiService.put(
       endPoint: EndPoint.updateProductUrl,
       body: product.toJson(),
     );
-    if (data.statusCode == 201) {
+    if (data.statusCode == 200) {
       return;
+    } else {
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
+  }
 
-    throw Exception(
-        'Failed to Get Random: Unexpected status code ${data.data}');
+  Future<void> updateVariant(UpdateVariantsModel product) async {
+    final data = await apiService.put(
+      endPoint: EndPoint.changeProductVariantPriceQuantity,
+      body: product.toMap(),
+    );
+    if (data.statusCode == 200) {
+      return;
+    } else {
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
+    }
   }
 
   Future<void> createReview(CreateReviewModel review) async {
@@ -302,9 +243,7 @@ class ProductsService {
     if (data.statusCode == HttpStatus.ok) {
       // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -316,9 +255,7 @@ class ProductsService {
       return List<ReviewModel>.from(
           data.data['result'].map((e) => ReviewModel.fromMap(e)));
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -330,15 +267,8 @@ class ProductsService {
     );
     if (data.statusCode == 201) {
       // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Random failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -350,35 +280,33 @@ class ProductsService {
     );
     if (data.statusCode == 201) {
       // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Random failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
   Future<void> deleteVariant(DeleteVariant review) async {
-    log(review.toMap().toString());
     final data = await apiService.post(
       endPoint: EndPoint.deleteProductVariantUrl,
       body: review.toMap(),
     );
-    if (data.statusCode == 201) {
+    if (data.statusCode == 200) {
       // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Random failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
+    }
+  }
+
+  Future<void> deleteProduct(String id) async {
+    final data = await apiService.delete(
+      endPoint: EndPoint.deleteProductUrl,
+      query: {
+        'id': id,
+      },
+    );
+    if (data.statusCode == 200) {
+    } else {
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -390,15 +318,8 @@ class ProductsService {
     );
     if (data.statusCode == 201) {
       // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Random failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
@@ -408,15 +329,8 @@ class ProductsService {
     );
     if (data.statusCode == 200) {
       // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      // errorAlert(context, errorMessage);
-      throw Exception('Get Random failed: $errorMessage');
     } else {
-      // Handle other status codes if necessary
-      throw Exception(
-          'Failed to Get Random: Unexpected status code ${data.statusCode}');
+      throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 }

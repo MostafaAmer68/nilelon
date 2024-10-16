@@ -1,11 +1,11 @@
 class DashboardModel {
-  final int storeFollowers;
+  final num storeFollowers;
   final String storeBestseller;
-  final int storeNumberOfItemsSold;
-  final int storeNumberOfNotifications;
-  final int storeOrdersNumber;
-  final int storeTotalIncome;
-  final int storeRate;
+  final num storeNumberOfItemsSold;
+  final num storeNumberOfNotifications;
+  final num storeOrdersNumber;
+  final num storeTotalIncome;
+  final num storeRate;
 
   DashboardModel({
     required this.storeFollowers,

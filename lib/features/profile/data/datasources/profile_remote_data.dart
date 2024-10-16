@@ -35,7 +35,7 @@ class ProfileRemoteData {
       String repName, String repNumber, String webLink, context) async {
     final response = await _apiService.put(
       endPoint: EndPoint.updateStoreInfoUrl,
-      data: {
+      body: {
         "storeId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "repName": repName,
         "repNumber": repNumber,
@@ -56,7 +56,7 @@ class ProfileRemoteData {
       String profilePic, String name, String storeSlogan, context) async {
     final response = await _apiService.put(
       endPoint: EndPoint.updateStoreUrl,
-      data: {
+      body: {
         "storeId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "profilePic": profilePic,
         "name": name,

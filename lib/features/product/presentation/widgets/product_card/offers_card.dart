@@ -7,20 +7,23 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 
+import '../../../../auth/domain/model/user_model.dart';
+import '../../pages/product_details_page.dart';
+import '../../pages/product_details_store_page.dart';
+import '../../../../../core/data/hive_stroage.dart';
+import '../../../../../core/tools.dart';
+import '../../../../../core/utils/navigation.dart';
+
 GestureDetector offersCard({required context, required ProductModel product}) {
   return GestureDetector(
     onTap: () {
-      // navigateTo(
-      //     context: context,
-      //     screen: ProductDetailsView(
-      //       images: images,
-      //       name: name,
-      //       storeName: storeName,
-      //       rating: rating,
-      //       price: price,
-      //       status: 'Out of Stock',
-      //       reviews: const [],
-      //     ));
+      navigateTo(
+        context: context,
+        screen:
+            product.storeId != HiveStorage.get<UserModel>(HiveKeys.userModel).id
+                ? ProductDetailsView(productId: product.id)
+                : ProductStoreDetailsView(productId: product.id),
+      );
     },
     child: Container(
       clipBehavior: Clip.antiAlias,
@@ -107,6 +110,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
           ),
           Text(
             product.name,
+              overflow: TextOverflow.ellipsis,
             style: AppStylesManager.customTextStyleBl9,
           ),
           const SizedBox(
@@ -117,7 +121,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
             child: Row(
               children: [
                 Text(
-                  product.productVariants.first.price.toString(),
+                  '${product.productVariants.firstWhere((e) => e.price != 0).price} ${lang(context).le}',
                   style: AppStylesManager.customTextStyleO3
                       .copyWith(fontWeight: FontWeight.w700),
                 ),
