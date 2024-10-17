@@ -320,6 +320,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "newPhoneNumber": MessageLookupByLibrary.simpleMessage("رقم هاتف جديد"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "no": MessageLookupByLibrary.simpleMessage("لا"),
+        "noBestSeller":
+            MessageLookupByLibrary.simpleMessage("لا يوجد افضل بيع للمنتج"),
         "noDraftsYet":
             MessageLookupByLibrary.simpleMessage("لا توجد مسودات بعد"),
         "noFollowingAnyStore":

@@ -75,7 +75,7 @@ class _AddProductViewState extends State<EditProductpage> {
       },
       child: ScaffoldImage(
         appBar: customAppBar(
-          title: lang.addProduct,
+          title: lang.editProduct,
           context: context,
           hasIcon: false,
         ),

@@ -389,5 +389,6 @@
     "selected": "تم تحديد",
     "offerApplied": "تم تطبيق العرض على المنتجات المحددة بنجاح!",
     "youMustSelectOneProduct": "يجب عليك اختيار منتج واحد",
+    "noBestSeller": "لا يوجد افضل بيع للمنتج",
   "returnedHistory": "تاريخ الإرجاع"
 }

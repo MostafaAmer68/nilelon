@@ -56,11 +56,9 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
       },
       child: Form(
         key: formKey,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          color: ColorManager.primaryG17,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -105,7 +103,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
                 ),
                 paymentItems(),
                 const SizedBox(
-                  height: 24,
+                  height: 10,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

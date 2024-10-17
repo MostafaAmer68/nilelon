@@ -62,7 +62,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                       height: 24,
                     ),
                     SizedBox(
-                      height: screenHeight(context, 1.3),
+                      height: screenHeight(context, 1),
                       child: PageView(
                         controller: ProgressCubit.get(context).pageController,
                         children: const [

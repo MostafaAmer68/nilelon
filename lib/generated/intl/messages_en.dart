@@ -324,6 +324,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("New Phone Number"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noBestSeller": MessageLookupByLibrary.simpleMessage("No Best Seller"),
         "noDraftsYet": MessageLookupByLibrary.simpleMessage("No Drafts Yet."),
         "noFollowingAnyStore": MessageLookupByLibrary.simpleMessage(
             "you dont followed any store yet."),

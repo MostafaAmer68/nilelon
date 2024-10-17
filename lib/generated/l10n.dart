@@ -3980,6 +3980,16 @@ class S {
     );
   }
 
+  /// `No Best Seller`
+  String get noBestSeller {
+    return Intl.message(
+      'No Best Seller',
+      name: 'noBestSeller',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

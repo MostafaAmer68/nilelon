@@ -19,6 +19,7 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
+import '../../../../core/widgets/cards/wide/analytics_wide_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'cubit/analytics_cubit.dart';
@@ -90,10 +91,11 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                             height: 24,
                           ),
                           SizedBox(
-                              height: 1.sw > 600 ? 220 : 145,
-                              width: screenWidth(context, 1),
-                              child: buildShimmerIndicatorAnalyticsBigCard(
-                                  context)),
+                            height: 1.sw > 600 ? 220 : 145,
+                            width: screenWidth(context, 1),
+                            child:
+                                buildShimmerIndicatorAnalyticsBigCard(context),
+                          ),
                         ],
                       ),
                     ),
@@ -223,18 +225,15 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                           Expanded(
                             // height: 1.sw > 600 ? 220 : 145,
                             // width: screenWidth(context, 1),
-                            child: Center(
-                                child:
-                                    Text(cubit.dashboardModel.storeBestseller)),
-                            // ListView.builder(
-                            //   shrinkWrap: true,
-                            //   scrollDirection: Axis.horizontal,
-                            //   itemBuilder: (context, index) => Padding(
-                            //     padding: const EdgeInsets.only(right: 8),
-                            //     child: analyticsWideCard(context: context),
-                            //   ),
-                            //   itemCount: 5,
-                            // ),
+                            child: Column(
+                              children: [
+                                cubit.dashboardModel.storeBestseller.isEmpty
+                                    ? Center(
+                                        child: Text(lang.noBestSeller),
+                                      )
+                                    : analyticsWideCard(context: context)
+                              ],
+                            ),
                           ),
                         ],
                       ),
