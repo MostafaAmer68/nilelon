@@ -66,6 +66,7 @@ class ClosetCubit extends Cubit<ClosetState> {
       emit(const ClosetState.failure());
     }, (response) {
       emit(const ClosetState.successDelete());
+      emit(const ClosetState.success());
     });
   }
 

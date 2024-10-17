@@ -48,61 +48,63 @@ class CreateNewSection extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 16.h,
-            ),
-            Text(
-              S.of(context).createNewSection,
-              style: AppStylesManager.customTextStyleBl6
-                  .copyWith(fontWeight: FontWeight.w700),
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            TextFormField(
-              keyboardType: TextInputType.name,
-              controller: ClosetCubit.get(context).closetName,
-              decoration: InputDecoration(
-                focusColor: ColorManager.primaryG,
-                hintText: S.of(context).sectionName,
-                hintStyle: AppStylesManager.customTextStyleG2,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 10.h,
               ),
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            BlocListener<ClosetCubit, ClosetState>(
-              listener: (context, state) {
-                state.mapOrNull(
-                  loading: (_) {
-                    BotToast.showLoading();
-                  },
-                  success: (_) {
-                    BotToast.closeAllLoading();
-                    navigatePop(context: context);
-                    ClosetCubit.get(context).getclosets();
-                  },
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ButtonBuilder(
-                    text: S.of(context).save,
-                    frameColor: ColorManager.primaryO3,
-                    ontap: () {
-                      ClosetCubit.get(context).createCloset();
+              Text(
+                S.of(context).createNewSection,
+                style: AppStylesManager.customTextStyleBl6
+                    .copyWith(fontWeight: FontWeight.w700),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              TextFormField(
+                keyboardType: TextInputType.name,
+                controller: ClosetCubit.get(context).closetName,
+                decoration: InputDecoration(
+                  focusColor: ColorManager.primaryG,
+                  hintText: S.of(context).sectionName,
+                  hintStyle: AppStylesManager.customTextStyleG2,
+                ),
+              ),
+              SizedBox(
+                height: 10.h,
+              ),
+              BlocListener<ClosetCubit, ClosetState>(
+                listener: (context, state) {
+                  state.mapOrNull(
+                    loading: (_) {
+                      BotToast.showLoading();
                     },
-                    width: screenWidth(context, 0.28),
-                    height: 45.h,
-                  ),
-                ],
-              ),
-            )
-          ],
+                    success: (_) {
+                      BotToast.closeAllLoading();
+                      navigatePop(context: context);
+                      ClosetCubit.get(context).getclosets();
+                    },
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ButtonBuilder(
+                      text: S.of(context).save,
+                      frameColor: ColorManager.primaryO3,
+                      ontap: () {
+                        ClosetCubit.get(context).createCloset();
+                      },
+                      width: screenWidth(context, 0.28),
+                      height: 45.h,
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

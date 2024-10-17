@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/utils/navigation.dart';
@@ -32,10 +33,17 @@ class _ClosetViewState extends State<ClosetPage> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
+    // BotToast.closeAllLoading();
     return ScaffoldImage(
       appBar: customAppBar(title: lang.closet, context: context),
       body: BlocListener<ClosetCubit, ClosetState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          state.mapOrNull(success: (_) {
+            BotToast.closeAllLoading();
+          }, successDelete: (_) {
+            ClosetCubit.get(context).getclosets();
+          });
+        },
         child: Column(
           children: [
             const Divider(
@@ -66,6 +74,28 @@ class _ClosetViewState extends State<ClosetPage> {
                           loading: () {
                             return const Center(
                                 child: CircularProgressIndicator());
+                          },
+                          successDelete: () {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount:
+                                  ClosetCubit.get(context).closets.length,
+                              itemBuilder: (context, index) {
+                                final closet =
+                                    ClosetCubit.get(context).closets[index];
+                                return ClosetsWidgetWithOptions(
+                                  isPage: true,
+                                  closet: closet,
+                                  onTap: () {
+                                    navigateTo(
+                                      context: context,
+                                      screen:
+                                          SectionDetailsView(closet: closet),
+                                    );
+                                  },
+                                );
+                              },
+                            );
                           },
                           success: () {
                             return ListView.builder(
