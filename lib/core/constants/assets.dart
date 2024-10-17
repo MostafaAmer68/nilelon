@@ -163,8 +163,12 @@ class Assets {
   static const String assetsImagesHandPicked = "assets/images/hand_picked.svg";
 
   /// Assets for assetsImagesHanger
-  /// assets/images/hanger.png
-  static const String assetsImagesHanger = "assets/images/hanger.png";
+  /// assets/images/hanger.svg
+  static const String assetsImagesHanger = "assets/images/hanger.svg";
+
+  /// Assets for assetsImagesHanger1
+  /// assets/images/hanger1.png
+  static const String assetsImagesHanger1 = "assets/images/hanger1.png";
 
   /// Assets for assetsImagesIcChevron
   /// assets/images/ic_chevron.svg

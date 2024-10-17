@@ -5,11 +5,12 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/core/widgets/pop_ups/add_to_closet_popup.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
 import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
 import 'package:nilelon/features/refund/presentation/widgets/custom_check_box.dart';
+import 'package:svg_flutter/svg.dart';
 
+import '../../../../../core/constants/assets.dart';
 import '../../../../auth/domain/model/user_model.dart';
 import '../../../../closet/presentation/view/closet_sheet_bar_view.dart';
 import '../../pages/product_details_store_page.dart';
@@ -131,25 +132,25 @@ GestureDetector productSquarItem(
                               boxShadow: [
                                 BoxShadow(
                                   color: Colors.orange.shade300.withOpacity(1),
-                                  offset: const Offset(3,
-                                      3), // Adjusted shadow to be more subtle
+                                  offset: const Offset(3, 3),
                                   blurRadius: 5,
                                 ),
                               ],
-                              image: product.isInCloset
-                                  ? const DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/closet_following.png',
-                                      ),
-                                      fit: BoxFit.cover, // Changed to contain
-                                    )
-                                  : const DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/hanger.png',
-                                      ),
-                                      fit: BoxFit.cover, // Changed to contain
-                                    ),
                             ),
+                            child: !product.isInCloset
+                                ? SizedBox(
+                                    // width: 20,
+                                    child: SvgPicture.asset(
+                                      Assets.assetsImagesHanger,
+                                      width: 30,
+                                      // height: ,
+
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : Image.asset(
+                                    Assets.assetsImagesClosetFollowing,
+                                  ),
                           ),
                         ),
                       ),
