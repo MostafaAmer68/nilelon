@@ -1,8 +1,12 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
+import 'package:nilelon/features/customer_flow/section_details/section_details_view.dart';
+import 'package:nilelon/features/product/presentation/pages/product_sections.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -10,6 +14,7 @@ import 'package:nilelon/features/closet/presentation/widget/closet_widget_with_o
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
 import '../../../../core/color_const.dart';
+import '../../../../core/utils/navigation.dart';
 import '../widget/create_section_widget.dart';
 
 class ClosetSheetBarView extends StatefulWidget {
@@ -26,6 +31,7 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
     super.initState();
   }
 
+  ClosetModel selectedCloset = const ClosetModel(id: '', name: '');
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -76,7 +82,49 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
           Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              BlocBuilder<ClosetCubit, ClosetState>(
+              BlocConsumer<ClosetCubit, ClosetState>(
+                listener: (context, state) {
+                  state.mapOrNull(success: (_) {
+                    BotToast.closeAllLoading();
+                  }, successDelete: (_) {
+                    BotToast.closeAllLoading();
+                    // navigatePop(context: context);
+                    ClosetCubit.get(context).getclosets();
+                  }, successAdded: (c) {
+                    BotToast.showCustomText(
+                      duration: const Duration(seconds: 4),
+                      toastBuilder: (_) => Card(
+                        color: Colors.black87,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                S.of(context).productAdded,
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                              const SizedBox(width: 10),
+                              TextButton(
+                                onPressed: () {
+                                  BotToast.closeAllLoading();
+                                  navigateTo(
+                                      context: context,
+                                      screen: SectionDetailsView(
+                                          closet: selectedCloset));
+                                },
+                                child: Text(
+                                  S.of(context).myCloset,
+                                  style: const TextStyle(color: Colors.blue),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  });
+                },
                 builder: (context, state) {
                   return state.whenOrNull(
                     loading: () {
@@ -136,11 +184,14 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                                       closet: closet,
                                       isPage: false,
                                       onTap: () {
-                                        ClosetCubit.get(context)
-                                            .addProductToClosets(
-                                          widget.productId,
-                                          closet.id,
-                                        );
+                                        if (widget.productId.isNotEmpty) {
+                                          ClosetCubit.get(context)
+                                              .addProductToClosets(
+                                            widget.productId,
+                                            closet.id,
+                                          );
+                                          selectedCloset = closet;
+                                        }
                                       },
                                     ),
                             );

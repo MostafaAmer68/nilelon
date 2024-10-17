@@ -76,11 +76,6 @@ void main() async {
     HiveStorage.set(HiveKeys.skipOnboarding, false);
   }
   runApp(
-    DevicePreview(
-      enabled: kReleaseMode,
-      builder: (context) {
-        return const MyApp();
-      },
-    ),
+    const MyApp(),
   );
 }

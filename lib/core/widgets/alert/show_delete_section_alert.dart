@@ -65,7 +65,9 @@ Future showDeleteSectionAlert(context, ClosetModel closetId) => showDialog(
                   width: screenWidth(context, 0.32),
                   height: screenHeight(context, 0.06),
                   ontap: () {
+                    navigatePop(context: context);
                     ClosetCubit.get(context).deletCloset(closetId.id);
+                   
                   }),
             ],
           ),

@@ -38,6 +38,11 @@ class ProductsCubit extends Cubit<ProductsState> {
       CategoryModel selectedCategory, List<ProductModel> products) {
     return selectedCategory.id.isEmpty
         ? products
+            .where((e) =>
+                e.categoryID == selectedCategory.id ||
+                gendar == e.type ||
+                gendar == 'All')
+            .toList()
         : products
             .where((e) =>
                 e.categoryID == selectedCategory.id ||

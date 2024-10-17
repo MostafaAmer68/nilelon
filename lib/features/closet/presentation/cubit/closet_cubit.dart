@@ -44,6 +44,7 @@ class ClosetCubit extends Cubit<ClosetState> {
       emit(const ClosetState.failure());
     }, (response) {
       getclosets();
+      closetName.clear();
       emit(const ClosetState.success());
     });
   }
@@ -54,7 +55,7 @@ class ClosetCubit extends Cubit<ClosetState> {
     data.fold((error) {
       emit(const ClosetState.failure());
     }, (response) {
-      emit(const ClosetState.success());
+      emit(const ClosetState.successDelete());
     });
   }
 
@@ -74,7 +75,7 @@ class ClosetCubit extends Cubit<ClosetState> {
     data.fold((error) {
       emit(const ClosetState.failure());
     }, (response) {
-      emit(const ClosetState.success());
+      emit(const ClosetState.successDelete());
     });
   }
 

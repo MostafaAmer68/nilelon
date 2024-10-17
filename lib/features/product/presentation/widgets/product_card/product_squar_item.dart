@@ -11,6 +11,7 @@ import 'package:nilelon/features/product/presentation/pages/product_details_page
 import 'package:nilelon/features/refund/presentation/widgets/custom_check_box.dart';
 
 import '../../../../auth/domain/model/user_model.dart';
+import '../../../../closet/presentation/view/closet_sheet_bar_view.dart';
 import '../../pages/product_details_store_page.dart';
 import '../../../../../core/color_const.dart';
 import '../../../../../core/resources/color_manager.dart';
@@ -107,7 +108,19 @@ GestureDetector productSquarItem(
                         visible: !HiveStorage.get(HiveKeys.isStore),
                         child: InkWell(
                           onTap: () {
-                            addToClosetDialog(context, product.id);
+                            showModalBottomSheet(
+                              context: context,
+                              backgroundColor: ColorManager.primaryW,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
+                                ),
+                              ),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              builder: (context) =>
+                                  ClosetSheetBarView(productId: product.id),
+                            );
                           },
                           child: Container(
                             width: 35.w, // Increased size to match the image

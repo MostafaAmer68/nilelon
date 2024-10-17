@@ -28,7 +28,7 @@ class _SectionDetailsViewState extends State<SectionDetailsView> {
 
   @override
   Widget build(BuildContext context) {
-    BotToast.closeAllLoading();
+    // BotToast.closeAllLoading();
     return ScaffoldImage(
       appBar: customAppBar(title: widget.closet.name, context: context),
       body: BlocListener<ClosetCubit, ClosetState>(
@@ -40,10 +40,10 @@ class _SectionDetailsViewState extends State<SectionDetailsView> {
             successDelete: (_) {
               BotToast.closeAllLoading();
               BotToast.showText(text: 'success delete');
-              ClosetCubit.get(context).getclosets();
+              ClosetCubit.get(context).getClosetsItems(widget.closet.id);
             },
             success: (_) {
-              // Navigator.pop(context);
+              BotToast.closeAllLoading();
             },
             failure: (_) {},
           );
@@ -64,7 +64,7 @@ class _SectionDetailsViewState extends State<SectionDetailsView> {
                     return state.whenOrNull(
                       loading: () => buildShimmerIndicatorGrid(),
                       success: () => GridView.builder(
-                        gridDelegate:gridDelegate,
+                        gridDelegate: gridDelegate,
                         itemCount: ClosetCubit.get(context).closetsItem.length,
                         itemBuilder: (context, index) {
                           return Container(

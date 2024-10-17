@@ -41,12 +41,12 @@ Future logoutAlert(context) => showDialog(
                   height: screenHeight(context, 0.06),
                   buttonColor: Colors.transparent,
                   frameColor: ColorManager.primaryB2,
-                  style: AppStylesManager.customTextStyleB4,
+                  style: AppStylesManager.customTextStyleW4,
                   ontap: () {
                     navigatePop(context: context);
                   }),
               SizedBox(
-                width: 3.w,
+                width: 5.w,
               ),
               GradientButtonBuilder(
                   text: lang.yes,

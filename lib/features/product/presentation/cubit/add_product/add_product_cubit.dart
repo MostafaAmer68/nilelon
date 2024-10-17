@@ -293,8 +293,8 @@ class AddProductCubit extends Cubit<AddproductState> {
           (e) => SizeModel(
             size: e.size,
             price: num.parse(e.price.text.isEmpty ? priceC.text : e.price.text),
-            quantity: int.parse(
-                e.quantity.text.isEmpty ? priceC.text : e.quantity.text),
+            quantity:
+                int.parse(e.quantity.text.isEmpty ? '0' : e.quantity.text),
           ),
         ),
       ).toList(),
@@ -513,6 +513,36 @@ class AddProductCubit extends Cubit<AddproductState> {
     return variants;
   }
 
+  resetAll() {
+    HiveStorage.set(HiveKeys.tempVarients, null);
+    sizes = SizeTypes.values
+        .map(
+          (e) => SizeController(
+            size: e.name,
+            isEdit: false,
+            quantity: TextEditingController(),
+            price: TextEditingController(),
+          ),
+        )
+        .toList();
+
+    priceC.clear();
+    productNameC.clear();
+    productDesC.clear();
+    productType = null;
+    sizeGuideImage = File('');
+    images.clear();
+    isVarientAdded = {
+      '0xFFD80000': false,
+      '0xFF1F00DF': false,
+      '0xFFFFCD1C': false,
+      '0xFFFFFFFF': false,
+      '0xFF101010': false,
+      '0xFF170048': false,
+      '0xFF165A11': false,
+    };
+  }
+
   void initializeSizeControllers() {
     sizes = SizeTypes.values
         .map(
@@ -525,8 +555,6 @@ class AddProductCubit extends Cubit<AddproductState> {
         )
         .toList();
 
-    // log(addedVarients.map((e) => e.toMap()).toString());
-    // for (var variant in addedVarients) {
     final varient = addedVarients.firstWhere(
       (e) => e.color == selectedColor.substring(2),
       orElse: () => Variant(
@@ -560,9 +588,12 @@ class AddProductCubit extends Cubit<AddproductState> {
     }
     if (variant.sizes.isNotEmpty) {
       for (int i = 0; i < sizes.length; i++) {
-        sizes[i].quantity.text = variant.sizes[i].quantity.toString();
-
-        sizes[i].price.text = variant.sizes[i].price.toString();
+        sizes[i] = sizes[i].copyWith(
+            quantity: TextEditingController(
+                text: variant.sizes[i].quantity.toString()));
+        sizes[i] = sizes[i].copyWith(
+            price:
+                TextEditingController(text: variant.sizes[i].price.toString()));
       }
     }
   }

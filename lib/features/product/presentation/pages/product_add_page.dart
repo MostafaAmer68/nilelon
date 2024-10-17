@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +19,10 @@ import 'package:nilelon/features/product/presentation/widgets/product_details_wi
 import 'package:nilelon/features/product/presentation/widgets/size_guid_image.dart';
 
 import '../../../../core/data/hive_stroage.dart';
+import '../../../../core/sizes_consts.dart';
 import '../../../../core/widgets/alert/delete_alert.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../domain/models/size_variant_controller.dart';
 import '../cubit/add_product/add_product_cubit.dart';
 
 class AddProductView extends StatefulWidget {
@@ -34,7 +38,7 @@ class _AddProductViewState extends State<AddProductView> {
 
   @override
   void dispose() {
-    HiveStorage.set(HiveKeys.tempVarients, null);
+    cubit.resetAll();
     super.dispose();
   }
 

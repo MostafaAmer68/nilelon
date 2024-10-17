@@ -5,9 +5,11 @@ import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 
+import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/alert/empty_closets_alert.dart';
 import '../../../../core/widgets/alert/show_delete_section_alert.dart';
 import '../../../../core/widgets/pop_ups/rename_popup.dart';
+import '../cubit/closet_cubit.dart';
 
 class ClosetsWidgetWithOptions extends StatelessWidget {
   const ClosetsWidgetWithOptions({
@@ -98,7 +100,9 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                                     style: AppStylesManager.customTextStyleR,
                                   ),
                                   onPressed: () {
+                                    navigatePop(context: context);
                                     showEmptyClosetAlert(context, closet);
+                                    // ClosetCubit.get(context).getclosets();
                                   },
                                 ),
                                 const Divider(),
@@ -108,7 +112,9 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                                     style: AppStylesManager.customTextStyleR,
                                   ),
                                   onPressed: () {
+                                    navigatePop(context: context);
                                     showDeleteSectionAlert(context, closet);
+                                    // ClosetCubit.get(context).getclosets();
                                   },
                                 ),
                               ],
