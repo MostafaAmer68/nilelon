@@ -93,54 +93,62 @@ class _DiscoverViewState extends State<DiscoverView> {
     return ScaffoldImage(
       appBar: customAppBar(
           title: lang.discover, context: context, hasLeading: false),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const DefaultDivider(),
-            const SizedBox(
-              height: 8,
-            ),
-            Text(
-              lang.discoverOurNewAndSpecialProductsFromHere,
-              style: AppStylesManager.customTextStyleG24,
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Column(
-              children: [
-                ViewAllRow(
-                    assetName: Assets.assetsImagesNewIn,
-                    noTextIcon: false,
-                    text: lang.newIn,
-                    onPressed: () {
-                      navigateTo(
-                          context: context,
-                          screen: const ProductNewInViewAll(
-                            isStore: false,
-                          ));
-                    }),
-                const SizedBox(
-                  height: 16,
-                ),
-                ProductNewInView(newInIsLoadMore: newInIsLoadMore),
-                const SizedBox(height: 20),
-                ViewAllRow(
-                    text: lang.handPicked,
-                    assetName: Assets.assetsImagesHandPicked,
-                    noTextIcon: false,
-                    onPressed: () {
-                      navigateTo(
-                          context: context, screen: const HandPickedViewAll());
-                    }),
-                HandPickedView(
-                  handScrollController: handScrollController,
-                  handIsLoadMore: handIsLoadMore,
-                ),
-                const SizedBox(height: 30),
-              ],
-            )
-          ],
+      body: BlocListener<ProductsCubit, ProductsState>(
+        listener: (context, state) {
+          state.mapOrNull(
+            success: (_) => setState(() {}),
+          );
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const DefaultDivider(),
+              const SizedBox(
+                height: 8,
+              ),
+              Text(
+                lang.discoverOurNewAndSpecialProductsFromHere,
+                style: AppStylesManager.customTextStyleG24,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Column(
+                children: [
+                  ViewAllRow(
+                      assetName: Assets.assetsImagesNewIn,
+                      noTextIcon: false,
+                      text: lang.newIn,
+                      onPressed: () {
+                        navigateTo(
+                            context: context,
+                            screen: const ProductNewInViewAll(
+                              isStore: false,
+                            ));
+                      }),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ProductNewInView(newInIsLoadMore: newInIsLoadMore),
+                  const SizedBox(height: 20),
+                  ViewAllRow(
+                      text: lang.handPicked,
+                      assetName: Assets.assetsImagesHandPicked,
+                      noTextIcon: false,
+                      onPressed: () {
+                        navigateTo(
+                            context: context,
+                            screen: const HandPickedViewAll());
+                      }),
+                  HandPickedView(
+                    handScrollController: handScrollController,
+                    handIsLoadMore: handIsLoadMore,
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -243,6 +251,12 @@ class HandPickedView extends StatefulWidget {
 }
 
 class _HandPickedViewState extends State<HandPickedView> {
+  @override
+  void initState() {
+    ProductsCubit.get(context).getRandomProducts(1, 100);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductsCubit, ProductsState>(

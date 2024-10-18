@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 
 import 'cateogyr_filter_item.dart';
 
@@ -18,23 +19,26 @@ class _GendarFilterWidgetState extends State<GendarFilterWidget> {
   List<String> gander = ['All', 'Male', 'Female'];
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 52,
-      width: MediaQuery.of(context).size.width,
-      child: ListView.builder(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: gander.length,
-        itemBuilder: (context, index) {
-          final ganderItem = gander[index];
-          return CategoryFilterItem(
-            name: ganderItem,
-            isSelected: widget.selectedCategory == ganderItem,
-            onTap: () {
-              widget.onSelected(ganderItem);
-            },
-          );
-        },
+    return Visibility(
+      visible: HiveStorage.get(HiveKeys.isStore),
+      child: SizedBox(
+        height: 52,
+        width: MediaQuery.of(context).size.width,
+        child: ListView.builder(
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          itemCount: gander.length,
+          itemBuilder: (context, index) {
+            final ganderItem = gander[index];
+            return CategoryFilterItem(
+              name: ganderItem,
+              isSelected: widget.selectedCategory == ganderItem,
+              onTap: () {
+                widget.onSelected(ganderItem);
+              },
+            );
+          },
+        ),
       ),
     );
   }

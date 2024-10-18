@@ -35,8 +35,11 @@ class ProductsCubit extends Cubit<ProductsState> {
   List<ProductModel> productsHandpack = [];
 
   List<ProductModel> filterListByCategory(
-      CategoryModel selectedCategory, List<ProductModel> products) {
-    return products.where((product) {
+      CategoryModel selectedCategory, List<ProductModel> filteredProducts) {
+    if (gendar == 'All' && selectedCategory.id.isEmpty) {
+      return filteredProducts;
+    }
+    return filteredProducts.where((product) {
       final matchesCategory = selectedCategory.id.isEmpty ||
           product.categoryID == selectedCategory.id;
       final matchesGender = gendar == 'All' || product.type == gendar;

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget%20copy.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
@@ -77,7 +78,10 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
                 }, loading: () {
                   return buildShimmerIndicatorGrid();
                 }, success: () {
-                  return ProductsCubit.get(context).productsHandpack.isEmpty
+                  return cubit
+                          .filterListByCategory(cubit.category,
+                              ProductsCubit.get(context).productsHandpack)
+                          .isEmpty
                       ? SizedBox(
                           height: 450.h,
                           child: Column(
@@ -119,11 +123,8 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
                                   handIsLoadMore) {
                                 return buildShimmerIndicatorSmall();
                               } else {
-                                if (cubit
-                                        .filterListByCategory(
-                                            cubit.category,
-                                            ProductsCubit.get(context)
-                                                .productsHandpack)[sizeIndex]
+                                if (ProductsCubit.get(context)
+                                        .productsHandpack[sizeIndex]
                                         .productVariants
                                         .first
                                         .discountRate !=
@@ -183,13 +184,16 @@ class _HandPickedViewAllState extends State<HandPickedViewAll> {
             const SizedBox(
               width: 8,
             ),
-            Expanded(
-              child: GendarFilterWidget(
-                selectedCategory: cubit.gendar,
-                onSelected: (gendar) {
-                  cubit.gendar = gendar;
-                  setState(() {});
-                },
+            Visibility(
+              visible: HiveStorage.get(HiveKeys.isStore),
+              child: Expanded(
+                child: GendarFilterWidget(
+                  selectedCategory: cubit.gendar,
+                  onSelected: (gendar) {
+                    cubit.gendar = gendar;
+                    setState(() {});
+                  },
+                ),
               ),
             ),
           ],
