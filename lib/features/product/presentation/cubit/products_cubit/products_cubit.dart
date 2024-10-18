@@ -36,26 +36,13 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   List<ProductModel> filterListByCategory(
       CategoryModel selectedCategory, List<ProductModel> products) {
-    return selectedCategory.id.isEmpty
-        ? products
-            .where((e) =>
-                e.categoryID == selectedCategory.id ||
-                gendar == e.type ||
-                gendar == 'All')
-            .toList()
-        : products
-            .where((e) =>
-                e.categoryID == selectedCategory.id ||
-                gendar == e.type ||
-                gendar == 'All')
-            .toList();
-  }
+    return products.where((product) {
+      final matchesCategory = selectedCategory.id.isEmpty ||
+          product.categoryID == selectedCategory.id;
+      final matchesGender = gendar == 'All' || product.type == gendar;
 
-  List<ProductModel> filterListByGendar(
-      String selectedGendar, List<ProductModel> products) {
-    return selectedGendar.isEmpty
-        ? products
-        : products.where((e) => e.type == selectedGendar).toList();
+      return matchesCategory && matchesGender;
+    }).toList();
   }
 
   Future<void> getProductDetails(String productId) async {

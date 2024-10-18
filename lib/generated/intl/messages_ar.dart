@@ -145,6 +145,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
         "deleteAll": MessageLookupByLibrary.simpleMessage("حذف الكل"),
+        "deleteDefault": MessageLookupByLibrary.simpleMessage(
+            "لا يمكنك حذف الخزانة الافتراضية"),
         "delivery": MessageLookupByLibrary.simpleMessage("التسليم"),
         "didYouFaceAnyProblemsAtTheShippingProcess":
             MessageLookupByLibrary.simpleMessage(
@@ -455,6 +457,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "سجل باستخدام بريدك الإلكتروني الصحيح"),
         "remove": MessageLookupByLibrary.simpleMessage("إزالة"),
         "rename": MessageLookupByLibrary.simpleMessage("إعادة التسمية"),
+        "renameDefault": MessageLookupByLibrary.simpleMessage(
+            "لا يمكنك إعادة تسمية الخزانة الافتراضية"),
         "renameSection":
             MessageLookupByLibrary.simpleMessage("إعادة تسمية القسم"),
         "report": MessageLookupByLibrary.simpleMessage("إبلاغ"),

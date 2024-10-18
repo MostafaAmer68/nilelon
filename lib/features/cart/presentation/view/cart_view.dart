@@ -93,7 +93,7 @@ class _CartViewState extends State<CartView> {
                   return Column(
                     children: [
                       SizedBox(
-                        height: screenHeight(context, 0.4),
+                        height: screenHeight(context, 0.3),
                         child: ListView.builder(
                           itemCount: cubit.cart.items.length,
                           padding: const EdgeInsets.only(bottom: 5),

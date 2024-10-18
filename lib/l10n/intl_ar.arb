@@ -390,5 +390,7 @@
     "offerApplied": "تم تطبيق العرض على المنتجات المحددة بنجاح!",
     "youMustSelectOneProduct": "يجب عليك اختيار منتج واحد",
     "noBestSeller": "لا يوجد افضل بيع للمنتج",
+     "deleteDefault": "لا يمكنك حذف الخزانة الافتراضية",
+  "renameDefault": "لا يمكنك إعادة تسمية الخزانة الافتراضية",
   "returnedHistory": "تاريخ الإرجاع"
 }

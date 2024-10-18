@@ -147,6 +147,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "deleteAll": MessageLookupByLibrary.simpleMessage("Delete All"),
+        "deleteDefault": MessageLookupByLibrary.simpleMessage(
+            "you can`t delete default closet"),
         "delivery": MessageLookupByLibrary.simpleMessage("Delivery"),
         "didYouFaceAnyProblemsAtTheShippingProcess":
             MessageLookupByLibrary.simpleMessage(
@@ -459,6 +461,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Register With Your Valid Email Address"),
         "remove": MessageLookupByLibrary.simpleMessage("Remove"),
         "rename": MessageLookupByLibrary.simpleMessage("Rename"),
+        "renameDefault": MessageLookupByLibrary.simpleMessage(
+            "you can`t rename default closet"),
         "renameSection": MessageLookupByLibrary.simpleMessage("Rename Section"),
         "report": MessageLookupByLibrary.simpleMessage("Report"),
         "reportOrder": MessageLookupByLibrary.simpleMessage("Report Order"),

@@ -3990,6 +3990,26 @@ class S {
     );
   }
 
+  /// `you can't delete default closet`
+  String get deleteDefault {
+    return Intl.message(
+      'you can`t delete default closet',
+      name: 'deleteDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you can't rename default closet`
+  String get renameDefault {
+    return Intl.message(
+      'you can`t rename default closet',
+      name: 'renameDefault',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

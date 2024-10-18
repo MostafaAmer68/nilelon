@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
@@ -91,6 +92,11 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                                     style: AppStylesManager.customTextStyleBl6,
                                   ),
                                   onPressed: () {
+                                    if (closet.name == 'Default') {
+                                      BotToast.showText(
+                                          text: lang.renameDefault);
+                                      return;
+                                    }
                                     renameSectionDialog(context);
                                   },
                                 ),
@@ -113,6 +119,11 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                                     style: AppStylesManager.customTextStyleR,
                                   ),
                                   onPressed: () {
+                                    if (closet.name == 'Default') {
+                                      BotToast.showText(
+                                          text: lang.deleteDefault);
+                                      return;
+                                    }
                                     navigatePop(context: context);
                                     showDeleteSectionAlert(context, closet);
                                     // ClosetCubit.get(context).getclosets();
