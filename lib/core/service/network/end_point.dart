@@ -80,7 +80,7 @@ class EndPoint {
       '/ShippingMethod/GetShippingMethods';
   //todo order urls
   static const String getCustomerOrderUrl = '/Order/GetCustomerOrders';
-  static const String getStoreOrderUrl = '/Order/GetStoreOrderes';
+  static const String getStoreOrderUrl = '/Order/GetStoreOrders';
   static const String createOrderUlr = '/Order/CreateOrder';
   static const String changeOrderStateUrl = '/Order/ChangeOrderState';
   static const String getOrderDetailsByIdUrl = '/Order/GetOrderDetailsById';
@@ -150,7 +150,8 @@ class EndPoint {
   static const String createProductVariantUrl = '/Product/CreateProductVariant';
   static const String createProductImagesUrl = '/Product/CreateProductImages';
   static const String updateProductUrl = '/Product/UpdateProduct';
-  static const String changeProductVariantPriceQuantity = '/Product/ChangeProductVariantPriceQuantity';
+  static const String changeProductVariantPriceQuantity =
+      '/Product/ChangeProductVariantPriceQuantity';
   static const String deleteProductUrl = '/Product/DeleteProduct';
   static const String changeProductVariantPriceQuantityUrl =
       '/Product/ChangeProductVariantPriceQuantity';

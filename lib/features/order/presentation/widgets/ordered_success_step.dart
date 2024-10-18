@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
@@ -17,7 +18,7 @@ class OrderedSuccessPage extends StatelessWidget {
       body: Column(
         children: [
           Image.asset(
-            'assets/images/invoice.png',
+            Assets.assetsImagesInvoice,
             width: screenWidth(context, 0.5),
           ),
           const SizedBox(height: 20),

@@ -135,7 +135,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
               BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
                   return state.whenOrNull(
-                    loading: () => buildShimmerIndicatorSmall(),
+                    loading: () => buildShimmerIndicatorSmall(500, 600),
                     success: () => ImageBanner(
                       images: productCubit.product.productImages
                           .map((e) => e.url)
@@ -152,7 +152,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                   child: BlocBuilder<ProductsCubit, ProductsState>(
                     builder: (context, state) {
                       return state.whenOrNull(
-                          loading: () => buildShimmerIndicatorSmall(),
+                          loading: () => buildShimmerIndicatorRow(),
                           success: () => ListView.builder(
                                 itemCount:
                                     productCubit.product.productImages.length,
@@ -176,7 +176,44 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                 child: BlocBuilder<ProductsCubit, ProductsState>(
                   builder: (context, state) {
                     return state.whenOrNull(
-                        loading: () => buildShimmerIndicatorSmall(),
+                        loading: () => Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    buildShimmerIndicatorSmall(40),
+                                    buildShimmerIndicatorSmall(40, 100),
+                                  ],
+                                ),
+                                const SizedBox(height: 24),
+                                buildShimmerIndicatorSmall(100, 400),
+                                SizedBox(height: 20.h),
+                                Row(
+                                  children: [
+                                    buildShimmerIndicatorSmall(40, 100),
+                                    buildShimmerIndicatorSmall(40),
+                                  ],
+                                ),
+                                SizedBox(height: 22.h),
+                                Row(
+                                  children: [
+                                    buildShimmerIndicatorSmall(40, 100),
+                                    buildShimmerIndicatorSmall(40),
+                                  ],
+                                ),
+                                SizedBox(height: 20.h),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    buildShimmerIndicatorSmall(40, 80),
+                                    buildShimmerIndicatorSmall(40, 80),
+                                  ],
+                                ),
+                              ],
+                            ),
                         success: () => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [

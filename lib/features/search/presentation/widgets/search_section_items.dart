@@ -36,12 +36,18 @@ class SearchSectionItems extends StatelessWidget {
         ),
         child: Column(
           children: [
-            imageReplacer(url: image),
+            imageReplacer(
+              url: image,
+              // width: 100,
+              height: 130,
+              fit: BoxFit.fill,
+            ),
             const SizedBox(
               height: 8,
             ),
             Text(
               name,
+              overflow: TextOverflow.ellipsis,
               style: AppStylesManager.customTextStyleBl3,
             )
           ],

@@ -42,8 +42,8 @@ class _DiscoverViewState extends State<DiscoverView> {
   @override
   void initState() {
     cubit = ProductsCubit.get(context);
-    cubit.getNewInProducts(newInPage, newInPageSize);
     cubit.getRandomProducts(newInPage, newInPageSize);
+    cubit.getNewInProducts(newInPage, newInPageSize);
 
     scrollController.addListener(() {
       if (scrollController.position.pixels ==
@@ -228,7 +228,7 @@ bool checkIsHasDiscount(List<ProductModel> productsList, int index) {
   return productsList[index].productVariants.first.discountRate != 0;
 }
 
-class HandPickedView extends StatelessWidget {
+class HandPickedView extends StatefulWidget {
   const HandPickedView({
     super.key,
     required this.handScrollController,
@@ -239,8 +239,18 @@ class HandPickedView extends StatelessWidget {
   final bool handIsLoadMore;
 
   @override
+  State<HandPickedView> createState() => _HandPickedViewState();
+}
+
+class _HandPickedViewState extends State<HandPickedView> {
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProductsCubit, ProductsState>(
+    return BlocConsumer<ProductsCubit, ProductsState>(
+      listener: (context, state) {
+        state.mapOrNull(success: (_) {
+          // setState(() {});
+        });
+      },
       builder: (context, state) {
         return state.when(initial: () {
           return buildShimmerIndicatorGrid();
@@ -256,21 +266,23 @@ class HandPickedView extends StatelessWidget {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: GridView.builder(
-              controller: handScrollController,
+              controller: widget.handScrollController,
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: gridDelegate,
               shrinkWrap: true,
-              itemCount:  ProductsCubit.get(context).productsHandpack.length,
+              itemCount: ProductsCubit.get(context).productsHandpack.length,
               itemBuilder: (context, index) {
-                if (index == ProductsCubit.get(context).productsHandpack.length &&
-                    handIsLoadMore) {
+                if (index ==
+                        ProductsCubit.get(context).productsHandpack.length &&
+                    widget.handIsLoadMore) {
                   return buildShimmerIndicatorSmall();
                 } else {
                   if (checkIsHasDiscount(
                       ProductsCubit.get(context).products, index)) {
                     return offersCard(
                         context: context,
-                        product: ProductsCubit.get(context).productsHandpack[index]);
+                        product:
+                            ProductsCubit.get(context).productsHandpack[index]);
                   }
                   return productSquarItem(
                     context: context,

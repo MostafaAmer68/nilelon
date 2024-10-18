@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
@@ -50,11 +51,15 @@ class AddToFooter extends StatelessWidget {
                                 TextButton(
                                   onPressed: () {
                                     BotToast.closeAllLoading();
+                                    // BotToast.remove()
+
                                     navigateTo(
                                         context: context,
                                         screen: const CustomerBottomTabBar(
                                           index: 1,
                                         ));
+
+                                    BotToast.cleanAll();
                                   },
                                   child: Text(
                                     S.of(context).viewCart,
@@ -77,18 +82,23 @@ class AddToFooter extends StatelessWidget {
                           : S.of(context).addToCart,
                       ontap: () {
                         if (HiveStorage.get(HiveKeys.userModel) != null) {
-                          CartCubit.get(context).addToCart(
-                            AddToCartModel(
-                              quantity: CartCubit.get(context).counter,
-                              size: CartCubit.get(context).selectedSize,
-                              color: CartCubit.get(context).selectedColor,
-                              productId: product.id,
-                              customerId:
-                                  HiveStorage.get<UserModel>(HiveKeys.userModel)
-                                      .id,
-                            ),
-                          );
+                          if (product.id.isNotEmpty) {
+                            CartCubit.get(context).addToCart(
+                              AddToCartModel(
+                                quantity: CartCubit.get(context).counter,
+                                size: CartCubit.get(context).selectedSize,
+                                color: CartCubit.get(context).selectedColor,
+                                productId: product.id,
+                                customerId: HiveStorage.get<UserModel>(
+                                        HiveKeys.userModel)
+                                    .id,
+                              ),
+                            );
+                          } else {
+                            BotToast.showText(text: lang(context).smothingWent);
+                          }
                         } else {
+                          CartCubit.get(context).getCart();
                           navigateTo(
                               context: context,
                               screen: const CustomerBottomTabBar(index: 3));

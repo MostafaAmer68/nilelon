@@ -2,6 +2,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/alert/shipped_alert.dart';
 import 'package:nilelon/core/widgets/cards/store_order/ordered_store_card.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
@@ -49,7 +51,7 @@ class _ShippedStoreViewState extends State<ShippedStoreView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'There is no Order yet.',
+                       lang(context).noOrder,
                         style: AppStylesManager.customTextStyleG2,
                       ),
                     ],
@@ -68,8 +70,8 @@ class _ShippedStoreViewState extends State<ShippedStoreView> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
                       child: OrderStoreCard(
-                        image: SvgPicture.asset('assets/images/inProgress.svg'),
-                        title: 'Order is Shipped.',
+                        image: SvgPicture.asset(Assets.assetsImagesInProgress),
+                        title: lang(context).orderIsShipped,
                         time: order.date,
                         onTap: () {
                           navigateTo(

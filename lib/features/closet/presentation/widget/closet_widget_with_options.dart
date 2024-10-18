@@ -11,7 +11,6 @@ import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/alert/empty_closets_alert.dart';
 import '../../../../core/widgets/alert/show_delete_section_alert.dart';
 import '../../../../core/widgets/pop_ups/rename_popup.dart';
-import '../cubit/closet_cubit.dart';
 
 class ClosetsWidgetWithOptions extends StatelessWidget {
   const ClosetsWidgetWithOptions({
@@ -132,7 +131,7 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 20),
                           Container(
                             decoration: BoxDecoration(
                               color: ColorManager.primaryW,

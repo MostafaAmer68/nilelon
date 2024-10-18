@@ -4010,6 +4010,126 @@ class S {
     );
   }
 
+  /// `Item not found`
+  String get itemNotFound {
+    return Intl.message(
+      'Item not found',
+      name: 'itemNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No Store found`
+  String get noStore {
+    return Intl.message(
+      'No Store found',
+      name: 'noStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order has arrived to Customer Address.`
+  String get orderHasArrived {
+    return Intl.message(
+      'Order has arrived to Customer Address.',
+      name: 'orderHasArrived',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no Order yet.`
+  String get noOrder {
+    return Intl.message(
+      'There is no Order yet.',
+      name: 'noOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` 'Returned History'`
+  String get refundHistory {
+    return Intl.message(
+      ' \'Returned History\'',
+      name: 'refundHistory',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your package has arrived at your destination`
+  String get orderHasDistance {
+    return Intl.message(
+      'Your package has arrived at your destination',
+      name: 'orderHasDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your package is being delivered by courier`
+  String get orderHasDelivered {
+    return Intl.message(
+      'Your package is being delivered by courier',
+      name: 'orderHasDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order is Shipped`
+  String get orderIsShipped {
+    return Intl.message(
+      'Order is Shipped',
+      name: 'orderIsShipped',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have new Order.`
+  String get newOrder {
+    return Intl.message(
+      'You have new Order.',
+      name: 'newOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `discount`
+  String get discount {
+    return Intl.message(
+      'discount',
+      name: 'discount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Free Shipping`
+  String get freeShipping {
+    return Intl.message(
+      'Free Shipping',
+      name: 'freeShipping',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

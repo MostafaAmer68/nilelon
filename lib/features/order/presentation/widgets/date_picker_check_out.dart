@@ -3,6 +3,8 @@ import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 
+import '../../../../core/tools.dart';
+
 Future datePickerCheckOut(BuildContext context) async {
   return await showMonthPicker(
       context: context,
@@ -16,11 +18,11 @@ Future datePickerCheckOut(BuildContext context) async {
       unselectedMonthTextColor: ColorManager.primaryW,
       selectedMonthBackgroundColor: ColorManager.primaryB,
       confirmWidget: Text(
-        'Confirm',
+        lang(context).confirm,
         style: AppStylesManager.customTextStyleW2,
       ),
       cancelWidget: Text(
-        'Cancel',
+        lang(context).cancel,
         style: AppStylesManager.customTextStyleW2,
       ));
 }

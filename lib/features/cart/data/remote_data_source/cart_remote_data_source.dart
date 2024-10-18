@@ -81,7 +81,7 @@ class CartService extends CartRemoteDataSource {
   Future<void> addToCart(AddToCartModel model) async {
     final Response data = await apiService.post(
       endPoint: EndPoint.addToCartUrl,
-      body: model.toJson(),
+      body: model.toMap(),
     );
     if (data.statusCode == HttpStatus.ok) {
       return data.data;

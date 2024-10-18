@@ -10,32 +10,32 @@ import 'package:nilelon/core/service/failure_service.dart';
 import '../../domain/model/cart_item.dart';
 
 class CartReposImpl extends CartRepos {
-  final CartRemoteDataSource _cartRemoteDataSource;
-  CartReposImpl(this._cartRemoteDataSource);
+  final CartRemoteDataSource _cartService;
+  CartReposImpl(this._cartService);
   @override
   Future<Either<FailureService,CartModel>> getCart() async {
-    return exe(() => _cartRemoteDataSource.getCart());
+    return exe(() => _cartService.getCart());
   }
 
   @override
   Future<Either<FailureService, void>> deleteFromCart(
       DeleteRequestModel model) async {
-    return exe(() => _cartRemoteDataSource.deleteFromCart(model));
+    return exe(() => _cartService.deleteFromCart(model));
   }
 
   @override
   Future<Either<FailureService, void>> updateQuantityCart(
       ChangeQuantityModel model) async {
-    return exe(() => _cartRemoteDataSource.updateQuantityCart(model));
+    return exe(() => _cartService.updateQuantityCart(model));
   }
 
   @override
   Future<Either<FailureService, void>> addToCart(AddToCartModel model) async {
-    return exe(() => _cartRemoteDataSource.addToCart(model));
+    return exe(() => _cartService.addToCart(model));
   }
 
   @override
   Future<Either<FailureService, void>> emptyCart(String customerId) async {
-    return exe(() => _cartRemoteDataSource.emptyCart(customerId));
+    return exe(() => _cartService.emptyCart(customerId));
   }
 }

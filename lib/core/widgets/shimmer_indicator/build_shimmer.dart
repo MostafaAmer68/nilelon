@@ -9,19 +9,22 @@ Widget buildShimmerIndicator() {
     baseColor: Colors.grey[300]!,
     highlightColor: Colors.grey[100]!,
     child: Column(
-      children: List.generate(10, (index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Container(
-            width: double.infinity,
-            height: 120,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
+      children: List.generate(
+        10,
+        (index) {
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: double.infinity,
+              height: 120,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
-          ),
-        );
-      }),
+          );
+        },
+      ),
     ),
   );
 }

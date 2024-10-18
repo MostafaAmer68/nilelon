@@ -392,5 +392,18 @@
     "noBestSeller": "لا يوجد افضل بيع للمنتج",
      "deleteDefault": "لا يمكنك حذف الخزانة الافتراضية",
   "renameDefault": "لا يمكنك إعادة تسمية الخزانة الافتراضية",
+  "itemNotFound": "العنصر غير موجود",
+  "noStore": "المتجر غير موجود",
+  "orderHasArrived": "الطلب وصل إلى عنوان العميل.",
+"noOrder": "لا يوجد طلب حتى الآن.",
+"refundHistory": " 'سجل المرتجعات'",
+"orderHasDistance": "وصلت الحزمة الخاصة بك إلى وجهتها",
+"orderHasDelivered": "الطلب يتم توصيله بواسطة المندوب",
+"orderIsShipped": "تم شحن الطلب",
+"confirm": "تأكيد",
+"newOrder": "لديك طلب جديد.",
+"discount": "خصم",
+"freeShipping": "شحن مجاني"
+,
   "returnedHistory": "تاريخ الإرجاع"
 }

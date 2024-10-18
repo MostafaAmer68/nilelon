@@ -2,7 +2,9 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/alert/shipped_alert.dart';
 import 'package:nilelon/core/widgets/cards/store_order/ordered_store_card.dart';
@@ -48,7 +50,7 @@ class _ReceivedStoreViewState extends State<ReceivedStoreView> {
                 color: ColorManager.primaryO,
               ),
               label: Text(
-                'Returned History',
+               lang(context).refundHistory,
                 style: AppStylesManager.customTextStyleO2,
               ),
             ),
@@ -71,7 +73,7 @@ class _ReceivedStoreViewState extends State<ReceivedStoreView> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'There is no Order yet.',
+                            lang(context).noOrder,
                             style: AppStylesManager.customTextStyleG2,
                           ),
                         ],
@@ -90,8 +92,8 @@ class _ReceivedStoreViewState extends State<ReceivedStoreView> {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 16, vertical: 8),
                           child: OrderStoreCard(
-                            image: Image.asset('assets/images/arrived2.png'),
-                            title: 'Order has arrived to Customer Address.',
+                            image: Image.asset(Assets.assetsImagesArrived2),
+                            title: lang(context).orderHasArrived,
                             time: order.date,
                             onTap: () {
                               navigateTo(

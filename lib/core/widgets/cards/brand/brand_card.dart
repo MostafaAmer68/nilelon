@@ -6,6 +6,7 @@ import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:nilelon/features/profile/presentation/widgets/profile_avater_widget.dart';
 
 import '../../../../features/profile/presentation/pages/store_profile_customer.dart';
 import '../../../utils/navigation.dart';
@@ -27,7 +28,7 @@ class _BrandCardState extends State<BrandCard> {
   @override
   void initState() {
     cubit = ProfileCubit.get(context);
-   
+
     super.initState();
   }
 
@@ -52,24 +53,9 @@ class _BrandCardState extends State<BrandCard> {
         ),
         child: Column(
           children: [
-            Container(
-              decoration: ShapeDecoration(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x33726363),
-                    blurRadius: 16,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  )
-                ],
-              ),
-              child: CircleAvatar(
-                radius: 30,
-                backgroundImage: NetworkImage(widget.store.profilePic ?? ''),
-              ),
+            ProfileAvater(
+              image: widget.store.profilePic ?? '',
+              radius: 40,
             ),
             const SizedBox(
               height: 12,

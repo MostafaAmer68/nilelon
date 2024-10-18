@@ -125,6 +125,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       products = response;
+      // getRandomProducts(page, productSize);
       emit(const ProductsState.success());
     });
   }

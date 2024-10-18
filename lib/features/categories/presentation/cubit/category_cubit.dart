@@ -25,6 +25,7 @@ class CategoryCubit extends Cubit<CategoryState> {
       (response) {
         emit(CategorySuccess());
         response.add(CategoryModel.empty());
+        response = response.reversed.toList();
         HiveStorage.set<List<CategoryModel>>(
           HiveKeys.categories,
           response,

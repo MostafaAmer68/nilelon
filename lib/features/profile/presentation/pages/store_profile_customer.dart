@@ -304,7 +304,7 @@ class _FollowAndNotifyWidgetState extends State<FollowAndNotifyWidget> {
                         width: 16,
                       ),
                       Container(
-                        height: 60,
+                        height: 38,
                         width: 60,
                         decoration: BoxDecoration(
                           color: ColorManager.primaryG16,
@@ -315,9 +315,9 @@ class _FollowAndNotifyWidgetState extends State<FollowAndNotifyWidget> {
                             !cubit.validationOption['isNotify']
                                 ? Assets.assetsImagesNotifications
                                 : Assets.assetsImagesNotificationsActive,
-                            // fit: BoxFit.cover,
+                            fit: BoxFit.cover,
                           ),
-                          // iconSize: 50,
+                          iconSize: 50,
                           onPressed: () {
                             cubit.notifyStore(widget.storeId);
                           },

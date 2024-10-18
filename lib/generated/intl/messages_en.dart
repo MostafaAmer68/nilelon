@@ -125,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "closet": MessageLookupByLibrary.simpleMessage("Closet"),
         "cluster": MessageLookupByLibrary.simpleMessage("Cluster"),
         "color": MessageLookupByLibrary.simpleMessage("Color"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("Confirm Password"),
         "confirmYourEmail":
@@ -153,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "didYouFaceAnyProblemsAtTheShippingProcess":
             MessageLookupByLibrary.simpleMessage(
                 "Did You Face Any Problems At The Shipping Process"),
+        "discount": MessageLookupByLibrary.simpleMessage("discount"),
         "discover": MessageLookupByLibrary.simpleMessage("Discover"),
         "discoverLocalTreasuresAtUnbeatablePricesShopWithEaseAndGetExclusiveDiscount":
             MessageLookupByLibrary.simpleMessage(
@@ -264,6 +266,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Forget Your Password"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("Forgot Password"),
+        "freeShipping": MessageLookupByLibrary.simpleMessage("Free Shipping"),
         "front": MessageLookupByLibrary.simpleMessage("Front"),
         "fullName": MessageLookupByLibrary.simpleMessage("Full Name"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
@@ -299,6 +302,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Is There Somthing Missing In Your Package"),
         "itemDeleteCart":
             MessageLookupByLibrary.simpleMessage("Item deleted successfully"),
+        "itemNotFound": MessageLookupByLibrary.simpleMessage("Item not found"),
         "items": MessageLookupByLibrary.simpleMessage("Items"),
         "jackets": MessageLookupByLibrary.simpleMessage("Jackets"),
         "jeans": MessageLookupByLibrary.simpleMessage("Jeans"),
@@ -321,6 +325,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myCloset": MessageLookupByLibrary.simpleMessage("My Closet"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "newIn": MessageLookupByLibrary.simpleMessage("New In"),
+        "newOrder": MessageLookupByLibrary.simpleMessage("You have new Order."),
         "newPassword": MessageLookupByLibrary.simpleMessage("New Password"),
         "newPhoneNumber":
             MessageLookupByLibrary.simpleMessage("New Phone Number"),
@@ -330,6 +335,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "noDraftsYet": MessageLookupByLibrary.simpleMessage("No Drafts Yet."),
         "noFollowingAnyStore": MessageLookupByLibrary.simpleMessage(
             "you dont followed any store yet."),
+        "noOrder":
+            MessageLookupByLibrary.simpleMessage("There is no Order yet."),
         "noProductCart": MessageLookupByLibrary.simpleMessage(
             "There is no products in the cart."),
         "noProductFollow": MessageLookupByLibrary.simpleMessage(
@@ -344,6 +351,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("No Return Items"),
         "noReviews": MessageLookupByLibrary.simpleMessage(
             "No Reviews for this product yet"),
+        "noStore": MessageLookupByLibrary.simpleMessage("No Store found"),
         "notification": MessageLookupByLibrary.simpleMessage("Notification"),
         "notified": MessageLookupByLibrary.simpleMessage("Notified"),
         "nowFollowing": MessageLookupByLibrary.simpleMessage(
@@ -368,6 +376,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderDate": MessageLookupByLibrary.simpleMessage("Order Date"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("Order Details"),
+        "orderHasArrived": MessageLookupByLibrary.simpleMessage(
+            "Order has arrived to Customer Address."),
+        "orderHasDelivered": MessageLookupByLibrary.simpleMessage(
+            "Your package is being delivered by courier"),
+        "orderHasDistance": MessageLookupByLibrary.simpleMessage(
+            "Your package has arrived at your destination"),
+        "orderIsShipped":
+            MessageLookupByLibrary.simpleMessage("Order is Shipped"),
         "orderManagment":
             MessageLookupByLibrary.simpleMessage("Order Managment"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("Order Price"),
@@ -455,6 +471,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "recievedDate": MessageLookupByLibrary.simpleMessage("Recieved Date"),
         "recommendations":
             MessageLookupByLibrary.simpleMessage("Recommendations"),
+        "refundHistory":
+            MessageLookupByLibrary.simpleMessage(" \'Returned History\'"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "registerWithYourValidEmailAddress":
             MessageLookupByLibrary.simpleMessage(

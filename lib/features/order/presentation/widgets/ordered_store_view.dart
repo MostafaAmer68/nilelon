@@ -2,6 +2,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/alert/shipped_alert.dart';
 import 'package:nilelon/core/widgets/cards/store_order/ordered_store_card.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -53,7 +55,7 @@ class _OrderedStoreViewState extends State<OrderedStoreView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        'There is no Order yet.',
+                        lang(context).noOrder,
                         style: AppStylesManager.customTextStyleG2,
                       ),
                     ],
@@ -73,14 +75,14 @@ class _OrderedStoreViewState extends State<OrderedStoreView> {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 8),
                       child: OrderStoreCard(
-                        image: SvgPicture.asset(
-                            'assets/images/package accept.svg'),
-                        title: 'You have new Order.',
+                        image:
+                            SvgPicture.asset(Assets.assetsImagesPackageAccept),
+                        title: lang(context).newOrder,
                         time: '',
                         onTap: () {
                           navigateTo(
                               context: context,
-                              screen:  OrderStoreDetailsView(
+                              screen: OrderStoreDetailsView(
                                 id: order.id,
                                 index: 0,
                               ));

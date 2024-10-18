@@ -123,6 +123,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "closet": MessageLookupByLibrary.simpleMessage("الخزانة"),
         "cluster": MessageLookupByLibrary.simpleMessage("عنقود"),
         "color": MessageLookupByLibrary.simpleMessage("اللون"),
+        "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
         "confirmPassword":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور"),
         "confirmYourEmail":
@@ -151,6 +152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "didYouFaceAnyProblemsAtTheShippingProcess":
             MessageLookupByLibrary.simpleMessage(
                 "هل واجهت أي مشاكل أثناء عملية الشحن"),
+        "discount": MessageLookupByLibrary.simpleMessage("خصم"),
         "discover": MessageLookupByLibrary.simpleMessage("اكتشف"),
         "discoverLocalTreasuresAtUnbeatablePricesShopWithEaseAndGetExclusiveDiscount":
             MessageLookupByLibrary.simpleMessage(
@@ -262,6 +264,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة المرور؟"),
         "forgotPassword":
             MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور"),
+        "freeShipping": MessageLookupByLibrary.simpleMessage("شحن مجاني"),
         "front": MessageLookupByLibrary.simpleMessage("الواجهة"),
         "fullName": MessageLookupByLibrary.simpleMessage("الاسم الكامل"),
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
@@ -296,6 +299,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل هناك شيء مفقود في طردك"),
         "itemDeleteCart":
             MessageLookupByLibrary.simpleMessage("تم حذف العنصر بنجاح"),
+        "itemNotFound":
+            MessageLookupByLibrary.simpleMessage("العنصر غير موجود"),
         "items": MessageLookupByLibrary.simpleMessage("العناصر"),
         "jackets": MessageLookupByLibrary.simpleMessage("جاكيتات"),
         "jeans": MessageLookupByLibrary.simpleMessage("جينز"),
@@ -318,6 +323,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myCloset": MessageLookupByLibrary.simpleMessage("خزانتي"),
         "name": MessageLookupByLibrary.simpleMessage("الاسم"),
         "newIn": MessageLookupByLibrary.simpleMessage("الجديد"),
+        "newOrder": MessageLookupByLibrary.simpleMessage("لديك طلب جديد."),
         "newPassword": MessageLookupByLibrary.simpleMessage("كلمة مرور جديدة"),
         "newPhoneNumber": MessageLookupByLibrary.simpleMessage("رقم هاتف جديد"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
@@ -328,6 +334,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لا توجد مسودات بعد"),
         "noFollowingAnyStore":
             MessageLookupByLibrary.simpleMessage("أنت لا تتابع أي متجر بعد."),
+        "noOrder":
+            MessageLookupByLibrary.simpleMessage("لا يوجد طلب حتى الآن."),
         "noProductCart":
             MessageLookupByLibrary.simpleMessage("لا توجد منتجات في السلة."),
         "noProductFollow":
@@ -342,6 +350,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لا توجد منتجات للعودة"),
         "noReviews": MessageLookupByLibrary.simpleMessage(
             "لا توجد مراجعات لهذا المنتج حتى الآن"),
+        "noStore": MessageLookupByLibrary.simpleMessage("المتجر غير موجود"),
         "notification": MessageLookupByLibrary.simpleMessage("إشعار"),
         "notified": MessageLookupByLibrary.simpleMessage("المبلغون"),
         "nowFollowing":
@@ -368,6 +377,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("طلب"),
         "orderDate": MessageLookupByLibrary.simpleMessage("تاريخ الطلب"),
         "orderDetails": MessageLookupByLibrary.simpleMessage("تفاصيل الطلب"),
+        "orderHasArrived":
+            MessageLookupByLibrary.simpleMessage("الطلب وصل إلى عنوان العميل."),
+        "orderHasDelivered": MessageLookupByLibrary.simpleMessage(
+            "الطلب يتم توصيله بواسطة المندوب"),
+        "orderHasDistance": MessageLookupByLibrary.simpleMessage(
+            "وصلت الحزمة الخاصة بك إلى وجهتها"),
+        "orderIsShipped": MessageLookupByLibrary.simpleMessage("تم شحن الطلب"),
         "orderManagment": MessageLookupByLibrary.simpleMessage("إدارة الطلبات"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
         "orderProcessExperience":
@@ -451,6 +467,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "recevied": MessageLookupByLibrary.simpleMessage("تم الاستلام"),
         "recievedDate": MessageLookupByLibrary.simpleMessage("تاريخ الاستلام"),
         "recommendations": MessageLookupByLibrary.simpleMessage("التوصيات"),
+        "refundHistory":
+            MessageLookupByLibrary.simpleMessage(" \'سجل المرتجعات\'"),
         "register": MessageLookupByLibrary.simpleMessage("تسجيل"),
         "registerWithYourValidEmailAddress":
             MessageLookupByLibrary.simpleMessage(

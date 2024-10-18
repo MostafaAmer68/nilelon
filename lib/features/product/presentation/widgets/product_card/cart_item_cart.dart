@@ -87,7 +87,9 @@ class _CartItemCardState extends State<CartItemCard> {
                     width: 1.sw > 600 ? 110 : 100,
                     height: 1.sw > 600 ? 130 : 100,
                     child: imageReplacer(
-                      url: widget.cart.productImages.first.url,
+                      url: widget.cart.productImages.isEmpty
+                          ? ''
+                          : widget.cart.productImages.first.url,
                     ),
                   ),
                   const SizedBox(

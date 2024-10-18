@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:svg_flutter/svg.dart';
@@ -46,7 +48,7 @@ class _ShippedCustomerViewState extends State<ShippedCustomerView> {
                         children: [
                           Center(
                             child: Text(
-                              'There is no Order yet.',
+                              lang(context).noOrder,
                               style: AppStylesManager.customTextStyleG2,
                             ),
                           ),
@@ -70,17 +72,15 @@ class _ShippedCustomerViewState extends State<ShippedCustomerView> {
                             onTap: () {
                               navigateTo(
                                   context: context,
-                                  screen: 
-                                  OrderDetailsView(
+                                  screen: OrderDetailsView(
                                     index: 2,
                                     recievedDate: order.date,
                                     id: order.id,
-                                  )
-                                  );
+                                  ));
                             },
-                            name: 'Your package is being delivered by courier',
-                            icon: SvgPicture.asset(
-                                'assets/images/inProgress.svg'),
+                            name: lang(context).orderHasDelivered,
+                            icon:
+                                SvgPicture.asset(Assets.assetsImagesInProgress),
                           ),
                         );
                       });

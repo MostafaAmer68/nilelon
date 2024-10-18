@@ -6,7 +6,6 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/features/customer_flow/section_details/section_details_view.dart';
-import 'package:nilelon/features/product/presentation/pages/product_sections.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';

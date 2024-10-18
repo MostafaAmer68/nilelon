@@ -93,7 +93,8 @@ class _CartViewState extends State<CartView> {
                   return Column(
                     children: [
                       SizedBox(
-                        height: screenHeight(context, 0.3),
+                        height: screenHeight(context, 0.4),
+                        // width: screenWidth(context, 0.9),
                         child: ListView.builder(
                           itemCount: cubit.cart.items.length,
                           padding: const EdgeInsets.only(bottom: 5),
@@ -176,50 +177,48 @@ class CartItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = CartCubit.get(context);
-    return Expanded(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Slidable(
-            key: ValueKey(index),
-            endActionPane: ActionPane(
-                motion: const BehindMotion(),
-                dismissible: DismissiblePane(onDismissed: () {
-                  BlocProvider.of<CartCubit>(context).deleteFromCart(
-                    DeleteRequestModel(
-                      color: cart.color,
-                      size: cart.size,
-                      productId: cubit.cart.items[index].productId,
-                      customrId:
-                          HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-                    ),
-                  );
-                }),
-                children: [
-                  SlidableAction(
-                    onPressed: (context) {
-                      BlocProvider.of<CartCubit>(context).deleteFromCart(
-                        DeleteRequestModel(
-                          color: cart.color,
-                          size: cubit.cart.items[index].size,
-                          productId: cubit.cart.items[index].productId,
-                          customrId:
-                              HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-                        ),
-                      );
-                    },
-                    backgroundColor: ColorManager.primaryO,
-                    icon: Iconsax.trash,
-                    foregroundColor: ColorManager.primaryW,
-                    label: lang(context).delete,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Slidable(
+          key: ValueKey(index),
+          endActionPane: ActionPane(
+              motion: const BehindMotion(),
+              dismissible: DismissiblePane(onDismissed: () {
+                BlocProvider.of<CartCubit>(context).deleteFromCart(
+                  DeleteRequestModel(
+                    color: cart.color,
+                    size: cart.size,
+                    productId: cubit.cart.items[index].productId,
+                    customrId:
+                        HiveStorage.get<UserModel>(HiveKeys.userModel).id,
                   ),
-                ]),
-            child: CartItemCard(
-              cart: cart,
-            ),
-          )
-        ],
-      ),
+                );
+              }),
+              children: [
+                SlidableAction(
+                  onPressed: (context) {
+                    BlocProvider.of<CartCubit>(context).deleteFromCart(
+                      DeleteRequestModel(
+                        color: cart.color,
+                        size: cubit.cart.items[index].size,
+                        productId: cubit.cart.items[index].productId,
+                        customrId:
+                            HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+                      ),
+                    );
+                  },
+                  backgroundColor: ColorManager.primaryO,
+                  icon: Iconsax.trash,
+                  foregroundColor: ColorManager.primaryW,
+                  label: lang(context).delete,
+                ),
+              ]),
+          child: CartItemCard(
+            cart: cart,
+          ),
+        )
+      ],
     );
   }
 }

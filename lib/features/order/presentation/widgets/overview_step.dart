@@ -145,7 +145,7 @@ class _OverViewStepState extends State<OverViewStep> {
                                 builder: (context, state) {
                                   return orderSummaryItemsWithDropList(
                                       lang.delivery,
-                                      '${promoCubit.deliveryPrice} L.E',
+                                      '${promoCubit.deliveryPrice} ${lang.le}',
                                       lang);
                                 },
                               ),
@@ -153,8 +153,8 @@ class _OverViewStepState extends State<OverViewStep> {
                               BlocBuilder<OrderCubit, OrderState>(
                                 builder: (context, state) {
                                   return orderSummaryItems(
-                                    'Discount',
-                                    '${promoCubit.discount} L.E',
+                                    lang.discount,
+                                    '${promoCubit.discount} ${lang.le}',
                                   );
                                 },
                               ),
@@ -163,7 +163,7 @@ class _OverViewStepState extends State<OverViewStep> {
                                 builder: (context, state) {
                                   return orderSummaryItems(
                                       lang.total,
-                                      '${promoCubit.totalPrice} L.E',
+                                      '${promoCubit.totalPrice} ${lang.le}',
                                       AppStylesManager.customTextStyleO5
                                           .copyWith(
                                               fontWeight: FontWeight.w600));
@@ -237,7 +237,7 @@ class _OverViewStepState extends State<OverViewStep> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: promoCubit.isFreeShipping
-          ? const Text('Free Shipping')
+          ?  Text(lang.freeShipping)
           : Row(
               // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

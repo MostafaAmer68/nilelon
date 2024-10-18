@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:equatable/equatable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/search/data/models/search_model.dart';
 import 'package:nilelon/features/search/data/repositories/search_repo_impl.dart';
@@ -15,23 +15,28 @@ class SearchCubit extends Cubit<SearchState> {
 
   List<SearchModel> searchResult = [];
 
+  TextEditingController searchC = TextEditingController();
+
   // Cache to store search results
   final Map<String, List<SearchModel>> _cache = {};
 
-  Future<void> search(String query) async {
+  Future<void> search() async {
+    if (searchC.text.isEmpty) {
+      emit(SearchInitial());
+      return;
+    }
     emit(SearchLoading());
 
     // Check if query is already in cache
-    if (_cache.containsKey(query)) {
+    if (_cache.containsKey(searchC.text)) {
       // Return cached result
-      searchResult = _cache[query]!;
-      log('already searched');
+      searchResult = _cache[searchC.text]!;
       emit(SearchSuccess());
       return;
     }
 
     // If not in cache, make API request
-    final response = await _searchRepoImpl.search(query);
+    final response = await _searchRepoImpl.search(searchC.text);
 
     response.fold(
       (failure) {
@@ -39,11 +44,10 @@ class SearchCubit extends Cubit<SearchState> {
       },
       (result) {
         // Cache the result with query as the key
-        _cache[query] = result;
+        _cache[searchC.text] = result;
         searchResult = result;
         emit(SearchSuccess());
       },
     );
-    print(searchResult);
   }
 }

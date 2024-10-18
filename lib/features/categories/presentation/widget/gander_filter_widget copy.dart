@@ -15,7 +15,7 @@ class GendarFilterWidget extends StatefulWidget {
 }
 
 class _GendarFilterWidgetState extends State<GendarFilterWidget> {
-  List<String> gander = ['Male', 'Female', 'All'];
+  List<String> gander = ['All', 'Male', 'Female'];
   @override
   Widget build(BuildContext context) {
     return SizedBox(

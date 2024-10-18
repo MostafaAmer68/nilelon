@@ -36,7 +36,7 @@ class TextFormFieldBuilder extends StatelessWidget {
   final bool? obsecure;
   final bool? isIcon;
   final bool? noIcon;
-  final Function? onpressed;
+  final VoidCallback? onpressed;
   final Widget? suffix;
   final IconData? prefix;
   final Widget? prefixWidget;
@@ -103,7 +103,10 @@ class TextFormFieldBuilder extends StatelessWidget {
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ))
-                  : prefixWidget,
+                  : InkWell(
+                      child: prefixWidget,
+                      onTap: onpressed ?? () {},
+                    ),
           hintText: label,
           hintStyle: color == null
               ? AppStylesManager.customTextStyleG2

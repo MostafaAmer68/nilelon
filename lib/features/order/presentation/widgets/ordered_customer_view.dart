@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/cards/customer_order_management/ordered_card.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
@@ -46,7 +48,7 @@ class _OrderedCustomerViewState extends State<OrderedCustomerView> {
                         children: [
                           Center(
                             child: Text(
-                              'There is no Order yet.',
+                              lang(context).noOrder,
                               style: AppStylesManager.customTextStyleG2,
                             ),
                           ),
@@ -67,9 +69,9 @@ class _OrderedCustomerViewState extends State<OrderedCustomerView> {
                               horizontal: 16, vertical: 8),
                           child: OrderCustomerCard(
                             order: order,
-                            name: 'Your package is being delivered by courier',
+                            name: lang(context).orderHasDelivered,
                             icon: SvgPicture.asset(
-                                'assets/images/package accept.svg'),
+                                Assets.assetsImagesPackageAccept),
                             onTap: () {
                               navigateTo(
                                   context: context,

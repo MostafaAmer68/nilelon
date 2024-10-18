@@ -26,6 +26,7 @@ import 'package:nilelon/features/profile/presentation/pages/store_profile_custom
 
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../domain/models/product_model.dart';
 import '../cubit/products_cubit/products_state.dart';
 import '../widgets/color_selector.dart';
 import '../widgets/custom_toggle_button.dart';
@@ -74,19 +75,24 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     final lang = S.of(context);
     return BlocListener<ProductsCubit, ProductsState>(
       listener: (context, state) {
-        state.mapOrNull(success: (_) {
-          BotToast.closeAllLoading();
-          cubit.selectedColor = productCubit.product.productVariants
-              .firstWhere((e) => e.price != 0)
-              .color;
-          cubit.selectedSize = productCubit.product.productVariants
-              .firstWhere((e) => e.price != 0)
-              .size;
-          sizes = productCubit.product.productVariants
-              .where((e) => e.quantity != 0 && e.quantity > 0)
-              .map((e) => e.size)
-              .toList();
-        });
+        state.mapOrNull(
+          initial: (_) {},
+          success: (_) {
+            BotToast.closeAllLoading();
+            if (productCubit.product != ProductModel.empty()) {
+              cubit.selectedColor = productCubit.product.productVariants
+                  .firstWhere((e) => e.price != 0)
+                  .color;
+              cubit.selectedSize = productCubit.product.productVariants
+                  .firstWhere((e) => e.price != 0)
+                  .size;
+              sizes = productCubit.product.productVariants
+                  .where((e) => e.quantity != 0 && e.quantity > 0)
+                  .map((e) => e.size)
+                  .toList();
+            }
+          },
+        );
       },
       child: ScaffoldImage(
         appBar: customAppBar(
@@ -107,11 +113,13 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   return state.whenOrNull(
                     failure: (_) => Text(_),
                     loading: () => buildShimmerIndicatorSmall(500, 600),
-                    success: () => ImageBanner(
-                      images: productCubit.product.productImages
-                          .map((e) => e.url)
-                          .toList(),
-                    ),
+                    success: () => productCubit.product == ProductModel.empty()
+                        ? buildShimmerIndicatorRow()
+                        : ImageBanner(
+                            images: productCubit.product.productImages
+                                .map((e) => e.url)
+                                .toList(),
+                          ),
                   )!;
                 },
               ),
@@ -125,19 +133,23 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       return state.whenOrNull(
                         failure: (_) => Text(_),
                         loading: () => buildShimmerIndicatorRow(),
-                        success: () => ListView.builder(
-                          itemCount: productCubit.product.productImages.length,
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) {
-                            final image =
-                                productCubit.product.productImages[index];
-                            return imageReplacer(
-                              url: image.url,
-                              fit: BoxFit.cover,
-                              // width: 30,
-                            );
-                          },
-                        ),
+                        success: () => productCubit.product ==
+                                ProductModel.empty()
+                            ? buildShimmerIndicatorRow()
+                            : ListView.builder(
+                                itemCount:
+                                    productCubit.product.productImages.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  final image =
+                                      productCubit.product.productImages[index];
+                                  return imageReplacer(
+                                    url: image.url,
+                                    fit: BoxFit.cover,
+                                    // width: 30,
+                                  );
+                                },
+                              ),
                       )!;
                     },
                   ),
@@ -149,21 +161,63 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   builder: (context, state) {
                     return state.whenOrNull(
                         failure: (_) => Text(_),
-                        loading: () => buildShimmerIndicatorSmall(),
-                        success: () => Column(
+                        loading: () => Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                _buildNameAndPriceRow(context),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    buildShimmerIndicatorSmall(40),
+                                    buildShimmerIndicatorSmall(40, 100),
+                                  ],
+                                ),
                                 const SizedBox(height: 24),
-                                _buildDescription(),
+                                buildShimmerIndicatorSmall(100, 400),
                                 SizedBox(height: 20.h),
-                                _buildSizeSelector(lang),
+                                Row(
+                                  children: [
+                                    buildShimmerIndicatorSmall(40, 100),
+                                    buildShimmerIndicatorSmall(40),
+                                  ],
+                                ),
                                 SizedBox(height: 22.h),
-                                _buildColorSelector(),
+                                Row(
+                                  children: [
+                                    buildShimmerIndicatorSmall(40, 100),
+                                    buildShimmerIndicatorSmall(40),
+                                  ],
+                                ),
                                 SizedBox(height: 20.h),
-                                _buildStockCounter(),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    buildShimmerIndicatorSmall(40, 80),
+                                    buildShimmerIndicatorSmall(40, 80),
+                                  ],
+                                ),
                               ],
-                            ))!;
+                            ),
+                        success: () {
+                          if (productCubit.product == ProductModel.empty()) {
+                            return buildShimmerIndicatorSmall();
+                          }
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildNameAndPriceRow(context),
+                              const SizedBox(height: 24),
+                              _buildDescription(),
+                              SizedBox(height: 20.h),
+                              _buildSizeSelector(lang),
+                              SizedBox(height: 22.h),
+                              _buildColorSelector(),
+                              SizedBox(height: 20.h),
+                              _buildStockCounter(),
+                            ],
+                          );
+                        })!;
                   },
                 ),
               ),
@@ -197,7 +251,16 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           ),
         ),
         persistentFooterButtons: [
-          AddToFooter(visible: true, product: productCubit.product),
+          BlocBuilder<ProductsCubit, ProductsState>(
+            builder: (context, state) {
+              return state.whenOrNull(
+                loading: () => buildShimmerIndicatorSmall(),
+                failure: (_) => Text(_),
+                success: () =>
+                    AddToFooter(visible: true, product: productCubit.product),
+              )!;
+            },
+          ),
         ],
       ),
     );
@@ -210,14 +273,17 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         Column(
           children: [
             Text(
-              '${calcSale(productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price, productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).discountRate)} L.E',
+              '${productCubit.product.productVariants.isNotEmpty ? calcSale(productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize, orElse: () => productCubit.product.productVariants.first).price, productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize, orElse: () => productCubit.product.productVariants.first).discountRate) : 'No variants available'} L.E',
               style: AppStylesManager.customTextStyleO4,
             ),
             Visibility(
               visible: productCubit.product.productVariants
-                      .firstWhere((e) =>
-                          e.color == cubit.selectedColor &&
-                          e.size == cubit.selectedSize)
+                      .firstWhere(
+                          (e) =>
+                              e.color == cubit.selectedColor &&
+                              e.size == cubit.selectedSize,
+                          orElse: () => productCubit.product.productVariants
+                              .firstWhere((e) => e.discountRate == 0))
                       .discountRate >
                   0,
               child: Text(
@@ -285,6 +351,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         Text('${lang.size} :', style: AppStylesManager.customTextStyleG10),
         SizeToggleButtons(
           sizes: productCubit.product.productVariants
+              .where((e) => e.quantity != 0 && e.price != 0)
               .map((e) => e.size)
               .toList()
               .toSet()
@@ -306,6 +373,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             style: AppStylesManager.customTextStyleG10),
         ColorSelector(
           colors: productCubit.product.productVariants
+              .where((e) => e.quantity != 0 && e.price != 0)
               .map((e) => e.color)
               .toList()
               .toSet()
