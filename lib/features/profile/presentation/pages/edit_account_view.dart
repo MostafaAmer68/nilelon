@@ -105,7 +105,7 @@ class _EditAccountViewState extends State<EditAccountView> {
                             height: screenHeight(context, 0.06),
                             buttonColor: Colors.transparent,
                             frameColor: ColorManager.primaryB2,
-                            style: AppStylesManager.customTextStyleB4
+                            style: AppStylesManager.customTextStyleW4
                                 .copyWith(fontSize: 1.sw > 600 ? 22 : 14),
                             ontap: () {
                               navigatePop(context: context);
