@@ -101,11 +101,7 @@ class _OffersViewState extends State<OffersView> {
   GridView _buildProductList() {
     return GridView.builder(
       physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 1.sw > 600 ? 3 : 2,
-          crossAxisSpacing: 1.sw > 600 ? 16 : 16.0,
-          mainAxisExtent: 1.sw > 600 ? 415 : 300,
-          mainAxisSpacing: 1.sw > 600 ? 16 : 12),
+      gridDelegate: gridDelegate,
       shrinkWrap: true,
       itemCount: offersIsLoadMore
           ? cubit.filterListByCategory(cubit.category, cubit.products).length +
@@ -147,11 +143,10 @@ class _OffersViewState extends State<OffersView> {
             offersIsLoadMore) {
           return buildShimmerIndicatorSmall();
         } else {
-          return Container(
-            child: offersCard(
-                context: context,
-                product: cubit.filterListByCategory(
-                    cubit.category, cubit.products)[sizeIndex]),
+          return offersCard(
+            context: context,
+            product: cubit.filterListByCategory(
+                cubit.category, cubit.products)[sizeIndex],
           );
         }
       },
@@ -186,7 +181,7 @@ class _OffersViewState extends State<OffersView> {
             const SizedBox(
               width: 8,
             ),
-             Expanded(
+            Expanded(
               child: GendarFilterWidget(
                 selectedCategory: cubit.gendar,
                 onSelected: (gendar) {

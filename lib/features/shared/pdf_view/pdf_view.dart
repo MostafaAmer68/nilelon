@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'package:nilelon/features/shared/pdf_view/build_table_row.dart';
@@ -16,6 +18,9 @@ class NilelonPdfView extends StatefulWidget {
     required this.discount,
     required this.total,
     required this.delivery,
+    required this.location,
+    required this.orderId,
+    required this.orderDate,
   });
 
   final List<List<String>> cells;
@@ -23,6 +28,9 @@ class NilelonPdfView extends StatefulWidget {
   final String discount;
   final String delivery;
   final String total;
+  final String location;
+  final String orderId;
+  final String orderDate;
 
   @override
   State<NilelonPdfView> createState() => _NilelonPdfViewState();
@@ -39,16 +47,39 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
   @override
   Widget build(BuildContext context) {
     return GradientButtonBuilder(
-      text: 'Download Receipt ',
+      text: 'Download Receipt',
       width: screenWidth(context, 1),
-      ontap: () => requestStoragePermission(
-        rows,
-        widget.cells,
-        widget.netTotal,
-        widget.discount,
-        widget.delivery,
-        widget.total,
-      ),
+      ontap: () async {
+        if ((await requestStoragePermission())) {
+          rows.add(
+            buildTableRow(cellsHeader, isHeader: true),
+          );
+          for (var rowData in widget.cells) {
+            rows.add(buildTableRow(
+              rowData,
+            ));
+          }
+
+          await generateOrderPdf(
+            cells: widget.cells,
+            netTotal: widget.netTotal,
+            discount: widget.discount,
+            delivery: widget.delivery,
+            total: widget.total,
+            name: HiveStorage.get<UserModel>(HiveKeys.userModel)
+                .getUserData<CustomerModel>()
+                .name,
+            location: widget.location,
+            orderId: widget.orderId,
+            orderDate: widget.orderDate,
+            phoneNumber: HiveStorage.get<UserModel>(HiveKeys.userModel)
+                .getUserData<CustomerModel>()
+                .phoneNumber,
+          );
+        } else {
+          _showPermissionDeniedMessage();
+        }
+      },
     );
   }
 
@@ -73,38 +104,8 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
     );
   }
 
-  Future<void> requestStoragePermission(
-      rows, cells, netTotal, discount, delivery, total) async {
+  Future<bool> requestStoragePermission() async {
     PermissionStatus status = await Permission.storage.request();
-
-    if (status.isGranted) {
-      print('helllo');
-      rows.add(
-        buildTableRow(cellsHeader, isHeader: true),
-      );
-      for (var rowData in cells) {
-        rows.add(buildTableRow(
-          rowData,
-        ));
-      }
-      await makePdf(
-        cells: cells,
-        netTotal: netTotal,
-        discount: discount,
-        delivery: delivery,
-        total: total,
-        name: 'Mostafa Amer',
-        location:
-            '2 Abi Rabiea Suleiman Street, Next to Waraq Al-Tout for Grilled Foods, Al-Hofuf',
-        orderId: '223556481123887',
-        orderDate: '25/12/2024',
-        phoneNumber: '+20 100 123 4567',
-      );
-    } else {
-      print('helllo2');
-      _showPermissionDeniedMessage();
-      print(status);
-      // Handle the case when the user denies the permission.
-    }
+    return status.isGranted;
   }
 }

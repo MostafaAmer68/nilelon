@@ -3,9 +3,13 @@ import 'package:nilelon/features/shared/pdf_view/pdf_view.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 
+import '../../../features/order/data/models/order_customer_model.dart';
+
 class OrderDetailsFooter extends StatelessWidget {
-  const OrderDetailsFooter({super.key, this.visible = true});
+  const OrderDetailsFooter(
+      {super.key, this.visible = true, required this.order});
   final bool visible;
+  final OrderCustomerModel order;
   @override
   Widget build(BuildContext context) {
     return Visibility(
@@ -13,92 +17,24 @@ class OrderDetailsFooter extends StatelessWidget {
       child: Container(
         color: ColorManager.primaryW,
         width: screenWidth(context, 1),
-        child: const NilelonPdfView(
-          cells: [
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-            ['T-shirt', 'Store', '1', 'White', 'XL', '300 L.E'],
-          ],
-          netTotal: '30000',
-          discount: '2000',
-          total: '29000',
-          delivery: '1000',
+        child: NilelonPdfView(
+          location: order.governate,
+          orderDate: order.date.toString(),
+          orderId: '#${order.id}',
+          cells: order.orderProductVariants
+              .map((e) => [
+                    e.productName,
+                    e.storeName,
+                    e.quantity.toString(),
+                    e.color,
+                    e.price.toString()
+                  ])
+              .toList(),
+          netTotal: (order.total - order.discount).toString(),
+          discount: order.discount.toString(),
+          total: order.total.toString(),
+          delivery: order.shippingCost,
         ),
-        // GradientButtonBuilder(
-        //   text: 'Download Receipt ',
-        //   ontap: () {},
-        //   width: screenWidth(context, 1),
-        // ),
       ),
     );
   }

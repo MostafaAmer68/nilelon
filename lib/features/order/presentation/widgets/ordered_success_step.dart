@@ -2,15 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
-import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
+import 'package:nilelon/features/shared/pdf_view/pdf_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
 
-class OrderedSuccessPage extends StatelessWidget {
+class OrderedSuccessPage extends StatefulWidget {
   const OrderedSuccessPage({super.key});
+
+  @override
+  State<OrderedSuccessPage> createState() => _OrderedSuccessPageState();
+}
+
+class _OrderedSuccessPageState extends State<OrderedSuccessPage> {
+  late final OrderCubit cubit;
+  @override
+  void initState() {
+    cubit = OrderCubit.get(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,12 +45,24 @@ class OrderedSuccessPage extends StatelessWidget {
             style: AppStylesManager.customTextStyleG,
           ),
           const SizedBox(height: 300),
-          // NilelonPdfView(cells: cells, netTotal: netTotal, discount: discount, total: total, delivery: delivery),
-          GradientButtonBuilder(
-              text: S.of(context).downloadReceipt,
-              ontap: () {
-                CartCubit.get(context).emptyCart();
-              }),
+          // NilelonPdfView(
+          //   location: cubit.addressLine1.text,
+          //   orderDate:DateTime.now().toString(),
+          //   orderId: '#${order.id}',
+          //   cells: order.orderProductVariants
+          //       .map((e) => [
+          //             e.productName,
+          //             e.storeName,
+          //             e.quantity.toString(),
+          //             e.color,
+          //             e.price.toString()
+          //           ])
+          //       .toList(),
+          //   netTotal: (order.total - order.discount).toString(),
+          //   discount: order.discount.toString(),
+          //   total: order.total.toString(),
+          //   delivery: order.shippingCost,
+          // )
         ],
       ),
     );

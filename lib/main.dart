@@ -36,6 +36,9 @@ void main() async {
       await NotificatoinService().initializeNotification();
     }
   }
+
+  final status = await Permission.storage.request();
+  if (status.isDenied) {}
   connection.serverTimeoutInMilliseconds = 60000;
   await connection.start()?.catchError((error) {}).whenComplete(() {
     HiveStorage.set(HiveKeys.connectionId, connection.connectionId);
@@ -75,7 +78,7 @@ void main() async {
     HiveStorage.set(HiveKeys.skipOnboarding, false);
   }
   runApp(DevicePreview(
-    enabled: false,
+    enabled: true,
     builder: (context) => const MyApp(),
   ));
 }

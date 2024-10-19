@@ -230,8 +230,10 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
           ],
         ),
       ),
-      persistentFooterButtons: const [
-        OrderDetailsFooter(),
+      persistentFooterButtons: [
+        OrderDetailsFooter(
+          order: cubit.customerOrder,
+        ),
       ],
     );
   }
