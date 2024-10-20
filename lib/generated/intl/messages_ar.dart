@@ -344,6 +344,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا توجد منتجات مختارة حتى الآن."),
         "noProductNewIn": MessageLookupByLibrary.simpleMessage(
             "لا توجد منتجات جديدة حتى الآن."),
+        "noProductOffer":
+            MessageLookupByLibrary.simpleMessage("لا عروض علي المنتجات بعد"),
         "noProductsAddedYet":
             MessageLookupByLibrary.simpleMessage("لم تتم إضافة أي منتجات بعد"),
         "noReturnItems":

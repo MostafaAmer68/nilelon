@@ -345,6 +345,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no Hand Picked in products yet."),
         "noProductNewIn": MessageLookupByLibrary.simpleMessage(
             "There is no New In products yet."),
+        "noProductOffer": MessageLookupByLibrary.simpleMessage(
+            "There is no Offer products yet."),
         "noProductsAddedYet":
             MessageLookupByLibrary.simpleMessage("No Products Added Yet"),
         "noReturnItems":

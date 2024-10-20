@@ -4130,6 +4130,16 @@ class S {
     );
   }
 
+  /// `There is no Offer products yet.`
+  String get noProductOffer {
+    return Intl.message(
+      'There is no Offer products yet.',
+      name: 'noProductOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

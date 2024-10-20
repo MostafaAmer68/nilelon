@@ -76,6 +76,9 @@ class _OffersViewState extends State<OffersView> {
                 }, loading: () {
                   return buildShimmerIndicatorGrid();
                 }, success: () {
+                  if (cubit.products.isEmpty) {
+                    return Text(lang.noProductOffer);
+                  }
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: widget.isStore

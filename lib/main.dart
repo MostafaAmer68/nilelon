@@ -77,8 +77,7 @@ void main() async {
   if (HiveStorage.get(HiveKeys.skipOnboarding) == null) {
     HiveStorage.set(HiveKeys.skipOnboarding, false);
   }
-  runApp(DevicePreview(
-    enabled: true,
-    builder: (context) => const MyApp(),
-  ));
+  runApp(
+    const MyApp(),
+  );
 }
