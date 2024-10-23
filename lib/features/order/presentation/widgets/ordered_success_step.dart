@@ -4,7 +4,6 @@ import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
-import 'package:nilelon/features/shared/pdf_view/pdf_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';

@@ -209,7 +209,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                     //   end: Alignment(-1, 0.1),
                     //   colors: ColorManager.gradientColors,
                     // ),
-                    color: Color.fromARGB(255, 233, 242, 245),
+                    color: const Color.fromARGB(255, 233, 242, 245),
                     borderRadius: BorderRadius.circular(12)),
                 child: IconButton(
                   icon: Icon(

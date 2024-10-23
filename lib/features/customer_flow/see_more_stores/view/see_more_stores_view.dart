@@ -31,7 +31,7 @@ class _SeeMoreStoresViewState extends State<SeeMoreStoresView> {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: isSearch
-            ?  SearchResult(isBrand:true)
+            ?  const SearchResult(isBrand:true)
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

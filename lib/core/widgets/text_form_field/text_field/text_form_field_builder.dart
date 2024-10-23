@@ -104,8 +104,8 @@ class TextFormFieldBuilder extends StatelessWidget {
                         end: Alignment.bottomRight,
                       ))
                   : InkWell(
-                      child: prefixWidget,
                       onTap: onpressed ?? () {},
+                      child: prefixWidget,
                     ),
           hintText: label,
           hintStyle: color == null
