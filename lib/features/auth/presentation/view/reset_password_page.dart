@@ -9,12 +9,12 @@ import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon_hide.dart';
-import 'package:nilelon/features/auth/presentation/view/login_view.dart';
+import 'package:nilelon/features/auth/presentation/view/login_page.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 
-class NewPasswordView extends StatefulWidget {
-  const NewPasswordView({
+class ResetPassowrdView extends StatefulWidget {
+  const ResetPassowrdView({
     super.key,
     required this.isLogin,
     required this.onTap,
@@ -22,10 +22,10 @@ class NewPasswordView extends StatefulWidget {
   final bool isLogin;
   final VoidCallback onTap;
   @override
-  State<NewPasswordView> createState() => _NewPasswordViewState();
+  State<ResetPassowrdView> createState() => _ResetPassowrdViewState();
 }
 
-class _NewPasswordViewState extends State<NewPasswordView> {
+class _ResetPassowrdViewState extends State<ResetPassowrdView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -71,9 +71,15 @@ class _NewPasswordViewState extends State<NewPasswordView> {
                 OutlinedButtonBuilder(
                     text: lang.cancel,
                     ontap: () {
-                      navigateTo(context: context, screen: const LoginView());
+                      navigateTo(
+                        context: context,
+                        screen: const LoginView(),
+                      );
                     }),
-                GradientButtonBuilder(text: lang.save, ontap: widget.onTap)
+                GradientButtonBuilder(
+                  text: lang.save,
+                  ontap: widget.onTap,
+                )
               ],
             ),
             const SizedBox(

@@ -26,27 +26,23 @@ class ColorSelector extends StatelessWidget {
           return GestureDetector(
             onTap: () => onColorSelected(color),
             child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8.0),
-              width: 40,
-              height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color(int.parse('0x$color')),
-                boxShadow: isSelected
-                    ? [
-                        BoxShadow(
-                          color: Colors.orange.withOpacity(0.6),
-                          blurRadius: 10,
-                          spreadRadius: 2,
-                        ),
-                      ]
-                    : null,
                 border: isSelected
                     ? Border.all(
                         color: Colors.orange,
                         width: 3,
                       )
                     : null,
+              ),
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(int.parse('0x$color')),
+                ),
               ),
             ),
           );

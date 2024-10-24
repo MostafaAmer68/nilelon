@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:nilelon/features/auth/presentation/view/forget_password_auth.dart';
+import 'package:nilelon/features/auth/presentation/view/forget_password_page.dart';
 import 'package:nilelon/features/shared/recommendation/presentation/view/recommendation_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -18,6 +18,7 @@ import 'package:nilelon/features/auth/presentation/view/store_register_view.dart
 import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
+import '../../../../core/constants/assets.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class LoginView extends StatefulWidget {
@@ -109,7 +110,7 @@ class _LoginViewState extends State<LoginView> {
                 },
                 controller: AuthCubit.get(context).emailController,
                 type: TextInputType.emailAddress,
-                image: 'assets/images/sms-tracking.svg',
+                image: Assets.assetsImagesSmsTracking,
               ),
               TextAndFormFieldColumnWithIconHide(
                 title: lang.password,
@@ -125,7 +126,7 @@ class _LoginViewState extends State<LoginView> {
                 },
                 controller: AuthCubit.get(context).passwordController,
                 type: TextInputType.text,
-                image: 'assets/images/lock.svg',
+                image: Assets.assetsImagesLock,
                 spaceHeight: 12,
               ),
               Padding(
@@ -137,7 +138,7 @@ class _LoginViewState extends State<LoginView> {
                       onPressed: () {
                         navigateTo(
                             context: context,
-                            screen: const ForgetPasswordAuthView(
+                            screen: const ForgetPasswordPage(
                               isLogin: true,
                             ));
                       },
@@ -241,7 +242,7 @@ class _LoginViewState extends State<LoginView> {
                           }
                         },
                         child: signWithContainer(
-                          'assets/images/google.svg',
+                          Assets.assetsImagesGoogle,
                           () {
                             BlocProvider.of<AuthCubit>(context)
                                 .signInWithGoogle(context);

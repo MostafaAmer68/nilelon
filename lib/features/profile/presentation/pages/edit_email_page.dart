@@ -9,13 +9,13 @@ import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
-import 'package:nilelon/features/auth/presentation/view/otp_view.dart';
+import 'package:nilelon/features/auth/presentation/view/otp_page.dart';
 
 import '../../../../core/widgets/pop_ups/success_creation_popup.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
-class ChangeEmail extends StatelessWidget {
-  const ChangeEmail({super.key});
+class ChangeEmailPage extends StatelessWidget {
+  const ChangeEmailPage({super.key});
 
   @override
   Widget build(BuildContext context) {

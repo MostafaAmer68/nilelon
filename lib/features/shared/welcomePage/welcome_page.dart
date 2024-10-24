@@ -8,7 +8,7 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
-import 'package:nilelon/features/auth/presentation/view/login_view.dart';
+import 'package:nilelon/features/auth/presentation/view/login_page.dart';
 
 import '../../../core/constants/assets.dart';
 import '../../../core/widgets/scaffold_image.dart';

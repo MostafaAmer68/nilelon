@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:nilelon/features/auth/presentation/view/forget_password_auth.dart';
+import 'package:nilelon/features/auth/presentation/view/forget_password_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
@@ -9,18 +9,18 @@ import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon_hide.dart';
-import 'package:nilelon/features/auth/presentation/view/new_password_view.dart';
+import 'package:nilelon/features/auth/presentation/view/reset_password_page.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 
-class ChangePassword extends StatefulWidget {
-  const ChangePassword({super.key});
+class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({super.key});
 
   @override
-  State<ChangePassword> createState() => _ChangePasswordState();
+  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -47,7 +47,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   onPressed: () {
                     navigateTo(
                         context: context,
-                        screen: const ForgetPasswordAuthView(
+                        screen: const ForgetPasswordPage(
                           isLogin: false,
                         ));
                   },
@@ -71,7 +71,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   ontap: () {
                     navigateTo(
                         context: context,
-                        screen: NewPasswordView(
+                        screen: ResetPassowrdView(
                           isLogin: false,
                           onTap: () {
                             AuthCubit.get(context).changePassword(context);

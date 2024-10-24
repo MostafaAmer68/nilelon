@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
 
 class RatingContainer extends StatelessWidget {
@@ -31,10 +32,8 @@ class RatingContainer extends StatelessWidget {
           Expanded(
             child: Container(
               clipBehavior: Clip.antiAlias,
-              // width: screenWidth(context, 0.7),
-              // height: 140,
               decoration: ShapeDecoration(
-                color: const Color(0xFFF3F0F1),
+                color: ColorManager.primaryW,
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
               ),

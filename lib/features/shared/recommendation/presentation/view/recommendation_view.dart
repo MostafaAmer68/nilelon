@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -43,16 +44,17 @@ class RecommendationView extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Image.asset('assets/images/nilelonWLogo.png'),
+                          Image.asset(Assets.assetsImagesNilelonWLogo),
                           Container(
                             height: 38.sp,
                             width: 110.sp,
                             decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/nilelonEcommerce.png',
-                                    ),
-                                    fit: BoxFit.fitHeight)),
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    Assets.assetsImagesNilelonEcommerce,
+                                  ),
+                                  fit: BoxFit.fitHeight),
+                            ),
                           )
                         ],
                       ),
@@ -63,46 +65,52 @@ class RecommendationView extends StatelessWidget {
                   padding: EdgeInsets.all(16.0.sp),
                   child: Column(
                     children: [
-                      imageContainer(
-                        context,
-                        'assets/images/shop_for_women.png',
-                        'Shop for Women',
-                        () {
-                          if (HiveStorage.get(HiveKeys.userModel) != null) {
-                            RecommendationCubit.get(context)
-                                .setRecommendation('Female', context);
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: imageContainer(
+                          context,
+                          Assets.assetsImagesShopForWomen,
+                          'Shop for Women',
+                          () {
+                            if (HiveStorage.get(HiveKeys.userModel) != null) {
+                              RecommendationCubit.get(context)
+                                  .setRecommendation('Female', context);
 
-                            HiveStorage.set(HiveKeys.shopFor, 'Female');
-                          } else {
-                            navigateAndRemoveUntil(
-                              context: context,
-                              screen: const CustomerBottomTabBar(),
-                            );
+                              HiveStorage.set(HiveKeys.shopFor, 'Female');
+                            } else {
+                              navigateAndRemoveUntil(
+                                context: context,
+                                screen: const CustomerBottomTabBar(),
+                              );
 
-                            HiveStorage.set(HiveKeys.shopFor, 'Female');
-                          }
-                        },
+                              HiveStorage.set(HiveKeys.shopFor, 'Female');
+                            }
+                          },
+                        ),
                       ),
                       SizedBox(
                         height: 16.sp,
                       ),
-                      imageContainer(
-                        context,
-                        'assets/images/shop_for_man.png',
-                        'Shop for Man',
-                        () {
-                          if (HiveStorage.get(HiveKeys.userModel) != null) {
-                            RecommendationCubit.get(context)
-                                .setRecommendation('Male', context);
-                            HiveStorage.set(HiveKeys.shopFor, 'Male');
-                          } else {
-                            navigateAndRemoveUntil(
-                              context: context,
-                              screen: const CustomerBottomTabBar(),
-                            );
-                            HiveStorage.set(HiveKeys.shopFor, 'Male');
-                          }
-                        },
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: imageContainer(
+                          context,
+                          Assets.assetsImagesShopForMan,
+                          'Shop for Man',
+                          () {
+                            if (HiveStorage.get(HiveKeys.userModel) != null) {
+                              RecommendationCubit.get(context)
+                                  .setRecommendation('Male', context);
+                              HiveStorage.set(HiveKeys.shopFor, 'Male');
+                            } else {
+                              navigateAndRemoveUntil(
+                                context: context,
+                                screen: const CustomerBottomTabBar(),
+                              );
+                              HiveStorage.set(HiveKeys.shopFor, 'Male');
+                            }
+                          },
+                        ),
                       ),
                     ],
                   ),

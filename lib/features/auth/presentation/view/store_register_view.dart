@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:nilelon/features/auth/presentation/view/otp_view.dart';
+import 'package:nilelon/features/auth/presentation/view/otp_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -16,6 +16,7 @@ import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_
 import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
 
+import '../../../../core/constants/assets.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class StoreRegisterView extends StatefulWidget {
@@ -142,7 +143,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                     AuthCubit.get(context).regFormCuts.currentState!.validate();
                   },
                   type: TextInputType.text,
-                  image: 'assets/images/profile.svg',
+                  image: Assets.assetsImagesProfile,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return S.of(context).enterStoreName;
@@ -163,7 +164,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 },
                 controller: cubit.emailController,
                 type: TextInputType.emailAddress,
-                image: 'assets/images/sms-tracking.svg',
+                image: Assets.assetsImagesSmsTracking,
               ),
               phoneNumber(
                 lang.phoneNumber,
@@ -179,7 +180,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                     AuthCubit.get(context).regFormCuts.currentState!.validate();
                   },
                   type: TextInputType.text,
-                  image: 'assets/images/user-tag.svg',
+                  image: Assets.assetsImagesUserTag,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return S.of(context).enterStoreRepresentativeName;
@@ -206,7 +207,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 },
                 controller: cubit.wareHouseAddressController,
                 type: TextInputType.text,
-                image: 'assets/images/location.svg',
+                image: Assets.assetsImagesLocation,
               ),
               TextAndFormFieldColumnWithIcon(
                   desc: ' (Facebook or Instagram)',
@@ -214,7 +215,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   label: lang.enterYourProfileLink,
                   controller: cubit.profileLinkController,
                   type: TextInputType.url,
-                  image: 'assets/images/Link.svg',
+                  image: Assets.assetsImagesLink,
                   onChange: (value) {
                     AuthCubit.get(context).regFormCuts.currentState!.validate();
                   },
@@ -230,7 +231,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 label: lang.enterYourWebsiteLink,
                 controller: cubit.websiteLinkController,
                 type: TextInputType.url,
-                image: 'assets/images/global.svg',
+                image: Assets.assetsImagesGlobal,
               ),
               TextAndFormFieldColumnWithIconHide(
                 title: lang.password,
@@ -246,7 +247,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 },
                 controller: cubit.passwordController,
                 type: TextInputType.text,
-                image: 'assets/images/lock.svg',
+                image: Assets.assetsImagesLock,
               ),
               TextAndFormFieldColumnWithIconHide(
                 title: lang.confirmPassword,
@@ -263,7 +264,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 },
                 controller: cubit.confirmPasswordController,
                 type: TextInputType.text,
-                image: 'assets/images/lock.svg',
+                image: Assets.assetsImagesLock,
               ),
               GestureDetector(
                 onTap: () {},
@@ -302,43 +303,6 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               const SizedBox(
                 height: 30,
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       SizedBox(
-              //           width: screenWidth(context, 0.24),
-              //           child: const Divider()),
-              //       Text(
-              //         'Or sign up with',
-              //         style: AppStylesManager.customTextStyleB,
-              //       ),
-              //       SizedBox(
-              //           width: screenWidth(context, 0.24),
-              //           child: const Divider()),
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 30,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 16),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       signWithContainer('assets/images/facebook.svg', () {}),
-              //       const SizedBox(
-              //         width: 24,
-              //       ),
-              //       signWithContainer('assets/images/google.svg', () {}),
-              //     ],
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 32,
-              // ),
             ],
           ),
         ),

@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:nilelon/features/auth/presentation/view/register_customer_page.dart';
 import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -12,6 +11,7 @@ import 'package:svg_flutter/svg.dart';
 import '../../../../core/resources/const_functions.dart';
 import '../../../../core/widgets/button/gradient_button_builder.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../auth/presentation/view/customer_register_view.dart';
 
 class ProfileGuestPage extends StatelessWidget {
   const ProfileGuestPage({super.key, this.hasLeading});

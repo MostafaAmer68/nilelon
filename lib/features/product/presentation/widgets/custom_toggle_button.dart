@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 
 class SizeToggleButtons extends StatelessWidget {
@@ -26,13 +27,15 @@ class SizeToggleButtons extends StatelessWidget {
             onTap: () => onSizeSelected(size),
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8.0),
-              width: 80,
-              height: 50,
+              width: 70,
+              height: 70,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                border: Border.all(
-                  color: isSelected ? Colors.orange : Colors.grey.shade300,
+                gradient: const LinearGradient(
+                  colors: [Colors.blue, Colors.orange],
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
                 ),
                 boxShadow: isSelected
                     ? [
@@ -41,21 +44,28 @@ class SizeToggleButtons extends StatelessWidget {
                           blurRadius: 10,
                           spreadRadius: 1,
                         ),
-                        BoxShadow(
-                          color: Colors.cyanAccent.withOpacity(0.3),
-                          blurRadius: 20,
+                        const BoxShadow(
+                          color: Color.fromRGBO(68, 201, 225, 0.40),
+                          blurRadius: 16,
                           spreadRadius: 3,
                         ),
                       ]
                     : null,
                 color: isSelected ? Colors.white : Colors.transparent,
               ),
-              child: Text(
-                size,
-                style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                  color: isSelected ? Colors.orange : Colors.grey.shade400,
+              child: Container(
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.white : Colors.transparent,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Text(
+                  size,
+                  style: TextStyle(
+                    fontSize: 13,
+                    fontWeight: FontWeight.bold,
+                    color: isSelected ? Colors.orange : Colors.grey.shade400,
+                  ),
                 ),
               ),
             ),

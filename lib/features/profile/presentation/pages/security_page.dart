@@ -6,9 +6,9 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
-import 'package:nilelon/features/auth/presentation/view/change_email_number.dart';
-import 'package:nilelon/features/auth/presentation/view/change_password.dart';
-import 'package:nilelon/features/auth/presentation/view/change_phone_number.dart';
+import 'package:nilelon/features/profile/presentation/pages/edit_email_page.dart';
+import 'package:nilelon/features/profile/presentation/pages/edit_password_page.dart';
+import 'package:nilelon/features/profile/presentation/pages/edit_phone_page.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
@@ -40,7 +40,7 @@ class SecurityView extends StatelessWidget {
                   image: 'assets/images/phone.svg',
                   onTap: () {
                     navigateTo(
-                        context: context, screen: const ChangePhoneNumber());
+                        context: context, screen: const EditPhoneNumPage());
                   },
                   trailingWidget: trailingWidget(lang.change),
                 ),
@@ -48,7 +48,8 @@ class SecurityView extends StatelessWidget {
                   name: lang.email,
                   image: 'assets/images/email.svg',
                   onTap: () {
-                    navigateTo(context: context, screen: const ChangeEmail());
+                    navigateTo(
+                        context: context, screen: const ChangeEmailPage());
                   },
                   trailingWidget: trailingWidget(lang.change),
                 ),
@@ -57,7 +58,7 @@ class SecurityView extends StatelessWidget {
                   image: 'assets/images/lock_b.svg',
                   onTap: () {
                     navigateTo(
-                        context: context, screen: const ChangePassword());
+                        context: context, screen: const ChangePasswordPage());
                   },
                   trailingWidget: trailingWidget(lang.change),
                 ),

@@ -2,8 +2,9 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:nilelon/features/auth/presentation/view/otp_view.dart';
+import 'package:nilelon/features/auth/presentation/view/otp_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -144,7 +145,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                     label: lang.enterYourName,
                     controller: AuthCubit.get(context).nameController,
                     type: TextInputType.text,
-                    image: 'assets/images/profile.svg',
+                    image: Assets.assetsImagesProfile,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return S.of(context).enterYourName;
@@ -162,7 +163,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   },
                   controller: AuthCubit.get(context).emailController,
                   type: TextInputType.emailAddress,
-                  image: 'assets/images/sms-tracking.svg',
+                  image: Assets.assetsImagesSmsTracking,
                 ),
                 phoneNumber(
                   lang.phoneNumber,
@@ -215,7 +216,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   },
                   controller: AuthCubit.get(context).passwordController,
                   type: TextInputType.text,
-                  image: 'assets/images/lock.svg',
+                  image: Assets.assetsImagesLock,
                 ),
                 TextAndFormFieldColumnWithIconHide(
                   title: lang.confirmPassword,
@@ -236,7 +237,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   },
                   controller: AuthCubit.get(context).confirmPasswordController,
                   type: TextInputType.text,
-                  image: 'assets/images/lock.svg',
+                  image: Assets.assetsImagesLock,
                 ),
                 GestureDetector(
                   onTap: () {},
@@ -306,22 +307,25 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                       //   width: 24,
                       // ),
                       BlocListener<AuthCubit, AuthState>(
-                          listener: (context, state) {
-                            if (state is GoogleRegisterLoading) {
-                            } else if (state is GoogleRegisterSuccess) {
-                              navigateAndRemoveUntil(
-                                  context: context,
-                                  screen: const RecommendationView());
-                            } else if (state is GoogleRegisterFailure) {
-                              BotToast.showText(
-                                  text: S.of(context).failedRegister);
-                            }
-                          },
-                          child:
-                              signWithContainer('assets/images/google.svg', () {
+                        listener: (context, state) {
+                          if (state is GoogleRegisterLoading) {
+                          } else if (state is GoogleRegisterSuccess) {
+                            navigateAndRemoveUntil(
+                                context: context,
+                                screen: const RecommendationView());
+                          } else if (state is GoogleRegisterFailure) {
+                            BotToast.showText(
+                                text: S.of(context).failedRegister);
+                          }
+                        },
+                        child: signWithContainer(
+                          Assets.assetsImagesGoogle,
+                          () {
                             BlocProvider.of<AuthCubit>(context)
                                 .signUpWithGoogle(context);
-                          })),
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -417,7 +421,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   width: 20,
                   height: 20,
                   padding: const EdgeInsets.all(8),
-                  child: SvgPicture.asset('assets/images/Calendar.svg')),
+                  child: SvgPicture.asset(Assets.assetsImagesCalendar)),
               width: screenWidth(context, 0.92),
             ),
           ),

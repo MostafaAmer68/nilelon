@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/constants/assets.dart';
-import 'package:nilelon/features/auth/presentation/view/login_view.dart';
+import 'package:nilelon/features/auth/presentation/view/login_page.dart';
 import 'package:nilelon/features/store_flow/subscription/subscription_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -13,7 +13,7 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/shared/language/language_view.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
-import 'package:nilelon/features/auth/presentation/view/security_view.dart';
+import 'package:nilelon/features/profile/presentation/pages/security_page.dart';
 import 'package:nilelon/features/profile/presentation/pages/edit_store_info_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/edit_store_profile_view.dart';
 

@@ -223,6 +223,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               ),
               SizedBox(height: 6.h),
               _buildReviewSection(lang),
+              const SizedBox(height: 15),
               const Divider(color: ColorManager.primaryG8, height: 4),
               const SizedBox(height: 24),
               BlocBuilder<ProductsCubit, ProductsState>(

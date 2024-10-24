@@ -1,4 +1,3 @@
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,6 +55,7 @@ class _AddProductViewState extends State<AddProductView> {
           BotToast.showLoading();
         }, success: (v) {
           BotToast.closeAllLoading();
+
           BotToast.showText(text: S.of(context).productAdded);
           navigatePop(context: context);
         }, failure: (r) {
@@ -84,7 +84,6 @@ class _AddProductViewState extends State<AddProductView> {
                 child: _buildProductForm(lang),
               ),
               ProductDetailsWidget(
-                // product: widget,
                 onTapAddButton: () {
                   cubit.addSize();
                   setState(() {});
