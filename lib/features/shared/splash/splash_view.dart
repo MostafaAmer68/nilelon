@@ -5,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
-import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
+import 'package:nilelon/features/layout/customer_bottom_tab_bar.dart';
 import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
-import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
+import 'package:nilelon/features/layout/store_bottom_tab_bar.dart';
 
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';

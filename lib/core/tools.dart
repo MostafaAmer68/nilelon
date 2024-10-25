@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/generated/l10n.dart';
 
-SliverGridDelegateWithFixedCrossAxisCount get gridDelegate =>
+SliverGridDelegateWithFixedCrossAxisCount gridDelegate(context) =>
     SliverGridDelegateWithFixedCrossAxisCount(
       crossAxisCount: 1.sw > 600 ? 3 : 2,
       crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-      mainAxisExtent: 320,
+      mainAxisExtent: 290,
       mainAxisSpacing: 1.sw > 600 ? 16 : 12,
     );
 

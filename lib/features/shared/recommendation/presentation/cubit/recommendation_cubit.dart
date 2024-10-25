@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
+import 'package:nilelon/features/layout/customer_bottom_tab_bar.dart';
 import 'package:nilelon/features/shared/recommendation/domain/repos/reccomendation_repos.dart';
 
 part 'recommendation_state.dart';

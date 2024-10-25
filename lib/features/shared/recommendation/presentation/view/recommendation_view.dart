@@ -10,7 +10,7 @@ import 'package:nilelon/features/shared/recommendation/presentation/cubit/recomm
 
 import '../../../../../core/utils/navigation.dart';
 import '../../../../../core/widgets/scaffold_image.dart';
-import '../../../../customer_flow/layout/customer_bottom_tab_bar.dart';
+import '../../../../layout/customer_bottom_tab_bar.dart';
 
 class RecommendationView extends StatelessWidget {
   const RecommendationView({super.key});

@@ -16,7 +16,7 @@ import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/
 import 'package:nilelon/features/auth/presentation/view/customer_register_view.dart';
 import 'package:nilelon/features/auth/presentation/view/store_register_view.dart';
 import 'package:nilelon/features/auth/presentation/widgets/sign_with_container.dart';
-import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
+import 'package:nilelon/features/layout/store_bottom_tab_bar.dart';
 
 import '../../../../core/constants/assets.dart';
 import '../../../../core/widgets/scaffold_image.dart';

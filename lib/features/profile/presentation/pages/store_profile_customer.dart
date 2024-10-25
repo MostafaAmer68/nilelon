@@ -216,10 +216,10 @@ class ProductStoreWidget extends StatelessWidget {
         return state.whenOrNull(
           // initial: () => const SizedBox(),
           failure: (_) => Text(_),
-          loading: () => buildShimmerIndicatorGrid(),
+          loading: () => buildShimmerIndicatorGrid(context),
           success: () => GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: gridDelegate,
+            gridDelegate: gridDelegate(context),
             shrinkWrap: true,
             itemCount: ProductsCubit.get(context)
                 .products

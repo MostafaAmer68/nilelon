@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-// import 'package:nilelon/features/store_flow/add_product/model/product_data/product_data.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/alert/delete_alert.dart';

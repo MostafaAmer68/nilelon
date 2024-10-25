@@ -9,17 +9,17 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_card/section_small_card.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 
-import '../../../core/widgets/scaffold_image.dart';
-import '../../../generated/l10n.dart';
+import '../../../../core/widgets/scaffold_image.dart';
+import '../../../../generated/l10n.dart';
 
-class SectionDetailsView extends StatefulWidget {
-  const SectionDetailsView({super.key, required this.closet});
+class ProductClosetPage extends StatefulWidget {
+  const ProductClosetPage({super.key, required this.closet});
   final ClosetModel closet;
   @override
-  State<SectionDetailsView> createState() => _SectionDetailsViewState();
+  State<ProductClosetPage> createState() => _ProductClosetPageState();
 }
 
-class _SectionDetailsViewState extends State<SectionDetailsView> {
+class _ProductClosetPageState extends State<ProductClosetPage> {
   @override
   void initState() {
     ClosetCubit.get(context).getClosetsItems(widget.closet.id);
@@ -62,9 +62,9 @@ class _SectionDetailsViewState extends State<SectionDetailsView> {
                 child: BlocBuilder<ClosetCubit, ClosetState>(
                   builder: (context, state) {
                     return state.whenOrNull(
-                      loading: () => buildShimmerIndicatorGrid(),
+                      loading: () => buildShimmerIndicatorGrid(context),
                       success: () => GridView.builder(
-                        gridDelegate: gridDelegate,
+                        gridDelegate: gridDelegate(context),
                         itemCount: ClosetCubit.get(context).closetsItem.length,
                         itemBuilder: (context, index) {
                           return Container(

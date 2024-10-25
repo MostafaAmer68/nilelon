@@ -75,12 +75,12 @@ Widget buildShimmerIndicatorAnalyticsSmallCard(context) {
       ));
 }
 
-Widget buildShimmerIndicatorGrid() {
+Widget buildShimmerIndicatorGrid(context) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 16.w),
     child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
-        gridDelegate: gridDelegate,
+        gridDelegate: gridDelegate(context),
         itemCount: 10,
         shrinkWrap: true,
         itemBuilder: (context, sizeIndex) {

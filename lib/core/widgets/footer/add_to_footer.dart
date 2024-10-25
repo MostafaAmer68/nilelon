@@ -9,7 +9,7 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/customer_flow/layout/customer_bottom_tab_bar.dart';
+import 'package:nilelon/features/layout/customer_bottom_tab_bar.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';

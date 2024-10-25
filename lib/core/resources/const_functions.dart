@@ -6,9 +6,9 @@ void showToast(String message) {
 }
 
 double screenWidth(context, double widthP) {
-  return MediaQuery.of(context).size.width * widthP;
+  return MediaQuery.sizeOf(context).width * widthP;
 }
 
 double screenHeight(context, double heightP) {
-  return MediaQuery.of(context).size.height * heightP;
+  return MediaQuery.sizeOf(context).height * heightP;
 }

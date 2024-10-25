@@ -10,10 +10,10 @@ import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/widgets/icon_with_gradient/icon_with_gradient.dart';
 import 'package:nilelon/features/categories/presentation/view/category_view.dart';
 import 'package:nilelon/features/order/presentation/pages/order_store_tab_bar.dart';
-import 'package:nilelon/features/store_flow/store_market/view/store_market_view.dart';
+import 'package:nilelon/features/home/view/store_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_view.dart';
 
-import '../analytics/presentation/cubit/analytics_cubit.dart';
+import '../store_flow/analytics/presentation/cubit/analytics_cubit.dart';
 
 class StoreBottomTabBar extends StatefulWidget {
   const StoreBottomTabBar({super.key});

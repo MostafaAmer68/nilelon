@@ -36,7 +36,7 @@ class _SearchResultState extends State<SearchResult> {
       },
       builder: (context, state) {
         if (state is SearchLoading) {
-          return buildShimmerIndicatorGrid();
+          return buildShimmerIndicatorGrid(context);
         }
         if (state is SearchSuccess) {
           final filterResult = widget.isBrand

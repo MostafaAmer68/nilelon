@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
-import 'package:nilelon/features/customer_flow/section_details/section_details_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -15,6 +14,7 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import '../../../../core/color_const.dart';
 import '../../../../core/utils/navigation.dart';
 import '../widget/create_section_widget.dart';
+import 'closet_product_page.dart';
 
 class ClosetSheetBarView extends StatefulWidget {
   const ClosetSheetBarView({super.key, this.productId = ''});
@@ -109,7 +109,7 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                                   BotToast.closeAllLoading();
                                   navigateTo(
                                       context: context,
-                                      screen: SectionDetailsView(
+                                      screen: ProductClosetPage(
                                           closet: selectedCloset));
                                 },
                                 child: Text(

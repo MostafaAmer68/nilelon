@@ -11,11 +11,10 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
-import 'package:nilelon/features/product/presentation/pages/product_handpack_all_page.dart';
+import 'package:nilelon/features/product/presentation/pages/products_view_all.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
-import 'package:nilelon/features/product/presentation/pages/product_new_in_all_widget.dart';
 
 import '../widgets/product_card/offers_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
@@ -28,63 +27,18 @@ class DiscoverView extends StatefulWidget {
 }
 
 class _DiscoverViewState extends State<DiscoverView> {
-  int newInPage = 1;
-  int newInPageSize = 10;
-  bool newInIsLoadMore = false;
-  ScrollController scrollController = ScrollController();
-  int handPage = 1;
+  int pageNum = 1;
   late final ProductsCubit cubit;
 
-  int handPageSize = 10;
-  bool handIsLoadMore = false;
-  ScrollController handScrollController = ScrollController();
+  int pageSize = 10;
 
   @override
   void initState() {
     cubit = ProductsCubit.get(context);
-    cubit.getRandomProducts(newInPage, newInPageSize);
-    cubit.getNewInProducts(newInPage, newInPageSize);
+    cubit.getRandomProducts(pageNum, pageSize);
+    cubit.getNewInProducts(pageNum, pageSize);
 
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-              scrollController.position.maxScrollExtent &&
-          !newInIsLoadMore) {
-        getMoreNewInData();
-      }
-    });
-    handScrollController.addListener(() {
-      if (handScrollController.position.pixels ==
-              handScrollController.position.maxScrollExtent &&
-          !handIsLoadMore) {
-        getMoreHandData();
-      }
-    });
     super.initState();
-  }
-
-  getMoreNewInData() async {
-    setState(() {
-      newInIsLoadMore = true;
-    });
-
-    newInPage = newInPage + 1;
-    cubit.getNewInProducts(newInPage, newInPageSize);
-    setState(() {
-      newInIsLoadMore = false;
-    });
-  }
-
-  getMoreHandData() async {
-    setState(() {
-      handIsLoadMore = true;
-    });
-
-    handPage = handPage + 1;
-    cubit.getRandomProducts(newInPage, newInPageSize);
-
-    setState(() {
-      handIsLoadMore = false;
-    });
   }
 
   @override
@@ -122,28 +76,39 @@ class _DiscoverViewState extends State<DiscoverView> {
                       onPressed: () {
                         navigateTo(
                             context: context,
-                            screen: const ProductNewInViewAll(
-                              isStore: false,
+                            screen: ProductsViewAll(
+                              notFoundTitle: lang.noProductNewIn,
+                              products: cubit.products,
+                              appBarTitle: lang.newIn,
+                              onStartPage: () {
+                                cubit.getNewInProducts(pageNum, pageSize);
+                              },
                             ));
                       }),
                   const SizedBox(
                     height: 16,
                   ),
-                  ProductNewInView(newInIsLoadMore: newInIsLoadMore),
+                  const ProductNewInView(),
                   const SizedBox(height: 20),
                   ViewAllRow(
-                      text: lang.handPicked,
-                      assetName: Assets.assetsImagesHandPicked,
-                      noTextIcon: false,
-                      onPressed: () {
-                        navigateTo(
-                            context: context,
-                            screen: const HandPickedViewAll());
-                      }),
-                  HandPickedView(
-                    handScrollController: handScrollController,
-                    handIsLoadMore: handIsLoadMore,
+                    text: lang.handPicked,
+                    assetName: Assets.assetsImagesHandPicked,
+                    noTextIcon: false,
+                    onPressed: () {
+                      navigateTo(
+                        context: context,
+                        screen: ProductsViewAll(
+                          notFoundTitle: lang.noProductHandPicked,
+                          products: cubit.productsHandpack,
+                          appBarTitle: lang.handPicked,
+                          onStartPage: () {
+                            cubit.getRandomProducts(pageNum, pageSize);
+                          },
+                        ),
+                      );
+                    },
                   ),
+                  const HandPickedView(),
                   const SizedBox(height: 30),
                 ],
               )
@@ -158,10 +123,7 @@ class _DiscoverViewState extends State<DiscoverView> {
 class ProductNewInView extends StatelessWidget {
   const ProductNewInView({
     super.key,
-    required this.newInIsLoadMore,
   });
-
-  final bool newInIsLoadMore;
 
   @override
   Widget build(BuildContext context) {
@@ -192,28 +154,21 @@ class ProductNewInView extends StatelessWidget {
               height: 1.sw > 600 ? 310 : 320,
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  if (index == ProductsCubit.get(context).products.length &&
-                      newInIsLoadMore) {
-                    return buildShimmerIndicatorSmall();
-                  } else {
-                    if (checkIsHasDiscount(
-                        ProductsCubit.get(context).products, index)) {
-                      return offersCard(
-                          context: context,
-                          product: ProductsCubit.get(context).products[index]);
-                    }
-                    return Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: productSquarItem(
+                  if (checkIsHasDiscount(
+                      ProductsCubit.get(context).products, index)) {
+                    return offersCard(
                         context: context,
-                        product: ProductsCubit.get(context).products[index],
-                      ),
-                    );
+                        product: ProductsCubit.get(context).products[index]);
                   }
+                  return Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: productSquarItem(
+                      context: context,
+                      product: ProductsCubit.get(context).products[index],
+                    ),
+                  );
                 },
-                itemCount: newInIsLoadMore
-                    ? ProductsCubit.get(context).products.length + 1
-                    : ProductsCubit.get(context).products.length,
+                itemCount: ProductsCubit.get(context).products.length,
                 scrollDirection: Axis.horizontal,
                 padding: const EdgeInsets.only(right: 8),
               ),
@@ -239,12 +194,7 @@ bool checkIsHasDiscount(List<ProductModel> productsList, int index) {
 class HandPickedView extends StatefulWidget {
   const HandPickedView({
     super.key,
-    required this.handScrollController,
-    required this.handIsLoadMore,
   });
-
-  final ScrollController handScrollController;
-  final bool handIsLoadMore;
 
   @override
   State<HandPickedView> createState() => _HandPickedViewState();
@@ -267,9 +217,9 @@ class _HandPickedViewState extends State<HandPickedView> {
       },
       builder: (context, state) {
         return state.when(initial: () {
-          return buildShimmerIndicatorGrid();
+          return buildShimmerIndicatorGrid(context);
         }, loading: () {
-          return buildShimmerIndicatorGrid();
+          return buildShimmerIndicatorGrid(context);
         }, success: () {
           if (ProductsCubit.get(context).productsHandpack.isEmpty) {
             return Text(
@@ -280,29 +230,22 @@ class _HandPickedViewState extends State<HandPickedView> {
           return Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: GridView.builder(
-              controller: widget.handScrollController,
               physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: gridDelegate,
+              gridDelegate: gridDelegate(context),
               shrinkWrap: true,
               itemCount: ProductsCubit.get(context).productsHandpack.length,
               itemBuilder: (context, index) {
-                if (index ==
-                        ProductsCubit.get(context).productsHandpack.length &&
-                    widget.handIsLoadMore) {
-                  return buildShimmerIndicatorSmall();
-                } else {
-                  if (checkIsHasDiscount(
-                      ProductsCubit.get(context).products, index)) {
-                    return offersCard(
-                        context: context,
-                        product:
-                            ProductsCubit.get(context).productsHandpack[index]);
-                  }
-                  return productSquarItem(
-                    context: context,
-                    product: ProductsCubit.get(context).productsHandpack[index],
-                  );
+                if (checkIsHasDiscount(
+                    ProductsCubit.get(context).products, index)) {
+                  return offersCard(
+                      context: context,
+                      product:
+                          ProductsCubit.get(context).productsHandpack[index]);
                 }
+                return productSquarItem(
+                  context: context,
+                  product: ProductsCubit.get(context).productsHandpack[index],
+                );
               },
             ),
           );

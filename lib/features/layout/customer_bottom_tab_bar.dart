@@ -7,10 +7,10 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/icon_with_gradient/icon_with_gradient.dart';
 import 'package:nilelon/features/cart/presentation/view/cart_view.dart';
 import 'package:nilelon/features/product/presentation/pages/product_discover_page.dart';
-import 'package:nilelon/features/customer_flow/home/view/customer_home_view.dart';
+import 'package:nilelon/features/home/view/customer_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_view.dart';
 
-import '../../../core/data/hive_stroage.dart';
+import '../../core/data/hive_stroage.dart';
 
 class CustomerBottomTabBar extends StatefulWidget {
   const CustomerBottomTabBar({super.key, this.index = 0});

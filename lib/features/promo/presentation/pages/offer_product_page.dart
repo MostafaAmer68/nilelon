@@ -84,9 +84,9 @@ class _OfferProductPageState extends State<OfferProductPage> {
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
                 return state.when(initial: () {
-                  return buildShimmerIndicatorGrid();
+                  return buildShimmerIndicatorGrid(context);
                 }, loading: () {
-                  return Expanded(child: buildShimmerIndicatorGrid());
+                  return Expanded(child: buildShimmerIndicatorGrid(context));
                 }, success: () {
                   if (pcubit.products.isEmpty) {
                     return Center(
@@ -100,7 +100,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: GridView.builder(
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: gridDelegate,
+                        gridDelegate: gridDelegate(context),
                         shrinkWrap: true,
                         itemCount: ProductsCubit.get(context).products.length,
                         itemBuilder: (context, index) {

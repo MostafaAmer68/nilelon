@@ -116,7 +116,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                       return Text(S.of(context).waitingToGet);
                     },
                     loading: () {
-                      return buildShimmerIndicatorGrid();
+                      return buildShimmerIndicatorGrid(context);
                     },
                     failure: (erro) {
                       return Text(erro);

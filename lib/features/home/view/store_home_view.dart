@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/features/product/presentation/pages/products_view_all.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -14,13 +15,12 @@ import 'package:nilelon/core/widgets/text_form_field/text_field/const_text_form_
 import 'package:nilelon/core/widgets/banner/banner_product.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
-import 'package:nilelon/features/product/presentation/pages/product_new_in_all_widget.dart';
-import 'package:nilelon/features/store_flow/search/view/store_search_view.dart';
 
-import '../../../../core/resources/appstyles_manager.dart';
-import '../../../../core/widgets/scaffold_image.dart';
-import '../../../product/presentation/cubit/products_cubit/products_state.dart';
-import '../../../product/presentation/pages/product_offers_view.dart';
+import '../../../core/constants/assets.dart';
+import '../../../core/resources/appstyles_manager.dart';
+import '../../../core/widgets/scaffold_image.dart';
+import '../../product/presentation/cubit/products_cubit/products_state.dart';
+import '../../search/presentation/pages/search_view.dart';
 
 class StoreMarketView extends StatefulWidget {
   const StoreMarketView({super.key});
@@ -54,7 +54,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
               ),
               GestureDetector(
                 onTap: () {
-                  navigateTo(context: context, screen: const StoreSearchView());
+                  navigateTo(context: context, screen: const SearchPage());
                 },
                 child: ConstTextFieldBuilder(
                   label: lang.searchForAnything,
@@ -69,6 +69,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                 height: 16,
               ),
               banner(context),
+              smallBanner(context),
               const SizedBox(
                 height: 12,
               ),
@@ -77,7 +78,13 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                 onPressed: () {
                   navigateTo(
                       context: context,
-                      screen: const ProductNewInViewAll(
+                      screen: ProductsViewAll(
+                        appBarTitle: lang.newIn,
+                        notFoundTitle: lang.noProductNewIn,
+                        products: cubit.products,
+                        onStartPage: () {
+                          cubit.getNewInProducts(1, 50);
+                        },
                         isStore: true,
                       ));
                 },
@@ -94,7 +101,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                         return const Icon(Icons.error);
                       },
                       loading: () {
-                        return buildShimmerIndicatorGrid();
+                        return buildShimmerIndicatorGrid(context);
                       },
                       success: () {
                         if (ProductsCubit.get(context).products.isEmpty) {
@@ -113,7 +120,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                         }
                         return GridView.builder(
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: gridDelegate,
+                          gridDelegate: gridDelegate(context),
                           shrinkWrap: true,
                           itemCount: ProductsCubit.get(context).products.length,
                           itemBuilder: (context, index) {
@@ -142,16 +149,48 @@ class _StoreMarketViewState extends State<StoreMarketView> {
 
   BannerProduct banner(BuildContext context) {
     return BannerProduct(
-      height: MediaQuery.of(context).size.height * .2,
-      isStore: true,
+      height: MediaQuery.of(context).size.height * .60,
+      isStore: false,
       onTap: () {
         navigateTo(
           context: context,
-          screen: const OffersView(
-            isStore: true,
+          screen: ProductsViewAll(
+            isOffer: true,
+            notFoundTitle: lang(context).noProductOffer,
+            products: ProductsCubit.get(context).products,
+            appBarTitle: lang(context).offers,
+            onStartPage: () {
+              ProductsCubit.get(context).getOffersProducts(1, 50);
+            },
           ),
         );
       },
+    );
+  }
+
+  smallBanner(BuildContext context) {
+    return InkWell(
+      onTap: () {
+        navigateTo(
+          context: context,
+          screen: ProductsViewAll(
+            isStore: true,
+            notFoundTitle: lang(context).noProductNewIn,
+            products: ProductsCubit.get(context).products,
+            appBarTitle: lang(context).handPicked,
+            onStartPage: () {
+              ProductsCubit.get(context).getRandomProducts(1, 50);
+            },
+          ),
+        );
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: Image.asset(
+          Assets.assetsImagesBannar2,
+          height: MediaQuery.of(context).size.height * .25,
+        ),
+      ),
     );
   }
 }

@@ -153,9 +153,9 @@ class _StoreProfileViewState extends State<StoreProfileView> {
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
                 return state.when(initial: () {
-                  return buildShimmerIndicatorGrid();
+                  return buildShimmerIndicatorGrid(context);
                 }, loading: () {
-                  return buildShimmerIndicatorGrid();
+                  return buildShimmerIndicatorGrid(context);
                 }, success: () {
                   return pCubit
                           .filterListByCategory(
@@ -180,7 +180,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                           child: GridView.builder(
                             controller: scrollController,
                             physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate: gridDelegate,
+                            gridDelegate: gridDelegate(context),
                             shrinkWrap: true,
                             itemCount: pCubit
                                 .filterListByCategory(

@@ -13,8 +13,8 @@ import 'package:nilelon/features/closet/presentation/widget/closet_widget_with_o
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
-import '../../../customer_flow/section_details/section_details_view.dart';
 import '../widget/create_section_widget.dart';
+import 'closet_product_page.dart';
 
 class ClosetPage extends StatefulWidget {
   const ClosetPage({super.key, this.productId = ''});
@@ -89,8 +89,7 @@ class _ClosetViewState extends State<ClosetPage> {
                                   onTap: () {
                                     navigateTo(
                                       context: context,
-                                      screen:
-                                          SectionDetailsView(closet: closet),
+                                      screen: ProductClosetPage(closet: closet),
                                     );
                                   },
                                 );
@@ -111,8 +110,7 @@ class _ClosetViewState extends State<ClosetPage> {
                                   onTap: () {
                                     navigateTo(
                                       context: context,
-                                      screen:
-                                          SectionDetailsView(closet: closet),
+                                      screen: ProductClosetPage(closet: closet),
                                     );
                                   },
                                 );

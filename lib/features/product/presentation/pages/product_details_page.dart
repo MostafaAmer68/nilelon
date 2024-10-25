@@ -17,7 +17,7 @@ import 'package:nilelon/core/widgets/button/small_button.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/footer/add_to_footer.dart';
-import 'package:nilelon/core/widgets/pop_ups/add_to_closet_popup.dart';
+// import 'package:nilelon/core/widgets/pop_ups/add_to_closet_popup.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
 import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
@@ -99,7 +99,6 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           title: lang.productDetails,
           icon: Icons.share_outlined,
           onPressed: () {
-            addToClosetDialog(context, productCubit.product.id);
           },
           context: context,
         ),

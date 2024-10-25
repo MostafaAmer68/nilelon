@@ -10,7 +10,7 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
-import 'package:nilelon/features/store_flow/layout/store_bottom_tab_bar.dart';
+import 'package:nilelon/features/layout/store_bottom_tab_bar.dart';
 
 import '../../../../core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
 

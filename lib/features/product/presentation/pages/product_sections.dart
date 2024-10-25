@@ -53,10 +53,10 @@ class _SectionsProductViewState extends State<SectionsProductView> {
               child: BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
                   return state.whenOrNull(
-                    loading: () => buildShimmerIndicatorGrid(),
+                    loading: () => buildShimmerIndicatorGrid(context),
                     success: () => GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: gridDelegate,
+                      gridDelegate: gridDelegate(context),
                       shrinkWrap: true,
                       itemCount:
                           ProductsCubit.get(context).products.toList().length,

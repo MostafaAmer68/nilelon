@@ -58,9 +58,9 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
         return state.when(initial: () {
-          return buildShimmerIndicatorGrid();
+          return buildShimmerIndicatorGrid(context);
         }, loading: () {
-          return buildShimmerIndicatorGrid();
+          return buildShimmerIndicatorGrid(context);
         }, success: () {
           return ProductsCubit.get(context).products.isEmpty
               ? SizedBox(
@@ -80,7 +80,7 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
                   child: GridView.builder(
                     controller: scrollController,
                     physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: gridDelegate,
+                    gridDelegate: gridDelegate(context),
                     shrinkWrap: true,
                     itemCount: isLoadMore
                         ? ProductsCubit.get(context).products.length + 1

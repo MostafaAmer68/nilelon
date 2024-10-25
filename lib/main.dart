@@ -1,4 +1,4 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -7,11 +7,8 @@ import 'package:nilelon/my_app.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/service/simple_bloc_observer.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:signalr_core/signalr_core.dart';
-
+import 'package:device_preview/device_preview.dart';
 import 'core/service/notification_service.dart';
-
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +26,6 @@ void main() async {
 
   final status = await Permission.storage.request();
   if (status.isDenied) {}
-  
 
   if (HiveStorage.get(HiveKeys.isArabic) == null) {
     HiveStorage.set(
@@ -43,6 +39,9 @@ void main() async {
     HiveStorage.set(HiveKeys.skipOnboarding, false);
   }
   runApp(
-    const MyApp(),
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (_) => const MyApp(),
+    ),
   );
 }
