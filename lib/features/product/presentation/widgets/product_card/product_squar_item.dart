@@ -25,6 +25,12 @@ GestureDetector productSquarItem(
     bool isSelectable = false,
     bool isSelected = false,
     Function(bool value)? onTap}) {
+  final price = product.productVariants
+      .firstWhere(
+        (e) => e.price != 0,
+        orElse: () => product.productVariants.first,
+      )
+      .price;
   return GestureDetector(
     onTap: () {
       navigateTo(
@@ -84,19 +90,7 @@ GestureDetector productSquarItem(
           Stack(
             alignment: Alignment.topRight,
             children: [
-              Container(
-                height: 150.h, // Adjusted to fit the design
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(0),
-                  ),
-                ),
-                child: imageReplacer(
-                    url: product.productImages.isEmpty
-                        ? ''
-                        : product.productImages.first.url),
-              ),
+              imageSection(product),
               Positioned(
                 top: 10.h,
                 right: 10.w, // Added right positioning
@@ -161,11 +155,9 @@ GestureDetector productSquarItem(
             height: 8,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 8.0), // Added padding to match image layout
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: PriceAndRatingRow(
-              price:
-                  '${product.productVariants.firstWhere((e) => e.price > 0, orElse: () => product.productVariants.first).price} ${lang(context).le}',
+              price: '$price ${lang(context).le}',
               rating: product.rating.toString(),
             ),
           ),
@@ -176,7 +168,6 @@ GestureDetector productSquarItem(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
               product.name,
-              // maxLines: 10,
               overflow: TextOverflow.ellipsis,
               style: AppStylesManager.customTextStyleG3,
             ),
@@ -184,5 +175,21 @@ GestureDetector productSquarItem(
         ],
       ),
     ),
+  );
+}
+
+Container imageSection(ProductModel product) {
+  return Container(
+    height: 150.h, // Adjusted to fit the design
+    width: double.infinity,
+    decoration: const BoxDecoration(
+      borderRadius: BorderRadius.vertical(
+        top: Radius.circular(0),
+      ),
+    ),
+    child: imageReplacer(
+        url: product.productImages.isEmpty
+            ? ''
+            : product.productImages.first.url),
   );
 }

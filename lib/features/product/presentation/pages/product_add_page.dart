@@ -48,7 +48,6 @@ class _AddProductViewState extends State<AddProductView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    // BotToast.closeAllLoading();
     return BlocListener<AddProductCubit, AddproductState>(
       listener: (context, state) {
         state.mapOrNull(loading: (value) {

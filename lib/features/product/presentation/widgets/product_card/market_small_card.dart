@@ -16,6 +16,12 @@ import '../../../../../core/data/hive_stroage.dart';
 
 GestureDetector marketSmallCard(
     {required context, required ProductModel product}) {
+  final price = product.productVariants
+      .firstWhere(
+        (e) => e.price != 0,
+        orElse: () => product.productVariants.first,
+      )
+      .price;
   return GestureDetector(
     onTap: () {
       navigateTo(
@@ -29,8 +35,7 @@ GestureDetector marketSmallCard(
     child: Container(
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
-        borderRadius:
-            BorderRadius.circular(4), // Updated to match rounded corners
+        borderRadius: BorderRadius.circular(4),
         color: Colors.white,
         boxShadow: const [
           BoxShadow(
@@ -80,11 +85,9 @@ GestureDetector marketSmallCard(
             height: 8,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 8.0), // Added padding to match image layout
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: PriceAndRatingRow(
-              price:
-                  '${product.productVariants.firstWhere((e) => e.price != 0, orElse: () => product.productVariants.first).price} ${lang(context).le}',
+              price: '$price ${lang(context).le}',
               rating: product.rating.toString(),
             ),
           ),
@@ -95,7 +98,6 @@ GestureDetector marketSmallCard(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
               product.name,
-              // maxLines: 10,
               overflow: TextOverflow.ellipsis,
               style: AppStylesManager.customTextStyleG3,
             ),

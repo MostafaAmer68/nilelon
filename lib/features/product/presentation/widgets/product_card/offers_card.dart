@@ -5,7 +5,6 @@ import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
@@ -20,6 +19,14 @@ import '../../../../../core/tools.dart';
 import '../../../../../core/utils/navigation.dart';
 
 GestureDetector offersCard({required context, required ProductModel product}) {
+  final price = product.productVariants
+      .firstWhere(
+        (e) => e.price != 0,
+        orElse: () => product.productVariants.first,
+      )
+      .price;
+  var priceAfterDiscount = product.productVariants.first.price *
+      (product.productVariants.first.discountRate / 100);
   return GestureDetector(
     onTap: () {
       navigateTo(
@@ -161,24 +168,16 @@ GestureDetector offersCard({required context, required ProductModel product}) {
             child: Row(
               children: [
                 Text(
-                  '${product.productVariants.firstWhere((e) => e.price != 0).price} ${lang(context).le}',
+                  '$price ${lang(context).le}',
                   style: AppStylesManager.customTextStyleO3
                       .copyWith(fontWeight: FontWeight.w700),
                 ),
-                // Text(
-                //   ' L.E',
-                //   style: AppStylesManager.customTextStyleO2
-                //       .copyWith(fontWeight: FontWeight.w500),
-                // ),
                 const Spacer(),
                 Stack(
                   alignment: Alignment.center,
                   children: [
                     Text(
-                      (product.productVariants.first.price *
-                              (product.productVariants.first.discountRate /
-                                  100))
-                          .toString(),
+                      '$priceAfterDiscount ${lang(context).le}',
                       style: AppStylesManager.customTextStyleG,
                     ),
                     const SizedBox(
@@ -204,13 +203,9 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                 height: 30.h,
                 width: 30.h,
                 decoration: BoxDecoration(
-                    // gradient: const LinearGradient(
-                    //   begin: Alignment(1.00, -0.10),
-                    //   end: Alignment(-1, 0.1),
-                    //   colors: ColorManager.gradientColors,
-                    // ),
-                    color: const Color.fromARGB(255, 233, 242, 245),
-                    borderRadius: BorderRadius.circular(12)),
+                  color: const Color.fromARGB(255, 233, 242, 245),
+                  borderRadius: BorderRadius.circular(12),
+                ),
                 child: IconButton(
                   icon: Icon(
                     Iconsax.shopping_cart,

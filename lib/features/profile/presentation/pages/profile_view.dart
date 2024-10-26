@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
-import 'package:nilelon/features/closet/presentation/view/closet_Page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -18,6 +17,7 @@ import 'package:nilelon/features/profile/presentation/pages/settings_view.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../auth/domain/model/user_model.dart';
+import '../../../closet/presentation/view/closet_page.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});

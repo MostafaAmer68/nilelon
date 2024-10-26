@@ -77,16 +77,17 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                 text: lang.newIn,
                 onPressed: () {
                   navigateTo(
-                      context: context,
-                      screen: ProductsViewAll(
-                        appBarTitle: lang.newIn,
-                        notFoundTitle: lang.noProductNewIn,
-                        products: cubit.products,
-                        onStartPage: () {
-                          cubit.getNewInProducts(1, 50);
-                        },
-                        isStore: true,
-                      ));
+                    context: context,
+                    screen: ProductsViewAll(
+                      appBarTitle: lang.newIn,
+                      notFoundTitle: lang.noProductNewIn,
+                      products: cubit.products,
+                      onStartPage: () {
+                        cubit.getNewInProducts(1, 50);
+                      },
+                      isStore: true,
+                    ),
+                  );
                 },
               ),
               const SizedBox(
@@ -179,7 +180,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
             products: ProductsCubit.get(context).products,
             appBarTitle: lang(context).handPicked,
             onStartPage: () {
-              ProductsCubit.get(context).getRandomProducts(1, 50);
+              ProductsCubit.get(context).getNewInProducts(1, 50);
             },
           ),
         );

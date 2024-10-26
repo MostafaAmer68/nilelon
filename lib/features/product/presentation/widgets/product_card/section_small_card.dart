@@ -20,6 +20,12 @@ GestureDetector sectionSmallCard(
     {required context,
     required ProductModel product,
     required String closetId}) {
+  final price = product.productVariants
+      .firstWhere(
+        (e) => e.price != 0,
+        orElse: () => product.productVariants.first,
+      )
+      .price;
   return GestureDetector(
     onTap: () {
       navigateTo(
@@ -50,7 +56,7 @@ GestureDetector sectionSmallCard(
           : 1.sw < 400
               ? 155
               : 200,
-      height: 1.sw > 600 ? 300 : 220,
+      // height: 1.sw > 600 ? 300 : 220,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -115,11 +121,9 @@ GestureDetector sectionSmallCard(
             height: 8,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 8.0), // Added padding to match image layout
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: PriceAndRatingRow(
-              price:
-                  '${product.productVariants.firstWhere((e) => e.price != 0).price} ${lang(context).le}',
+              price: '$price ${lang(context).le}',
               rating: product.rating.toString(),
             ),
           ),
@@ -127,11 +131,9 @@ GestureDetector sectionSmallCard(
             height: 4,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 8.0), // Added padding to match image layout
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: Text(
               product.name,
-              // overflow: TextOverflow.fade,
               overflow: TextOverflow.ellipsis,
               style: AppStylesManager.customTextStyleG3,
             ),

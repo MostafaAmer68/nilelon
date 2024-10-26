@@ -17,9 +17,6 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   ProductsCubit(this.productsRepos) : super(const ProductsState.initial());
   static ProductsCubit get(context) => BlocProvider.of<ProductsCubit>(context);
-  //?*********************************************************************************
-  //! Get Followed
-  //?*********************************************************************************
 
   final TextEditingController comment = TextEditingController();
 
@@ -39,13 +36,15 @@ class ProductsCubit extends Cubit<ProductsState> {
     if (gendar == 'All' && selectedCategory.id.isEmpty) {
       return filteredProducts;
     }
-    return filteredProducts.where((product) {
-      final matchesCategory = selectedCategory.id.isEmpty ||
-          product.categoryID == selectedCategory.id;
-      final matchesGender = gendar == 'All' || product.type == gendar;
+    return filteredProducts.where(
+      (product) {
+        final matchesCategory = selectedCategory.id.isEmpty ||
+            product.categoryID == selectedCategory.id;
+        final matchesGender = gendar == 'All' || product.type == gendar;
 
-      return matchesCategory && matchesGender;
-    }).toList();
+        return matchesCategory && matchesGender;
+      },
+    ).toList();
   }
 
   Future<void> getProductDetails(String productId) async {
@@ -61,6 +60,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   Future<void> getProductByCategory(int page, int productSize) async {
+    products.clear();
     emit(const ProductsState.loading());
     var result =
         await productsRepos.getProductByCategory(categoryId, page, productSize);
@@ -87,6 +87,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   Future<void> getReviews(String productId) async {
+    review.clear();
     emit(const ProductsState.loading());
     var result = await productsRepos.getReviews(productId);
     result.fold((failure) {
@@ -99,6 +100,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   //todo Get Followed Products Pagination
   Future<void> getFollowedProducts(int page, int productSize) async {
+    products.clear();
     emit(const ProductsState.loading());
     var result = await productsRepos.getFollowedProducts(page, productSize);
     result.fold((failure) {
@@ -115,6 +117,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   //todo Get New In Products Pagination
   Future<void> getNewInProducts(int page, int productSize) async {
+    products.clear();
     emit(const ProductsState.loading());
     late final Either<FailureService, List<ProductModel>> result;
 
@@ -128,7 +131,6 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       products = response;
-      // getRandomProducts(page, productSize);
       emit(const ProductsState.success());
     });
   }
@@ -139,6 +141,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   //todo Get Random Products
   Future<void> getRandomProducts(int page, int productSize) async {
+    productsHandpack.clear();
     emit(const ProductsState.loading());
     late final Either<FailureService, List<ProductModel>> result;
 
@@ -175,6 +178,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   //todo Get Offers Products Pagination
   Future<void> getOffersProducts(int page, int productSize) async {
+    products.clear();
     emit(const ProductsState.loading());
     late final Either<FailureService, List<ProductModel>> result;
 
@@ -192,13 +196,10 @@ class ProductsCubit extends Cubit<ProductsState> {
     });
   }
 
-  //?*********************************************************************************
-  //! Get Store
-  //?*********************************************************************************
-
   //todo Get Store Products Pagination
   Future<void> getStoreProducts(
       String storeId, int page, int productSize) async {
+    products.clear();
     emit(const ProductsState.loading());
     var result =
         await productsRepos.getStoreProfileItems(storeId, page, productSize);
@@ -209,6 +210,4 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(const ProductsState.success());
     });
   }
-
-  //?*********************************************************************************
 }

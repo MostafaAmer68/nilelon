@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/tools.dart';
-import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -16,7 +15,6 @@ import 'package:nilelon/features/product/presentation/widgets/product_card/produ
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
-import '../widgets/product_card/offers_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class DiscoverView extends StatefulWidget {
@@ -70,21 +68,22 @@ class _DiscoverViewState extends State<DiscoverView> {
               Column(
                 children: [
                   ViewAllRow(
-                      assetName: Assets.assetsImagesNewIn,
-                      noTextIcon: false,
-                      text: lang.newIn,
-                      onPressed: () {
-                        navigateTo(
-                            context: context,
-                            screen: ProductsViewAll(
-                              notFoundTitle: lang.noProductNewIn,
-                              products: cubit.products,
-                              appBarTitle: lang.newIn,
-                              onStartPage: () {
-                                cubit.getNewInProducts(pageNum, pageSize);
-                              },
-                            ));
-                      }),
+                    assetName: Assets.assetsImagesNewIn,
+                    noTextIcon: false,
+                    text: lang.newIn,
+                    onPressed: () {
+                      navigateTo(
+                          context: context,
+                          screen: ProductsViewAll(
+                            notFoundTitle: lang.noProductNewIn,
+                            products: cubit.products,
+                            appBarTitle: lang.newIn,
+                            onStartPage: () {
+                              cubit.getNewInProducts(pageNum, pageSize);
+                            },
+                          ));
+                    },
+                  ),
                   const SizedBox(
                     height: 16,
                   ),
@@ -111,7 +110,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                   const HandPickedView(),
                   const SizedBox(height: 30),
                 ],
-              )
+              ),
             ],
           ),
         ),
@@ -154,17 +153,12 @@ class ProductNewInView extends StatelessWidget {
               height: 1.sw > 600 ? 310 : 320,
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  if (checkIsHasDiscount(
-                      ProductsCubit.get(context).products, index)) {
-                    return offersCard(
-                        context: context,
-                        product: ProductsCubit.get(context).products[index]);
-                  }
+                  final product = ProductsCubit.get(context).products[index];
                   return Padding(
                     padding: const EdgeInsets.all(10),
                     child: productSquarItem(
                       context: context,
-                      product: ProductsCubit.get(context).products[index],
+                      product: product,
                     ),
                   );
                 },
@@ -187,10 +181,6 @@ class ProductNewInView extends StatelessWidget {
   }
 }
 
-bool checkIsHasDiscount(List<ProductModel> productsList, int index) {
-  return productsList[index].productVariants.first.discountRate != 0;
-}
-
 class HandPickedView extends StatefulWidget {
   const HandPickedView({
     super.key,
@@ -203,7 +193,6 @@ class HandPickedView extends StatefulWidget {
 class _HandPickedViewState extends State<HandPickedView> {
   @override
   void initState() {
-    ProductsCubit.get(context).getRandomProducts(1, 100);
     super.initState();
   }
 
@@ -211,9 +200,7 @@ class _HandPickedViewState extends State<HandPickedView> {
   Widget build(BuildContext context) {
     return BlocConsumer<ProductsCubit, ProductsState>(
       listener: (context, state) {
-        state.mapOrNull(success: (_) {
-          // setState(() {});
-        });
+        state.mapOrNull(success: (_) {});
       },
       builder: (context, state) {
         return state.when(initial: () {
@@ -235,16 +222,11 @@ class _HandPickedViewState extends State<HandPickedView> {
               shrinkWrap: true,
               itemCount: ProductsCubit.get(context).productsHandpack.length,
               itemBuilder: (context, index) {
-                if (checkIsHasDiscount(
-                    ProductsCubit.get(context).products, index)) {
-                  return offersCard(
-                      context: context,
-                      product:
-                          ProductsCubit.get(context).productsHandpack[index]);
-                }
+                final product =
+                    ProductsCubit.get(context).productsHandpack[index];
                 return productSquarItem(
                   context: context,
-                  product: ProductsCubit.get(context).productsHandpack[index],
+                  product: product,
                 );
               },
             ),
