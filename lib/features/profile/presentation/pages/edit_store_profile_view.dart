@@ -1,6 +1,8 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -14,7 +16,9 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/pop_ups/camera_popup.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
 
+import '../../../../core/tools.dart';
 import '../../../../core/widgets/pop_ups/success_creation_popup.dart';
+import '../../../../core/widgets/replacer/image_replacer.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class EditStoreProfileView extends StatefulWidget {
@@ -25,6 +29,17 @@ class EditStoreProfileView extends StatefulWidget {
 }
 
 class _EditStoreProfileViewState extends State<EditStoreProfileView> {
+  late final AuthCubit cubit;
+  @override
+  void initState() {
+    cubit = AuthCubit.get(context);
+    cubit.nameController =
+        TextEditingController(text: currentUsr<StoreModel>().name);
+    cubit.sloganController =
+        TextEditingController(text: currentUsr<StoreModel>().storeSlogan);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -46,13 +61,14 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
           if (state is UpdateStoreSuccess) {
             BotToast.closeAllLoading();
             successCreationDialog(
-                context: context,
-                highlightedText: S.of(context).infoUpdateReglogin,
-                regularText: '',
-                buttonText: lang.save,
-                ontap: () {
-                  navigatePop(context: context);
-                });
+              context: context,
+              highlightedText: S.of(context).infoUpdateReglogin,
+              regularText: '',
+              buttonText: lang.save,
+              ontap: () {
+                navigatePop(context: context);
+              },
+            );
           }
         },
         child: Column(
@@ -88,25 +104,28 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   ButtonBuilder(
-                      text: lang.cancel,
-                      width: screenWidth(context, 0.44),
-                      height: screenHeight(context, 0.06),
-                      buttonColor: Colors.transparent,
-                      frameColor: ColorManager.primaryB2,
-                      style: AppStylesManager.customTextStyleB4,
-                      ontap: () {
-                        navigatePop(context: context);
-                      }),
+                    text: lang.cancel,
+                    width: screenWidth(context, 0.44),
+                    height: screenHeight(context, 0.06),
+                    buttonColor: Colors.transparent,
+                    frameColor: ColorManager.primaryB2,
+                    style: AppStylesManager.customTextStyleB4
+                        .copyWith(color: ColorManager.primaryW),
+                    ontap: () {
+                      navigatePop(context: context);
+                    },
+                  ),
                   const SizedBox(
                     width: 12,
                   ),
                   GradientButtonBuilder(
-                      text: lang.save,
-                      width: screenWidth(context, 0.44),
-                      height: screenHeight(context, 0.06),
-                      ontap: () {
-                        AuthCubit.get(context).updateStore(context);
-                      }),
+                    text: lang.save,
+                    width: screenWidth(context, 0.44),
+                    height: screenHeight(context, 0.06),
+                    ontap: () {
+                      AuthCubit.get(context).updateStore(context);
+                    },
+                  ),
                 ],
               ),
             ),
@@ -131,14 +150,8 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
               return Container(
                 width: 100,
                 height: 100,
-                decoration: ShapeDecoration(
-                  image: DecorationImage(
-                    image: AuthCubit.get(context).image.path.isEmpty
-                        ? const AssetImage('assets/images/brand1.png')
-                        : FileImage(AuthCubit.get(context).image),
-                    fit: BoxFit.fill,
-                  ),
-                  shape: const CircleBorder(
+                decoration: const ShapeDecoration(
+                  shape: CircleBorder(
                     side: BorderSide(
                       width: 5,
                       strokeAlign: BorderSide.strokeAlignOutside,
@@ -146,6 +159,14 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
                     ),
                   ),
                 ),
+                child: cubit.image.path.isEmpty &&
+                        currentUsr<StoreModel>().profilePic.isEmpty
+                    ? Image.asset(Assets.assetsImagesBrand1)
+                    : currentUsr<StoreModel>().profilePic.isNotEmpty &&
+                            cubit.image.path.isNotEmpty
+                        ? Image.file(cubit.image)
+                        : imageReplacer(
+                            url: currentUsr<StoreModel>().profilePic),
               );
             },
           ),

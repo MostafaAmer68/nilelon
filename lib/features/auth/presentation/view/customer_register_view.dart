@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/presentation/view/otp_page.dart';
@@ -72,9 +73,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   AuthCubit.get(context).authCustomerRegister(context);
                 }
               },
-              resend: () {
-               
-              },
+              resend: () {},
             ),
           );
         }
@@ -411,7 +410,11 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
           ),
           GestureDetector(
             onTap: () async {
-              await calenderRegisterDialog(context);
+              await calenderRegisterDialog(context, (date) {
+                AuthCubit.get(context).date = date;
+                AuthCubit.get(context).dateFormatted =
+                    DateFormat('dd/MM/yyyy').format(date);
+              });
               setState(() {});
             },
             child: ConstTextFieldBuilder(

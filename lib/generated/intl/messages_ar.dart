@@ -537,6 +537,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sizeGuide": MessageLookupByLibrary.simpleMessage("دليل المقاسات"),
         "sizes": MessageLookupByLibrary.simpleMessage("المقاسات"),
         "smothingWent": MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
+        "startDate": MessageLookupByLibrary.simpleMessage("تاريخ البداء"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المتجر"),
         "storeProfileLinkIsCopied":

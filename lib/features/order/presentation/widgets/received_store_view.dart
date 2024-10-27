@@ -50,7 +50,7 @@ class _ReceivedStoreViewState extends State<ReceivedStoreView> {
                 color: ColorManager.primaryO,
               ),
               label: Text(
-               lang(context).refundHistory,
+                lang(context).refundHistory,
                 style: AppStylesManager.customTextStyleO2,
               ),
             ),
@@ -79,36 +79,39 @@ class _ReceivedStoreViewState extends State<ReceivedStoreView> {
                         ],
                       ),
                     )
-                  : ListView.builder(
-                      itemCount: cubit.storeOrders
-                          .where((e) => e.status == 'Delivered')
-                          .toList()
-                          .length,
-                      itemBuilder: (context, index) {
-                        final order = cubit.storeOrders
-                            .where((e) => e.status == 'Delivered')
-                            .toList()[index];
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 8),
-                          child: OrderStoreCard(
-                            image: Image.asset(Assets.assetsImagesArrived2),
-                            title: lang(context).orderHasArrived,
-                            time: order.date,
-                            onTap: () {
-                              navigateTo(
-                                  context: context,
-                                  screen: OrderStoreDetailsView(
-                                    id: order.id,
-                                    index: 0,
-                                  ));
-                            },
-                            shippedOnTap: () async {
-                              await shippedAlert(context, order);
-                            },
-                          ),
-                        );
-                      }),
+                  : Expanded(
+                      child: ListView.builder(
+                          itemCount: cubit.storeOrders
+                              .where((e) => e.status == 'Delivered')
+                              .toList()
+                              .length,
+                          itemBuilder: (context, index) {
+                            final order = cubit.storeOrders
+                                .where((e) => e.status == 'Delivered')
+                                .toList()[index];
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 8),
+                              child: OrderStoreCard(
+                                image: Image.asset(Assets.assetsImagesArrived2),
+                                title: lang(context).orderHasArrived,
+                                time: order.date,
+                                
+                                onTap: () {
+                                  navigateTo(
+                                      context: context,
+                                      screen: OrderStoreDetailsView(
+                                        id: order.id,
+                                        index: 0,
+                                      ));
+                                },
+                                shippedOnTap: () async {
+                                  await shippedAlert(context, order);
+                                },
+                              ),
+                            );
+                          }),
+                    ),
             ),
           ),
         ],

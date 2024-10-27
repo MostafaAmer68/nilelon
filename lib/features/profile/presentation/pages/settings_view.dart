@@ -10,7 +10,7 @@ import 'package:nilelon/core/widgets/alert/delete_alert.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
-import 'package:nilelon/features/profile/presentation/pages/edit_account_view.dart';
+import 'package:nilelon/features/profile/presentation/pages/edit_profile_view.dart';
 import 'package:nilelon/features/shared/language/language_view.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/security_page.dart';
@@ -45,7 +45,7 @@ class SettingsView extends StatelessWidget {
                   image: Assets.assetsImagesEdit2,
                   onTap: () {
                     navigateTo(
-                        context: context, screen: const EditAccountView());
+                        context: context, screen: const EditProfileView());
                   },
                 ),
                 ProfileListTile(

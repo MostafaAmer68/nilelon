@@ -24,6 +24,7 @@ import 'package:nilelon/features/product/presentation/widgets/rating_container.d
 import 'package:nilelon/core/widgets/rating/view/rating_dialog.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 
+import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../domain/models/product_model.dart';
@@ -98,8 +99,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         appBar: customAppBar(
           title: lang.productDetails,
           icon: Icons.share_outlined,
-          onPressed: () {
-          },
+          onPressed: () {},
           context: context,
         ),
         body: SingleChildScrollView(
@@ -422,17 +422,20 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   }
 
   Widget _buildReviewSection(S lang) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      child: ViewAllRow(
-        text: lang.reviews,
-        noPadding: true,
-        onPressed: () {
-          ratingDialog(context);
-        },
-        buttonWidget: Text(
-          lang.rate,
-          style: AppStylesManager.customTextStyleO,
+    return Visibility(
+      visible: !HiveStorage.get<bool>(HiveKeys.isStore),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: ViewAllRow(
+          text: lang.reviews,
+          noPadding: true,
+          onPressed: () {
+            ratingDialog(context);
+          },
+          buttonWidget: Text(
+            lang.rate,
+            style: AppStylesManager.customTextStyleO,
+          ),
         ),
       ),
     );

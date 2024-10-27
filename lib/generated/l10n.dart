@@ -1798,6 +1798,16 @@ class S {
     );
   }
 
+  /// `Start Date`
+  String get startDate {
+    return Intl.message(
+      'Start Date',
+      name: 'startDate',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Pay`
   String get pay {
     return Intl.message(

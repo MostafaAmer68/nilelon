@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/alert/shipped_alert.dart';
@@ -51,42 +52,45 @@ class _ShippedStoreViewState extends State<ShippedStoreView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                       lang(context).noOrder,
+                        lang(context).noOrder,
                         style: AppStylesManager.customTextStyleG2,
                       ),
                     ],
                   ),
                 )
-              : ListView.builder(
-                  itemCount: cubit.storeOrders
-                      .where((e) => e.status == 'Shipped')
-                      .toList()
-                      .length,
-                  itemBuilder: (context, index) {
-                    final order = cubit.storeOrders
-                        .where((e) => e.status == 'Shipped')
-                        .toList()[index];
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 8),
-                      child: OrderStoreCard(
-                        image: SvgPicture.asset(Assets.assetsImagesInProgress),
-                        title: lang(context).orderIsShipped,
-                        time: order.date,
-                        onTap: () {
-                          navigateTo(
-                              context: context,
-                              screen: OrderStoreDetailsView(
-                                id: order.id,
-                                index: 0,
-                              ));
-                        },
-                        shippedOnTap: () async {
-                          await shippedAlert(context, order);
-                        },
-                      ),
-                    );
-                  }),
+              : Expanded(
+                  child: ListView.builder(
+                      itemCount: cubit.storeOrders
+                          .where((e) => e.status == 'Shipped')
+                          .toList()
+                          .length,
+                      itemBuilder: (context, index) {
+                        final order = cubit.storeOrders
+                            .where((e) => e.status == 'Shipped')
+                            .toList()[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 8),
+                          child: OrderStoreCard(
+                            image:
+                                SvgPicture.asset(Assets.assetsImagesInProgress),
+                            title: lang(context).orderIsShipped,
+                            time: order.date,
+                            onTap: () {
+                              navigateTo(
+                                  context: context,
+                                  screen: OrderStoreDetailsView(
+                                    id: order.id,
+                                    index: 0,
+                                  ));
+                            },
+                            shippedOnTap: () async {
+                              await shippedAlert(context, order);
+                            },
+                          ),
+                        );
+                      }),
+                ),
         ),
       ),
     );

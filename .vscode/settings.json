@@ -12,7 +12,7 @@
     // Deprecated. Use the pre-release of GitLens instead
     //
     "gitlens.insiders": null,
-    "typescript.tsserver.maxTsServerMemory": 4096,
+    "typescript.tsserver.maxTsServerMemory": 6144,
 
     // Specifies how much (if any) output will be sent to the GitLens output channel
     //  - off: Logs nothing

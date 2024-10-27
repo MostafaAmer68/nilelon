@@ -165,7 +165,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                     );
                   }
                 }, failure: (message) {
-                  return Text(message);
+                  return Text(widget.notFoundTitle);
                 });
               },
             ),

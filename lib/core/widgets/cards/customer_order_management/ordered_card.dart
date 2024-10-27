@@ -21,8 +21,6 @@ class OrderCustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DateFormat formatter = DateFormat('h:mm a');
-
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -92,7 +90,10 @@ class OrderCustomerCard extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          formatter.format(DateTime.parse(order.date)),
+                          DateFormat('yyyy-MM-dd HH:mm').format(
+                            DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
+                                .parse(order.date),
+                          ),
                           style: AppStylesManager.customTextStyleG7,
                         ),
                       ],

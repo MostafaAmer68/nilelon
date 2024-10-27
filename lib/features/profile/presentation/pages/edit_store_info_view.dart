@@ -14,10 +14,32 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
 
+import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../auth/domain/model/user_model.dart';
 
-class EditStoreInfoView extends StatelessWidget {
+class EditStoreInfoView extends StatefulWidget {
   const EditStoreInfoView({super.key});
+
+  @override
+  State<EditStoreInfoView> createState() => _EditStoreInfoViewState();
+}
+
+class _EditStoreInfoViewState extends State<EditStoreInfoView> {
+  late final AuthCubit cubit;
+  @override
+  void initState() {
+    cubit = AuthCubit.get(context);
+    cubit.repNameController =
+        TextEditingController(text: currentUsr<StoreModel>().repName);
+    cubit.repPhoneController =
+        TextEditingController(text: currentUsr<StoreModel>().repPhone);
+    cubit.wareHouseAddressController =
+        TextEditingController(text: currentUsr<StoreModel>().warehouseAddress);
+    // cubit.websiteLinkController =
+    //     TextEditingController(text: currentUsr<StoreModel>().);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,20 +88,20 @@ class EditStoreInfoView extends StatelessWidget {
                       title: lang.storeRepresentativeName,
                       label: 'Twixi',
                       height: 25,
-                      controller: AuthCubit.get(context).repNameController,
+                      controller: cubit.repNameController,
                       type: TextInputType.text,
                     ),
                     TextAndFormFieldColumnNoIcon(
                       title: lang.storeRepresentativeNumber,
                       label: '01000000000',
-                      controller: AuthCubit.get(context).repPhoneController,
+                      controller: cubit.repPhoneController,
                       height: 25,
                       type: TextInputType.phone,
                     ),
                     TextAndFormFieldColumnNoIcon(
                       title: lang.warehouseAddress,
                       label: 'Cairo',
-                      controller: TextEditingController(),
+                      controller: cubit.wareHouseAddressController,
                       height: 25,
                       type: TextInputType.text,
                     ),
@@ -94,7 +116,7 @@ class EditStoreInfoView extends StatelessWidget {
                     TextAndFormFieldColumnNoIcon(
                       title: lang.websiteLink,
                       label: 'TwixiShop',
-                      controller: AuthCubit.get(context).websiteLinkController,
+                      controller: cubit.websiteLinkController,
                       height: 25,
                       type: TextInputType.text,
                     ),
@@ -115,7 +137,9 @@ class EditStoreInfoView extends StatelessWidget {
                         height: screenHeight(context, 0.06),
                         buttonColor: Colors.transparent,
                         frameColor: ColorManager.primaryB2,
-                        style: AppStylesManager.customTextStyleB4,
+                        style: AppStylesManager.customTextStyleB4.copyWith(
+                          color: ColorManager.primaryW,
+                        ),
                         ontap: () {
                           navigatePop(context: context);
                         }),
