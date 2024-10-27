@@ -36,7 +36,6 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
 
   @override
   Widget build(BuildContext context) {
-    // BotToast.closeAllLoading();
     final progressCubit = BlocProvider.of<ProgressCubit>(context);
     final lang = S.of(context);
     return BlocListener<OrderCubit, OrderState>(

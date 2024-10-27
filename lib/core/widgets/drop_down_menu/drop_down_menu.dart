@@ -18,23 +18,21 @@ Container dropDownMenu(
     width: width,
     height: height,
     decoration: decorationWithFade(),
+    alignment: Alignment.center,
     child: DropdownButtonFormField<String>(
-      // itemHeight: height,
       iconSize: height == null ? 24 : 12,
       hint: Text(
         hint,
         style: style ?? AppStylesManager.customTextStyleG2,
       ),
-      elevation: 1,
-      menuMaxHeight: menuMaxHeight, borderRadius: BorderRadius.circular(12),
+      elevation: 0,
+      menuMaxHeight: menuMaxHeight,
+      borderRadius: BorderRadius.circular(12),
       decoration: InputDecoration(
         fillColor: const Color(0xFFFBF9F9),
         filled: true,
+        alignLabelWithHint: true,
         errorStyle: AppStylesManager.customTextStyleR,
-        // AppStyles.customTextStyle.copyWith(
-        //   color: Colors.red[900]!,
-        //   fontSize: 10,
-        // ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20),
           borderSide: BorderSide.none,
@@ -43,23 +41,17 @@ Container dropDownMenu(
       isExpanded: true,
       value: selectedValue,
       validator: (value) {
-        // if (value == null || value.id!.isEmpty) {
-        //   return 'Select room first';
-        // }
         return null;
       },
-      // style: AppStyles.customTextStyleG,
       items: items.map(
         (e) {
           return DropdownMenuItem<String>(
             value: e,
-            child: SizedBox(
-                width: width ?? screenWidth(context, 1),
-                // height: height,
-                child: Text(
-                  e,
-                  style: style2 ?? AppStylesManager.customTextStyleBl,
-                )),
+            alignment: Alignment.bottomCenter,
+            child: Text(
+              e,
+              style: style2 ?? AppStylesManager.customTextStyleBl,
+            ),
           );
         },
       ).toList(),

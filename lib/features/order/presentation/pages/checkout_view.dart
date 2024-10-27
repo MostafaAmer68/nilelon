@@ -36,49 +36,37 @@ class _CheckOutViewState extends State<CheckOutView> {
         context: context,
         hasIcon: false,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              color: ColorManager.primaryW,
-              height: 16,
-            ),
-            BlocBuilder<ProgressCubit, int>(
-              builder: (context, state) {
-                return Column(
-                  children: [
-                    Container(
-                      color: ColorManager.primaryW,
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: StepIndicator(totalSteps: 3, currentStep: state),
-                      ),
+      body: Column(
+        children: [
+          BlocBuilder<ProgressCubit, int>(
+            builder: (context, state) {
+              return Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: StepIndicator(totalSteps: 3, currentStep: state),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  SizedBox(
+                    height: screenHeight(context, 0.78),
+                    child: PageView(
+                      controller: ProgressCubit.get(context).pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      children: const [
+                        OverViewStep(),
+                        BillingDetailsStep(),
+                        OrderedSuccessPage(),
+                        PaymentPage(),
+                      ],
                     ),
-                    Container(
-                      color: ColorManager.primaryW,
-                      height: 16,
-                    ),
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    SizedBox(
-                      height: screenHeight(context, 1),
-                      child: PageView(
-                        controller: ProgressCubit.get(context).pageController,
-                        children: const [
-                          OverViewStep(),
-                          BillingDetailsStep(),
-                          OrderedSuccessPage(),
-                          PaymentPage(),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ],
-        ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
       ),
     );
   }

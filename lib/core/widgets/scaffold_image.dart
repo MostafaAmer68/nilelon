@@ -5,9 +5,11 @@ class ScaffoldImage extends StatelessWidget {
       {super.key,
       required this.body,
       this.appBar,
-      this.persistentFooterButtons});
+      this.persistentFooterButtons,
+      this.btmBar});
   final Widget body;
   final PreferredSizeWidget? appBar;
+  final Widget? btmBar;
   final List<Widget>? persistentFooterButtons;
   @override
   Widget build(BuildContext context) {
@@ -22,6 +24,7 @@ class ScaffoldImage extends StatelessWidget {
         appBar: appBar,
         backgroundColor: Colors.transparent,
         persistentFooterButtons: persistentFooterButtons,
+        bottomNavigationBar: btmBar,
         body: body,
       ),
     );

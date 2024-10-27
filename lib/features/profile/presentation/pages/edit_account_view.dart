@@ -1,7 +1,11 @@
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -18,6 +22,7 @@ import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_
 import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../auth/domain/model/user_model.dart';
 
 class EditAccountView extends StatefulWidget {
   const EditAccountView({super.key});
@@ -31,12 +36,15 @@ class _EditAccountViewState extends State<EditAccountView> {
   @override
   void initState() {
     cubit = AuthCubit.get(context);
+    cubit.nameController =
+        TextEditingController(text: currentUsr<CustomerModel>().name);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
+    // log(currentUsr<CustomerModel>().profilePic, name: 'image');
     return ScaffoldImage(
       appBar: customAppBar(
           title: lang.editAccount, context: context, hasIcon: false),
@@ -91,7 +99,7 @@ class _EditAccountViewState extends State<EditAccountView> {
                           width: 20,
                           height: 20,
                           padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset('assets/images/profile.svg')),
+                          child: SvgPicture.asset(Assets.assetsImagesProfileI)),
                     ),
                     const SizedBox(
                       height: 40,
@@ -140,24 +148,28 @@ class _EditAccountViewState extends State<EditAccountView> {
         alignment: Alignment.bottomCenter,
         children: [
           Container(
-            width: 100.w,
-            height: 100.w,
-            decoration: ShapeDecoration(
-              image: DecorationImage(
-                image: cubit.image.path.isEmpty
-                    ? const AssetImage('assets/images/profile.png')
-                    : FileImage(cubit.image),
-                fit: BoxFit.contain,
-              ),
-              shape: const CircleBorder(
-                side: BorderSide(
-                  width: 5,
-                  strokeAlign: BorderSide.strokeAlignOutside,
-                  color: Color(0xFFFCFCFC),
+              width: 100.w,
+              height: 100.w,
+              decoration: const ShapeDecoration(
+                shape: CircleBorder(
+                  side: BorderSide(
+                    width: 5,
+                    strokeAlign: BorderSide.strokeAlignOutside,
+                    color: Color(0xFFFCFCFC),
+                  ),
                 ),
               ),
-            ),
-          ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(360),
+                child: cubit.image.path.isEmpty &&
+                        currentUsr<CustomerModel>().profilePic.isEmpty
+                    ? Image.asset('assets/images/profile.png')
+                    : currentUsr<CustomerModel>().profilePic.isNotEmpty &&
+                            cubit.image.path.isNotEmpty
+                        ? Image.file(cubit.image)
+                        : imageReplacer(
+                            url: currentUsr<CustomerModel>().profilePic),
+              )),
           Positioned(
               bottom: 2,
               right: 2,

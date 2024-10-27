@@ -76,7 +76,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                           context: context,
                           screen: ProductsViewAll(
                             notFoundTitle: lang.noProductNewIn,
-                            products: cubit.products,
+                            isHandpicked: false,
                             appBarTitle: lang.newIn,
                             onStartPage: () {
                               cubit.getNewInProducts(pageNum, pageSize);
@@ -98,7 +98,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                         context: context,
                         screen: ProductsViewAll(
                           notFoundTitle: lang.noProductHandPicked,
-                          products: cubit.productsHandpack,
+                          isHandpicked: true,
                           appBarTitle: lang.handPicked,
                           onStartPage: () {
                             cubit.getRandomProducts(pageNum, pageSize);

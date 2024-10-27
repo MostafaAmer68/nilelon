@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
-import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/generated/l10n.dart';
+
+import '../features/auth/domain/model/user_model.dart';
 
 SliverGridDelegateWithFixedCrossAxisCount gridDelegate(context) =>
     SliverGridDelegateWithFixedCrossAxisCount(
@@ -19,3 +20,6 @@ calcSale(num original, num rate) {
 }
 
 T localData<T>(String key) => HiveStorage.get<T>(key);
+
+T currentUsr<T>() =>
+    HiveStorage.get<UserModel>(HiveKeys.userModel).getUserData<T>();

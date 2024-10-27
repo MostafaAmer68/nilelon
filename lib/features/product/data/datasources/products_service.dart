@@ -36,7 +36,7 @@ class ProductsService {
       return List<ProductModel>.from(
           data.data['result'].map((e) => ProductModel.fromJson(e)));
     } else {
-      throw Exception('Unexpected error ${data.data["errorMessages"]}');
+      throw Exception('Unexpected error ${data.data.first}');
     }
   }
 

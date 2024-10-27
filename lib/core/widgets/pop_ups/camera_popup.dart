@@ -42,7 +42,9 @@ Future<File> cameraDialog(BuildContext context) async {
                 onPressed: () async {
                   // AuthCubit.get(context).pickImage(ImageSource.camera);
                   File? image = await pickImage(ImageSource.camera);
-                  completer.complete(image);
+                  if (image != null) {
+                    completer.complete(image);
+                  }
                   navigatePop(context: context);
                 },
                 child: Row(
@@ -66,7 +68,9 @@ Future<File> cameraDialog(BuildContext context) async {
                 onPressed: () async {
                   // AuthCubit.get(context).pickImage(ImageSource.gallery);
                   File? image = await pickImage(ImageSource.gallery);
-                  completer.complete(image);
+                  if (image != null) {
+                    completer.complete(image);
+                  }
                   navigatePop(context: context);
                 },
                 child: Row(

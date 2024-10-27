@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -15,6 +14,7 @@ import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.
 import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/settings_view.dart';
 
+import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../auth/domain/model/user_model.dart';
 import '../../../closet/presentation/view/closet_page.dart';
@@ -50,9 +50,7 @@ class ProfileView extends StatelessWidget {
                       Container(
                         decoration: const BoxDecoration(shape: BoxShape.circle),
                         child: imageReplacer(
-                          url: HiveStorage.get<UserModel>(HiveKeys.userModel)
-                              .getUserData<CustomerModel>()
-                              .profilePic,
+                          url: currentUsr<CustomerModel>().profilePic,
                           width: 60,
                           height: 60,
                         ),
@@ -61,7 +59,7 @@ class ProfileView extends StatelessWidget {
                         width: 12,
                       ),
                       Text(
-                        'Hi, ${HiveStorage.get<UserModel>(HiveKeys.userModel).getUserData<CustomerModel>().name}',
+                        'Hi, ${currentUsr<CustomerModel>().name}',
                         style: AppStylesManager.customTextStyleBl8
                             .copyWith(fontWeight: FontWeight.w600),
                       ),

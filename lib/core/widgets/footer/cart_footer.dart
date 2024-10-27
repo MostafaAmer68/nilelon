@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -47,28 +48,38 @@ class _CartFooterState extends State<CartFooter> {
             }
           }
         },
-        child: Padding(
+        child: Container(
+          decoration: BoxDecoration(
+            color: ColorManager.primaryW,
+            borderRadius: BorderRadius.circular(14),
+          ),
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    lang.totalPrice,
-                    style: AppStylesManager.customTextStyleB5,
-                  ),
-                  BlocBuilder<CartCubit, CartState>(
-                    builder: (context, state) {
-                      return state is UpdateQuantityCartLoading
-                          ? const CircularProgressIndicator()
-                          : Text(
-                              '$totalPrice ${lang.le}',
-                              style: AppStylesManager.customTextStyleO5,
-                            );
-                    },
-                  )
-                ],
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      lang.totalPrice,
+                      style: AppStylesManager.customTextStyleB5,
+                    ),
+                    // const SizedBox(width: 50),
+                    BlocBuilder<CartCubit, CartState>(
+                      builder: (context, state) {
+                        return state is UpdateQuantityCartLoading
+                            ? const CircularProgressIndicator()
+                            : Text(
+                                '$totalPrice ${lang.le}',
+                                style: AppStylesManager.customTextStyleO5,
+                              );
+                      },
+                    )
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 18,

@@ -153,7 +153,8 @@ class _OtpViewState extends State<OtpView> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              widget.resend;
+                              AuthCubit.get(context)
+                                  .confirmRegisteration(context);
                               resendTime = 59;
                               startTimer();
                               setState(() {});

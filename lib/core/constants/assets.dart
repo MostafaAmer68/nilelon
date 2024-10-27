@@ -27,8 +27,8 @@ class Assets {
   static const String assetsImagesAppstore = "assets/images/appstore.png";
 
   /// Assets for assetsImagesArrived
-  /// assets/images/arrived.png
-  static const String assetsImagesArrived = "assets/images/arrived.png";
+  /// assets/images/Arrived.png
+  static const String assetsImagesArrived = "assets/images/Arrived.png";
 
   /// Assets for assetsImagesArrived2
   /// assets/images/arrived2.png
@@ -91,8 +91,8 @@ class Assets {
   static const String assetsImagesCall = "assets/images/call.svg";
 
   /// Assets for assetsImagesCard
-  /// assets/images/card.svg
-  static const String assetsImagesCard = "assets/images/card.svg";
+  /// assets/images/Card.svg
+  static const String assetsImagesCard = "assets/images/Card.svg";
 
   /// Assets for assetsImagesCard2
   /// assets/images/card_2.svg
@@ -127,8 +127,8 @@ class Assets {
   static const String assetsImagesFacebook = "assets/images/facebook.svg";
 
   /// Assets for assetsImagesFeedback
-  /// assets/images/feedback.png
-  static const String assetsImagesFeedback = "assets/images/feedback.png";
+  /// assets/images/Feedback.png
+  static const String assetsImagesFeedback = "assets/images/Feedback.png";
 
   /// Assets for assetsImagesGlobal
   /// assets/images/global.svg
@@ -195,12 +195,12 @@ class Assets {
   static const String assetsImagesInvoice = "assets/images/invoice.png";
 
   /// Assets for assetsImagesLanguage
-  /// assets/images/language.svg
-  static const String assetsImagesLanguage = "assets/images/language.svg";
+  /// assets/images/Language.svg
+  static const String assetsImagesLanguage = "assets/images/Language.svg";
 
   /// Assets for assetsImagesLink
-  /// assets/images/link.svg
-  static const String assetsImagesLink = "assets/images/link.svg";
+  /// assets/images/Link.svg
+  static const String assetsImagesLink = "assets/images/Link.svg";
 
   /// Assets for assetsImagesLocation
   /// assets/images/location.svg
@@ -314,9 +314,13 @@ class Assets {
   /// assets/images/profile.png
   static const String assetsImagesProfile = "assets/images/profile.png";
 
+  /// Assets for assetsImagesProfileI
+  /// assets/images/profileI.svg
+  static const String assetsImagesProfileI = "assets/images/profileI.svg";
+
   /// Assets for assetsImagesRecommendation
-  /// assets/images/recommendation.svg
-  static const String assetsImagesRecommendation = "assets/images/recommendation.svg";
+  /// assets/images/Recommendation.svg
+  static const String assetsImagesRecommendation = "assets/images/Recommendation.svg";
 
   /// Assets for assetsImagesRepeatCircle
   /// assets/images/repeat_circle.svg

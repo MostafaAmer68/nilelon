@@ -26,11 +26,11 @@ class ProductsViewAll extends StatefulWidget {
     this.isStore = false,
     this.isOffer = false,
     required this.notFoundTitle,
-    required this.products,
+    required this.isHandpicked,
   });
   final String appBarTitle;
   final String notFoundTitle;
-  final List<ProductModel> products;
+  final bool isHandpicked;
   final bool isStore;
   final bool isOffer;
 
@@ -45,11 +45,13 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   bool isLoadMore = false;
   late final ProductsCubit cubit;
   ScrollController scrollCn = ScrollController();
+  List<ProductModel> products = [];
 
   @override
   void initState() {
     cubit = ProductsCubit.get(context);
     widget.onStartPage();
+
     scrollCn.addListener(() {
       if (scrollCn.position.pixels == scrollCn.position.maxScrollExtent &&
           !isLoadMore) {
@@ -91,8 +93,13 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                 }, loading: () {
                   return buildShimmerIndicatorGrid(context);
                 }, success: () {
+                  if (widget.isHandpicked) {
+                    products = cubit.productsHandpack;
+                  } else {
+                    products = cubit.products;
+                  }
                   if (cubit
-                      .filterListByCategory(cubit.category, widget.products)
+                      .filterListByCategory(cubit.category, products)
                       .isEmpty) {
                     return SizedBox(
                       height: 450.h,
@@ -117,7 +124,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                         itemCount: isLoadMore
                             ? cubit
                                     .filterListByCategory(
-                                        cubit.category, widget.products)
+                                        cubit.category, products)
                                     .length +
                                 1
                             : cubit.productsHandpack.length,
@@ -126,14 +133,14 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                                   cubit
                                       .filterListByCategory(
                                         cubit.category,
-                                        widget.products,
+                                        products,
                                       )
                                       .length &&
                               isLoadMore) {
                             return buildShimmerIndicatorSmall();
                           } else {
                             final productItem = cubit.filterListByCategory(
-                                cubit.category, widget.products)[sizeIndex];
+                                cubit.category, products)[sizeIndex];
                             if (widget.isOffer) {
                               return offersCard(
                                 context: context,

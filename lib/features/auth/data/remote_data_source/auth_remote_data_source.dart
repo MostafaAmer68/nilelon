@@ -116,11 +116,6 @@ class AuthService extends AuthRemoteDataSource {
         userData = UserModel<StoreModel>.fromMap(data.data);
       }
       HiveStorage.set(HiveKeys.userModel, userData);
-    } else if (data.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = data.data;
-      errorAlert(context, errorMessage);
-      throw Exception('Login failed: $errorMessage');
     } else {
       // Handle other status codes if necessary
       throw Exception(
@@ -567,6 +562,16 @@ class AuthService extends AuthRemoteDataSource {
       },
     );
     if (response.statusCode == 200) {
+      final s = HiveStorage.get<UserModel>(HiveKeys.userModel);
+      final userModel = UserModel(
+          id: s.id,
+          token: s.token,
+          role: s.role,
+          userData: CustomerModel.fromMap(response.data['result']));
+      HiveStorage.set(
+        HiveKeys.userModel,
+        userModel,
+      );
       return '';
     } else {
       // Handle other status codes if necessary

@@ -90,7 +90,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
                 height: 16,
               ),
               banner(context),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               smallBanner(context),
               SizedBox(
                 height: 16.h,
@@ -102,7 +102,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
                     context: context,
                     screen: ProductsViewAll(
                       notFoundTitle: lang.noProductFollow,
-                      products: ProductsCubit.get(context).products,
+                      isHandpicked: false,
                       appBarTitle: lang.following,
                       onStartPage: () {
                         ProductsCubit.get(context).getFollowedProducts(1, 50);
@@ -133,7 +133,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
           screen: ProductsViewAll(
             isOffer: true,
             notFoundTitle: lang(context).noProductOffer,
-            products: ProductsCubit.get(context).products,
+            isHandpicked: false,
             appBarTitle: lang(context).offers,
             onStartPage: () {
               ProductsCubit.get(context).getOffersProducts(1, 50);
@@ -151,7 +151,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
           context: context,
           screen: ProductsViewAll(
             notFoundTitle: lang(context).noProductNewIn,
-            products: ProductsCubit.get(context).products,
+            isHandpicked: true,
             appBarTitle: lang(context).handPicked,
             onStartPage: () {
               ProductsCubit.get(context).getRandomProducts(1, 50);

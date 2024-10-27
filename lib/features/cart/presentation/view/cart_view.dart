@@ -145,21 +145,19 @@ class _CartViewState extends State<CartView> {
           ),
         ],
       ),
-      persistentFooterButtons: [
-        BlocBuilder<CartCubit, CartState>(
-          builder: (context, state) {
-            if (state is CartLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (state is GetCartSuccess || state is UpdateQuantityCartLoading) {
-              return CartFooter(
-                visible: cubit.cart.items.isNotEmpty,
-              );
-            }
-            return const SizedBox();
-          },
-        ),
-      ],
+      btmBar: BlocBuilder<CartCubit, CartState>(
+        builder: (context, state) {
+          if (state is CartLoading) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (state is GetCartSuccess || state is UpdateQuantityCartLoading) {
+            return CartFooter(
+              visible: cubit.cart.items.isNotEmpty,
+            );
+          }
+          return const SizedBox();
+        },
+      ),
     );
   }
 }
@@ -208,7 +206,7 @@ class CartItemWidget extends StatelessWidget {
                       ),
                     );
                   },
-                  backgroundColor: ColorManager.primaryO,
+                  backgroundColor: ColorManager.primaryG4,
                   icon: Iconsax.trash,
                   foregroundColor: ColorManager.primaryW,
                   label: lang(context).delete,

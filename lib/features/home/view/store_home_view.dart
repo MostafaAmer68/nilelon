@@ -81,7 +81,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                     screen: ProductsViewAll(
                       appBarTitle: lang.newIn,
                       notFoundTitle: lang.noProductNewIn,
-                      products: cubit.products,
+                      isHandpicked: false,
                       onStartPage: () {
                         cubit.getNewInProducts(1, 50);
                       },
@@ -158,7 +158,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
           screen: ProductsViewAll(
             isOffer: true,
             notFoundTitle: lang(context).noProductOffer,
-            products: ProductsCubit.get(context).products,
+            isHandpicked: false,
             appBarTitle: lang(context).offers,
             onStartPage: () {
               ProductsCubit.get(context).getOffersProducts(1, 50);
@@ -177,7 +177,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
           screen: ProductsViewAll(
             isStore: true,
             notFoundTitle: lang(context).noProductNewIn,
-            products: ProductsCubit.get(context).products,
+            isHandpicked: true,
             appBarTitle: lang(context).handPicked,
             onStartPage: () {
               ProductsCubit.get(context).getNewInProducts(1, 50);

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 abstract class FailureService {
@@ -23,10 +25,11 @@ class ServerFailure extends FailureService {
         return ServerFailure('Bad certificate from Api Server');
 
       case DioExceptionType.badResponse:
-        return //ServerFailure('Bad Response from Api Server');
-            ServerFailure.fromResponse(
+        return ServerFailure.fromResponse(
           dioException.response!.statusCode,
-          dioException.response!.data,
+          dioException.response!.data is Map
+              ? dioException.response!.data['errorMessages'].toString()
+              : dioException.response!.data,
         );
 
       case DioExceptionType.cancel:
