@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -11,8 +13,8 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/small_button.dart';
 
-import '../../pages/product_details_page.dart';
-import '../../../../../core/utils/navigation.dart';
+import '../../../product/presentation/pages/product_details_page.dart';
+import '../../../../core/utils/navigation.dart';
 
 class CartItemCard extends StatefulWidget {
   const CartItemCard({
@@ -63,7 +65,7 @@ class _CartItemCardState extends State<CartItemCard> {
             width: screenWidth(context, 0.9),
             child: Container(
               clipBehavior: Clip.antiAlias,
-              height: 1.sw > 600 ? 160 : 150,
+              // height: 1.sw > 600 ? 160 : 1,
               margin: const EdgeInsets.all(1),
               decoration: BoxDecoration(
                 boxShadow: const [
@@ -86,10 +88,13 @@ class _CartItemCardState extends State<CartItemCard> {
                   SizedBox(
                     width: 1.sw > 600 ? 110 : 100,
                     height: 1.sw > 600 ? 130 : 100,
-                    child: imageReplacer(
-                      url: widget.cart.productImages.isEmpty
-                          ? ''
-                          : widget.cart.productImages.first.url,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(4),
+                      child: imageReplacer(
+                        url: widget.cart.productImages.isEmpty
+                            ? ''
+                            : widget.cart.productImages.first.url,
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -98,7 +103,7 @@ class _CartItemCardState extends State<CartItemCard> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                        vertical: 16,
+                        vertical: 10,
                         horizontal: 8,
                       ),
                       child: Column(
@@ -121,9 +126,22 @@ class _CartItemCardState extends State<CartItemCard> {
                                 value: isEnabled,
                                 activeColor: ColorManager.primaryO,
                                 onChanged: (value) {
-                                  isEnabled = !isEnabled;
+                                  isEnabled = value!;
                                   CartCubit.get(context)
-                                      .onSelectedItem(value!, widget.cart);
+                                      .onSelectedItem(value, widget.cart);
+                                  log(
+                                      CartCubit.get(context)
+                                          .tempCartItems
+                                          .length
+                                          .toString(),
+                                      name: 'temp cart');
+                                  log(
+                                      CartCubit.get(context)
+                                          .cart1
+                                          .items
+                                          .length
+                                          .toString(),
+                                      name: 'cart1 cart');
                                   setState(() {});
                                 },
                               ),
@@ -196,17 +214,17 @@ class _CartItemCardState extends State<CartItemCard> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 12,
-                  ),
+                  // const SizedBox(
+                  //   width: 12,
+                  // ),
                 ],
               ),
             ),
           ),
         ),
-        const SizedBox(
-          height: 12,
-        )
+        // const SizedBox(
+        //   height: 12,
+        // )
       ],
     );
   }

@@ -6,24 +6,25 @@ import 'package:nilelon/generated/l10n.dart';
 import 'package:svg_flutter/svg.dart';
 
 class ViewAllRow extends StatelessWidget {
-  const ViewAllRow({
-    super.key,
-    this.text,
-    this.onPressed,
-    this.buttonText,
-    this.buttonWidget,
-    this.noButton = false,
-    this.noText = false,
-    this.noPadding = false,
-    this.style,
-    this.noTextIcon = true,
-    this.assetName,
-  });
+  const ViewAllRow(
+      {super.key,
+      this.text,
+      this.onPressed,
+      this.buttonText,
+      this.buttonWidget,
+      this.noButton = false,
+      this.noText = false,
+      this.noPadding = false,
+      this.style,
+      this.noTextIcon = true,
+      this.assetName,
+      this.isStyled = true});
   final String? text;
   final void Function()? onPressed;
   final String? buttonText;
   final Widget? buttonWidget;
   final bool noButton;
+  final bool isStyled;
   final bool noText;
   final bool noTextIcon;
   final bool noPadding;
@@ -66,17 +67,21 @@ class ViewAllRow extends StatelessWidget {
                   onTap: onPressed,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    decoration: BoxDecoration(
-                      color: ColorManager.primaryW,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: ColorManager.primaryY,
-                          offset: Offset(5, 5),
-                        ),
-                      ],
+                      horizontal: 5,
+                      vertical: 10,
                     ),
+                    decoration: isStyled
+                        ? BoxDecoration(
+                            color: ColorManager.primaryW,
+                            borderRadius: BorderRadius.circular(15),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: ColorManager.primaryY,
+                                offset: Offset(5, 5),
+                              ),
+                            ],
+                          )
+                        : null,
                     child: buttonWidget ??
                         Row(
                           children: [

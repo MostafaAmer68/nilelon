@@ -166,10 +166,10 @@ class S {
     );
   }
 
-  /// `Empty cart`
+  /// `Clear all`
   String get emptyCart {
     return Intl.message(
-      'Empty cart',
+      'Clear all',
       name: 'emptyCart',
       desc: '',
       args: [],

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -27,7 +28,7 @@ class _CartFooterState extends State<CartFooter> {
   @override
   void initState() {
     cubit = CartCubit.get(context);
-    for (var item in cubit.cart.items) {
+    for (var item in cubit.tempCartItems) {
       totalPrice += item.price * item.quantity;
     }
     super.initState();
@@ -43,7 +44,7 @@ class _CartFooterState extends State<CartFooter> {
         listener: (context, state) {
           if (state is GetCartSuccess) {
             totalPrice = 0;
-            for (var item in cubit.selectedItems.items) {
+            for (var item in cubit.tempCartItems) {
               totalPrice += item.price * item.quantity;
             }
           }
@@ -89,7 +90,12 @@ class _CartFooterState extends State<CartFooter> {
                 child: GradientButtonBuilder(
                   text: lang.checkOut,
                   ontap: () {
-                    navigateTo(context: context, screen: const CheckOutView());
+                    if (cubit.tempCartItems.isNotEmpty) {
+                      navigateTo(
+                          context: context, screen: const CheckOutView());
+                    } else {
+                      BotToast.showText(text: lang.youMustSelectOneProduct);
+                    }
                   },
                   width: screenWidth(context, 1),
                 ),

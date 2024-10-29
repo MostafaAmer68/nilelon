@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,7 +16,7 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/footer/cart_footer.dart';
-import 'package:nilelon/features/product/presentation/widgets/product_card/cart_item_cart.dart';
+import 'package:nilelon/features/cart/presentation/view/cart_item_cart.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
@@ -50,13 +52,17 @@ class _CartViewState extends State<CartView> {
         hasLeading: false,
       ),
       body: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const DefaultDivider(),
           const SizedBox(
             height: 8,
           ),
           ViewAllRow(
-            text: '',
+            isStyled: false,
+            text: cubit.cart1.items.isEmpty
+                ? ''
+                : '${cubit.cart1.items.length} ${lang.items}',
             onPressed: () {
               navigateTo(
                 context: context,
@@ -87,56 +93,68 @@ class _CartViewState extends State<CartView> {
                 return Text(state.message);
               } else if (state is GetCartSuccess ||
                   state is UpdateQuantityCartLoading) {
-                if (cubit.cart.items.isEmpty) {
-                  return Text(S.of(context).noProductCart);
+                log(cubit.cart1.id.toString());
+                if (cubit.cart1.items.isEmpty) {
+                  return SizedBox(
+                    height: screenHeight(context, 0.6),
+                    child: Center(
+                      child: Text(S.of(context).noProductCart),
+                    ),
+                  );
                 } else {
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: screenHeight(context, 0.4),
-                        // width: screenWidth(context, 0.9),
-                        child: ListView.builder(
-                          itemCount: cubit.cart.items.length,
-                          padding: const EdgeInsets.only(bottom: 5),
-                          shrinkWrap: true,
-                          itemBuilder: (context, index) {
-                            final cartItem = cubit.cart.items[index];
-                            return CartItemWidget(cart: cartItem, index: index);
-                          },
-                        ),
-                      ),
-                      const Divider(),
-                      Align(
-                        alignment: AlignmentDirectional.centerEnd,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 10),
-                          child: SizedBox(
-                            width: screenWidth(context, 0.4),
-                            child: OutlinedButton(
-                              onPressed: () {
-                                CartCubit.get(context).emptyCart();
-                              },
-                              style: OutlinedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  side: const BorderSide(
-                                    color: ColorManager.primaryR,
+                  return SizedBox(
+                    height: screenHeight(context, 0.5),
+                    // width: screenWidth(context, 0.9),5
+                    child: ListView.builder(
+                      itemCount: cubit.cart1.items.length + 1,
+                      padding: const EdgeInsets.only(bottom: 5),
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        if (cubit.cart1.items.length == index) {
+                          return Column(
+                            children: [
+                              const SizedBox(height: 20),
+                              const DefaultDivider(),
+                              Align(
+                                alignment: AlignmentDirectional.bottomEnd,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: SizedBox(
+                                    width: screenWidth(context, 0.4),
+                                    child: OutlinedButton(
+                                      onPressed: () {
+                                        CartCubit.get(context).emptyCart();
+                                      },
+                                      style: OutlinedButton.styleFrom(
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          side: const BorderSide(
+                                            color: ColorManager.primaryR,
+                                          ),
+                                        ),
+                                        backgroundColor:
+                                            ColorManager.scaffoldBG,
+                                      ),
+                                      child: Text(
+                                        lang.emptyCart,
+                                        style: const TextStyle(
+                                          color: ColorManager.primaryR,
+                                        ),
+                                      ),
+                                    ),
                                   ),
                                 ),
-                                backgroundColor: ColorManager.scaffoldBG,
                               ),
-                              child: Text(
-                                lang.emptyCart,
-                                style: const TextStyle(
-                                  color: ColorManager.primaryR,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 20),
-                    ],
+                              const SizedBox(width: 20),
+                            ],
+                          );
+                        }
+                        final item = cubit.cart1.items[index];
+                        return CartItemWidget(cart: item, index: index);
+                      },
+                    ),
                   );
                 }
               }
@@ -152,7 +170,7 @@ class _CartViewState extends State<CartView> {
           }
           if (state is GetCartSuccess || state is UpdateQuantityCartLoading) {
             return CartFooter(
-              visible: cubit.cart.items.isNotEmpty,
+              visible: cubit.cart1.items.isNotEmpty,
             );
           }
           return const SizedBox();
@@ -182,34 +200,46 @@ class CartItemWidget extends StatelessWidget {
           key: ValueKey(index),
           endActionPane: ActionPane(
               motion: const BehindMotion(),
-              dismissible: DismissiblePane(onDismissed: () {
-                BlocProvider.of<CartCubit>(context).deleteFromCart(
-                  DeleteRequestModel(
-                    color: cart.color,
-                    size: cart.size,
-                    productId: cubit.cart.items[index].productId,
-                    customrId:
-                        HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-                  ),
-                );
-              }),
+              extentRatio: 0.3,
+              dismissible: DismissiblePane(
+                onDismissed: () {
+                  BlocProvider.of<CartCubit>(context).deleteFromCart(
+                    DeleteRequestModel(
+                      color: cart.color,
+                      size: cart.size,
+                      productId: cubit.cart1.items[index].productId,
+                      customrId:
+                          HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+                    ),
+                  );
+                },
+              ),
               children: [
-                SlidableAction(
-                  onPressed: (context) {
-                    BlocProvider.of<CartCubit>(context).deleteFromCart(
-                      DeleteRequestModel(
-                        color: cart.color,
-                        size: cubit.cart.items[index].size,
-                        productId: cubit.cart.items[index].productId,
-                        customrId:
-                            HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-                      ),
-                    );
-                  },
-                  backgroundColor: ColorManager.primaryG4,
-                  icon: Iconsax.trash,
-                  foregroundColor: ColorManager.primaryW,
-                  label: lang(context).delete,
+                Flexible(
+                  child: SizedBox(
+                    width: 100,
+                    child: SlidableAction(
+                      // padding: EdgeInsets.symmetric(hor),
+                      borderRadius: BorderRadius.circular(15),
+                      onPressed: (context) {
+                        BlocProvider.of<CartCubit>(context).deleteFromCart(
+                          DeleteRequestModel(
+                            color: cart.color,
+                            size: cubit.cart1.items[index].size,
+                            productId: cubit.cart1.items[index].productId,
+                            customrId:
+                                HiveStorage.get<UserModel>(HiveKeys.userModel)
+                                    .id,
+                          ),
+                        );
+                      },
+                      // spacing: ,
+                      backgroundColor: ColorManager.primaryG4,
+                      icon: Iconsax.trash,
+                      foregroundColor: ColorManager.primaryW,
+                      label: lang(context).delete,
+                    ),
+                  ),
                 ),
               ]),
           child: CartItemCard(

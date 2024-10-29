@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -16,7 +18,6 @@ class CartCubit extends Cubit<CartState> {
   final CartRepos cartRepos;
   String selectedSize = '';
   String selectedColor = '';
-  List<CartItem> tempCartItems = [];
   int counter = 1;
   static CartCubit get(context) => BlocProvider.of<CartCubit>(context);
   Future<void> emptyCart() async {
@@ -31,8 +32,10 @@ class CartCubit extends Cubit<CartState> {
     });
   }
 
-  CartModel cart = CartModel(id: '', items: []);
-  CartModel selectedItems = CartModel(id: '', items: []);
+  CartModel cart1 = CartModel(id: '', items: []);
+  // List<CartItem> selectedItems = [];
+  List<CartItem> cartItems = [];
+  List<CartItem> tempCartItems = [];
   Future<void> addToCart(AddToCartModel model) async {
     emit(CartLoading());
 
@@ -44,12 +47,25 @@ class CartCubit extends Cubit<CartState> {
     });
   }
 
-  void onSelectedItem(bool value, CartItem cart) {
+  void onSelectedItem(bool value, CartItem item) {
     emit(UpdateQuantityCartLoading());
+    final index = cartItems.indexWhere((e) => item.productId == e.productId);
     if (value) {
-      selectedItems.items.add(cart);
+      if (tempCartItems.isEmpty || cartItems.length == 1) {
+        tempCartItems.add(item);
+        log(index.toString(), name: 'onSelectedMethod true');
+      } else {
+        tempCartItems.insert(index, item);
+        log(index.toString(), name: 'onSelectedMethod false');
+      }
     } else {
-      selectedItems.items.remove(cart);
+      if (tempCartItems.isEmpty || cartItems.length == 1) {
+        tempCartItems.remove(item);
+        log(index.toString(), name: 'onSelectedMethod length 1');
+      } else {
+        log(index.toString(), name: 'onSelectedMethod length > 1');
+        tempCartItems.removeAt(index);
+      }
     }
     emit(GetCartSuccess());
   }
@@ -64,8 +80,11 @@ class CartCubit extends Cubit<CartState> {
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
-      cart = response;
-      selectedItems = response;
+      cart1 = response;
+      cartItems = response.items;
+      tempCartItems = response.items;
+      log(tempCartItems.length.toString(), name: 'temp cart');
+      log(cart1.items.length.toString(), name: 'cart1 cart');
       emit(GetCartSuccess());
     });
   }
