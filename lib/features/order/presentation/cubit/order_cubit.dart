@@ -10,6 +10,7 @@ import 'package:nilelon/features/order/data/models/order_model.dart';
 import 'package:nilelon/features/order/data/models/order_store_model.dart';
 import 'package:nilelon/features/order/data/models/shipping_method.dart';
 import 'package:nilelon/features/order/domain/repositories/order_repo.dart';
+import 'package:nilelon/features/payments/presentation/cubit/payment_cubit.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 
 import '../../../../core/data/hive_stroage.dart';
@@ -45,29 +46,57 @@ class OrderCubit extends Cubit<OrderState> {
   OrderStoreModel storeOrder = OrderStoreModel.empty();
   Future<void> createOrder(context) async {
     emit(const OrderState.loading());
-    final result = await _orderRepo.createOrder(
-      _createOrderModel(context),
-    );
-    result.fold(
-      (failure) {
-        emit(OrderState.failure(failure.errorMsg));
-      },
-      (response) {
-        emit(const OrderState.success());
-      },
-    );
+    if (selectedOption == 'Visa Card' || selectedOption == 'Credit Card') {
+      // PaymentCubit.get(context)
+      //     .dropInPayment(PromoCubit.get(context).totalPrice.toString());
+      PaymentCubit.get(context)
+          .makeTransaction(
+        PromoCubit.get(context).totalPrice.toInt(),
+        PromoCubit.get(context).discount,
+        'EGP',
+      )
+          .then(
+        (v) async {
+          if (HiveStorage.get<String?>(HiveKeys.trans) != null) {
+            final result = await _orderRepo.createOrder(
+              _createOrderModel(context),
+            );
+            result.fold(
+              (failure) {
+                emit(OrderState.failure(failure.errorMsg));
+              },
+              (response) {
+                emit(const OrderState.success());
+              },
+            );
+          }
+        },
+      );
+    } else {
+      final result = await _orderRepo.createOrder(
+        _createOrderModel(context),
+      );
+      result.fold(
+        (failure) {
+          emit(OrderState.failure(failure.errorMsg));
+        },
+        (response) {
+          emit(const OrderState.success());
+        },
+      );
+    }
   }
 
   CreateOrderModel _createOrderModel(context) {
     return CreateOrderModel(
       total: PromoCubit.get(context).totalPrice.toInt(),
       phoneNum: phoneController.text,
-      discount: 0,
+      discount: PromoCubit.get(context).discount,
       type: selectedOption,
       shippingMethodId: selectedShippingMethodId,
       customerId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       governate: selectedGovernate,
-      transactionId: '',
+      transactionId: HiveStorage.get<String?>(HiveKeys.trans) ?? '',
       customerAddressDTO: {
         "customerId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         "addressLine1": addressLine1.text,
@@ -78,7 +107,12 @@ class OrderCubit extends Cubit<OrderState> {
         "nearestLandMark": landmark.text,
       },
       orderProductVeriants: CartCubit.get(context)
+<<<<<<< HEAD
           .tempCartItems
+=======
+          .selectedItems
+          .items
+>>>>>>> d63971e799ac6b9251782e54512df8d3b7dd138d
           .map((e) => {
                 "size": e.size,
                 "color": e.color,

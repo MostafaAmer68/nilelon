@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -38,6 +39,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
   Widget build(BuildContext context) {
     final progressCubit = BlocProvider.of<ProgressCubit>(context);
     final lang = S.of(context);
+    // BotToast.closeAllLoading();
     return BlocListener<OrderCubit, OrderState>(
       listener: (context, state) {
         state.mapOrNull(
@@ -212,6 +214,12 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
         TextFormFieldBuilder(
           label: label,
           controller: controller,
+          validator: (v) {
+            if (v!.isEmpty) {
+              return 'required';
+            }
+            return null;
+          },
           type: type,
           width: screenWidth(context, 1),
           noIcon: true,

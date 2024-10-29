@@ -12,8 +12,12 @@
     // Deprecated. Use the pre-release of GitLens instead
     //
     "gitlens.insiders": null,
+<<<<<<< HEAD
     "emulator.emulatorTimeout": 600000,
     "typescript.tsserver.maxTsServerMemory": 4096,
+=======
+    "typescript.tsserver.maxTsServerMemory": 6144,
+>>>>>>> d63971e799ac6b9251782e54512df8d3b7dd138d
 
     // Specifies how much (if any) output will be sent to the GitLens output channel
     //  - off: Logs nothing

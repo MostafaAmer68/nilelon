@@ -7,8 +7,7 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 
 Future calenderRegisterDialog(
-  BuildContext context,
-) {
+    BuildContext context, Function(DateTime date) onTap) {
   return showCupertinoModalPopup(
     barrierDismissible: false,
     context: context,
@@ -23,21 +22,10 @@ Future calenderRegisterDialog(
                   height: 200.h,
                   child: CupertinoDatePicker(
                     maximumYear: DateTime.now().year,
-                    onDateTimeChanged: (date) {
-                      AuthCubit.get(context).date = date;
-                      AuthCubit.get(context).dateFormatted =
-                          intll.DateFormat('dd/MM/yyyy').format(date);
-                    },
+                    onDateTimeChanged: onTap,
                     mode: CupertinoDatePickerMode.date,
                   ),
                 )),
-            // CupertinoActionSheetAction(
-            //   onPressed: () async {},
-            //   child: const Text(
-            //     'Done',
-            //     style: AppStyles.customTextStyleB4,
-            //   ),
-            // ),
           ],
           cancelButton: CupertinoActionSheetAction(
             onPressed: () {

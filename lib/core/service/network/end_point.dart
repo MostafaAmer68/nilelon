@@ -62,7 +62,7 @@ class EndPoint {
   static const String emptyCartUrl = '/Cart/EmptyCart';
 
   //todo payment urls
-  static const String getClientTokenUrl = '/PaymentService/OrderTransaction';
+  static const String getClientTokenUrl = '/PaymentService/GetClientToken';
   static const String makeTransactionUrl = '/PaymentService/MakeTransaction';
   static const String makeTransactionWithPaymentUrl =
       '/PaymentService/MakeTransactionWithPayment';

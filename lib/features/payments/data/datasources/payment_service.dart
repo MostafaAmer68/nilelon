@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -31,9 +32,10 @@ class PaymentService {
     );
 
     if (response.statusCode == HttpStatus.ok) {
-      // HiveStorage.set(HiveKeys.clientToken, response.data as String);
+      log(response.data.toString(), name: 'makeTrans');
+      HiveStorage.set(HiveKeys.trans, response.data['result'] as String);
     } else {
-      throw response.data['result'];
+      throw response.data['errosMessages'];
     }
   }
 

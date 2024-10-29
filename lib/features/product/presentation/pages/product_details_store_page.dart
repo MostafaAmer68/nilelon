@@ -21,6 +21,7 @@ import 'package:nilelon/features/product/presentation/widgets/image_banner.dart'
 import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
 
+import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/button/gradient_button_builder.dart';
 import '../../../../core/widgets/scaffold_image.dart';
@@ -240,6 +241,9 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                   return state.whenOrNull(
                     loading: () => buildShimmerIndicatorSmall(),
                     success: () {
+                      if (productCubit.review.isEmpty) {
+                        return Center(child: Text(lang.noReviews));
+                      }
                       return ListView.builder(
                         shrinkWrap: true,
                         itemCount: productCubit.review.length,
@@ -429,6 +433,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
       child: ViewAllRow(
         text: lang.reviews,
         noPadding: true,
+        noButton: true,
         onPressed: () {
           // ratingDialog(context);
         },

@@ -541,6 +541,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sizes": MessageLookupByLibrary.simpleMessage("Sizes"),
         "smothingWent":
             MessageLookupByLibrary.simpleMessage("Something went wrong"),
+        "startDate": MessageLookupByLibrary.simpleMessage("Start Date"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
         "storeProfileLinkIsCopied": MessageLookupByLibrary.simpleMessage(

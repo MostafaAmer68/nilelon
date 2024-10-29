@@ -9,6 +9,7 @@ class HiveKeys {
   static const String draftProduct = 'productData';
   static const String connectionId = 'connectionId';
   static const String varients = 'varient';
+  static const String trans = 'varient';
   static const String tempVarients = 'tempVarient';
   static const String email = 'email';
   static const String shopFor = 'ShopFor';

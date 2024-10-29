@@ -1,4 +1,3 @@
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,14 +23,14 @@ import 'package:svg_flutter/svg_flutter.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../auth/domain/model/user_model.dart';
 
-class EditAccountView extends StatefulWidget {
-  const EditAccountView({super.key});
+class EditProfileView extends StatefulWidget {
+  const EditProfileView({super.key});
 
   @override
-  State<EditAccountView> createState() => _EditAccountViewState();
+  State<EditProfileView> createState() => _EditProfileViewState();
 }
 
-class _EditAccountViewState extends State<EditAccountView> {
+class _EditProfileViewState extends State<EditProfileView> {
   late final AuthCubit cubit;
   @override
   void initState() {
@@ -148,28 +147,29 @@ class _EditAccountViewState extends State<EditAccountView> {
         alignment: Alignment.bottomCenter,
         children: [
           Container(
-              width: 100.w,
-              height: 100.w,
-              decoration: const ShapeDecoration(
-                shape: CircleBorder(
-                  side: BorderSide(
-                    width: 5,
-                    strokeAlign: BorderSide.strokeAlignOutside,
-                    color: Color(0xFFFCFCFC),
-                  ),
+            width: 100.w,
+            height: 100.w,
+            decoration: const ShapeDecoration(
+              shape: CircleBorder(
+                side: BorderSide(
+                  width: 5,
+                  strokeAlign: BorderSide.strokeAlignOutside,
+                  color: Color(0xFFFCFCFC),
                 ),
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(360),
-                child: cubit.image.path.isEmpty &&
-                        currentUsr<CustomerModel>().profilePic.isEmpty
-                    ? Image.asset('assets/images/profile.png')
-                    : currentUsr<CustomerModel>().profilePic.isNotEmpty &&
-                            cubit.image.path.isNotEmpty
-                        ? Image.file(cubit.image)
-                        : imageReplacer(
-                            url: currentUsr<CustomerModel>().profilePic),
-              )),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(360),
+              child: cubit.image.path.isEmpty &&
+                      currentUsr<CustomerModel>().profilePic.isEmpty
+                  ? Image.asset(Assets.assetsImagesProfile)
+                  : currentUsr<CustomerModel>().profilePic.isNotEmpty &&
+                          cubit.image.path.isNotEmpty
+                      ? Image.file(cubit.image)
+                      : imageReplacer(
+                          url: currentUsr<CustomerModel>().profilePic),
+            ),
+          ),
           Positioned(
               bottom: 2,
               right: 2,

@@ -120,6 +120,7 @@ GestureDetector productSquarItem(
                           child: Container(
                             width: 35.w, // Increased size to match the image
                             height: 35.w,
+                            padding: EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,
@@ -133,10 +134,12 @@ GestureDetector productSquarItem(
                             ),
                             child: !product.isInCloset
                                 ? SizedBox(
-                                    // width: 20,
+                                    width: 5,
+                                    height: 5,
                                     child: SvgPicture.asset(
                                       Assets.assetsImagesHanger,
-                                      width: 30,
+                                      width: 3,
+                                      height: 3,
                                       // height: ,
 
                                       fit: BoxFit.cover,

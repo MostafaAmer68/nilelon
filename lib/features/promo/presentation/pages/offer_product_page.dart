@@ -83,51 +83,57 @@ class _OfferProductPageState extends State<OfferProductPage> {
             const SizedBox(height: 20),
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
-                return state.when(initial: () {
-                  return buildShimmerIndicatorGrid(context);
-                }, loading: () {
-                  return Expanded(child: buildShimmerIndicatorGrid(context));
-                }, success: () {
-                  if (pcubit.products.isEmpty) {
-                    return Center(
-                      child: Text(
-                        S.of(context).thereNoProduct,
-                        style: AppStylesManager.customTextStyleG2,
-                      ),
-                    );
-                  } else {
-                    return Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: gridDelegate(context),
-                        shrinkWrap: true,
-                        itemCount: ProductsCubit.get(context).products.length,
-                        itemBuilder: (context, index) {
-                          final product = pcubit.products[index];
-                          return productSquarItem(
-                            context: context,
-                            isSelectable: true,
-                            isSelected:
-                                cubit.selectedProducts.contains(product),
-                            onTap: (value) {
-                              if (value) {
-                                cubit.selectedProducts.add(product);
-                              } else {
-                                cubit.selectedProducts.remove(product);
-                                cubit.isSelectedAll = false;
-                              }
-                              setState(() {});
-                            },
-                            product: product,
-                          );
-                        },
-                      ),
-                    );
-                  }
-                }, failure: (message) {
-                  return Text(message);
-                });
+                return state.when(
+                  initial: () {
+                    return buildShimmerIndicatorGrid(context);
+                  },
+                  loading: () {
+                    return Expanded(child: buildShimmerIndicatorGrid(context));
+                  },
+                  success: () {
+                    if (pcubit.products.isEmpty) {
+                      return Center(
+                        child: Text(
+                          S.of(context).thereNoProduct,
+                          style: AppStylesManager.customTextStyleG2,
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        height: screenHeight(context, 0.73),
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: GridView.builder(
+                          // physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate: gridDelegate(context),
+                          shrinkWrap: true,
+                          itemCount: ProductsCubit.get(context).products.length,
+                          itemBuilder: (context, index) {
+                            final product = pcubit.products[index];
+                            return productSquarItem(
+                              context: context,
+                              isSelectable: true,
+                              isSelected:
+                                  cubit.selectedProducts.contains(product),
+                              onTap: (value) {
+                                if (value) {
+                                  cubit.selectedProducts.add(product);
+                                } else {
+                                  cubit.selectedProducts.remove(product);
+                                  cubit.isSelectedAll = false;
+                                }
+                                setState(() {});
+                              },
+                              product: product,
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  },
+                  failure: (message) {
+                    return Text(message);
+                  },
+                );
               },
             ),
             const Spacer(),
