@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nilelon/features/cart/data/remote_data_source/cart_remote_data_source.dart';
+import 'package:nilelon/features/cart/data/datasource/cart_service.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
 import 'package:nilelon/features/closet/data/remote_data_source/closet_remote_data_source.dart';
 import 'package:nilelon/features/closet/data/repo_impl/closet_repo_impl.dart';
@@ -10,9 +10,9 @@ import 'package:nilelon/features/payments/data/datasources/payment_service.dart'
 import 'package:nilelon/features/payments/data/repositories/payment_repo_impl.dart';
 import 'package:nilelon/features/product/data/datasources/products_service.dart';
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
-import 'package:nilelon/features/auth/data/remote_data_source/auth_remote_data_source.dart';
+import 'package:nilelon/features/auth/data/datasource/auth_service.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
-import 'package:nilelon/features/profile/data/datasources/profile_remote_data.dart';
+import 'package:nilelon/features/profile/data/datasources/profile_service.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:nilelon/features/promo/data/datasources/promo_service.dart';
 import 'package:nilelon/features/promo/data/repositories/promo_repo_impl.dart';
@@ -43,7 +43,7 @@ void setUpLocatorService() {
   );
 
   // profile
-  locatorService.registerSingleton(ProfileRemoteData(
+  locatorService.registerSingleton(ProfileService(
     locatorService(),
   ));
   locatorService.registerSingleton<ProfileRepoIMpl>(ProfileRepoIMpl(

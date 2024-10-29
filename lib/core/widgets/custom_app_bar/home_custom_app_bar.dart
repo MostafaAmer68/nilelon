@@ -21,19 +21,15 @@ class HomeCustomAppBar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
+          SizedBox(
             width: 30.w,
             height: 30.w,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Assets.assetsImagesLogo))),
+            child: SvgPicture.asset(Assets.assetsImagesLogo),
           ),
-          Container(
+          SizedBox(
             width: 90.w,
             height: 30.w,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Assets.assetsImagesNotification))),
+            child: Image.asset(Assets.assetsImagesNilelonEcommerce),
           ),
           const Spacer(),
           GestureDetector(
@@ -122,6 +118,7 @@ class HomeCustomAppBar extends StatelessWidget {
             child: Container(
               width: 1.sw > 600 ? 40 : 40,
               height: 1.sw > 600 ? 40 : 40,
+              padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 color: Colors.white,
@@ -134,7 +131,9 @@ class HomeCustomAppBar extends StatelessWidget {
                   )
                 ],
               ),
-              child: SvgPicture.asset(Assets.assetsImagesCloset),
+              child: SvgPicture.asset(
+                Assets.assetsImagesCloset,
+              ),
             ),
           )
         ],

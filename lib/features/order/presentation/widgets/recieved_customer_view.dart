@@ -14,8 +14,11 @@ import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class ReceivedCustomerView extends StatefulWidget {
-  const ReceivedCustomerView({super.key});
-
+  const ReceivedCustomerView({
+    super.key,
+    required this.onStarted,
+  });
+  final VoidCallback onStarted;
   @override
   State<ReceivedCustomerView> createState() => _ReceivedCustomerViewState();
 }
@@ -25,7 +28,7 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
   @override
   void initState() {
     cubit = OrderCubit.get(context);
-    cubit.getCustomerOrder('Delivered');
+    widget.onStarted;
     super.initState();
   }
 
@@ -45,7 +48,7 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
                 color: ColorManager.primaryO,
               ),
               label: Text(
-              lang(context).refundHistory,
+                lang(context).refundHistory,
                 style: AppStylesManager.customTextStyleO2,
               ),
             ),
@@ -95,8 +98,7 @@ class _ReceivedCustomerViewState extends State<ReceivedCustomerView> {
                                         id: order.id,
                                       ));
                                 },
-                                name:
-                                    lang(context).orderHasDistance,
+                                name: lang(context).orderHasDistance,
                                 icon: Image.asset(Assets.assetsImagesArrived2),
                               ),
                             );

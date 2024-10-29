@@ -1,4 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/constants/assets.dart';
@@ -11,7 +13,12 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../../../core/color_const.dart';
+import '../../../../../generated/l10n.dart';
 import '../../../../auth/domain/model/user_model.dart';
+import '../../../../cart/domain/model/add_cart_request_model.dart';
+import '../../../../cart/presentation/cubit/cart_cubit.dart';
+import '../../../../closet/presentation/view/closet_sheet_bar_view.dart';
+import '../../../../layout/customer_bottom_tab_bar.dart';
 import '../../pages/product_details_page.dart';
 import '../../pages/product_details_store_page.dart';
 import '../../../../../core/data/hive_stroage.dart';
@@ -117,35 +124,55 @@ GestureDetector offersCard({required context, required ProductModel product}) {
               Positioned(
                 top: 10,
                 right: 25,
-                child: Container(
-                  width: 35.w, // Increased size to match the image
-                  height: 35.w,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.orange.shade300.withOpacity(1),
-                        offset: const Offset(
-                            3, 3), // Adjusted shadow to be more subtle
-                        blurRadius: 5,
-                      ),
-                    ],
-                  ),
-                  child: !product.isInCloset
-                      ? SizedBox(
-                          // width: 20,
-                          child: SvgPicture.asset(
-                            Assets.assetsImagesHanger,
-                            width: 30,
-                            // height: ,
+                child: InkWell(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      // isScrollControlled: true,
 
-                            fit: BoxFit.cover,
-                          ),
-                        )
-                      : Image.asset(
-                          Assets.assetsImagesClosetFollowing,
+                      backgroundColor: ColorManager.primaryW,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
                         ),
+                      ),
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      builder: (context) =>
+                          ClosetSheetBarView(productId: product.id),
+                    );
+                  },
+                  child: Container(
+                    width: 35.w, // Increased size to match the image
+                    height: 35.w,
+                    padding: const EdgeInsets.all(4),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.orange.shade300.withOpacity(1),
+                          offset: const Offset(
+                              3, 3), // Adjusted shadow to be more subtle
+                          blurRadius: 5,
+                        ),
+                      ],
+                    ),
+                    child: !product.isInCloset
+                        ? SizedBox(
+                            // width: 20,
+                            child: SvgPicture.asset(
+                              Assets.assetsImagesHanger,
+                              width: 30,
+                              // height: ,
+
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : Image.asset(
+                            Assets.assetsImagesClosetFollowing,
+                          ),
+                  ),
                 ),
               )
             ],
@@ -206,13 +233,75 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                   color: const Color.fromARGB(255, 233, 242, 245),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: IconButton(
-                  icon: Icon(
-                    Iconsax.shopping_cart,
-                    color: ColorManager.primaryB,
-                    size: 14.r,
-                  ),
-                  onPressed: () {},
+                child: BlocConsumer<CartCubit, CartState>(
+                  listener: (context, state) {
+                    if (state is CartSuccess) {
+                      BotToast.showCustomText(
+                        duration: const Duration(seconds: 4),
+                        toastBuilder: (_) => Card(
+                          color: Colors.black87,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  S.of(context).productAddedToCart,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                const SizedBox(width: 10),
+                                TextButton(
+                                  onPressed: () {
+                                    BotToast.closeAllLoading();
+                                    // BotToast.remove()
+
+                                    navigateTo(
+                                        context: context,
+                                        screen: const CustomerBottomTabBar(
+                                          index: 1,
+                                        ));
+
+                                    BotToast.cleanAll();
+                                  },
+                                  child: Text(
+                                    S.of(context).viewCart,
+                                    style: const TextStyle(color: Colors.blue),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    } else if (state is GetCartFailure) {
+                      BotToast.showText(text: state.message);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is CartLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return IconButton(
+                      icon: Icon(
+                        Iconsax.shopping_cart,
+                        color: ColorManager.primaryB,
+                        size: 14.r,
+                      ),
+                      onPressed: () {
+                        CartCubit.get(context).addToCart(
+                          AddToCartModel(
+                            quantity: 1,
+                            size: product.productVariants.first.size,
+                            color: product.productVariants.first.color,
+                            productId: product.id,
+                            customerId:
+                                HiveStorage.get<UserModel>(HiveKeys.userModel)
+                                    .id,
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
               GradientButtonBuilder(

@@ -64,7 +64,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "allBrands": MessageLookupByLibrary.simpleMessage("All Brands"),
         "allDrafts": MessageLookupByLibrary.simpleMessage("All Drafts"),
         "alreadyExits":
-            MessageLookupByLibrary.simpleMessage("Already have an account?"),
+            MessageLookupByLibrary.simpleMessage("Already have an account? "),
         "amount": MessageLookupByLibrary.simpleMessage("Amount"),
         "analytics": MessageLookupByLibrary.simpleMessage("Analytics"),
         "andDontForgetTheTotalNumberOfSalesInTheWholeMarketIsGettingIncreasingWhileWereTalkingWhichMeansTheAverageIsGettingBiggerTooSoHoldOnToYourPositionAndAimForAHigherOne":
@@ -273,7 +273,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "getStarted": MessageLookupByLibrary.simpleMessage("Get Started"),
         "gold": MessageLookupByLibrary.simpleMessage("Gold"),
         "guestMsg": MessageLookupByLibrary.simpleMessage(
-            "You dont`t Have Account sign up\nto enjoy out features."),
+            "You dont`t Have Account sign up\nto enjoy our features."),
         "guideBook": MessageLookupByLibrary.simpleMessage("Guide Book"),
         "handPicked": MessageLookupByLibrary.simpleMessage("Hand Picked"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
@@ -407,6 +407,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Password Changed Successfully!"),
         "pay": MessageLookupByLibrary.simpleMessage("Pay"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("Payment Method"),
+        "pdfSaved":
+            MessageLookupByLibrary.simpleMessage("Receipt has been saved"),
         "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
         "phoneNumberChangedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Phone Number Changed Successfully!"),
@@ -430,6 +432,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter a valid number"),
         "plsEnterwareHouse":
             MessageLookupByLibrary.simpleMessage("please enter wareHouse"),
+        "plsSelectMethod":
+            MessageLookupByLibrary.simpleMessage("please select pay method"),
         "polices": MessageLookupByLibrary.simpleMessage("Polices"),
         "pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails":
             MessageLookupByLibrary.simpleMessage(
@@ -469,7 +473,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "received": MessageLookupByLibrary.simpleMessage("Received"),
         "receivedColor": MessageLookupByLibrary.simpleMessage("Received Color"),
         "receivedSize": MessageLookupByLibrary.simpleMessage("Received Size"),
-        "recevied": MessageLookupByLibrary.simpleMessage("Recevied"),
+        "recevied": MessageLookupByLibrary.simpleMessage("Delivered"),
         "recievedDate": MessageLookupByLibrary.simpleMessage("Recieved Date"),
         "recommendations":
             MessageLookupByLibrary.simpleMessage("Recommendations"),

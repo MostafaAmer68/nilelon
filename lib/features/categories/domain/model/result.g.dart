@@ -6,7 +6,7 @@ part of 'result.dart';
 // TypeAdapterGenerator
 // **************************************************************************
 
-class ResultAdapter extends TypeAdapter<CategoryModel> {
+class CategoryModelAdapter extends TypeAdapter<CategoryModel> {
   @override
   final int typeId = 4;
 
@@ -41,7 +41,7 @@ class ResultAdapter extends TypeAdapter<CategoryModel> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ResultAdapter &&
+      other is CategoryModelAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

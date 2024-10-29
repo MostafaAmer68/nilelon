@@ -21,7 +21,7 @@ class BillingDetailsStep extends StatefulWidget {
 }
 
 class _BillingDetailsStepState extends State<BillingDetailsStep> {
-  GlobalKey<FormState> formKey = GlobalKey();
+  // GlobalKey<FormState> formKey = GlobalKey();
   String _tempSelectedOption = '';
   List<String> options = [
     'Visa Card',
@@ -39,24 +39,27 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
   Widget build(BuildContext context) {
     final progressCubit = BlocProvider.of<ProgressCubit>(context);
     final lang = S.of(context);
-    // BotToast.closeAllLoading();
     return BlocListener<OrderCubit, OrderState>(
       listener: (context, state) {
         state.mapOrNull(
             loading: (_) => BotToast.showLoading(),
             failure: (_) {
               BotToast.closeAllLoading();
-              BotToast.showText(text: _.errMessage);
+              BotToast.showText(
+                  text: _.errMessage == 'pay-field'
+                      ? lang.smothingWent
+                      : _.errMessage);
             },
             success: (_) {
               BotToast.closeAllLoading();
               CartCubit.get(context).emptyCart();
 
               progressCubit.nextStep();
+              // setState(() {});
             });
       },
       child: Form(
-        key: formKey,
+        key: cubit.formKey,
         child: Padding(
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
           child: SingleChildScrollView(
@@ -103,29 +106,6 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
                   height: 16,
                 ),
                 paymentItems(),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ButtonBuilder(
-                      text: lang.previous,
-                      ontap: () {
-                        progressCubit.previousStep();
-                      },
-                    ),
-                    GradientButtonBuilder(
-                      text: lang.pay,
-                      ontap: () {
-                        // progressCubit.nextStep();
-                        if (formKey.currentState!.validate()) {
-                          cubit.createOrder(context);
-                        }
-                      },
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
@@ -190,6 +170,15 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
                   ))
               .toList(),
         ),
+        Visibility(
+          visible: cubit.selectedOption.isEmpty,
+          child: Text(
+            S.of(context).plsSelectMethod,
+            style: AppStylesManager.customTextStyleR
+                .copyWith(fontWeight: FontWeight.w600),
+          ),
+        ),
+        const SizedBox(height: 10),
       ],
     );
   }

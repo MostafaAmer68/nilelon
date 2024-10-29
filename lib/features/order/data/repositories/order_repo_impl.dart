@@ -24,9 +24,9 @@ class OrderRepoImpl extends OrderRepo {
   }
 
   @override
-  Future<Either<ServerFailure, void>> createOrder(
+  Future<Either<ServerFailure, String>> createOrder(
       CreateOrderModel order) async {
-    return exe(() => _orderService.createOrder(order));
+    return exe<String>(() => _orderService.createOrder(order));
   }
 
   @override

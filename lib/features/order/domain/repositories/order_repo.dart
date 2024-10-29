@@ -8,7 +8,7 @@ import 'package:nilelon/features/order/data/models/order_store_model.dart';
 import '../../data/models/shipping_method.dart';
 
 abstract class OrderRepo {
-  Future<Either<ServerFailure, void>> createOrder(CreateOrderModel order);
+  Future<Either<ServerFailure, String>> createOrder(CreateOrderModel order);
 
   Future<Either<ServerFailure, List<OrderModel>>> getStoreOrder(
       String orderStatus);

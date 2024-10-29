@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -134,66 +136,67 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                         width: screenWidth(context, 1),
                         height: screenHeight(context, 0.4),
                         child: ListView.builder(
-                          itemCount: ClosetCubit.get(context).closets.length,
+                          itemCount:
+                              ClosetCubit.get(context).closets.length + 1,
                           itemBuilder: (context, index) {
-                            final closet =
-                                ClosetCubit.get(context).closets[index];
-                            return Container(
-                              child: index == 0
-                                  ? Container(
-                                      margin: const EdgeInsets.only(
-                                        top: 16,
-                                        bottom: 16,
-                                        left: 13,
-                                      ),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 8, horizontal: 12),
-                                      child: ListTile(
-                                        onTap: () {
-                                          showModalBottomSheet(
-                                            backgroundColor:
-                                                ColorManager.primaryW,
-                                            shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(30),
-                                                topRight: Radius.circular(30),
-                                              ),
-                                            ),
-                                            clipBehavior:
-                                                Clip.antiAliasWithSaveLayer,
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return const CreateNewSection();
-                                            },
-                                          );
-                                        },
-                                        leading: Container(
-                                          padding: const EdgeInsets.all(12),
-                                          decoration: BoxDecoration(
-                                            border: Border.all(),
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                          ),
-                                          child: const Icon(Icons.add),
+                            if (ClosetCubit.get(context).closets.length ==
+                                index) {
+                              return Container(
+                                margin: const EdgeInsets.only(
+                                  top: 16,
+                                  bottom: 16,
+                                  left: 13,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 8, horizontal: 12),
+                                child: ListTile(
+                                  onTap: () {
+                                    showModalBottomSheet(
+                                      backgroundColor: ColorManager.primaryW,
+                                      isScrollControlled: true,
+                                      isDismissible: true,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(30),
+                                          topRight: Radius.circular(30),
                                         ),
-                                        title: Text(lang.addNewSection),
                                       ),
-                                    )
-                                  : ClosetsWidgetWithOptions(
-                                      closet: closet,
-                                      isPage: false,
-                                      onTap: () {
-                                        if (widget.productId.isNotEmpty) {
-                                          ClosetCubit.get(context)
-                                              .addProductToClosets(
-                                            widget.productId,
-                                            closet.id,
-                                          );
-                                          selectedCloset = closet;
-                                        }
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return const CreateNewSection();
                                       },
+                                    );
+                                  },
+                                  leading: Container(
+                                    padding: const EdgeInsets.all(12),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(),
+                                      borderRadius: BorderRadius.circular(5),
                                     ),
-                            );
+                                    child: const Icon(Icons.add),
+                                  ),
+                                  title: Text(lang.addNewSection),
+                                ),
+                              );
+                            } else {
+                              final closet =
+                                  ClosetCubit.get(context).closets[index];
+                              return ClosetsWidgetWithOptions(
+                                closet: closet,
+                                isPage: false,
+                                onTap: () {
+                                  if (widget.productId.isNotEmpty) {
+                                    ClosetCubit.get(context)
+                                        .addProductToClosets(
+                                      widget.productId,
+                                      closet.id,
+                                    );
+                                    selectedCloset = closet;
+                                  }
+                                },
+                              );
+                            }
                           },
                         ),
                       );

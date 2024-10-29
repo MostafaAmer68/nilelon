@@ -2,12 +2,13 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 
+import '../../../../core/service/catch_func.dart';
 import '../../../../core/service/failure_service.dart';
 import '../../domain/repositories/profile_repo.dart';
-import '../datasources/profile_remote_data.dart';
+import '../datasources/profile_service.dart';
 
 class ProfileRepoIMpl implements ProfileRepo {
-  final ProfileRemoteData _profile;
+  final ProfileService _profile;
 
   ProfileRepoIMpl(this._profile);
   @override
@@ -139,5 +140,48 @@ class ProfileRepoIMpl implements ProfileRepo {
       print(e.toString());
       return left(ServerFailure(e.toString()));
     }
+  }
+
+  @override
+  Future<Either<FailureService, String>> sendOtpToEmail(
+      String email, context) async {
+    return exe(() => _profile.sendOtpToEmail(email, context));
+  }
+
+  @override
+  Future<Either<FailureService, String>> validateEmail(
+      String newValue, context) async {
+    return exe(() => _profile.validateEmail(newValue, context));
+  }
+
+  @override
+  Future<Either<FailureService, String>> resetPasswordEmail(
+      String email, context) async {
+    return exe(() => _profile.resetPasswordEmail(email, context));
+  }
+
+  @override
+  Future<Either<FailureService, String>> resetPasswordPhone(
+      String phone, context) async {
+    return exe(() => _profile.resetPasswordPhone(phone, context));
+  }
+
+  @override
+  Future<Either<FailureService, String>> resetPhone(
+      String tergetSend, String newValue, context) async {
+    return exe(() => _profile.resetPhone(tergetSend, newValue, context));
+  }
+
+  @override
+  Future<Either<FailureService, String>> resetPhoneDetails(
+      String token, String targetValue, String newValue, context) async {
+    return exe(
+        () => _profile.validatePhone(token, targetValue, newValue, context));
+  }
+
+  @override
+  Future<Either<FailureService, String>> updateCustomer(
+      String profilePic, String name, context) async {
+    return exe(() => _profile.updateCustomer(profilePic, name, context));
   }
 }

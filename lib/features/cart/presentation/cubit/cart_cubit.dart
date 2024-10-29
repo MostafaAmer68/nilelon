@@ -28,13 +28,13 @@ class CartCubit extends Cubit<CartState> {
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
-      emit(GetCartSuccess());
+      getCart();
+      // emit(GetCartSuccess());
     });
   }
 
   CartModel cart1 = CartModel(id: '', items: []);
   // List<CartItem> selectedItems = [];
-  List<CartItem> cartItems = [];
   List<CartItem> tempCartItems = [];
   Future<void> addToCart(AddToCartModel model) async {
     emit(CartLoading());
@@ -49,9 +49,9 @@ class CartCubit extends Cubit<CartState> {
 
   void onSelectedItem(bool value, CartItem item) {
     emit(UpdateQuantityCartLoading());
-    final index = cartItems.indexWhere((e) => item.productId == e.productId);
+    final index = cart1.items.indexWhere((e) => item.productId == e.productId);
     if (value) {
-      if (tempCartItems.isEmpty || cartItems.length == 1) {
+      if (tempCartItems.isEmpty || cart1.items.length == 1) {
         tempCartItems.add(item);
         log(index.toString(), name: 'onSelectedMethod true');
       } else {
@@ -59,7 +59,7 @@ class CartCubit extends Cubit<CartState> {
         log(index.toString(), name: 'onSelectedMethod false');
       }
     } else {
-      if (tempCartItems.isEmpty || cartItems.length == 1) {
+      if (tempCartItems.isEmpty || cart1.items.length == 1) {
         tempCartItems.remove(item);
         log(index.toString(), name: 'onSelectedMethod length 1');
       } else {
@@ -81,10 +81,7 @@ class CartCubit extends Cubit<CartState> {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
       cart1 = response;
-      cartItems = response.items;
-      tempCartItems = response.items;
-      log(tempCartItems.length.toString(), name: 'temp cart');
-      log(cart1.items.length.toString(), name: 'cart1 cart');
+      tempCartItems = cart1.items.toList();
       emit(GetCartSuccess());
     });
   }

@@ -80,7 +80,7 @@ class _SearchPageState extends State<SearchPage> {
                           return state.when(
                             initial: () => Text(lang.smothingWent),
                             loading: () => buildShimmerIndicatorRow(),
-                            failure: () => Text(lang.smothingWent),
+                            failure: (_) => Text(lang.smothingWent),
                             success: () {
                               return ListView.builder(
                                 scrollDirection: Axis.horizontal,
@@ -102,6 +102,7 @@ class _SearchPageState extends State<SearchPage> {
                                     ProfileCubit.get(context).stores.length,
                               );
                             },
+                            codeSentSuccess: () => const SizedBox(),
                           );
                         },
                       ),

@@ -107,6 +107,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                       );
                     },
                   ),
+                  const SizedBox(height: 16),
                   const HandPickedView(),
                   const SizedBox(height: 30),
                 ],
@@ -209,9 +210,11 @@ class _HandPickedViewState extends State<HandPickedView> {
           return buildShimmerIndicatorGrid(context);
         }, success: () {
           if (ProductsCubit.get(context).productsHandpack.isEmpty) {
-            return Text(
-              S.of(context).noProductHandPicked,
-              style: AppStylesManager.customTextStyleG2,
+            return Center(
+              child: Text(
+                S.of(context).noProductHandPicked,
+                style: AppStylesManager.customTextStyleG2,
+              ),
             );
           }
           return Padding(

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
@@ -17,14 +18,16 @@ class OrderService {
 
   OrderService(this._apiService);
 
-  Future<void> createOrder(CreateOrderModel order) async {
+  Future<String> createOrder(CreateOrderModel order) async {
     log(order.toJson());
     final response = await _apiService.post(
       endPoint: EndPoint.createOrderUlr,
       body: order.toMap(),
     );
     if (response.statusCode == HttpStatus.ok) {
-      return;
+      final orderId = response.data['result']['id'];
+
+      return orderId;
     }
     log(response.data['result'].toString());
     throw response.data['result'];

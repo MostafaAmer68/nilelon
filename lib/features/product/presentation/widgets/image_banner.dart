@@ -33,10 +33,10 @@ class _ImageBannerState extends State<ImageBanner> {
               }),
           itemBuilder: (ctx, index, _) {
             return imageReplacer(
-              url: widget.images[index],
-              height: screenHeight(context, 0.5),
-              width: double.infinity,
-            );
+                url: widget.images[index],
+                height: screenHeight(context, 0.5),
+                width: double.infinity,
+                radius: 16);
           },
         ),
       ],

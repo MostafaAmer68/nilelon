@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -44,17 +46,17 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
     Map<String, dynamic> orderState = {
       'Ordered': {
         'title': 'Ordered',
-        'icon': 'assets/images/bag-timer.svg',
+        'icon': Assets.assetsImagesBagTimer,
         'color': ColorManager.primaryL
       },
       'Shipped': {
         'title': 'Shipped',
-        'icon': 'assets/images/bag-timer2.svg',
+        'icon': Assets.assetsImagesBagTimer2,
         'color': ColorManager.primaryO
       },
       'Delivered': {
         'title': 'Delivered',
-        'icon': 'assets/images/bag-timer3.svg',
+        'icon': Assets.assetsImagesBagTimer3,
         'color': ColorManager.primaryGR
       }
     };
@@ -80,7 +82,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                 children: [
                   Container(
                     width: screenWidth(context, 1),
-                    height: 310,
+                    height: 290,
                     decoration: ShapeDecoration(
                       color: ColorManager.primaryW,
                       shape: RoundedRectangleBorder(
@@ -98,9 +100,11 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        orderSummaryItems2(lang.orderDate,
-                            Text(cubit.customerOrder.date.toString())),
-                        const DefaultDivider(),
+                        orderSummaryItems2(
+                            lang.orderDate,
+                            Text(DateFormat('dd-MM-yyyy')
+                                .format(cubit.customerOrder.date)
+                                .toString())),
                         orderSummaryItems2(
                           lang.orderState,
                           BlocBuilder<OrderCubit, OrderState>(
@@ -135,33 +139,31 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                             },
                           ),
                         ),
-                        const DefaultDivider(),
                         orderSummaryItems2(
                             lang.recievedDate,
                             Text(
                               widget.recievedDate,
                               style: AppStylesManager.customTextStyleG,
                             )),
-                        const DefaultDivider(),
                         orderSummaryItems2(
-                            lang.paymentMethod,
-                            Text(
-                              'Credit Card',
-                              style: AppStylesManager.customTextStyleG,
-                            )),
-                        const DefaultDivider(),
+                          lang.paymentMethod,
+                          Text(
+                            'Credit Card',
+                            style: AppStylesManager.customTextStyleBl8,
+                          ),
+                        ),
                         orderSummaryItems2(
-                            lang.promoCodeApplied,
-                            Text(
-                              cubit.customerOrder.promoCodeName != null
-                                  ? lang.yes
-                                  : lang.no,
-                              style: AppStylesManager.customTextStyleG.copyWith(
-                                  color:
-                                      cubit.customerOrder.promoCodeName != null
-                                          ? ColorManager.primaryGR
-                                          : ColorManager.primaryR),
-                            )),
+                          lang.promoCodeApplied,
+                          Text(
+                            cubit.customerOrder.promoCodeName != null
+                                ? lang.yes
+                                : lang.no,
+                            style: AppStylesManager.customTextStyleG.copyWith(
+                                color: cubit.customerOrder.promoCodeName != null
+                                    ? ColorManager.primaryGR
+                                    : ColorManager.primaryR),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -174,7 +176,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                 children: [
                   Container(
                     width: screenWidth(context, 1),
-                    height: 190,
+                    height: 180,
                     decoration: ShapeDecoration(
                       color: ColorManager.primaryW,
                       shape: RoundedRectangleBorder(
@@ -198,24 +200,25 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                               loading: () => const CircularProgressIndicator(),
                               success: () => orderSummaryItems(
                                 S.of(context).order,
-                                (cubit.customerOrder.total -
-                                        num.parse(
-                                            cubit.customerOrder.shippingCost))
-                                    .toString(),
+                                (cubit.customerOrder.total).toString(),
                               ),
                             )!,
-                            const DefaultDivider(),
-                            state.whenOrNull(
-                              loading: () => const CircularProgressIndicator(),
-                              success: () => orderSummaryItems('Total',
-                                  cubit.customerOrder.total.toString()),
-                            )!,
-                            const DefaultDivider(),
                             state.whenOrNull(
                               loading: () => const CircularProgressIndicator(),
                               success: () => orderSummaryItems(
                                 S.of(context).delivery,
                                 cubit.customerOrder.shippingCost,
+                              ),
+                            )!,
+                            state.whenOrNull(
+                              loading: () => const CircularProgressIndicator(),
+                              success: () => orderSummaryItems(
+                                lang.total,
+                                (cubit.customerOrder.total +
+                                        num.parse(
+                                            cubit.customerOrder.shippingCost))
+                                    .toString(),
+                                AppStylesManager.customTextStyleO5,
                               ),
                             )!,
                           ],
@@ -238,7 +241,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
     );
   }
 
-  Padding orderSummaryItems(String title, String content) {
+  Padding orderSummaryItems(String title, String content, [style]) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
@@ -246,12 +249,13 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
         children: [
           Text(
             title,
-            style: AppStylesManager.customTextStyleBl8
-                .copyWith(fontWeight: FontWeight.w600),
+            style: style ??
+                AppStylesManager.customTextStyleBl8
+                    .copyWith(fontWeight: FontWeight.w600),
           ),
           Text(
             content,
-            style: AppStylesManager.customTextStyleBl8,
+            style: style ?? AppStylesManager.customTextStyleBl8,
           )
         ],
       ),

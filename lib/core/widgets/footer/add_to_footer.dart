@@ -98,7 +98,7 @@ class AddToFooter extends StatelessWidget {
                             BotToast.showText(text: lang(context).smothingWent);
                           }
                         } else {
-                          CartCubit.get(context).getCart();
+                          // CartCubit.get(context).getCart();
                           navigateTo(
                               context: context,
                               screen: const CustomerBottomTabBar(index: 3));

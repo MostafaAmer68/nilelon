@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -34,16 +35,18 @@ class ForgetPasswordPage extends StatelessWidget {
               onSuccess: () {
                 BotToast.closeAllLoading();
                 navigateTo(
-                    context: context,
-                    screen: ResetPassowrdView(
-                      isLogin: isLogin,
-                      onTap: () {
-                        AuthCubit.get(context).forgotPassword(context);
-                      },
-                    ));
+                  context: context,
+                  screen: ResetPassowrdView(
+                    isLogin: isLogin,
+                    form: AuthCubit.get(context).resetPasswordForm,
+                    onTap: () {
+                      AuthCubit.get(context).forgotPassword(context);
+                    },
+                  ),
+                );
               },
               resend: () {
-                AuthCubit.get(context).resetPasswordEmail(context);
+                ProfileCubit.get(context).resetPasswordEmail(context);
               },
             ),
           );
@@ -91,7 +94,7 @@ class ForgetPasswordPage extends StatelessWidget {
                     text: lang.continuePress,
                     width: screenWidth(context, 0.9),
                     ontap: () {
-                      AuthCubit.get(context).resetPasswordEmail(context);
+                      ProfileCubit.get(context).resetPasswordEmail(context);
                     },
                   )
                 ],

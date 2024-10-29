@@ -51,8 +51,9 @@ class ProfileView extends StatelessWidget {
                         decoration: const BoxDecoration(shape: BoxShape.circle),
                         child: imageReplacer(
                           url: currentUsr<CustomerModel>().profilePic,
-                          width: 60,
-                          height: 60,
+                          width: 70,
+                          height: 70,
+                          radius: 360,
                         ),
                       ),
                       const SizedBox(

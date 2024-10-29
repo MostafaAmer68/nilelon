@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/order/data/models/order_model.dart';
 
 class OrderCustomerCard extends StatelessWidget {
@@ -80,17 +81,17 @@ class OrderCustomerCard extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          'Order Price: ',
+                          '${lang(context).orderPrice}: ',
                           style: AppStylesManager.customTextStyleB3,
                         ),
                         Text(
-                          '${order.total} L.E',
+                          '${order.total} ${lang(context).le}',
                           style: AppStylesManager.customTextStyleO
                               .copyWith(fontSize: 1.sw > 600 ? 18 : 10),
                         ),
                         const Spacer(),
                         Text(
-                          DateFormat('yyyy-MM-dd HH:mm').format(
+                          DateFormat('dd-MM-yyyy').format(
                             DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
                                 .parse(order.date),
                           ),

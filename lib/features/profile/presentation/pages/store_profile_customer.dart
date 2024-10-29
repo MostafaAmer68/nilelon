@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/constants/assets.dart';
@@ -77,7 +79,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
           builder: (context, state) {
             return state.whenOrNull(
               initial: () => const SizedBox(),
-              failure: () => Text(lang.smothingWent),
+              failure: (_) => Text(lang.smothingWent),
               loading: () => Column(
                 children: [
                   const DefaultDivider(),
@@ -222,16 +224,16 @@ class ProductStoreWidget extends StatelessWidget {
             gridDelegate: gridDelegate(context),
             shrinkWrap: true,
             itemCount: ProductsCubit.get(context)
-                .products
-                .where((e) => profileCubit.selectedCategory.id == e.categoryID)
+                .filterListByCategory(profileCubit.selectedCategory,
+                    ProductsCubit.get(context).products)
                 .length,
             itemBuilder: (context, sizeIndex) {
+              log('test');
               return productSquarItem(
                 context: context,
                 product: ProductsCubit.get(context)
-                    .products
-                    .where(
-                        (e) => profileCubit.selectedCategory.id == e.categoryID)
+                    .filterListByCategory(profileCubit.selectedCategory,
+                        ProductsCubit.get(context).products)
                     .toList()[sizeIndex],
               );
             },

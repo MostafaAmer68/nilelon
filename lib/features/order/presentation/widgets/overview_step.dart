@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
@@ -24,8 +25,6 @@ class OverViewStep extends StatefulWidget {
 }
 
 class _OverViewStepState extends State<OverViewStep> {
-  late GlobalKey<FormState> formKey;
-
   late final CartCubit cartCubit;
   late final OrderCubit cubit;
   late final PromoCubit promoCubit;
@@ -35,179 +34,151 @@ class _OverViewStepState extends State<OverViewStep> {
     cubit = OrderCubit.get(context);
     promoCubit = PromoCubit.get(context);
 
-    cubit.getShippingMethod();
-    formKey = GlobalKey();
+    if (cubit.shippingMethods.isEmpty) {
+      cubit.getShippingMethod();
+    }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final progressCubit = BlocProvider.of<ProgressCubit>(context);
     final lang = S.of(context);
-    return Form(
-      key: formKey,
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 150,
-                child: BlocBuilder<CartCubit, CartState>(
-                  builder: (context, state) {
-                    if (state is CartLoading) {
-                      return buildShimmerIndicatorSmall();
-                    }
-                    return ListView.builder(
-                      padding: const EdgeInsetsDirectional.symmetric(
-                        vertical: 16,
-                        horizontal: 16,
-                      ),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 16),
-                          child: CheckProductItem(
-                            cartItem:
-                                CartCubit.get(context).tempCartItems[index],
-                          ),
-                        );
-                      },
-                      itemCount: CartCubit.get(context).tempCartItems.length,
-                      scrollDirection: Axis.horizontal,
-                    );
-                  },
-                ),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: 150,
+              child: BlocBuilder<CartCubit, CartState>(
+                builder: (context, state) {
+                  if (state is CartLoading) {
+                    return buildShimmerIndicatorSmall();
+                  }
+                  return ListView.builder(
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      vertical: 16,
+                      horizontal: 16,
+                    ),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: CheckProductItem(
+                          cartItem: CartCubit.get(context).tempCartItems[index],
+                        ),
+                      );
+                    },
+                    itemCount: CartCubit.get(context).tempCartItems.length,
+                    scrollDirection: Axis.horizontal,
+                  );
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 12,
-                    ),
-                    const TxtFieldPromo(),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Text(
-                      lang.orderSummary,
-                      style: AppStylesManager.customTextStyleBl8
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Container(
-                      width: screenWidth(context, 1),
-                      height: 320,
-                      decoration: ShapeDecoration(
-                        color: ColorManager.primaryW,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        shadows: const [
-                          BoxShadow(
-                            color: ColorManager.primaryBL4,
-                            blurRadius: 8,
-                            offset: Offset(0, 2),
-                            spreadRadius: 0,
-                          )
-                        ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  const TxtFieldPromo(),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    lang.orderSummary,
+                    style: AppStylesManager.customTextStyleBl8
+                        .copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    width: screenWidth(context, 1),
+                    height: 280,
+                    decoration: ShapeDecoration(
+                      color: ColorManager.primaryW,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Column(children: [
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        BlocBuilder<CartCubit, CartState>(
-                          builder: (context, state) {
-                            if (state is GetCartSuccess) {
-                              if (promoCubit.totalPrice == 0) {
-                                for (var item
-                                    in CartCubit.get(context).cart1.items) {
-                                  promoCubit.totalPrice +=
-                                      item.price * item.quantity;
-                                  promoCubit.tempTotalPrice +=
-                                      item.price * item.quantity;
-                                }
-                              }
-                            }
-                            return Column(
-                              children: [
-                                BlocBuilder<OrderCubit, OrderState>(
-                                  builder: (context, state) {
-                                    return orderSummaryItems(lang.order,
-                                        promoCubit.totalPrice.toString());
-                                  },
-                                ),
-                                const Divider(),
-                                BlocBuilder<OrderCubit, OrderState>(
-                                  builder: (context, state) {
-                                    return orderSummaryItemsWithDropList(
-                                        lang.delivery,
-                                        '${promoCubit.deliveryPrice} ${lang.le}',
-                                        lang);
-                                  },
-                                ),
-                                const Divider(),
-                                BlocBuilder<OrderCubit, OrderState>(
-                                  builder: (context, state) {
-                                    return orderSummaryItems(
-                                      lang.discount,
-                                      '${promoCubit.discount} ${lang.le}',
-                                    );
-                                  },
-                                ),
-                                const Divider(),
-                                BlocBuilder<OrderCubit, OrderState>(
-                                  builder: (context, state) {
-                                    return orderSummaryItems(
-                                        lang.total,
-                                        '${promoCubit.totalPrice} ${lang.le}',
-                                        AppStylesManager.customTextStyleO5
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600));
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ]),
-                    ),
-                    const SizedBox(
-                      height: 60,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ButtonBuilder(
-                          text: lang.previous,
-                          buttonColor: ColorManager.primaryG2,
-                          ontap: () {
-                            progressCubit.pageController.previousPage(
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.easeInOut);
-                          },
-                        ),
-                        GradientButtonBuilder(
-                          text: lang.continuePress,
-                          ontap: () {
-                            if (formKey.currentState!.validate()) {
-                              progressCubit.pageController.nextPage(
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.easeInOut);
-                            }
-                          },
+                      shadows: const [
+                        BoxShadow(
+                          color: ColorManager.primaryBL4,
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
+                          spreadRadius: 0,
                         )
                       ],
                     ),
-                  ],
-                ),
+                    child: Column(children: [
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      BlocBuilder<CartCubit, CartState>(
+                        builder: (context, state) {
+                          if (state is GetCartSuccess) {
+                            if (promoCubit.totalPrice == 0) {
+                              for (var item
+                                  in CartCubit.get(context).cart1.items) {
+                                promoCubit.totalPrice +=
+                                    item.price * item.quantity;
+                                promoCubit.tempTotalPrice +=
+                                    item.price * item.quantity;
+                              }
+                            }
+                          }
+                          return Column(
+                            children: [
+                              BlocBuilder<OrderCubit, OrderState>(
+                                builder: (context, state) {
+                                  return orderSummaryItems(
+                                      lang.order,
+                                      (promoCubit.totalPrice -
+                                              promoCubit.deliveryPrice)
+                                          .toString());
+                                },
+                              ),
+                              BlocBuilder<OrderCubit, OrderState>(
+                                builder: (context, state) {
+                                  return orderSummaryItemsWithDropList(
+                                      lang.delivery,
+                                      '${promoCubit.deliveryPrice} ${lang.le}',
+                                      lang);
+                                },
+                              ),
+                              BlocBuilder<OrderCubit, OrderState>(
+                                builder: (context, state) {
+                                  return orderSummaryItems(
+                                    lang.discount,
+                                    '${promoCubit.discount} ${lang.le}',
+                                  );
+                                },
+                              ),
+                              BlocBuilder<OrderCubit, OrderState>(
+                                builder: (context, state) {
+                                  return orderSummaryItems(
+                                      lang.total,
+                                      '${promoCubit.totalPrice} ${lang.le}',
+                                      AppStylesManager.customTextStyleO5
+                                          .copyWith(
+                                              fontWeight: FontWeight.w600));
+                                },
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    ]),
+                  ),
+                  const SizedBox(
+                    height: 60,
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -281,7 +252,7 @@ class _OverViewStepState extends State<OverViewStep> {
                               .map((e) => e.governate)
                               .toList(),
                           context: context,
-                          menuMaxHeight: 40,
+                          // menuMaxHeight: 30,
                           onChanged: (selectedValue) {
                             cubit.selectedCity = selectedValue ?? '';
                             promoCubit.deliveryPrice = OrderCubit.get(context)

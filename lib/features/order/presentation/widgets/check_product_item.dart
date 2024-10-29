@@ -8,6 +8,8 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/cart/domain/model/cart_item.dart';
 
+import '../../../../core/sizes_consts.dart';
+
 class CheckProductItem extends StatelessWidget {
   const CheckProductItem({
     super.key,
@@ -99,9 +101,10 @@ class CheckProductItem extends StatelessWidget {
                       lang.size,
                       style: AppStylesManager.customTextStyleG13,
                     ),
+                    const SizedBox(width: 5),
                     Container(
-                      height: 30,
-                      width: 30,
+                      height: 25,
+                      width: 25,
                       decoration: BoxDecoration(
                         color: ColorManager.primaryR2,
                         border: Border.all(
@@ -111,7 +114,7 @@ class CheckProductItem extends StatelessWidget {
                       ),
                       child: Center(
                         child: Text(
-                          cartItem.size.toString(),
+                          getSizeShortcut(cartItem.size.toString()),
                           style: AppStylesManager.customTextStyleO,
                         ),
                       ),

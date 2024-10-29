@@ -3,7 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
+import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 
 Future renameSectionDialog(
   BuildContext context,
@@ -34,7 +36,7 @@ Future renameSectionDialog(
                   height: 16.h,
                 ),
                 Text(
-                  'Rename Section',
+                  lang(context).renameSection,
                   style: AppStylesManager.customTextStyleBl6
                       .copyWith(fontWeight: FontWeight.w700),
                 ),
@@ -45,7 +47,7 @@ Future renameSectionDialog(
                   keyboardType: TextInputType.name,
                   decoration: InputDecoration(
                     focusColor: ColorManager.primaryG,
-                    hintText: 'Section Name',
+                    hintText: lang(context).sectionName,
                     hintStyle: AppStylesManager.customTextStyleG2,
                   ),
                 ),
@@ -56,8 +58,10 @@ Future renameSectionDialog(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     ButtonBuilder(
-                      text: 'Save',
-                      ontap: () {},
+                      text: lang(context).save,
+                      ontap: () {
+                        // ClosetCubit.get(context).
+                      },
                       width: screenWidth(context, 0.28),
                       height: 45.h,
                     )

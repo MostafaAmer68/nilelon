@@ -16,7 +16,8 @@ Container dropDownMenu(
   return Container(
     width: width,
     height: height,
-    decoration: decorationWithFade(),
+
+    // decoration: decorationWithFade(),
     alignment: Alignment.center,
     child: DropdownButtonFormField<String>(
       iconSize: height == null ? 24 : 12,
@@ -46,7 +47,7 @@ Container dropDownMenu(
         (e) {
           return DropdownMenuItem<String>(
             value: e,
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.center,
             child: Text(
               e,
               style: style2 ?? AppStylesManager.customTextStyleBl,

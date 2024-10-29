@@ -219,8 +219,8 @@ class Assets {
   static const String assetsImagesLog = "assets/images/log.png";
 
   /// Assets for assetsImagesLogo
-  /// assets/images/logo.png
-  static const String assetsImagesLogo = "assets/images/logo.png";
+  /// assets/images/logo.svg
+  static const String assetsImagesLogo = "assets/images/logo.svg";
 
   /// Assets for assetsImagesLogout
   /// assets/images/logout.svg

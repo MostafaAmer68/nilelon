@@ -21,6 +21,7 @@ part 'order_cubit.freezed.dart';
 
 class OrderCubit extends Cubit<OrderState> {
   final OrderRepo _orderRepo;
+  final GlobalKey<FormState> formKey = GlobalKey();
 
   static OrderCubit get(context) => BlocProvider.of(context);
   OrderCubit(this._orderRepo) : super(const OrderState.initial());
@@ -44,16 +45,16 @@ class OrderCubit extends Cubit<OrderState> {
 
   OrderCustomerModel customerOrder = OrderCustomerModel.empty();
   OrderStoreModel storeOrder = OrderStoreModel.empty();
+
   Future<void> createOrder(context) async {
     emit(const OrderState.loading());
+    // customerOrder = OrderCustomerModel.empty();
     if (selectedOption == 'Visa Card' || selectedOption == 'Credit Card') {
-      // PaymentCubit.get(context)
-      //     .dropInPayment(PromoCubit.get(context).totalPrice.toString());
       PaymentCubit.get(context)
           .makeTransaction(
         PromoCubit.get(context).totalPrice.toInt(),
         PromoCubit.get(context).discount,
-        'EGP',
+        'USD',
       )
           .then(
         (v) async {
@@ -66,9 +67,12 @@ class OrderCubit extends Cubit<OrderState> {
                 emit(OrderState.failure(failure.errorMsg));
               },
               (response) {
-                emit(const OrderState.success());
+                getCustomerOrderDetailsById(response);
+                // emit(const OrderState.success());
               },
             );
+          } else {
+            emit(OrderState.failure('pay-field'));
           }
         },
       );
@@ -81,7 +85,7 @@ class OrderCubit extends Cubit<OrderState> {
           emit(OrderState.failure(failure.errorMsg));
         },
         (response) {
-          emit(const OrderState.success());
+          getCustomerOrderDetailsById(response);
         },
       );
     }

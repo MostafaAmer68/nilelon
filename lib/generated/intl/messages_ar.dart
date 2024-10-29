@@ -406,6 +406,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تغيير كلمة المرور بنجاح!"),
         "pay": MessageLookupByLibrary.simpleMessage("دفع"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("طريقة الدفع"),
+        "pdfSaved": MessageLookupByLibrary.simpleMessage("تم حفظ الفاتوره"),
         "phoneNumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
         "phoneNumberChangedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تغيير رقم الهاتف بنجاح!"),
@@ -427,6 +428,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المتجر"),
         "plsEnterwareHouse":
             MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المستودع"),
+        "plsSelectMethod":
+            MessageLookupByLibrary.simpleMessage("رجاءً اختر طريقة الدفع"),
         "polices": MessageLookupByLibrary.simpleMessage("السياسات"),
         "pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails":
             MessageLookupByLibrary.simpleMessage(

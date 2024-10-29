@@ -48,9 +48,8 @@ class EndPoint {
   static const String changePasswordUrl = '/Authentication/ChangePassword';
   static const String resetEmailUrl = '/Authentication/ResetEmail';
   static const String resetPhoneUrl = '/Authentication/ResetPhone';
-  static const String resetEmailDetailUrl = '/Authentication/ResetEmailDetails';
-  static const String resetPhoneDetailsUrl =
-      '/Authentication/ResetPhoneDetails';
+  static const String validateEmailUrl = '/Authentication/ValidatedEmail';
+  static const String validatePhoneUrl = '/Authentication/ValidatePhone';
   static const String customerGoogleRegisterUrl =
       '/Authentication/GoogleRegister';
 

@@ -99,7 +99,7 @@ class OrderStoreCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  DateFormat('yyyy-MM-dd HH:mm').format(
+                                 DateFormat('dd-MM-yyyy').format(
                                       DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
                                           .parse(time)),
                                   style: AppStylesManager.customTextStyleG7,

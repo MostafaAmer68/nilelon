@@ -35,4 +35,25 @@ abstract class ProfileRepo {
     int page,
     int pageSize,
   );
+
+  Future<Either<FailureService, String>> sendOtpToEmail(
+      String newValue, context);
+
+  Future<Either<FailureService, String>> validateEmail(
+      String newValue, context);
+
+  Future<Either<FailureService, String>> resetPasswordEmail(
+      String email, context);
+
+  Future<Either<FailureService, String>> resetPasswordPhone(
+      String phone, context);
+
+  Future<Either<FailureService, String>> resetPhone(
+      String tergetSend, String newValue, context);
+
+  Future<Either<FailureService, String>> resetPhoneDetails(
+      String token, String targetValue, String newValue, context);
+
+  Future<Either<FailureService, String>> updateCustomer(
+      String profilePic, String name, context);
 }

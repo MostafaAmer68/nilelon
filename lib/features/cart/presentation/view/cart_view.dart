@@ -37,8 +37,15 @@ class _CartViewState extends State<CartView> {
   @override
   void initState() {
     cubit = CartCubit.get(context);
+
     cubit.getCart();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    // cubit.close();
+    super.dispose();
   }
 
   @override
@@ -93,7 +100,6 @@ class _CartViewState extends State<CartView> {
                 return Text(state.message);
               } else if (state is GetCartSuccess ||
                   state is UpdateQuantityCartLoading) {
-                log(cubit.cart1.id.toString());
                 if (cubit.cart1.items.isEmpty) {
                   return SizedBox(
                     height: screenHeight(context, 0.6),
@@ -121,7 +127,7 @@ class _CartViewState extends State<CartView> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
                                   child: SizedBox(
-                                    width: screenWidth(context, 0.4),
+                                    width: screenWidth(context, 0.3),
                                     child: OutlinedButton(
                                       onPressed: () {
                                         CartCubit.get(context).emptyCart();
@@ -134,8 +140,7 @@ class _CartViewState extends State<CartView> {
                                             color: ColorManager.primaryR,
                                           ),
                                         ),
-                                        backgroundColor:
-                                            ColorManager.scaffoldBG,
+                                        backgroundColor: ColorManager.primaryW,
                                       ),
                                       child: Text(
                                         lang.emptyCart,

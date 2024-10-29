@@ -137,6 +137,8 @@ class _ClosetViewState extends State<ClosetPage> {
             ontap: () {
               showModalBottomSheet(
                 backgroundColor: ColorManager.primaryW,
+                isScrollControlled: true,
+                useSafeArea: true,
                 shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),

@@ -1,7 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -26,10 +26,10 @@ class EditStoreInfoView extends StatefulWidget {
 }
 
 class _EditStoreInfoViewState extends State<EditStoreInfoView> {
-  late final AuthCubit cubit;
+  late final ProfileCubit cubit;
   @override
   void initState() {
-    cubit = AuthCubit.get(context);
+    cubit = ProfileCubit.get(context);
     cubit.repNameController =
         TextEditingController(text: currentUsr<StoreModel>().repName);
     cubit.repPhoneController =
@@ -52,26 +52,28 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
         hasIcon: false,
       ),
       body: SingleChildScrollView(
-        child: BlocListener<AuthCubit, AuthState>(
+        child: BlocListener<ProfileCubit, ProfileState>(
           listener: (context, state) {
-            if (state is LoginLoading) {
-              BotToast.showLoading();
-            }
-            if (state is LoginFailure) {
-              BotToast.closeAllLoading();
-              BotToast.showText(text: state.errorMessage);
-            }
-            if (state is UpdateStoreSuccess) {
-              BotToast.closeAllLoading();
-              successCreationDialog(
-                  context: context,
-                  highlightedText: S.of(context).infoUpdate,
-                  regularText: '',
-                  buttonText: lang.save,
-                  ontap: () {
-                    navigatePop(context: context);
-                  });
-            }
+            state.mapOrNull(
+              loading: (_) {
+                BotToast.showLoading();
+              },
+              success: (_) {
+                BotToast.closeAllLoading();
+                successCreationDialog(
+                    context: context,
+                    highlightedText: S.of(context).infoUpdate,
+                    regularText: '',
+                    buttonText: lang.save,
+                    ontap: () {
+                      navigatePop(context: context);
+                    });
+              },
+              failure: (_) {
+                BotToast.closeAllLoading();
+                BotToast.showText(text: _.er);
+              },
+            );
           },
           child: Column(
             children: [
@@ -108,7 +110,7 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
                     // TextAndFormFieldColumnNoIcon(
                     //   title: lang.profileLink,
                     //   label: 'TwixiShop',
-                    //   controller: AuthCubit.get(context).re,
+                    //   controller: ProfileCubit.get(context).re,
                     //   height: 25,
                     //   desc: ' (Facebook or Instagram)',
                     //   type: TextInputType.text,
@@ -151,7 +153,7 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
                       width: screenWidth(context, 0.44),
                       height: screenHeight(context, 0.06),
                       ontap: () {
-                        AuthCubit.get(context).updateStoreInfo(context);
+                        ProfileCubit.get(context).updateStoreInfo(context);
                       },
                     ),
                   ],

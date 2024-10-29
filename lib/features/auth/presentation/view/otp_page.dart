@@ -92,8 +92,6 @@ class _OtpViewState extends State<OtpView> {
         ),
         body: SingleChildScrollView(
           reverse: true,
-          // padding:
-          //     EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -153,8 +151,7 @@ class _OtpViewState extends State<OtpView> {
                       children: [
                         TextButton(
                             onPressed: () {
-                              AuthCubit.get(context)
-                                  .confirmRegisteration(context);
+                              widget.resend();
                               resendTime = 59;
                               startTimer();
                               setState(() {});

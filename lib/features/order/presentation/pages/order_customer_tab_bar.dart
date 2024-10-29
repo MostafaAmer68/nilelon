@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -21,6 +22,13 @@ class OrderManegementTabBar extends StatefulWidget {
 
 class _OrderManegementTabBarState extends State<OrderManegementTabBar> {
   int selectedIndex = 0;
+  late final OrderCubit cubit;
+
+  @override
+  void initState() {
+    cubit = OrderCubit.get(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +50,8 @@ class _OrderManegementTabBarState extends State<OrderManegementTabBar> {
               child: Column(
                 children: [
                   Container(
+                    // height: 50,
+                    width: screenWidth(context, 0.9),
                     decoration: BoxDecoration(
                       color: Colors.white, // Background color for the tab bar
                       borderRadius: BorderRadius.circular(25), // Rounded edges
@@ -73,6 +83,7 @@ class _OrderManegementTabBarState extends State<OrderManegementTabBar> {
                       // labelPadding: EdgeInsets.symmetric(horizontal: 5),
                       indicatorSize: TabBarIndicatorSize.tab,
                       dividerColor: Colors.transparent,
+                      // dividerHeight: 50,
                       labelColor: ColorManager.primaryW,
                       unselectedLabelColor: ColorManager.primaryG,
                       indicatorColor: ColorManager.primaryO,
@@ -97,12 +108,16 @@ class _OrderManegementTabBarState extends State<OrderManegementTabBar> {
                       ],
                     ),
                   ),
-                  const Expanded(
+                  Expanded(
                     child: TabBarView(
                       children: [
                         OrderedCustomerView(),
                         ShippedCustomerView(),
-                        ReceivedCustomerView(),
+                        ReceivedCustomerView(
+                          onStarted: () {
+                            cubit.getCustomerOrder('Ordered');
+                          },
+                        ),
                       ],
                     ),
                   ),

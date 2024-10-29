@@ -1,5 +1,7 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -38,7 +40,7 @@ class NilelonPdfView extends StatefulWidget {
 
 class _NilelonPdfViewState extends State<NilelonPdfView> {
   List<pw.TableRow> rows = [];
-
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -46,41 +48,54 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
 
   @override
   Widget build(BuildContext context) {
-    return GradientButtonBuilder(
-      text: 'Download Receipt',
-      width: screenWidth(context, 1),
-      ontap: () async {
-        if ((await requestStoragePermission())) {
-          rows.add(
-            buildTableRow(cellsHeader, isHeader: true),
-          );
-          for (var rowData in widget.cells) {
-            rows.add(buildTableRow(
-              rowData,
-            ));
-          }
+    if (isLoading) {
+      BotToast.showText(text: lang(context).pdfSaved);
+    }
+    return isLoading
+        ? const Center(child: CircularProgressIndicator())
+        : GradientButtonBuilder(
+            text: lang(context).downloadReceipt,
+            width: screenWidth(context, 1),
+            ontap: () async {
+              isLoading = true;
+              setState(() {});
+              if ((await requestStoragePermission())) {
+                rows.add(
+                  buildTableRow(cellsHeader, isHeader: true),
+                );
+                for (var rowData in widget.cells) {
+                  rows.add(buildTableRow(
+                    rowData,
+                  ));
+                }
 
-          await generateOrderPdf(
-            cells: widget.cells,
-            netTotal: widget.netTotal,
-            discount: widget.discount,
-            delivery: widget.delivery,
-            total: widget.total,
-            name: HiveStorage.get<UserModel>(HiveKeys.userModel)
-                .getUserData<CustomerModel>()
-                .name,
-            location: widget.location,
-            orderId: widget.orderId,
-            orderDate: widget.orderDate,
-            phoneNumber: HiveStorage.get<UserModel>(HiveKeys.userModel)
-                .getUserData<CustomerModel>()
-                .phoneNumber,
+                await makePdf(
+                  cells: widget.cells,
+                  netTotal: widget.netTotal,
+                  discount: widget.discount,
+                  delivery: widget.delivery,
+                  total: widget.total,
+                  name: HiveStorage.get<UserModel>(HiveKeys.userModel)
+                      .getUserData<CustomerModel>()
+                      .name,
+                  location: widget.location,
+                  orderId: widget.orderId,
+                  orderDate: widget.orderDate,
+                  phoneNumber: HiveStorage.get<UserModel>(HiveKeys.userModel)
+                      .getUserData<CustomerModel>()
+                      .phoneNumber,
+                ).then((v) {
+                  isLoading = false;
+                  setState(() {});
+                });
+              } else {
+                isLoading = false;
+                setState(() {});
+                _showPermissionDeniedMessage();
+              }
+              // setState(() {});
+            },
           );
-        } else {
-          _showPermissionDeniedMessage();
-        }
-      },
-    );
   }
 
   void _showPermissionDeniedMessage() {

@@ -38,7 +38,7 @@ class HiveStorage {
     Hive.registerAdapter(AddProductModelAdapter());
     Hive.registerAdapter(SizeModelAdapter());
     Hive.registerAdapter(DraftProductModelAdapter());
-    Hive.registerAdapter(ResultAdapter());
+    Hive.registerAdapter(CategoryModelAdapter());
     Hive.registerAdapter(UserModelAdapter());
     Hive.registerAdapter(CustomerModelAdapter());
     Hive.registerAdapter(StoreModelAdapter());

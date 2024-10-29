@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nilelon/features/shared/pdf_view/pdf_view.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -19,7 +20,7 @@ class OrderDetailsFooter extends StatelessWidget {
         width: screenWidth(context, 1),
         child: NilelonPdfView(
           location: order.governate,
-          orderDate: order.date.toString(),
+          orderDate: DateFormat('dd-MM-yyyy').format(order.date),
           orderId: '#${order.id}',
           cells: order.orderProductVariants
               .map((e) => [
@@ -27,12 +28,13 @@ class OrderDetailsFooter extends StatelessWidget {
                     e.storeName,
                     e.quantity.toString(),
                     e.color,
+                    e.size.toString(),
                     e.price.toString()
                   ])
               .toList(),
           netTotal: (order.total - order.discount).toString(),
           discount: order.discount.toString(),
-          total: order.total.toString(),
+          total: (order.total + num.parse(order.shippingCost)).toString(),
           delivery: order.shippingCost,
         ),
       ),

@@ -119,7 +119,14 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                       child: GridView.builder(
                         controller: scrollCn,
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: gridDelegate(context),
+                        gridDelegate: widget.isOffer
+                            ? SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 1.sw > 600 ? 3 : 2,
+                                crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
+                                mainAxisExtent: 310,
+                                mainAxisSpacing: 1.sw > 600 ? 16 : 12,
+                              )
+                            : gridDelegate(context),
                         shrinkWrap: true,
                         itemCount: isLoadMore
                             ? cubit
@@ -127,7 +134,9 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                                         cubit.category, products)
                                     .length +
                                 1
-                            : cubit.productsHandpack.length,
+                            : cubit
+                                .filterListByCategory(cubit.category, products)
+                                .length,
                         itemBuilder: (context, sizeIndex) {
                           if (sizeIndex ==
                                   cubit

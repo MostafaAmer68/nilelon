@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
-import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -29,10 +29,10 @@ class EditStoreProfileView extends StatefulWidget {
 }
 
 class _EditStoreProfileViewState extends State<EditStoreProfileView> {
-  late final AuthCubit cubit;
+  late final ProfileCubit cubit;
   @override
   void initState() {
-    cubit = AuthCubit.get(context);
+    cubit = ProfileCubit.get(context);
     cubit.nameController =
         TextEditingController(text: currentUsr<StoreModel>().name);
     cubit.sloganController =
@@ -49,27 +49,29 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
         context: context,
         hasIcon: false,
       ),
-      body: BlocListener<AuthCubit, AuthState>(
+      body: BlocListener<ProfileCubit, ProfileState>(
         listener: (context, state) {
-          if (state is LoginLoading) {
-            BotToast.showLoading();
-          }
-          if (state is LoginFailure) {
-            BotToast.closeAllLoading();
-            BotToast.showText(text: state.errorMessage);
-          }
-          if (state is UpdateStoreSuccess) {
-            BotToast.closeAllLoading();
-            successCreationDialog(
-              context: context,
-              highlightedText: S.of(context).infoUpdateReglogin,
-              regularText: '',
-              buttonText: lang.save,
-              ontap: () {
-                navigatePop(context: context);
-              },
-            );
-          }
+          state.mapOrNull(
+            loading: (_) {
+              BotToast.showLoading();
+            },
+            success: (_) {
+              BotToast.closeAllLoading();
+              successCreationDialog(
+                context: context,
+                highlightedText: S.of(context).infoUpdateReglogin,
+                regularText: '',
+                buttonText: lang.save,
+                ontap: () {
+                  navigatePop(context: context);
+                },
+              );
+            },
+            failure: (_) {
+              BotToast.closeAllLoading();
+              BotToast.showText(text: _.er);
+            },
+          );
         },
         child: Column(
           children: [
@@ -84,13 +86,13 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
                     title: lang.storeName,
                     label: 'Twixi',
                     height: 25,
-                    controller: AuthCubit.get(context).nameController,
+                    controller: ProfileCubit.get(context).nameController,
                     type: TextInputType.text,
                   ),
                   TextAndFormFieldColumnNoIcon(
                     title: lang.storeSlogan,
                     label: 'Twixi',
-                    controller: AuthCubit.get(context).sloganController,
+                    controller: ProfileCubit.get(context).sloganController,
                     height: 25,
                     type: TextInputType.text,
                   ),
@@ -123,7 +125,7 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
                     width: screenWidth(context, 0.44),
                     height: screenHeight(context, 0.06),
                     ontap: () {
-                      AuthCubit.get(context).updateStore(context);
+                      ProfileCubit.get(context).updateStore(context);
                     },
                   ),
                 ],
@@ -145,7 +147,7 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
         clipBehavior: Clip.none,
         alignment: Alignment.bottomCenter,
         children: [
-          BlocBuilder<AuthCubit, AuthState>(
+          BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, state) {
               return Container(
                 width: 100,
@@ -175,7 +177,7 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
             right: 2,
             child: GestureDetector(
               onTap: () async {
-                AuthCubit.get(context).image = await cameraDialog(context);
+                cubit.image = await cameraDialog(context);
                 setState(() {});
               },
               child: Container(

@@ -1318,10 +1318,10 @@ class S {
     );
   }
 
-  /// `Recevied`
+  /// `Delivered`
   String get recevied {
     return Intl.message(
-      'Recevied',
+      'Delivered',
       name: 'recevied',
       desc: '',
       args: [],
@@ -3550,20 +3550,20 @@ class S {
     );
   }
 
-  /// `Already have an account?`
+  /// `Already have an account? `
   String get alreadyExits {
     return Intl.message(
-      'Already have an account?',
+      'Already have an account? ',
       name: 'alreadyExits',
       desc: '',
       args: [],
     );
   }
 
-  /// `You dont't Have Account sign up\nto enjoy out features.`
+  /// `You dont't Have Account sign up\nto enjoy our features.`
   String get guestMsg {
     return Intl.message(
-      'You dont`t Have Account sign up\nto enjoy out features.',
+      'You dont`t Have Account sign up\nto enjoy our features.',
       name: 'guestMsg',
       desc: '',
       args: [],
@@ -4145,6 +4145,26 @@ class S {
     return Intl.message(
       'There is no Offer products yet.',
       name: 'noProductOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please select pay method`
+  String get plsSelectMethod {
+    return Intl.message(
+      'please select pay method',
+      name: 'plsSelectMethod',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receipt has been saved`
+  String get pdfSaved {
+    return Intl.message(
+      'Receipt has been saved',
+      name: 'pdfSaved',
       desc: '',
       args: [],
     );

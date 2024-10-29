@@ -10,20 +10,11 @@ import 'package:nilelon/features/cart/domain/model/cart_item.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
 
-abstract class CartRemoteDataSource {
-  Future<CartModel> getCart();
-  Future<void> deleteFromCart(DeleteRequestModel model);
-  Future<void> updateQuantityCart(ChangeQuantityModel model);
-  Future<void> addToCart(AddToCartModel model);
-  Future<void> emptyCart(String customerId);
-}
-
-class CartService extends CartRemoteDataSource {
+class CartService {
   final ApiService apiService;
 
   CartService({required this.apiService});
 
-  @override
   Future<CartModel> getCart() async {
     final Response data = await apiService.get(
         endPoint: EndPoint.getCartByCustomerIdUrl,
@@ -37,7 +28,6 @@ class CartService extends CartRemoteDataSource {
     }
   }
 
-  @override
   Future<void> deleteFromCart(DeleteRequestModel model) async {
     final Response data = await apiService.delete(
       endPoint: EndPoint.deleteFromCartUrl,
@@ -57,7 +47,6 @@ class CartService extends CartRemoteDataSource {
     }
   }
 
-  @override
   Future<void> updateQuantityCart(ChangeQuantityModel model) async {
     final Response data = await apiService.put(
       endPoint: EndPoint.updateQuantityCartUrl,
@@ -77,7 +66,6 @@ class CartService extends CartRemoteDataSource {
     }
   }
 
-  @override
   Future<void> addToCart(AddToCartModel model) async {
     final Response data = await apiService.post(
       endPoint: EndPoint.addToCartUrl,
@@ -92,7 +80,6 @@ class CartService extends CartRemoteDataSource {
     }
   }
 
-  @override
   Future<void> emptyCart(String customerId) async {
     final Response data = await apiService.delete(
       endPoint: EndPoint.emptyCartUrl,

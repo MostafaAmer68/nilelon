@@ -13,6 +13,10 @@ class ProgressCubit extends Cubit<int> {
     }
   }
 
+  void resetPage() {
+    emit(state * 0);
+  }
+
   void previousStep() {
     if (state > 0) {
       pageController.previousPage(

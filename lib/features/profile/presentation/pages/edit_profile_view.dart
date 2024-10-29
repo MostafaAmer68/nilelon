@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
-import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -22,6 +21,7 @@ import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../auth/domain/model/user_model.dart';
+import '../cubit/profile_cubit.dart';
 
 class EditProfileView extends StatefulWidget {
   const EditProfileView({super.key});
@@ -31,10 +31,10 @@ class EditProfileView extends StatefulWidget {
 }
 
 class _EditProfileViewState extends State<EditProfileView> {
-  late final AuthCubit cubit;
+  late final ProfileCubit cubit;
   @override
   void initState() {
-    cubit = AuthCubit.get(context);
+    cubit = ProfileCubit.get(context);
     cubit.nameController =
         TextEditingController(text: currentUsr<CustomerModel>().name);
     super.initState();
@@ -47,26 +47,28 @@ class _EditProfileViewState extends State<EditProfileView> {
     return ScaffoldImage(
       appBar: customAppBar(
           title: lang.editAccount, context: context, hasIcon: false),
-      body: BlocListener<AuthCubit, AuthState>(
+      body: BlocListener<ProfileCubit, ProfileState>(
         listener: (context, state) {
-          if (state is LoginLoading) {
-            BotToast.showLoading();
-          }
-          if (state is LoginFailure) {
-            BotToast.closeAllLoading();
-            BotToast.showText(text: state.errorMessage);
-          }
-          if (state is UpdateStoreSuccess) {
-            BotToast.closeAllLoading();
-            successCreationDialog(
-                context: context,
-                highlightedText: S.of(context).infoUpdateReglogin,
-                regularText: '',
-                buttonText: lang.save,
-                ontap: () {
-                  navigatePop(context: context);
-                });
-          }
+          state.mapOrNull(
+            loading: (_) {
+              BotToast.showLoading();
+            },
+            success: (_) {
+              BotToast.closeAllLoading();
+              successCreationDialog(
+                  context: context,
+                  highlightedText: S.of(context).infoUpdateReglogin,
+                  regularText: '',
+                  buttonText: lang.save,
+                  ontap: () {
+                    navigatePop(context: context);
+                  });
+            },
+            failure: (_) {
+              BotToast.closeAllLoading();
+              BotToast.showText(text: _.er);
+            },
+          );
         },
         child: SingleChildScrollView(
           child: Column(
@@ -125,7 +127,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                             width: screenWidth(context, 0.44),
                             height: screenHeight(context, 0.06),
                             ontap: () {
-                              AuthCubit.get(context).updateCustomer(context);
+                              ProfileCubit.get(context).updateCustomer(context);
                             }),
                       ],
                     ),

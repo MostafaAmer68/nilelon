@@ -6,7 +6,9 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/features/shared/recommendation/presentation/cubit/recommendation_cubit.dart';
 
+import '../../../core/utils/navigation.dart';
 import '../../../core/widgets/scaffold_image.dart';
+import '../../layout/customer_bottom_tab_bar.dart';
 
 class RecommendationProfileView extends StatelessWidget {
   const RecommendationProfileView({super.key});
@@ -28,8 +30,14 @@ class RecommendationProfileView extends StatelessWidget {
                   'assets/images/shop_for_women.png',
                   'Shop for Women',
                   () {
-                    RecommendationCubit.get(context)
-                        .setRecommendation('Female', context);
+                    if (HiveStorage.get(HiveKeys.userModel) != null) {
+                      RecommendationCubit.get(context)
+                          .setRecommendation('Female', context);
+                    }
+                    navigateAndRemoveUntil(
+                      context: context,
+                      screen: const CustomerBottomTabBar(),
+                    );
                     HiveStorage.set(HiveKeys.shopFor, 'Female');
                   },
                 ),
@@ -41,8 +49,14 @@ class RecommendationProfileView extends StatelessWidget {
                   'assets/images/shop_for_man.png',
                   'Shop for Man',
                   () {
-                    RecommendationCubit.get(context)
-                        .setRecommendation('Male', context);
+                    if (HiveStorage.get(HiveKeys.userModel) != null) {
+                      RecommendationCubit.get(context)
+                          .setRecommendation('Male', context);
+                    }
+                    navigateAndRemoveUntil(
+                      context: context,
+                      screen: const CustomerBottomTabBar(),
+                    );
                     HiveStorage.set(HiveKeys.shopFor, 'Male');
                   },
                 ),

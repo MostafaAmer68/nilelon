@@ -19,65 +19,21 @@ abstract class AuthRepos {
     String email,
     context,
   );
-  Future<Either<FailureService, String>> updateStoreInfo(
-    String repName,
-    String repNumber,
-    String webLink,
-    context,
-  );
-  Future<Either<FailureService, String>> changePassword(
-    String oldPassword,
-    String newPassword,
-    context,
-  );
-  Future<Either<FailureService, String>> updateStore(
-    String profilePic,
-    String name,
-    String storeSlogan,
-    context,
-  );
-  Future<Either<FailureService, String>> updateCustomer(
-    String profilePic,
-    String name,
-    context,
-  );
+
   Future<Either<FailureService, String>> validateOtp(
     String userOtp,
     String tokenOtp,
     context,
   );
+
+  Future<Either<FailureService, String>> changePassword(
+    String oldPassword,
+    String newPassword,
+    context,
+  );
   Future<Either<FailureService, String>> googleRegisterAuth();
-  Future<Either<FailureService, String>> signInGoogleAuth(
-    // String email,
-    // String connectionId,
-  );
-  Future<Either<FailureService, String>> resetPasswordEmail(
-    String email,
-    context,
-  );
-  Future<Either<FailureService, String>> resetPasswordPhone(
-    String phone,
-    context,
-  );
-  Future<Either<FailureService, String>> resetPhone(
-    String tergetSend,
-    String newValue,
-    context,
-  );
-  Future<Either<FailureService, String>> resetEmail(
-    String newValue,
-    context,
-  );
-  Future<Either<FailureService, String>> resetEmailDetails(
-    String newValue,
-    context,
-  );
-  Future<Either<FailureService, String>> resetPhoneDetails(
-    String token,
-    String targetValue,
-    String newValue,
-    context,
-  );
+  Future<Either<FailureService, String>> signInGoogleAuth();
+
   Future<Either<FailureService, String>> forgotPassword(
     String token,
     String targetValue,

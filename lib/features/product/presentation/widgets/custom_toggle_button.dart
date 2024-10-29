@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+
+import '../../../../core/sizes_consts.dart';
 
 class SizeToggleButtons extends StatelessWidget {
   final List<String> sizes;
@@ -26,16 +29,18 @@ class SizeToggleButtons extends StatelessWidget {
             onTap: () => onSizeSelected(size),
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8.0),
-              width: 70,
-              height: 70,
+              width: 52,
+              // height: 30,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                gradient: const LinearGradient(
-                  colors: [Colors.blue, Colors.orange],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
+                borderRadius: BorderRadius.circular(10),
+                gradient: !isSelected
+                    ? null
+                    : const LinearGradient(
+                        colors: [Colors.blue, Colors.orange],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
                 boxShadow: isSelected
                     ? [
                         BoxShadow(
@@ -50,20 +55,25 @@ class SizeToggleButtons extends StatelessWidget {
                         ),
                       ]
                     : null,
-                color: isSelected ? Colors.white : Colors.transparent,
+                color:
+                    isSelected ? ColorManager.primaryW : ColorManager.primaryG,
               ),
               child: Container(
-                padding: const EdgeInsets.all(15),
+                width: 49,
+                height: 50,
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.white : Colors.transparent,
-                  borderRadius: BorderRadius.circular(15),
+                  color: isSelected ? Colors.white : ColorManager.primaryW,
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                child: Text(
-                  size,
-                  style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.bold,
-                    color: isSelected ? Colors.orange : Colors.grey.shade400,
+                child: Center(
+                  child: Text(
+                    getSizeShortcut(size),
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                      color: isSelected ? Colors.orange : Colors.grey.shade400,
+                    ),
                   ),
                 ),
               ),

@@ -123,7 +123,9 @@ class _CartItemCardState extends State<CartItemCard> {
                               ),
                               Checkbox(
                                 splashRadius: 1.sw > 600 ? 20 : 12,
-                                value: isEnabled,
+                                value: CartCubit.get(context)
+                                    .tempCartItems
+                                    .contains(widget.cart),
                                 activeColor: ColorManager.primaryO,
                                 onChanged: (value) {
                                   isEnabled = value!;
