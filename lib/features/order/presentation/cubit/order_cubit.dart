@@ -107,12 +107,7 @@ class OrderCubit extends Cubit<OrderState> {
         "nearestLandMark": landmark.text,
       },
       orderProductVeriants: CartCubit.get(context)
-<<<<<<< HEAD
           .tempCartItems
-=======
-          .selectedItems
-          .items
->>>>>>> d63971e799ac6b9251782e54512df8d3b7dd138d
           .map((e) => {
                 "size": e.size,
                 "color": e.color,
