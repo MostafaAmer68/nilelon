@@ -231,8 +231,11 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                             child: Column(
                               children: [
                                 cubit.dashboardModel.storeBestseller.isEmpty
-                                    ? Center(
-                                        child: Text(lang.noBestSeller),
+                                    ? SizedBox(
+                                        height: screenHeight(context, 0.15),
+                                        child: Center(
+                                          child: Text(lang.noBestSeller),
+                                        ),
                                       )
                                     : analyticsWideCard(context: context)
                               ],
@@ -273,8 +276,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                         ),
                         BlocBuilder<ReservationDateCubit, ReservationDateState>(
                           builder: (context, state) {
-                            var cubit =
-                                BlocProvider.of<ReservationDateCubit>(context);
+                            var cubit = ReservationDateCubit.get(context);
                             dateStart = cubit.rangeStart;
                             dateEnd = cubit.rangeEnd;
 

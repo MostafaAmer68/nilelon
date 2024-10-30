@@ -1,6 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/cards/brand/brand_card.dart';
@@ -9,12 +8,8 @@ import 'package:nilelon/features/product/presentation/cubit/products_cubit/produ
 import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 
-import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
-import '../../../product/presentation/pages/product_details_page.dart';
-import '../../../profile/presentation/pages/store_profile_customer.dart';
 import '../cubit/search_cubit.dart';
-import 'search_section_items.dart';
 
 class SearchResult extends StatefulWidget {
   const SearchResult({super.key, this.isBrand = false});

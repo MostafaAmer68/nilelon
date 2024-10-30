@@ -31,107 +31,159 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
 
     return DefaultTabController(
       length: 5,
-      child: Scaffold(
-          backgroundColor: Colors.white,
-          body: Column(
-            children: [
-              Expanded(
-                child: TabBarView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  children: [
-                    const StoreMarketView(),
-                    const OrderTabBar(),
-                    const ChooseProductView(),
-                    MultiBlocProvider(
-                      providers: [
-                        BlocProvider<ReservationDateCubit>(
-                          create: (context) => ReservationDateCubit(),
-                        ),
-                        BlocProvider(
-                          create: (context) => AnalyticsCubit(
-                              locatorService<AnalyticsReposImpl>()),
-                        ),
-                      ],
-                      child: const AnalyticsView(),
-                    ),
-                    const StoreProfileView(),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 70,
-                child: TabBar(
-                  onTap: (index) {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
-                  labelColor: ColorManager.primaryB2,
-                  unselectedLabelColor: ColorManager.primaryG,
-                  indicatorColor: Colors.transparent,
-                  tabs: [
-                    Tab(
-                        child: selectedIndex == 0
-                            ? Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  iconWithGradient(
-                                      Icons.store_mall_directory_outlined),
-                                  Text(
-                                    lang.market,
-                                    style: AppStylesManager.customTextStyleB2,
-                                  )
-                                ],
-                              )
-                            : const Icon(
-                                Icons.store_mall_directory_outlined,
-                              )),
-                    Tab(
-                      child: selectedIndex == 1
-                          ? Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                iconWithGradient(Icons.shopping_cart_outlined),
-                                Text(
-                                  lang.order,
-                                  style: AppStylesManager.customTextStyleB2,
+      child: PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (v, s) {
+          if (v) {
+            return;
+          }
+          selectedIndex = 0;
+          setState(() {});
+        },
+        child: Scaffold(
+            backgroundColor: Colors.white,
+            body: Column(
+              children: [
+                Expanded(
+                    child: [
+                  PopScope(
+                      canPop: false,
+                      onPopInvokedWithResult: (v, s) {
+                        if (v) {
+                          return;
+                        }
+                        selectedIndex = 0;
+                        setState(() {});
+                      },
+                      child: const StoreMarketView()),
+                  PopScope(
+                      canPop: false,
+                      onPopInvokedWithResult: (v, s) {
+                        if (v) {
+                          return;
+                        }
+                        selectedIndex = 0;
+                        setState(() {});
+                      },
+                      child: const OrderTabBar()),
+                  PopScope(
+                      canPop: false,
+                      onPopInvokedWithResult: (v, s) {
+                        if (v) {
+                          return;
+                        }
+                        selectedIndex = 0;
+                        setState(() {});
+                      },
+                      child: const ChooseProductView()),
+                  MultiBlocProvider(
+                    providers: [
+                      BlocProvider<ReservationDateCubit>(
+                        create: (context) => ReservationDateCubit(),
+                      ),
+                      BlocProvider(
+                        create: (context) => AnalyticsCubit(
+                            locatorService<AnalyticsReposImpl>()),
+                      ),
+                    ],
+                    child: PopScope(
+                        canPop: false,
+                        onPopInvokedWithResult: (v, s) {
+                          if (v) {
+                            return;
+                          }
+                          selectedIndex = 0;
+                          setState(() {});
+                        },
+                        child: const AnalyticsView()),
+                  ),
+                  PopScope(
+                      canPop: false,
+                      onPopInvokedWithResult: (v, s) {
+                        if (v) {
+                          return;
+                        }
+                        selectedIndex = 0;
+                        setState(() {});
+                      },
+                      child: const StoreProfileView()),
+                ][selectedIndex]),
+                SizedBox(
+                  height: 70,
+                  child: TabBar(
+                    onTap: (index) {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
+                    labelColor: ColorManager.primaryB2,
+                    unselectedLabelColor: ColorManager.primaryG,
+                    indicatorColor: Colors.transparent,
+                    tabs: [
+                      Tab(
+                          child: selectedIndex == 0
+                              ? Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    iconWithGradient(
+                                        Icons.store_mall_directory_outlined),
+                                    Text(
+                                      lang.market,
+                                      style: AppStylesManager.customTextStyleB2,
+                                    )
+                                  ],
                                 )
-                              ],
-                            )
-                          : const Icon(Icons.shopping_cart_outlined),
-                    ),
-                    Tab(
-                        child: selectedIndex == 2
-                            ? Column(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  iconWithGradient(Icons.add),
-                                  Text(
-                                    lang.add,
-                                    style: AppStylesManager.customTextStyleB2,
-                                  )
-                                ],
-                              )
-                            : const Icon(Icons.add)),
-                    Tab(
-                        child: selectedIndex == 3
+                              : const Icon(
+                                  Icons.store_mall_directory_outlined,
+                                )),
+                      Tab(
+                        child: selectedIndex == 1
                             ? Column(
                                 mainAxisSize: MainAxisSize.min,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   iconWithGradient(
-                                      Icons.insert_chart_outlined_rounded),
+                                      Icons.shopping_cart_outlined),
                                   Text(
-                                    lang.analytics,
+                                    lang.order,
                                     style: AppStylesManager.customTextStyleB2,
                                   )
                                 ],
                               )
-                            : const Icon(Icons.insert_chart_outlined_rounded)),
-                    Tab(
+                            : const Icon(Icons.shopping_cart_outlined),
+                      ),
+                      Tab(
+                          child: selectedIndex == 2
+                              ? Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    iconWithGradient(Icons.add),
+                                    Text(
+                                      lang.add,
+                                      style: AppStylesManager.customTextStyleB2,
+                                    )
+                                  ],
+                                )
+                              : const Icon(Icons.add)),
+                      Tab(
+                          child: selectedIndex == 3
+                              ? Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    iconWithGradient(
+                                        Icons.insert_chart_outlined_rounded),
+                                    Text(
+                                      lang.analytics,
+                                      style: AppStylesManager.customTextStyleB2,
+                                    )
+                                  ],
+                                )
+                              : const Icon(
+                                  Icons.insert_chart_outlined_rounded)),
+                      Tab(
                         child: selectedIndex == 4
                             ? Column(
                                 mainAxisSize: MainAxisSize.min,
@@ -144,12 +196,14 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
                                   )
                                 ],
                               )
-                            : const Icon(Icons.person_outline_sharp)),
-                  ],
+                            : const Icon(Icons.person_outline_sharp),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          )),
+              ],
+            )),
+      ),
     );
   }
 }

@@ -26,10 +26,9 @@ class _DateRangePickerState extends State<DateRangePicker> {
   DateTime focusedDay = DateTime.now();
   @override
   Widget build(BuildContext context) {
+    var cubit = ReservationDateCubit.get(context);
     return BlocBuilder<ReservationDateCubit, ReservationDateState>(
       builder: (context, state) {
-        var cubit = BlocProvider.of<ReservationDateCubit>(context);
-
         return ScaffoldImage(
           body: SafeArea(
             child: Center(
@@ -155,8 +154,8 @@ class _DateRangePickerState extends State<DateRangePicker> {
                         height: 50,
                         text: 'Confirm',
                         ontap: () {
-                          navigateAndRemoveUntil(
-                              context: context, screen: const AnalyticsView());
+                          //  cubit.rangeStart =
+                          navigatePop(context: context);
                         },
                       ),
                       OutlinedButtonBuilder(

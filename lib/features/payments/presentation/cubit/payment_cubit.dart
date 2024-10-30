@@ -6,7 +6,6 @@ import 'package:flutter_braintree/flutter_braintree.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
-import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/payments/data/repositories/payment_repo_impl.dart';
 import 'package:nilelon/features/payments/domain/models/add_payment_model.dart';

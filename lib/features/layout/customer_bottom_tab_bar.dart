@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_guest_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -40,13 +41,31 @@ class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
               Expanded(
                 child: [
                   const CustomerHomeView(),
-                  HiveStorage.get(HiveKeys.userModel) != null
-                      ? const CartView()
-                      : const ProfileGuestPage(),
-                  const DiscoverView(),
-                  HiveStorage.get(HiveKeys.userModel) != null
-                      ? const ProfileView()
-                      : const ProfileGuestPage(),
+                  PopScope(
+                    onPopInvokedWithResult: (v, s) {
+                      selectedIndex = 0;
+                      setState(() {});
+                    },
+                    child: HiveStorage.get(HiveKeys.userModel) != null
+                        ? const CartView()
+                        : const ProfileGuestPage(),
+                  ),
+                  PopScope(
+                    onPopInvokedWithResult: (v, s) {
+                      selectedIndex = 0;
+                      setState(() {});
+                    },
+                    child: const DiscoverView(),
+                  ),
+                  PopScope(
+                    onPopInvokedWithResult: (v, s) {
+                      selectedIndex = 0;
+                      setState(() {});
+                    },
+                    child: HiveStorage.get(HiveKeys.userModel) != null
+                        ? const ProfileView()
+                        : const ProfileGuestPage(),
+                  ),
                 ][selectedIndex],
               ),
               SizedBox(

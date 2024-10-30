@@ -9,6 +9,8 @@ class ReservationDateCubit extends Cubit<ReservationDateState> {
   DateTime? timeStart;
   DateTime? timeEnd;
   DateTime focusedDay = DateTime.now();
+
+  static ReservationDateCubit get(context) => BlocProvider.of(context);
   void selectReservationDate(
     DateTime selectedDay,
     DateTime getfocusedDay,
@@ -29,13 +31,7 @@ class ReservationDateCubit extends Cubit<ReservationDateState> {
         rangeEnd = selectedDay;
       }
     }
-    // CacheService.setData(
-    //     key: ConstText().pickupDate, value: rangeStart!.toString());
 
-    // print(CacheService.getData(key: ConstText().pickupDate));
-    // CacheService.setData(
-    //     key: ConstText().returnDate, value: rangeEnd!.toString());
-    // print(CacheService.getData(key: ConstText().returnDate));
     emit(ReservationDateSuccess());
   }
 

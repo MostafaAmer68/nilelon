@@ -1,6 +1,5 @@
 // import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
-import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/store_flow/analytics/domain/model/analytics_response_model.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
@@ -8,6 +7,7 @@ import 'package:nilelon/core/service/network/end_point.dart';
 
 abstract class AnalyticsRemoteDataSource {
   Future<DashboardModel> getDashboardData();
+  Future<List<num>> getChartData();
 }
 
 class AnalyticsService extends AnalyticsRemoteDataSource {
@@ -24,6 +24,21 @@ class AnalyticsService extends AnalyticsRemoteDataSource {
     if (data.statusCode == 200) {
       if (data.data['result'] != null) {
         return DashboardModel.fromJson(data.data['result']);
+      }
+      throw data.data['errorMessages'].first;
+    }
+    throw data.data['errorMessages'].first;
+  }
+
+  @override
+  Future<List<num>> getChartData() async {
+    final data =
+        await apiService.get(endPoint: EndPoint.getChartDataUrl, query: {
+      'storeId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+    });
+    if (data.statusCode == 200) {
+      if (data.data['result'] != null) {
+        return List<num>.from(data.data['result'].map((e) => e));
       }
       throw data.data['errorMessages'].first;
     }

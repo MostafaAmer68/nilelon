@@ -2,6 +2,8 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/features/store_flow/analytics/domain/model/analytics_response_model.dart';
+import 'package:nilelon/features/store_flow/analytics/presentation/cubit/analytics_cubit.dart';
 
 class LineChartSample extends StatefulWidget {
   const LineChartSample({
@@ -31,19 +33,6 @@ class _LineChartSampleState extends State<LineChartSample> {
     return LineChartData(
       gridData: const FlGridData(
         show: false,
-        // drawVerticalLine: true,
-        // getDrawingHorizontalLine: (value) {
-        //   return const FlLine(
-        //     color: ColorManager.primaryB,
-        //     strokeWidth: 1,
-        //   );
-        // },
-        // getDrawingVerticalLine: (value) {
-        //   return const FlLine(
-        //     color: ColorManager.primaryB,
-        //     strokeWidth: 1,
-        //   );
-        // },
       ),
       titlesData: const FlTitlesData(
         show: false,
@@ -78,15 +67,25 @@ class _LineChartSampleState extends State<LineChartSample> {
       maxY: 6,
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(0, 2),
-            FlSpot(2, 2),
-            FlSpot(4.2, 6),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9, 3),
-            FlSpot(11, 5),
-          ],
+          spots: AnalyticsCubit.get(context).chart.isEmpty ||
+                  AnalyticsCubit.get(context).chart.every((e) => e == 0)
+              ? const [
+                  FlSpot(1, 0),
+                  FlSpot(2, 0),
+                  FlSpot(3, 0),
+                  FlSpot(4, 0),
+                  FlSpot(5, 0),
+                  FlSpot(6, 0),
+                  FlSpot(7, 0),
+                  FlSpot(8, 0),
+                  FlSpot(9, 0),
+                  FlSpot(10, 0),
+                ]
+              : AnalyticsCubit.get(context)
+                  .chart
+                  .map((e) => FlSpot(e.toDouble(), e.toDouble()))
+                  .toList(),
+
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,

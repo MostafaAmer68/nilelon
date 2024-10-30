@@ -13,4 +13,8 @@ class AnalyticsReposImpl extends AnalyticsRepos {
   Future<Either<FailureService, DashboardModel>> getDashboardData() async {
     return exe(() => analyticsRemoteDataSource.getDashboardData());
   }
+  @override
+  Future<Either<FailureService, List<num>>> getChartData() async {
+    return exe(() => analyticsRemoteDataSource.getChartData());
+  }
 }
