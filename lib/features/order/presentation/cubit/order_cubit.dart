@@ -72,7 +72,7 @@ class OrderCubit extends Cubit<OrderState> {
               },
             );
           } else {
-            emit(OrderState.failure('pay-field'));
+            emit(const OrderState.failure('pay-field'));
           }
         },
       );

@@ -120,7 +120,7 @@ GestureDetector productSquarItem(
                           child: Container(
                             width: 35.w, // Increased size to match the image
                             height: 35.w,
-                            padding: EdgeInsets.all(4),
+                            padding: const EdgeInsets.all(4),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               shape: BoxShape.circle,

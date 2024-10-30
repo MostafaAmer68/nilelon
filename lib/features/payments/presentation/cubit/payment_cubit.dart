@@ -119,7 +119,7 @@ class PaymentCubit extends Cubit<PaymentState> {
         );
         BraintreeDropInResult? result = await BraintreeDropIn.start(request);
         nonce.complete(result!.paymentMethodNonce.nonce);
-        log(result!.paymentMethodNonce.nonce.toString());
+        log(result.paymentMethodNonce.nonce.toString());
       });
       return await nonce.future;
     } catch (e) {

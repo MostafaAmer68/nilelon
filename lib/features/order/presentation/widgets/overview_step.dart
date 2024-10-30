@@ -1,4 +1,3 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
@@ -8,12 +7,9 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/font_weight_manger.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
-import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/drop_down_menu/drop_down_menu.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
-import 'package:nilelon/features/order/presentation/progress_cubit/progress_cubit.dart';
 import 'package:nilelon/features/order/presentation/widgets/check_product_item.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 

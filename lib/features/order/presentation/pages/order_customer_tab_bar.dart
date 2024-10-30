@@ -111,8 +111,8 @@ class _OrderManegementTabBarState extends State<OrderManegementTabBar> {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        OrderedCustomerView(),
-                        ShippedCustomerView(),
+                        const OrderedCustomerView(),
+                        const ShippedCustomerView(),
                         ReceivedCustomerView(
                           onStarted: () {
                             cubit.getCustomerOrder('Ordered');

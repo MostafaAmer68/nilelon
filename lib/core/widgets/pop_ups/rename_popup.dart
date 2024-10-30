@@ -5,7 +5,6 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
-import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 
 Future renameSectionDialog(
   BuildContext context,

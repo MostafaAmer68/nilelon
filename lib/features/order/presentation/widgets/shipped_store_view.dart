@@ -2,7 +2,6 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/alert/shipped_alert.dart';

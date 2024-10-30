@@ -7,7 +7,6 @@ import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
-import '../../../shared/pdf_view/pdf_view.dart';
 
 class OrderedSuccessPage extends StatefulWidget {
   const OrderedSuccessPage({super.key});

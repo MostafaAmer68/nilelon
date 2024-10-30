@@ -112,7 +112,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             children: [
               const DefaultDivider(),
               Container(
-                margin: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                 child: BlocBuilder<ProductsCubit, ProductsState>(
                   builder: (context, state) {
                     return state.whenOrNull(
