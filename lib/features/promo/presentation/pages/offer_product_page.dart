@@ -85,7 +85,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
               builder: (context, state) {
                 return state.when(
                   initial: () {
-                    return buildShimmerIndicatorGrid(context);
+                    return Expanded(child: buildShimmerIndicatorGrid(context));
                   },
                   loading: () {
                     return Expanded(child: buildShimmerIndicatorGrid(context));
@@ -100,7 +100,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
                       );
                     } else {
                       return Container(
-                        height: screenHeight(context, 0.73),
+                        height: screenHeight(context, 1),
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: GridView.builder(
                           // physics: const NeverScrollableScrollPhysics(),

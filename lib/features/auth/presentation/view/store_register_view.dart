@@ -143,7 +143,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                     AuthCubit.get(context).regFormCuts.currentState!.validate();
                   },
                   type: TextInputType.text,
-                  image: Assets.assetsImagesProfile,
+                  image: Assets.assetsImagesProfileI,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return S.of(context).enterStoreName;

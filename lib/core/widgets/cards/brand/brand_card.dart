@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -66,22 +68,29 @@ class _BrandCardState extends State<BrandCard> {
                   .copyWith(fontWeight: FontWeight.w600),
             ),
             const Spacer(),
-            !cubit.validationOption['isFollow']
-                ? GradientButtonBuilder(
-                    text: 'Follow',
-                    ontap: () {
-                      cubit.followStore(widget.store.id);
-                    },
-                    height: 45,
-                  )
-                : OutlinedButtonBuilder(
-                    text: 'Following',
-                    ontap: () {
-                      cubit.followStore(widget.store.id);
-                    },
-                    // width: screenWidth(context, 0.55),
-                    height: 45,
-                  ),
+            BlocBuilder<ProfileCubit, ProfileState>(
+              builder: (context, state) {
+                return Visibility(
+                  visible: !HiveStorage.get(HiveKeys.isStore),
+                  child: !cubit.validationOption['isFollow']
+                      ? GradientButtonBuilder(
+                          text: 'Follow',
+                          ontap: () {
+                            cubit.followStore(widget.store.id);
+                          },
+                          height: 45,
+                        )
+                      : OutlinedButtonBuilder(
+                          text: 'Following',
+                          ontap: () {
+                            cubit.followStore(widget.store.id);
+                          },
+                          // width: screenWidth(context, 0.55),
+                          height: 45,
+                        ),
+                );
+              },
+            )
           ],
         ),
       ),

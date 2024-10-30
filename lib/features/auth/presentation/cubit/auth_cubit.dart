@@ -157,7 +157,7 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   Future<void> authStoreRegister(context) async {
-    if (!regFormSto.currentState!.validate()) return;
+    // if (!regFormSto.currentState!.validate()) return;
     emit(StoreRegisterLoading());
     var result = await authRepos.storeRegisterRepos(
       StoreRegisterModel(

@@ -56,15 +56,18 @@ class ProfileService {
   }
 
   Future<String> sendOtpToEmail(String email, context) async {
+    final model = HiveStorage.get(HiveKeys.isStore)
+        ? currentUsr<StoreModel>()
+        : currentUsr<CustomerModel>();
     final response =
         await _apiService.post(endPoint: EndPoint.resetEmailUrl, body: {
-      "tergetSend": currentUsr<CustomerModel>().email,
+      "tergetSend": model.email,
       "userId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       "newValue": email,
     });
     if (response.statusCode == 200) {
       return response.data;
-    } else if (response.statusCode == 400) { 
+    } else if (response.statusCode == 400) {
       // Handle the bad request response
       final errorMessage = response.data;
       errorAlert(context, errorMessage);
@@ -76,10 +79,13 @@ class ProfileService {
     }
   }
 
-  Future<String> resetPhone(String tergetSend, String newValue, context) async {
+  Future<String> resetPhone(String newValue, context) async {
+    final model = HiveStorage.get(HiveKeys.isStore)
+        ? currentUsr<StoreModel>()
+        : currentUsr<CustomerModel>();
     final response =
         await _apiService.post(endPoint: EndPoint.resetPhoneUrl, body: {
-      "tergetSend": currentUsr<CustomerModel>().email,
+      "tergetSend": model.email,
       "userId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       "newValue": newValue,
     });

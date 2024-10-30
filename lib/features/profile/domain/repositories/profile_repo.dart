@@ -48,8 +48,7 @@ abstract class ProfileRepo {
   Future<Either<FailureService, String>> resetPasswordPhone(
       String phone, context);
 
-  Future<Either<FailureService, String>> resetPhone(
-      String tergetSend, String newValue, context);
+  Future<Either<FailureService, String>> resetPhone(String newValue, context);
 
   Future<Either<FailureService, String>> resetPhoneDetails(
       String token, String targetValue, String newValue, context);

@@ -22,7 +22,7 @@ import 'package:nilelon/features/search/data/datasources/search_service.dart';
 import 'package:nilelon/features/search/data/repositories/search_repo_impl.dart';
 import 'package:nilelon/features/shared/recommendation/data/remote_data_source/recommendation_remot_data_source.dart';
 import 'package:nilelon/features/shared/recommendation/data/repos_impl/recommendation_repos_impl.dart';
-import 'package:nilelon/features/store_flow/analytics/data/remote_data_source/analytics_remote_data_source.dart';
+import 'package:nilelon/features/store_flow/analytics/data/remote_data_source/analytics_service.dart';
 import 'package:nilelon/features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
 import 'package:nilelon/features/categories/data/service/category_service.dart';
 import 'package:nilelon/features/categories/data/repo/category_repos_impl.dart';

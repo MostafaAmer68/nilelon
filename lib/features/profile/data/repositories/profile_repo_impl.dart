@@ -168,8 +168,8 @@ class ProfileRepoIMpl implements ProfileRepo {
 
   @override
   Future<Either<FailureService, String>> resetPhone(
-      String tergetSend, String newValue, context) async {
-    return exe(() => _profile.resetPhone(tergetSend, newValue, context));
+      String newValue, context) async {
+    return exe(() => _profile.resetPhone(newValue, context));
   }
 
   @override

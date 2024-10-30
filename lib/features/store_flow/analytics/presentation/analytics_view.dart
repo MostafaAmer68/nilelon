@@ -57,7 +57,10 @@ class _AnalyticsViewState extends State<AnalyticsView> {
         child: BlocBuilder<AnalyticsCubit, AnalyticsState>(
           builder: (context, state) {
             return state.when(failure: (err) {
-              return Text(err);
+              return SizedBox(
+                height: screenHeight(context, 0.6),
+                child: Center(child: Text(err)),
+              );
             }, initial: () {
               return const SizedBox();
             }, loading: () {
