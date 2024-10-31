@@ -1,4 +1,5 @@
 // import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:intl/intl.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/store_flow/analytics/domain/model/analytics_response_model.dart';
@@ -7,7 +8,7 @@ import 'package:nilelon/core/service/network/end_point.dart';
 
 abstract class AnalyticsRemoteDataSource {
   Future<DashboardModel> getDashboardData();
-  Future<List<num>> getChartData();
+  Future<List<num>> getChartData(DateTime endDate, DateTime startDate);
 }
 
 class AnalyticsService extends AnalyticsRemoteDataSource {
@@ -31,10 +32,12 @@ class AnalyticsService extends AnalyticsRemoteDataSource {
   }
 
   @override
-  Future<List<num>> getChartData() async {
+  Future<List<num>> getChartData(DateTime endDate, DateTime startDate) async {
     final data =
         await apiService.get(endPoint: EndPoint.getChartDataUrl, query: {
       'storeId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+      'startDate': DateFormat().format(startDate),
+      'endDate': DateFormat().format(endDate),
     });
     if (data.statusCode == 200) {
       if (data.data['result'] != null) {

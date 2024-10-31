@@ -6,6 +6,7 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_avater_widget.dart';
@@ -46,19 +47,34 @@ class _BrandCardState extends State<BrandCard> {
       },
       child: Container(
         width: screenWidth(context, 0.45),
-        height: 200,
-        padding:
-            const EdgeInsets.only(top: 24, bottom: 12, left: 12, right: 12),
+        height: HiveStorage.get(HiveKeys.isStore) ? 150 : 200,
+        padding: const EdgeInsets.only(
+          top: 24,
+          bottom: 12,
+          left: 12,
+          right: 12,
+        ),
         decoration: BoxDecoration(
-          color: ColorManager.primaryB5,
+          color: HiveStorage.get(HiveKeys.isStore)
+              ? ColorManager.primaryW
+              : ColorManager.primaryB5,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
+          mainAxisAlignment: HiveStorage.get(HiveKeys.isStore)
+              ? MainAxisAlignment.start
+              : MainAxisAlignment.start,
           children: [
-            ProfileAvater(
-              image: widget.store.profilePic ?? '',
-              radius: 40,
-            ),
+            HiveStorage.get(HiveKeys.isStore)
+                ? imageReplacer(
+                    url: widget.store.profilePic ?? '',
+                    height: 150,
+                    width: 300,
+                  )
+                : ProfileAvater(
+                    image: widget.store.profilePic ?? '',
+                    radius: 40,
+                  ),
             const SizedBox(
               height: 12,
             ),
@@ -67,7 +83,12 @@ class _BrandCardState extends State<BrandCard> {
               style: AppStylesManager.customTextStyleBl3
                   .copyWith(fontWeight: FontWeight.w600),
             ),
-            const Spacer(),
+            Text(
+              widget.store.storeSlogan ?? '',
+              style: AppStylesManager.customTextStyleBl3
+                  .copyWith(fontWeight: FontWeight.w600),
+            ),
+            // const Spacer(),
             BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {
                 return Visibility(

@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
@@ -101,21 +99,6 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
                       type: TextInputType.phone,
                     ),
                     TextAndFormFieldColumnNoIcon(
-                      title: lang.warehouseAddress,
-                      label: 'Cairo',
-                      controller: cubit.wareHouseAddressController,
-                      height: 25,
-                      type: TextInputType.text,
-                    ),
-                    // TextAndFormFieldColumnNoIcon(
-                    //   title: lang.profileLink,
-                    //   label: 'TwixiShop',
-                    //   controller: ProfileCubit.get(context).re,
-                    //   height: 25,
-                    //   desc: ' (Facebook or Instagram)',
-                    //   type: TextInputType.text,
-                    // ),
-                    TextAndFormFieldColumnNoIcon(
                       title: lang.websiteLink,
                       label: 'TwixiShop',
                       controller: cubit.websiteLinkController,
@@ -134,17 +117,13 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     ButtonBuilder(
-                        text: lang.cancel,
-                        width: screenWidth(context, 0.44),
-                        height: screenHeight(context, 0.06),
-                        buttonColor: Colors.transparent,
-                        frameColor: ColorManager.primaryB2,
-                        style: AppStylesManager.customTextStyleB4.copyWith(
-                          color: ColorManager.primaryW,
-                        ),
-                        ontap: () {
-                          navigatePop(context: context);
-                        }),
+                      text: lang.cancel,
+                      width: screenWidth(context, 0.44),
+                      height: screenHeight(context, 0.06),
+                      ontap: () {
+                        navigatePop(context: context);
+                      },
+                    ),
                     const SizedBox(
                       width: 12,
                     ),

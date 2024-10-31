@@ -135,7 +135,6 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                     onTap: () {
                                       showModalBottomSheet(
                                         context: context,
-                                        // isScrollControlled: true,
 
                                         backgroundColor: ColorManager.primaryW,
                                         shape: const RoundedRectangleBorder(

@@ -20,12 +20,16 @@ import 'package:nilelon/features/product/presentation/pages/product_edit_page.da
 import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
 import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
+import 'package:svg_flutter/svg.dart';
 
+import '../../../../core/constants/assets.dart';
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/button/gradient_button_builder.dart';
+import '../../../../core/widgets/replacer/image_replacer.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
 import '../../../promo/presentation/pages/appy_offer_page.dart';
+import '../../domain/models/product_model.dart';
 import '../cubit/products_cubit/products_state.dart';
 import '../widgets/color_selector.dart';
 import '../widgets/custom_toggle_button.dart';
@@ -117,6 +121,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                       () {
                     productCubit.deleteProduct(widget.productId);
                     navigatePop(context: context);
+                    navigatePop(context: context);
                   });
                 } else if (value == 'update') {
                   navigateTo(
@@ -132,17 +137,21 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const DefaultDivider(),
-              BlocBuilder<ProductsCubit, ProductsState>(
-                builder: (context, state) {
-                  return state.whenOrNull(
-                    loading: () => buildShimmerIndicatorSmall(500, 600),
-                    success: () => ImageBanner(
-                      images: productCubit.product.productImages
-                          .map((e) => e.url)
-                          .toList(),
-                    ),
-                  )!;
-                },
+              Container(
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                child: BlocBuilder<ProductsCubit, ProductsState>(
+                  builder: (context, state) {
+                    return state.whenOrNull(
+                      loading: () => buildShimmerIndicatorSmall(500, 600),
+                      success: () => ImageBanner(
+                        images: productCubit.product.productImages
+                            .map((e) => e.url)
+                            .toList(),
+                      ),
+                    )!;
+                  },
+                ),
               ),
               const SizedBox(height: 20),
               Center(
@@ -152,21 +161,27 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                   child: BlocBuilder<ProductsCubit, ProductsState>(
                     builder: (context, state) {
                       return state.whenOrNull(
-                          loading: () => buildShimmerIndicatorRow(),
-                          success: () => ListView.builder(
+                        failure: (_) => Text(_),
+                        loading: () => buildShimmerIndicatorRow(),
+                        success: () => productCubit.product ==
+                                ProductModel.empty()
+                            ? buildShimmerIndicatorRow()
+                            : ListView.builder(
                                 itemCount:
                                     productCubit.product.productImages.length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   final image =
                                       productCubit.product.productImages[index];
-                                  return Image.network(
-                                    image.url,
+                                  return imageReplacer(
+                                    url: image.url,
                                     fit: BoxFit.cover,
-                                    // width: 30,
+                                    width: 50,
+                                    radius: 8,
                                   );
                                 },
-                              ))!;
+                              ),
+                      )!;
                     },
                   ),
                 ),
@@ -225,7 +240,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                                 SizedBox(height: 22.h),
                                 _buildColorSelector(),
                                 SizedBox(height: 20.h),
-                                _buildStockCounter(),
+                                // _buildStockCounter(),
                               ],
                             ))!;
                   },
@@ -353,7 +368,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
 
   Widget _buildSizeSelector(S lang) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      // mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text('${lang.size} :', style: AppStylesManager.customTextStyleG10),
         SizeToggleButtons(

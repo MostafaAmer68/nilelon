@@ -13,6 +13,9 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
       : super(const AnalyticsState.initial());
   DashboardModel dashboardModel = DashboardModel.empty();
   List<num> chart = [];
+  DateTime endDate = DateTime.now();
+  DateTime startDate = DateTime.now();
+
   Future<void> getDashboardData() async {
     emit(const AnalyticsState.loading());
     final result = await _analyticsReposImpl.getDashboardData();
@@ -27,7 +30,7 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
 
   Future<void> getChartData() async {
     emit(const AnalyticsState.loading());
-    final result = await _analyticsReposImpl.getChartData();
+    final result = await _analyticsReposImpl.getChartData(endDate, startDate);
     result.fold((er) {
       emit(AnalyticsState.failure(er.errorMsg));
     }, (response) {

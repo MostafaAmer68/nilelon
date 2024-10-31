@@ -19,7 +19,7 @@ class AnalyticsSmallCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: screenWidth(context, 0.45),
-      height: screenHeight(context, 0.115),
+      height: screenHeight(context, 0.1),
       padding: const EdgeInsets.all(16),
       decoration: ShapeDecoration(
         // color: Colors.white,

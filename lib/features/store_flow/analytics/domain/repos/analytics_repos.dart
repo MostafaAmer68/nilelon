@@ -4,5 +4,6 @@ import 'package:nilelon/core/service/failure_service.dart';
 
 abstract class AnalyticsRepos {
   Future<Either<FailureService, DashboardModel>> getDashboardData();
-  Future<Either<FailureService, List<num>>> getChartData();
+  Future<Either<FailureService, List<num>>> getChartData(
+      DateTime endDate, DateTime startDate);
 }

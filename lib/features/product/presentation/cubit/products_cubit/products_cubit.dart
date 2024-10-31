@@ -168,6 +168,8 @@ class ProductsCubit extends Cubit<ProductsState> {
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
+      getStoreProducts(
+          HiveStorage.get<UserModel>(HiveKeys.userModel).id, 1, 10);
       emit(const ProductsState.success());
     });
   }

@@ -35,6 +35,8 @@ import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 import 'features/search/data/repositories/search_repo_impl.dart';
+import 'features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
+import 'features/store_flow/analytics/presentation/cubit/analytics_cubit.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -117,6 +119,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider<ProgressCubit>(
           create: (context) => ProgressCubit(),
         ),
+        BlocProvider(
+          create: (context) =>
+              AnalyticsCubit(locatorService<AnalyticsReposImpl>()),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
@@ -141,7 +147,7 @@ class _MyAppState extends State<MyApp> {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            
+
             supportedLocales: S.delegate.supportedLocales,
             home: const SplashView(),
           );

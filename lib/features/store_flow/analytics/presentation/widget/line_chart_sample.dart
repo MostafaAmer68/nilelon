@@ -2,7 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
-import 'package:nilelon/features/store_flow/analytics/domain/model/analytics_response_model.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/cubit/analytics_cubit.dart';
 
 class LineChartSample extends StatefulWidget {

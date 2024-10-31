@@ -75,11 +75,14 @@ class _ChooseProductViewState extends State<ChooseProductView> {
                         crossAxisSpacing: 4.0,
                         mainAxisSpacing: 12,
                       ),
-                      itemCount:
-                          HiveStorage.get<List>(HiveKeys.categories).length,
+                      itemCount: HiveStorage.get<List>(HiveKeys.categories)
+                          .where((e) => e.name != 'All')
+                          .length,
                       itemBuilder: (context, sizeIndex) {
-                        final category = (HiveStorage.get<List>(
-                            HiveKeys.categories))[sizeIndex];
+                        final category =
+                            (HiveStorage.get<List>(HiveKeys.categories)
+                                    .where((e) => e.name != 'All'))
+                                .toList()[sizeIndex];
 
                         return Column(
                           children: [
@@ -88,10 +91,11 @@ class _ChooseProductViewState extends State<ChooseProductView> {
                               name: category.name!,
                               onTap: () {
                                 navigateTo(
-                                    context: context,
-                                    screen: AddProductView(
-                                      categoryId: category.id!,
-                                    ));
+                                  context: context,
+                                  screen: AddProductView(
+                                    categoryId: category.id!,
+                                  ),
+                                );
                               },
                             ),
                           ],

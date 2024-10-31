@@ -20,7 +20,7 @@ class SizeToggleButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 55,
-      width: screenHeight(context, 0.33),
+      width: screenHeight(context, 0.38),
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: sizes.map((size) {

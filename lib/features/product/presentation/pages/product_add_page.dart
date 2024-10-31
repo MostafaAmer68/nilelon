@@ -84,11 +84,11 @@ class _AddProductViewState extends State<AddProductView> {
               ),
               ProductDetailsWidget(
                 onTapAddButton: () {
-                  cubit.addSize();
+                  cubit.activateVariant();
                   setState(() {});
                 },
                 onTapEditButton: () {
-                  cubit.editSize();
+                  cubit.editVariant();
                   setState(() {});
                 },
                 onTapDeleteButton: () {

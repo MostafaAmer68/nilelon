@@ -23,11 +23,11 @@ GestureDetector analyticsWideCard({required context}) {
     },
     child: SizedBox(
       width: screenWidth(context, 0.92),
-      height: 1.sw > 600 ? 220 : 145,
+      height: 1.sw > 600 ? 100 : 100,
       child: Stack(
         children: [
           Container(
-            height: 1.sw > 600 ? 220 : 145,
+            height: 1.sw > 600 ? 100 : 100,
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: ColorManager.gradientColors,

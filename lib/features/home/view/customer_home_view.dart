@@ -162,7 +162,9 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(14),
         child: Image.asset(
-          Assets.assetsImagesBannar2,
+          Assets.assetsImagesBanner2,
+          width: double.infinity,
+          fit: BoxFit.cover,
           height: MediaQuery.of(context).size.height * .25,
         ),
       ),

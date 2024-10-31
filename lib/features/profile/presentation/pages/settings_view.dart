@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/features/auth/presentation/view/login_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -7,7 +8,6 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/alert/delete_alert.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/profile/presentation/pages/edit_profile_view.dart';
@@ -67,21 +67,29 @@ class SettingsView extends StatelessWidget {
                     navigateTo(context: context, screen: const SecurityView());
                   },
                 ),
-                Visibility(
-                  visible: HiveStorage.get(HiveKeys.userModel) == null,
-                  child: ProfileListTile(
-                    name: lang.logout,
-                    image: Assets.assetsImagesLogout,
-                    isRed: true,
-                    onTap: () {
-                      logoutAlert(context);
-                    },
-                  ),
-                ),
               ],
             ),
           ),
-          ButtonBuilder(
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: ColorManager.primaryW,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Visibility(
+              visible: HiveStorage.get(HiveKeys.userModel) == null,
+              child: ProfileListTile(
+                name: lang.logout,
+                image: Assets.assetsImagesLogout,
+                isRed: true,
+                onTap: () {
+                  logoutAlert(context);
+                },
+              ),
+            ),
+          ),
+          OutlinedButtonBuilder(
             text: lang.deleteAccount,
             ontap: () {
               deleteAlert(
@@ -97,7 +105,7 @@ class SettingsView extends StatelessWidget {
             buttonColor: ColorManager.primaryW,
             frameColor: ColorManager.primaryR,
             style: AppStylesManager.customTextStyleB4
-                .copyWith(color: ColorManager.primaryR, fontSize: 16),
+                .copyWith(color: ColorManager.primaryR, fontSize: 15),
           ),
           const Spacer(),
         ],

@@ -7,7 +7,6 @@ import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
@@ -109,10 +108,6 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
                     text: lang.cancel,
                     width: screenWidth(context, 0.44),
                     height: screenHeight(context, 0.06),
-                    buttonColor: Colors.transparent,
-                    frameColor: ColorManager.primaryB2,
-                    style: AppStylesManager.customTextStyleB4
-                        .copyWith(color: ColorManager.primaryW),
                     ontap: () {
                       navigatePop(context: context);
                     },

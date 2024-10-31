@@ -26,6 +26,7 @@ class DateRow extends StatelessWidget {
     var formattedDate = intll.DateFormat('d/M');
     return ViewAllRow(
       text: lang.date,
+      isStyled: false,
       onPressed: () {
         navigateTo(context: context, screen: const DateRangePicker());
       },

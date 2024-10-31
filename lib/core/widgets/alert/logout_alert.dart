@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
@@ -39,9 +38,6 @@ Future logoutAlert(context) => showDialog(
                   text: lang.no,
                   width: screenWidth(context, 0.30),
                   height: screenHeight(context, 0.06),
-                  buttonColor: Colors.transparent,
-                  frameColor: ColorManager.primaryB2,
-                  style: AppStylesManager.customTextStyleW4,
                   ontap: () {
                     navigatePop(context: context);
                   }),

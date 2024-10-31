@@ -38,41 +38,6 @@ class AddProductCubit extends Cubit<AddproductState> {
   List<File> images = [];
   ProductModel productEdit = ProductModel.empty();
 
-  List<Map<String, bool>> generateIsEditableList(
-      List<String> colors, List<bool> isEditable) {
-    List<Map<String, bool>> editableList = [];
-    for (int i = 0; i < colors.length; i++) {
-      editableList.add({colors[i]: isEditable[i]});
-    }
-    return editableList;
-  }
-
-  Future<void> saveDraft(BuildContext context) async {
-    final List<Variant> variants = HiveStorage.get(HiveKeys.tempVarients) ?? [];
-    final List<DraftProductModel> productDataList =
-        HiveStorage.get(HiveKeys.draftProduct) ?? [];
-
-    final newProductData = DraftProductModel(
-      productPrice: priceC.text,
-      product: AddProductModel(
-        categoryID: categoryId,
-        name: productNameC.text,
-        type: selectedColor,
-        description: productDesC.text,
-        variants: variants,
-        sizeguide: (await convertImageToBase64(sizeGuideImage)),
-        storeId: JwtDecoder.decode(
-            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
-      ),
-      isEditable:
-          generateIsEditableList(colors, isVarientAdded.values.toList()),
-    );
-
-    productDataList.add(newProductData);
-    HiveStorage.set(HiveKeys.draftProduct, productDataList);
-    HiveStorage.remove(HiveKeys.tempVarients);
-  }
-
   List<String> colors = [
     '0xFFD80000',
     '0xFF1F00DF',
@@ -103,8 +68,53 @@ class AddProductCubit extends Cubit<AddproductState> {
 
   List<String> items = ['Male', 'Female', 'UniSex'];
   final ProductsReposImpl _product;
+  bool _checkIfVarientEditable() => isVarientAdded[selectedColor]!;
 
   AddProductCubit(this._product) : super(const AddproductState.initial());
+
+  List<Map<String, bool>> generateIsEditableList(
+      List<String> colors, List<bool> isEditable) {
+    List<Map<String, bool>> editableList = [];
+    for (int i = 0; i < colors.length; i++) {
+      editableList.add({colors[i]: isEditable[i]});
+    }
+    return editableList;
+  }
+
+  bool checkIfVarientAlreadyAdded(Variant variant) =>
+      variant.color == selectedColor.substring(2);
+
+  int calculateTotalSizes() {
+    return sizes
+        .map((e) => e.quantity.text)
+        .fold(0, (sum, controller) => sum + (int.tryParse(controller) ?? 0));
+  }
+
+  Future<void> saveDraft(BuildContext context) async {
+    final List<Variant> variants = HiveStorage.get(HiveKeys.tempVarients) ?? [];
+    final List<DraftProductModel> productDataList =
+        HiveStorage.get(HiveKeys.draftProduct) ?? [];
+
+    final newProductData = DraftProductModel(
+      productPrice: priceC.text,
+      product: AddProductModel(
+        categoryID: categoryId,
+        name: productNameC.text,
+        type: selectedColor,
+        description: productDesC.text,
+        variants: variants,
+        sizeguide: (await convertImageToBase64(sizeGuideImage)),
+        storeId: JwtDecoder.decode(
+            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+      ),
+      isEditable:
+          generateIsEditableList(colors, isVarientAdded.values.toList()),
+    );
+
+    productDataList.add(newProductData);
+    HiveStorage.set(HiveKeys.draftProduct, productDataList);
+    HiveStorage.remove(HiveKeys.tempVarients);
+  }
 
   Future<void> createProduct() async {
     emit(const AddproductState.loading());
@@ -255,7 +265,7 @@ class AddProductCubit extends Cubit<AddproductState> {
       isSubmit = false;
 
       _resetSizeControllersToDefault();
-      initializeSizeControllers();
+      initializeVariant();
 
       AppLogs.infoLog(HiveStorage.get(HiveKeys.tempVarients).toString());
     } else {
@@ -315,8 +325,6 @@ class AddProductCubit extends Cubit<AddproductState> {
         .toList();
   }
 
-  bool _checkIfVarientEditable() => isVarientAdded[selectedColor]!;
-
   void onSelectedColor(
     index,
   ) {
@@ -326,7 +334,7 @@ class AddProductCubit extends Cubit<AddproductState> {
     if (isEdit) {
       initializeVarientsEdit(productEdit);
     } else {
-      initializeSizeControllers();
+      initializeVariant();
     }
     if (_checkIfVarientEditable()) {
       isSubmit = false;
@@ -343,17 +351,16 @@ class AddProductCubit extends Cubit<AddproductState> {
     }
   }
 
-  void addSize() {
+  void activateVariant() {
     isVarientActive = true; // is add for activate variants widget
-    isNotFirstTimeActivated =
-        true; // check for first time variant activated or not
+    isNotFirstTimeActivated = true;
     isSubmit = true; // for submit or upload button only
     for (var item in sizes) {
       item.price.text = priceC.text;
     }
   }
 
-  void editSize() {
+  void editVariant() {
     isVarientActive = true;
     isSubmit = true;
     isVarientAdded[selectedColor] = false;
@@ -390,12 +397,6 @@ class AddProductCubit extends Cubit<AddproductState> {
         HiveStorage.set(HiveKeys.tempVarients, varients);
       }
     }
-  }
-
-  int calculateTotalSizes() {
-    return sizes
-        .map((e) => e.quantity.text)
-        .fold(0, (sum, controller) => sum + (int.tryParse(controller) ?? 0));
   }
 
   void initializeVarientsDraft(DraftProductModel product) {
@@ -543,7 +544,7 @@ class AddProductCubit extends Cubit<AddproductState> {
     };
   }
 
-  void initializeSizeControllers() {
+  void initializeVariant() {
     sizes = SizeTypes.values
         .map(
           (e) => SizeController(
@@ -564,17 +565,13 @@ class AddProductCubit extends Cubit<AddproductState> {
       ),
     );
     if (checkIfVarientAlreadyAdded(varient)) {
-      initializeVarientWidget(varient);
+      initializeVarientItem(varient);
     } else {
       resetVarientWidget();
     }
-    // }
   }
 
-  bool checkIfVarientAlreadyAdded(Variant variant) =>
-      variant.color == selectedColor.substring(2);
-
-  void initializeVarientWidget(Variant variant) async {
+  void initializeVarientItem(Variant variant) async {
     images.clear();
 
     final Completer<File> result = Completer();

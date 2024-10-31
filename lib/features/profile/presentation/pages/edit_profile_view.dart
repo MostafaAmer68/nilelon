@@ -108,17 +108,14 @@ class _EditProfileViewState extends State<EditProfileView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        ButtonBuilder(
-                            text: lang.cancel,
-                            width: screenWidth(context, 0.44),
-                            height: screenHeight(context, 0.06),
-                            buttonColor: Colors.transparent,
-                            frameColor: ColorManager.primaryB2,
-                            style: AppStylesManager.customTextStyleW4
-                                .copyWith(fontSize: 1.sw > 600 ? 22 : 14),
-                            ontap: () {
-                              navigatePop(context: context);
-                            }),
+                          ButtonBuilder(
+                          text: lang.cancel,
+                          width: screenWidth(context, 0.44),
+                          height: screenHeight(context, 0.06),
+                          ontap: () {
+                            navigatePop(context: context);
+                          },
+                        ),
                         const SizedBox(
                           width: 12,
                         ),

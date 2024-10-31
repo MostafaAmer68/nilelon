@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/features/auth/presentation/view/login_page.dart';
 import 'package:nilelon/features/store_flow/subscription/subscription_view.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -8,7 +9,6 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/alert/delete_alert.dart';
 import 'package:nilelon/core/widgets/alert/logout_alert.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/shared/language/language_view.dart';
@@ -17,6 +17,7 @@ import 'package:nilelon/features/profile/presentation/pages/security_page.dart';
 import 'package:nilelon/features/profile/presentation/pages/edit_store_info_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/edit_store_profile_view.dart';
 
+import '../../../../core/widgets/button/outlined_button_builder.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class StoreSettingsView extends StatelessWidget {
@@ -32,8 +33,13 @@ class StoreSettingsView extends StatelessWidget {
       body: Column(
         children: [
           const DefaultDivider(),
-          Padding(
+          Container(
             padding: const EdgeInsets.all(16.0),
+            margin: const EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              color: ColorManager.primaryW,
+              borderRadius: BorderRadius.circular(15),
+            ),
             child: Column(
               children: [
                 ProfileListTile(
@@ -79,19 +85,27 @@ class StoreSettingsView extends StatelessWidget {
                     navigateTo(context: context, screen: const SecurityView());
                   },
                 ),
-                ProfileListTile(
-                  name: lang.logout,
-                  image: Assets.assetsImagesLogout,
-                  isRed: true,
-                  onTap: () {
-                    logoutAlert(context);
-                  },
-                ),
               ],
             ),
           ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+            margin: const EdgeInsets.symmetric(horizontal: 16),
+            decoration: BoxDecoration(
+              color: ColorManager.primaryW,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: ProfileListTile(
+              name: lang.logout,
+              image: Assets.assetsImagesLogout,
+              isRed: true,
+              onTap: () {
+                logoutAlert(context);
+              },
+            ),
+          ),
           const Spacer(),
-          ButtonBuilder(
+          OutlinedButtonBuilder(
             text: lang.deleteAccount,
             ontap: () {
               deleteAlert(
@@ -104,8 +118,10 @@ class StoreSettingsView extends StatelessWidget {
             },
             width: screenWidth(context, 0.42),
             height: screenHeight(context, 0.06),
-            buttonColor: Colors.transparent,
+            buttonColor: ColorManager.primaryW,
             frameColor: ColorManager.primaryR,
+            style: AppStylesManager.customTextStyleB4
+                .copyWith(color: ColorManager.primaryR, fontSize: 15),
           ),
           const Spacer()
         ],

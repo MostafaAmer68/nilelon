@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
-import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
-import 'package:nilelon/features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
-import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/widgets/icon_with_gradient/icon_with_gradient.dart';
 import 'package:nilelon/features/categories/presentation/view/category_view.dart';
 import 'package:nilelon/features/order/presentation/pages/order_store_tab_bar.dart';
 import 'package:nilelon/features/home/view/store_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_view.dart';
 
-import '../store_flow/analytics/presentation/cubit/analytics_cubit.dart';
 
 class StoreBottomTabBar extends StatefulWidget {
   const StoreBottomTabBar({super.key});
@@ -76,27 +71,16 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
                         setState(() {});
                       },
                       child: const ChooseProductView()),
-                  MultiBlocProvider(
-                    providers: [
-                      BlocProvider<ReservationDateCubit>(
-                        create: (context) => ReservationDateCubit(),
-                      ),
-                      BlocProvider(
-                        create: (context) => AnalyticsCubit(
-                            locatorService<AnalyticsReposImpl>()),
-                      ),
-                    ],
-                    child: PopScope(
-                        canPop: false,
-                        onPopInvokedWithResult: (v, s) {
-                          if (v) {
-                            return;
-                          }
-                          selectedIndex = 0;
-                          setState(() {});
-                        },
-                        child: const AnalyticsView()),
-                  ),
+                  PopScope(
+                      canPop: false,
+                      onPopInvokedWithResult: (v, s) {
+                        if (v) {
+                          return;
+                        }
+                        selectedIndex = 0;
+                        setState(() {});
+                      },
+                      child: const AnalyticsView()),
                   PopScope(
                       canPop: false,
                       onPopInvokedWithResult: (v, s) {

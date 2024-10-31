@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart' as intll;
-import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
+import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/features/store_flow/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -152,15 +153,18 @@ class _DateRangePickerState extends State<DateRangePicker> {
                       ButtonBuilder(
                         buttonColor: ColorManager.primaryO,
                         height: 50,
-                        text: 'Confirm',
+                        text: lang(context).confirm,
                         ontap: () {
-                          //  cubit.rangeStart =
+                          AnalyticsCubit.get(context).endDate = cubit.rangeEnd!;
+                          AnalyticsCubit.get(context).startDate =
+                              cubit.rangeStart!;
+                          AnalyticsCubit.get(context).getChartData();
                           navigatePop(context: context);
                         },
                       ),
                       OutlinedButtonBuilder(
                         height: 50,
-                        text: 'Cancel',
+                        text: lang(context).cancel,
                         ontap: () {
                           navigatePop(context: context);
                         },

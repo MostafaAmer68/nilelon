@@ -276,23 +276,43 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                         ),
                         BlocBuilder<ReservationDateCubit, ReservationDateState>(
                           builder: (context, state) {
-                            var cubit = ReservationDateCubit.get(context);
-                            dateStart = cubit.rangeStart;
-                            dateEnd = cubit.rangeEnd;
-
                             return DateRow(
-                              dateEnd: dateEnd,
-                              dateStart: dateStart,
+                              dateEnd: cubit.endDate,
+                              dateStart: cubit.startDate,
                             );
                           },
                         ),
                         SizedBox(
                           height: 16.h,
                         ),
-                        textWithInfoColumn(lang.mos,
-                            lang.isANumberThatHelpYouToKnowHowGoodYoureAsABrandHowMuchSalesShouldBeYourNextTargetAndWhereYouAreStandingInYourMarket),
+                        textWithINfo(
+                          lang.mos,
+                          () {
+                            showDialog(
+                              context: context,
+                              builder: (_) {
+                                return SimpleDialog(
+                                  contentPadding: const EdgeInsets.all(5),
+                                  titlePadding: const EdgeInsets.all(20),
+                                  title: Text(
+                                    lang.isANumberThatHelpYouToKnowHowGoodYoureAsABrandHowMuchSalesShouldBeYourNextTargetAndWhereYouAreStandingInYourMarket,
+                                    style: AppStylesManager.customTextStyleG3,
+                                  ),
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        navigatePop(context: context);
+                                      },
+                                      child: Text(lang.ok),
+                                    )
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
                         SizedBox(
-                          height: screenHeight(context, 0.24),
+                          height: screenHeight(context, 0.21),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.sp),
                             child: Row(
@@ -333,8 +353,30 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                         SizedBox(
                           height: 16.h,
                         ),
-                        textWithInfoColumn(lang.kpis,
-                            lang.AreNumbersWhichIndicatingThatYouareOnTheRightPathToReachYourGoalsEveryTimeTheseNumbersGotHigherThatMeansKeepItGoingYouAreNearerToYourGoalsMoreThanYesterday),
+                        textWithINfo(lang.kpis, () {
+                          showDialog(
+                              context: context,
+                              useSafeArea: true,
+                              builder: (_) {
+                                return SimpleDialog(
+                                  contentPadding: const EdgeInsets.all(5),
+                                  titlePadding: const EdgeInsets.all(20),
+                                  title: Text(
+                                      lang
+                                          .AreNumbersWhichIndicatingThatYouareOnTheRightPathToReachYourGoalsEveryTimeTheseNumbersGotHigherThatMeansKeepItGoingYouAreNearerToYourGoalsMoreThanYesterday,
+                                      style:
+                                          AppStylesManager.customTextStyleG3),
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        navigatePop(context: context);
+                                      },
+                                      child: Text(lang.ok),
+                                    )
+                                  ],
+                                );
+                              });
+                        }),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
                           child: Row(
@@ -389,6 +431,34 @@ class _AnalyticsViewState extends State<AnalyticsView> {
           Text(text2, style: AppStylesManager.customTextStyleG24),
           SizedBox(
             height: 8.h,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Padding textWithINfo(String text, VoidCallback onTap) {
+    return Padding(
+      padding: EdgeInsets.all(16.0.sp),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: AppStylesManager.customTextStyleBl3,
+          ),
+          SizedBox(
+            width: 3.h,
+          ),
+          InkWell(
+            onTap: onTap,
+            child: const Icon(
+              Icons.info,
+              size: 18,
+            ),
+          ),
+          SizedBox(
+            width: 8.h,
           ),
         ],
       ),

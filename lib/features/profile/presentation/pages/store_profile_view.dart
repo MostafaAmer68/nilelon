@@ -111,6 +111,9 @@ class _StoreProfileViewState extends State<StoreProfileView> {
               user.storeSlogan,
               style: AppStylesManager.customTextStyleG5,
             ),
+            const SizedBox(
+              height: 8,
+            ),
             GradientButtonBuilder(
               text: lang.applyOffer,
               ontap: () {

@@ -62,9 +62,8 @@ class ConstTextFieldBuilder extends StatelessWidget {
             borderSide: disabledBorder ?? BorderSide.none,
             borderRadius: BorderRadius.circular(12),
           ),
-          label: Center(
-              child: Text(label,
-                  style: style ?? AppStylesManager.customTextStyleG2)),
+          label:
+              Text(label, style: style ?? AppStylesManager.customTextStyleG2),
         ),
       ),
     );

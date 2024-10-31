@@ -52,28 +52,37 @@ class _OfferProductPageState extends State<OfferProductPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      GradientCheckBox(
-                          value: cubit.selectedProducts.length ==
-                              pcubit.products.length,
-                          onChanged: (value) {
-                            cubit.isSelectedAll = value;
-                            if (value) {
-                              if (cubit.selectedProducts.isNotEmpty) {
-                                cubit.selectedProducts.clear();
-                                cubit.selectedProducts.addAll(pcubit.products);
+                  BlocListener<ProductsCubit, ProductsState>(
+                    listener: (context, state) {
+                      state.mapOrNull(success: (_) {
+                        setState(() {});
+                      });
+                    },
+                    child: Row(
+                      children: [
+                        GradientCheckBox(
+                            value: cubit.selectedProducts.length ==
+                                pcubit.products.length,
+                            onChanged: (value) {
+                              cubit.isSelectedAll = value;
+                              if (value) {
+                                if (cubit.selectedProducts.isNotEmpty) {
+                                  cubit.selectedProducts.clear();
+                                  cubit.selectedProducts
+                                      .addAll(pcubit.products);
+                                } else {
+                                  cubit.selectedProducts
+                                      .addAll(pcubit.products);
+                                }
                               } else {
-                                cubit.selectedProducts.addAll(pcubit.products);
+                                cubit.selectedProducts.clear();
                               }
-                            } else {
-                              cubit.selectedProducts.clear();
-                            }
-                            setState(() {});
-                          }),
-                      const SizedBox(width: 10),
-                      Text(lang.selectAll),
-                    ],
+                              setState(() {});
+                            }),
+                        const SizedBox(width: 10),
+                        Text(lang.selectAll),
+                      ],
+                    ),
                   ),
                   Text(
                       '${lang.selected} ${cubit.selectedProducts.length} / ${pcubit.products.length}'),
@@ -100,7 +109,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
                       );
                     } else {
                       return Container(
-                        height: screenHeight(context, 1),
+                        height: screenHeight(context, 0.75),
                         padding: EdgeInsets.symmetric(horizontal: 16.w),
                         child: GridView.builder(
                           // physics: const NeverScrollableScrollPhysics(),
