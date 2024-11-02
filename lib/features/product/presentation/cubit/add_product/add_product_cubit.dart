@@ -282,7 +282,6 @@ class AddProductCubit extends Cubit<AddproductState> {
     variants.add(productVarieants);
     HiveStorage.set<List<Variant>>(HiveKeys.tempVarients, variants);
     addedVarients.add(productVarieants);
-    log('save');
   }
 
   Variant _createProductVariant() {
