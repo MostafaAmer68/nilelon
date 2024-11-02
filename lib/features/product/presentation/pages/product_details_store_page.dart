@@ -20,9 +20,7 @@ import 'package:nilelon/features/product/presentation/pages/product_edit_page.da
 import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
 import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
-import 'package:svg_flutter/svg.dart';
 
-import '../../../../core/constants/assets.dart';
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/button/gradient_button_builder.dart';
 import '../../../../core/widgets/replacer/image_replacer.dart';
