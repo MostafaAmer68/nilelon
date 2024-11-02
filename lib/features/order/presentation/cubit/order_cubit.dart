@@ -37,9 +37,8 @@ class OrderCubit extends Cubit<OrderState> {
   String selectedShippingMethodId = '';
   String selectedOption = '';
   String selectedCity = '';
-  List<OrderModel> storeOrders = [];
 
-  List<OrderModel> customerOrders = [];
+  List<OrderModel> orders = [];
   String selectedStatus = '';
   List<ShippingMethod> shippingMethods = [];
 
@@ -150,7 +149,7 @@ class OrderCubit extends Cubit<OrderState> {
         emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
-        customerOrders = response;
+        orders = response;
         emit(const OrderState.success());
       },
     );
@@ -164,7 +163,7 @@ class OrderCubit extends Cubit<OrderState> {
         emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
-        storeOrders = response;
+        orders = response;
         emit(const OrderState.success());
       },
     );
@@ -178,7 +177,7 @@ class OrderCubit extends Cubit<OrderState> {
         emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
-        storeOrders = response;
+        orders = response;
         emit(const OrderState.success());
       },
     );

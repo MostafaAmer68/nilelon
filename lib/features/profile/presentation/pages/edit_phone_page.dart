@@ -68,7 +68,7 @@ class EditPhoneNumPage extends StatelessWidget {
                           },
                           resend: () {
                             ProfileCubit.get(context)
-                                .resetPasswordEmail(context);
+                                .resetPasswordEmailOrPhone(context);
                           },
                         ));
                   })

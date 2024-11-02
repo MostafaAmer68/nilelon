@@ -22,7 +22,7 @@ class _CategoryFilterWidgetState extends State<CategoryFilterWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 52,
+      height: 120,
       width: MediaQuery.of(context).size.width,
       child: ListView.builder(
         shrinkWrap: true,
@@ -32,6 +32,7 @@ class _CategoryFilterWidgetState extends State<CategoryFilterWidget> {
           final category = HiveStorage.get<List>(HiveKeys.categories)[index];
           return CategoryFilterItem(
             name: category.name,
+            image: category.image,
             isSelected: widget.selectedCategory == category,
             onTap: () {
               widget.onSelected(category);

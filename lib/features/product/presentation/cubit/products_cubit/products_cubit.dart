@@ -33,16 +33,15 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   List<ProductModel> filterListByCategory(
       CategoryModel selectedCategory, List<ProductModel> filteredProducts) {
-    if (gendar == 'All' && selectedCategory.id.isEmpty) {
+    if (selectedCategory.id.isEmpty) {
       return filteredProducts;
     }
     return filteredProducts.where(
       (product) {
         final matchesCategory = selectedCategory.id.isEmpty ||
             product.categoryID == selectedCategory.id;
-        final matchesGender = gendar == 'All' || product.type == gendar;
 
-        return matchesCategory && matchesGender;
+        return matchesCategory;
       },
     ).toList();
   }
@@ -54,7 +53,6 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       product = response;
-      getReviews(productId);
       emit(const ProductsState.success());
     });
   }
@@ -87,12 +85,14 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   Future<void> getReviews(String productId) async {
-    review.clear();
+    emit(const ProductsState.initial());
+    // review.clear();
     emit(const ProductsState.loading());
     var result = await productsRepos.getReviews(productId);
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
+      emit(const ProductsState.loading());
       review = response;
       emit(const ProductsState.success());
     });
@@ -121,10 +121,12 @@ class ProductsCubit extends Cubit<ProductsState> {
     emit(const ProductsState.loading());
     late final Either<FailureService, List<ProductModel>> result;
 
-    if (HiveStorage.get(HiveKeys.userModel) != null) {
+    if (HiveStorage.get(HiveKeys.userModel) != null &&
+        !HiveStorage.get(HiveKeys.isStore)) {
       result = await productsRepos.getNewInProducts(page, productSize);
     } else {
-      result = await productsRepos.getNewInProductsGuest(page, productSize);
+      result = await productsRepos.getNewInProductsGuest(
+          page, productSize, gendar == 'All' ? 'UniSex' : gendar);
     }
 
     result.fold((failure) {
@@ -146,14 +148,17 @@ class ProductsCubit extends Cubit<ProductsState> {
     late final Either<FailureService, List<ProductModel>> result;
 
     if (HiveStorage.get(HiveKeys.userModel) != null) {
-      result = await productsRepos.getRandomProduct(page, productSize);
+      result = await productsRepos.getRandomProduct(
+          page, productSize, gendar == 'All' ? 'UniSex' : gendar);
     } else {
-      result = await productsRepos.getRandomProductsGuest(page, productSize);
+      result = await productsRepos.getRandomProductsGuest(
+          page, productSize, gendar == 'All' ? 'UniSex' : gendar);
     }
 
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
+      emit(const ProductsState.loading());
       productsHandpack = response;
       emit(const ProductsState.success());
     });
@@ -174,20 +179,17 @@ class ProductsCubit extends Cubit<ProductsState> {
     });
   }
 
-  //?*********************************************************************************
-  //! Get Offers
-  //?*********************************************************************************
-
-  //todo Get Offers Products Pagination
   Future<void> getOffersProducts(int page, int productSize) async {
     products.clear();
     emit(const ProductsState.loading());
     late final Either<FailureService, List<ProductModel>> result;
 
     if (HiveStorage.get(HiveKeys.userModel) != null) {
-      result = await productsRepos.getOffersProducts(page, productSize);
+      result = await productsRepos.getOffersProducts(
+          page, productSize, gendar == 'All' ? 'UniSex' : gendar);
     } else {
-      result = await productsRepos.getOffersProductsGuest(page, productSize);
+      result = await productsRepos.getOffersProductsGuest(
+          page, productSize, gendar == 'All' ? 'UniSex' : gendar);
     }
 
     result.fold((failure) {

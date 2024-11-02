@@ -5,19 +5,20 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/features/order/data/models/order_model.dart';
 
 class OrderStoreCard extends StatelessWidget {
   const OrderStoreCard({
     super.key,
-    required this.image,
-    required this.title,
-    required this.time,
     required this.onTap,
     required this.shippedOnTap,
+    required this.order,
+    required this.image,
+    required this.title,
   });
-  final Widget image;
+  final OrderModel order;
   final String title;
-  final String time;
+  final Widget image;
   final void Function() onTap;
   final void Function() shippedOnTap;
   @override
@@ -99,14 +100,14 @@ class OrderStoreCard extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                 DateFormat('dd-MM-yyyy').format(
+                                  DateFormat('dd-MM-yyyy').format(
                                       DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
-                                          .parse(time)),
+                                          .parse(order.date)),
                                   style: AppStylesManager.customTextStyleG7,
                                 ),
                                 const Spacer(),
                                 GradientButtonBuilder(
-                                  text: 'Shipped',
+                                  text: order.status,
                                   ontap: shippedOnTap,
                                   style: AppStylesManager.customTextStyleW4,
                                   width: 120.w,

@@ -2,28 +2,31 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/features/refund/presentation/pages/refund_history_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/features/order/presentation/widgets/ordered_customer_view.dart';
-import 'package:nilelon/features/order/presentation/widgets/recieved_customer_view.dart';
-import 'package:nilelon/features/order/presentation/widgets/shipped_customer_view.dart';
+import 'package:nilelon/features/order/presentation/widgets/order_view.dart';
+import 'package:svg_flutter/svg.dart';
 
+import '../../../../core/constants/assets.dart';
+import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/order_cubit.dart';
 
-class OrderManegementTabBar extends StatefulWidget {
-  const OrderManegementTabBar({super.key});
+class OrderPage extends StatefulWidget {
+  const OrderPage({super.key});
 
   @override
-  State<OrderManegementTabBar> createState() => _OrderManegementTabBarState();
+  State<OrderPage> createState() => _OrderPageState();
 }
 
-class _OrderManegementTabBarState extends State<OrderManegementTabBar> {
+class _OrderPageState extends State<OrderPage> {
   int selectedIndex = 0;
   late final OrderCubit cubit;
-
+  bool isStore = HiveStorage.get(HiveKeys.isStore);
   @override
   void initState() {
     cubit = OrderCubit.get(context);
@@ -111,11 +114,39 @@ class _OrderManegementTabBarState extends State<OrderManegementTabBar> {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        const OrderedCustomerView(),
-                        const ShippedCustomerView(),
-                        ReceivedCustomerView(
-                          onStarted: () {
-                            cubit.getCustomerOrder('Ordered');
+                        OrderView(
+                          image: SvgPicture.asset(
+                              Assets.assetsImagesPackageAccept),
+                          title:
+                              isStore ? lang.newOrder : lang.orderHasDelivered,
+                          status: 'Ordered',
+                          onTapHistory: () {
+                            navigateTo(
+                                context: context,
+                                screen: const ReturnHistoryPage());
+                          },
+                        ),
+                        OrderView(
+                          image:
+                              SvgPicture.asset(Assets.assetsImagesInProgress),
+                          title: isStore
+                              ? lang.orderIsShipped
+                              : lang.orderHasDistance,
+                          status: 'Shipped',
+                          onTapHistory: () {
+                            navigateTo(
+                                context: context,
+                                screen: const ReturnHistoryPage());
+                          },
+                        ),
+                        OrderView(
+                          image: Image.asset(Assets.assetsImagesArrived2),
+                          title: lang.orderHasArrived,
+                          status: 'Delivered',
+                          onTapHistory: () {
+                            navigateTo(
+                                context: context,
+                                screen: const ReturnHistoryPage());
                           },
                         ),
                       ],

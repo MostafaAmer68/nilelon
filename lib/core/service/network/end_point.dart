@@ -99,12 +99,13 @@ class EndPoint {
 
   //todo Customer Products Urls
   static const String getFollowedProductsUrl = '/Product/GetFollowedProducts';
-  static const String getNewProductsUrl = '/Product/GetNewNProducts';
-  static const String getRandomProductsUrl = '/Product/GetRandomProducts';
+  static const String getNewProductsUrl = '/Product//GetCustomerRandomProducts';
+  static const String getRandomProductsUrl =
+      '/Product/GetCustomerRandomProducts';
   static const String getNewProductsGuestUrl = '/Product/GetNewNProductsGuest';
   static const String getRandomProductsGuestUrl =
       '/Product/GetRandomProductsGuest';
-  static const String getCustomersOffersUrl = '/Product/GetOffers';
+  static const String getOffers = '/Product/GetOffers';
   static const String getProductByCategory = '/Product/GetProductsByCategory';
   static const String getProductById = '/Product/GetProductDetails/';
   static const String getStoreOffersUrl = '/Product/GetOffersForStore';

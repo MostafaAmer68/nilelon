@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
-import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget%20copy.dart';
+import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_card/offers_card.dart';
@@ -210,12 +209,13 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
               width: 8,
             ),
             Visibility(
-              visible: HiveStorage.get(HiveKeys.isStore),
+              // visible: HiveStorage.get(HiveKeys.isStore),
               child: Expanded(
                 child: GendarFilterWidget(
                   selectedCategory: cubit.gendar,
                   onSelected: (gendar) {
                     cubit.gendar = gendar;
+                    widget.onStartPage();
                     setState(() {});
                   },
                 ),

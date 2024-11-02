@@ -14,6 +14,10 @@ class Assets {
   /// assets/fonts/Poppins-Regular.ttf
   static const String assetsFontsPoppinsRegular = "assets/fonts/Poppins-Regular.ttf";
 
+  /// Assets for assetsImagesAllCategory
+  /// assets/images/allCategory.png
+  static const String assetsImagesAllCategory = "assets/images/allCategory.png";
+
   /// Assets for assetsImagesAmico
   /// assets/images/amico.svg
   static const String assetsImagesAmico = "assets/images/amico.svg";

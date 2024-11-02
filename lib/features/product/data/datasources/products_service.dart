@@ -72,12 +72,13 @@ class ProductsService {
     }
   }
 
-  Future<List<ProductModel>> getRandomProducts(int page, int pageSize) async {
+  Future<List<ProductModel>> getRandomProducts(
+      int page, int pageSize, String productType) async {
     final data = await apiService.get(
       endPoint: EndPoint.getRandomProductsUrl,
       query: {
-        'Customerid': JwtDecoder.decode(
-            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+        'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+        'productType': productType,
         'page': page,
         'pageSize': pageSize,
       },
@@ -127,10 +128,10 @@ class ProductsService {
   }
 
   Future<List<ProductModel>> getNewInProductsGuest(
-      int page, int pageSize) async {
+      int page, int pageSize, String productType) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getNewProductsGuestUrl, query: {
-      'productType': HiveStorage.get(HiveKeys.shopFor),
+      'productType': productType,
       'page': page,
       'pageSize': pageSize,
     });
@@ -143,11 +144,11 @@ class ProductsService {
   }
 
   Future<List<ProductModel>> getRandomProductsGuest(
-      int page, int pageSize) async {
+      int page, int pageSize, String productType) async {
     final data = await apiService.get(
       endPoint: EndPoint.getRandomProductsGuestUrl,
       query: {
-        'ProductType': HiveStorage.get(HiveKeys.shopFor),
+        'productType': productType,
         'page': page,
         'pageSize': pageSize,
       },
@@ -161,12 +162,13 @@ class ProductsService {
   }
 
   Future<List<ProductModel>> getCustomersOffersProducts(
-      int page, int pageSize) async {
+      int page, int pageSize, String productType) async {
     final data = await apiService.get(
-      endPoint: EndPoint.getCustomersOffersUrl,
+      endPoint: EndPoint.getOffers,
       query: {
         'customerId': JwtDecoder.decode(
             HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+        'productType': productType,
         'page': page,
         'pageSize': pageSize,
       },
@@ -180,12 +182,11 @@ class ProductsService {
   }
 
   Future<List<ProductModel>> getOffersProductsGuest(
-      int page, int pageSize) async {
+      int page, int pageSize, String productType) async {
     final data = await apiService.get(
       endPoint: EndPoint.getStoreOffersUrl,
       query: {
-        // 'customerId': JwtDecoder.decode(
-        //     HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+        'productType': productType,
         'page': page,
         'pageSize': pageSize,
       },

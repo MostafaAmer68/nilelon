@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -29,25 +30,13 @@ class ProfileGuestPage extends StatelessWidget {
         children: [
           const DefaultDivider(),
           const Spacer(),
-          SvgPicture.asset('assets/images/amico.svg'),
+          SvgPicture.asset(Assets.assetsImagesAmico),
           const SizedBox(height: 30),
           Text(
             S.of(context).guestMsg,
             style: AppStylesManager.customTextStyleBl,
           ),
           const SizedBox(height: 30),
-          // TextButton.icon(
-          //     iconAlignment: IconAlignment.end,
-          //     onPressed: () {
-          //       navigateTo(context: context, screen: const SettingsView());
-          //     },
-          //     label:
-          //         Text('Settings', style: AppStylesManager.customTextStyleG2),
-          //     icon: const Icon(
-          //       Icons.arrow_forward_ios,
-          //       color: ColorManager.primaryG,
-          //       size: 15,
-          //     )),
           const SizedBox(height: 30),
           GradientButtonBuilder(
             text: S.of(context).createAccount,

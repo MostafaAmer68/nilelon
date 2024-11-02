@@ -2,19 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
-import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/resources/color_manager.dart';
 
-class CategoryFilterItem extends StatelessWidget {
-  const CategoryFilterItem(
-      {super.key,
-      required this.name,
-      required this.isSelected,
-      required this.onTap,
-      required this.image});
+class GanderFilterItem extends StatelessWidget {
+  const GanderFilterItem({
+    super.key,
+    required this.name,
+    required this.isSelected,
+    required this.onTap,
+  });
   final String name;
-  final String image;
   final bool isSelected;
   final VoidCallback onTap;
   @override
@@ -43,24 +41,16 @@ class CategoryFilterItem extends StatelessWidget {
                     ),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-                child: name == 'All'
-                    ? Image.asset(
-                        Assets.assetsImagesAllCategory,
-                        width: 40,
-                        height: 40,
-                      )
-                    : imageReplacer(url: image, width: 40, height: 40),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                child: Center(
+                  child: Text(
+                    name,
+                    textAlign: TextAlign.center,
+                    style: AppStylesManager.customTextStyleB4,
+                  ),
+                ),
               ),
             ),
-            const SizedBox(height: 10),
-            Center(
-              child: Text(
-                name,
-                textAlign: TextAlign.center,
-                style: AppStylesManager.customTextStyleB4,
-              ),
-            )
           ],
         ),
       ),

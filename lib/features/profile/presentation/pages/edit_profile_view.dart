@@ -108,7 +108,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                          ButtonBuilder(
+                        ButtonBuilder(
                           text: lang.cancel,
                           width: screenWidth(context, 0.44),
                           height: screenHeight(context, 0.06),
@@ -162,11 +162,12 @@ class _EditProfileViewState extends State<EditProfileView> {
               child: cubit.image.path.isEmpty &&
                       currentUsr<CustomerModel>().profilePic.isEmpty
                   ? Image.asset(Assets.assetsImagesProfile)
-                  : currentUsr<CustomerModel>().profilePic.isNotEmpty &&
+                  : currentUsr<CustomerModel>().profilePic.isEmpty &&
                           cubit.image.path.isNotEmpty
                       ? Image.file(cubit.image)
                       : imageReplacer(
-                          url: currentUsr<CustomerModel>().profilePic),
+                          url: currentUsr<CustomerModel>().profilePic,
+                        ),
             ),
           ),
           Positioned(

@@ -69,7 +69,10 @@ class CartService {
   Future<void> addToCart(AddToCartModel model) async {
     final Response data = await apiService.post(
       endPoint: EndPoint.addToCartUrl,
-      body: model.toMap(),
+      query: {
+        'customerId': model.customerId,
+      },
+      body: [model.toMap()],
     );
     if (data.statusCode == HttpStatus.ok) {
       return data.data;

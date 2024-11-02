@@ -39,20 +39,20 @@ class ProductsReposImpl extends ProductsRepos {
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getRandomProduct(
-      int page, int productSize) async {
-    return exe(() => _productService.getRandomProducts(page, productSize));
+      int page, int productSize,String productType) async {
+    return exe(() => _productService.getRandomProducts(page, productSize,productType));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getNewInProductsGuest(
-      int page, int productSize) async {
-    return exe(() => _productService.getNewInProductsGuest(page, productSize));
+      int page, int productSize, String productType) async {
+    return exe(() => _productService.getNewInProductsGuest(page, productSize,productType));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getRandomProductsGuest(
-      int page, int productSize) async {
-    return exe(() => _productService.getRandomProductsGuest(page, productSize));
+      int page, int productSize, String productType) async {
+    return exe(() => _productService.getRandomProductsGuest(page, productSize,productType));
   }
 
   @override
@@ -106,15 +106,16 @@ class ProductsReposImpl extends ProductsRepos {
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getOffersProducts(
-      int page, int productSize) async {
-    return exe(
-        () => _productService.getCustomersOffersProducts(page, productSize));
+      int page, int productSize, String productType) async {
+    return exe(() => _productService.getCustomersOffersProducts(
+        page, productSize, productType));
   }
 
   @override
   Future<Either<FailureService, List<ProductModel>>> getOffersProductsGuest(
-      int page, int productSize) async {
-    return exe(() => _productService.getOffersProductsGuest(page, productSize));
+      int page, int productSize, String productType) async {
+    return exe(() =>
+        _productService.getOffersProductsGuest(page, productSize, productType));
   }
 
   @override

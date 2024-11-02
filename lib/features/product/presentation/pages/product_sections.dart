@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconsax/iconsax.dart';
@@ -31,6 +33,7 @@ class _SectionsProductViewState extends State<SectionsProductView> {
   void initState() {
     cubit = ProductsCubit.get(context);
     cubit.categoryId = widget.categoryId;
+    log(cubit.categoryId);
     // selectedCategory = widget.selectedCat;
     cubit.getProductByCategory(1, 10);
     super.initState();
@@ -53,6 +56,7 @@ class _SectionsProductViewState extends State<SectionsProductView> {
               child: BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
                   return state.whenOrNull(
+                    failure: (er) => Center(child: Text(er)),
                     loading: () => buildShimmerIndicatorGrid(context),
                     success: () => GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),

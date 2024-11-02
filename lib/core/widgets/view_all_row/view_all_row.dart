@@ -67,7 +67,7 @@ class ViewAllRow extends StatelessWidget {
                   onTap: onPressed,
                   child: Container(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 5,
+                      horizontal: 20,
                       vertical: 10,
                     ),
                     decoration: isStyled

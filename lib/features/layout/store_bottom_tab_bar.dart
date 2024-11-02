@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:nilelon/features/order/presentation/pages/order_customer_tab_bar.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/icon_with_gradient/icon_with_gradient.dart';
 import 'package:nilelon/features/categories/presentation/view/category_view.dart';
-import 'package:nilelon/features/order/presentation/pages/order_store_tab_bar.dart';
 import 'package:nilelon/features/home/view/store_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_view.dart';
-
 
 class StoreBottomTabBar extends StatefulWidget {
   const StoreBottomTabBar({super.key});
@@ -60,7 +59,7 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
                         selectedIndex = 0;
                         setState(() {});
                       },
-                      child: const OrderTabBar()),
+                      child: const OrderPage()),
                   PopScope(
                       canPop: false,
                       onPopInvokedWithResult: (v, s) {

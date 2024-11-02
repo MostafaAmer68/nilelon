@@ -9,6 +9,7 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/auth/presentation/view/login_page.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../core/constants/assets.dart';
 import '../../../core/widgets/scaffold_image.dart';
@@ -28,28 +29,18 @@ class ShopOrSellView extends StatelessWidget {
             const Spacer(
               flex: 12,
             ),
-            Container(
+            SvgPicture.asset(
+              Assets.assetsImagesLogo,
               width: 60.w,
-              height: 60.w,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(Assets.assetsImagesLogo),
-                  fit: BoxFit.fill,
-                ),
-              ),
+              height: 60.h,
             ),
             SizedBox(
               height: 22.h,
             ),
-            Container(
+            Image.asset(
+              Assets.assetsImagesNilelonEcommerce,
               width: 184.w,
               height: 68.w,
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/nilelonEcommerce.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
             ),
             const Spacer(
               flex: 2,

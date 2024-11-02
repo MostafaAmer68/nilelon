@@ -23,17 +23,17 @@ abstract class ProductsRepos {
   Future<Either<FailureService, List<ProductModel>>> getNewInProducts(
       int page, int productSize);
   Future<Either<FailureService, List<ProductModel>>> getRandomProduct(
-      int page, int productSize);
+      int page, int productSize, String productType);
   Future<Either<FailureService, List<ProductModel>>> getNewInProductsGuest(
-      int page, int productSize);
+      int page, int productSize, String productType);
   Future<Either<FailureService, List<ProductModel>>> getRandomProductsGuest(
-      int page, int productSize);
+      int page, int productSize, String productType);
   Future<Either<FailureService, List<ProductModel>>> getStoreProfileItems(
       String storeId, int page, int productSize);
   Future<Either<FailureService, List<ProductModel>>> getOffersProducts(
-      int page, int productSize);
+      int page, int productSize, String productTypes);
   Future<Either<FailureService, List<ProductModel>>> getOffersProductsGuest(
-      int page, int productSize);
+      int page, int productSize, String productType);
   Future<Either<FailureService, void>> createProduct(AddProductModel model);
   Future<Either<FailureService, void>> updateProduct(UpdateProduct model);
   Future<Either<FailureService, void>> updateVariant(UpdateVariantsModel model);

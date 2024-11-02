@@ -27,14 +27,16 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
   @override
   void initState() {
     // if (HiveStorage.get(HiveKeys.userModel) != null) {
-    ProductsCubit.get(context).getFollowedProducts(page, pageSize);
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-              scrollController.position.maxScrollExtent &&
-          !isLoadMore) {
-        getMoreData();
-      }
-    });
+    if (HiveStorage.get(HiveKeys.userModel) != null) {
+      ProductsCubit.get(context).getFollowedProducts(page, pageSize);
+      scrollController.addListener(() {
+        if (scrollController.position.pixels ==
+                scrollController.position.maxScrollExtent &&
+            !isLoadMore) {
+          getMoreData();
+        }
+      });
+    }
     // }
     super.initState();
   }
@@ -58,48 +60,48 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
         return state.when(initial: () {
-          return buildShimmerIndicatorGrid(context);
+          return Center(child: Text(lang(context).guestMsg));
         }, loading: () {
           return buildShimmerIndicatorGrid(context);
         }, success: () {
-          return ProductsCubit.get(context).products.isEmpty
-              ? SizedBox(
-                  height: 180.h,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        S.of(context).noFollowingAnyStore,
-                        style: AppStylesManager.customTextStyleG2,
-                      ),
-                    ],
+          if (ProductsCubit.get(context).products.isEmpty) {
+            return SizedBox(
+              height: 180.h,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    S.of(context).noFollowingAnyStore,
+                    style: AppStylesManager.customTextStyleG2,
                   ),
-                )
-              : Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  child: GridView.builder(
-                    controller: scrollController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: gridDelegate(context),
-                    shrinkWrap: true,
-                    itemCount: isLoadMore
-                        ? ProductsCubit.get(context).products.length + 1
-                        : ProductsCubit.get(context).products.length,
-                    itemBuilder: (context, sizeIndex) {
-                      if (sizeIndex ==
-                              ProductsCubit.get(context).products.length &&
-                          isLoadMore) {
-                        return buildShimmerIndicatorSmall();
-                      } else {
-                        return productSquarItem(
-                          context: context,
-                          product:
-                              ProductsCubit.get(context).products[sizeIndex],
-                        );
-                      }
-                    },
-                  ),
-                );
+                ],
+              ),
+            );
+          } else {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: GridView.builder(
+                controller: scrollController,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: gridDelegate(context),
+                shrinkWrap: true,
+                itemCount: isLoadMore
+                    ? ProductsCubit.get(context).products.length + 1
+                    : ProductsCubit.get(context).products.length,
+                itemBuilder: (context, sizeIndex) {
+                  if (sizeIndex == ProductsCubit.get(context).products.length &&
+                      isLoadMore) {
+                    return buildShimmerIndicatorSmall();
+                  } else {
+                    return productSquarItem(
+                      context: context,
+                      product: ProductsCubit.get(context).products[sizeIndex],
+                    );
+                  }
+                },
+              ),
+            );
+          }
         }, failure: (message) {
           return SizedBox(
               height: 100,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
@@ -20,6 +21,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   final ProfileRepoIMpl _profileRepoIMpl;
   ProfileCubit(this._profileRepoIMpl) : super(const ProfileState.initial());
   TextEditingController emailController = TextEditingController();
+  TextEditingController emailOrPhoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -32,6 +34,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController sloganController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   String followStatus = '';
+  GlobalKey<FormState> formResetPass = GlobalKey();
   StoreProfileModel? storeProfile;
   List<StoreProfileModel> stores = [];
   Map<String, dynamic> validationOption = {
@@ -240,28 +243,24 @@ class ProfileCubit extends Cubit<ProfileState> {
     });
   }
 
-  Future<void> resetPasswordPhone(context) async {
+  Future<void> resetPasswordEmailOrPhone(context) async {
     emit(const ProfileState.loading());
-
-    var result = await _profileRepoIMpl.resetPasswordPhone(
-      phoneController.text,
-      context,
-    );
-    result.fold((failure) {
-      emit(ProfileState.failure(failure.errorMsg));
-    }, (response) {
-      emit(const ProfileState.success());
-      HiveStorage.set(HiveKeys.token, response);
-    });
-  }
-
-  Future<void> resetPasswordEmail(context) async {
-    emit(const ProfileState.loading());
-
-    var result = await _profileRepoIMpl.resetPasswordEmail(
-      emailController.text,
-      context,
-    );
+    var result;
+    if (AuthCubit.get(context)
+        .emailRegex
+        .hasMatch(emailOrPhoneController.text)) {
+      result = await _profileRepoIMpl.resetPasswordEmail(
+        emailOrPhoneController.text,
+        context,
+      );
+    } else if (AuthCubit.get(context)
+        .phoneRegex
+        .hasMatch(emailOrPhoneController.text)) {
+      result = await _profileRepoIMpl.resetPasswordPhone(
+        emailOrPhoneController.text,
+        context,
+      );
+    }
     result.fold((failure) {
       emit(ProfileState.failure(failure.errorMsg));
     }, (response) {

@@ -1,4 +1,3 @@
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -246,8 +245,11 @@ class CartItemWidget extends StatelessWidget {
                   ),
                 ),
               ]),
-          child: CartItemCard(
-            cart: cart,
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CartItemCard(
+              cart: cart,
+            ),
           ),
         )
       ],

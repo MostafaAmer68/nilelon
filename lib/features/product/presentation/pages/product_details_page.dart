@@ -58,7 +58,6 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
     cubit = CartCubit.get(context);
     productCubit = ProductsCubit.get(context);
     productCubit.getProductDetails(widget.productId);
-    productCubit.getReviews(widget.productId);
   }
 
   void incrementCounter() {
@@ -112,7 +111,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             children: [
               const DefaultDivider(),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
                 child: BlocBuilder<ProductsCubit, ProductsState>(
                   builder: (context, state) {
                     return state.whenOrNull(
@@ -135,7 +135,6 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                     onTap: () {
                                       showModalBottomSheet(
                                         context: context,
-
                                         backgroundColor: ColorManager.primaryW,
                                         shape: const RoundedRectangleBorder(
                                           borderRadius: BorderRadius.only(
@@ -332,27 +331,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               const SizedBox(height: 15),
               const Divider(color: ColorManager.primaryG8, height: 4),
               const SizedBox(height: 24),
-              BlocBuilder<ProductsCubit, ProductsState>(
-                builder: (context, state) {
-                  return state.whenOrNull(
-                    failure: (_) => Text(_),
-                    loading: () => buildShimmerIndicatorSmall(),
-                    success: () {
-                      if (productCubit.review.isEmpty) {
-                        return Center(child: Text(lang.noReviews));
-                      }
-                      return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: productCubit.review.length,
-                        itemBuilder: (context, index) {
-                          final review = productCubit.review[index];
-                          return RatingContainer(review: review);
-                        },
-                      );
-                    },
-                  )!;
-                },
-              ),
+              ReviewWidget(productId: widget.productId),
               const SizedBox(height: 24),
             ],
           ),
@@ -550,6 +529,58 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class ReviewWidget extends StatefulWidget {
+  const ReviewWidget({
+    super.key,
+    required this.productId,
+  });
+  final String productId;
+
+  @override
+  State<ReviewWidget> createState() => _ReviewWidgetState();
+}
+
+class _ReviewWidgetState extends State<ReviewWidget> {
+  late final ProductsCubit cubit;
+
+  @override
+  void initState() {
+    cubit = ProductsCubit.get(context);
+    cubit.getReviews(widget.productId);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocConsumer<ProductsCubit, ProductsState>(
+      listener: (context, state) {
+        state.mapOrNull(success: (_) {
+          setState(() {});
+        });
+      },
+      builder: (context, state) {
+        return state.whenOrNull(
+          failure: (_) => Text(_),
+          loading: () => buildShimmerIndicatorSmall(),
+          success: () {
+            if (cubit.review.isEmpty) {
+              return Center(child: Text(lang(context).noReviews));
+            }
+            return ListView.builder(
+              shrinkWrap: true,
+              itemCount: cubit.review.length,
+              itemBuilder: (context, index) {
+                final review = cubit.review[index];
+                return RatingContainer(review: review);
+              },
+            );
+          },
+        )!;
+      },
     );
   }
 }

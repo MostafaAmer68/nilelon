@@ -22,37 +22,20 @@ class ProfileService {
     });
     if (response.statusCode == 200) {
       return response.data as String;
-    } else if (response.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = response.data;
-      errorAlert(context, errorMessage);
-      throw Exception('Google Register failed: $errorMessage');
-    } else {
-      // Handle other status codes if necessary
-      //  errorAlert(context, errorMessage);
-      throw Exception(
-          'Failed to Google Register: Unexpected status code ${response.statusCode}');
     }
+    //  errorAlert(context, errorMessage);
+    throw Exception('Unexpected: ${response.data}');
   }
 
   Future<String> resetPasswordPhone(String phone, context) async {
     final Response response = await _apiService
         .post(endPoint: EndPoint.resetPasswordPhoneUrl, query: {
-      'phone': phone,
+      'phone': '+2${phone.startsWith('0') ? '' : '0'}$phone',
     });
     if (response.statusCode == 200) {
       return response.data as String;
-    } else if (response.statusCode == 400) {
-      // Handle the bad request response
-      final errorMessage = response.data;
-      errorAlert(context, errorMessage);
-      throw Exception('Google Register failed: $errorMessage');
-    } else {
-      // Handle other status codes if necessary
-      //  errorAlert(context, errorMessage);
-      throw Exception(
-          'Failed to Google Register: Unexpected status code ${response.statusCode}');
     }
+    throw Exception('Unexpected: ${response.data}');
   }
 
   Future<String> sendOtpToEmail(String email, context) async {
@@ -217,15 +200,22 @@ class ProfileService {
     );
     if (response.statusCode == 200) {
       final s = HiveStorage.get<UserModel>(HiveKeys.userModel);
-      final userModel = UserModel(
+      if (response.data['result'] is Map<String, dynamic>) {
+        final userModel = UserModel(
           id: s.id,
           token: s.token,
           role: s.role,
-          userData: CustomerModel.fromMap(response.data['result']));
-      HiveStorage.set(
-        HiveKeys.userModel,
-        userModel,
-      );
+          userData: CustomerModel.fromMap(
+            response.data['result'],
+          ),
+        );
+        HiveStorage.set(
+          HiveKeys.userModel,
+          userModel,
+        );
+      } else {
+        throw response.data['errorMessages'];
+      }
       return '';
     } else {
       // Handle other status codes if necessary

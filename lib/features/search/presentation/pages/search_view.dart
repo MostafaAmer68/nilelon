@@ -116,11 +116,14 @@ class _SearchPageState extends State<SearchPage> {
                         mainAxisExtent: 1.sw > 600 ? 300 : 220,
                         mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                       ),
-                      itemCount:
-                          HiveStorage.get<List>(HiveKeys.categories).length,
+                      itemCount: HiveStorage.get<List>(HiveKeys.categories)
+                          .where((e) => e.id != '')
+                          .length,
                       itemBuilder: (context, index) {
                         final category =
-                            HiveStorage.get<List>(HiveKeys.categories)[index];
+                            HiveStorage.get<List>(HiveKeys.categories)
+                                .where((e) => e.id != '')
+                                .toList()[index];
                         return Column(
                           children: [
                             SearchSectionItems(

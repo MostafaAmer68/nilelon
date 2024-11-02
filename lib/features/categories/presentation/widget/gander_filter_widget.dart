@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
 
 import 'cateogyr_filter_item.dart';
+import 'gander_filter_item.dart';
 
 class GendarFilterWidget extends StatefulWidget {
   const GendarFilterWidget({
@@ -20,7 +20,7 @@ class _GendarFilterWidgetState extends State<GendarFilterWidget> {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: HiveStorage.get(HiveKeys.isStore),
+      // visible: HiveStorage.get(HiveKeys.isStore),
       child: SizedBox(
         height: 52,
         width: MediaQuery.of(context).size.width,
@@ -30,7 +30,7 @@ class _GendarFilterWidgetState extends State<GendarFilterWidget> {
           itemCount: gander.length,
           itemBuilder: (context, index) {
             final ganderItem = gander[index];
-            return CategoryFilterItem(
+            return GanderFilterItem(
               name: ganderItem,
               isSelected: widget.selectedCategory == ganderItem,
               onTap: () {

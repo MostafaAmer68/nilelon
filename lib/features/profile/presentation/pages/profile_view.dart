@@ -83,8 +83,7 @@ class ProfileView extends StatelessWidget {
                         image: Assets.assetsImagesBag,
                         onTap: () {
                           navigateTo(
-                              context: context,
-                              screen: const OrderManegementTabBar());
+                              context: context, screen: const OrderPage());
                         },
                       ),
                       ProfileListTile(

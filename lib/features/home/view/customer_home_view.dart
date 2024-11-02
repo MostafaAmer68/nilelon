@@ -20,6 +20,8 @@ import 'package:nilelon/core/widgets/custom_app_bar/home_custom_app_bar.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/search/presentation/pages/search_view.dart';
 
+import '../../layout/customer_bottom_tab_bar.dart';
+
 class CustomerHomeView extends StatefulWidget {
   const CustomerHomeView({super.key});
 
@@ -98,6 +100,14 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
               ViewAllRow(
                 text: lang.following,
                 onPressed: () {
+                  if (HiveStorage.get(HiveKeys.userModel) == null) {
+                    navigateAndRemoveUntil(
+                        context: context,
+                        screen: const CustomerBottomTabBar(
+                          index: 3,
+                        ));
+                    return;
+                  }
                   navigateTo(
                     context: context,
                     screen: ProductsViewAll(
@@ -152,7 +162,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
           screen: ProductsViewAll(
             notFoundTitle: lang(context).noProductNewIn,
             isHandpicked: true,
-            appBarTitle: lang(context).handPicked,
+            appBarTitle: lang(context).hotPicks,
             onStartPage: () {
               ProductsCubit.get(context).getRandomProducts(1, 50);
             },
