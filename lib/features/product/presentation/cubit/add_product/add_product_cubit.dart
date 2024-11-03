@@ -91,44 +91,56 @@ class AddProductCubit extends Cubit<AddproductState> {
   }
 
   Future<void> saveDraft(BuildContext context) async {
-    final List<Variant> variants = HiveStorage.get(HiveKeys.tempVarients) ?? [];
-    final List<DraftProductModel> productDataList =
-        HiveStorage.get(HiveKeys.draftProduct) ?? [];
+    emit(const AddproductState.loading());
+    try {
+      final List<Variant> variants =
+          HiveStorage.get(HiveKeys.tempVarients) ?? [];
+      final List productDataList = HiveStorage.get(HiveKeys.draftProduct) ?? [];
 
-    final newProductData = DraftProductModel(
-      productPrice: priceC.text,
-      product: AddProductModel(
-        categoryID: categoryId,
-        name: productNameC.text,
-        type: selectedColor,
-        description: productDesC.text,
-        variants: variants,
-        sizeguide: (await convertImageToBase64(sizeGuideImage)),
-        storeId: JwtDecoder.decode(
-            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
-      ),
-      isEditable:
-          generateIsEditableList(colors, isVarientAdded.values.toList()),
-    );
+      final newProductData = DraftProductModel(
+        productPrice: priceC.text,
+        product: AddProductModel(
+          categoryID: categoryId,
+          name: productNameC.text,
+          type: productType ?? 'UniSex',
+          description: productDesC.text,
+          variants: variants,
+          sizeguide: (await convertImageToBase64(sizeGuideImage)),
+          storeId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+        ),
+        isEditable:
+            generateIsEditableList(colors, isVarientAdded.values.toList()),
+      );
 
-    productDataList.add(newProductData);
-    HiveStorage.set(HiveKeys.draftProduct, productDataList);
-    HiveStorage.remove(HiveKeys.tempVarients);
+      productDataList.add(newProductData);
+      HiveStorage.set(HiveKeys.draftProduct, productDataList);
+      HiveStorage.set(HiveKeys.varients, isVarientAdded);
+      HiveStorage.remove(HiveKeys.tempVarients);
+      emit(const AddproductState.success());
+    } catch (e) {
+      emit(AddproductState.failure(e.toString()));
+    }
   }
 
-  Future<void> createProduct() async {
+  Future<void> createProduct(DraftProductModel? product) async {
     emit(const AddproductState.loading());
     final sizeGuid = await convertImageToBase64(sizeGuideImage);
+    var variant;
+    if (product == null) {
+      variant = HiveStorage.get<List>(HiveKeys.tempVarients);
+    } else {
+      variant = product.product.variants;
+    }
     final result = await _product.createProduct(
       AddProductModel(
         name: productNameC.text,
         description: productDesC.text,
         type: productType!,
         storeId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-        categoryID: categoryId,
+        categoryID: product != null ? product.product.categoryID : categoryId,
         sizeguide: sizeGuid,
         variants: List<Variant>.from(
-          HiveStorage.get<List>(HiveKeys.tempVarients).map(
+          variant.map(
             (e) => Variant(color: e.color, images: e.images, sizes: e.sizes),
           ),
         ),
@@ -186,7 +198,6 @@ class AddProductCubit extends Cubit<AddproductState> {
     for (int i = 0; i < sizes.length; i++) {
       final variant = product.productVariants[i];
       final size = sizes[i];
-      log(size.price.text);
       updatedVariants.add(
         UpdateVariantDto(
           price: variant.price,
@@ -281,6 +292,7 @@ class AddProductCubit extends Cubit<AddproductState> {
     List<Variant> variants = [];
     variants.add(productVarieants);
     HiveStorage.set<List<Variant>>(HiveKeys.tempVarients, variants);
+    // HiveStorage.set<List<Variant>>(HiveKeys.varients, variants);
     addedVarients.add(productVarieants);
   }
 
@@ -398,28 +410,53 @@ class AddProductCubit extends Cubit<AddproductState> {
     }
   }
 
-  void initializeVarientsDraft(DraftProductModel product) {
-    sizes = SizeTypes.values
-        .map(
-          (e) => SizeController(
-            size: e.name,
-            isEdit: false,
-            quantity: TextEditingController(),
-            price: TextEditingController(),
-          ),
-        )
-        .toList();
+  void initializeVarientsDraft(DraftProductModel product) async {
+    emit(const AddproductState.loading());
+    try {
+      sizes = SizeTypes.values
+          .map(
+            (e) => SizeController(
+              size: e.name,
+              isEdit: false,
+              quantity: TextEditingController(),
+              price: TextEditingController(),
+            ),
+          )
+          .toList();
 
-    for (var variant in product.product.variants) {
-      // if (variant.sizes.isNotEmpty) {
-      if (variant.color == selectedColor.toLowerCase().substring(2)) {
-        for (var item in variant.sizes) {
-          for (int i = 0; i < sizes.length; i++) {
-            sizes[i].quantity.text = item.quantity.toString();
-            sizes[i].price.text = item.price.toString();
-          }
+      priceC.text = product.productPrice;
+      productNameC.text = product.product.name;
+      productDesC.text = product.product.description;
+      isVarientActive = false;
+      isNotFirstTimeActivated = true;
+      isSubmit = false;
+      // isVarientAdded = HiveStorage.get(HiveKeys.varients);
+      productType = product.product.type;
+      sizeGuideImage = await convertBase64ToImage(product.product.sizeguide);
+      final varient = product.product.variants.firstWhere(
+        (e) => e.color == selectedColor.substring(2),
+        orElse: () => Variant(
+          color: selectedColor.substring(2),
+          images: [],
+          sizes: [],
+        ),
+      );
+      if (checkIfVarientAlreadyAdded(varient)) {
+        initializeVarientItem(varient);
+      } else {
+        resetVarientWidget();
+      }
+
+      for (int i = 0; i < product.product.variants.length; i++) {
+        if (product.product.variants[i].sizes.every((e) => e.price != 0) ||
+            product.product.variants[i].sizes.every((e) => e.quantity != 0)) {
+          isVarientAdded[
+              '0x${product.product.variants[i].color.toUpperCase()}'] = true;
         }
       }
+      emit(const AddproductState.success());
+    } catch (e) {
+      emit(AddproductState.failure(e.toString()));
     }
   }
 
@@ -571,26 +608,32 @@ class AddProductCubit extends Cubit<AddproductState> {
   }
 
   void initializeVarientItem(Variant variant) async {
-    images.clear();
+    // emit(const AddproductState.initial());
+    // emit(const AddproductState.loading());
+    try {
+      images.clear();
 
-    final Completer<File> result = Completer();
-    for (var item in variant.images) {
-      await convertBase64ToImage(item).then((value) async {
-        result.complete(value);
-        final image = await result.future;
-        images.add(image);
-        log(images.toString());
-      });
-    }
-    if (variant.sizes.isNotEmpty) {
-      for (int i = 0; i < sizes.length; i++) {
-        sizes[i] = sizes[i].copyWith(
-            quantity: TextEditingController(
-                text: variant.sizes[i].quantity.toString()));
-        sizes[i] = sizes[i].copyWith(
-            price:
-                TextEditingController(text: variant.sizes[i].price.toString()));
+      final Completer<File> result = Completer();
+      for (var item in variant.images) {
+        await convertBase64ToImage(item).then((value) async {
+          result.complete(value);
+          final image = await result.future;
+          images.add(image);
+        });
       }
+      if (variant.sizes.isNotEmpty) {
+        for (int i = 0; i < sizes.length; i++) {
+          sizes[i] = sizes[i].copyWith(
+              quantity: TextEditingController(
+                  text: variant.sizes[i].quantity.toString()));
+          sizes[i] = sizes[i].copyWith(
+              price: TextEditingController(
+                  text: variant.sizes[i].price.toString()));
+        }
+      }
+      // emit(const AddproductState.success());
+    } catch (e) {
+      emit(AddproductState.failure(e.toString()));
     }
   }
 

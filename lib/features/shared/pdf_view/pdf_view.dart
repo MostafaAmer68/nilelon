@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -48,9 +50,6 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
-      BotToast.showText(text: lang(context).pdfSaved);
-    }
     return isLoading
         ? const Center(child: CircularProgressIndicator())
         : GradientButtonBuilder(
@@ -59,40 +58,41 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
             ontap: () async {
               isLoading = true;
               setState(() {});
-              if ((await requestStoragePermission())) {
-                rows.add(
-                  buildTableRow(cellsHeader, isHeader: true),
-                );
-                for (var rowData in widget.cells) {
-                  rows.add(buildTableRow(
-                    rowData,
-                  ));
-                }
-
-                await makePdf(
-                  cells: widget.cells,
-                  netTotal: widget.netTotal,
-                  discount: widget.discount,
-                  delivery: widget.delivery,
-                  total: widget.total,
-                  name: HiveStorage.get<UserModel>(HiveKeys.userModel)
-                      .getUserData<CustomerModel>()
-                      .name,
-                  location: widget.location,
-                  orderId: widget.orderId,
-                  orderDate: widget.orderDate,
-                  phoneNumber: HiveStorage.get<UserModel>(HiveKeys.userModel)
-                      .getUserData<CustomerModel>()
-                      .phoneNumber,
-                ).then((v) {
-                  isLoading = false;
-                  setState(() {});
-                });
-              } else {
-                isLoading = false;
-                setState(() {});
-                _showPermissionDeniedMessage();
+              rows.add(
+                buildTableRow(cellsHeader, isHeader: true),
+              );
+              for (var rowData in widget.cells) {
+                rows.add(buildTableRow(
+                  rowData,
+                ));
               }
+
+              await makePdf(
+                cells: widget.cells,
+                netTotal: widget.netTotal,
+                discount: widget.discount,
+                delivery: widget.delivery,
+                total: widget.total,
+                name: HiveStorage.get<UserModel>(HiveKeys.userModel)
+                    .getUserData<CustomerModel>()
+                    .name,
+                location: widget.location,
+                orderId: widget.orderId,
+                orderDate: widget.orderDate,
+                phoneNumber: HiveStorage.get<UserModel>(HiveKeys.userModel)
+                    .getUserData<CustomerModel>()
+                    .phoneNumber,
+              ).then((v) {
+                isLoading = false;
+                BotToast.showText(text: lang(context).pdfSaved);
+                setState(() {});
+              });
+              // if ((await _requestStoragePermission())) {
+              // } else {
+              //   isLoading = false;
+              //   setState(() {});
+              //   _showPermissionDeniedMessage();
+              // }
               // setState(() {});
             },
           );
@@ -109,8 +109,9 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
           actions: <Widget>[
             TextButton(
               child: const Text('OK'),
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context).pop();
+                await requestStoragePermission();
               },
             ),
           ],
@@ -121,6 +122,29 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
 
   Future<bool> requestStoragePermission() async {
     PermissionStatus status = await Permission.storage.request();
+    log((await Permission.storage.status).toString());
+    Permission.storage.onDeniedCallback(() async {});
+    return status.isGranted;
+  }
+
+  Future<bool> _requestStoragePermission() async {
+    var status = await Permission.storage.status;
+    if (status.isDenied) {
+      // Request permission
+      if (await Permission.storage.request().isGranted) {
+        // Permission granted
+        print("Storage permission granted.");
+      } else {
+        // Permission denied
+        _showPermissionDeniedMessage();
+      }
+    } else if (status.isPermanentlyDenied) {
+      // Open app settings if permission is permanently denied
+      await openAppSettings();
+    } else {
+      // Permission already granted
+      print("Storage permission already granted.");
+    }
     return status.isGranted;
   }
 }

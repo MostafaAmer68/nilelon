@@ -58,6 +58,7 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
           BotToast.showLoading();
         }, success: (v) {
           BotToast.closeAllLoading();
+          // setState(() {});
         }, failure: (r) {
           BotToast.closeAllLoading();
           BotToast.showText(text: r.message);
@@ -75,10 +76,6 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
             children: [
               const DefaultDivider(),
               SizedBox(height: 24.h),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(horizontal: 16.sp),
-              //   child: _buildAddToDraft(lang.addToDraft),
-              // ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.sp),
                 child: _buildProductForm(lang),
@@ -255,7 +252,7 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
       text: uploadStr,
       ontap: () {
         // AppLogs.infoLog(HiveStorage.get(HiveKeys.varients).toString());
-        cubit.createProduct();
+        cubit.createProduct(widget.product);
         // navigatePop(context: context);
       },
     );

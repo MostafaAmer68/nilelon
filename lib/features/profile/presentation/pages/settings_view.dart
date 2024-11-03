@@ -100,8 +100,8 @@ class SettingsView extends StatelessWidget {
                 },
               );
             },
-            width: screenWidth(context, 0.8),
-            height: screenHeight(context, 0.06),
+            width: screenWidth(context, 0.4),
+            height: 50,
             buttonColor: ColorManager.primaryW,
             frameColor: ColorManager.primaryR,
             style: AppStylesManager.customTextStyleB4

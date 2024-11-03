@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
+import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
@@ -42,7 +43,9 @@ class _CheckOutViewState extends State<CheckOutView> {
 
   @override
   void dispose() {
-    // orderCubit.close();
+    PromoCubit.get(context).deliveryPrice = 0;
+    PromoCubit.get(context).totalPrice = 0;
+    PromoCubit.get(context).tempTotalPrice = 0;
     super.dispose();
   }
 
@@ -50,7 +53,6 @@ class _CheckOutViewState extends State<CheckOutView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
     // cubit.previousStep();
-    log(orderCubit.customerOrder.total.toString());
     return BlocListener<OrderCubit, OrderState>(
       listener: (context, state) {
         state.mapOrNull(success: (_) {
@@ -99,7 +101,7 @@ class _CheckOutViewState extends State<CheckOutView> {
           ],
         ),
         persistentFooterButtons: [
-          cubit.state == 2
+          cubit.state == 1
               ? NilelonPdfView(
                   location: orderCubit.customerOrder.governate,
                   orderDate: DateFormat('dd-MM-yyyy')
@@ -147,6 +149,9 @@ class _CheckOutViewState extends State<CheckOutView> {
                     GradientButtonBuilder(
                       text: lang.continuePress,
                       ontap: () {
+                        cubit.pageController.nextPage(
+                            duration: const Duration(milliseconds: 500),
+                            curve: Curves.easeInOut);
                         if (OrderCubit.get(context).formKey.currentState ==
                             null) {
                           cubit.nextStep();

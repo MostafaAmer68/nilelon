@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/features/order/presentation/pages/order_customer_tab_bar.dart';
+import 'package:nilelon/features/order/presentation/pages/order_tab_bar.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';

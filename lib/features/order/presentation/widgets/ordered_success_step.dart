@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
@@ -25,6 +26,7 @@ class _OrderedSuccessPageState extends State<OrderedSuccessPage> {
 
   @override
   Widget build(BuildContext context) {
+    // BotToast.closeAllLoading();
     return ScaffoldImage(
       body: Center(
         child: Padding(
@@ -32,6 +34,7 @@ class _OrderedSuccessPageState extends State<OrderedSuccessPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              const SizedBox(height: 100),
               Image.asset(
                 Assets.assetsImagesInvoice,
                 width: screenWidth(context, 0.5),

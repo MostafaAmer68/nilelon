@@ -82,40 +82,42 @@ class _OrderViewState extends State<OrderView> {
                       ),
                     );
                   } else {
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: cubit.orders
-                            .where((e) => e.status == widget.status)
-                            .toList()
-                            .length,
-                        itemBuilder: (context, index) {
-                          final order = cubit.orders
+                    return Expanded(
+                      child: ListView.builder(
+                          // shrinkWrap: true,
+                          itemCount: cubit.orders
                               .where((e) => e.status == widget.status)
-                              .toList()[index];
+                              .toList()
+                              .length,
+                          itemBuilder: (context, index) {
+                            final order = cubit.orders
+                                .where((e) => e.status == widget.status)
+                                .toList()[index];
 
-                          if (HiveStorage.get(HiveKeys.isStore)) {
-                            return OrderStoreCard(
-                                image: widget.image,
-                                title: widget.title,
-                                order: order,
-                                onTap: () {},
-                                shippedOnTap: () {});
-                          }
-                          return OrderCustomerCard(
-                            order: order,
-                            onTap: () {
-                              navigateTo(
-                                  context: context,
-                                  screen: OrderDetailsView(
-                                    index: 2,
-                                    recievedDate: order.date,
-                                    id: order.id,
-                                  ));
-                            },
-                            name: widget.title,
-                            icon: widget.image,
-                          );
-                        });
+                            if (HiveStorage.get(HiveKeys.isStore)) {
+                              return OrderStoreCard(
+                                  image: widget.image,
+                                  title: widget.title,
+                                  order: order,
+                                  onTap: () {},
+                                  shippedOnTap: () {});
+                            }
+                            return OrderCustomerCard(
+                              order: order,
+                              onTap: () {
+                                navigateTo(
+                                    context: context,
+                                    screen: OrderDetailsView(
+                                      index: 2,
+                                      recievedDate: order.date,
+                                      id: order.id,
+                                    ));
+                              },
+                              name: widget.title,
+                              icon: widget.image,
+                            );
+                          }),
+                    );
                   }
                 },
                 loading: () {

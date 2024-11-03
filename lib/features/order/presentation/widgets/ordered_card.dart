@@ -27,6 +27,7 @@ class OrderCustomerCard extends StatelessWidget {
       child: Container(
         height: 1.sw > 600 ? 110 : 90,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 8),
         width: screenWidth(context, 0.9),
         decoration: BoxDecoration(
           color: ColorManager.primaryG10,

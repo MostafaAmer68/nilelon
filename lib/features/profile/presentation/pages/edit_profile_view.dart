@@ -17,6 +17,7 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/pop_ups/camera_popup.dart';
 import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
+import 'package:nilelon/my_app.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
@@ -43,7 +44,6 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    // log(currentUsr<CustomerModel>().profilePic, name: 'image');
     return ScaffoldImage(
       appBar: customAppBar(
           title: lang.editAccount, context: context, hasIcon: false),
@@ -62,6 +62,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                   buttonText: lang.save,
                   ontap: () {
                     navigatePop(context: context);
+                    MyApp.restartApp(context);
                   });
             },
             failure: (_) {

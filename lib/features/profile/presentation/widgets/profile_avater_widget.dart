@@ -23,6 +23,7 @@ class ProfileAvater extends StatelessWidget {
       ),
       child: CircleAvatar(
         radius: radius,
+        backgroundColor: Colors.transparent,
         child: imageReplacer(url: image, radius: 300, width: 80, height: 80),
       ),
     );

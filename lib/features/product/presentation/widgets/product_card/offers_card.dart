@@ -83,25 +83,25 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                   style: AppStylesManager.customTextStyleW4,
                 )),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: colorConst
-                      .map(
-                        (e) => Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 3),
-                          width: 10,
-                          height: 10,
-                          decoration: BoxDecoration(
-                            color: e,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.symmetric(horizontal: 15),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.end,
+              //     children: colorConst
+              //         .map(
+              //           (e) => Container(
+              //             margin: const EdgeInsets.symmetric(horizontal: 3),
+              //             width: 10,
+              //             height: 10,
+              //             decoration: BoxDecoration(
+              //               color: e,
+              //               shape: BoxShape.circle,
+              //             ),
+              //           ),
+              //         )
+              //         .toList(),
+              //   ),
+              // ),
             ],
           ),
           const SizedBox(height: 10),

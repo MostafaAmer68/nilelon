@@ -55,7 +55,7 @@ Future draftAlert(context, void Function() ontap) => showDialog(
                   height: screenHeight(context, 0.06),
                   buttonColor: Colors.transparent,
                   frameColor: ColorManager.primaryB2,
-                  style: AppStylesManager.customTextStyleB4,
+                  // style: AppStylesManager.customTextStyleB4,
                   ontap: () {
                     navigatePop(context: context);
                   }),

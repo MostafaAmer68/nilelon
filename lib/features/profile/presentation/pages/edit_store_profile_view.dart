@@ -161,8 +161,11 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
                     ? Image.asset(Assets.assetsImagesBrand1)
                     : currentUsr<StoreModel>().profilePic.isNotEmpty &&
                             cubit.image.path.isNotEmpty
-                        ? Image.file(cubit.image)
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(300),
+                            child: Image.file(cubit.image))
                         : imageReplacer(
+                            radius: 300,
                             url: currentUsr<StoreModel>().profilePic),
               );
             },

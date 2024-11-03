@@ -76,7 +76,7 @@ class _AddProductViewState extends State<AddProductView> {
               SizedBox(height: 24.h),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                child: _buildAddToDraft(lang.addToDraft),
+                child: addToDraftWidget(lang.addToDraft),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.sp),
@@ -109,10 +109,6 @@ class _AddProductViewState extends State<AddProductView> {
     );
   }
 
-  Widget _buildAddToDraft(String addToDraft) {
-    return addToDraftWidget(addToDraft);
-  }
-
   Widget addToDraftWidget(String addToDraft) {
     return ViewAllRow(
       noText: true,
@@ -127,7 +123,7 @@ class _AddProductViewState extends State<AddProductView> {
             // Draft saving logic goes here
             cubit.saveDraft(context);
 
-            navigatePop(context: context);
+            // navigatePop(context: context);
             // showToast('Saved As Draft');
           });
         },
@@ -260,10 +256,7 @@ class _AddProductViewState extends State<AddProductView> {
       isActivated: !cubit.isSubmit,
       text: uploadStr,
       ontap: () {
-        // AppLogs.infoLog(HiveStorage.get(HiveKeys.varients).toString());
-        cubit.createProduct();
-        // HiveStorage.set(HiveKeys.tempVarients, null);
-        // navigatePop(context: context);
+        cubit.createProduct(null);
       },
     );
   }

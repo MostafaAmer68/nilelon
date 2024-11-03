@@ -50,7 +50,7 @@ class CreateOrderModel extends Equatable {
       'discount': discount,
       'type': type,
       'shippingMethodId': shippingMethodId,
-      'CustomerId': customerId,
+      'customerId': customerId,
       'governate': governate,
       'transactionId': transactionId,
       'customerAddressDTO': customerAddressDTO,

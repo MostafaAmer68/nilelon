@@ -37,6 +37,14 @@ class _OverViewStepState extends State<OverViewStep> {
   }
 
   @override
+  void dispose() {
+    // cubit.selectedCity = '';
+ 
+    // cubit.selectedShippingMethodId = '';
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
     return SizedBox(
@@ -117,7 +125,7 @@ class _OverViewStepState extends State<OverViewStep> {
                           if (state is GetCartSuccess) {
                             if (promoCubit.totalPrice == 0) {
                               for (var item
-                                  in CartCubit.get(context).cart1.items) {
+                                  in CartCubit.get(context).tempCartItems) {
                                 promoCubit.totalPrice +=
                                     item.price * item.quantity;
                                 promoCubit.tempTotalPrice +=
