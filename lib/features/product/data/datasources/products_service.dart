@@ -116,7 +116,9 @@ class ProductsService {
       endPoint: EndPoint.getProductById + productId,
       query: {
         'customerId': HiveStorage.get(HiveKeys.userModel) != null
-            ? HiveStorage.get<UserModel>(HiveKeys.userModel).id
+            ? HiveStorage.get(HiveKeys.isStore)
+                ? ''
+                : HiveStorage.get<UserModel>(HiveKeys.userModel).id
             : '',
       },
     );

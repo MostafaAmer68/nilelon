@@ -59,12 +59,12 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  Future<void> forgotPassword(context) async {
+  Future<void> forgotPassword(context,email) async {
     emit(ResetPasswordLoading());
 
     var result = await authRepos.forgotPassword(
       HiveStorage.get(HiveKeys.token),
-      emailController.text,
+    email,
       newPasswordController.text,
       context,
     );

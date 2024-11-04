@@ -264,7 +264,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     result.fold((failure) {
       emit(ProfileState.failure(failure.errorMsg));
     }, (response) {
-      emit(const ProfileState.success());
+      emit(const ProfileState.codeSentSuccess());
       HiveStorage.set(HiveKeys.token, response);
     });
   }

@@ -24,18 +24,8 @@ class ScaffoldImage extends StatelessWidget {
       child: Scaffold(
         appBar: appBar,
         backgroundColor: Colors.transparent,
-        persistentFooterButtons: persistentFooterButtons
-            .map((e) => Container(
-                  height: 5,
-                  color: ColorManager.primaryW,
-                  child: e,
-                ))
-            .toList(),
-        bottomNavigationBar: Container(
-          height: 5,
-          color: ColorManager.primaryW,
-          child: btmBar,
-        ),
+        persistentFooterButtons: persistentFooterButtons,
+        bottomNavigationBar: btmBar,
         body: body,
       ),
     );

@@ -34,6 +34,7 @@ class ForgetPasswordPage extends StatelessWidget {
             BotToast.showText(text: _.er);
           },
           codeSentSuccess: (_) {
+            BotToast.closeAllLoading();
             navigateTo(
               context: context,
               screen: OtpView(
@@ -48,7 +49,11 @@ class ForgetPasswordPage extends StatelessWidget {
                       isLogin: isLogin,
                       form: AuthCubit.get(context).resetPasswordForm,
                       onTap: () {
-                        AuthCubit.get(context).forgotPassword(context);
+                        AuthCubit.get(context).forgotPassword(
+                            context,
+                            ProfileCubit.get(context)
+                                .emailOrPhoneController
+                                .text);
                       },
                     ),
                   );

@@ -101,7 +101,7 @@ class _CheckOutViewState extends State<CheckOutView> {
           ],
         ),
         persistentFooterButtons: [
-          cubit.state == 1
+          cubit.state == 2
               ? NilelonPdfView(
                   location: orderCubit.customerOrder.governate,
                   orderDate: DateFormat('dd-MM-yyyy')
