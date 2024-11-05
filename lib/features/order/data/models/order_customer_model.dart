@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class OrderCustomerModel {
   final String id;
   final DateTime date;
@@ -6,6 +7,7 @@ class OrderCustomerModel {
   final String? promoCodeName; // Nullable, since it's null in the JSON
   final String governate;
   final String status;
+  final String paymentType;
   final String phoneNumber;
   final String shippingCost;
   final String customerId;
@@ -16,6 +18,7 @@ class OrderCustomerModel {
         date: DateTime.now(),
         total: 0,
         discount: 0,
+        paymentType: '',
         governate: '',
         status: '',
         phoneNumber: '',
@@ -32,6 +35,7 @@ class OrderCustomerModel {
     this.promoCodeName,
     required this.governate,
     required this.status,
+    required this.paymentType,
     required this.phoneNumber,
     required this.shippingCost,
     required this.customerId,
@@ -45,6 +49,7 @@ class OrderCustomerModel {
       total: json['total'],
       discount: json['discount'],
       promoCodeName: json['promoCodeName'],
+      paymentType: json['paymentType'],
       governate: json['governate'],
       status: json['status'],
       phoneNumber: json['phoneNumber'],

@@ -102,9 +102,10 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                       children: [
                         orderSummaryItems2(
                             lang.orderDate,
-                            Text(DateFormat('dd-MM-yyyy')
-                                .format(cubit.customerOrder.date)
-                                .toString())),
+                            Text(
+                              DateFormat('dd-MM-yyyy')
+                                  .format(cubit.customerOrder.date),
+                            )),
                         orderSummaryItems2(
                           lang.orderState,
                           BlocBuilder<OrderCubit, OrderState>(
@@ -142,13 +143,15 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                         orderSummaryItems2(
                             lang.recievedDate,
                             Text(
-                              widget.recievedDate,
+                              DateFormat('dd-MM-yyyy').format(
+                                  DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
+                                      .parse(widget.recievedDate)),
                               style: AppStylesManager.customTextStyleG,
                             )),
                         orderSummaryItems2(
                           lang.paymentMethod,
                           Text(
-                            'Credit Card',
+                            cubit.customerOrder.paymentType,
                             style: AppStylesManager.customTextStyleBl8,
                           ),
                         ),
@@ -159,9 +162,10 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                                 ? lang.yes
                                 : lang.no,
                             style: AppStylesManager.customTextStyleG.copyWith(
-                                color: cubit.customerOrder.promoCodeName != null
-                                    ? ColorManager.primaryGR
-                                    : ColorManager.primaryR),
+                              color: cubit.customerOrder.promoCodeName != null
+                                  ? ColorManager.primaryGR
+                                  : ColorManager.primaryR,
+                            ),
                           ),
                         ),
                       ],

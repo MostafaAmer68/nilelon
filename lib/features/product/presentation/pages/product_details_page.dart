@@ -117,7 +117,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                   builder: (context, state) {
                     return state.whenOrNull(
                       failure: (_) => Text(_),
-                      loading: () => buildShimmerIndicatorSmall(500, 600),
+                      loading: () =>
+                          buildShimmerIndicatorSmall(height: 500, width: 600),
                       success: () => productCubit.product ==
                               ProductModel.empty()
                           ? buildShimmerIndicatorRow()
@@ -238,24 +239,28 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    buildShimmerIndicatorSmall(40),
-                                    buildShimmerIndicatorSmall(40, 100),
+                                    buildShimmerIndicatorSmall(height: 40),
+                                    buildShimmerIndicatorSmall(
+                                        height: 40, width: 100),
                                   ],
                                 ),
                                 const SizedBox(height: 24),
-                                buildShimmerIndicatorSmall(100, 400),
+                                buildShimmerIndicatorSmall(
+                                    height: 100, width: 400),
                                 SizedBox(height: 20.h),
                                 Row(
                                   children: [
-                                    buildShimmerIndicatorSmall(40, 100),
-                                    buildShimmerIndicatorSmall(40),
+                                    buildShimmerIndicatorSmall(
+                                        height: 40, width: 100),
+                                    buildShimmerIndicatorSmall(height: 40),
                                   ],
                                 ),
                                 SizedBox(height: 22.h),
                                 Row(
                                   children: [
-                                    buildShimmerIndicatorSmall(40, 100),
-                                    buildShimmerIndicatorSmall(40),
+                                    buildShimmerIndicatorSmall(
+                                        height: 40, width: 100),
+                                    buildShimmerIndicatorSmall(height: 40),
                                   ],
                                 ),
                                 SizedBox(height: 20.h),
@@ -263,8 +268,10 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    buildShimmerIndicatorSmall(40, 80),
-                                    buildShimmerIndicatorSmall(40, 80),
+                                    buildShimmerIndicatorSmall(
+                                        height: 40, width: 80),
+                                    buildShimmerIndicatorSmall(
+                                        height: 40, width: 80),
                                   ],
                                 ),
                               ],
@@ -395,7 +402,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           child: Text(
             productCubit.product.name,
             style: AppStylesManager.customTextStyleBl6.copyWith(
-              fontSize: 30.sp,
+              fontSize: 25.sp,
               fontWeight: FontWeight.bold,
             ),
           ),

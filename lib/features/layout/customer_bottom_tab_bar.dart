@@ -41,7 +41,7 @@ class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
                 child: [
                   const CustomerHomeView(),
                   PopScope(
-                    onPopInvokedWithResult: (v, s) {
+                    onPopInvoked: (s) {
                       selectedIndex = 0;
                       setState(() {});
                     },
@@ -50,14 +50,14 @@ class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
                         : const ProfileGuestPage(),
                   ),
                   PopScope(
-                    onPopInvokedWithResult: (v, s) {
+                    onPopInvoked: (s) {
                       selectedIndex = 0;
                       setState(() {});
                     },
                     child: const DiscoverView(),
                   ),
                   PopScope(
-                    onPopInvokedWithResult: (v, s) {
+                    onPopInvoked: (s) {
                       selectedIndex = 0;
                       setState(() {});
                     },

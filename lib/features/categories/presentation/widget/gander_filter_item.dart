@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 
 import '../../../../core/resources/color_manager.dart';
 
@@ -68,7 +66,7 @@ class KnitwearBackgroundPainter extends CustomPainter {
 
     final shadowRect = RRect.fromRectAndRadius(
       Rect.fromLTWH(8, 8, size.width - 16, size.height - 16),
-      Radius.circular(60),
+      const Radius.circular(60),
     );
 
     canvas.drawRRect(shadowRect, shadowPaint);
@@ -80,7 +78,7 @@ class KnitwearBackgroundPainter extends CustomPainter {
 
     final backgroundRect = RRect.fromRectAndRadius(
       Rect.fromLTWH(0, 0, size.width, size.height),
-      Radius.circular(60),
+      const Radius.circular(60),
     );
 
     canvas.drawRRect(backgroundRect, backgroundPaint);

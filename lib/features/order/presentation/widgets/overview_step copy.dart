@@ -31,6 +31,7 @@ class _OverViewStepState extends State<OverViewStep> {
     cartCubit = CartCubit.get(context);
     cubit = OrderCubit.get(context);
     promoCubit = PromoCubit.get(context);
+    // cartCubit.getCart();
     if (cubit.shippingMethods.isEmpty) {
       cubit.getShippingMethod();
     }
@@ -42,14 +43,6 @@ class _OverViewStepState extends State<OverViewStep> {
     // cubit.selectedCity = '';
 
     // cubit.selectedShippingMethodId = '';
-
-    if (promoCubit.totalPrice == 0) {
-      for (var item in CartCubit.get(context).tempCartItems) {
-        log(item.price.toString());
-        promoCubit.totalPrice += item.price * item.quantity;
-        promoCubit.tempTotalPrice += item.price * item.quantity;
-      }
-    }
     super.dispose();
   }
 
@@ -63,21 +56,28 @@ class _OverViewStepState extends State<OverViewStep> {
           children: [
             SizedBox(
               height: 150,
-              child: ListView.builder(
-                padding: const EdgeInsetsDirectional.symmetric(
-                  vertical: 16,
-                  horizontal: 16,
-                ),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: CheckProductItem(
-                      cartItem: CartCubit.get(context).tempCartItems[index],
+              child: BlocBuilder<CartCubit, CartState>(
+                builder: (context, state) {
+                  if (state is CartLoading) {
+                    return buildShimmerIndicatorSmall();
+                  }
+                  return ListView.builder(
+                    padding: const EdgeInsetsDirectional.symmetric(
+                      vertical: 16,
+                      horizontal: 16,
                     ),
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: CheckProductItem(
+                          cartItem: CartCubit.get(context).tempCartItems[index],
+                        ),
+                      );
+                    },
+                    itemCount: CartCubit.get(context).tempCartItems.length,
+                    scrollDirection: Axis.horizontal,
                   );
                 },
-                itemCount: CartCubit.get(context).tempCartItems.length,
-                scrollDirection: Axis.horizontal,
               ),
             ),
             Padding(
@@ -124,6 +124,18 @@ class _OverViewStepState extends State<OverViewStep> {
                       ),
                       BlocBuilder<CartCubit, CartState>(
                         builder: (context, state) {
+                          if (state is GetCartSuccess) {
+                            if (promoCubit.totalPrice == 0) {
+                              for (var item
+                                  in CartCubit.get(context).tempCartItems) {
+                                log(item.price.toString());
+                                promoCubit.totalPrice +=
+                                    item.price * item.quantity;
+                                promoCubit.tempTotalPrice +=
+                                    item.price * item.quantity;
+                              }
+                            }
+                          }
                           return Column(
                             children: [
                               BlocBuilder<OrderCubit, OrderState>(

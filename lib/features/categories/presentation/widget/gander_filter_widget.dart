@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'cateogyr_filter_item.dart';
 import 'gander_filter_item.dart';
 
 class GendarFilterWidget extends StatefulWidget {

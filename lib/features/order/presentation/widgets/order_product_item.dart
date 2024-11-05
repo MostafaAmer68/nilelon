@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -38,10 +38,9 @@ class OrderDetailsCard extends StatelessWidget {
             width: 90,
             height: 110,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: const DecorationImage(
-                    image: AssetImage(Assets.assetsImagesCloth1),
-                    fit: BoxFit.cover)),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: imageReplacer(url: product.urls.first),
           ),
           const SizedBox(
             width: 8,

@@ -43,7 +43,6 @@ class _AddProductViewState extends State<EditProductpage> {
 
   @override
   void setState(VoidCallback fn) {
-    // TODO: implement setState
     if (mounted) {
       super.setState(fn);
     }
@@ -92,6 +91,7 @@ class _AddProductViewState extends State<EditProductpage> {
                   child: _buildProductForm(lang),
                 ),
                 ProductDetailsWidget(
+                  cubit: cubit,
                   product: widget.product,
                   onTapAddButton: () {
                     cubit.activateVariant();

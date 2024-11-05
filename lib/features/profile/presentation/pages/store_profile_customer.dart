@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
 
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -86,19 +87,25 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                   const SizedBox(
                     height: 30,
                   ),
-                  buildShimmerIndicatorSmall(),
+                  buildShimmerIndicatorSmall(radius: 300),
                   const SizedBox(
                     height: 16,
                   ),
-                  buildShimmerIndicatorSmall(),
+                  buildShimmerIndicatorSmall(height: 40),
                   const SizedBox(
                     height: 8,
                   ),
-                  buildShimmerIndicatorSmall(),
+                  buildShimmerIndicatorSmall(height: 40),
                   const SizedBox(
                     height: 30,
                   ),
-                  buildShimmerIndicatorSmall(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      buildShimmerIndicatorSmall(height: 40),
+                      buildShimmerIndicatorSmall(height: 40, width: 40),
+                    ],
+                  ),
                   const SizedBox(
                     height: 30,
                   ),
@@ -124,7 +131,8 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                             scrollDirection: Axis.horizontal,
                             itemCount: 3,
                             itemBuilder: (context, index) =>
-                                buildShimmerIndicatorSmall(),
+                                buildShimmerIndicatorSmall(
+                                    width: 60, height: 60),
                           ),
                         ),
                       ),
@@ -152,20 +160,16 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                       style: AppStylesManager.customTextStyleBl8
                           .copyWith(fontWeight: FontWeight.w700),
                     ),
-                    const SizedBox(
-                      height: 8,
-                    ),
+                    const SizedBox(height: 8),
                     Text(
                       cubit.storeProfile!.storeSlogan ?? '',
                       style: AppStylesManager.customTextStyleG5,
                     ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    FollowAndNotifyWidget(storeId: widget.storeId),
-                    const SizedBox(
-                      height: 30,
-                    ),
+                    const SizedBox(height: 30),
+                    if (!HiveStorage.get(HiveKeys.isStore)) ...[
+                      FollowAndNotifyWidget(storeId: widget.storeId),
+                      const SizedBox(height: 30),
+                    ],
                     const DefaultDivider(),
                     const SizedBox(
                       height: 18,

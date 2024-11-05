@@ -29,8 +29,7 @@ class SizeToggleButtons extends StatelessWidget {
             onTap: () => onSizeSelected(size),
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8.0),
-              width: 52,
-              // height: 30,
+              width: 45,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
@@ -59,9 +58,9 @@ class SizeToggleButtons extends StatelessWidget {
                     isSelected ? ColorManager.primaryW : ColorManager.primaryG,
               ),
               child: Container(
-                width: 49,
+                width: 40,
                 height: 50,
-                padding: const EdgeInsets.all(16),
+                // padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: isSelected ? Colors.white : ColorManager.primaryW,
                   borderRadius: BorderRadius.circular(8),

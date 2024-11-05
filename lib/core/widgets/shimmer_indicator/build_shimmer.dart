@@ -31,7 +31,8 @@ Widget buildShimmerIndicator() {
   );
 }
 
-Widget buildShimmerIndicatorSmall([double? height, double? width]) {
+Widget buildShimmerIndicatorSmall(
+    {double? height, double? width, double? radius}) {
   return Shimmer.fromColors(
     baseColor: Colors.grey[300]!,
     highlightColor: Colors.grey[100]!,
@@ -42,7 +43,7 @@ Widget buildShimmerIndicatorSmall([double? height, double? width]) {
         height: height ?? (1.sw > 600 ? 300 : 220),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(radius ?? 10),
         ),
       ),
     ),

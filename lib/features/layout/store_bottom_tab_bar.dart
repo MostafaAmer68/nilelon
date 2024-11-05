@@ -27,7 +27,7 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
       length: 5,
       child: PopScope(
         canPop: false,
-        onPopInvokedWithResult: (v, s) {
+        onPopInvoked: (v) {
           if (v) {
             return;
           }
@@ -42,7 +42,7 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
                     child: [
                   PopScope(
                       canPop: false,
-                      onPopInvokedWithResult: (v, s) {
+                      onPopInvoked: (v) {
                         if (v) {
                           return;
                         }
@@ -52,7 +52,7 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
                       child: const StoreMarketView()),
                   PopScope(
                       canPop: false,
-                      onPopInvokedWithResult: (v, s) {
+                      onPopInvoked: (v) {
                         if (v) {
                           return;
                         }
@@ -62,7 +62,7 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
                       child: const OrderPage()),
                   PopScope(
                       canPop: false,
-                      onPopInvokedWithResult: (v, s) {
+                      onPopInvoked: (v) {
                         if (v) {
                           return;
                         }
@@ -72,7 +72,7 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
                       child: const ChooseProductView()),
                   PopScope(
                       canPop: false,
-                      onPopInvokedWithResult: (v, s) {
+                      onPopInvoked: (v) {
                         if (v) {
                           return;
                         }
@@ -82,7 +82,7 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
                       child: const AnalyticsView()),
                   PopScope(
                       canPop: false,
-                      onPopInvokedWithResult: (v, s) {
+                      onPopInvoked: (v) {
                         if (v) {
                           return;
                         }

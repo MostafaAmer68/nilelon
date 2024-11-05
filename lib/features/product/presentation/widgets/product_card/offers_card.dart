@@ -9,10 +9,11 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
+import 'package:nilelon/features/cart/domain/model/cart_item.dart';
+import 'package:nilelon/features/order/presentation/pages/checkout_view.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-import '../../../../../core/color_const.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../../auth/domain/model/user_model.dart';
 import '../../../../cart/domain/model/add_cart_request_model.dart';
@@ -306,7 +307,22 @@ GestureDetector offersCard({required context, required ProductModel product}) {
               ),
               GradientButtonBuilder(
                 text: lang(context).buy,
-                ontap: () {},
+                ontap: () {
+                  CartCubit.get(context).tempCartItems.clear();
+                  CartCubit.get(context).tempCartItems.add(
+                        CartItem(
+                          quantity: 1,
+                          size: product.productVariants.first.size,
+                          color: product.productVariants.first.color,
+                          price: product.productVariants.first.price,
+                          productName: product.name,
+                          productId: product.id,
+                          productImages: product.productImages,
+                          cartId: '',
+                        ),
+                      );
+                  navigateTo(context: context, screen: const CheckOutView());
+                },
                 width: 110.h,
                 height: 30.h,
               )

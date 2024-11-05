@@ -21,6 +21,7 @@ import 'package:nilelon/features/product/presentation/widgets/add_container.dart
 import 'package:nilelon/features/product/presentation/widgets/image_container.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_details_widget.dart';
 
+import '../../../../core/widgets/alert/delete_alert.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/add_product/add_product_cubit.dart';
 
@@ -46,7 +47,7 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
     super.initState();
 
     cubit = AddProductCubit.get(context);
-    cubit.initializeVarientsDraft(widget.product);
+    cubit.initializeVarientsInDraftMode(widget.product);
   }
 
   @override
@@ -58,6 +59,10 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
           BotToast.showLoading();
         }, success: (v) {
           BotToast.closeAllLoading();
+          // setState(() {});
+        }, successChange: (v) {
+          BotToast.closeAllLoading();
+          setState(() {});
           // setState(() {});
         }, failure: (r) {
           BotToast.closeAllLoading();
@@ -71,22 +76,40 @@ class _AddProductViewState extends State<PreviewDraftProductPage> {
           hasIcon: false,
         ),
         body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const DefaultDivider(),
-              SizedBox(height: 24.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                child: _buildProductForm(lang),
-              ),
-              ProductDetailsWidget(
-                onTapAddButton: () {},
-                onTapEditButton: () {},
-                onTapDeleteButton: () {},
-              ),
-              _buildSubmitSection(lang),
-            ],
+          child: Form(
+            key: cubit.globalKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const DefaultDivider(),
+                SizedBox(height: 24.h),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.sp),
+                  child: _buildProductForm(lang),
+                ),
+                ProductDetailsWidget(
+                  cubit: cubit,
+                  onTapAddButton: () {
+                    cubit.activateVariant();
+                    setState(() {});
+                  },
+                  onTapEditButton: () {
+                    cubit.editVariant();
+                    setState(() {});
+                  },
+                  onTapDeleteButton: () {
+                    deleteAlert(context,
+                        lang.areYouSureYouWantToDeleteAllSizesForThisColor, () {
+                      cubit.isVarientAdded[cubit.selectedColor] = false;
+                      cubit.deleteVariant();
+                      navigatePop(context: context);
+                      setState(() {});
+                    });
+                  },
+                ),
+                _buildSubmitSection(lang),
+              ],
+            ),
           ),
         ),
       ),

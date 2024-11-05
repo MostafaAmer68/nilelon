@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
@@ -22,11 +25,13 @@ class ProductDetailsWidget extends StatefulWidget {
     required this.onTapEditButton,
     required this.onTapDeleteButton,
     this.product,
+    required this.cubit,
   });
   final VoidCallback onTapAddButton;
   final VoidCallback onTapEditButton;
   final VoidCallback onTapDeleteButton;
   final ProductModel? product;
+  final AddProductCubit cubit;
 
   @override
   State<ProductDetailsWidget> createState() => _ProductDetailsWidgetState();
@@ -36,10 +41,10 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   late final AddProductCubit cubit;
   @override
   void initState() {
-    cubit = AddProductCubit.get(context);
+    cubit = widget.cubit;
 
     if (widget.product != null) {
-      cubit.initializeVarientsEdit(widget.product!);
+      cubit.initializeVarientsInEditMode(widget.product!);
     } else {
       cubit.sizes = SizeTypes.values
           .map(
@@ -51,6 +56,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
             ),
           )
           .toList();
+      log('init state');
     }
     super.initState();
   }
@@ -58,32 +64,37 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        ProductColorsSelection(
-          onTap: (index) {
-            cubit.onSelectedColor(index);
-            setState(() {});
-          },
-        ),
-        if (cubit.isVarientAdded[cubit.selectedColor]!)
-          _buildEditListTile(
-            lang.editSizesForThisColor,
-            lang.areYouSureYouWantToDeleteAllSizesForThisColor,
-          )
-        else
-          _buildAddButton(lang.addSizesForThisColor),
-        _buildSizeVariantSection(lang),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            lang.pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails,
-            style: AppStylesManager.customTextStyleG17,
-          ),
-        ),
-        SizedBox(height: 20.h),
-      ],
+
+    return BlocBuilder<AddProductCubit, AddproductState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ProductColorsSelection(
+              onTap: (index) {
+                cubit.onSelectedColor(index);
+                setState(() {});
+              },
+            ),
+            if (cubit.isVarientAdded[cubit.selectedColor]!)
+              _buildEditListTile(
+                lang.editSizesForThisColor,
+                lang.areYouSureYouWantToDeleteAllSizesForThisColor,
+              )
+            else
+              _buildAddButton(lang.addSizesForThisColor),
+            _buildSizeVariantSection(lang),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                lang.pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails,
+                style: AppStylesManager.customTextStyleG17,
+              ),
+            ),
+            SizedBox(height: 20.h),
+          ],
+        );
+      },
     );
   }
 
@@ -132,7 +143,6 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   Widget _buildDisabledVarient(String total) {
     return Stack(
       children: [
-        // _buildDisabledVariantSection(total),
         _buildEditableVariantSection(total),
         Container(
           width: double.infinity,
@@ -144,25 +154,29 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   }
 
   Widget _buildEditableVariantSection(String total) {
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.sp),
-      child: Column(
-        children: [
-          const ImageRow(),
-          Visibility(
-            visible: cubit.images.isEmpty,
-            child: Text(
-              S.of(context).youMustSelectOneImage,
-              style: AppStylesManager.customTextStyleR,
-            ),
+    return BlocBuilder<AddProductCubit, AddproductState>(
+      builder: (context, state) {
+        return Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.sp),
+          child: Column(
+            children: [
+              const ImageRow(),
+              Visibility(
+                visible: cubit.images.isEmpty,
+                child: Text(
+                  S.of(context).youMustSelectOneImage,
+                  style: AppStylesManager.customTextStyleR,
+                ),
+              ),
+              SizedBox(height: 40.h),
+              const TableHeaders(),
+              const VariantItems(),
+              totalRow(context, cubit.calculateTotalSizes(), total),
+              SizedBox(height: 24.h),
+            ],
           ),
-          SizedBox(height: 40.h),
-          const TableHeaders(),
-          const VariantItems(),
-          totalRow(context, cubit.calculateTotalSizes(), total),
-          SizedBox(height: 24.h),
-        ],
-      ),
+        );
+      },
     );
   }
 

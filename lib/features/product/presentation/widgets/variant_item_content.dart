@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/const_functions.dart';
+import '../../../../core/sizes_consts.dart';
 import '../../../../core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import '../cubit/add_product/add_product_cubit.dart';
 import 'size_container.dart';
@@ -24,26 +28,35 @@ class _VariantItemsState extends State<VariantItems> {
   @override
   void initState() {
     cubit = AddProductCubit.get(context);
+    log(cubit.hashCode.toString(), name: 'hash');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: cubit.sizes.length,
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemBuilder: (context, index) {
-        bool isNonEditable = cubit.isVarientAdded[cubit.selectedColor]!;
+    log(cubit.hashCode.toString(), name: 'hash');
+    return BlocConsumer<AddProductCubit, AddproductState>(
+      listener: (context, state) {
+        setState(() {});
+      },
+      builder: (context, state) {
+        return ListView.builder(
+          itemCount: cubit.sizes.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (context, index) {
+            bool isNonEditable = cubit.isVarientAdded[cubit.selectedColor]!;
 
-        if (isNonEditable) {
-          return _variantItem(index: index, isEditable: false);
-        } else {
-          return _variantItem(
-            index: index,
-            isEditable: cubit.sizes[index].isEdit,
-          );
-        }
+            if (isNonEditable) {
+              return _variantItem(index: index, isEditable: false);
+            } else {
+              return _variantItem(
+                index: index,
+                isEditable: cubit.sizes[index].isEdit,
+              );
+            }
+          },
+        );
       },
     );
   }
@@ -58,7 +71,7 @@ class _VariantItemsState extends State<VariantItems> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          sizeContainer(context, cubit.sizes[index].size),
+          sizeContainer(context, getSizeShortcut(cubit.sizes[index].size)),
           _buildQuantityTextField(cubit.sizes[index].quantity),
           if (isEditable)
             _buildPriceTextField(cubit.sizes[index].price)

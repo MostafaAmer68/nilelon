@@ -4,7 +4,6 @@ import 'package:nilelon/features/categories/presentation/cubit/category_cubit.da
 import 'package:nilelon/features/product/presentation/pages/product_draft_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:nilelon/core/utils/app_logs.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
@@ -50,17 +49,13 @@ class _ChooseProductViewState extends State<ChooseProductView> {
             style: AppStylesManager.customTextStyleBl5.copyWith(
               fontWeight: FontWeight.w500,
             ),
-            buttonWidget: GestureDetector(
-                onTap: () {
-                  AppLogs.infoLog(
-                      HiveStorage.get(HiveKeys.draftProduct).toString());
-                  navigateTo(
-                      context: context, screen: const DraftProductPage());
-                },
-                child: Text(
-                  lang.drafts,
-                  style: AppStylesManager.customTextStyleO,
-                )),
+            onPressed: () {
+              navigateTo(context: context, screen: const DraftProductPage());
+            },
+            buttonWidget: Text(
+              lang.drafts,
+              style: AppStylesManager.customTextStyleO,
+            ),
           ),
           Expanded(
             child: Padding(
@@ -94,6 +89,7 @@ class _ChooseProductViewState extends State<ChooseProductView> {
                                   context: context,
                                   screen: AddProductView(
                                     categoryId: category.id!,
+                                    draft: null,
                                   ),
                                 );
                               },

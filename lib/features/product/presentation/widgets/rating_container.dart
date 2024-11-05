@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -51,7 +52,9 @@ class RatingContainer extends StatelessWidget {
                         ),
                         const Spacer(),
                         Text(
-                          review.date,
+                          DateFormat('dd-MM-yyyy').format(
+                              DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
+                                  .parse(review.date)),
                           style: AppStylesManager.customTextStyleG12,
                         ),
                       ],

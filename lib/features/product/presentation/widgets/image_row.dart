@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/resources/const_functions.dart';
 import '../../../../core/widgets/pop_ups/camera_popup.dart';
@@ -24,31 +25,35 @@ class _ImageRowState extends State<ImageRow> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: screenWidth(context, 0.21),
-      width: screenWidth(context, 1),
-      child: ListView.builder(
-        itemCount: cubit.images.length + 1,
-        itemBuilder: (context, index) {
-          if (index == cubit.images.length) {
-            return addContainer(
-              () async {
-                if (cubit.isVarientActive) {
-                  cubit.images.add((await cameraDialog(context)));
+    return BlocBuilder<AddProductCubit, AddproductState>(
+      builder: (context, state) {
+        return SizedBox(
+          height: screenWidth(context, 0.21),
+          width: screenWidth(context, 1),
+          child: ListView.builder(
+            itemCount: cubit.images.length + 1,
+            itemBuilder: (context, index) {
+              if (index == cubit.images.length) {
+                return addContainer(
+                  () async {
+                    if (cubit.isVarientActive) {
+                      cubit.images.add((await cameraDialog(context)));
 
-                  setState(() {});
-                }
-              },
-              context,
-              null,
-              null,
-            );
-          } else {
-            return _buildImageContainer(index);
-          }
-        },
-        scrollDirection: Axis.horizontal,
-      ),
+                      setState(() {});
+                    }
+                  },
+                  context,
+                  null,
+                  null,
+                );
+              } else {
+                return _buildImageContainer(index);
+              }
+            },
+            scrollDirection: Axis.horizontal,
+          ),
+        );
+      },
     );
   }
 

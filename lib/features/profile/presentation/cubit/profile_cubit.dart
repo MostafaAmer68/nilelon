@@ -1,10 +1,12 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
@@ -245,7 +247,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
   Future<void> resetPasswordEmailOrPhone(context) async {
     emit(const ProfileState.loading());
-    var result;
+    late Either<FailureService, String> result;
     if (AuthCubit.get(context)
         .emailRegex
         .hasMatch(emailOrPhoneController.text)) {
@@ -255,17 +257,20 @@ class ProfileCubit extends Cubit<ProfileState> {
       );
     } else if (AuthCubit.get(context)
         .phoneRegex
-        .hasMatch(emailOrPhoneController.text)) {
+        .hasMatch(emailOrPhoneController.text)) { 
       result = await _profileRepoIMpl.resetPasswordPhone(
         emailOrPhoneController.text,
         context,
       );
     }
-    result.fold((failure) {
-      emit(ProfileState.failure(failure.errorMsg));
-    }, (response) {
-      emit(const ProfileState.codeSentSuccess());
-      HiveStorage.set(HiveKeys.token, response);
-    });
+    result.fold(
+      (failure) {
+        emit(ProfileState.failure(failure.errorMsg));
+      },
+      (response) {
+        emit(const ProfileState.codeSentSuccess());
+        HiveStorage.set(HiveKeys.token, response);
+      },
+    );
   }
 }

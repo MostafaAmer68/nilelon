@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
 
+import '../../../product/domain/models/product_model.dart';
+
 class CartModel {
   final String id;
   final List<CartItem> items;
@@ -113,30 +115,30 @@ class CartItem extends Equatable {
   }
 }
 
-class ProductImage {
-  final String productId;
-  final String url;
-  final String color;
+// class ProductImage {
+//   final String productId;
+//   final String url;
+//   final String color;
 
-  ProductImage({
-    required this.productId,
-    required this.url,
-    required this.color,
-  });
+//   ProductImage({
+//     required this.productId,
+//     required this.url,
+//     required this.color,
+//   });
 
-  factory ProductImage.fromJson(Map<String, dynamic> json) {
-    return ProductImage(
-      productId: json['productId'],
-      url: json['url'],
-      color: json['color'],
-    );
-  }
+//   factory ProductImage.fromJson(Map<String, dynamic> json) {
+//     return ProductImage(
+//       productId: json['productId'],
+//       url: json['url'],
+//       color: json['color'],
+//     );
+//   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'productId': productId,
-      'url': url,
-      'color': color,
-    };
-  }
-}
+//   Map<String, dynamic> toJson() {
+//     return {
+//       'productId': productId,
+//       'url': url,
+//       'color': color,
+//     };
+//   }
+// }

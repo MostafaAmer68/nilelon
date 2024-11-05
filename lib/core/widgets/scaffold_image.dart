@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 
 class ScaffoldImage extends StatelessWidget {
   const ScaffoldImage(
       {super.key,
       required this.body,
       this.appBar,
-      this.persistentFooterButtons = const [],
+      this.persistentFooterButtons,
       this.btmBar});
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? btmBar;
-  final List<Widget> persistentFooterButtons;
+  final List<Widget>? persistentFooterButtons;
   @override
   Widget build(BuildContext context) {
     return Container(

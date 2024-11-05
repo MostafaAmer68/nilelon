@@ -9,7 +9,7 @@ Container sizeContainer(
 ) {
   return Container(
     height: 46.h,
-    width: 80.h,
+    width: 60.h,
     decoration: BoxDecoration(
       color: ColorManager.primaryW,
       border: Border.all(
