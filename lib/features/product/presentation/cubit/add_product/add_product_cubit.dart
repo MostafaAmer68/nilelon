@@ -2,11 +2,13 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nilelon/core/helper.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/product/domain/models/product_data/draft_product_model.dart';
@@ -67,41 +69,163 @@ class AddProductCubit extends Cubit<AddproductState> {
 
   List<String> items = ['Male', 'Female', 'UniSex'];
   final ProductsReposImpl _product;
-  bool _checkIfVarientEditable() => isVarientAdded[selectedColor]!;
 
   AddProductCubit(this._product) : super(const AddproductState.initial());
 
-  List<Map<String, bool>> generateIsEditableList(
-      List<String> colors, List<bool> isEditable) {
-    List<Map<String, bool>> editableList = [];
-    for (int i = 0; i < colors.length; i++) {
-      editableList.add({colors[i]: isEditable[i]});
+  //handle event (click button,)
+
+  void activateVariant() {
+    isVarientActive = true; // is add for activate variants widget
+    isNotFirstTimeActivated = true;
+    isSubmit = true; // for submit or upload button only
+    for (var item in sizes) {
+      item.price.text = priceC.text;
     }
-    return editableList;
   }
 
-  bool checkIfVarientAlreadyAdded(Variant variant) =>
-      variant.color == selectedColor.substring(2);
-
-  int calculateTotalSizes() {
-    return sizes
-        .map((e) => e.quantity.text)
-        .fold(0, (sum, controller) => sum + (int.tryParse(controller) ?? 0));
+  void editVariant() {
+    isVarientActive = true;
+    isSubmit = true;
+    isVarientAdded[selectedColor] = false;
+    // for (var item in sizes) {
+    //   item.price.text = priceC.text;
+    // }
+    removeNonEditableVariant();
   }
 
+  void deleteVariant() {
+    Variant? proVar;
+    List varients = HiveStorage.get<List>(HiveKeys.tempVarients);
+    for (var element in addedVarients) {
+      if (selectedColor == element.color) {
+        proVar = element;
+      }
+    }
+    addedVarients.remove(proVar);
+    varients.remove(proVar);
+    HiveStorage.set(HiveKeys.tempVarients, varients);
+    resetVarientWidget();
+
+    if (addedVarients.isEmpty) {
+      isNotFirstTimeActivated = false;
+      isSubmit = true;
+    }
+  }
+
+  void onSelectedColor(index) {
+    images.clear();
+    selectedIndex = index;
+    selectedColor = colors[selectedIndex].toString();
+
+    if (isEdit) {
+      initializeVarientsInEditMode(productEdit);
+    } else {
+      initializeVariantInAddMode();
+    }
+    if (_checkIfVarientEditable()) {
+      isSubmit = false;
+      isVarientActive = false;
+      isNotFirstTimeActivated = true;
+    } else if (!_checkIfVarientEditable()) {
+      isSubmit = false;
+      isVarientActive = false;
+      isNotFirstTimeActivated = true;
+    } else {
+      isVarientActive = false;
+      isNotFirstTimeActivated = false;
+      isSubmit = true;
+    }
+  }
+
+  void handleSubmit() async {
+    // HiveStorage.set(HiveKeys.tempVarients, null);
+    List<bool> isLeastOneQuantity = [];
+    for (var e in sizes) {
+      isLeastOneQuantity.add(e.quantity.text.isNotEmpty);
+    }
+    if (globalKey.currentState!.validate() &&
+        images.isNotEmpty &&
+        isLeastOneQuantity.contains(true)) {
+      if (HiveStorage.get<List?>(HiveKeys.tempVarients) == null) {
+        _saveNewVariant();
+      } else {
+        _updateExistingVariant();
+      }
+      isVarientAdded[selectedColor] = true;
+      isVarientActive = false;
+      isSubmit = false;
+
+      _resetSizeControllersToDefault();
+      initializeVariantInAddMode();
+
+      AppLogs.infoLog(HiveStorage.get(HiveKeys.tempVarients).toString());
+      emit(const AddproductState.successChange());
+    } else {
+      emit(const AddproductState.failure('please enter valid form'));
+    }
+  }
+
+  void saveDraft(BuildContext context) async {
+    emit(const AddproductState.loading());
+    try {
+      final List<Variant> variants =
+          HiveStorage.get(HiveKeys.tempVarients) ?? [];
+      final List productDataList = HiveStorage.get(HiveKeys.draftProduct) ?? [];
+
+      final newProductData = DraftProductModel(
+        productPrice: priceC.text,
+        product: AddProductModel(
+          categoryID: categoryId,
+          name: productNameC.text,
+          type: productType ?? 'UniSex',
+          description: productDesC.text,
+          variants: variants,
+          sizeguide: sizeGuideImage.path,
+          storeId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+        ),
+        isEditable:
+            _generateIsEditableList(colors, isVarientAdded.values.toList()),
+      );
+
+      productDataList.add(newProductData);
+      HiveStorage.set(HiveKeys.draftProduct, productDataList);
+      HiveStorage.set(HiveKeys.varients, isVarientAdded);
+      HiveStorage.remove(HiveKeys.tempVarients);
+      emit(const AddproductState.success());
+    } catch (e) {
+      emit(AddproductState.failure(e.toString()));
+    }
+  }
+
+  void _updateExistingVariant() {
+    final varients = HiveStorage.get<List>(HiveKeys.tempVarients);
+    Variant productVarieants = _createProductVariant();
+    addedVarients
+        .removeWhere((element) => element.color == selectedColor.substring(2));
+    varients.add(productVarieants);
+    HiveStorage.set(HiveKeys.tempVarients, varients);
+    addedVarients.add(productVarieants);
+  }
+
+  void _saveNewVariant() {
+    Variant productVarieants = _createProductVariant();
+
+    addedVarients.removeWhere(
+        (element) => (element.color == selectedColor.substring(2)));
+    List<Variant> variants = [];
+    variants.add(productVarieants);
+    HiveStorage.set<List<Variant>>(HiveKeys.tempVarients, variants);
+    // HiveStorage.set<List<Variant>>(HiveKeys.varients, variants);
+    addedVarients.add(productVarieants);
+  }
+
+  //end handle event (click button,)
+
+  // initialize data with defferent modes(Add, Edit, Draft)
   void initializeVarientsInDraftMode(DraftProductModel product) async {
     emit(const AddproductState.loading());
     try {
-      sizes = SizeTypes.values
-          .map(
-            (e) => SizeController(
-              size: e.name,
-              isEdit: false,
-              quantity: TextEditingController(),
-              price: TextEditingController(),
-            ),
-          )
-          .toList();
+      _resetSizeControllersToDefault();
 
       priceC.text = product.productPrice;
       productNameC.text = product.product.name;
@@ -139,16 +263,7 @@ class AddProductCubit extends Cubit<AddproductState> {
   }
 
   void initializeVarientsInEditMode(ProductModel product) async {
-    sizes = SizeTypes.values
-        .map(
-          (e) => SizeController(
-            size: e.name,
-            isEdit: false,
-            quantity: TextEditingController(),
-            price: TextEditingController(),
-          ),
-        )
-        .toList();
+    _resetSizeControllersToDefault();
     priceC.text = product.productVariants.first.price.toString();
     productNameC.text = product.name;
     productDesC.text = product.description;
@@ -173,8 +288,7 @@ class AddProductCubit extends Cubit<AddproductState> {
       for (int i = 0; i < sizes.length; i++) {
         sizes[i] = sizes[i].copyWith(
             quantity: TextEditingController(
-                text: varient.sizes[i].quantity.toString()));
-        sizes[i] = sizes[i].copyWith(
+                text: varient.sizes[i].quantity.toString()),
             price:
                 TextEditingController(text: varient.sizes[i].price.toString()));
       }
@@ -188,16 +302,7 @@ class AddProductCubit extends Cubit<AddproductState> {
   }
 
   void initializeVariantInAddMode() {
-    sizes = SizeTypes.values
-        .map(
-          (e) => SizeController(
-            size: e.name,
-            isEdit: false,
-            quantity: TextEditingController(),
-            price: TextEditingController(),
-          ),
-        )
-        .toList();
+    _resetSizeControllersToDefault();
 
     final varient = addedVarients.firstWhere(
       (e) => e.color == selectedColor.substring(2),
@@ -211,6 +316,119 @@ class AddProductCubit extends Cubit<AddproductState> {
       initializeVarientItem(varient);
     } else {
       resetVarientWidget();
+    }
+  }
+
+  //end initialize data with defferent modes(Add, Edit, Draft)
+
+  // helper methods
+  bool _checkIfVarientEditable() => isVarientAdded[selectedColor]!;
+
+  Variant _createProductVariant() {
+    final Completer<String> image = Completer();
+
+    List<String> convertedImages = [];
+    for (var img in images) {
+      convertImageToBase64(img).then((value) async {
+        image.complete(value);
+        convertedImages.add((await image.future));
+      });
+    }
+    return Variant(
+      color: selectedColor.substring(2),
+      images: convertedImages,
+      sizes: List<SizeModel>.from(
+        sizes.map(
+          (e) => SizeModel(
+            size: e.size,
+            price: num.parse(e.price.text.isEmpty ? priceC.text : e.price.text),
+            quantity:
+                int.parse(e.quantity.text.isEmpty ? '0' : e.quantity.text),
+          ),
+        ),
+      ).toList(),
+    );
+  }
+
+  List<Variant> convertToVariant(
+      List<ProductVariant> productVariants, List<ProductImage> productImages) {
+    // Group product variants by color
+    Map<String, List<ProductVariant>> groupedVariantsByColor = {};
+    for (var variant in productVariants) {
+      if (!groupedVariantsByColor.containsKey(variant.color)) {
+        groupedVariantsByColor[variant.color] = [];
+      }
+      groupedVariantsByColor[variant.color]!.add(variant);
+    }
+
+    // Create a list of Variants from grouped variants
+    List<Variant> variants = [];
+
+    groupedVariantsByColor.forEach((color, variantsList) {
+      // Extract sizes for each color
+      List<SizeModel> sizes = variantsList
+          .map((variant) => SizeModel(
+                size: variant.size,
+                price: variant.newPrice,
+                quantity: variant.quantity.toInt(),
+              ))
+          .toList();
+
+      // Extract images for the color from the ProductImage model
+      List<String> images = productImages
+          .where((image) => image.color == color)
+          .map((image) => image.url)
+          .toList();
+
+      // Create a Variant object for this color
+      variants.add(Variant(
+        color: color,
+        images: images,
+        sizes: sizes,
+      ));
+    });
+
+    return variants;
+  }
+
+  List<Map<String, bool>> _generateIsEditableList(
+      List<String> colors, List<bool> isEditable) {
+    List<Map<String, bool>> editableList = [];
+    for (int i = 0; i < colors.length; i++) {
+      editableList.add({colors[i]: isEditable[i]});
+    }
+    return editableList;
+  }
+
+  bool checkIfVarientAlreadyAdded(Variant variant) =>
+      variant.color == selectedColor.substring(2);
+
+  int calculateTotalSizes() {
+    return sizes
+        .map((e) => e.quantity.text)
+        .fold(0, (sum, controller) => sum + (int.tryParse(controller) ?? 0));
+  }
+
+  void _resetSizeControllersToDefault() {
+    sizes = SizeTypes.values
+        .map(
+          (e) => SizeController(
+            size: e.name,
+            isEdit: false,
+            quantity: TextEditingController(),
+            price: TextEditingController(),
+          ),
+        )
+        .toList();
+  }
+
+  void removeNonEditableVariant() {
+    for (var element in addedVarients) {
+      if (selectedColor == element.color) {
+        final varients = HiveStorage.get<List<Variant>>(HiveKeys.tempVarients);
+        varients.remove(element);
+        HiveStorage.set(HiveKeys.tempVarients, varients);
+      }
     }
   }
 
@@ -246,37 +464,45 @@ class AddProductCubit extends Cubit<AddproductState> {
     }
   }
 
-  Future<void> saveDraft(BuildContext context) async {
-    emit(const AddproductState.loading());
-    try {
-      final List<Variant> variants =
-          HiveStorage.get(HiveKeys.tempVarients) ?? [];
-      final List productDataList = HiveStorage.get(HiveKeys.draftProduct) ?? [];
-
-      final newProductData = DraftProductModel(
-        productPrice: priceC.text,
-        product: AddProductModel(
-          categoryID: categoryId,
-          name: productNameC.text,
-          type: productType ?? 'UniSex',
-          description: productDesC.text,
-          variants: variants,
-          sizeguide: sizeGuideImage.path,
-          storeId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-        ),
-        isEditable:
-            generateIsEditableList(colors, isVarientAdded.values.toList()),
-      );
-
-      productDataList.add(newProductData);
-      HiveStorage.set(HiveKeys.draftProduct, productDataList);
-      HiveStorage.set(HiveKeys.varients, isVarientAdded);
-      HiveStorage.remove(HiveKeys.tempVarients);
-      emit(const AddproductState.success());
-    } catch (e) {
-      emit(AddproductState.failure(e.toString()));
+  void resetVarientWidget() {
+    for (var item in sizes) {
+      item.quantity.text = '0';
+      item.price.text = priceC.text;
     }
   }
+
+  void resetAllData() {
+    HiveStorage.set(HiveKeys.tempVarients, null);
+    sizes = SizeTypes.values
+        .map(
+          (e) => SizeController(
+            size: e.name,
+            isEdit: false,
+            quantity: TextEditingController(),
+            price: TextEditingController(),
+          ),
+        )
+        .toList();
+
+    addedVarients = [];
+    priceC.clear();
+    productNameC.clear();
+    productDesC.clear();
+    productType = null;
+    sizeGuideImage = File('');
+    images.clear();
+    isVarientAdded = {
+      '0xFFD80000': false,
+      '0xFF1F00DF': false,
+      '0xFFFFCD1C': false,
+      '0xFFFFFFFF': false,
+      '0xFF101010': false,
+      '0xFF170048': false,
+      '0xFF165A11': false,
+    };
+  }
+
+  // end helper methods
 
   Future<void> createProduct(DraftProductModel? product) async {
     emit(const AddproductState.loading());
@@ -371,23 +597,29 @@ class AddProductCubit extends Cubit<AddproductState> {
         ),
       );
     }
-    final result = await _product.updateVariant(
-      UpdateVariantsModel(
-        productId: product.id,
-        updateVariantsDto: product.productVariants
-            .map(
-              (e) => UpdateVariantDto(
-                price: e.price,
-                size: e.size,
-                color: e.color,
-                quantity: e.quantity.toInt(),
-              ),
-            )
-            .toList(),
-      ).copyWith(
-        updateVariantsDto: updatedVariants,
-      ),
+    final updatedVariant = UpdateVariantsModel(
+      productId: product.id,
+      updateVariantsDto: product.productVariants
+          .map(
+            (e) => UpdateVariantDto(
+              price: e.price,
+              size: e.size,
+              color: e.color,
+              quantity: e.quantity.toInt(),
+            ),
+          )
+          .toList(),
+    ).copyWith(
+      updateVariantsDto: updatedVariants,
     );
+    Either<FailureService, void> result;
+    bool isUpdate = 3 == 4;
+    if (isUpdate) {
+      result = await _product.updateVariant(updatedVariant);
+    } else {
+      result = await _product.createProductVariant(updatedVariant);
+    }
+
     result.fold((err) {
       emit(AddproductState.failure(err.errorMsg));
     }, (res) {
@@ -397,252 +629,5 @@ class AddProductCubit extends Cubit<AddproductState> {
     try {} catch (e) {
       emit(AddproductState.failure(e.toString()));
     }
-  }
-
-  void _updateExistingVariant() {
-    final varients = HiveStorage.get<List>(HiveKeys.tempVarients);
-    Variant productVarieants = _createProductVariant();
-    addedVarients
-        .removeWhere((element) => element.color == selectedColor.substring(2));
-    varients.add(productVarieants);
-    log(varients.map((e) => (e as Variant).sizes.first.quantity).toString());
-    HiveStorage.set(HiveKeys.tempVarients, varients);
-    addedVarients.add(productVarieants);
-    log('update');
-  }
-
-  Future<void> handleSubmit() async {
-    // HiveStorage.set(HiveKeys.tempVarients, null);
-    List<bool> isLeastOneQuantity = [];
-    for (var e in sizes) {
-      isLeastOneQuantity.add(e.quantity.text.isNotEmpty);
-    }
-    if (globalKey.currentState!.validate() &&
-        images.isNotEmpty &&
-        isLeastOneQuantity.contains(true)) {
-      if (HiveStorage.get<List?>(HiveKeys.tempVarients) == null) {
-        _saveNewVariant();
-      } else {
-        _updateExistingVariant();
-      }
-      isVarientAdded[selectedColor] = true;
-      isVarientActive = false;
-      isSubmit = false;
-
-      _resetSizeControllersToDefault();
-      initializeVariantInAddMode();
-
-      AppLogs.infoLog(HiveStorage.get(HiveKeys.tempVarients).toString());
-      emit(const AddproductState.successChange());
-    } else {
-      emit(const AddproductState.failure('please enter valid form'));
-    }
-  }
-
-  void _saveNewVariant() {
-    Variant productVarieants = _createProductVariant();
-
-    addedVarients.removeWhere(
-        (element) => (element.color == selectedColor.substring(2)));
-    List<Variant> variants = [];
-    variants.add(productVarieants);
-    HiveStorage.set<List<Variant>>(HiveKeys.tempVarients, variants);
-    // HiveStorage.set<List<Variant>>(HiveKeys.varients, variants);
-    addedVarients.add(productVarieants);
-  }
-
-  Variant _createProductVariant() {
-    final Completer<String> image = Completer();
-
-    List<String> convertedImages = [];
-    for (var img in images) {
-      convertImageToBase64(img).then((value) async {
-        image.complete(value);
-        convertedImages.add((await image.future));
-      });
-    }
-    return Variant(
-      color: selectedColor.substring(2),
-      images: convertedImages,
-      sizes: List<SizeModel>.from(
-        sizes.map(
-          (e) => SizeModel(
-            size: e.size,
-            price: num.parse(e.price.text.isEmpty ? priceC.text : e.price.text),
-            quantity:
-                int.parse(e.quantity.text.isEmpty ? '0' : e.quantity.text),
-          ),
-        ),
-      ).toList(),
-    );
-  }
-
-  void _resetSizeControllersToDefault() {
-    //
-    sizes = SizeTypes.values
-        .map(
-          (e) => SizeController(
-            size: e.name,
-            isEdit: false,
-            quantity: TextEditingController(),
-            price: TextEditingController(),
-          ),
-        )
-        .toList();
-  }
-
-  void onSelectedColor(index) {
-    images.clear();
-    selectedIndex = index;
-    selectedColor = colors[selectedIndex].toString();
-
-    if (isEdit) {
-      initializeVarientsInEditMode(productEdit);
-    } else {
-      initializeVariantInAddMode();
-    }
-    if (_checkIfVarientEditable()) {
-      isSubmit = false;
-      isVarientActive = false;
-      isNotFirstTimeActivated = true;
-    } else if (!_checkIfVarientEditable()) {
-      isSubmit = false;
-      isVarientActive = false;
-      isNotFirstTimeActivated = true;
-    } else {
-      isVarientActive = false;
-      isNotFirstTimeActivated = false;
-      isSubmit = true;
-    }
-    // emit(const AddproductState.initial());
-  }
-
-  void activateVariant() {
-    isVarientActive = true; // is add for activate variants widget
-    isNotFirstTimeActivated = true;
-    isSubmit = true; // for submit or upload button only
-    for (var item in sizes) {
-      item.price.text = priceC.text;
-    }
-  }
-
-  void editVariant() {
-    isVarientActive = true;
-    isSubmit = true;
-    isVarientAdded[selectedColor] = false;
-    for (var item in sizes) {
-      item.price.text = priceC.text;
-    }
-    removeNonEditableVariant();
-  }
-
-  void deleteVariant() {
-    Variant? proVar;
-    List varients = HiveStorage.get<List>(HiveKeys.tempVarients);
-    for (var element in addedVarients) {
-      if (selectedColor == element.color) {
-        proVar = element;
-      }
-    }
-    addedVarients.remove(proVar);
-    varients.remove(proVar);
-    HiveStorage.set(HiveKeys.tempVarients, varients);
-    resetVarientWidget();
-
-    if (addedVarients.isEmpty) {
-      isNotFirstTimeActivated = false;
-      isSubmit = true;
-    }
-  }
-
-  void removeNonEditableVariant() {
-    for (var element in addedVarients) {
-      if (selectedColor == element.color) {
-        final varients = HiveStorage.get<List<Variant>>(HiveKeys.tempVarients);
-        varients.remove(element);
-        HiveStorage.set(HiveKeys.tempVarients, varients);
-      }
-    }
-  }
-
-  void resetVarientWidget() {
-    // images.clear();
-    log('reset');
-    for (var item in sizes) {
-      item.quantity.text = '0';
-      item.price.text = priceC.text;
-    }
-  }
-
-  resetAll() {
-    HiveStorage.set(HiveKeys.tempVarients, null);
-    sizes = SizeTypes.values
-        .map(
-          (e) => SizeController(
-            size: e.name,
-            isEdit: false,
-            quantity: TextEditingController(),
-            price: TextEditingController(),
-          ),
-        )
-        .toList();
-
-    addedVarients = [];
-    priceC.clear();
-    productNameC.clear();
-    productDesC.clear();
-    productType = null;
-    sizeGuideImage = File('');
-    images.clear();
-    isVarientAdded = {
-      '0xFFD80000': false,
-      '0xFF1F00DF': false,
-      '0xFFFFCD1C': false,
-      '0xFFFFFFFF': false,
-      '0xFF101010': false,
-      '0xFF170048': false,
-      '0xFF165A11': false,
-    };
-  }
-
-  List<Variant> convertToVariant(
-      List<ProductVariant> productVariants, List<ProductImage> productImages) {
-    // Group product variants by color
-    Map<String, List<ProductVariant>> groupedVariantsByColor = {};
-    for (var variant in productVariants) {
-      if (!groupedVariantsByColor.containsKey(variant.color)) {
-        groupedVariantsByColor[variant.color] = [];
-      }
-      groupedVariantsByColor[variant.color]!.add(variant);
-    }
-
-    // Create a list of Variants from grouped variants
-    List<Variant> variants = [];
-
-    groupedVariantsByColor.forEach((color, variantsList) {
-      // Extract sizes for each color
-      List<SizeModel> sizes = variantsList
-          .map((variant) => SizeModel(
-                size: variant.size,
-                price: variant.newPrice,
-                quantity: variant.quantity.toInt(),
-              ))
-          .toList();
-
-      // Extract images for the color from the ProductImage model
-      List<String> images = productImages
-          .where((image) => image.color == color)
-          .map((image) => image.url)
-          .toList();
-
-      // Create a Variant object for this color
-      variants.add(Variant(
-        color: color,
-        images: images,
-        sizes: sizes,
-      ));
-    });
-
-    return variants;
   }
 }

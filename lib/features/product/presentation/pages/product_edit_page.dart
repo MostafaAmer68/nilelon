@@ -38,6 +38,7 @@ class _AddProductViewState extends State<EditProductpage> {
   @override
   void dispose() {
     HiveStorage.set(HiveKeys.tempVarients, null);
+    cubit.resetAllData();
     super.dispose();
   }
 
@@ -56,6 +57,7 @@ class _AddProductViewState extends State<EditProductpage> {
 
     cubit.isEdit = true;
     cubit.productEdit = widget.product;
+    cubit.initializeVarientsInEditMode(widget.product);
   }
 
   @override
@@ -66,6 +68,10 @@ class _AddProductViewState extends State<EditProductpage> {
         state.mapOrNull(loading: (value) {
           BotToast.showLoading();
         }, success: (v) {
+          BotToast.closeAllLoading();
+          navigatePop(context: context);
+          BotToast.showText(text: lang.productEdited);
+        }, successChange: (v) {
           BotToast.closeAllLoading();
         }, failure: (r) {
           BotToast.closeAllLoading();
@@ -277,11 +283,7 @@ class _AddProductViewState extends State<EditProductpage> {
       isActivated:
           cubit.isNotFirstTimeActivated ? cubit.isSubmit : !cubit.isSubmit,
       ontap: () {
-        if (cubit.isEdit) {
-          cubit.updateVariant(widget.product);
-        } else {
-          cubit.handleSubmit();
-        }
+        cubit.handleSubmit();
         setState(() {});
       },
     );
@@ -292,9 +294,7 @@ class _AddProductViewState extends State<EditProductpage> {
       isActivated: !cubit.isSubmit,
       text: uploadStr,
       ontap: () {
-        // AppLogs.infoLog(HiveStorage.get(HiveKeys.varients).toString());
-        cubit.updateProduct(widget.product);
-        // navigatePop(context: context);
+        if (cubit.isVarientAdded[cubit.selectedColor]!) {}
       },
     );
   }

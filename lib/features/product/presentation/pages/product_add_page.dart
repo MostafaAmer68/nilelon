@@ -42,7 +42,7 @@ class _AddProductViewState extends State<AddProductView> {
 
   @override
   void dispose() {
-    cubit.resetAll();
+    cubit.resetAllData();
     super.dispose();
   }
 

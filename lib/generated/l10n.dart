@@ -4170,6 +4170,16 @@ class S {
     );
   }
 
+  /// `Product updated successfully`
+  String get productEdited {
+    return Intl.message(
+      'Product updated successfully',
+      name: 'productEdited',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

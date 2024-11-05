@@ -5,7 +5,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/closet/presentation/view/closet_sheet_bar_view.dart';
-import 'package:nilelon/features/customer_flow/notification/notification_view.dart';
+import 'package:nilelon/features/notification/presentation/pages/notification_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_guest_page.dart';
 import 'package:svg_flutter/svg.dart';
 

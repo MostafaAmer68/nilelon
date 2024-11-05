@@ -4,7 +4,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/tools.dart';
-import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
+import 'package:nilelon/features/recomandtion/recommendation_profile_view.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/pages/product_followed_page.dart';
 import 'package:nilelon/features/product/presentation/pages/products_view_all.dart';

@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:nilelon/features/product/domain/models/create_review_model.dart';
 import 'package:nilelon/features/product/domain/models/create_variant_image.dart';
-import 'package:nilelon/features/product/domain/models/create_variant_model.dart';
 import 'package:nilelon/features/product/domain/models/delete_image_variant.dart';
 import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
 import 'package:nilelon/core/service/failure_service.dart';
@@ -45,7 +44,7 @@ abstract class ProductsRepos {
   Future<Either<FailureService, void>> deleteVariantImage(
       DeleteVariantImage model);
   Future<Either<FailureService, void>> createProductVariant(
-      CreateVariant model);
+      UpdateVariantsModel model);
   Future<Either<FailureService, void>> createVariantImage(
       CreateVariantImage model);
 }

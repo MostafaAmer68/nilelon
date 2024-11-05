@@ -28,13 +28,11 @@ class _VariantItemsState extends State<VariantItems> {
   @override
   void initState() {
     cubit = AddProductCubit.get(context);
-    log(cubit.hashCode.toString(), name: 'hash');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    log(cubit.hashCode.toString(), name: 'hash');
     return BlocConsumer<AddProductCubit, AddproductState>(
       listener: (context, state) {
         setState(() {});
@@ -83,6 +81,7 @@ class _VariantItemsState extends State<VariantItems> {
   }
 
   Widget _buildPriceText(int index, TextEditingController priceController) {
+    log(priceController.text);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

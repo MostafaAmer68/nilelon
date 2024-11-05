@@ -447,6 +447,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "productDescription":
             MessageLookupByLibrary.simpleMessage("وصف المنتج"),
         "productDetails": MessageLookupByLibrary.simpleMessage("تفاصيل المنتج"),
+        "productEdited":
+            MessageLookupByLibrary.simpleMessage("تم تحديث المنتج"),
         "productLinkIsCopied":
             MessageLookupByLibrary.simpleMessage("تم نسخ رابط المنتج"),
         "productName": MessageLookupByLibrary.simpleMessage("اسم المنتج"),

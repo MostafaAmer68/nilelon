@@ -8,7 +8,6 @@ import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/domain/models/add_product/add_product_model.dart';
 import 'package:nilelon/features/product/domain/models/create_review_model.dart';
 import 'package:nilelon/features/product/domain/models/create_variant_image.dart';
-import 'package:nilelon/features/product/domain/models/create_variant_model.dart';
 import 'package:nilelon/features/product/domain/models/delete_image_variant.dart';
 import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
@@ -262,13 +261,13 @@ class ProductsService {
     }
   }
 
-  Future<void> createVariant(CreateVariant review) async {
+  Future<void> createVariant(UpdateVariantsModel review) async {
     log(review.toMap().toString());
     final data = await apiService.post(
       endPoint: EndPoint.createProductVariantUrl,
       body: review.toMap(),
     );
-    if (data.statusCode == 201) {
+    if (data.statusCode == 200) {
       // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');

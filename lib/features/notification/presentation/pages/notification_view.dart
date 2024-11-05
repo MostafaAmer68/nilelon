@@ -8,7 +8,7 @@ import 'package:nilelon/core/widgets/cards/notification/notify_gradient_card.dar
 import 'package:nilelon/core/widgets/cards/notification/notify_viewed_card.dart';
 import 'package:nilelon/core/widgets/cards/notification/notify_card.dart';
 
-import '../../../core/widgets/scaffold_image.dart';
+import '../../../../core/widgets/scaffold_image.dart';
 
 class NotificationView extends StatelessWidget {
   const NotificationView({super.key, required this.noNotification});

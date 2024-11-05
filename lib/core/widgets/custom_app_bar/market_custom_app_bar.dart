@@ -6,7 +6,7 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/store_flow/notification/notification_tab_bar.dart';
 import 'package:svg_flutter/svg.dart';
 
-import '../../../features/customer_flow/notification/notification_view.dart';
+import '../../../features/notification/presentation/pages/notification_view.dart';
 import '../../../features/profile/presentation/pages/profile_guest_page.dart';
 import '../../data/hive_stroage.dart';
 

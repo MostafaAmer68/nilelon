@@ -452,6 +452,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Product Description"),
         "productDetails":
             MessageLookupByLibrary.simpleMessage("Product Details"),
+        "productEdited": MessageLookupByLibrary.simpleMessage(
+            "Product updated successfully"),
         "productLinkIsCopied":
             MessageLookupByLibrary.simpleMessage("Product Link Is Copied"),
         "productName": MessageLookupByLibrary.simpleMessage("Product Name"),

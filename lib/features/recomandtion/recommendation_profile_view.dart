@@ -6,9 +6,9 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/features/shared/recommendation/presentation/cubit/recommendation_cubit.dart';
 
-import '../../../core/utils/navigation.dart';
-import '../../../core/widgets/scaffold_image.dart';
-import '../../layout/customer_bottom_tab_bar.dart';
+import '../../core/utils/navigation.dart';
+import '../../core/widgets/scaffold_image.dart';
+import '../layout/customer_bottom_tab_bar.dart';
 
 class RecommendationProfileView extends StatelessWidget {
   const RecommendationProfileView({super.key});

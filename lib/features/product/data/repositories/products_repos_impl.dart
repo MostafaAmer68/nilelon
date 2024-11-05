@@ -2,7 +2,6 @@ import 'package:dartz/dartz.dart';
 import 'package:nilelon/features/product/domain/models/add_product/add_product_model.dart';
 import 'package:nilelon/features/product/domain/models/create_review_model.dart';
 import 'package:nilelon/features/product/domain/models/create_variant_image.dart';
-import 'package:nilelon/features/product/domain/models/create_variant_model.dart';
 import 'package:nilelon/features/product/domain/models/delete_image_variant.dart';
 import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
 import 'package:nilelon/features/product/data/datasources/products_service.dart';
@@ -76,7 +75,7 @@ class ProductsReposImpl extends ProductsRepos {
 
   @override
   Future<Either<FailureService, void>> createProductVariant(
-      CreateVariant model) async {
+      UpdateVariantsModel model) async {
     return exe(() => _productService.createVariant(model));
   }
 

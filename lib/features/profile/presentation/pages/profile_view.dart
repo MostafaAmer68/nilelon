@@ -11,7 +11,7 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/order/presentation/pages/order_tab_bar.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
-import 'package:nilelon/features/customer_flow/recommendation_profile/recommendation_profile_view.dart';
+import 'package:nilelon/features/recomandtion/recommendation_profile_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/settings_view.dart';
 
 import '../../../../core/tools.dart';

@@ -11,7 +11,7 @@ import 'package:nilelon/core/widgets/cards/brand/brand_card.dart';
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../profile/data/models/store_profile_model.dart';
-import '../../../search/presentation/widgets/search_delegate.dart';
+import '../widgets/search_delegate.dart';
 
 class SeeMoreStoresView extends StatefulWidget {
   const SeeMoreStoresView({super.key, required this.stores});
