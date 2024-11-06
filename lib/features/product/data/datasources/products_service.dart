@@ -261,14 +261,13 @@ class ProductsService {
     }
   }
 
-  Future<void> createVariant(UpdateVariantsModel review) async {
-    log(review.toMap().toString());
+  Future<bool> createVariant(UpdateVariantsModel review) async {
     final data = await apiService.post(
       endPoint: EndPoint.createProductVariantUrl,
       body: review.toMap(),
     );
-    if (data.statusCode == 200) {
-      // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
+    if (data.statusCode == 200 || data.statusCode == 201) {
+      return data.data['isSuccess'];
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
@@ -280,7 +279,7 @@ class ProductsService {
       endPoint: EndPoint.createProductImagesUrl,
       body: review.toMap(),
     );
-    if (data.statusCode == 201) {
+    if (data.statusCode == 200 || data.statusCode == 201) {
       // return ProductsResponseModel.fromJson(dat  a.data as Map<String, dynamic>);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');

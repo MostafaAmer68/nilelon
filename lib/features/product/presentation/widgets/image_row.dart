@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/helper.dart';
 
 import '../../../../core/resources/const_functions.dart';
 import '../../../../core/widgets/pop_ups/camera_popup.dart';
@@ -37,7 +40,15 @@ class _ImageRowState extends State<ImageRow> {
                 return addContainer(
                   () async {
                     if (cubit.isVarientActive) {
-                      cubit.images.add((await cameraDialog(context)));
+                      final pickedIMage = await cameraDialog(context);
+
+                      cubit.images.add(pickedIMage);
+                      final Completer endcodedImage = Completer<String>();
+
+                      await convertImageToBase64(pickedIMage).then((v) {
+                        endcodedImage.complete(v);
+                      });
+                      cubit.newImage.add(await endcodedImage.future);
 
                       setState(() {});
                     }

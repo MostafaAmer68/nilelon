@@ -74,7 +74,7 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, void>> createProductVariant(
+  Future<Either<FailureService, bool>> createProductVariant(
       UpdateVariantsModel model) async {
     return exe(() => _productService.createVariant(model));
   }

@@ -11,6 +11,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
+import 'package:nilelon/features/product/domain/models/create_variant_image.dart';
 import 'package:nilelon/features/product/domain/models/product_data/draft_product_model.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/domain/models/size_variant_controller.dart';
@@ -49,6 +50,15 @@ class AddProductCubit extends Cubit<AddproductState> {
     '0xFF165A11',
   ];
   Map<String, bool> isVarientAdded = {
+    '0xFFD80000': false,
+    '0xFF1F00DF': false,
+    '0xFFFFCD1C': false,
+    '0xFFFFFFFF': false,
+    '0xFF101010': false,
+    '0xFF170048': false,
+    '0xFF165A11': false,
+  };
+  Map<String, bool> isVarientAddedEditMode = {
     '0xFFD80000': false,
     '0xFF1F00DF': false,
     '0xFFFFCD1C': false,
@@ -152,11 +162,22 @@ class AddProductCubit extends Cubit<AddproductState> {
         _updateExistingVariant();
       }
       isVarientAdded[selectedColor] = true;
+      if (!isEdit) {
+        isVarientAddedEditMode[selectedColor] = true;
+      }
+
       isVarientActive = false;
       isSubmit = false;
-
+      if (newImage.isNotEmpty) {
+        createVariantImage(productEdit.id);
+      }
+      updateVariant(productEdit);
       _resetSizeControllersToDefault();
-      initializeVariantInAddMode();
+      if (isEdit) {
+        initializeVarientsInEditMode(productEdit);
+      } else {
+        initializeVariantInAddMode();
+      }
 
       AppLogs.infoLog(HiveStorage.get(HiveKeys.tempVarients).toString());
       emit(const AddproductState.successChange());
@@ -264,6 +285,7 @@ class AddProductCubit extends Cubit<AddproductState> {
 
   void initializeVarientsInEditMode(ProductModel product) async {
     _resetSizeControllersToDefault();
+    images.clear();
     priceC.text = product.productVariants.first.price.toString();
     productNameC.text = product.name;
     productDesC.text = product.description;
@@ -271,7 +293,10 @@ class AddProductCubit extends Cubit<AddproductState> {
     isNotFirstTimeActivated = true;
     isSubmit = true;
     productType = product.type;
-    images = product.productImages.map((e) => File(e.url)).toList();
+    images = product.productImages
+        .where((e) => e.color == selectedColor.substring(2).toLowerCase())
+        .map((e) => File(e.url))
+        .toList();
     sizeGuideImage = File(product.sizeguide);
     final variants =
         convertToVariant(product.productVariants, product.productImages);
@@ -283,20 +308,43 @@ class AddProductCubit extends Cubit<AddproductState> {
         sizes: [],
       ),
     );
+    // if (checkIfVarientAlreadyAdded(varient)) {
+    //   final Completer<File> result = Completer();
+    //   for (var item in newImage) {
+    //     await convertBase64ToImage(item).then((value) async {
+    //       result.complete(value);
+    //       final image = await result.future;
+    //       images.add(image);
+    //     });
+    //   }
+    // }
+    //  final Completer<File> result = Completer();
+    // for (var item in variant.images) {
+    //   await convertBase64ToImage(item).then((value) async {
+    //     result.complete(value);
+    //     final image = await result.future;
+    //     images.add(image);
+    //   });
+    // }
 
+    emit(AddproductState.loading());
     if (varient.sizes.isNotEmpty) {
+      emit(AddproductState.loading());
       for (int i = 0; i < sizes.length; i++) {
         sizes[i] = sizes[i].copyWith(
             quantity: TextEditingController(
                 text: varient.sizes[i].quantity.toString()),
             price:
                 TextEditingController(text: varient.sizes[i].price.toString()));
+        emit(AddproductState.successChange());
       }
     }
+    emit(AddproductState.successChange());
     for (int i = 0; i < variants.length; i++) {
       if (variants[i].sizes.every((e) => e.price != 0) ||
           variants[i].sizes.every((e) => e.quantity != 0)) {
         isVarientAdded['0x${variants[i].color.toUpperCase()}'] = true;
+        isVarientAddedEditMode['0x${variants[i].color.toUpperCase()}'] = true;
       }
     }
   }
@@ -443,7 +491,6 @@ class AddProductCubit extends Cubit<AddproductState> {
           final image = await result.future;
           images.add(image);
         });
-        log(images.length.toString(), name: 'image');
       }
       emit(const AddproductState.loading());
       if (variant.sizes.isNotEmpty) {
@@ -492,6 +539,15 @@ class AddProductCubit extends Cubit<AddproductState> {
     sizeGuideImage = File('');
     images.clear();
     isVarientAdded = {
+      '0xFFD80000': false,
+      '0xFF1F00DF': false,
+      '0xFFFFCD1C': false,
+      '0xFFFFFFFF': false,
+      '0xFF101010': false,
+      '0xFF170048': false,
+      '0xFF165A11': false,
+    };
+    isVarientAddedEditMode = {
       '0xFFD80000': false,
       '0xFF1F00DF': false,
       '0xFFFFCD1C': false,
@@ -577,57 +633,98 @@ class AddProductCubit extends Cubit<AddproductState> {
 
   Future<void> updateVariant(ProductModel product) async {
     emit(const AddproductState.loading());
-    List<UpdateVariantDto> updatedVariants = [];
-    for (int i = 0; i < sizes.length; i++) {
-      final variant = product.productVariants[i];
-      final size = sizes[i];
-      updatedVariants.add(
-        UpdateVariantDto(
-          price: variant.price,
-          size: variant.size,
-          color: variant.color,
-          quantity: variant.quantity.toInt(),
-        ).copyWith(
-          price: num.parse(size.price.text) == variant.price
-              ? null
-              : num.parse(size.price.text),
-          quantity: int.parse(size.quantity.text) == variant.quantity
-              ? null
-              : int.parse(size.quantity.text),
-        ),
-      );
-    }
-    final updatedVariant = UpdateVariantsModel(
-      productId: product.id,
-      updateVariantsDto: product.productVariants
-          .map(
-            (e) => UpdateVariantDto(
-              price: e.price,
-              size: e.size,
-              color: e.color,
-              quantity: e.quantity.toInt(),
-            ),
-          )
-          .toList(),
-    ).copyWith(
-      updateVariantsDto: updatedVariants,
-    );
-    Either<FailureService, void> result;
-    bool isUpdate = 3 == 4;
-    if (isUpdate) {
-      result = await _product.updateVariant(updatedVariant);
-    } else {
-      result = await _product.createProductVariant(updatedVariant);
-    }
 
-    result.fold((err) {
-      emit(AddproductState.failure(err.errorMsg));
-    }, (res) {
-      HiveStorage.set(HiveKeys.tempVarients, null);
-      emit(const AddproductState.success());
-    });
-    try {} catch (e) {
+    try {
+      List<UpdateVariantDto> updatedVariants = [];
+      // final cachedVariant = HiveStorage.get(HiveKeys.tempVarients);
+
+      for (int i = 0; i < sizes.length; i++) {
+        final variant = product.productVariants[i];
+
+        final size = sizes[i];
+        updatedVariants.add(
+          UpdateVariantDto(
+            price: variant.price,
+            size: variant.size,
+            color: variant.color,
+            quantity: variant.quantity.toInt(),
+          ).copyWith(
+            price: num.parse(size.price.text) == variant.price
+                ? null
+                : num.parse(size.price.text),
+            quantity: int.parse(size.quantity.text) == variant.quantity
+                ? null
+                : int.parse(size.quantity.text),
+          ),
+        );
+      }
+      final updatedVariant = UpdateVariantsModel(
+        productId: product.id,
+        updateVariantsDto: product.productVariants
+            .map(
+              (e) => UpdateVariantDto(
+                price: e.price,
+                size: e.size,
+                color: e.color,
+                quantity: e.quantity.toInt(),
+              ),
+            )
+            .toList(),
+      ).copyWith(
+        updateVariantsDto: updatedVariants,
+      );
+      Either<FailureService, dynamic> result;
+
+      if (!isVarientAddedEditMode[selectedColor]!) {
+        final List<UpdateVariantDto> createdVariant = [];
+        for (var item in addedVarients
+            .firstWhere((e) => e.color == selectedColor.substring(2))
+            .sizes) {
+          createdVariant.add(UpdateVariantDto(
+              price: item.price,
+              size: item.size,
+              color: selectedColor.substring(2).toLowerCase(),
+              quantity: item.quantity));
+        }
+        result = await _product.createProductVariant(
+          UpdateVariantsModel(
+            productId: product.id,
+            updateVariantsDto: createdVariant,
+          ),
+        );
+      } else {
+        result = await _product.updateVariant(updatedVariant);
+      }
+
+      result.fold((err) {
+        emit(AddproductState.failure(err.errorMsg));
+      }, (res) async {
+        HiveStorage.set(HiveKeys.tempVarients, null);
+        if (res is bool) {
+          isVarientAddedEditMode[selectedColor] = res;
+          log('success updated');
+        }
+
+        emit(const AddproductState.success());
+      });
+    } catch (e) {
       emit(AddproductState.failure(e.toString()));
     }
+  }
+
+  List<String> newImage = [];
+
+  Future<void> createVariantImage(id) async {
+    final resultI = await _product.createVariantImage(CreateVariantImage(
+        productId: id,
+        color: selectedColor.substring(2).toLowerCase(),
+        images: newImage.where((e) => e.isNotEmpty).toList()));
+
+    resultI.fold((e) {
+      emit(AddproductState.failure(e.errorMsg));
+    }, (res) {
+      // newImage.clear();
+      emit(const AddproductState.success());
+    });
   }
 }

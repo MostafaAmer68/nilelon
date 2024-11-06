@@ -17,12 +17,15 @@ GestureDetector imageContainer(void Function() onTap, String file, context,
       //   color: ColorManager.primaryB5,
       //   borderRadius: BorderRadius.circular(16),
       // ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: file.contains('https') || file.contains('http')
-            ? imageReplacer(url: file)
-            : Image.file(File(file)),
-      ),
+      child: file.contains('https') || file.contains('http')
+          ? imageReplacer(url: file, radius: 16)
+          : ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.file(
+                File(file),
+                fit: BoxFit.cover,
+              ),
+            ),
     ),
   );
 }

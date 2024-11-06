@@ -108,6 +108,7 @@ class BackgroundService {
         ),
       ),
     );
+    
     connection.on('MissYou', (message) async {
       flutterLocalNotificationsPlugin.show(
         888,

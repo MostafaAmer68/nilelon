@@ -43,7 +43,7 @@ abstract class ProductsRepos {
   Future<Either<FailureService, void>> deleteProduct(String id);
   Future<Either<FailureService, void>> deleteVariantImage(
       DeleteVariantImage model);
-  Future<Either<FailureService, void>> createProductVariant(
+  Future<Either<FailureService, bool>> createProductVariant(
       UpdateVariantsModel model);
   Future<Either<FailureService, void>> createVariantImage(
       CreateVariantImage model);

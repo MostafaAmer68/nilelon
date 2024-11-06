@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -39,6 +40,7 @@ class _AddProductViewState extends State<EditProductpage> {
   void dispose() {
     HiveStorage.set(HiveKeys.tempVarients, null);
     cubit.resetAllData();
+    cubit.resetVarientWidget();
     super.dispose();
   }
 
@@ -69,8 +71,12 @@ class _AddProductViewState extends State<EditProductpage> {
           BotToast.showLoading();
         }, success: (v) {
           BotToast.closeAllLoading();
-          navigatePop(context: context);
+          ProductsCubit.get(context).getProductDetails(widget.product.id);
+          cubit.productEdit = ProductsCubit.get(context).product;
+          cubit
+              .initializeVarientsInEditMode(ProductsCubit.get(context).product);
           BotToast.showText(text: lang.productEdited);
+          setState(() {});
         }, successChange: (v) {
           BotToast.closeAllLoading();
         }, failure: (r) {
@@ -258,7 +264,7 @@ class _AddProductViewState extends State<EditProductpage> {
   }
 
   Widget _buildSubmitSection(S lang) {
-    return _buildButtonRow(lang.submit, lang.editProduct);
+    return _buildButtonRow(lang.submit, lang.confirm);
   }
 
   Widget _buildButtonRow(String submitStr, String uploadStr) {
@@ -283,6 +289,10 @@ class _AddProductViewState extends State<EditProductpage> {
       isActivated:
           cubit.isNotFirstTimeActivated ? cubit.isSubmit : !cubit.isSubmit,
       ontap: () {
+        // if (cubit.isVarientActive) {
+        //   cubit.updateVariant(widget.product);
+        // } else {
+        // }
         cubit.handleSubmit();
         setState(() {});
       },
@@ -294,7 +304,7 @@ class _AddProductViewState extends State<EditProductpage> {
       isActivated: !cubit.isSubmit,
       text: uploadStr,
       ontap: () {
-        if (cubit.isVarientAdded[cubit.selectedColor]!) {}
+        cubit.updateVariant(widget.product);
       },
     );
   }
