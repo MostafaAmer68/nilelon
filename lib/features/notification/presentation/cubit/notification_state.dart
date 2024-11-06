@@ -8,3 +8,13 @@ abstract class NotificationState extends Equatable {
 }
 
 class NotificationInitial extends NotificationState {}
+
+class NotificationLoading extends NotificationState {}
+
+class Notificationfailure extends NotificationState {
+  final String err;
+
+  const Notificationfailure(this.err);
+}
+
+class NotificationSuccess extends NotificationState {}

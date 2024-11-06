@@ -1,7 +1,9 @@
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/service/background_service.dart';
+import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/my_app.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/service/simple_bloc_observer.dart';
@@ -37,6 +39,8 @@ void main() async {
   if (HiveStorage.get(HiveKeys.skipOnboarding) == null) {
     HiveStorage.set(HiveKeys.skipOnboarding, false);
   }
+
+ 
   runApp(
     DevicePreview(
       enabled: false,

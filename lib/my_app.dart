@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:app_links/app_links.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/notification/data/repositories/notifiy_repo_impl.dart';
 import 'package:nilelon/features/order/presentation/progress_cubit/progress_cubit.dart';
 import 'package:nilelon/features/closet/data/repo_impl/closet_repo_impl.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
@@ -18,6 +22,7 @@ import 'package:nilelon/features/product/presentation/cubit/products_cubit/produ
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/features/promo/data/repositories/promo_repo_impl.dart';
@@ -34,6 +39,8 @@ import 'package:nilelon/features/categories/data/repo/category_repos_impl.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/generated/l10n.dart';
 
+import 'core/utils/navigation.dart';
+import 'features/notification/presentation/cubit/notification_cubit.dart';
 import 'features/search/data/repositories/search_repo_impl.dart';
 import 'features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
 import 'features/store_flow/analytics/presentation/cubit/analytics_cubit.dart';
@@ -55,6 +62,14 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       key = UniqueKey();
     });
+  }
+
+  final appLinks = AppLinks(); // AppLinks is singleton
+  @override
+  void initState() {
+// Subscribe to all events (initial link and further)
+
+    super.initState();
   }
 
   @override
@@ -122,6 +137,10 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(
           create: (context) =>
               AnalyticsCubit(locatorService<AnalyticsReposImpl>()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              NotificationCubit(locatorService<NotifyRepoImpl>()),
         ),
       ],
       child: ScreenUtilInit(

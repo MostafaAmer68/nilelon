@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_guest_page.dart';
@@ -11,6 +14,8 @@ import 'package:nilelon/features/home/view/customer_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_view.dart';
 
 import '../../core/data/hive_stroage.dart';
+import '../../core/utils/navigation.dart';
+import '../product/presentation/pages/product_details_page.dart';
 
 class CustomerBottomTabBar extends StatefulWidget {
   const CustomerBottomTabBar({super.key, this.index = 0});
@@ -21,10 +26,17 @@ class CustomerBottomTabBar extends StatefulWidget {
 
 class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
   int selectedIndex = 0;
-
+  final appLinks = AppLinks();
   @override
   void initState() {
     selectedIndex = widget.index;
+    final sub = appLinks.uriLinkStream.listen((uri) {
+      log(uri.toString());
+      navigateTo(
+          context: context,
+          screen: ProductDetailsView(
+              productId: uri.path.split('/').last.toString()));
+    });
     super.initState();
   }
 

@@ -38,7 +38,6 @@ class HomeCustomAppBar extends StatelessWidget {
                   context: context,
                   screen: HiveStorage.get(HiveKeys.userModel) != null
                       ? const NotificationView(
-                          noNotification: false,
                         )
                       : const ProfileGuestPage(
                           hasLeading: true,

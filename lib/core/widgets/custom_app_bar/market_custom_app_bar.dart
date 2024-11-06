@@ -48,9 +48,7 @@ class MarketCustomAppBar extends StatelessWidget {
                       navigateTo(
                           context: context,
                           screen: HiveStorage.get(HiveKeys.userModel) != null
-                              ? const NotificationView(
-                                  noNotification: false,
-                                )
+                              ? const NotificationTabBar()
                               : const ProfileGuestPage(
                                   hasLeading: true,
                                 ));

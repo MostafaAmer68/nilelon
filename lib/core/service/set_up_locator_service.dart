@@ -4,6 +4,8 @@ import 'package:nilelon/features/cart/data/datasource/cart_service.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
 import 'package:nilelon/features/closet/data/remote_data_source/closet_remote_data_source.dart';
 import 'package:nilelon/features/closet/data/repo_impl/closet_repo_impl.dart';
+import 'package:nilelon/features/notification/data/datasources/notification_remote.dart';
+import 'package:nilelon/features/notification/data/repositories/notifiy_repo_impl.dart';
 import 'package:nilelon/features/order/data/datasources/order_service.dart';
 import 'package:nilelon/features/order/data/repositories/order_repo_impl.dart';
 import 'package:nilelon/features/payments/data/datasources/payment_service.dart';
@@ -47,6 +49,13 @@ void setUpLocatorService() {
     locatorService(),
   ));
   locatorService.registerSingleton<ProfileRepoIMpl>(ProfileRepoIMpl(
+    locatorService(),
+  ));
+  // notification
+  locatorService.registerSingleton(NotificationRemote(
+    locatorService(),
+  ));
+  locatorService.registerSingleton<NotifyRepoImpl>(NotifyRepoImpl(
     locatorService(),
   ));
 

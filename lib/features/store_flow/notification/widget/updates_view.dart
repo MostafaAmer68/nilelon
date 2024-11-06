@@ -30,6 +30,7 @@ class UpdatesView extends StatelessWidget {
                     NotifyViewedCard(
                       image: 'assets/images/Feedback.png',
                       title: ' You Received New Feedback. Check it Now! ',
+                      type: '',
                       time: '11:56 AM',
                     ),
                   ],

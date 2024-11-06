@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:nilelon/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -10,9 +14,24 @@ import 'package:nilelon/core/widgets/cards/notification/notify_card.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 
-class NotificationView extends StatelessWidget {
-  const NotificationView({super.key, required this.noNotification});
-  final bool noNotification;
+class NotificationView extends StatefulWidget {
+  const NotificationView({
+    super.key,
+  });
+
+  @override
+  State<NotificationView> createState() => _NotificationViewState();
+}
+
+class _NotificationViewState extends State<NotificationView> {
+  late final NotificationCubit cubit;
+  @override
+  void initState() {
+    cubit = NotificationCubit.get(context);
+    cubit.getAllNotification();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -20,52 +39,38 @@ class NotificationView extends StatelessWidget {
       appBar: customAppBar(title: lang.notification, context: context),
       body: Column(
         children: [
-          const SizedBox(
-            height: 4,
-            child: Divider(
-              color: ColorManager.primaryG8,
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: noNotification
-                  ? Container(
-                      width: screenWidth(context, 0.5),
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(
-                            Assets.assetsImagesNoNotification,
-                          ),
-                        ),
-                      ),
-                    )
-                  : const Column(
-                      children: [
-                        NotifyGradientCard(
-                          image: Assets.assetsImagesCloth1,
-                          title: '20% Discount on this item, Don’t miss it.',
-                          time: '11:56 AM',
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        NotifyCard(
-                          image: Assets.assetsImagesArrived,
-                          title: 'Your package is being packed by the sender',
-                          time: '11:56 AM',
-                        ),
-                        SizedBox(
-                          height: 16,
-                        ),
-                        NotifyViewedCard(
-                          image: Assets.assetsImagesArrived2,
-                          title: 'Your package has arrived at your destination',
-                          time: '11:56 AM',
-                        )
-                      ],
-                    ),
-            ),
+          DefaultDivider(),
+          BlocBuilder<NotificationCubit, NotificationState>(
+            builder: (context, state) {
+              if (state is NotificationLoading) {
+                return buildShimmerIndicatorSmall();
+              }
+
+              if (state is NotificationSuccess) {
+                if (cubit.notificatios.isEmpty) {
+                  return Image.asset(Assets.assetsImagesNoNotification);
+                }
+                return Expanded(
+                  child: ListView.builder(
+                    // shrinkWrap: true,
+                    itemCount: cubit.notificatios.length,
+                    itemBuilder: (context, index) {
+                      final notification = cubit.notificatios[index];
+                      return NotifyViewedCard(
+                        image: Assets.assetsImagesArrived2,
+                        title: notification.message,
+                        type: notification.type,
+                        time: notification.date,
+                      );
+                    },
+                  ),
+                );
+              }
+              if (state is Notificationfailure) {
+                return Center(child: Text(state.err));
+              }
+              return Image.asset(Assets.assetsImagesNoNotification);
+            },
           ),
         ],
       ),

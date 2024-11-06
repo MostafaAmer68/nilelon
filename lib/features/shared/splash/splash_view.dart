@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +17,7 @@ import 'package:nilelon/features/shared/onboarding/onboarding_cubit/onboarding_c
 import 'package:nilelon/features/shared/onboarding/screen/onboarding_view.dart';
 
 import '../../../core/widgets/scaffold_image.dart';
+import '../../product/presentation/pages/product_details_page.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -24,27 +27,45 @@ class SplashView extends StatefulWidget {
 }
 
 class _SplashViewState extends State<SplashView> {
+  final appLinks = AppLinks();
   @override
   void initState() {
     super.initState();
     // BlocProvider.of(context)
+
     BlocProvider.of<CategoryCubit>(context).getCategories();
     Timer(const Duration(seconds: 3), () {
-      !HiveStorage.get(HiveKeys.skipOnboarding)
-          ? navigateAndRemoveUntil(
-              context: context,
-              screen: BlocProvider<OnBoardingCubit>(
-                create: (context) => OnBoardingCubit(),
-                child: const OnBoardingView(),
-              ))
-          : HiveStorage.get(HiveKeys.userModel) == null
-              ? navigateAndRemoveUntil(
-                  context: context, screen: const ShopOrSellView())
-              : HiveStorage.get(HiveKeys.isStore)
-                  ? navigateAndRemoveUntil(
-                      context: context, screen: const StoreBottomTabBar())
-                  : navigateAndRemoveUntil(
-                      context: context, screen: const CustomerBottomTabBar());
+      // final sub = appLinks.uriLinkStream.listen((uri) {
+      // log(uri.toString());
+      if (!HiveStorage.get(HiveKeys.skipOnboarding)) {
+        navigateAndRemoveUntil(
+            context: context,
+            screen: BlocProvider<OnBoardingCubit>(
+              create: (context) => OnBoardingCubit(),
+              child: const OnBoardingView(),
+            ));
+      } else {
+        if (HiveStorage.get(HiveKeys.userModel) == null) {
+          navigateAndRemoveUntil(
+              context: context, screen: const ShopOrSellView());
+        } else {
+          // if (uri.path.contains('Products')) {
+          //   navigateTo(
+          //       context: context,
+          //       screen: ProductDetailsView(
+          //           productId: uri.path.split('/').last.toString()));
+          // } else {
+          if (HiveStorage.get(HiveKeys.isStore)) {
+            navigateAndRemoveUntil(
+                context: context, screen: const StoreBottomTabBar());
+          } else {
+            navigateAndRemoveUntil(
+                context: context, screen: const CustomerBottomTabBar());
+          }
+          // }
+        }
+      }
+      // });
     });
   }
 
