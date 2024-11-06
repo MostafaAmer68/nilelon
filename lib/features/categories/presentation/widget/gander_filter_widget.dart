@@ -7,8 +7,10 @@ class GendarFilterWidget extends StatefulWidget {
     super.key,
     required this.onSelected,
     required this.selectedCategory,
+    this.isDark = false,
   });
   final String selectedCategory;
+  final bool isDark;
   final Function(String category) onSelected;
   @override
   State<GendarFilterWidget> createState() => _GendarFilterWidgetState();
@@ -30,6 +32,7 @@ class _GendarFilterWidgetState extends State<GendarFilterWidget> {
           itemBuilder: (context, index) {
             final ganderItem = gander[index];
             return GanderFilterItem(
+              isDark:widget.isDark,
               name: ganderItem,
               isSelected: widget.selectedCategory == ganderItem,
               onTap: () {

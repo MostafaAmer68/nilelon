@@ -60,58 +60,54 @@ class _DiscoverViewState extends State<DiscoverView> {
               ),
               Text(
                 lang.discoverOurNewAndSpecialProductsFromHere,
-                style: AppStylesManager.customTextStyleG24,
+                style: AppStylesManager.customTextStyleG3,
               ),
               const SizedBox(
                 height: 16,
               ),
-              Column(
-                children: [
-                  ViewAllRow(
-                    assetName: Assets.assetsImagesNewIn,
-                    noTextIcon: false,
-                    text: lang.newIn,
-                    onPressed: () {
-                      navigateTo(
-                          context: context,
-                          screen: ProductsViewAll(
-                            notFoundTitle: lang.noProductNewIn,
-                            isHandpicked: false,
-                            appBarTitle: lang.newIn,
-                            onStartPage: () {
-                              cubit.getNewInProducts(pageNum, pageSize);
-                            },
-                          ));
-                    },
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const ProductNewInView(),
-                  const SizedBox(height: 20),
-                  ViewAllRow(
-                    text: lang.handPicked,
-                    assetName: Assets.assetsImagesHandPicked,
-                    noTextIcon: false,
-                    onPressed: () {
-                      navigateTo(
-                        context: context,
-                        screen: ProductsViewAll(
-                          notFoundTitle: lang.noProductHandPicked,
-                          isHandpicked: true,
-                          appBarTitle: lang.handPicked,
-                          onStartPage: () {
-                            cubit.getRandomProducts(pageNum, pageSize);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  const HandPickedView(),
-                  const SizedBox(height: 30),
-                ],
+              ViewAllRow(
+                assetName: Assets.assetsImagesNewIn,
+                noTextIcon: false,
+                text: lang.newIn,
+                onPressed: () {
+                  navigateTo(
+                      context: context,
+                      screen: ProductsViewAll(
+                        notFoundTitle: lang.noProductNewIn,
+                        isHandpicked: false,
+                        appBarTitle: lang.newIn,
+                        onStartPage: () {
+                          cubit.getNewInProducts(pageNum, pageSize);
+                        },
+                      ));
+                },
               ),
+              const SizedBox(
+                height: 16,
+              ),
+              const ProductNewInView(),
+              const SizedBox(height: 16),
+              ViewAllRow(
+                text: lang.handPicked,
+                assetName: Assets.assetsImagesHandPicked,
+                noTextIcon: false,
+                onPressed: () {
+                  navigateTo(
+                    context: context,
+                    screen: ProductsViewAll(
+                      notFoundTitle: lang.noProductHandPicked,
+                      isHandpicked: true,
+                      appBarTitle: lang.handPicked,
+                      onStartPage: () {
+                        cubit.getRandomProducts(pageNum, pageSize);
+                      },
+                    ),
+                  );
+                },
+              ),
+              const SizedBox(height: 16),
+              const HandPickedView(),
+              const SizedBox(height: 30),
             ],
           ),
         ),
@@ -151,7 +147,7 @@ class ProductNewInView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: SizedBox(
-              height: 1.sw > 600 ? 310 : 300,
+              height: 1.sw > 600 ? 300 : 290,
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   final product = ProductsCubit.get(context).products[index];

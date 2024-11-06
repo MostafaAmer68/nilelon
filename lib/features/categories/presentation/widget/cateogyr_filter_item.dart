@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/resources/color_manager.dart';
 
@@ -11,10 +12,12 @@ class CategoryFilterItem extends StatelessWidget {
       required this.name,
       required this.isSelected,
       required this.onTap,
-      required this.image});
+      required this.image,
+      required this.isDark});
   final String name;
   final String image;
   final bool isSelected;
+  final bool isDark;
   final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,15 @@ class CategoryFilterItem extends StatelessWidget {
               decoration: !isSelected
                   ? BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: ColorManager.primaryB2))
+                      color: ColorManager.primaryW3,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: ColorManager.primaryO2,
+                          offset: Offset(5, 5),
+                        ),
+                      ],
+                      border: Border.all(color: ColorManager.primaryL),
+                    )
                   : BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       color: ColorManager.primaryW,
@@ -44,7 +55,7 @@ class CategoryFilterItem extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                 child: name == 'All'
-                    ? Image.asset(
+                    ? SvgPicture.asset(
                         Assets.assetsImagesAllCategory,
                         width: 40,
                         height: 40,
@@ -57,7 +68,9 @@ class CategoryFilterItem extends StatelessWidget {
               child: Text(
                 name,
                 textAlign: TextAlign.center,
-                style: AppStylesManager.customTextStyleB4,
+                style: isDark
+                    ? AppStylesManager.customTextStyleW4
+                    : AppStylesManager.customTextStyleB4,
               ),
             )
           ],

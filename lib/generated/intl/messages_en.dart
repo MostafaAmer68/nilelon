@@ -472,7 +472,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Rate Your Order Process Experience"),
         "readyToBeShipped":
             MessageLookupByLibrary.simpleMessage("Ready To Be Shipped"),
-        "received": MessageLookupByLibrary.simpleMessage("Received"),
+        "received": MessageLookupByLibrary.simpleMessage("Delivered"),
         "receivedColor": MessageLookupByLibrary.simpleMessage("Received Color"),
         "receivedSize": MessageLookupByLibrary.simpleMessage("Received Size"),
         "recevied": MessageLookupByLibrary.simpleMessage("Delivered"),

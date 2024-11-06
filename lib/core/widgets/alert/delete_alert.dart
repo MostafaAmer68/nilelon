@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
+
+import '../../color_const.dart';
 
 Future deleteAlert(
   context,
@@ -18,10 +22,38 @@ Future deleteAlert(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          shadowColor: ColorManager.primaryO,
+          elevation: 5,
+          backgroundColor: ColorManager.primaryW,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           content: SizedBox(
             height: 90.h,
             child: Column(
               children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: colorConst
+                        .map(
+                          (e) => Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 1),
+                            width: 10.w,
+                            height: 10.w,
+                            decoration: BoxDecoration(
+                              color: e,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                const DefaultDivider(),
                 SizedBox(
                   height: 24.h,
                 ),
@@ -37,7 +69,7 @@ Future deleteAlert(
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ButtonBuilder(
+                OutlinedButtonBuilder(
                     text: lang.no,
                     width: screenWidth(context, 0.32),
                     height: screenHeight(context, 0.06),

@@ -10,8 +10,10 @@ class CategoryFilterWidget extends StatefulWidget {
     super.key,
     required this.onSelected,
     required this.selectedCategory,
+    this.isDark = false,
   });
   final CategoryModel selectedCategory;
+  final bool isDark;
   final Function(CategoryModel category) onSelected;
   @override
   State<CategoryFilterWidget> createState() => _CategoryFilterWidgetState();
@@ -32,6 +34,7 @@ class _CategoryFilterWidgetState extends State<CategoryFilterWidget> {
           final category = HiveStorage.get<List>(HiveKeys.categories)[index];
           return CategoryFilterItem(
             name: category.name,
+            isDark:widget.isDark,
             image: category.image,
             isSelected: widget.selectedCategory == category,
             onTap: () {

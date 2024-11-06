@@ -44,12 +44,12 @@ class SizeToggleButtons extends StatelessWidget {
                     ? [
                         BoxShadow(
                           color: Colors.orange.withOpacity(0.3),
-                          blurRadius: 10,
+                          blurRadius: 8,
                           spreadRadius: 1,
                         ),
                         const BoxShadow(
                           color: Color.fromRGBO(68, 201, 225, 0.40),
-                          blurRadius: 16,
+                          blurRadius: 8,
                           spreadRadius: 3,
                         ),
                       ]

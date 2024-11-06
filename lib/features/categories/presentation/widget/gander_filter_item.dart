@@ -9,8 +9,10 @@ class GanderFilterItem extends StatelessWidget {
     required this.name,
     required this.isSelected,
     required this.onTap,
+    this.isDark = false,
   });
   final String name;
+  final bool isDark;
   final bool isSelected;
   final VoidCallback onTap;
   @override
@@ -25,7 +27,15 @@ class GanderFilterItem extends StatelessWidget {
               decoration: !isSelected
                   ? BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      border: Border.all(color: ColorManager.primaryB2))
+                      color: ColorManager.primaryW3,
+                      boxShadow: const [
+                        BoxShadow(
+                          color: ColorManager.primaryO2,
+                          offset: Offset(5, 5),
+                        ),
+                      ],
+                      border: Border.all(color: ColorManager.primaryL),
+                    )
                   : BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
                       color: ColorManager.primaryW,
@@ -44,7 +54,9 @@ class GanderFilterItem extends StatelessWidget {
                   child: Text(
                     name,
                     textAlign: TextAlign.center,
-                    style: AppStylesManager.customTextStyleB4,
+                    style: isDark
+                        ? AppStylesManager.customTextStyleW4
+                        : AppStylesManager.customTextStyleB4,
                   ),
                 ),
               ),

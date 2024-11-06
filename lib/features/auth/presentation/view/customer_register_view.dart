@@ -89,6 +89,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
             buttonText: lang.letsStart,
             ontap: () {
               navigateAndRemoveUntil(
+                
                 context: context,
                 screen: const RecommendationView(),
               );
@@ -145,7 +146,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                     label: lang.enterYourName,
                     controller: AuthCubit.get(context).nameController,
                     type: TextInputType.text,
-                    image: Assets.assetsImagesProfile,
+                    image: Assets.assetsImagesProfilee,
                     validator: (value) {
                       if (value!.isEmpty) {
                         return S.of(context).enterYourName;

@@ -14,9 +14,13 @@ class Assets {
   /// assets/fonts/Poppins-Regular.ttf
   static const String assetsFontsPoppinsRegular = "assets/fonts/Poppins-Regular.ttf";
 
+  /// Assets for assetsImagesAddTOCart
+  /// assets/images/addTOCart.svg
+  static const String assetsImagesAddTOCart = "assets/images/addTOCart.svg";
+
   /// Assets for assetsImagesAllCategory
-  /// assets/images/allCategory.png
-  static const String assetsImagesAllCategory = "assets/images/allCategory.png";
+  /// assets/images/allCategory.svg
+  static const String assetsImagesAllCategory = "assets/images/allCategory.svg";
 
   /// Assets for assetsImagesAmico
   /// assets/images/amico.svg
@@ -65,6 +69,10 @@ class Assets {
   /// Assets for assetsImagesBanner2
   /// assets/images/banner2.png
   static const String assetsImagesBanner2 = "assets/images/banner2.png";
+
+  /// Assets for assetsImagesBgColor
+  /// assets/images/bgColor.png
+  static const String assetsImagesBgColor = "assets/images/bgColor.png";
 
   /// Assets for assetsImagesBrand1
   /// assets/images/brand1.png
@@ -310,9 +318,9 @@ class Assets {
   /// assets/images/profile.png
   static const String assetsImagesProfile = "assets/images/profile.png";
 
-  /// Assets for assetsImagesProfileI
-  /// assets/images/profileI.svg
-  static const String assetsImagesProfileI = "assets/images/profileI.svg";
+  /// Assets for assetsImagesProfilee
+  /// assets/images/profilee.svg
+  static const String assetsImagesProfilee = "assets/images/profilee.svg";
 
   /// Assets for assetsImagesRecommendation
   /// assets/images/Recommendation.svg

@@ -61,99 +61,56 @@ class RecommendationView extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(16.0.sp),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: imageContainer(
-                          context,
-                          Assets.assetsImagesShopForWomen,
-                          'Shop for Women',
-                          () {
-                            if (HiveStorage.get(HiveKeys.userModel) != null) {
-                              RecommendationCubit.get(context)
-                                  .setRecommendation('Female', context);
-
-                              HiveStorage.set(HiveKeys.shopFor, 'Female');
-                            } else {
-                              navigateAndRemoveUntil(
-                                context: context,
-                                screen: const CustomerBottomTabBar(),
-                              );
-
-                              HiveStorage.set(HiveKeys.shopFor, 'Female');
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(
-                        height: 16.sp,
-                      ),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: imageContainer(
-                          context,
-                          Assets.assetsImagesShopForMan,
-                          'Shop for Man',
-                          () {
-                            if (HiveStorage.get(HiveKeys.userModel) != null) {
-                              RecommendationCubit.get(context)
-                                  .setRecommendation('Male', context);
-                              HiveStorage.set(HiveKeys.shopFor, 'Male');
-                            } else {
-                              navigateAndRemoveUntil(
-                                context: context,
-                                screen: const CustomerBottomTabBar(),
-                              );
-                              HiveStorage.set(HiveKeys.shopFor, 'Male');
-                            }
-                          },
-                        ),
-                      ),
-                    ],
+                ClipRRect(
+                  // borderRadius: BorderRadius.circular(15),
+                  child: InkWell(
+                    onTap: () {
+                      if (HiveStorage.get(HiveKeys.userModel) != null) {
+                        RecommendationCubit.get(context)
+                            .setRecommendation('Female', context);
+                        HiveStorage.set(HiveKeys.shopFor, 'Female');
+                      } else {
+                        navigateAndRemoveUntil(
+                          context: context,
+                          screen: const CustomerBottomTabBar(),
+                        );
+                        HiveStorage.set(HiveKeys.shopFor, 'Female');
+                      }
+                    },
+                    child: Image.asset(
+                      width: screenWidth(context, 0.95),
+                      Assets.assetsImagesShopForWomen,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                ClipRRect(
+                  // borderRadius: BorderRadius.circular(15),
+                  child: InkWell(
+                    onTap: () {
+                      if (HiveStorage.get(HiveKeys.userModel) != null) {
+                        RecommendationCubit.get(context)
+                            .setRecommendation('Male', context);
+                        HiveStorage.set(HiveKeys.shopFor, 'Male');
+                      } else {
+                        navigateAndRemoveUntil(
+                          context: context,
+                          screen: const CustomerBottomTabBar(),
+                        );
+                        HiveStorage.set(HiveKeys.shopFor, 'Male');
+                      }
+                    },
+                    child: Image.asset(
+                      width: screenWidth(context, 0.95),
+                      Assets.assetsImagesShopForMan,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                 )
               ],
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  InkWell imageContainer(
-    BuildContext context,
-    image,
-    buttomText,
-    onTap,
-  ) {
-    return InkWell(
-      onTap: onTap,
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          Container(
-            width: screenWidth(context, 1),
-            height: 300.sp,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(
-                  image: AssetImage(image), fit: BoxFit.fitWidth),
-            ),
-          ),
-          // Positioned(
-          //   bottom: 20,
-          //   left: 16,
-          //   child: ButtonBuilder(
-          //     text: buttomText,
-          //     ontap: onTap,
-          //     width: 140.sp,
-          //     style: AppStylesManager.customTextStyleW2.copyWith(fontSize: 12.sp),
-          //   ),
-          // ),
-        ],
       ),
     );
   }

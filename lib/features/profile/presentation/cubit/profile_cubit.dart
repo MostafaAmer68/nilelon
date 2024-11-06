@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nilelon/core/service/failure_service.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
@@ -14,6 +15,7 @@ import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dar
 
 import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/helper.dart';
+import '../../../../core/tools.dart';
 
 part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';
@@ -32,7 +34,8 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController websiteLinkController = TextEditingController();
   TextEditingController repNameController = TextEditingController();
   TextEditingController repPhoneController = TextEditingController();
-  TextEditingController wareHouseAddressController = TextEditingController();
+  TextEditingController wareHouseAddressController =
+      TextEditingController(text: 'Ciaro');
   TextEditingController sloganController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   String followStatus = '';
@@ -257,7 +260,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       );
     } else if (AuthCubit.get(context)
         .phoneRegex
-        .hasMatch(emailOrPhoneController.text)) { 
+        .hasMatch(emailOrPhoneController.text)) {
       result = await _profileRepoIMpl.resetPasswordPhone(
         emailOrPhoneController.text,
         context,

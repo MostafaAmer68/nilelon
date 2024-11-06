@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -133,6 +132,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                       buttonColor: cubit.state != 0
                           ? ColorManager.primaryB2
                           : ColorManager.primaryG2,
+                      frameColor: Colors.transparent,
                       ontap: () {
                         if (cubit.state == 0) {
                         } else {

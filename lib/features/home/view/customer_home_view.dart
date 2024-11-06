@@ -21,6 +21,7 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/search/presentation/pages/search_view.dart';
 
 import '../../layout/customer_bottom_tab_bar.dart';
+import '../../product/presentation/pages/products_view_all_hot.dart';
 
 class CustomerHomeView extends StatefulWidget {
   const CustomerHomeView({super.key});
@@ -159,7 +160,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
       onTap: () {
         navigateTo(
           context: context,
-          screen: ProductsViewAll(
+          screen: ProductsViewAllHot(
             notFoundTitle: lang(context).noProductNewIn,
             isHandpicked: true,
             appBarTitle: lang(context).hotPicks,

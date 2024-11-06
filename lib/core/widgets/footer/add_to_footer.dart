@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -26,11 +27,28 @@ class AddToFooter extends StatelessWidget {
       visible: visible,
       child: Column(
         children: [
-          SizedBox(
+          Container(
+            color: ColorManager.primaryW,
+            padding: EdgeInsets.all(10),
             width: MediaQuery.of(context).size.width,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                ButtonBuilder(
+                  text: S.of(context).buyNow,
+                  ontap: () {
+                    if (HiveStorage.get(HiveKeys.userModel) != null) {
+                      ///TODO:
+                    } else {
+                      navigateTo(
+                          context: context,
+                          screen: const CustomerBottomTabBar(index: 3));
+                    }
+                  },
+                  buttonColor: ColorManager.primaryW,
+                  frameColor: ColorManager.gradientColors.first,
+                  style: AppStylesManager.customTextStyleB4,
+                ),
                 BlocConsumer<CartCubit, CartState>(
                   listener: (context, state) {
                     if (state is CartSuccess) {
@@ -51,7 +69,6 @@ class AddToFooter extends StatelessWidget {
                                 TextButton(
                                   onPressed: () {
                                     BotToast.closeAllLoading();
-                                    // BotToast.remove()
 
                                     navigateTo(
                                         context: context,
@@ -77,6 +94,7 @@ class AddToFooter extends StatelessWidget {
                   },
                   builder: (context, state) {
                     return GradientButtonBuilder(
+                      isIcon:true,
                       text: state is CartLoading
                           ? S.of(context).loading
                           : S.of(context).addToCart,
@@ -98,7 +116,6 @@ class AddToFooter extends StatelessWidget {
                             BotToast.showText(text: lang(context).smothingWent);
                           }
                         } else {
-                          // CartCubit.get(context).getCart();
                           navigateTo(
                               context: context,
                               screen: const CustomerBottomTabBar(index: 3));
@@ -107,21 +124,6 @@ class AddToFooter extends StatelessWidget {
                     );
                   },
                 ),
-                ButtonBuilder(
-                  text: S.of(context).buyNow,
-                  ontap: () {
-                    if (HiveStorage.get(HiveKeys.userModel) != null) {
-                      ///TODO:
-                    } else {
-                      navigateTo(
-                          context: context,
-                          screen: const CustomerBottomTabBar(index: 3));
-                    }
-                  },
-                  buttonColor: ColorManager.primaryW,
-                  frameColor: ColorManager.gradientColors.first,
-                  style: AppStylesManager.customTextStyleB4,
-                )
               ],
             ),
           ),

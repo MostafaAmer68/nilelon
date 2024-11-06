@@ -144,7 +144,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                     AuthCubit.get(context).regFormCuts.currentState!.validate();
                   },
                   type: TextInputType.text,
-                  image: Assets.assetsImagesProfileI,
+                  image: Assets.assetsImagesProfilee,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return S.of(context).enterStoreName;
@@ -311,7 +311,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
     );
   }
 
-  Padding  phoneNumber(
+  Padding phoneNumber(
     String title,
     String label,
     TextEditingController controller,

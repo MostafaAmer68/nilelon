@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/cart_item.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
@@ -123,7 +124,7 @@ class _CartViewState extends State<CartView> {
                                 alignment: AlignmentDirectional.bottomEnd,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                      horizontal: 23,),
                                   child: SizedBox(
                                     width: screenWidth(context, 0.3),
                                     child: OutlinedButton(
@@ -142,9 +143,8 @@ class _CartViewState extends State<CartView> {
                                       ),
                                       child: Text(
                                         lang.emptyCart,
-                                        style: const TextStyle(
-                                          color: ColorManager.primaryR,
-                                        ),
+                                        style:
+                                            AppStylesManager.customTextStyleR,
                                       ),
                                     ),
                                   ),

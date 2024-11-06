@@ -6,17 +6,19 @@ class ScaffoldImage extends StatelessWidget {
       required this.body,
       this.appBar,
       this.persistentFooterButtons,
+      this.bgColor = 'assets/images/background.png',
       this.btmBar});
   final Widget body;
   final PreferredSizeWidget? appBar;
   final Widget? btmBar;
+  final String bgColor;
   final List<Widget>? persistentFooterButtons;
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/background.png'),
+          image: AssetImage(bgColor),
           fit: BoxFit.cover,
         ),
       ),

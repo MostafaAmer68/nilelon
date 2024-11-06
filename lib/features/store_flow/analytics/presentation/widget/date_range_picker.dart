@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart' as intll;
 import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/cubit/analytics_cubit.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/cubit/reservation_cubit/reservation_date_cubit.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -150,8 +151,8 @@ class _DateRangePickerState extends State<DateRangePicker> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ButtonBuilder(
-                        buttonColor: ColorManager.primaryO,
+                      GradientButtonBuilder(
+                        // buttonColor: ColorManager.primaryO,
                         height: 50,
                         text: lang(context).confirm,
                         ontap: () {

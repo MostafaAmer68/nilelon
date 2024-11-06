@@ -49,6 +49,7 @@ class ColorManager {
   //********* Neutral color *********//
   static const Color primaryW = Color(0xFFFFFFFF);
   static const Color primaryW2 = Color(0xFFF7FDFF);
+  static const Color primaryW3 = Color.fromARGB(255, 219, 219, 219);
   static const Color black = Color(0xFF000000);
   static const Color lightBlack = Color(0xFF232323);
   static const Color textColor = Color(0xFF141414);
@@ -56,6 +57,7 @@ class ColorManager {
 
   //********* orange color *********//
   static const Color primaryO = Color(0xFFF59022);
+  static const Color primaryO10 = Color.fromARGB(255, 139, 83, 22);
   static const Color primaryO2 = Color(0xFFF2A213);
   static const Color primaryO3 = Color.fromARGB(255, 255, 183, 129);
   static const Color primaryO4 = Color(0xFFF89225);

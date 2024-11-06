@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:svg_flutter/svg.dart';
 
 class GradientButtonBuilder extends StatelessWidget {
   const GradientButtonBuilder({
@@ -12,12 +14,14 @@ class GradientButtonBuilder extends StatelessWidget {
     this.height,
     this.isLoading,
     this.style,
+    this.isIcon = false,
     this.isActivated = true,
   });
 
   final String text;
   final VoidCallback ontap;
   final double? width;
+  final bool isIcon;
   final double? height;
   final bool? isLoading;
   final TextStyle? style;
@@ -43,9 +47,19 @@ class GradientButtonBuilder extends StatelessWidget {
                         color: ColorManager.primaryW,
                       ),
                       child: Center(
-                        child: Text(
-                          text,
-                          style: style ?? AppStylesManager.customTextStyleW2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (isIcon) ...[
+                              SvgPicture.asset(Assets.assetsImagesAddTOCart),
+                              const SizedBox(width: 10),
+                            ],
+                            Text(
+                              text,
+                              style:
+                                  style ?? AppStylesManager.customTextStyleW2,
+                            ),
+                          ],
                         ),
                       ),
                     )

@@ -56,7 +56,7 @@ class _DraftsCardState extends State<DraftsCard> {
           );
         },
         child: Container(
-          height: 1.sw > 600 ? 140 : 120,
+          height: 1.sw > 600 ? 130 : 110,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: ColorManager.primaryW,
@@ -69,16 +69,19 @@ class _DraftsCardState extends State<DraftsCard> {
                 )
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(10),
             child: Row(
               children: [
-                Container(
+                SizedBox(
                   width: screenWidth(context, 0.25),
-                  height: 120.h,
-                  decoration: BoxDecoration(
+                  height: 140.h,
+                  child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
+                    child: Image.file(
+                      image,
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  child: Image.file(image),
                 ),
                 const SizedBox(
                   width: 16,

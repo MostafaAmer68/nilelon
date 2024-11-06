@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/widgets/cards/wide/wide_card.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
@@ -18,8 +20,8 @@ import '../../domain/models/product_model.dart';
 import '../widgets/product_card/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
-class ProductsViewAll extends StatefulWidget {
-  const ProductsViewAll({
+class ProductsViewAllHot extends StatefulWidget {
+  const ProductsViewAllHot({
     super.key,
     required this.appBarTitle,
     required this.onStartPage,
@@ -36,10 +38,10 @@ class ProductsViewAll extends StatefulWidget {
 
   final VoidCallback onStartPage;
   @override
-  State<ProductsViewAll> createState() => _ProductsViewAllState();
+  State<ProductsViewAllHot> createState() => _ProductsViewAllState();
 }
 
-class _ProductsViewAllState extends State<ProductsViewAll> {
+class _ProductsViewAllState extends State<ProductsViewAllHot> {
   int page = 5;
   int pageSize = 1;
   bool isLoadMore = false;
@@ -77,8 +79,12 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   Widget build(BuildContext context) {
     // final lang = S.of(context);
     return ScaffoldImage(
-      appBar: customAppBar(title: widget.appBarTitle, context: context),
-      // bgColor: ColorManager.primaryB6,
+      appBar: customAppBar(
+        title: widget.appBarTitle,
+        context: context,
+        color: ColorManager.primaryW,
+      ),
+      bgColor: Assets.assetsImagesBgColor,
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -120,14 +126,12 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                       child: GridView.builder(
                         controller: scrollCn,
                         physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate: widget.isOffer
-                            ? SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 1.sw > 600 ? 3 : 2,
-                                crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                                mainAxisExtent: 310,
-                                mainAxisSpacing: 1.sw > 600 ? 16 : 12,
-                              )
-                            : gridDelegate(context),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 1,
+                          crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
+                          mainAxisExtent: 195,
+                          mainAxisSpacing: 1.sw > 600 ? 16 : 12,
+                        ),
                         shrinkWrap: true,
                         itemCount: isLoadMore
                             ? cubit
@@ -151,24 +155,8 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                           } else {
                             final productItem = cubit.filterListByCategory(
                                 cubit.category, products)[sizeIndex];
-                            if (widget.isOffer) {
-                              return offersCard(
-                                context: context,
-                                product: productItem,
-                              );
-                            } else {
-                              if (widget.isStore) {
-                                return marketSmallCard(
-                                  context: context,
-                                  product: productItem,
-                                );
-                              } else {
-                                return productSquarItem(
-                                  context: context,
-                                  product: productItem,
-                                );
-                              }
-                            }
+                            return wideCard(
+                                context: context, product: productItem);
                           }
                         },
                       ),
@@ -191,6 +179,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
         Padding(
           padding: const EdgeInsets.only(left: 8, right: 8),
           child: CategoryFilterWidget(
+            isDark: true,
             selectedCategory: cubit.category,
             onSelected: (category) {
               cubit.category = category;
@@ -206,7 +195,10 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
             const SizedBox(
               width: 16,
             ),
-            const Icon(Icons.tune),
+            const Icon(
+              Icons.tune,
+              color: ColorManager.primaryW,
+            ),
             const SizedBox(
               width: 8,
             ),
@@ -214,6 +206,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
               // visible: HiveStorage.get(HiveKeys.isStore),
               child: Expanded(
                 child: GendarFilterWidget(
+                  isDark: false,
                   selectedCategory: cubit.gendar,
                   onSelected: (gendar) {
                     cubit.gendar = gendar;
