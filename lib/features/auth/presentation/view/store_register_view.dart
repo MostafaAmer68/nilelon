@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
@@ -310,7 +311,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
     );
   }
 
-  Padding phoneNumber(
+  Padding  phoneNumber(
     String title,
     String label,
     TextEditingController controller,
@@ -339,7 +340,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
               TextFormFieldBuilder(
                 label: label,
                 controller: controller,
-                maxLength: 11,
+                // maxLength: 11,
                 validator: (value) {
                   if (!AuthCubit.get(context).phoneRegex.hasMatch(value!)) {
                     return S.of(context).plsEnterValidNumber;
@@ -349,6 +350,13 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 onchanged: (value) {
                   AuthCubit.get(context).regFormSto.currentState!.validate();
                 },
+                inputFormater: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'[0-9]')), // Only digits
+                  LengthLimitingTextInputFormatter(
+                    9,
+                  ), // Limit to 9 characters
+                ],
                 type: type,
                 width: screenWidth(context, 0.75),
                 noIcon: true,

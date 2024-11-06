@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
 import 'package:gradient_icon/gradient_icon.dart';
@@ -29,6 +30,7 @@ class TextFormFieldBuilder extends StatelessWidget {
     this.disabledBorder,
     this.textAlignVer,
     this.maxLength,
+    this.inputFormater,
   });
 
   final String label;
@@ -51,6 +53,7 @@ class TextFormFieldBuilder extends StatelessWidget {
   final TextAlignVertical? textAlignVer;
   final BorderSide? disabledBorder;
   final int? maxLength;
+  final List<TextInputFormatter>? inputFormater;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -68,6 +71,7 @@ class TextFormFieldBuilder extends StatelessWidget {
           color: color,
         ),
         validator: validator,
+        inputFormatters: inputFormater,
         onChanged: onchanged,
         keyboardType: type,
         maxLength: maxLength,

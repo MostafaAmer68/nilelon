@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -368,8 +369,14 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
               TextFormFieldBuilder(
                 label: label,
                 controller: controller,
-                maxLength: 11,
                 type: type,
+                inputFormater: [
+                  FilteringTextInputFormatter.allow(
+                      RegExp(r'[0-9]')), // Only digits
+                  LengthLimitingTextInputFormatter(
+                    9,
+                  ), // Limit to 9 characters
+                ],
                 validator: (value) {
                   if (!AuthCubit.get(context).phoneRegex.hasMatch(value!)) {
                     return S.of(context).plsEnterValidNumber;
