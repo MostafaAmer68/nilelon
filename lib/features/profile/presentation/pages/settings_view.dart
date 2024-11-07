@@ -70,25 +70,6 @@ class SettingsView extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: ColorManager.primaryW,
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Visibility(
-              visible: HiveStorage.get(HiveKeys.userModel) == null,
-              child: ProfileListTile(
-                name: lang.logout,
-                image: Assets.assetsImagesLogout,
-                isRed: true,
-                onTap: () {
-                  logoutAlert(context);
-                },
-              ),
-            ),
-          ),
           OutlinedButtonBuilder(
             text: lang.deleteAccount,
             ontap: () {

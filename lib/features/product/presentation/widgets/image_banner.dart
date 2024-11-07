@@ -8,8 +8,9 @@ class ImageBanner extends StatefulWidget {
   const ImageBanner({
     super.key,
     required this.images,
+    this.height,
   });
-
+  final double? height;
   @override
   State<ImageBanner> createState() => _ImageBannerState();
 }
@@ -25,7 +26,7 @@ class _ImageBannerState extends State<ImageBanner> {
           options: CarouselOptions(
               aspectRatio: 1,
               viewportFraction: 1,
-              height: screenHeight(context, 0.5),
+              height: widget.height ?? screenHeight(context, 0.5),
               enlargeCenterPage: true,
               autoPlay: true,
               onPageChanged: (index, reason) {

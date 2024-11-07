@@ -9,16 +9,29 @@ import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
 
+import '../../resources/color_manager.dart';
+import '../divider/default_divider.dart';
+import '../donts_widget.dart';
+
 Future logoutAlert(context) => showDialog(
     context: context,
     builder: (BuildContext context) {
       final lang = S.of(context);
 
       return AlertDialog(
+        shadowColor: ColorManager.primaryO,
+        elevation: 5,
+        backgroundColor: ColorManager.primaryW,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         content: SizedBox(
           height: 90.h,
           child: Column(
             children: [
+              DontsWidget(),
+              const SizedBox(
+                height: 10,
+              ),
+              const DefaultDivider(),
               SizedBox(
                 height: 24.h,
               ),
@@ -45,15 +58,16 @@ Future logoutAlert(context) => showDialog(
                 width: 5.w,
               ),
               GradientButtonBuilder(
-                  text: lang.yes,
-                  width: screenWidth(context, 0.30),
-                  height: screenHeight(context, 0.06),
-                  ontap: () {
-                    HiveStorage.clear();
-                    HiveStorage.set(HiveKeys.skipOnboarding, true);
-                    navigateAndRemoveUntil(
-                        context: context, screen: const ShopOrSellView());
-                  }),
+                text: lang.yes,
+                width: screenWidth(context, 0.30),
+                height: screenHeight(context, 0.06),
+                ontap: () {
+                  HiveStorage.clear();
+                  HiveStorage.set(HiveKeys.skipOnboarding, true);
+                  navigateAndRemoveUntil(
+                      context: context, screen: const ShopOrSellView());
+                },
+              ),
             ],
           ),
         ],

@@ -4,6 +4,7 @@ import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/features/order/presentation/pages/order_store_details_view.dart';
 import 'package:nilelon/features/order/presentation/widgets/ordered_card.dart';
 import 'package:nilelon/features/order/presentation/widgets/ordered_store_card.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
@@ -73,7 +74,7 @@ class _OrderViewState extends State<OrderView> {
                 success: () {
                   if (cubit.orders.isEmpty) {
                     return SizedBox(
-                      height: screenHeight(context, 0.7),
+                      height: screenHeight(context, 0.6),
                       child: Center(
                         child: Text(
                           lang(context).noOrder,
@@ -96,11 +97,20 @@ class _OrderViewState extends State<OrderView> {
 
                             if (HiveStorage.get(HiveKeys.isStore)) {
                               return OrderStoreCard(
-                                  image: widget.image,
-                                  title: widget.title,
-                                  order: order,
-                                  onTap: () {},
-                                  shippedOnTap: () {});
+                                image: widget.image,
+                                title: widget.title,
+                                order: order,
+                                onTap: () {
+                                  navigateTo(
+                                      context: context,
+                                      screen: OrderStoreDetailsView(
+                                        index: 2,
+                                        // recievedDate: order.date,
+                                        id: order.id,
+                                      ));
+                                },
+                                shippedOnTap: () {},
+                              );
                             }
                             return OrderCustomerCard(
                               order: order,

@@ -10,16 +10,28 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 
+import '../divider/default_divider.dart';
+import '../donts_widget.dart';
+
 Future showEmptyClosetAlert(context, ClosetModel closetId) => showDialog(
     context: context,
     builder: (BuildContext context) {
       final lang = S.of(context);
 
       return AlertDialog(
+        shadowColor: ColorManager.primaryO,
+        elevation: 5,
+        backgroundColor: ColorManager.primaryW,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         content: SizedBox(
           height: 70.h,
           child: Column(
             children: [
+              const DontsWidget(),
+              const SizedBox(
+                height: 10,
+              ),
+              const DefaultDivider(),
               SizedBox(
                 height: 16.h,
               ),

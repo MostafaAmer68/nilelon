@@ -146,7 +146,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                   ),
                   TextFormFieldBuilder(
                     label: lang.email,
-                    controller: cubit.emailController,
+                    controller: TextEditingController(
+                        text: currentUsr<CustomerModel>().email),
+                    readOnly: true,
                     type: TextInputType.text,
                     width: screenWidth(context, 1),
                     isIcon: false,
@@ -168,7 +170,9 @@ class _EditProfileViewState extends State<EditProfileView> {
                   ),
                   TextFormFieldBuilder(
                     label: lang.phoneNumber,
-                    controller: cubit.phoneController,
+                    controller: TextEditingController(
+                        text: currentUsr<CustomerModel>().phoneNumber),
+                    readOnly: true,
                     type: TextInputType.text,
                     width: screenWidth(context, 1),
                     isIcon: false,
@@ -186,7 +190,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                     children: [
                       OutlinedButtonBuilder(
                         text: lang.cancel,
-                        // child: Text(''),
                         width: screenWidth(context, 0.37),
                         height: screenHeight(context, 0.05),
                         ontap: () {

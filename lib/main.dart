@@ -1,4 +1,5 @@
 import 'package:app_links/app_links.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -40,10 +41,9 @@ void main() async {
     HiveStorage.set(HiveKeys.skipOnboarding, false);
   }
 
- 
   runApp(
     DevicePreview(
-      enabled: false,
+      enabled: !kReleaseMode,
       builder: (_) => const MyApp(),
     ),
   );

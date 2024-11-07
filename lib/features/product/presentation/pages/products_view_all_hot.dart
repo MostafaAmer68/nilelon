@@ -129,7 +129,7 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
                           crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                          mainAxisExtent: 195,
+                          mainAxisExtent: 150,
                           mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                         ),
                         shrinkWrap: true,

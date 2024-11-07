@@ -61,7 +61,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
         ],
       ),
       width: screenWidth(context, 0.42),
-      height: 1.sw > 600 ? 310 : 280,
+      height: 280,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

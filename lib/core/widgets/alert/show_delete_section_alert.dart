@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/widgets/divider/default_divider.dart';
+import 'package:nilelon/core/widgets/donts_widget.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -16,10 +18,19 @@ Future showDeleteSectionAlert(context, ClosetModel closetId) => showDialog(
       final lang = S.of(context);
 
       return AlertDialog(
+        shadowColor: ColorManager.primaryO,
+        elevation: 5,
+        backgroundColor: ColorManager.primaryW,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         content: SizedBox(
-          height: 70.h,
+          height: 75.h,
           child: Column(
             children: [
+              const DontsWidget(),
+              const SizedBox(
+                height: 10,
+              ),
+              const DefaultDivider(),
               SizedBox(
                 height: 16.h,
               ),
@@ -67,7 +78,6 @@ Future showDeleteSectionAlert(context, ClosetModel closetId) => showDialog(
                   ontap: () {
                     navigatePop(context: context);
                     ClosetCubit.get(context).deletCloset(closetId.id);
-                   
                   }),
             ],
           ),

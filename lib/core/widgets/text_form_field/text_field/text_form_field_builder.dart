@@ -20,6 +20,7 @@ class TextFormFieldBuilder extends StatelessWidget {
     this.obsecure = false,
     this.color,
     this.validator,
+    this.readOnly = false,
     this.prefix,
     this.isIcon = true,
     this.prefixWidget,
@@ -49,6 +50,7 @@ class TextFormFieldBuilder extends StatelessWidget {
   final Color? color;
   final String? Function(String?)? validator;
   final bool? maxlines;
+  final bool readOnly;
   final TextAlign? textAlign;
   final TextAlignVertical? textAlignVer;
   final BorderSide? disabledBorder;
@@ -71,6 +73,7 @@ class TextFormFieldBuilder extends StatelessWidget {
           color: color,
         ),
         validator: validator,
+        readOnly: readOnly,
         inputFormatters: inputFormater,
         onChanged: onchanged,
         keyboardType: type,

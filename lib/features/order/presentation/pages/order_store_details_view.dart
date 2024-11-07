@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -30,6 +32,7 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
   @override
   void initState() {
     cubit = OrderCubit.get(context);
+    cubit.getStoreOrderDetailsById(widget.id);
     super.initState();
   }
 
@@ -42,105 +45,162 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
     return ScaffoldImage(
       appBar: customAppBar(
           title: lang.orderDetails, hasIcon: false, context: context),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Expanded(
-            child: PageView.builder(
-              physics: const BouncingScrollPhysics(),
-              controller: controller,
-              onPageChanged: (i) {
-                if (i == cubit.customerOrder.orderProductVariants.length - 1 &&
-                    !isLast) {
-                  setState(() => isLast = true);
-                } else if (isLast) {
-                  setState(() => isLast = false);
-                }
-              },
-              itemBuilder: (context, index) {
-                final product = cubit.customerOrder.orderProductVariants[index];
-                return OrderProductDetailsWidget(
-                  images: product.urls,
-                  name: product.productName,
-                  storeName: product.storeName,
-                  rating: product.productRate.toString(),
-                  price: product.price.toString(),
-                  size: product.size,
-                  quan: product.quantity.toString(),
-                );
-              },
-              itemCount: cubit.customerOrder.orderProductVariants.length,
-            ),
-          ),
-          Positioned(
-            top: 1.sw > 600
-                ? screenHeight(context, 0.82)
-                : screenHeight(context, 0.75),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SmoothPageIndicator(
-                  controller: controller,
-                  effect: WormEffect(
-                    dotColor: ColorManager.primaryG.withOpacity(0.8),
-                    activeDotColor: ColorManager.primaryO.withOpacity(0.9),
-                    dotHeight: 10,
-                    dotWidth: 10,
-                    spacing: 5.0,
-                    type: WormType.underground,
+      body: BlocBuilder<OrderCubit, OrderState>(
+        builder: (context, state) {
+          return state.whenOrNull(
+            loading: () {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  buildShimmerIndicatorSmall(
+                      height: screenHeight(context, 0.3),
+                      width: screenWidth(context, 0.9)),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              buildShimmerIndicatorSmall(
+                                  height: 40, width: 200),
+                              SizedBox(
+                                height: 8.h,
+                              ),
+                              Row(
+                                children: [
+                                  buildShimmerIndicatorSmall(
+                                      height: 40, width: 100),
+                                  buildShimmerIndicatorSmall(
+                                      height: 40, width: 100),
+                                ],
+                              )
+                            ],
+                          ),
+                          const Spacer(),
+                          buildShimmerIndicatorSmall(height: 40, width: 100),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          buildShimmerIndicatorSmall(height: 40, width: 100),
+                          buildShimmerIndicatorSmall(height: 40, width: 100),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Align(
+                          alignment: Alignment.topLeft,
+                          child: buildShimmerIndicatorSmall(
+                              height: 40, width: 100))
+                    ],
                   ),
-                  count: cubit.customerOrder.orderProductVariants.length,
+                  buildShimmerIndicatorSmall(height: 40, width: 50),
+                  const SizedBox(height: 15),
+                ],
+              );
+            },
+            success: () => Column(
+              children: [
+                Expanded(
+                  child: PageView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    controller: controller,
+                    onPageChanged: (i) {
+                      if (i ==
+                              cubit.customerOrder.orderProductVariants.length -
+                                  1 &&
+                          !isLast) {
+                        setState(() => isLast = true);
+                      } else if (isLast) {
+                        setState(() => isLast = false);
+                      }
+                    },
+                    itemBuilder: (context, index) {
+                      final product =
+                          cubit.storeOrder.orderProductVariants[index];
+                      return OrderProductDetailsWidget(
+                        product: product,
+                      );
+                    },
+                    itemCount: cubit.storeOrder.orderProductVariants.length,
+                  ),
                 ),
+                Positioned(
+                  top: 1.sw > 600
+                      ? screenHeight(context, 0.82)
+                      : screenHeight(context, 0.75),
+                  child: SmoothPageIndicator(
+                    controller: controller,
+                    effect: WormEffect(
+                      dotColor: ColorManager.primaryG.withOpacity(0.8),
+                      activeDotColor: ColorManager.primaryO.withOpacity(0.9),
+                      dotHeight: 10,
+                      dotWidth: 10,
+                      spacing: 5.0,
+                      type: WormType.underground,
+                    ),
+                    count: cubit.storeOrder.orderProductVariants.length,
+                  ),
+                ),
+                const SizedBox(height: 15),
               ],
             ),
-          ),
+          )!;
+        },
+      ),
+      persistentFooterButtons: [
+        if (widget.index == 0)
           Positioned(
             top: 1.sw > 600
                 ? screenHeight(context, 0.85)
                 : screenHeight(context, 0.81),
-            child: widget.index == 0
-                ? GradientButtonBuilder(
-                    width: screenWidth(context, 0.9),
-                    text: lang.readyToBeShipped,
-                    ontap: () {},
-                  )
-                : widget.index == 1
-                    ? Column(
-                        children: [
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: SvgPicture.asset(
-                                'assets/images/inProgress.svg'),
-                          ),
-                          const SizedBox(
-                            height: 2,
-                          ),
-                          Text(
-                            lang.shipped,
-                            style: AppStylesManager.customTextStyleG16,
-                          )
-                        ],
-                      )
-                    : Column(
-                        children: [
-                          SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: Image.asset('assets/images/arrived2.png'),
-                          ),
-                          const SizedBox(
-                            height: 2,
-                          ),
-                          Text(
-                            lang.received,
-                            style: AppStylesManager.customTextStyleG16,
-                          )
-                        ],
+            child: widget.index == 1
+                ? Column(
+                    children: [
+                      SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: SvgPicture.asset('assets/images/inProgress.svg'),
                       ),
-          ),
-        ],
-      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text(
+                        lang.shipped,
+                        style: AppStylesManager.customTextStyleG16,
+                      )
+                    ],
+                  )
+                : Column(
+                    children: [
+                      SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: Image.asset('assets/images/arrived2.png'),
+                      ),
+                      const SizedBox(
+                        height: 2,
+                      ),
+                      Text(
+                        lang.received,
+                        style: AppStylesManager.customTextStyleG16,
+                      )
+                    ],
+                  ),
+          )
+        else
+          GradientButtonBuilder(
+            ontap: () {},
+            width: screenWidth(context, 0.9),
+            text: lang.readyToBeShipped,
+          )
+      ],
     );
   }
 }

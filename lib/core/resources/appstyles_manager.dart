@@ -253,7 +253,7 @@ class AppStylesManager {
   );
   static TextStyle customTextStyleG4 = TextStyle(
     color: ColorManager.primaryG5,
-    fontSize: 1.sw > 600 ? 20 : 12, // Reduced by 2
+    fontSize: 1.sw > 600 ? 24 : 16, // Reduced by 2
     fontFamily: 'Nunito Sans',
     fontWeight: FontWeightManager.regular400,
   );

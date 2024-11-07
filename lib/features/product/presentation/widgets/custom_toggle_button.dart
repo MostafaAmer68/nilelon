@@ -19,7 +19,7 @@ class SizeToggleButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 55,
+      height: 45,
       width: screenHeight(context, 0.38),
       child: ListView(
         scrollDirection: Axis.horizontal,
@@ -59,7 +59,7 @@ class SizeToggleButtons extends StatelessWidget {
               ),
               child: Container(
                 width: 40,
-                height: 50,
+                height: 40,
                 // padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   color: isSelected ? Colors.white : ColorManager.primaryW,

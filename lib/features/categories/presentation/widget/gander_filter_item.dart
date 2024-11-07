@@ -27,14 +27,14 @@ class GanderFilterItem extends StatelessWidget {
               decoration: !isSelected
                   ? BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
-                      color: ColorManager.primaryW3,
+                      color: ColorManager.primaryW,
                       boxShadow: const [
                         BoxShadow(
                           color: ColorManager.primaryO2,
                           offset: Offset(5, 5),
                         ),
                       ],
-                      border: Border.all(color: ColorManager.primaryL),
+                      // border: Border.all(color: ColorManager.primaryL),
                     )
                   : BoxDecoration(
                       borderRadius: BorderRadius.circular(30),
@@ -56,7 +56,9 @@ class GanderFilterItem extends StatelessWidget {
                     textAlign: TextAlign.center,
                     style: isDark
                         ? AppStylesManager.customTextStyleW4
-                        : AppStylesManager.customTextStyleB4,
+                        : !isSelected
+                            ? AppStylesManager.customTextStyleG4
+                            : AppStylesManager.customTextStyleB4,
                   ),
                 ),
               ),

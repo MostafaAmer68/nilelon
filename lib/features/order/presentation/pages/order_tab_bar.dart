@@ -53,7 +53,7 @@ class _OrderPageState extends State<OrderPage> {
               child: Column(
                 children: [
                   Container(
-                    // height: 50,
+                    height: 40,
                     width: screenWidth(context, 0.9),
                     decoration: BoxDecoration(
                       color: Colors.white, // Background color for the tab bar
@@ -83,7 +83,7 @@ class _OrderPageState extends State<OrderPage> {
                         borderRadius:
                             BorderRadius.circular(25), // Rounded indicator
                       ),
-                      // labelPadding: EdgeInsets.symmetric(horizontal: 5),
+                      indicatorWeight: 0.1,
                       indicatorSize: TabBarIndicatorSize.tab,
                       dividerColor: Colors.transparent,
                       // dividerHeight: 50,

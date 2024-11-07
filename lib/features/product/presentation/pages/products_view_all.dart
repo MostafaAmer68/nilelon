@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
@@ -124,7 +123,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                             ? SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 1.sw > 600 ? 3 : 2,
                                 crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                                mainAxisExtent: 310,
+                                mainAxisExtent: 290,
                                 mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                               )
                             : gridDelegate(context),

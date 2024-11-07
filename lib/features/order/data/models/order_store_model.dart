@@ -58,11 +58,11 @@ class OrderProductVariant {
   final String orderId;
   final String productId;
   final String productName;
-  final int productRate;
+  final num productRate;
   final String size;
   final String color;
   final int quantity;
-  final int price;
+  final num price;
   final String storeName;
   final String storeId;
   final List<String> urls;

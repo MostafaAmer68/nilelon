@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nilelon/core/color_const.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
+import 'package:nilelon/core/widgets/donts_widget.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -25,25 +25,7 @@ Future draftAlert(context, void Function() ontap) => showDialog(
           height: 145.h,
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: colorConst
-                      .map(
-                        (e) => Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 1),
-                          width: 10.w,
-                          height: 10.w,
-                          decoration: BoxDecoration(
-                            color: e,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
+              const DontsWidget(),
               const SizedBox(
                 height: 10,
               ),

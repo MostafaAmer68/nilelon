@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/product/presentation/pages/products_view_all.dart';
+import 'package:nilelon/features/product/presentation/pages/products_view_all_hot.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -174,7 +175,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
       onTap: () {
         navigateTo(
           context: context,
-          screen: ProductsViewAll(
+          screen: ProductsViewAllHot(
             isStore: true,
             notFoundTitle: lang(context).noProductNewIn,
             isHandpicked: true,

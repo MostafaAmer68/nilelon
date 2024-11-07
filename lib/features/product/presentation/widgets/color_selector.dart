@@ -17,7 +17,7 @@ class ColorSelector extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 55,
+      height: 50,
       width: screenHeight(context, 0.33),
       child: ListView(
         scrollDirection: Axis.horizontal,
@@ -26,8 +26,6 @@ class ColorSelector extends StatelessWidget {
           return GestureDetector(
             onTap: () => onColorSelected(color),
             child: Container(
-              // width: 40,
-              // height: 40,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: isSelected
@@ -39,8 +37,8 @@ class ColorSelector extends StatelessWidget {
               ),
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                width: 38,
-                height: 38,
+                width: 35,
+                height: 35,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: Color(int.parse('0x$color')),

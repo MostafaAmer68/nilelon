@@ -2,38 +2,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
+import 'package:nilelon/features/product/presentation/widgets/size_container.dart';
 
+import '../../../../core/sizes_consts.dart';
 import '../../../../generated/l10n.dart';
+import '../../data/models/order_store_model.dart';
 
 class OrderProductDetailsWidget extends StatelessWidget {
   const OrderProductDetailsWidget({
     super.key,
-    required this.images,
-    required this.name,
-    required this.storeName,
-    required this.rating,
-    required this.price,
-    required this.size,
-    required this.quan,
+    required this.product,
   });
 
-  final List<String> images;
-  final String name;
-  final String storeName;
-  final String rating;
-  final String price;
-  final String size;
-  final String quan;
-
+  final OrderProductVariant product;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         const DefaultDivider(),
-        ImageBanner(
-          images: images,
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          child: ImageBanner(
+            images: product.urls,
+            height: screenHeight(context, 0.4),
+          ),
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
@@ -45,8 +40,8 @@ class OrderProductDetailsWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        name,
-                        style: AppStylesManager.customTextStyleBl6,
+                        product.productName,
+                        style: AppStylesManager.customTextStyleBl2,
                       ),
                       SizedBox(
                         height: 8.h,
@@ -54,7 +49,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
                       Row(
                         children: [
                           Text(
-                            storeName,
+                            product.storeName,
                             style: AppStylesManager.customTextStyleG9,
                           ),
                           const SizedBox(
@@ -65,14 +60,14 @@ class OrderProductDetailsWidget extends StatelessWidget {
                             color: ColorManager.primaryO2,
                             size: 20,
                           ),
-                          Text(rating)
+                          Text(product.productRate.toString())
                         ],
                       )
                     ],
                   ),
                   const Spacer(),
                   Text(
-                    '$price ${S.of(context).le}',
+                    '${product.price} ${S.of(context).le}',
                     style: AppStylesManager.customTextStyleO4,
                   ),
                 ],
@@ -89,23 +84,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
                   const SizedBox(
                     width: 12,
                   ),
-                  Container(
-                    height: 1.sw > 600 ? 50 : 30,
-                    width: 1.sw > 600 ? 50 : 30,
-                    decoration: BoxDecoration(
-                      color: ColorManager.primaryR2,
-                      border: Border.all(
-                        color: ColorManager.primaryR2,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        size,
-                        style: AppStylesManager.customTextStyleO,
-                      ),
-                    ),
-                  ),
+                  borderContainer(getSizeShortcut(product.size)),
                   const Spacer(
                     flex: 3,
                   ),
@@ -120,48 +99,80 @@ class OrderProductDetailsWidget extends StatelessWidget {
                     width: 1.sw > 600 ? 36 : 26,
                     height: 1.sw > 600 ? 36 : 26,
                     decoration: const BoxDecoration(
-                        color: ColorManager.primaryL2, shape: BoxShape.circle),
+                      color: ColorManager.primaryL2,
+                      shape: BoxShape.circle,
+                    ),
                   ),
-                  const Spacer(),
+                  // const Spacer(),
                 ],
               ),
               SizedBox(
-                height: 16.h,
+                height: 20.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    '${S.of(context).quantity}: ',
+                    '${S.of(context).quantity.substring(0, 4)}: ',
                     style: AppStylesManager.customTextStyleG10,
                   ),
                   const SizedBox(
                     width: 12,
                   ),
-                  Container(
-                    height: 1.sw > 600 ? 50 : 30,
-                    width: 1.sw > 600 ? 50 : 30,
-                    decoration: BoxDecoration(
-                      // color: AppStyles.primaryBL,
-                      border: Border.all(
-                        color: ColorManager.primaryG5,
-                      ),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Center(
-                      child: Text(
-                        quan,
-                        style: AppStylesManager.customTextStyleO
-                            .copyWith(color: ColorManager.primaryG5),
-                      ),
-                    ),
-                  ),
+                  borderContainer(product.quantity.toString())
                 ],
               ),
             ],
           ),
         )
       ],
+    );
+  }
+
+  Container borderContainer(String t) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+      width: 35,
+      height: 35,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        gradient: const LinearGradient(
+          colors: [Colors.blue, Colors.orange],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.orange.withOpacity(0.3),
+            blurRadius: 8,
+            spreadRadius: 1,
+          ),
+          const BoxShadow(
+            color: Color.fromRGBO(68, 201, 225, 0.40),
+            blurRadius: 8,
+            spreadRadius: 3,
+          ),
+        ],
+        color: ColorManager.primaryW,
+      ),
+      child: Container(
+        width: 30,
+        height: 30,
+        decoration: BoxDecoration(
+          color: ColorManager.primaryW,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Center(
+          child: Text(
+            t,
+            style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: Colors.orange),
+          ),
+        ),
+      ),
     );
   }
 }
