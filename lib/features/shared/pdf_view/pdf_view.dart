@@ -58,43 +58,43 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
             ontap: () async {
               // requestStoragePermission();
 
-              if ((await _requestStoragePermission())) {
-                isLoading = true;
-                setState(() {});
-                rows.add(
-                  buildTableRow(cellsHeader, isHeader: true),
-                );
-                for (var rowData in widget.cells) {
-                  rows.add(buildTableRow(
-                    rowData,
-                  ));
-                }
-
-                await makePdf(
-                  cells: widget.cells,
-                  netTotal: widget.netTotal,
-                  discount: widget.discount,
-                  delivery: widget.delivery,
-                  total: widget.total,
-                  name: HiveStorage.get<UserModel>(HiveKeys.userModel)
-                      .getUserData<CustomerModel>()
-                      .name,
-                  location: widget.location,
-                  orderId: widget.orderId,
-                  orderDate: widget.orderDate,
-                  phoneNumber: HiveStorage.get<UserModel>(HiveKeys.userModel)
-                      .getUserData<CustomerModel>()
-                      .phoneNumber,
-                ).then((v) {
-                  isLoading = false;
-                  BotToast.showText(text: lang(context).pdfSaved);
-                  setState(() {});
-                });
-              } else {
-                isLoading = false;
-                setState(() {});
-                // _showPermissionDeniedMessage();
+              isLoading = true;
+              setState(() {});
+              rows.add(
+                buildTableRow(cellsHeader, isHeader: true),
+              );
+              for (var rowData in widget.cells) {
+                rows.add(buildTableRow(
+                  rowData,
+                ));
               }
+
+              await makePdf(
+                cells: widget.cells,
+                netTotal: widget.netTotal,
+                discount: widget.discount,
+                delivery: widget.delivery,
+                total: widget.total,
+                name: HiveStorage.get<UserModel>(HiveKeys.userModel)
+                    .getUserData<CustomerModel>()
+                    .name,
+                location: widget.location,
+                orderId: widget.orderId,
+                orderDate: widget.orderDate,
+                phoneNumber: HiveStorage.get<UserModel>(HiveKeys.userModel)
+                    .getUserData<CustomerModel>()
+                    .phoneNumber,
+              ).then((v) {
+                isLoading = false;
+                BotToast.showText(text: lang(context).pdfSaved);
+                setState(() {});
+              });
+              // if ((await _requestStoragePermission())) {
+              // } else {
+              //   isLoading = false;
+              //   setState(() {});
+              //   // _showPermissionDeniedMessage();
+              // }
               setState(() {});
             },
           );

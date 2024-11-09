@@ -4180,6 +4180,16 @@ class S {
     );
   }
 
+  /// `You are store you can't doo this action`
+  String get youAreStore {
+    return Intl.message(
+      'You are store you can\'t doo this action',
+      name: 'youAreStore',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(

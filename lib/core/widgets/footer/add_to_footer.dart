@@ -9,11 +9,14 @@ import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
+import 'package:nilelon/features/cart/domain/model/cart_item.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/layout/customer_bottom_tab_bar.dart';
+import 'package:nilelon/features/order/presentation/pages/checkout_view.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
+import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 
 import '../../../generated/l10n.dart';
 
@@ -37,8 +40,38 @@ class AddToFooter extends StatelessWidget {
                 ButtonBuilder(
                   text: S.of(context).buyNow,
                   ontap: () {
+                    if (HiveStorage.get(HiveKeys.isStore)) {
+                      BotToast.showText(text: lang(context).youAreStore);
+                      return;
+                    }
                     if (HiveStorage.get(HiveKeys.userModel) != null) {
-                      ///TODO:
+                      CartCubit.get(context).tempCartItems.clear();
+                      CartCubit.get(context).tempCartItems.add(CartItem(
+                          quantity:
+                              product.productVariants.first.quantity.toInt(),
+                          size: product.productVariants
+                              .firstWhere((e) => e.price != 0)
+                              .size,
+                          color: product.productVariants
+                              .firstWhere((e) => e.price != 0)
+                              .color,
+                          price: product.productVariants
+                              .firstWhere((e) => e.price != 0)
+                              .price,
+                          productName: product.name,
+                          productId: product.id,
+                          productImages: product.productImages,
+                          cartId: ''));
+                      PromoCubit.get(context).totalPrice = product
+                          .productVariants
+                          .firstWhere((e) => e.price != 0)
+                          .price;
+                      PromoCubit.get(context).tempTotalPrice = product
+                          .productVariants
+                          .firstWhere((e) => e.price != 0)
+                          .price;
+                      navigateTo(
+                          context: context, screen: const CheckOutView());
                     } else {
                       navigateTo(
                           context: context,
@@ -94,11 +127,15 @@ class AddToFooter extends StatelessWidget {
                   },
                   builder: (context, state) {
                     return GradientButtonBuilder(
-                      isIcon:true,
+                      isIcon: true,
                       text: state is CartLoading
                           ? S.of(context).loading
                           : S.of(context).addToCart,
                       ontap: () {
+                        if (HiveStorage.get(HiveKeys.isStore)) {
+                          BotToast.showText(text: lang(context).youAreStore);
+                          return;
+                        }
                         if (HiveStorage.get(HiveKeys.userModel) != null) {
                           if (product.id.isNotEmpty) {
                             CartCubit.get(context).addToCart(

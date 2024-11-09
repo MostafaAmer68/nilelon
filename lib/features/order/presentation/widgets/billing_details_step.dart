@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -67,8 +68,15 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
                 textAndTextField(
                     title: lang.phoneNumber,
                     label: lang.phoneNumber,
+                    validate: (v) {
+                      if (v!.isEmpty ||
+                          !AuthCubit.get(context).phoneRegex.hasMatch(v)) {
+                        return lang.plsEnterValidNumber;
+                      }
+                      return null;
+                    },
                     controller: cubit.phoneController,
-                    type: TextInputType.phone),
+                    type: TextInputType.number),
                 textAndTextField(
                     title: lang.addressLine1,
                     label: lang.enterYourStreetAddress,
@@ -185,6 +193,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
     required String label,
     required controller,
     required type,
+    String? Function(String? v)? validate,
   }) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,13 +208,17 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
         ),
         TextFormFieldBuilder(
           label: label,
-          controller: controller,
-          validator: (v) {
-            if (v!.isEmpty) {
-              return 'required';
-            }
-            return null;
+          onchanged: (v) {
+            cubit.formKey.currentState!.validate();
           },
+          controller: controller,
+          validator: validate ??
+              (v) {
+                if (v!.isEmpty) {
+                  return 'required';
+                }
+                return null;
+              },
           type: type,
           width: screenWidth(context, 1),
           noIcon: true,

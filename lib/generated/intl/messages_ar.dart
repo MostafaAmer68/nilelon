@@ -619,6 +619,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "youAddedNewProductSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تمت إضافة المنتج الجديد بنجاح"),
+        "youAreStore": MessageLookupByLibrary.simpleMessage(
+            "أنت متجر، لا يمكنك تنفيذ هذا الإجراء"),
         "youCanDownloadYourReceiptToViewYourOrderDetails":
             MessageLookupByLibrary.simpleMessage(
                 "يمكنك تنزيل الإيصال لمشاهدة تفاصيل طلبك"),

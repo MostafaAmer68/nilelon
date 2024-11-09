@@ -1,4 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -8,12 +10,21 @@ import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
+import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
+import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:svg_flutter/svg.dart';
 
+import '../../../../features/auth/domain/model/user_model.dart';
+import '../../../../features/cart/domain/model/cart_item.dart';
 import '../../../../features/closet/presentation/view/closet_sheet_bar_view.dart';
+import '../../../../features/layout/customer_bottom_tab_bar.dart';
+import '../../../../features/order/presentation/pages/checkout_view.dart';
 import '../../../../features/product/domain/models/product_model.dart';
+import '../../../../features/promo/presentation/cubit/promo_cubit.dart';
+import '../../../../generated/l10n.dart';
 import '../../../constants/assets.dart';
 import '../../../data/hive_stroage.dart';
+import '../../../utils/navigation.dart';
 
 GestureDetector wideCard({required ProductModel product, required context}) {
   return GestureDetector(
@@ -119,9 +130,7 @@ GestureDetector wideCard({required ProductModel product, required context}) {
                   '${product.productVariants.first.price} ${lang(context).le}',
                   style: AppStylesManager.customTextStyleBl2,
                 ),
-                // SizedBox(
-                //   height: 5.h,
-                // ),
+
                 Row(
                   children: [
                     Text(
@@ -141,7 +150,6 @@ GestureDetector wideCard({required ProductModel product, required context}) {
                 ),
                 const SizedBox(height: 10),
                 Row(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
                       height: 40.h,
@@ -158,19 +166,146 @@ GestureDetector wideCard({required ProductModel product, required context}) {
                           )
                         ],
                       ),
-                      child: IconButton(
-                        icon: const Icon(
-                          Iconsax.shopping_cart,
-                          color: ColorManager.primaryB2,
-                        ),
-                        onPressed: () {},
+                      child: BlocConsumer<CartCubit, CartState>(
+                        listener: (context, state) {
+                          if (state is CartSuccess) {
+                            BotToast.showCustomText(
+                              duration: const Duration(seconds: 4),
+                              toastBuilder: (_) => Card(
+                                color: Colors.black87,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        S.of(context).productAddedToCart,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                      ),
+                                      const SizedBox(width: 10),
+                                      TextButton(
+                                        onPressed: () {
+                                          BotToast.closeAllLoading();
+
+                                          navigateTo(
+                                              context: context,
+                                              screen:
+                                                  const CustomerBottomTabBar(
+                                                index: 1,
+                                              ));
+
+                                          BotToast.cleanAll();
+                                        },
+                                        child: Text(
+                                          S.of(context).viewCart,
+                                          style: const TextStyle(
+                                              color: Colors.blue),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          } else if (state is GetCartFailure) {
+                            BotToast.showText(text: state.message);
+                          }
+                        },
+                        builder: (context, state) {
+                          return state is CartLoading
+                              ? const Padding(
+                                  padding: EdgeInsets.all(12),
+                                  child: CircularProgressIndicator(),
+                                )
+                              : IconButton(
+                                  icon: const Icon(
+                                    Iconsax.shopping_cart,
+                                    color: ColorManager.primaryB2,
+                                  ),
+                                  onPressed: () {
+                                    if (HiveStorage.get(HiveKeys.isStore)) {
+                                      BotToast.showText(
+                                          text: lang(context).youAreStore);
+                                      return;
+                                    }
+                                    if (HiveStorage.get(HiveKeys.userModel) !=
+                                        null) {
+                                      if (product.id.isNotEmpty) {
+                                        CartCubit.get(context).addToCart(
+                                          AddToCartModel(
+                                            quantity: 1,
+                                            size: product.productVariants
+                                                .firstWhere((e) => e.price != 0)
+                                                .size,
+                                            color: product.productVariants
+                                                .firstWhere((e) => e.price != 0)
+                                                .color,
+                                            productId: product.id,
+                                            customerId:
+                                                HiveStorage.get<UserModel>(
+                                                        HiveKeys.userModel)
+                                                    .id,
+                                          ),
+                                        );
+                                      } else {
+                                        BotToast.showText(
+                                            text: lang(context).smothingWent);
+                                      }
+                                    } else {
+                                      navigateTo(
+                                          context: context,
+                                          screen: const CustomerBottomTabBar(
+                                              index: 3));
+                                    }
+                                  },
+                                );
+                        },
                       ),
                     ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: ButtonBuilder(
                         text: lang(context).buy,
-                        ontap: () {},
+                        ontap: () {
+                          if (HiveStorage.get(HiveKeys.isStore)) {
+                            BotToast.showText(text: lang(context).youAreStore);
+                            return;
+                          }
+                          if (HiveStorage.get(HiveKeys.userModel) != null) {
+                            CartCubit.get(context).tempCartItems.clear();
+                            CartCubit.get(context).tempCartItems.add(CartItem(
+                                quantity: product.productVariants.first.quantity
+                                    .toInt(),
+                                size: product.productVariants
+                                    .firstWhere((e) => e.price != 0)
+                                    .size,
+                                color: product.productVariants
+                                    .firstWhere((e) => e.price != 0)
+                                    .color,
+                                price: product.productVariants
+                                    .firstWhere((e) => e.price != 0)
+                                    .price,
+                                productName: product.name,
+                                productId: product.id,
+                                productImages: product.productImages,
+                                cartId: ''));
+                            PromoCubit.get(context).totalPrice = product
+                                .productVariants
+                                .firstWhere((e) => e.price != 0)
+                                .price;
+                            PromoCubit.get(context).tempTotalPrice = product
+                                .productVariants
+                                .firstWhere((e) => e.price != 0)
+                                .price;
+                            navigateTo(
+                                context: context, screen: const CheckOutView());
+                          } else {
+                            navigateTo(
+                                context: context,
+                                screen: const CustomerBottomTabBar(index: 3));
+                          }
+                        },
                         frameColor: ColorManager.gradientBoxColors[1],
                         // width: screenWidth(context, 0.30),
                         height: 40.h,

@@ -405,9 +405,10 @@
 "newOrder": "لديك طلب جديد.",
 "discount": "خصم",
 "freeShipping": "شحن مجاني",
- "noProductOffer": "لا عروض علي المنتجات بعد",
-  "plsSelectMethod": "رجاءً اختر طريقة الدفع",
-   "pdfSaved": "تم حفظ الفاتوره",
-    "productEdited": "تم تحديث المنتج",
-  "returnedHistory": "تاريخ الإرجاع"
+"noProductOffer": "لا عروض علي المنتجات بعد",
+"plsSelectMethod": "رجاءً اختر طريقة الدفع",
+"pdfSaved": "تم حفظ الفاتوره",
+"productEdited": "تم تحديث المنتج",
+"youAreStore": "أنت متجر، لا يمكنك تنفيذ هذا الإجراء",
+"returnedHistory": "تاريخ الإرجاع"
 }

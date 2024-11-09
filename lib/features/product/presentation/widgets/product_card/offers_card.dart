@@ -20,6 +20,7 @@ import '../../../../cart/domain/model/add_cart_request_model.dart';
 import '../../../../cart/presentation/cubit/cart_cubit.dart';
 import '../../../../closet/presentation/view/closet_sheet_bar_view.dart';
 import '../../../../layout/customer_bottom_tab_bar.dart';
+import '../../../../promo/presentation/cubit/promo_cubit.dart';
 import '../../pages/product_details_page.dart';
 import '../../pages/product_details_store_page.dart';
 import '../../../../../core/data/hive_stroage.dart';
@@ -309,20 +310,43 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                 child: GradientButtonBuilder(
                   text: lang(context).buy,
                   ontap: () {
-                    CartCubit.get(context).tempCartItems.clear();
-                    CartCubit.get(context).tempCartItems.add(
-                          CartItem(
-                            quantity: 1,
-                            size: product.productVariants.first.size,
-                            color: product.productVariants.first.color,
-                            price: product.productVariants.first.price,
-                            productName: product.name,
-                            productId: product.id,
-                            productImages: product.productImages,
-                            cartId: '',
-                          ),
-                        );
-                    navigateTo(context: context, screen: const CheckOutView());
+                    if (HiveStorage.get(HiveKeys.isStore)) {
+                      BotToast.showText(text: lang(context).youAreStore);
+                      return;
+                    }
+                    if (HiveStorage.get(HiveKeys.userModel) != null) {
+                      CartCubit.get(context).tempCartItems.clear();
+                      CartCubit.get(context).tempCartItems.add(CartItem(
+                          quantity:
+                              product.productVariants.first.quantity.toInt(),
+                          size: product.productVariants
+                              .firstWhere((e) => e.price != 0)
+                              .size,
+                          color: product.productVariants
+                              .firstWhere((e) => e.price != 0)
+                              .color,
+                          price: product.productVariants
+                              .firstWhere((e) => e.price != 0)
+                              .price,
+                          productName: product.name,
+                          productId: product.id,
+                          productImages: product.productImages,
+                          cartId: ''));
+                      PromoCubit.get(context).totalPrice = product
+                          .productVariants
+                          .firstWhere((e) => e.price != 0)
+                          .price;
+                      PromoCubit.get(context).tempTotalPrice = product
+                          .productVariants
+                          .firstWhere((e) => e.price != 0)
+                          .price;
+                      navigateTo(
+                          context: context, screen: const CheckOutView());
+                    } else {
+                      navigateTo(
+                          context: context,
+                          screen: const CustomerBottomTabBar(index: 3));
+                    }
                   },
                   width: 110.h,
                   height: 30.h,

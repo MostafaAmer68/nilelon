@@ -159,6 +159,13 @@ class ProfileService {
       },
     );
     if (response.statusCode == 200) {
+      final newUsr = response.data['result'];
+      final usr = HiveStorage.get<UserModel>(HiveKeys.userModel);
+      HiveStorage.set(
+          HiveKeys.userModel,
+          usr.copyWith(
+            userData: StoreModel.fromMap(newUsr),
+          ));
       return '';
     } else {
       // Handle other status codes if necessary
@@ -180,6 +187,13 @@ class ProfileService {
       },
     );
     if (response.statusCode == 200) {
+      final newUsr = response.data['result'];
+      final usr = HiveStorage.get<UserModel>(HiveKeys.userModel);
+      HiveStorage.set(
+          HiveKeys.userModel,
+          usr.copyWith(
+            userData: StoreModel.fromMap(newUsr),
+          ));
       return '';
     } else {
       // Handle other status codes if necessary

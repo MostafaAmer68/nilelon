@@ -7,6 +7,8 @@ import 'package:nilelon/features/shared/pdf_view/pdf_footer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'dart:typed_data';
+// import 'package:flutter/services.dart';
 
 Future<void> makePdf({
   required List<List<String>> cells,
@@ -492,23 +494,9 @@ Future<void> makePdf({
       ),
     );
   }
-  Future<Directory> getDownloadDirectory() async {
-    Directory directory;
-    if (Platform.isAndroid) {
-      directory = Directory('/storage/emulated/0/Download');
-      if (!(await directory.exists())) {
-        directory = (await getExternalStorageDirectory())!;
-      }
-    } else if (Platform.isIOS) {
-      directory = await getApplicationDocumentsDirectory();
-    } else {
-      throw UnsupportedError("Unsupported platform");
-    }
-    return directory;
-  }
 
-  Directory? root = await getDownloadDirectory();
-  String path = '${root.path}/Nilelon Invoice.pdf';
+  Directory? root = await getTemporaryDirectory();
+  String path = '${root.path}/Nilelon Invoice($orderId).pdf';
   final file = File(path);
   await file.writeAsBytes(await pdf.save());
 }

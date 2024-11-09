@@ -122,7 +122,7 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     var result = await _profileRepoIMpl.updateStoreInfo(
       repNameController.text,
-      phoneController.text,
+      repPhoneController.text,
       websiteLinkController.text,
       context,
     );

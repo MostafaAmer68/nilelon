@@ -14,6 +14,7 @@ import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/
 
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../../../my_app.dart';
 import '../../../auth/domain/model/user_model.dart';
 
 class EditStoreInfoView extends StatefulWidget {
@@ -64,7 +65,7 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
                     regularText: '',
                     buttonText: lang.save,
                     ontap: () {
-                      navigatePop(context: context);
+                      MyApp.restartApp(context);
                     });
               },
               failure: (_) {

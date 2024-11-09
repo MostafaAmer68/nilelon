@@ -130,16 +130,20 @@ class StoreModel extends BaseUserData {
   }
 
   StoreModel copyWith({
+    String? name,
+    String? email,
+    String? phone,
+    String? prfile,
     String? repName,
     String? storeSlogan,
     String? repPhone,
     String? warehouseAddress,
   }) {
     return StoreModel(
-      name: super.name,
-      email: super.email,
-      phoneNumber: super.phoneNumber,
-      profilePic: super.profilePic,
+      name:name?? super.name,
+      email:email?? super.email,
+      phoneNumber:phone?? super.phoneNumber,
+      profilePic: prfile ?? super.profilePic,
       repName: repName ?? this.repName,
       storeSlogan: storeSlogan ?? this.storeSlogan,
       repPhone: repPhone ?? this.repPhone,

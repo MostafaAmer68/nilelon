@@ -624,6 +624,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youAddedNewProductSuccessfully": MessageLookupByLibrary.simpleMessage(
             "You Added New Product Successfully"),
+        "youAreStore": MessageLookupByLibrary.simpleMessage(
+            "You are store you can\'t doo this action"),
         "youCanDownloadYourReceiptToViewYourOrderDetails":
             MessageLookupByLibrary.simpleMessage(
                 "You Can Download Your Receipt To View Your Order Details"),

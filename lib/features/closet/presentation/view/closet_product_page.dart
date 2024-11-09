@@ -5,7 +5,6 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
-import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -23,6 +22,7 @@ class ProductClosetPage extends StatefulWidget {
 }
 
 class _ProductClosetPageState extends State<ProductClosetPage> {
+
   @override
   void initState() {
     ClosetCubit.get(context).getClosetsItems(widget.closet.id);
@@ -31,7 +31,7 @@ class _ProductClosetPageState extends State<ProductClosetPage> {
 
   @override
   Widget build(BuildContext context) {
-    // BotToast.closeAllLoading();
+   
     return ScaffoldImage(
       appBar: customAppBar(title: widget.closet.name, context: context),
       body: BlocListener<ClosetCubit, ClosetState>(
