@@ -6,12 +6,15 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
+import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
+import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/constants/assets.dart';
 import '../../../../auth/domain/model/user_model.dart';
 import '../../../../closet/presentation/view/closet_sheet_bar_view.dart';
+import '../../../../refund/presentation/widgets/custom_check_box.dart';
 import '../../pages/product_details_store_page.dart';
 import '../../../../../core/color_const.dart';
 import '../../../../../core/resources/color_manager.dart';
@@ -30,6 +33,8 @@ GestureDetector productSquarItem(
         orElse: () => product.productVariants.first,
       )
       .price;
+  final PromoCubit cubit = PromoCubit.get(context);
+  final ProductsCubit pcubit = ProductsCubit.get(context);
   return GestureDetector(
     onTap: () {
       navigateTo(
@@ -93,52 +98,58 @@ GestureDetector productSquarItem(
               Positioned(
                 top: 10.h,
                 right: 10.w,
-                child: Visibility(
-                  visible: !HiveStorage.get(HiveKeys.isStore),
-                  child: InkWell(
-                    onTap: () {
-                      showModalBottomSheet(
-                        context: context,
-                        backgroundColor: ColorManager.primaryW,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
-                          ),
-                        ),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        builder: (context) =>
-                            ClosetSheetBarView(productId: product.id),
-                      );
-                    },
-                    child: !product.isInCloset
-                        ? Container(
-                            width: 35.w,
-                            height: 35.w,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.orange.shade300.withOpacity(1),
-                                  offset: const Offset(3, 3),
-                                  blurRadius: 5,
+                child: isSelectable
+                    ? GradientCheckBox(
+                        value: cubit.selectedProducts.contains(product),
+                        onChanged: onTap!,
+                      )
+                    : Visibility(
+                        visible: !HiveStorage.get(HiveKeys.isStore),
+                        child: InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              backgroundColor: ColorManager.primaryW,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
                                 ),
-                              ],
-                            ),
-                            child: SvgPicture.asset(
-                              Assets.assetsImagesHanger,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : Image.asset(
-                            Assets.assetsImagesClosetFollowing,
-                            fit: BoxFit.cover,
-                            width: 50,
-                          ),
-                  ),
-                ),
+                              ),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              builder: (context) =>
+                                  ClosetSheetBarView(productId: product.id),
+                            );
+                          },
+                          child: !product.isInCloset
+                              ? Container(
+                                  width: 35.w,
+                                  height: 35.w,
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.orange.shade300
+                                            .withOpacity(1),
+                                        offset: const Offset(3, 3),
+                                        blurRadius: 5,
+                                      ),
+                                    ],
+                                  ),
+                                  child: SvgPicture.asset(
+                                    Assets.assetsImagesHanger,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : Image.asset(
+                                  Assets.assetsImagesClosetFollowing,
+                                  fit: BoxFit.cover,
+                                  width: 50,
+                                ),
+                        ),
+                      ),
               ),
             ],
           ),

@@ -92,6 +92,8 @@ class EndPoint {
   static const String addProductToClosetUrl = '/Closet/AddProductToCloset';
   static const String deleteProductFromCloset = '/Closet/DeleteFromCloset';
   static const String deleteClosetUrl = '/Closet/DeleteCloset';
+  static const String updateCloset = '/Closet/UpdateCloset';
+  static const String getAllClosetsItems = '/Closet/GetAllClosetsItems';
   static const String emptyClosetUrl = '/Closet/EmptyCloset';
   static const String addProductToDefaultClosetUrl =
       '/Closet/AddProductToDefaultCloset';

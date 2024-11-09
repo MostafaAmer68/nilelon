@@ -42,13 +42,6 @@ class _OverViewStepState extends State<OverViewStep> {
 
     // cubit.selectedShippingMethodId = '';
 
-    if (promoCubit.totalPrice == 0) {
-      for (var item in CartCubit.get(context).tempCartItems) {
-        log(item.price.toString());
-        promoCubit.totalPrice += item.price * item.quantity;
-        promoCubit.tempTotalPrice += item.price * item.quantity;
-      }
-    }
     super.dispose();
   }
 
@@ -123,6 +116,17 @@ class _OverViewStepState extends State<OverViewStep> {
                       ),
                       BlocBuilder<CartCubit, CartState>(
                         builder: (context, state) {
+                          if (state is GetCartSuccess) {
+                            if (promoCubit.totalPrice == 0) {
+                              for (var item
+                                  in CartCubit.get(context).cart1.items) {
+                                promoCubit.totalPrice +=
+                                    item.price * item.quantity;
+                                promoCubit.tempTotalPrice +=
+                                    item.price * item.quantity;
+                              }
+                            }
+                          }
                           return Column(
                             children: [
                               BlocBuilder<OrderCubit, OrderState>(

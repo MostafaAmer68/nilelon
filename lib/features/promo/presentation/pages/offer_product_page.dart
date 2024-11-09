@@ -44,121 +44,122 @@ class _OfferProductPageState extends State<OfferProductPage> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
     return ScaffoldImage(
-        appBar: customAppBar(title: lang.offers, context: context),
-        body: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  BlocListener<ProductsCubit, ProductsState>(
-                    listener: (context, state) {
-                      state.mapOrNull(success: (_) {
-                        setState(() {});
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        GradientCheckBox(
-                            value: cubit.selectedProducts.length ==
-                                pcubit.products.length,
-                            onChanged: (value) {
-                              cubit.isSelectedAll = value;
-                              if (value) {
-                                if (cubit.selectedProducts.isNotEmpty) {
-                                  cubit.selectedProducts.clear();
-                                  cubit.selectedProducts
-                                      .addAll(pcubit.products);
-                                } else {
-                                  cubit.selectedProducts
-                                      .addAll(pcubit.products);
-                                }
-                              } else {
+      appBar: customAppBar(title: lang.offers, context: context),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                BlocListener<ProductsCubit, ProductsState>(
+                  listener: (context, state) {
+                    state.mapOrNull(success: (_) {
+                      setState(() {});
+                    });
+                  },
+                  child: Row(
+                    children: [
+                      GradientCheckBox(
+                          value: cubit.selectedProducts.length ==
+                              pcubit.products.length,
+                          onChanged: (value) {
+                            cubit.isSelectedAll = value;
+                            if (value) {
+                              if (cubit.selectedProducts.isNotEmpty) {
                                 cubit.selectedProducts.clear();
+                                cubit.selectedProducts.addAll(pcubit.products);
+                              } else {
+                                cubit.selectedProducts.addAll(pcubit.products);
+                              }
+                            } else {
+                              cubit.selectedProducts.clear();
+                            }
+                            setState(() {});
+                          }),
+                      const SizedBox(width: 10),
+                      Text(lang.selectAll),
+                    ],
+                  ),
+                ),
+                Text(
+                    '${lang.selected} ${cubit.selectedProducts.length} / ${pcubit.products.length}'),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          BlocBuilder<ProductsCubit, ProductsState>(
+            builder: (context, state) {
+              return state.when(
+                initial: () {
+                  return Expanded(child: buildShimmerIndicatorGrid(context));
+                },
+                loading: () {
+                  return Expanded(child: buildShimmerIndicatorGrid(context));
+                },
+                success: () {
+                  if (pcubit.products.isEmpty) {
+                    return Center(
+                      child: Text(
+                        S.of(context).thereNoProduct,
+                        style: AppStylesManager.customTextStyleG2,
+                      ),
+                    );
+                  } else {
+                    return Container(
+                      height: screenHeight(context, 0.70),
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: GridView.builder(
+                        // physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: gridDelegate(context),
+                        shrinkWrap: true,
+                        itemCount: ProductsCubit.get(context).products.length,
+                        itemBuilder: (context, index) {
+                          final product = pcubit.products[index];
+                          return productSquarItem(
+                            context: context,
+                            isSelectable: true,
+                            isSelected:
+                                cubit.selectedProducts.contains(product),
+                            onTap: (value) {
+                              if (value) {
+                                cubit.selectedProducts.add(product);
+                              } else {
+                                cubit.selectedProducts.remove(product);
+                                cubit.isSelectedAll = false;
                               }
                               setState(() {});
-                            }),
-                        const SizedBox(width: 10),
-                        Text(lang.selectAll),
-                      ],
-                    ),
-                  ),
-                  Text(
-                      '${lang.selected} ${cubit.selectedProducts.length} / ${pcubit.products.length}'),
-                ],
-              ),
-            ),
-            const SizedBox(height: 20),
-            BlocBuilder<ProductsCubit, ProductsState>(
-              builder: (context, state) {
-                return state.when(
-                  initial: () {
-                    return Expanded(child: buildShimmerIndicatorGrid(context));
-                  },
-                  loading: () {
-                    return Expanded(child: buildShimmerIndicatorGrid(context));
-                  },
-                  success: () {
-                    if (pcubit.products.isEmpty) {
-                      return Center(
-                        child: Text(
-                          S.of(context).thereNoProduct,
-                          style: AppStylesManager.customTextStyleG2,
-                        ),
-                      );
-                    } else {
-                      return Container(
-                        height: screenHeight(context, 0.75),
-                        padding: EdgeInsets.symmetric(horizontal: 16.w),
-                        child: GridView.builder(
-                          // physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: gridDelegate(context),
-                          shrinkWrap: true,
-                          itemCount: ProductsCubit.get(context).products.length,
-                          itemBuilder: (context, index) {
-                            final product = pcubit.products[index];
-                            return productSquarItem(
-                              context: context,
-                              isSelectable: true,
-                              isSelected:
-                                  cubit.selectedProducts.contains(product),
-                              onTap: (value) {
-                                if (value) {
-                                  cubit.selectedProducts.add(product);
-                                } else {
-                                  cubit.selectedProducts.remove(product);
-                                  cubit.isSelectedAll = false;
-                                }
-                                setState(() {});
-                              },
-                              product: product,
-                            );
-                          },
-                        ),
-                      );
-                    }
-                  },
-                  failure: (message) {
-                    return Text(message);
-                  },
-                );
-              },
-            ),
-            const Spacer(),
-            GradientButtonBuilder(
-              text: lang.continuePress,
-              width: screenWidth(context, 0.9),
-              ontap: () {
-                if (cubit.selectedProducts.isEmpty) {
-                  BotToast.showText(text: lang.youMustSelectOneProduct);
-                } else {
-                  navigateTo(context: context, screen: const ApplyOfferPage());
-                }
-              },
-            ),
-            const SizedBox(height: 20),
-          ],
-        ));
+                            },
+                            product: product,
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
+                failure: (message) {
+                  return Text(message);
+                },
+              );
+            },
+          ),
+          // const Spacer(),
+        ],
+      ),
+      btmBar: SizedBox(
+        height: 90,
+        child: GradientButtonBuilder(
+          text: lang.continuePress,
+          width: screenWidth(context, 0.9),
+          ontap: () {
+            if (cubit.selectedProducts.isEmpty) {
+              BotToast.showText(text: lang.youMustSelectOneProduct);
+            } else {
+              navigateTo(context: context, screen: const ApplyOfferPage());
+            }
+          },
+        ),
+      ),
+    );
   }
 }

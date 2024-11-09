@@ -305,26 +305,28 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                   },
                 ),
               ),
-              GradientButtonBuilder(
-                text: lang(context).buy,
-                ontap: () {
-                  CartCubit.get(context).tempCartItems.clear();
-                  CartCubit.get(context).tempCartItems.add(
-                        CartItem(
-                          quantity: 1,
-                          size: product.productVariants.first.size,
-                          color: product.productVariants.first.color,
-                          price: product.productVariants.first.price,
-                          productName: product.name,
-                          productId: product.id,
-                          productImages: product.productImages,
-                          cartId: '',
-                        ),
-                      );
-                  navigateTo(context: context, screen: const CheckOutView());
-                },
-                width: 110.h,
-                height: 30.h,
+              Expanded(
+                child: GradientButtonBuilder(
+                  text: lang(context).buy,
+                  ontap: () {
+                    CartCubit.get(context).tempCartItems.clear();
+                    CartCubit.get(context).tempCartItems.add(
+                          CartItem(
+                            quantity: 1,
+                            size: product.productVariants.first.size,
+                            color: product.productVariants.first.color,
+                            price: product.productVariants.first.price,
+                            productName: product.name,
+                            productId: product.id,
+                            productImages: product.productImages,
+                            cartId: '',
+                          ),
+                        );
+                    navigateTo(context: context, screen: const CheckOutView());
+                  },
+                  width: 110.h,
+                  height: 30.h,
+                ),
               )
             ],
           )

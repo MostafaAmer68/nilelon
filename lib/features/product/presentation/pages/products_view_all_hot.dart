@@ -7,17 +7,13 @@ import 'package:nilelon/core/widgets/cards/wide/wide_card.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
-import 'package:nilelon/features/product/presentation/widgets/product_card/offers_card.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
-import '../../../../core/tools.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
 import '../../domain/models/product_model.dart';
-import '../widgets/product_card/market_small_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class ProductsViewAllHot extends StatefulWidget {
@@ -129,7 +125,7 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
                           crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                          mainAxisExtent: 150,
+                          mainAxisExtent: 175,
                           mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                         ),
                         shrinkWrap: true,

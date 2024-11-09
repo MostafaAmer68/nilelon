@@ -97,6 +97,24 @@ class ClosetService {
     }
   }
 
+  Future<void> updateCloset(String closetListId, String name) async {
+    final Response data = await _apiService.put(
+        endPoint: EndPoint.updateCloset,
+        body: {'id': closetListId, 'name': name});
+    if (data.statusCode == HttpStatus.ok) {
+      return data.data;
+    } else if (data.statusCode == HttpStatus.badRequest) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Left('Delet Closet failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Left(
+          'Failed to Delet Closet: Unexpected status code ${data.statusCode}');
+    }
+  }
+
   Future<void> deleteroductFromCloset(
       String closetListId, String productId) async {
     final Response data = await _apiService
@@ -120,7 +138,7 @@ class ClosetService {
 
   Future<void> emptyCoset(String closetListId) async {
     final Response data =
-        await _apiService.post(endPoint: EndPoint.emptyCartUrl, query: {
+        await _apiService.delete(endPoint: EndPoint.emptyClosetUrl, query: {
       'closetListId': closetListId,
     });
     if (data.statusCode == HttpStatus.ok) {
@@ -143,6 +161,28 @@ class ClosetService {
     if (data.statusCode == HttpStatus.ok) {
       return (data.data['result'] as List)
           .map((item) => ProductModel.fromJson(item['product']))
+          .toList();
+    } else if (data.statusCode == HttpStatus.badRequest) {
+      // Handle the bad request response
+      final errorMessage = data.data;
+      // errorAlert(context, errorMessage);
+      throw Left('Update Quantity Cart failed: $errorMessage');
+    } else {
+      // Handle other status codes if necessary
+      throw Left(
+          'Failed to Update Quantity Cart: Unexpected status code ${data.statusCode}');
+    }
+  }
+
+  Future<List<ProductModel>> getAllClosetsItems() async {
+    final Response data = await _apiService.get(
+        endPoint: EndPoint.getAllClosetsItems,
+        query: {
+          'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id
+        });
+    if (data.statusCode == HttpStatus.ok) {
+      return (data.data['result'] as List)
+          .map((item) => ProductModel.fromJson(item))
           .toList();
     } else if (data.statusCode == HttpStatus.badRequest) {
       // Handle the bad request response

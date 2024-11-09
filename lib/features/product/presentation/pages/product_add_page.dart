@@ -63,22 +63,27 @@ class _AddProductViewState extends State<AddProductView> {
     final lang = S.of(context);
     return BlocConsumer<AddProductCubit, AddproductState>(
       listener: (context, state) {
-        state.mapOrNull(loading: (value) {
-          BotToast.showLoading();
-        }, success: (v) {
-          BotToast.closeAllLoading();
+        state.mapOrNull(
+          loading: (value) {
+            BotToast.showLoading();
+          },
+          success: (v) {
+            BotToast.closeAllLoading();
 
-          BotToast.showText(text: S.of(context).productAdded);
-          navigatePop(context: context);
-          if (widget.draft != null) {
+            BotToast.showText(text: S.of(context).productAdded);
             navigatePop(context: context);
-          }
-        }, failure: (r) {
-          BotToast.closeAllLoading();
-          BotToast.showText(text: r.message);
-        }, successChange: (e) {
-          BotToast.closeAllLoading();
-        });
+            if (widget.draft != null) {
+              navigatePop(context: context);
+            }
+          },
+          failure: (r) {
+            BotToast.closeAllLoading();
+            BotToast.showText(text: r.message);
+          },
+          successChange: (e) {
+            BotToast.closeAllLoading();
+          },
+        );
         log(cubit.sizes.map((e) => e.price.text).toString(),
             name: 'price build');
         log(cubit.sizes.map((e) => e.quantity.text).toString(),
@@ -138,22 +143,16 @@ class _AddProductViewState extends State<AddProductView> {
       style: AppStylesManager.customTextStyleBl5.copyWith(
         fontWeight: FontWeight.w500,
       ),
-      buttonWidget: GestureDetector(
-        onTap: () {
-          draftAlert(context, () {
-            navigatePop(context: context);
+      onPressed: () {
+        draftAlert(context, () {
+          navigatePop(context: context);
 
-            // Draft saving logic goes here
-            cubit.saveDraft(context);
-
-            // navigatePop(context: context);
-            // showToast('Saved As Draft');
-          });
-        },
-        child: Text(
-          addToDraft,
-          style: AppStylesManager.customTextStyleO,
-        ),
+          cubit.saveDraft(context);
+        });
+      },
+      buttonWidget: Text(
+        addToDraft,
+        style: AppStylesManager.customTextStyleO,
       ),
     );
   }
@@ -275,11 +274,39 @@ class _AddProductViewState extends State<AddProductView> {
   }
 
   Widget _buildUploadButton(String uploadStr) {
-    return GradientButtonBuilder(
-      isActivated: !cubit.isSubmit,
-      text: uploadStr,
-      ontap: () {
-        cubit.createProduct(null);
+    return BlocBuilder<AddProductCubit, AddproductState>(
+      builder: (context, state) {
+        return state.whenOrNull(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          success: () => GradientButtonBuilder(
+            isActivated: !cubit.isSubmit,
+            text: uploadStr,
+            ontap: () {
+              cubit.createProduct(widget.draft);
+            },
+          ),
+          initial: () => GradientButtonBuilder(
+            isActivated: !cubit.isSubmit,
+            text: uploadStr,
+            ontap: () {
+              cubit.createProduct(widget.draft);
+            },
+          ),
+          failure: (_) => GradientButtonBuilder(
+            isActivated: !cubit.isSubmit,
+            text: uploadStr,
+            ontap: () {
+              cubit.createProduct(widget.draft);
+            },
+          ),
+          successChange: () => GradientButtonBuilder(
+            isActivated: !cubit.isSubmit,
+            text: uploadStr,
+            ontap: () {
+              cubit.createProduct(widget.draft);
+            },
+          ),
+        )!;
       },
     );
   }

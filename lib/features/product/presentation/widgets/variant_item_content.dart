@@ -16,8 +16,9 @@ import 'size_container.dart';
 class VariantItems extends StatefulWidget {
   const VariantItems({
     super.key,
+    required this.onChange,
   });
-
+  final VoidCallback onChange;
   @override
   State<VariantItems> createState() => _VariantItemsState();
 }
@@ -111,6 +112,9 @@ class _VariantItemsState extends State<VariantItems> {
       controller: amountController,
       type: TextInputType.number,
       textAlign: TextAlign.center,
+      onchanged: (v) {
+        widget.onChange();
+      },
       height: 46.h,
       disabledBorder: const BorderSide(color: ColorManager.primaryB2),
       width: 1.sw > 600 ? screenWidth(context, 0.4) : screenWidth(context, 0.2),

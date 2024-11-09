@@ -12,10 +12,13 @@ abstract class ClosetRepo {
   Future<Either<FailureService, void>> deleteProductFromCloset(
       String closetListId, String productId);
   Future<Either<FailureService, void>> deleteCloset(String closetListId);
+  Future<Either<FailureService, void>> updateCloset(
+      String closetListId, String name);
   Future<Either<FailureService, void>> emptyCloset(String closetListId);
   Future<Either<FailureService, void>> addProductToDefaultCloset(
       String productId);
   Future<Either<FailureService, List<ClosetModel>>> getCustomerCloset();
   Future<Either<FailureService, List<ProductModel>>> getClosetItem(
       String closetId);
+  Future<Either<FailureService, List<ProductModel>>> getAllClosetsItems();
 }

@@ -84,7 +84,7 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Row(
+                      Row(  
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildShimmerIndicatorSmall(height: 40, width: 100),

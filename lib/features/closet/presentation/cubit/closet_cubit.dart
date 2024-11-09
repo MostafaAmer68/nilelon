@@ -59,6 +59,18 @@ class ClosetCubit extends Cubit<ClosetState> {
     });
   }
 
+  Future<void> updateCloset(String closetId) async {
+    emit(const ClosetState.loading());
+    final data = await repo.updateCloset(closetId, closetName.text);
+    data.fold((error) {
+      emit(const ClosetState.failure());
+    }, (response) {
+      closetName.clear();
+      emit(const ClosetState.successDelete());
+      emit(const ClosetState.success());
+    });
+  }
+
   Future<void> deletFromCloset(String closetId, String productId) async {
     emit(const ClosetState.loading());
     final data = await repo.deleteProductFromCloset(closetId, productId);
@@ -77,6 +89,7 @@ class ClosetCubit extends Cubit<ClosetState> {
       emit(const ClosetState.failure());
     }, (response) {
       emit(const ClosetState.successDelete());
+      emit(const ClosetState.success());
     });
   }
 
@@ -93,8 +106,21 @@ class ClosetCubit extends Cubit<ClosetState> {
   }
 
   Future<void> getClosetsItems(String closetId) async {
+    closetsItem.clear();
     emit(const ClosetState.loading());
     final data = await repo.getClosetItem(closetId);
+    data.fold((error) {
+      emit(const ClosetState.failure());
+    }, (response) {
+      closetsItem = response;
+      emit(const ClosetState.success());
+    });
+  }
+
+  Future<void> getAllClosetsItems() async {
+    closetsItem.clear();
+    emit(const ClosetState.loading());
+    final data = await repo.getAllClosetsItems();
     data.fold((error) {
       emit(const ClosetState.failure());
     }, (response) {

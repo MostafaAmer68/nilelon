@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nilelon/features/cart/data/datasource/cart_service.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
-import 'package:nilelon/features/closet/data/remote_data_source/closet_remote_data_source.dart';
+import 'package:nilelon/features/closet/data/remote_data_source/clooset_service.dart';
 import 'package:nilelon/features/closet/data/repo_impl/closet_repo_impl.dart';
 import 'package:nilelon/features/notification/data/datasources/notification_remote.dart';
 import 'package:nilelon/features/notification/data/repositories/notifiy_repo_impl.dart';

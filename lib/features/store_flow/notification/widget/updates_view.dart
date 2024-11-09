@@ -23,7 +23,7 @@ class UpdatesView extends StatelessWidget {
                     NotifyCard(
                         image: 'assets/images/arrived2.png',
                         title: 'Package 43901 has arrived to Customer',
-                        time: '10:30 AM'),
+                        time: '2023-04-10 12:30 am'),
                     SizedBox(
                       height: 16,
                     ),
@@ -31,7 +31,7 @@ class UpdatesView extends StatelessWidget {
                       image: 'assets/images/Feedback.png',
                       title: ' You Received New Feedback. Check it Now! ',
                       type: '',
-                      time: '11:56 AM',
+                      time: '2024-11-07T19:07:23.882Z',
                     ),
                   ],
                 ),

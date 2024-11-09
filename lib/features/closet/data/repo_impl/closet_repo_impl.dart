@@ -6,7 +6,7 @@ import 'package:nilelon/core/service/failure_service.dart';
 import '../../../../core/service/catch_func.dart';
 import '../../../product/domain/models/product_model.dart';
 import '../../domain/model/closet_model.dart';
-import '../remote_data_source/closet_remote_data_source.dart';
+import '../remote_data_source/clooset_service.dart';
 
 class ClosetRepoImpl extends ClosetRepo {
   final ClosetService _service;
@@ -55,5 +55,16 @@ class ClosetRepoImpl extends ClosetRepo {
   @override
   Future<Either<FailureService, List<ClosetModel>>> getCustomerCloset() {
     return exe(() => _service.getCustomerCloset());
+  }
+
+  @override
+  Future<Either<FailureService, void>> updateCloset(
+      String closetListId, String name) {
+    return exe(() => _service.updateCloset(closetListId, name));
+  }
+
+  @override
+  Future<Either<FailureService, List<ProductModel>>> getAllClosetsItems() {
+    return exe(() => _service.getAllClosetsItems());
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,7 +65,6 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   }
 
   void decrementCounter() {
-    log('te');
     setState(() {
       CartCubit.get(context).counter--;
       if (CartCubit.get(context).counter != 1) {}
@@ -362,13 +359,39 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   bool get isNOtEMpty => productCubit.product.sizeguide.isNotEmpty;
 
   Widget _buildNameAndPriceRow(BuildContext context) {
+    final priceAfterDis;
+    if (productCubit.product.productVariants.isNotEmpty) {
+      priceAfterDis = calcSale(
+          productCubit.product.productVariants
+              .firstWhere(
+                  (e) =>
+                      e.color == cubit.selectedColor &&
+                      e.size == cubit.selectedSize,
+                  orElse: () => productCubit.product.productVariants.first)
+              .price,
+          productCubit.product.productVariants
+              .firstWhere(
+                  (e) =>
+                      e.color == cubit.selectedColor &&
+                      e.size == cubit.selectedSize,
+                  orElse: () => productCubit.product.productVariants.first)
+              .discountRate);
+    } else {
+      priceAfterDis = 'No variants available';
+    }
+    final price = productCubit.product.productVariants
+        .firstWhere(
+            (e) =>
+                e.color == cubit.selectedColor && e.size == cubit.selectedSize,
+            orElse: () => productCubit.product.productVariants.first)
+        .price;
     return Row(
       children: [
         Expanded(child: _buildProductInfo(context)),
         Column(
           children: [
             Text(
-              '${productCubit.product.productVariants.isNotEmpty ? calcSale(productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize, orElse: () => productCubit.product.productVariants.first).price, productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize, orElse: () => productCubit.product.productVariants.first).discountRate) : 'No variants available'} L.E',
+              '$priceAfterDis ${lang(context).le}',
               style: AppStylesManager.customTextStyleO4,
             ),
             Visibility(
@@ -382,7 +405,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                       .discountRate >
                   0,
               child: Text(
-                '${productCubit.product.productVariants.firstWhere((e) => e.color == cubit.selectedColor && e.size == cubit.selectedSize).price} L.E',
+                '$price ${lang(context).le}',
                 style: AppStylesManager.customTextStyleO5
                     .copyWith(decoration: TextDecoration.lineThrough),
               ),

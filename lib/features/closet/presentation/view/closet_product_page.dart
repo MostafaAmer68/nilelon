@@ -1,8 +1,11 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -56,6 +59,20 @@ class _ProductClosetPageState extends State<ProductClosetPage> {
                 color: ColorManager.primaryG8,
               ),
             ),
+            Visibility(
+              visible: ClosetCubit.get(context).closetsItem.isNotEmpty,
+              child: Align(
+                alignment: AlignmentDirectional.topEnd,
+                child: TextButton(
+                    onPressed: () {
+                      ClosetCubit.get(context).emptyCloset(widget.closet.id);
+                    },
+                    child: Text(
+                      lang(context).emptyCloset,
+                      style: AppStylesManager.customTextStyleR,
+                    )),
+              ),
+            ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -63,19 +80,32 @@ class _ProductClosetPageState extends State<ProductClosetPage> {
                   builder: (context, state) {
                     return state.whenOrNull(
                       loading: () => buildShimmerIndicatorGrid(context),
-                      success: () => GridView.builder(
-                        gridDelegate: gridDelegate(context),
-                        itemCount: ClosetCubit.get(context).closetsItem.length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            child: sectionSmallCard(
-                                context: context,
-                                product:
-                                    ClosetCubit.get(context).closetsItem[index],
-                                closetId: widget.closet.id),
+                      success: () {
+                        if (ClosetCubit.get(context).closetsItem.isEmpty) {
+                          return Center(
+                            child: SizedBox(
+                              height: screenHeight(context, 0.1),
+                              child: Text(lang(context)
+                                  .noProductCart
+                                  .replaceAll('cart', 'closet')),
+                            ),
                           );
-                        },
-                      ),
+                        }
+                        return GridView.builder(
+                          gridDelegate: gridDelegate(context),
+                          itemCount:
+                              ClosetCubit.get(context).closetsItem.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              child: sectionSmallCard(
+                                  context: context,
+                                  product: ClosetCubit.get(context)
+                                      .closetsItem[index],
+                                  closetId: widget.closet.id),
+                            );
+                          },
+                        );
+                      },
                       failure: () => Text(S.of(context).smothingWent),
                     )!;
                   },

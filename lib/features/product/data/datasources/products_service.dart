@@ -205,7 +205,7 @@ class ProductsService {
       endPoint: EndPoint.createProductUrl,
       body: product.toMap(),
     );
-    if (data.statusCode == 201) {
+    if (data.statusCode == 201 || data.statusCode == 200) {
       return;
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');

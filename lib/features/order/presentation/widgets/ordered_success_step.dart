@@ -1,4 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -27,30 +29,37 @@ class _OrderedSuccessPageState extends State<OrderedSuccessPage> {
   Widget build(BuildContext context) {
     // BotToast.closeAllLoading();
     return ScaffoldImage(
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const SizedBox(height: 100),
-              Image.asset(
-                Assets.assetsImagesInvoice,
-                width: screenWidth(context, 0.5),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                S.of(context).thankYouForOrdering,
-                style: AppStylesManager.customTextStyleBl13
-                    .copyWith(fontSize: 25.sp, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              Text(
-                S.of(context).youCanDownloadYourReceiptToViewYourOrderDetails,
-                style: AppStylesManager.customTextStyleG,
-              ),
-              const SizedBox(height: 300),
-            ],
+      body: BlocListener<OrderCubit, OrderState>(
+        listener: (context, state) {
+          state.mapOrNull(success: (_) {
+            BotToast.closeAllLoading();
+          });
+        },
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 100),
+                Image.asset(
+                  Assets.assetsImagesInvoice,
+                  width: screenWidth(context, 0.5),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  S.of(context).thankYouForOrdering,
+                  style: AppStylesManager.customTextStyleBl13
+                      .copyWith(fontSize: 25.sp, fontWeight: FontWeight.bold),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  S.of(context).youCanDownloadYourReceiptToViewYourOrderDetails,
+                  style: AppStylesManager.customTextStyleG,
+                ),
+                const SizedBox(height: 200),
+              ],
+            ),
           ),
         ),
       ),

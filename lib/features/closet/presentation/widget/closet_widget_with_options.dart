@@ -96,7 +96,7 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                                           text: lang.renameDefault);
                                       return;
                                     }
-                                    renameSectionDialog(context);
+                                    renameSectionDialog(context, closet.id);
                                   },
                                 ),
                                 const Divider(),

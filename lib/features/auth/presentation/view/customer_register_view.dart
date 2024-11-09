@@ -89,7 +89,6 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
             buttonText: lang.letsStart,
             ontap: () {
               navigateAndRemoveUntil(
-                
                 context: context,
                 screen: const RecommendationView(),
               );
@@ -373,7 +372,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                 type: type,
                 inputFormater: [
                   FilteringTextInputFormatter.allow(
-                      RegExp(r'[0-9]')), // Only digits
+                      RegExp(r'[0-11]')), // Only digits
                   LengthLimitingTextInputFormatter(
                     9,
                   ), // Limit to 9 characters

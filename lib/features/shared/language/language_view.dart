@@ -25,8 +25,10 @@ class _LanguageViewState extends State<LanguageView> {
 
   @override
   void initState() {
-    _tempSelectedOption =
-        HiveStorage.get(HiveKeys.isArabic) ? 'Arabic' : 'English';
+    _tempSelectedOption = HiveStorage.get(HiveKeys.isArabic) != null &&
+            HiveStorage.get(HiveKeys.isArabic)
+        ? 'Arabic'
+        : 'English';
     super.initState();
   }
 

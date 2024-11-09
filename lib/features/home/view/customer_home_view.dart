@@ -161,7 +161,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
         navigateTo(
           context: context,
           screen: ProductsViewAllHot(
-            notFoundTitle: lang(context).noProductNewIn,
+            notFoundTitle: lang(context).noProductHandPicked,
             isHandpicked: true,
             appBarTitle: lang(context).hotPicks,
             onStartPage: () {

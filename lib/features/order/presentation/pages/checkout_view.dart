@@ -91,7 +91,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                     OverViewStep(),
                     BillingDetailsStep(),
                     OrderedSuccessPage(),
-                    PaymentPage(),
+                    // PaymentPage(),
                   ],
                 ),
               ),
@@ -148,9 +148,9 @@ class _CheckOutViewState extends State<CheckOutView> {
                     GradientButtonBuilder(
                       text: lang.continuePress,
                       ontap: () {
-                        cubit.pageController.nextPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut);
+                        // cubit.pageController.nextPage(
+                        //     duration: const Duration(milliseconds: 500),
+                        //     curve: Curves.easeInOut);
                         if (OrderCubit.get(context).formKey.currentState ==
                             null) {
                           cubit.nextStep();

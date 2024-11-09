@@ -170,7 +170,12 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
               ),
               SizedBox(height: 40.h),
               const TableHeaders(),
-              const VariantItems(),
+              VariantItems(onChange: () {
+                cubit.calculateTotalSizes();
+                setState(() {
+                  
+                });
+              }),
               totalRow(context, cubit.calculateTotalSizes(), total),
               SizedBox(height: 24.h),
             ],

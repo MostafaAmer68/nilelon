@@ -94,27 +94,30 @@ GestureDetector sectionSmallCard(
                 ),
                 child: imageReplacer(url: product.productImages.first.url),
               ),
-              Positioned(
-                  top: 10.h,
-                  right: 10.w,
-                  child: InkWell(
-                    onTap: () {
-                      ClosetCubit.get(context)
-                          .deletFromCloset(closetId, product.id);
-                    },
-                    child: Container(
-                      width: 28,
-                      height: 28,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16),
-                          color: ColorManager.primaryO),
-                      child: const Icon(
-                        Iconsax.trash,
-                        color: ColorManager.primaryW,
-                        size: 18,
+              Visibility(
+                visible: closetId.isNotEmpty,
+                child: Positioned(
+                    top: 10.h,
+                    right: 10.w,
+                    child: InkWell(
+                      onTap: () {
+                        ClosetCubit.get(context)
+                            .deletFromCloset(closetId, product.id);
+                      },
+                      child: Container(
+                        width: 28,
+                        height: 28,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: ColorManager.primaryO),
+                        child: const Icon(
+                          Iconsax.trash,
+                          color: ColorManager.primaryW,
+                          size: 18,
+                        ),
                       ),
-                    ),
-                  ))
+                    )),
+              )
             ],
           ),
           const SizedBox(

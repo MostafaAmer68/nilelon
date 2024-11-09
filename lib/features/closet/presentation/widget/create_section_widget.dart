@@ -88,7 +88,7 @@ class CreateNewSection extends StatelessWidget {
                       success: (_) {
                         BotToast.closeAllLoading();
                         navigatePop(context: context);
-                        ClosetCubit.get(context).getclosets();
+                        // ClosetCubit.get(context).getclosets();
                       },
                     );
                   },

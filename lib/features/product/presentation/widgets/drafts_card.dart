@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/helper.dart';
+import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/product/domain/models/product_data/draft_product_model.dart';
 import 'package:nilelon/features/product/presentation/pages/product_add_page.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -30,14 +33,19 @@ class DraftsCard extends StatefulWidget {
 class _DraftsCardState extends State<DraftsCard> {
   File image = File('');
   decodeImage() async {
-    image = await convertBase64ToImage(
-        widget.draft.product.variants.first.images.first);
+    final Completer img = Completer<File>();
+    await convertBase64ToImage(widget.draft.product.variants.first.images.first)
+        .then((v) {
+      img.complete(v);
+    });
+    image = await img.future;
     setState(() {});
   }
 
   @override
   void initState() {
     decodeImage();
+    log(image.path);
     super.initState();
   }
 
@@ -77,10 +85,12 @@ class _DraftsCardState extends State<DraftsCard> {
                   height: 140.h,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
-                    child: Image.file(
-                      image,
-                      fit: BoxFit.cover,
-                    ),
+                    child: image.path.isEmpty
+                        ? buildShimmerIndicator()
+                        : Image.file(
+                            image,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
                 const SizedBox(

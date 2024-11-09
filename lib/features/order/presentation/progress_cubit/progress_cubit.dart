@@ -6,7 +6,7 @@ class ProgressCubit extends Cubit<int> {
   static ProgressCubit get(context) => BlocProvider.of(context);
   final PageController pageController = PageController();
   void nextStep() {
-    if (state < 3) {
+    if (state < 2) {
       pageController.nextPage(
           duration: const Duration(milliseconds: 500), curve: Curves.easeIn);
       emit(state + 1);

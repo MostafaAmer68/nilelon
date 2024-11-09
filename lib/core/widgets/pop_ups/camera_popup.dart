@@ -93,7 +93,7 @@ Future<File> cameraDialog(BuildContext context) async {
             ],
             cancelButton: CupertinoActionSheetAction(
               onPressed: () {
-                completer.complete(File(''));
+                // completer.complete(File(''));
                 navigatePop(context: context);
               },
               child: Text(

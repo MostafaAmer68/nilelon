@@ -511,5 +511,4 @@ Future<void> makePdf({
   String path = '${root.path}/Nilelon Invoice.pdf';
   final file = File(path);
   await file.writeAsBytes(await pdf.save());
-  print('pathhhhhhhhhh          $path');
 }

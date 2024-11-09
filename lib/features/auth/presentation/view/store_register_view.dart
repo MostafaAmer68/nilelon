@@ -352,7 +352,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 },
                 inputFormater: [
                   FilteringTextInputFormatter.allow(
-                      RegExp(r'[0-9]')), // Only digits
+                      RegExp(r'[0-11]')), // Only digits
                   LengthLimitingTextInputFormatter(
                     9,
                   ), // Limit to 9 characters
