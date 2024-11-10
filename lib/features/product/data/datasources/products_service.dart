@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/domain/models/add_product/add_product_model.dart';
@@ -26,8 +25,7 @@ class ProductsService {
   Future<List<ProductModel>> getFollowedProducts(int page, int pageSize) async {
     final data =
         await apiService.get(endPoint: EndPoint.getFollowedProductsUrl, query: {
-      'customerId': JwtDecoder.decode(
-          HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+      'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'page': page,
       'pagesize': pageSize,
     });
@@ -42,8 +40,7 @@ class ProductsService {
   Future<List<ProductModel>> getNewInProducts(int page, int pageSize) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getNewProductsUrl, query: {
-      'CustomerId': JwtDecoder.decode(
-          HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+      'CustomerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'page': page,
       'pageSize': pageSize,
     });
@@ -167,8 +164,7 @@ class ProductsService {
     final data = await apiService.get(
       endPoint: EndPoint.getOffers,
       query: {
-        'customerId': JwtDecoder.decode(
-            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+        'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         'productType': productType,
         'page': page,
         'pageSize': pageSize,

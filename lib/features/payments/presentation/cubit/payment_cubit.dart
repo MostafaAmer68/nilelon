@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_braintree/flutter_braintree.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/payments/data/repositories/payment_repo_impl.dart';
@@ -84,8 +83,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   Future<void> addPayment() async {
     emit(const PaymentState.loading());
     final result = await _paymentRepoImpl.addPayment(AddPaymentModel(
-        customerId: JwtDecoder.decode(
-            HiveStorage.get<UserModel>(HiveKeys.userModel).token)['id'],
+        customerId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         name: '',
         nonce: ''));
     result.fold((err) {
