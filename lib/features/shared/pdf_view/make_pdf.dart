@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:nilelon/features/shared/pdf_view/build_table_row.dart';
@@ -10,7 +11,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'dart:typed_data';
 // import 'package:flutter/services.dart';
 
-Future<void> makePdf({
+Future<bool> makePdf({
   required List<List<String>> cells,
   required String netTotal,
   required String discount,
@@ -22,6 +23,9 @@ Future<void> makePdf({
   required String orderDate,
   required String phoneNumber,
 }) async {
+  if (orderId.isEmpty) {
+    return false;
+  }
   const int maxRowsPerPage = 18;
 
   final pdf = pw.Document();
@@ -495,8 +499,30 @@ Future<void> makePdf({
     );
   }
 
-  Directory? root = await getTemporaryDirectory();
-  String path = '${root.path}/Nilelon Invoice($orderId).pdf';
-  final file = File(path);
-  await file.writeAsBytes(await pdf.save());
+  Directory? directory = await getExternalStorageDirectory();
+  if (directory != null) {
+    String newPath = "";
+
+    // Get the "Documents" folder by modifying the path
+    List<String> paths = directory.path.split("/");
+    for (int i = 1; i < paths.length; i++) {
+      String folder = paths[i];
+      if (folder == "Android") break;
+      newPath += "/" + folder;
+    }
+    newPath += "/Documents";
+
+    final documentsDirectory = Directory(newPath);
+
+    // Create the directory if it doesn't exist
+    if (!documentsDirectory.existsSync()) {
+      documentsDirectory.createSync(recursive: true);
+    }
+    String path = '${documentsDirectory.path}/Nilelon Invoice($orderId).pdf';
+    log(path);
+    final file = File(path);
+    final result = await file.writeAsBytes(await pdf.save());
+    return await result.exists();
+  }
+  return false;
 }

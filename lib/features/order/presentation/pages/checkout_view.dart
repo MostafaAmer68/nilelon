@@ -10,7 +10,6 @@ import 'package:nilelon/features/order/presentation/progress_cubit/progress_cubi
 import 'package:nilelon/features/order/presentation/widgets/ordered_success_step.dart';
 import 'package:nilelon/features/order/presentation/widgets/overview_step.dart';
 import 'package:nilelon/features/order/presentation/widgets/billing_details_step.dart';
-import 'package:nilelon/features/order/presentation/widgets/payment_stemp.dart';
 import 'package:nilelon/features/order/presentation/widgets/step_indicator.dart';
 
 import '../../../../core/resources/color_manager.dart';

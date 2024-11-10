@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/features/order/data/models/order_customer_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -100,12 +101,16 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        orderSummaryItems2(
-                            lang.orderDate,
-                            Text(
-                              DateFormat('dd-MM-yyyy')
-                                  .format(cubit.customerOrder.date),
-                            )),
+                        BlocBuilder<OrderCubit, OrderState>(
+                          builder: (context, state) {
+                            return orderSummaryItems2(
+                                lang.orderDate,
+                                Text(
+                                  DateFormat('dd-MM-yyyy')
+                                      .format(cubit.customerOrder.date),
+                                ));
+                          },
+                        ),
                         orderSummaryItems2(
                           lang.orderState,
                           BlocBuilder<OrderCubit, OrderState>(
@@ -148,12 +153,16 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                                       .parse(widget.recievedDate)),
                               style: AppStylesManager.customTextStyleG,
                             )),
-                        orderSummaryItems2(
-                          lang.paymentMethod,
-                          Text(
-                            cubit.customerOrder.paymentType,
-                            style: AppStylesManager.customTextStyleBl8,
-                          ),
+                        BlocBuilder<OrderCubit, OrderState>(
+                          builder: (context, state) {
+                            return orderSummaryItems2(
+                              lang.paymentMethod,
+                              Text(
+                                cubit.customerOrder.paymentType,
+                                style: AppStylesManager.customTextStyleBl8,
+                              ),
+                            );
+                          },
                         ),
                         orderSummaryItems2(
                           lang.promoCodeApplied,
@@ -238,8 +247,13 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
         ),
       ),
       persistentFooterButtons: [
-        OrderDetailsFooter(
-          order: cubit.customerOrder,
+        BlocBuilder<OrderCubit, OrderState>(
+          builder: (context, state) {
+            return OrderDetailsFooter(
+              visible: cubit.customerOrder != OrderCustomerModel.empty(),
+              order: cubit.customerOrder,
+            );
+          },
         ),
       ],
     );

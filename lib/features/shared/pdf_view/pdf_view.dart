@@ -69,7 +69,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
                 ));
               }
 
-              await makePdf(
+              final result = await makePdf(
                 cells: widget.cells,
                 netTotal: widget.netTotal,
                 discount: widget.discount,
@@ -84,11 +84,15 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
                 phoneNumber: HiveStorage.get<UserModel>(HiveKeys.userModel)
                     .getUserData<CustomerModel>()
                     .phoneNumber,
-              ).then((v) {
+              );
+              if (result) {
                 isLoading = false;
                 BotToast.showText(text: lang(context).pdfSaved);
-                setState(() {});
-              });
+              } else {
+                BotToast.showText(text: lang(context).smothingWent);
+                isLoading = false;
+              }
+              setState(() {});
               // if ((await _requestStoragePermission())) {
               // } else {
               //   isLoading = false;

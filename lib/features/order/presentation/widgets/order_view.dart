@@ -109,7 +109,15 @@ class _OrderViewState extends State<OrderView> {
                                         id: order.id,
                                       ));
                                 },
-                                shippedOnTap: () {},
+                                shippedOnTap: () {
+                                  OrderCubit.get(context).changeOrderStatus(
+                                    order.id,
+                                    'Shipped',
+                                    true
+                                  );
+                                  OrderCubit.get(context)
+                                      .getStoreOrder(widget.status);
+                                },
                               );
                             }
                             return OrderCustomerCard(

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/order/data/models/order_model.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 
 class OrderStoreCard extends StatelessWidget {
   const OrderStoreCard({
@@ -81,12 +84,24 @@ class OrderStoreCard extends StatelessWidget {
                           style: AppStylesManager.customTextStyleG7,
                         ),
                         const Spacer(),
-                        GradientButtonBuilder(
-                          text: order.status,
-                          ontap: shippedOnTap,
-                          style: AppStylesManager.customTextStyleW4,
-                          width: 120.w,
-                          height: 35.h,
+                        Visibility(
+                          visible: order.status != 'Shipped' ||
+                              order.status != 'Delivered',
+                          child: BlocBuilder<OrderCubit, OrderState>(
+                            builder: (context, state) {
+                              return state.whenOrNull(
+                                loading: () =>
+                                    const CircularProgressIndicator(),
+                                success: () => GradientButtonBuilder(
+                                  text: lang(context).shipped,
+                                  ontap: shippedOnTap,
+                                  style: AppStylesManager.customTextStyleW4,
+                                  width: 120.w,
+                                  height: 35.h,
+                                ),
+                              )!;
+                            },
+                          ),
                         )
                       ],
                     ),

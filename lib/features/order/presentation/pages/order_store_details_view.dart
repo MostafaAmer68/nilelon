@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -45,7 +46,12 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
     return ScaffoldImage(
       appBar: customAppBar(
           title: lang.orderDetails, hasIcon: false, context: context),
-      body: BlocBuilder<OrderCubit, OrderState>(
+      body: BlocConsumer<OrderCubit, OrderState>(
+        listener: (context, state) {
+          state.mapOrNull(success: (_) {
+            setState(() {});
+          });
+        },
         builder: (context, state) {
           return state.whenOrNull(
             loading: () {
@@ -84,7 +90,7 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Row(  
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           buildShimmerIndicatorSmall(height: 40, width: 100),
@@ -155,50 +161,54 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
         },
       ),
       persistentFooterButtons: [
-        if (widget.index == 0)
+        if (cubit.storeOrder.status == 'Shipped' ||
+            cubit.storeOrder.status == 'Delivered')
           Positioned(
-            top: 1.sw > 600
-                ? screenHeight(context, 0.85)
-                : screenHeight(context, 0.81),
-            child: widget.index == 1
-                ? Column(
-                    children: [
-                      SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: SvgPicture.asset('assets/images/inProgress.svg'),
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        lang.shipped,
-                        style: AppStylesManager.customTextStyleG16,
-                      )
-                    ],
-                  )
-                : Column(
-                    children: [
-                      SizedBox(
-                        width: 50,
-                        height: 50,
-                        child: Image.asset('assets/images/arrived2.png'),
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        lang.received,
-                        style: AppStylesManager.customTextStyleG16,
-                      )
-                    ],
-                  ),
-          )
+              top: 1.sw > 600
+                  ? screenHeight(context, 0.85)
+                  : screenHeight(context, 0.81),
+              child: Center(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: cubit.storeOrder.status != 'Shipped'
+                          ? Image.asset(Assets.assetsImagesArrived2)
+                          : SvgPicture.asset(
+                              Assets.assetsImagesInProgress,
+                            ),
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Text(
+                      cubit.storeOrder.status == 'Shipped'
+                          ? lang.shipped
+                          : lang.received,
+                      style: AppStylesManager.customTextStyleG15,
+                    )
+                  ],
+                ),
+              ))
         else
-          GradientButtonBuilder(
-            ontap: () {},
-            width: screenWidth(context, 0.9),
-            text: lang.readyToBeShipped,
+          BlocBuilder<OrderCubit, OrderState>(
+            builder: (context, state) {
+              return state.whenOrNull(
+                loading: () => const CircularProgressIndicator(),
+                success: () => GradientButtonBuilder(
+                  ontap: () {
+                    cubit.changeOrderStatus(
+                      widget.id,
+                      'Shipped',
+                    );
+                    // cubit.getStoreOrderDetailsById(widget.id);
+                  },
+                  width: screenWidth(context, 0.9),
+                  text: lang.readyToBeShipped,
+                ),
+              )!;
+            },
           )
       ],
     );

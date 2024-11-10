@@ -5,7 +5,6 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/product/presentation/widgets/image_banner.dart';
-import 'package:nilelon/features/product/presentation/widgets/size_container.dart';
 
 import '../../../../core/sizes_consts.dart';
 import '../../../../generated/l10n.dart';

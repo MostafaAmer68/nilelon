@@ -25,45 +25,25 @@ class NotificatoinService {
   }
 
   Future initializeNotification() async {
-    // if ((await _requestNotificationPermissions())) return;
     AwesomeNotifications().initialize(
-      // set the icon to null if you want to use the default app icon
-      null,
+      'resource://mipmap/launcher_icon',
       [
         NotificationChannel(
-            channelGroupKey: 'basic_channel_group',
-            channelKey: 'basic_channel',
-            channelName: 'Basic notifications',
-            channelDescription: 'Notification channel for basic tests',
-            defaultColor: ColorManager.primaryG,
-            ledColor: ColorManager.primaryB)
+          channelKey: 'basic_channel',
+          channelName: 'Basic Notifications',
+          channelDescription: 'Notification channel for WebSocket messages',
+          defaultColor: ColorManager.primaryO,
+          importance: NotificationImportance.High,
+          channelShowBadge: true,
+        )
       ],
-      // Channel groups are only visual and are not required
-      channelGroups: [
-        NotificationChannelGroup(
-            channelGroupKey: 'basic_channel_group',
-            channelGroupName: 'Basic group')
-      ],
-      debug: true,
     );
-    AwesomeNotifications().setListeners(
-      onActionReceivedMethod: (ReceivedAction receivedAction) async {
-        NotificationController.onActionReceivedMethod(receivedAction);
-      },
-      onNotificationCreatedMethod:
-          (ReceivedNotification receivedNotification) async {
-        NotificationController.onNotificationCreatedMethod(
-            receivedNotification);
-      },
-      onNotificationDisplayedMethod:
-          (ReceivedNotification receivedNotification) async {
-        NotificationController.onNotificationDisplayedMethod(
-            receivedNotification);
-      },
-      onDismissActionReceivedMethod: (ReceivedAction receivedAction) async {
-        NotificationController.onDismissActionReceivedMethod(receivedAction);
-      },
-    );
+
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
   }
 }
 

@@ -94,8 +94,9 @@ class OrderCustomerCard extends StatelessWidget {
                         const Spacer(),
                         Text(
                           DateFormat('dd-MM-yyyy').format(
-                            DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
-                                .parse(order.date),
+                            DateFormat(
+                              'yyyy-MM-ddTHH:mm:ss.ssssss',
+                            ).parse(order.date),
                           ),
                           style: AppStylesManager.customTextStyleG7,
                         ),

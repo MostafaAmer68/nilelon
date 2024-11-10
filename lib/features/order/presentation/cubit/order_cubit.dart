@@ -183,7 +183,8 @@ class OrderCubit extends Cubit<OrderState> {
     );
   }
 
-  Future<void> changeOrderStatus(String orderId, String status) async {
+  Future<void> changeOrderStatus(String orderId, String status,
+      [bool isList = false]) async {
     emit(const OrderState.loading());
     final result = await _orderRepo.changeOrderStatus(orderId, status);
     result.fold(
@@ -191,7 +192,10 @@ class OrderCubit extends Cubit<OrderState> {
         emit(OrderState.failure(failure.errorMsg));
       },
       (response) {
-        emit(const OrderState.success());
+        if (!isList) {
+          getStoreOrderDetailsById(orderId);
+        }
+        
       },
     );
   }
