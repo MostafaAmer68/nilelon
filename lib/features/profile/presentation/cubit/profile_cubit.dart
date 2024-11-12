@@ -48,6 +48,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   File image = File('');
   String base64Image = '';
   GlobalKey<FormState> forgotPasswordForm = GlobalKey();
+  GlobalKey<FormState> formEmail = GlobalKey();
   final picker = ImagePicker();
   Future<void> getStoreById(String storeId) async {
     emit(const ProfileState.loading());

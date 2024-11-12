@@ -103,16 +103,21 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   GradientButtonBuilder(
                     text: lang.next,
                     ontap: () {
-                      navigateTo(
-                        context: context,
-                        screen: ResetPassowrdView(
-                          isLogin: false,
-                          form: AuthCubit.get(context).resetPasswordForm,
-                          onTap: () {
-                            AuthCubit.get(context).changePassword(context);
-                          },
-                        ),
-                      );
+                      if (ProfileCubit.get(context)
+                          .forgotPasswordForm
+                          .currentState!
+                          .validate()) {
+                        navigateTo(
+                          context: context,
+                          screen: ResetPassowrdView(
+                            isLogin: false,
+                            form: AuthCubit.get(context).resetPasswordForm,
+                            onTap: () {
+                              AuthCubit.get(context).changePassword(context);
+                            },
+                          ),
+                        );
+                      }
                     },
                   )
                 ],

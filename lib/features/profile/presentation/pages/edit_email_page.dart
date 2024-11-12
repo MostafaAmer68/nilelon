@@ -69,48 +69,56 @@ class ChangeEmailPage extends StatelessWidget {
       child: ScaffoldImage(
         appBar:
             customAppBar(title: lang.email, context: context, hasIcon: false),
-        body: Column(
-          children: [
-            const DefaultDivider(),
-            const SizedBox(
-              height: 16,
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: TextAndFormFieldColumnNoIcon(
-                title: lang.addNewEmail,
-                validator: (value) {
-                  if (!AuthCubit.get(context).emailRegex.hasMatch(value!)) {
-                    return S.of(context).enterYourEmailToVerification;
-                  }
-                  return null;
-                },
-                label: lang.enterEmail,
-                controller: ProfileCubit.get(context).emailController,
-                type: TextInputType.emailAddress,
+        body: Form(
+          key: ProfileCubit.get(context).formEmail,
+          child: Column(
+            children: [
+              const DefaultDivider(),
+              const SizedBox(
+                height: 16,
               ),
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                OutlinedButtonBuilder(
-                    text: lang.cancel,
-                    ontap: () {
-                      navigatePop(context: context);
-                    }),
-                GradientButtonBuilder(
-                  text: lang.next,
-                  ontap: () {
-                    ProfileCubit.get(context).sendOtpEmail(context);
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: TextAndFormFieldColumnNoIcon(
+                  title: lang.addNewEmail,
+                  validator: (value) {
+                    if (!AuthCubit.get(context).emailRegex.hasMatch(value!)) {
+                      return S.of(context).enterYourEmailToVerification;
+                    }
+                    return null;
                   },
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 16,
-            )
-          ],
+                  label: lang.enterEmail,
+                  controller: ProfileCubit.get(context).emailController,
+                  type: TextInputType.emailAddress,
+                ),
+              ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  OutlinedButtonBuilder(
+                      text: lang.cancel,
+                      ontap: () {
+                        navigatePop(context: context);
+                      }),
+                  GradientButtonBuilder(
+                    text: lang.next,
+                    ontap: () {
+                      if (ProfileCubit.get(context)
+                          .formEmail
+                          .currentState!
+                          .validate()) {
+                        ProfileCubit.get(context).sendOtpEmail(context);
+                      }
+                    },
+                  )
+                ],
+              ),
+              const SizedBox(
+                height: 16,
+              )
+            ],
+          ),
         ),
       ),
     );
