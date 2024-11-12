@@ -20,6 +20,8 @@ import '../../../../features/closet/presentation/view/closet_sheet_bar_view.dart
 import '../../../../features/layout/customer_bottom_tab_bar.dart';
 import '../../../../features/order/presentation/pages/checkout_view.dart';
 import '../../../../features/product/domain/models/product_model.dart';
+import '../../../../features/product/presentation/pages/product_details_page.dart';
+import '../../../../features/product/presentation/pages/product_details_store_page.dart';
 import '../../../../features/promo/presentation/cubit/promo_cubit.dart';
 import '../../../../generated/l10n.dart';
 import '../../../constants/assets.dart';
@@ -29,11 +31,12 @@ import '../../../utils/navigation.dart';
 GestureDetector wideCard({required ProductModel product, required context}) {
   return GestureDetector(
     onTap: () {
-      // navigateTo(
-      //     context: context,
-      //     screen: ProductDetailsView(
-      //       product: model,
-      //     ));
+      navigateTo(
+        context: context,
+        screen: !HiveStorage.get(HiveKeys.isStore)
+            ? ProductDetailsView(productId: product.id)
+            : ProductStoreDetailsView(productId: product.id),
+      );
     },
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
@@ -118,7 +121,7 @@ GestureDetector wideCard({required ProductModel product, required context}) {
                                     fit: BoxFit.cover,
                                   ),
                                 )
-                              : SvgPicture.asset(
+                              : Image.asset(
                                   Assets.assetsImagesClosetFollowing,
                                   fit: BoxFit.cover,
                                   width: 40,

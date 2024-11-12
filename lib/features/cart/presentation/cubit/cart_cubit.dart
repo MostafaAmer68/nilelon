@@ -44,6 +44,7 @@ class CartCubit extends Cubit<CartState> {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
       emit(CartSuccess());
+      emit(GetCartSuccess());
     });
   }
 

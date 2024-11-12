@@ -242,9 +242,11 @@ class _EditProfileViewState extends State<EditProfileView> {
               child: cubit.image.path.isEmpty &&
                       currentUsr<CustomerModel>().profilePic.isEmpty
                   ? Image.asset(Assets.assetsImagesProfile)
-                  : currentUsr<CustomerModel>().profilePic.isEmpty &&
-                          cubit.image.path.isNotEmpty
-                      ? Image.file(cubit.image)
+                  : cubit.image.path.isNotEmpty
+                      ? Image.file(
+                          cubit.image,
+                          fit: BoxFit.cover,
+                        )
                       : imageReplacer(
                           url: currentUsr<CustomerModel>().profilePic,
                         ),

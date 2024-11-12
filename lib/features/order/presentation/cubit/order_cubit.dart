@@ -67,6 +67,14 @@ class OrderCubit extends Cubit<OrderState> {
               },
               (response) {
                 getCustomerOrderDetailsById(response);
+                phoneController.clear();
+                addressLine1.clear();
+                addressLine2.clear();
+                streetAddress.clear();
+                unitNumber.clear();
+                landmark.clear();
+                city.clear();
+                promoCode.clear();
                 // emit(const OrderState.success());
               },
             );
@@ -195,7 +203,6 @@ class OrderCubit extends Cubit<OrderState> {
         if (!isList) {
           getStoreOrderDetailsById(orderId);
         }
-        
       },
     );
   }

@@ -85,7 +85,7 @@ class OrderStoreCard extends StatelessWidget {
                         ),
                         const Spacer(),
                         Visibility(
-                          visible: order.status != 'Shipped' ||
+                          visible: order.status != 'Shipped' &&
                               order.status != 'Delivered',
                           child: BlocBuilder<OrderCubit, OrderState>(
                             builder: (context, state) {

@@ -31,7 +31,7 @@ class _SeeMoreStoresViewState extends State<SeeMoreStoresView> {
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: isSearch
-            ?  const SearchResult(isBrand:true)
+            ? const SearchResult(isBrand: true)
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -46,18 +46,14 @@ class _SeeMoreStoresViewState extends State<SeeMoreStoresView> {
                     child: GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              mainAxisExtent: 200,
+                              mainAxisExtent: 215,
                               crossAxisCount: 2,
                               crossAxisSpacing: 20.0,
                               mainAxisSpacing: 12),
                       itemCount: widget.stores.length,
                       itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            BrandCard(
-                              store: widget.stores[index],
-                            ),
-                          ],
+                        return BrandCard(
+                          store: widget.stores[index],
                         );
                       },
                     ),

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grouped_list/grouped_list.dart';
+import 'package:intl/intl.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/features/order/data/models/order_model.dart';
 import 'package:nilelon/features/order/presentation/pages/order_store_details_view.dart';
 import 'package:nilelon/features/order/presentation/widgets/ordered_card.dart';
 import 'package:nilelon/features/order/presentation/widgets/ordered_store_card.dart';
@@ -84,17 +88,24 @@ class _OrderViewState extends State<OrderView> {
                     );
                   } else {
                     return Expanded(
-                      child: ListView.builder(
+                      child: GroupedListView<OrderModel, String>(
                           // shrinkWrap: true,
-                          itemCount: cubit.orders
+                          elements: cubit.orders
                               .where((e) => e.status == widget.status)
-                              .toList()
-                              .length,
-                          itemBuilder: (context, index) {
-                            final order = cubit.orders
-                                .where((e) => e.status == widget.status)
-                                .toList()[index];
-
+                              .toList(),
+                          order: GroupedListOrder.ASC,
+                          groupBy: (OrderModel e) => DateFormat('dd-MM-yyyy')
+                              .format(DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
+                                  .parse(e.date)),
+                          groupSeparatorBuilder: (String groupByValue) =>
+                              Center(
+                                child: Text(
+                                  groupByValue,
+                                  style: AppStylesManager.customDateStyle
+                                      .copyWith(fontSize: 14.sp),
+                                ),
+                              ),
+                          itemBuilder: (context, order) {
                             if (HiveStorage.get(HiveKeys.isStore)) {
                               return OrderStoreCard(
                                 image: widget.image,
@@ -111,10 +122,7 @@ class _OrderViewState extends State<OrderView> {
                                 },
                                 shippedOnTap: () {
                                   OrderCubit.get(context).changeOrderStatus(
-                                    order.id,
-                                    'Shipped',
-                                    true
-                                  );
+                                      order.id, 'Shipped', true);
                                   OrderCubit.get(context)
                                       .getStoreOrder(widget.status);
                                 },

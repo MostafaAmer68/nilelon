@@ -59,12 +59,12 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  Future<void> forgotPassword(context,email) async {
+  Future<void> forgotPassword(context, email) async {
     emit(ResetPasswordLoading());
 
     var result = await authRepos.forgotPassword(
       HiveStorage.get(HiveKeys.token),
-    email,
+      email,
       newPasswordController.text,
       context,
     );
@@ -128,6 +128,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(LoginFailure(failure.errorMsg));
     }, (response) {
       emit(const LoginSuccess('Login Successfully'));
+      emailController.clear();
+      passwordController.clear();
+
       BlocProvider.of<CategoryCubit>(context).getCategories();
     });
   }
@@ -150,7 +153,11 @@ class AuthCubit extends Cubit<AuthState> {
       emit(CustomerRegisterFailure(failure.errorMsg));
     }, (response) {
       // Map<String, dynamic> decodedToken = JwtDecoder.decode(response);
-
+      nameController.clear();
+      emailController.clear();
+      phoneController.clear();
+      passwordController.clear();
+      confirmPasswordController.clear();
       emit(CustomerRegisterSuccess(response));
       BlocProvider.of<CategoryCubit>(context).getCategories();
     });
@@ -167,7 +174,7 @@ class AuthCubit extends Cubit<AuthState> {
         profileLink: profileLinkController.text,
         websiteLink: websiteLinkController.text,
         repName: repNameController.text,
-        repPhone: repNameController.text,
+        repPhone: repPhoneController.text,
         warehouseAddress: wareHouseAddressController.text,
         password: passwordController.text,
         confirmPassword: confirmPasswordController.text,
@@ -182,6 +189,16 @@ class AuthCubit extends Cubit<AuthState> {
         response,
       );
       emit(StoreRegisterSuccess(response));
+      nameController.clear();
+      emailController.clear();
+      phoneController.clear();
+      profileLinkController.clear();
+      websiteLinkController.clear();
+      repNameController.clear();
+      repPhoneController.clear();
+      wareHouseAddressController.clear();
+      passwordController.clear();
+      confirmPasswordController.clear();
       BlocProvider.of<CategoryCubit>(context).getCategories();
     });
   }

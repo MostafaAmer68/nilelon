@@ -40,10 +40,9 @@ GestureDetector offersCard({required context, required ProductModel product}) {
     onTap: () {
       navigateTo(
         context: context,
-        screen:
-            !HiveStorage.get(HiveKeys.isStore)
-                ? ProductDetailsView(productId: product.id)
-                : ProductStoreDetailsView(productId: product.id),
+        screen: !HiveStorage.get(HiveKeys.isStore)
+            ? ProductDetailsView(productId: product.id)
+            : ProductStoreDetailsView(productId: product.id),
       );
     },
     child: Container(
@@ -171,7 +170,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                               fit: BoxFit.cover,
                             ),
                           )
-                        : SvgPicture.asset(
+                        : Image.asset(
                             Assets.assetsImagesClosetFollowing,
                           ),
                   ),

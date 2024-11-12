@@ -112,9 +112,9 @@ class _SearchPageState extends State<SearchPage> {
                     child: GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1.sw > 600 ? 3 : 2,
-                        crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                        mainAxisExtent: 1.sw > 600 ? 300 : 220,
-                        mainAxisSpacing: 1.sw > 600 ? 16 : 12,
+                        crossAxisSpacing: 16,
+                        mainAxisExtent: 190,
+                        mainAxisSpacing: 12,
                       ),
                       itemCount: HiveStorage.get<List>(HiveKeys.categories)
                           .where((e) => e.id != '')
@@ -124,21 +124,17 @@ class _SearchPageState extends State<SearchPage> {
                             HiveStorage.get<List>(HiveKeys.categories)
                                 .where((e) => e.id != '')
                                 .toList()[index];
-                        return Column(
-                          children: [
-                            SearchSectionItems(
-                              image: category.image,
-                              name: category.name,
-                              onTap: () {
-                                navigateTo(
-                                  context: context,
-                                  screen: SectionsProductView(
-                                    categoryId: category.id,
-                                  ),
-                                );
-                              },
-                            ),
-                          ],
+                        return SearchSectionItems(
+                          image: category.image,
+                          name: category.name,
+                          onTap: () {
+                            navigateTo(
+                              context: context,
+                              screen: SectionsProductView(
+                                categoryId: category.id,
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
