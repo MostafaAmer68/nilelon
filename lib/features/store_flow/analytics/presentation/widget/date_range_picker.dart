@@ -148,33 +148,35 @@ class _DateRangePickerState extends State<DateRangePicker> {
                   ),
                   const Divider(),
                   const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      GradientButtonBuilder(
-                        // buttonColor: ColorManager.primaryO,
-                        height: 50,
-                        text: lang(context).confirm,
-                        ontap: () {
-                          AnalyticsCubit.get(context).endDate = cubit.rangeEnd!;
-                          AnalyticsCubit.get(context).startDate =
-                              cubit.rangeStart!;
-                          AnalyticsCubit.get(context).getChartData();
-                          navigatePop(context: context);
-                        },
-                      ),
-                      OutlinedButtonBuilder(
-                        height: 50,
-                        text: lang(context).cancel,
-                        ontap: () {
-                          navigatePop(context: context);
-                        },
-                      ),
-                    ],
+                  Container(
+                    color: ColorManager.primaryW,
+                    padding: const EdgeInsets.all(14),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        OutlinedButtonBuilder(
+                          height: 50,
+                          text: lang(context).cancel,
+                          ontap: () {
+                            navigatePop(context: context);
+                          },
+                        ),
+                        GradientButtonBuilder(
+                          // buttonColor: ColorManager.primaryO,
+                          height: 50,
+                          text: lang(context).confirm,
+                          ontap: () {
+                            AnalyticsCubit.get(context).endDate =
+                                cubit.rangeEnd!;
+                            AnalyticsCubit.get(context).startDate =
+                                cubit.rangeStart!;
+                            AnalyticsCubit.get(context).getChartData();
+                            navigatePop(context: context);
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(
-                    height: 18,
-                  )
                 ],
               ),
             ),

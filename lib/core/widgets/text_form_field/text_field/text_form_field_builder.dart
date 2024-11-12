@@ -69,9 +69,7 @@ class TextFormFieldBuilder extends StatelessWidget {
         controller: controller,
         obscureText: obsecure!,
         textAlignVertical: textAlignVer ?? TextAlignVertical.top,
-        style: TextStyle(
-          color: color,
-        ),
+        style: TextStyle(color: color),
         validator: validator,
         readOnly: readOnly,
         inputFormatters: inputFormater,

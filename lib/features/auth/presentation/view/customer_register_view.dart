@@ -371,11 +371,8 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                 controller: controller,
                 type: type,
                 inputFormater: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(r'[0-11]')), // Only digits
-                  LengthLimitingTextInputFormatter(
-                    9,
-                  ), // Limit to 9 characters
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                  LengthLimitingTextInputFormatter(11),
                 ],
                 validator: (value) {
                   if (!AuthCubit.get(context).phoneRegex.hasMatch(value!)) {
@@ -478,7 +475,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
           child: RadioListTile(
             title: Text(option),
             value: option,
-            activeColor: ColorManager.primaryB,
+            activeColor: ColorManager.primaryO,
             groupValue: _tempSelectedOption,
             contentPadding:
                 const EdgeInsets.symmetric(horizontal: 4, vertical: 0),

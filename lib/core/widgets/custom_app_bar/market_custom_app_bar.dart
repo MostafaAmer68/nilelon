@@ -26,12 +26,60 @@ class MarketCustomAppBar extends StatelessWidget {
             height: 30.w,
             child: SvgPicture.asset(Assets.assetsImagesLogo),
           ),
-          Container(
-            width: 90.w,
-            height: 30.w,
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(Assets.assetsImagesNilelonEcommerce))),
+          GestureDetector(
+            onTap: () {
+              navigateTo(
+                  context: context,
+                  screen: HiveStorage.get(HiveKeys.userModel) != null
+                      ? const NotificationView()
+                      : const ProfileGuestPage(
+                          hasLeading: true,
+                        ));
+            },
+            child: Container(
+              width: 1.sw > 600 ? 40 : 40,
+              height: 1.sw > 600 ? 40 : 40,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.white,
+                boxShadow: const [
+                  BoxShadow(
+                    color: ColorManager.primaryO,
+                    blurRadius: 0,
+                    offset: Offset(5, 5),
+                    spreadRadius: 0,
+                  )
+                ],
+              ),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Center(
+                    child: SizedBox(
+                      width: 1.sw > 600 ? 40 : 30,
+                      height: 1.sw > 600 ? 40 : 30,
+                      child: SvgPicture.asset(Assets.assetsImagesNotification),
+                    ),
+                  ),
+                  Positioned(
+                    left: 4,
+                    child: Container(
+                      width: 1.sw > 600 ? 16 : 14,
+                      height: 1.sw > 600 ? 16 : 14,
+                      decoration: BoxDecoration(
+                          color: ColorManager.primaryR,
+                          borderRadius: BorderRadius.circular(16)),
+                      child: const Center(
+                        child: Text(
+                          '0',
+                          style: TextStyle(color: Colors.white, fontSize: 8),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
           ),
           const Spacer(),
           GestureDetector(

@@ -12,7 +12,7 @@ import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
-import 'package:nilelon/features/promo/presentation/pages/appy_offer_page.dart';
+import 'package:nilelon/features/promo/presentation/pages/apply_offer_page.dart';
 import 'package:nilelon/features/refund/presentation/widgets/custom_check_box.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';

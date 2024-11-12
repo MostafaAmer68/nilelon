@@ -43,9 +43,9 @@ class ClosetCubit extends Cubit<ClosetState> {
     data.fold((error) {
       emit(const ClosetState.failure());
     }, (response) {
-      getclosets();
       closetName.clear();
-      emit(const ClosetState.success());
+      getclosets();
+      // emit(const ClosetState.success());
     });
   }
 

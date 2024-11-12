@@ -53,158 +53,164 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
       'isFollow': false,
       'isNotify': false,
     };
+    cubit.storeProfile = null;
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    return ScaffoldImage(
-      appBar: customAppBar(
-        title: cubit.storeProfile == null
-            ? lang.loading
-            : cubit.storeProfile!.name,
-        context: context,
-        onPressed: () {
-          customerStoreDialog(context);
-        },
-        icon: Icons.more_vert_rounded,
-      ),
-      body: SingleChildScrollView(
-        child: BlocConsumer<ProfileCubit, ProfileState>(
-          listener: (context, state) {
-            state.mapOrNull(initial: (_) {
-              cubit.getStoreById(widget.storeId);
-            });
-          },
-          builder: (context, state) {
-            return state.whenOrNull(
-              initial: () => const SizedBox(),
-              failure: (_) => Text(lang.smothingWent),
-              loading: () => Column(
-                children: [
-                  const DefaultDivider(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  buildShimmerIndicatorSmall(radius: 300),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  buildShimmerIndicatorSmall(height: 40),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  buildShimmerIndicatorSmall(height: 40),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        return ScaffoldImage(
+          appBar: customAppBar(
+            title: cubit.storeProfile == null
+                ? lang.loading
+                : cubit.storeProfile!.name,
+            context: context,
+            onPressed: () {
+              customerStoreDialog(context);
+            },
+            icon: Icons.more_vert_rounded,
+          ),
+          body: SingleChildScrollView(
+            child: BlocConsumer<ProfileCubit, ProfileState>(
+              listener: (context, state) {
+                state.mapOrNull(initial: (_) {
+                  cubit.getStoreById(widget.storeId);
+                });
+              },
+              builder: (context, state) {
+                return state.whenOrNull(
+                  initial: () => const SizedBox(),
+                  failure: (_) => Text(lang.smothingWent),
+                  loading: () => Column(
                     children: [
+                      const DefaultDivider(),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      buildShimmerIndicatorSmall(radius: 300),
+                      const SizedBox(
+                        height: 16,
+                      ),
                       buildShimmerIndicatorSmall(height: 40),
-                      buildShimmerIndicatorSmall(height: 40, width: 40),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  const DefaultDivider(),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Row(
-                    children: [
                       const SizedBox(
-                        width: 16,
+                        height: 8,
                       ),
-                      const Icon(Icons.tune),
+                      buildShimmerIndicatorSmall(height: 40),
                       const SizedBox(
-                        width: 8,
+                        height: 30,
                       ),
-                      Expanded(
-                        child: SizedBox(
-                          height: 52,
-                          width: MediaQuery.of(context).size.width,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 3,
-                            itemBuilder: (context, index) =>
-                                buildShimmerIndicatorSmall(
-                                    width: 60, height: 60),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          buildShimmerIndicatorSmall(height: 40),
+                          buildShimmerIndicatorSmall(height: 40, width: 40),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      const DefaultDivider(),
+                      const SizedBox(
+                        height: 18,
+                      ),
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 16,
                           ),
-                        ),
+                          const Icon(Icons.tune),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Expanded(
+                            child: SizedBox(
+                              height: 52,
+                              width: MediaQuery.of(context).size.width,
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 3,
+                                itemBuilder: (context, index) =>
+                                    buildShimmerIndicatorSmall(
+                                        width: 60, height: 60),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.all(16.0),
+                        child: ProductStoreWidget(),
                       ),
                     ],
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: ProductStoreWidget(),
-                  ),
-                ],
-              ),
-              success: () {
-                return Column(
-                  children: [
-                    const DefaultDivider(),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    ProfileAvater(image: cubit.storeProfile!.profilePic ?? ''),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                      cubit.storeProfile!.name,
-                      style: AppStylesManager.customTextStyleBl8
-                          .copyWith(fontWeight: FontWeight.w700),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      cubit.storeProfile!.storeSlogan ?? '',
-                      style: AppStylesManager.customTextStyleG5,
-                    ),
-                    const SizedBox(height: 30),
-                    if (!HiveStorage.get(HiveKeys.isStore)) ...[
-                      FollowAndNotifyWidget(storeId: widget.storeId),
-                      const SizedBox(height: 30),
-                    ],
-                    const DefaultDivider(),
-                    const SizedBox(
-                      height: 18,
-                    ),
-                    Row(
+                  success: () {
+                    return Column(
                       children: [
+                        const DefaultDivider(),
                         const SizedBox(
-                          width: 16,
+                          height: 30,
                         ),
-                        const Icon(Icons.tune),
+                        ProfileAvater(
+                            image: cubit.storeProfile!.profilePic ?? ''),
                         const SizedBox(
-                          width: 8,
+                          height: 16,
                         ),
-                        Expanded(
-                          child: CategoryFilterWidget(
-                            selectedCategory: cubit.selectedCategory,
-                            onSelected: (category) {
-                              cubit.selectedCategory = category;
-                              setState(() {});
-                            },
-                          ),
+                        Text(
+                          cubit.storeProfile!.name,
+                          style: AppStylesManager.customTextStyleBl8
+                              .copyWith(fontWeight: FontWeight.w700),
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          cubit.storeProfile!.storeSlogan ?? '',
+                          style: AppStylesManager.customTextStyleG5,
+                        ),
+                        const SizedBox(height: 30),
+                        if (!HiveStorage.get(HiveKeys.isStore)) ...[
+                          FollowAndNotifyWidget(storeId: widget.storeId),
+                          const SizedBox(height: 30),
+                        ],
+                        const DefaultDivider(),
+                        const SizedBox(
+                          height: 18,
+                        ),
+                        Row(
+                          children: [
+                            const SizedBox(
+                              width: 16,
+                            ),
+                            const Icon(Icons.tune),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            Expanded(
+                              child: CategoryFilterWidget(
+                                selectedCategory: cubit.selectedCategory,
+                                onSelected: (category) {
+                                  cubit.selectedCategory = category;
+                                  setState(() {});
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: ProductStoreWidget(),
                         ),
                       ],
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: ProductStoreWidget(),
-                    ),
-                  ],
-                );
+                    );
+                  },
+                )!;
               },
-            )!;
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

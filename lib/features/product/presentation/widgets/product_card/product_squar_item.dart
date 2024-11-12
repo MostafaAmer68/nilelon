@@ -39,9 +39,7 @@ GestureDetector productSquarItem(
     onTap: () {
       navigateTo(
         context: context,
-        screen: !HiveStorage.get(HiveKeys.isStore) ||
-                product.storeId !=
-                    HiveStorage.get<UserModel>(HiveKeys.userModel).id
+        screen: !HiveStorage.get(HiveKeys.isStore)
             ? ProductDetailsView(productId: product.id)
             : ProductStoreDetailsView(productId: product.id),
       );
@@ -143,7 +141,7 @@ GestureDetector productSquarItem(
                                     fit: BoxFit.cover,
                                   ),
                                 )
-                              : Image.asset(
+                              : SvgPicture.asset(
                                   Assets.assetsImagesClosetFollowing,
                                   fit: BoxFit.cover,
                                   width: 50,

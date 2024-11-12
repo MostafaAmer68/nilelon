@@ -107,19 +107,19 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   }
 
   Widget _buildAddButton(String addSizes) {
-    return Padding(
-      padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 20.h),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          GestureDetector(
-            onTap: widget.onTapAddButton,
-            child: Icon(Iconsax.edit_2, size: 22.r),
-          ),
-          SizedBox(width: 8.w),
-          Text(addSizes, style: AppStylesManager.customTextStyleB),
-          const Spacer(),
-        ],
+    return InkWell(
+      onTap: widget.onTapAddButton,
+      child: Padding(
+        padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 20.h),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Icon(Iconsax.edit_2, size: 22.r),
+            SizedBox(width: 8.w),
+            Text(addSizes, style: AppStylesManager.customTextStyleB),
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }
@@ -130,9 +130,11 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          _buildEditBtn(),
+          InkWell(onTap: widget.onTapEditButton, child: _buildEditBtn()),
           SizedBox(width: 8.w),
-          Text(editSizes, style: AppStylesManager.customTextStyleB),
+          InkWell(
+              onTap: widget.onTapEditButton,
+              child: Text(editSizes, style: AppStylesManager.customTextStyleB)),
           const Spacer(),
           _buildDeleteBtn(deleteAlertStr),
         ],
@@ -172,9 +174,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
               const TableHeaders(),
               VariantItems(onChange: () {
                 cubit.calculateTotalSizes();
-                setState(() {
-                  
-                });
+                setState(() {});
               }),
               totalRow(context, cubit.calculateTotalSizes(), total),
               SizedBox(height: 24.h),
@@ -186,10 +186,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   }
 
   Widget _buildEditBtn() {
-    return GestureDetector(
-      onTap: widget.onTapEditButton,
-      child: const Icon(Iconsax.edit_2, size: 22),
-    );
+    return const Icon(Iconsax.edit_2, size: 22);
   }
 
   Widget _buildDeleteBtn(String deleteAlertStr) {

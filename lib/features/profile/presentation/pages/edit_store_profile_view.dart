@@ -17,6 +17,7 @@ import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/
 import 'package:nilelon/my_app.dart';
 
 import '../../../../core/tools.dart';
+import '../../../../core/widgets/button/outlined_button_builder.dart';
 import '../../../../core/widgets/pop_ups/success_creation_popup.dart';
 import '../../../../core/widgets/replacer/image_replacer.dart';
 import '../../../../core/widgets/scaffold_image.dart';
@@ -100,12 +101,13 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
               ),
             ),
             const Spacer(),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+            Container(
+              color: ColorManager.primaryW,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ButtonBuilder(
+                  OutlinedButtonBuilder(
                     text: lang.cancel,
                     width: screenWidth(context, 0.44),
                     height: screenHeight(context, 0.06),
@@ -127,9 +129,6 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
                 ],
               ),
             ),
-            const SizedBox(
-              height: 16,
-            )
           ],
         ),
       ),

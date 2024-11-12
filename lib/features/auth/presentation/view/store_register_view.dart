@@ -351,11 +351,8 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   AuthCubit.get(context).regFormSto.currentState!.validate();
                 },
                 inputFormater: [
-                  FilteringTextInputFormatter.allow(
-                      RegExp(r'[0-11]')), // Only digits
-                  LengthLimitingTextInputFormatter(
-                    9,
-                  ), // Limit to 9 characters
+                  FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                  LengthLimitingTextInputFormatter(11),
                 ],
                 type: type,
                 width: screenWidth(context, 0.75),

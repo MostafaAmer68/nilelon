@@ -177,7 +177,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                                 fit: BoxFit.cover,
                                               ),
                                             )
-                                          : Image.asset(
+                                          : SvgPicture.asset(
                                               Assets
                                                   .assetsImagesClosetFollowing,
                                             ),

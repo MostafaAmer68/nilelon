@@ -56,6 +56,7 @@ class _OrderedSuccessPageState extends State<OrderedSuccessPage> {
                 Text(
                   S.of(context).youCanDownloadYourReceiptToViewYourOrderDetails,
                   style: AppStylesManager.customTextStyleG,
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 200),
               ],

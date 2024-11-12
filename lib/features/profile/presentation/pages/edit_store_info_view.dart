@@ -1,11 +1,12 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
@@ -33,8 +34,8 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
         TextEditingController(text: currentUsr<StoreModel>().repName);
     cubit.repPhoneController =
         TextEditingController(text: currentUsr<StoreModel>().repPhone);
-    cubit.wareHouseAddressController =
-        TextEditingController(text: currentUsr<StoreModel>().warehouseAddress);
+    // cubit.websiteLinkController =
+    //     TextEditingController(text: currentUsr<StoreModel>());
     // cubit.websiteLinkController =
     //     TextEditingController(text: currentUsr<StoreModel>().);
     super.initState();
@@ -50,100 +51,104 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
         context: context,
         hasIcon: false,
       ),
-      body: SingleChildScrollView(
-        child: BlocListener<ProfileCubit, ProfileState>(
-          listener: (context, state) {
-            state.mapOrNull(
-              loading: (_) {
-                BotToast.showLoading();
-              },
-              success: (_) {
-                BotToast.closeAllLoading();
-                successCreationDialog(
-                    context: context,
-                    highlightedText: S.of(context).infoUpdate,
-                    regularText: '',
-                    buttonText: lang.save,
+      body: BlocListener<ProfileCubit, ProfileState>(
+        listener: (context, state) {
+          state.mapOrNull(
+            loading: (_) {
+              BotToast.showLoading();
+            },
+            success: (_) {
+              BotToast.closeAllLoading();
+              successCreationDialog(
+                  context: context,
+                  highlightedText: S.of(context).infoUpdate,
+                  regularText: '',
+                  buttonText: lang.save,
+                  ontap: () {
+                    MyApp.restartApp(context);
+                  });
+            },
+            failure: (_) {
+              BotToast.closeAllLoading();
+              BotToast.showText(text: _.er);
+            },
+          );
+        },
+        child: Column(
+          children: [
+            const DefaultDivider(),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  TextAndFormFieldColumnNoIcon(
+                    title: lang.storeRepresentativeName,
+                    label: 'Twixi',
+                    height: 25,
+                    controller: cubit.repNameController,
+                    type: TextInputType.text,
+                  ),
+                  TextAndFormFieldColumnNoIcon(
+                    title: lang.storeRepresentativeNumber,
+                    label: '01000000000',
+                    controller: cubit.repPhoneController,
+                    height: 25,
+                    type: TextInputType.phone,
+                  ),
+                  TextAndFormFieldColumnNoIcon(
+                    title: lang.profileLink,
+                    label: 'TwixiShop',
+                    controller: cubit.websiteLinkController,
+                    height: 25,
+                    type: TextInputType.text,
+                  ),
+                  TextAndFormFieldColumnNoIcon(
+                    title: lang.websiteLink,
+                    label: 'TwixiShop',
+                    controller: cubit.websiteLinkController,
+                    height: 25,
+                    type: TextInputType.text,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: screenHeight(context, 0.11),
+            ),
+            const Spacer(),
+            Container(
+              color: ColorManager.primaryW,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  OutlinedButtonBuilder(
+                    text: lang.cancel,
+                    width: screenWidth(context, 0.44),
+                    height: screenHeight(context, 0.06),
                     ontap: () {
-                      MyApp.restartApp(context);
-                    });
-              },
-              failure: (_) {
-                BotToast.closeAllLoading();
-                BotToast.showText(text: _.er);
-              },
-            );
-          },
-          child: Column(
-            children: [
-              const DefaultDivider(),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    TextAndFormFieldColumnNoIcon(
-                      title: lang.storeRepresentativeName,
-                      label: 'Twixi',
-                      height: 25,
-                      controller: cubit.repNameController,
-                      type: TextInputType.text,
-                    ),
-                    TextAndFormFieldColumnNoIcon(
-                      title: lang.storeRepresentativeNumber,
-                      label: '01000000000',
-                      controller: cubit.repPhoneController,
-                      height: 25,
-                      type: TextInputType.phone,
-                    ),
-                    TextAndFormFieldColumnNoIcon(
-                      title: lang.websiteLink,
-                      label: 'TwixiShop',
-                      controller: cubit.websiteLinkController,
-                      height: 25,
-                      type: TextInputType.text,
-                    ),
-                  ],
-                ),
+                      navigatePop(context: context);
+                    },
+                  ),
+                  const SizedBox(
+                    width: 12,
+                  ),
+                  GradientButtonBuilder(
+                    text: lang.save,
+                    width: screenWidth(context, 0.44),
+                    height: screenHeight(context, 0.06),
+                    ontap: () {
+                      ProfileCubit.get(context).updateStoreInfo(context);
+                    },
+                  ),
+                ],
               ),
-              SizedBox(
-                height: screenHeight(context, 0.11),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ButtonBuilder(
-                      text: lang.cancel,
-                      width: screenWidth(context, 0.44),
-                      height: screenHeight(context, 0.06),
-                      ontap: () {
-                        navigatePop(context: context);
-                      },
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    GradientButtonBuilder(
-                      text: lang.save,
-                      width: screenWidth(context, 0.44),
-                      height: screenHeight(context, 0.06),
-                      ontap: () {
-                        ProfileCubit.get(context).updateStoreInfo(context);
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

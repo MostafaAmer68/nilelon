@@ -99,75 +99,85 @@ class _CheckOutViewState extends State<CheckOutView> {
         ),
         persistentFooterButtons: [
           cubit.state == 2
-              ? NilelonPdfView(
-                  location: orderCubit.customerOrder.governate,
-                  orderDate: DateFormat('dd-MM-yyyy')
-                      .format(orderCubit.customerOrder.date),
-                  orderId: '#${orderCubit.customerOrder.id}',
-                  cells: orderCubit.customerOrder.orderProductVariants
-                      .map((e) => [
-                            e.productName,
-                            e.storeName,
-                            e.quantity.toString(),
-                            e.color,
-                            e.size.toString(),
-                            e.price.toString()
-                          ])
-                      .toList(),
-                  netTotal: (orderCubit.customerOrder.total -
-                          num.parse(orderCubit.customerOrder.shippingCost))
-                      .toString(),
-                  discount: orderCubit.customerOrder.discount.toString(),
-                  total: (orderCubit.customerOrder.total +
-                          num.parse(orderCubit.customerOrder.shippingCost))
-                      .toString(),
-                  delivery: orderCubit.customerOrder.shippingCost,
+              ? Container(
+                  color: ColorManager.primaryW,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: NilelonPdfView(
+                    location: orderCubit.customerOrder.governate,
+                    orderDate: DateFormat('dd-MM-yyyy')
+                        .format(orderCubit.customerOrder.date),
+                    orderId: '#${orderCubit.customerOrder.id}',
+                    cells: orderCubit.customerOrder.orderProductVariants
+                        .map((e) => [
+                              e.productName,
+                              e.storeName,
+                              e.quantity.toString(),
+                              e.color,
+                              e.size.toString(),
+                              e.price.toString()
+                            ])
+                        .toList(),
+                    netTotal: (orderCubit.customerOrder.total -
+                            num.parse(orderCubit.customerOrder.shippingCost))
+                        .toString(),
+                    discount: orderCubit.customerOrder.discount.toString(),
+                    total: (orderCubit.customerOrder.total +
+                            num.parse(orderCubit.customerOrder.shippingCost))
+                        .toString(),
+                    delivery: orderCubit.customerOrder.shippingCost,
+                  ),
                 )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ButtonBuilder(
-                      text: lang.previous,
-                      buttonColor: cubit.state != 0
-                          ? ColorManager.primaryB2
-                          : ColorManager.primaryG2,
-                      frameColor: Colors.transparent,
-                      ontap: () {
-                        if (cubit.state == 0) {
-                        } else {
-                          cubit.previousStep();
-                          cubit.pageController.previousPage(
-                            duration: const Duration(milliseconds: 500),
-                            curve: Curves.easeInOut,
-                          );
-                          setState(() {});
-                        }
-                      },
-                    ),
-                    GradientButtonBuilder(
-                      text: lang.continuePress,
-                      ontap: () {
-                        // cubit.pageController.nextPage(
-                        //     duration: const Duration(milliseconds: 500),
-                        //     curve: Curves.easeInOut);
-                        if (OrderCubit.get(context).formKey.currentState ==
-                            null) {
-                          cubit.nextStep();
-                          cubit.pageController.nextPage(
+              : Container(
+                  color: ColorManager.primaryW,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ButtonBuilder(
+                        text: lang.previous,
+                        buttonColor: cubit.state != 0
+                            ? ColorManager.primaryB2
+                            : ColorManager.primaryG2,
+                        frameColor: Colors.transparent,
+                        ontap: () {
+                          if (cubit.state == 0) {
+                          } else {
+                            cubit.previousStep();
+                            cubit.pageController.previousPage(
                               duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeInOut);
-                        } else {
-                          if (OrderCubit.get(context)
-                              .formKey
-                              .currentState!
-                              .validate()) {
-                            OrderCubit.get(context).createOrder(context);
+                              curve: Curves.easeInOut,
+                            );
+                            setState(() {});
                           }
-                        }
-                        setState(() {});
-                      },
-                    ),
-                  ],
+                        },
+                      ),
+                      GradientButtonBuilder(
+                        text: lang.continuePress,
+                        ontap: () {
+                          // cubit.pageController.nextPage(
+                          //     duration: const Duration(milliseconds: 500),
+                          //     curve: Curves.easeInOut);
+                          if (OrderCubit.get(context).formKey.currentState ==
+                              null) {
+                            cubit.nextStep();
+                            cubit.pageController.nextPage(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInOut);
+                          } else {
+                            if (OrderCubit.get(context)
+                                .formKey
+                                .currentState!
+                                .validate()) {
+                              OrderCubit.get(context).createOrder(context);
+                            }
+                          }
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
                 ),
         ],
       ),

@@ -20,6 +20,7 @@ class PromoCubit extends Cubit<PromoState> {
   num deliveryPrice = 0;
   num discount = 0;
   String selectedGov = '';
+  final GlobalKey<FormState> applyOfferForm = GlobalKey();
 
   List<ProductModel> selectedProducts = [];
   bool isSelectedAll = false;

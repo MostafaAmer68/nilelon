@@ -181,8 +181,10 @@ class _SearchPageState extends State<SearchPage> {
 
   AppBar searchAppBar(BuildContext context) {
     return AppBar(
-      clipBehavior: Clip.none,
+      // clipBehavior: Clip.none,
       leadingWidth: 30,
+      elevation: 0,
+
       backgroundColor: ColorManager.primaryW,
       title: TextFormFieldBuilder(
         label: lang(context).searchForAnything,

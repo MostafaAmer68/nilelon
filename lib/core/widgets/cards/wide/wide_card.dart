@@ -36,7 +36,8 @@ GestureDetector wideCard({required ProductModel product, required context}) {
       //     ));
     },
     child: Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+      margin: const EdgeInsets.symmetric(vertical: 8),
       decoration: BoxDecoration(
         color: const Color(0xFFF7FDFF),
         borderRadius: BorderRadius.circular(12),
@@ -68,57 +69,61 @@ GestureDetector wideCard({required ProductModel product, required context}) {
                 // const SizedBox(height: 5),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       product.name,
                       style: AppStylesManager.customTextStyleO3,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    Visibility(
-                      visible: !HiveStorage.get(HiveKeys.isStore),
-                      child: InkWell(
-                        onTap: () {
-                          showModalBottomSheet(
-                            context: context,
-                            backgroundColor: ColorManager.primaryW,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30),
-                              ),
-                            ),
-                            clipBehavior: Clip.antiAliasWithSaveLayer,
-                            builder: (context) =>
-                                ClosetSheetBarView(productId: product.id),
-                          );
-                        },
-                        child: !product.isInCloset
-                            ? Container(
-                                width: 30.w,
-                                height: 30.w,
-                                padding: const EdgeInsets.all(5),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color:
-                                          Colors.orange.shade300.withOpacity(1),
-                                      offset: const Offset(3, 3),
-                                      blurRadius: 5,
-                                    ),
-                                  ],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Visibility(
+                        visible: !HiveStorage.get(HiveKeys.isStore),
+                        child: InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              backgroundColor: ColorManager.primaryW,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
                                 ),
-                                child: SvgPicture.asset(
-                                  Assets.assetsImagesHanger,
+                              ),
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
+                              builder: (context) =>
+                                  ClosetSheetBarView(productId: product.id),
+                            );
+                          },
+                          child: !product.isInCloset
+                              ? Container(
+                                  width: 30.w,
+                                  height: 30.w,
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.orange.shade300
+                                            .withOpacity(1),
+                                        offset: const Offset(3, 3),
+                                        blurRadius: 5,
+                                      ),
+                                    ],
+                                  ),
+                                  child: SvgPicture.asset(
+                                    Assets.assetsImagesHanger,
+                                    fit: BoxFit.cover,
+                                  ),
+                                )
+                              : SvgPicture.asset(
+                                  Assets.assetsImagesClosetFollowing,
                                   fit: BoxFit.cover,
+                                  width: 40,
                                 ),
-                              )
-                            : Image.asset(
-                                Assets.assetsImagesClosetFollowing,
-                                fit: BoxFit.cover,
-                                width: 40,
-                              ),
+                        ),
                       ),
                     ),
                   ],
@@ -148,7 +153,7 @@ GestureDetector wideCard({required ProductModel product, required context}) {
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 5),
                 Row(
                   children: [
                     Container(

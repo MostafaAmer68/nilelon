@@ -30,10 +30,9 @@ GestureDetector sectionSmallCard(
     onTap: () {
       navigateTo(
         context: context,
-        screen:
-            product.storeId != HiveStorage.get<UserModel>(HiveKeys.userModel).id
-                ? ProductDetailsView(productId: product.id)
-                : ProductStoreDetailsView(productId: product.id),
+        screen: !HiveStorage.get(HiveKeys.isStore)
+            ? ProductDetailsView(productId: product.id)
+            : ProductStoreDetailsView(productId: product.id),
       );
     },
     child: Container(

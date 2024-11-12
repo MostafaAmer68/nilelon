@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nilelon/core/service/failure_service.dart';
-import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
@@ -15,7 +14,6 @@ import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dar
 
 import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/helper.dart';
-import '../../../../core/tools.dart';
 
 part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';

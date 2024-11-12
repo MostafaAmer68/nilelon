@@ -5,7 +5,8 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 
 Future calenderRegisterDialog(
-    BuildContext context, Function(DateTime date) onTap) {
+    BuildContext context, Function(DateTime date) onTap,
+    [int? maxYear, int? minYear]) {
   return showCupertinoModalPopup(
     barrierDismissible: false,
     context: context,
@@ -19,8 +20,9 @@ Future calenderRegisterDialog(
                 child: SizedBox(
                   height: 200.h,
                   child: CupertinoDatePicker(
-                    maximumYear: DateTime.now().year,
+                    maximumYear: maxYear ?? DateTime.now().year,
                     onDateTimeChanged: onTap,
+                    minimumYear: minYear ?? 1,
                     mode: CupertinoDatePickerMode.date,
                   ),
                 )),

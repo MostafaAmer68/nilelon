@@ -10,7 +10,6 @@ import 'package:nilelon/features/product/presentation/pages/product_details_stor
 
 import '../../../../../core/color_const.dart';
 import '../../../../../core/resources/color_manager.dart';
-import '../../../../auth/domain/model/user_model.dart';
 import '../../pages/product_details_page.dart';
 import '../../../../../core/data/hive_stroage.dart';
 
@@ -26,10 +25,9 @@ GestureDetector marketSmallCard(
     onTap: () {
       navigateTo(
         context: context,
-        screen:
-            product.storeId != HiveStorage.get<UserModel>(HiveKeys.userModel).id
-                ? ProductDetailsView(productId: product.id)
-                : ProductStoreDetailsView(productId: product.id),
+        screen: !HiveStorage.get(HiveKeys.isStore)
+            ? ProductDetailsView(productId: product.id)
+            : ProductStoreDetailsView(productId: product.id),
       );
     },
     child: Container(

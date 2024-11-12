@@ -41,7 +41,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
       navigateTo(
         context: context,
         screen:
-            product.storeId != HiveStorage.get<UserModel>(HiveKeys.userModel).id
+            !HiveStorage.get(HiveKeys.isStore)
                 ? ProductDetailsView(productId: product.id)
                 : ProductStoreDetailsView(productId: product.id),
       );
@@ -171,7 +171,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                               fit: BoxFit.cover,
                             ),
                           )
-                        : Image.asset(
+                        : SvgPicture.asset(
                             Assets.assetsImagesClosetFollowing,
                           ),
                   ),
