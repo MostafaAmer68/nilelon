@@ -471,7 +471,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "received": MessageLookupByLibrary.simpleMessage("تم الاستلام"),
         "receivedColor": MessageLookupByLibrary.simpleMessage("اللون المستلم"),
         "receivedSize": MessageLookupByLibrary.simpleMessage("الحجم المستلم"),
-        "recevied": MessageLookupByLibrary.simpleMessage("تم الاستلام"),
         "recievedDate": MessageLookupByLibrary.simpleMessage("تاريخ الاستلام"),
         "recommendations": MessageLookupByLibrary.simpleMessage("التوصيات"),
         "refundHistory":

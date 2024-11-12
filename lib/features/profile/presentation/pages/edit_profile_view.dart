@@ -76,143 +76,142 @@ class _EditProfileViewState extends State<EditProfileView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const DefaultDivider(),
-            SizedBox(
-              height: 1.sw > 600 ? 24.h : 0,
-            ),
             Container(
-              height: screenHeight(context, 0.85),
+              height: screenHeight(context, 0.70),
               padding: const EdgeInsets.all(16.0),
               margin: const EdgeInsets.all(30),
               decoration: BoxDecoration(
                   color: ColorManager.primaryW,
                   borderRadius: BorderRadius.circular(16)),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Center(child: photosStack(context)),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      lang.name,
-                      style: AppStylesManager.customTextStyleBl5,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Center(child: photosStack(context)),
+                    const SizedBox(
+                      height: 30,
                     ),
-                  ),
-                  TextFormFieldBuilder(
-                    label: lang.enterYourName,
-                    controller: cubit.nameController,
-                    type: TextInputType.text,
-                    width: screenWidth(context, 1),
-                    isIcon: false,
-                    prefixWidget: Container(
-                        width: 20,
-                        height: 20,
-                        padding: const EdgeInsets.all(12),
-                        child: SvgPicture.asset(Assets.assetsImagesProfilee)),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      lang.address,
-                      style: AppStylesManager.customTextStyleBl5,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        lang.name,
+                        style: AppStylesManager.customTextStyleBl5,
+                      ),
                     ),
-                  ),
-                  TextFormFieldBuilder(
-                    label: lang.address,
-                    controller: cubit.wareHouseAddressController,
-                    type: TextInputType.text,
-                    width: screenWidth(context, 1),
-                    isIcon: false,
-                    prefixWidget: Container(
-                        width: 20,
-                        height: 20,
-                        padding: const EdgeInsets.all(12),
-                        child: SvgPicture.asset(Assets.assetsImagesLocation)),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      lang.email,
-                      style: AppStylesManager.customTextStyleBl5,
+                    TextFormFieldBuilder(
+                      label: lang.enterYourName,
+                      controller: cubit.nameController,
+                      type: TextInputType.text,
+                      width: screenWidth(context, 1),
+                      isIcon: false,
+                      prefixWidget: Container(
+                          width: 20,
+                          height: 20,
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(Assets.assetsImagesProfilee)),
                     ),
-                  ),
-                  TextFormFieldBuilder(
-                    label: lang.email,
-                    controller: TextEditingController(
-                        text: currentUsr<CustomerModel>().email),
-                    readOnly: true,
-                    type: TextInputType.text,
-                    width: screenWidth(context, 1),
-                    isIcon: false,
-                    prefixWidget: Container(
-                        width: 20,
-                        height: 20,
-                        padding: const EdgeInsets.all(12),
-                        child: SvgPicture.asset(Assets.assetsImagesEmail)),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      lang.phoneNumber,
-                      style: AppStylesManager.customTextStyleBl5,
+                    const SizedBox(
+                      height: 30,
                     ),
-                  ),
-                  TextFormFieldBuilder(
-                    label: lang.phoneNumber,
-                    controller: TextEditingController(
-                        text: currentUsr<CustomerModel>().phoneNumber),
-                    readOnly: true,
-                    type: TextInputType.text,
-                    width: screenWidth(context, 1),
-                    isIcon: false,
-                    prefixWidget: Container(
-                        width: 20,
-                        height: 20,
-                        padding: const EdgeInsets.all(12),
-                        child: SvgPicture.asset(Assets.assetsImagesPhone)),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Container(
-                    color: ColorManager.primaryW,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        OutlinedButtonBuilder(
-                          text: lang.cancel,
-                          width: screenWidth(context, 0.44),
-                          height: screenHeight(context, 0.06),
-                          ontap: () {
-                            navigatePop(context: context);
-                          },
-                        ),
-                        GradientButtonBuilder(
-                            text: lang.save,
-                            width: screenWidth(context, 0.37),
-                            height: screenHeight(context, 0.05),
-                            ontap: () {
-                              ProfileCubit.get(context).updateCustomer(context);
-                            }),
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        lang.address,
+                        style: AppStylesManager.customTextStyleBl5,
+                      ),
                     ),
-                  ),
-                ],
+                    TextFormFieldBuilder(
+                      label: lang.address,
+                      controller: cubit.wareHouseAddressController,
+                      type: TextInputType.text,
+                      width: screenWidth(context, 1),
+                      isIcon: false,
+                      prefixWidget: Container(
+                          width: 20,
+                          height: 20,
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(Assets.assetsImagesLocation)),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        lang.email,
+                        style: AppStylesManager.customTextStyleBl5,
+                      ),
+                    ),
+                    TextFormFieldBuilder(
+                      label: lang.email,
+                      controller: TextEditingController(
+                          text: currentUsr<CustomerModel>().email),
+                      readOnly: true,
+                      type: TextInputType.text,
+                      width: screenWidth(context, 1),
+                      isIcon: false,
+                      prefixWidget: Container(
+                          width: 20,
+                          height: 20,
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(Assets.assetsImagesEmail)),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        lang.phoneNumber,
+                        style: AppStylesManager.customTextStyleBl5,
+                      ),
+                    ),
+                    TextFormFieldBuilder(
+                      label: lang.phoneNumber,
+                      controller: TextEditingController(
+                          text: currentUsr<CustomerModel>().phoneNumber),
+                      readOnly: true,
+                      type: TextInputType.text,
+                      width: screenWidth(context, 1),
+                      isIcon: false,
+                      prefixWidget: Container(
+                          width: 20,
+                          height: 20,
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(Assets.assetsImagesPhone)),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                  ],
+                ),
               ),
             )
+          ],
+        ),
+      ),
+      btmBar: Container(
+        height: 70,
+        color: ColorManager.primaryW,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            OutlinedButtonBuilder(
+              text: lang.cancel,
+              width: screenWidth(context, 0.44),
+              height: screenHeight(context, 0.06),
+              ontap: () {
+                navigatePop(context: context);
+              },
+            ),
+            GradientButtonBuilder(
+                text: lang.save,
+                width: screenWidth(context, 0.37),
+                height: screenHeight(context, 0.05),
+                ontap: () {
+                  ProfileCubit.get(context).updateCustomer(context);
+                }),
           ],
         ),
       ),

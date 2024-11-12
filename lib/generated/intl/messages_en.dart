@@ -150,6 +150,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteAll": MessageLookupByLibrary.simpleMessage("Delete All"),
         "deleteDefault": MessageLookupByLibrary.simpleMessage(
             "you can`t delete default closet"),
+        "delivered": MessageLookupByLibrary.simpleMessage("Delivered"),
         "delivery": MessageLookupByLibrary.simpleMessage("Delivery"),
         "didYouFaceAnyProblemsAtTheShippingProcess":
             MessageLookupByLibrary.simpleMessage(
@@ -475,7 +476,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "received": MessageLookupByLibrary.simpleMessage("Received"),
         "receivedColor": MessageLookupByLibrary.simpleMessage("Received Color"),
         "receivedSize": MessageLookupByLibrary.simpleMessage("Received Size"),
-        "recevied": MessageLookupByLibrary.simpleMessage("Delivered"),
         "recievedDate": MessageLookupByLibrary.simpleMessage("Recieved Date"),
         "recommendations":
             MessageLookupByLibrary.simpleMessage("Recommendations"),

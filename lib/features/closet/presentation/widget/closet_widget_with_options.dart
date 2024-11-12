@@ -53,12 +53,16 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
             SizedBox(
               width: 50.w,
               height: 50.w,
-              child: SvgPicture.asset(Assets.assetsImagesClosetFollowing),
+              child: Image.asset(Assets.assetsImagesClosetFollowing),
             ),
             const SizedBox(width: 10),
-            Text(
-              closet.name,
-              style: AppStylesManager.customTextStyleBl6,
+            SizedBox(
+              width: 200,
+              child: Text(
+                closet.name,
+                overflow: TextOverflow.ellipsis,
+                style: AppStylesManager.customTextStyleBl6,
+              ),
             ),
             const Spacer(),
             IconButton(

@@ -126,7 +126,7 @@
   "orderManagment": "Order Managment",
   "ordered": "Ordered",
   "shipped": "Shipped",
-  "recevied": "Delivered",
+  "delivered": "Delivered",
   "youHaveNewOrderInProcessCheckYourOrderDetails": "You Have New Order In Process Check Your Order Details",
   "orderPrice": "Order Price",
   "orderDetails": "Order Details",

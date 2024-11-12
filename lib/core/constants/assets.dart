@@ -1,21 +1,18 @@
 // ignore_for_file: prefer_single_quotes
 class Assets {
   Assets._();
-
+  
   /// Assets for assetsFontsLondrinaSolidRegular
   /// assets/fonts/LondrinaSolid-Regular.ttf
-  static const String assetsFontsLondrinaSolidRegular =
-      "assets/fonts/LondrinaSolid-Regular.ttf";
+  static const String assetsFontsLondrinaSolidRegular = "assets/fonts/LondrinaSolid-Regular.ttf";
 
   /// Assets for assetsFontsNunitoSans10ptRegular
   /// assets/fonts/NunitoSans_10pt-Regular.ttf
-  static const String assetsFontsNunitoSans10ptRegular =
-      "assets/fonts/NunitoSans_10pt-Regular.ttf";
+  static const String assetsFontsNunitoSans10ptRegular = "assets/fonts/NunitoSans_10pt-Regular.ttf";
 
   /// Assets for assetsFontsPoppinsRegular
   /// assets/fonts/Poppins-Regular.ttf
-  static const String assetsFontsPoppinsRegular =
-      "assets/fonts/Poppins-Regular.ttf";
+  static const String assetsFontsPoppinsRegular = "assets/fonts/Poppins-Regular.ttf";
 
   /// Assets for assetsImagesAddTOCart
   /// assets/images/addTOCart.svg
@@ -118,9 +115,8 @@ class Assets {
   static const String assetsImagesCloset = "assets/images/Closet.svg";
 
   /// Assets for assetsImagesClosetFollowing
-  /// assets/images/closet_following.svg
-  static const String assetsImagesClosetFollowing =
-      "assets/images/closet_following.svg";
+  /// assets/images/closet_following.png
+  static const String assetsImagesClosetFollowing = "assets/images/closet_following.png";
 
   /// Assets for assetsImagesCloth1
   /// assets/images/cloth1.png
@@ -252,28 +248,23 @@ class Assets {
 
   /// Assets for assetsImagesNilelonDLogo
   /// assets/images/nilelonDLogo.png
-  static const String assetsImagesNilelonDLogo =
-      "assets/images/nilelonDLogo.png";
+  static const String assetsImagesNilelonDLogo = "assets/images/nilelonDLogo.png";
 
   /// Assets for assetsImagesNilelonEcommerce
   /// assets/images/nilelonEcommerce.png
-  static const String assetsImagesNilelonEcommerce =
-      "assets/images/nilelonEcommerce.png";
+  static const String assetsImagesNilelonEcommerce = "assets/images/nilelonEcommerce.png";
 
   /// Assets for assetsImagesNilelonEcommerceW
   /// assets/images/nilelonEcommerceW.png
-  static const String assetsImagesNilelonEcommerceW =
-      "assets/images/nilelonEcommerceW.png";
+  static const String assetsImagesNilelonEcommerceW = "assets/images/nilelonEcommerceW.png";
 
   /// Assets for assetsImagesNilelonWLogo
   /// assets/images/nilelonWLogo.png
-  static const String assetsImagesNilelonWLogo =
-      "assets/images/nilelonWLogo.png";
+  static const String assetsImagesNilelonWLogo = "assets/images/nilelonWLogo.png";
 
   /// Assets for assetsImagesNoNotification
   /// assets/images/noNotification.png
-  static const String assetsImagesNoNotification =
-      "assets/images/noNotification.png";
+  static const String assetsImagesNoNotification = "assets/images/noNotification.png";
 
   /// Assets for assetsImagesNonImage
   /// assets/images/non_image.png
@@ -281,18 +272,15 @@ class Assets {
 
   /// Assets for assetsImagesNotification
   /// assets/images/Notification.svg
-  static const String assetsImagesNotification =
-      "assets/images/Notification.svg";
+  static const String assetsImagesNotification = "assets/images/Notification.svg";
 
   /// Assets for assetsImagesNotifications
   /// assets/images/notifications.png
-  static const String assetsImagesNotifications =
-      "assets/images/notifications.png";
+  static const String assetsImagesNotifications = "assets/images/notifications.png";
 
   /// Assets for assetsImagesNotificationsActive
   /// assets/images/notifications_active.png
-  static const String assetsImagesNotificationsActive =
-      "assets/images/notifications_active.png";
+  static const String assetsImagesNotificationsActive = "assets/images/notifications_active.png";
 
   /// Assets for assetsImagesOnboarding1
   /// assets/images/onboarding1.png
@@ -316,8 +304,7 @@ class Assets {
 
   /// Assets for assetsImagesPackageAccept
   /// assets/images/package_accept.svg
-  static const String assetsImagesPackageAccept =
-      "assets/images/package_accept.svg";
+  static const String assetsImagesPackageAccept = "assets/images/package_accept.svg";
 
   /// Assets for assetsImagesPassword
   /// assets/images/Password.svg
@@ -341,13 +328,11 @@ class Assets {
 
   /// Assets for assetsImagesRecommendation
   /// assets/images/Recommendation.svg
-  static const String assetsImagesRecommendation =
-      "assets/images/Recommendation.svg";
+  static const String assetsImagesRecommendation = "assets/images/Recommendation.svg";
 
   /// Assets for assetsImagesRepeatCircle
   /// assets/images/repeat_circle.svg
-  static const String assetsImagesRepeatCircle =
-      "assets/images/repeat_circle.svg";
+  static const String assetsImagesRepeatCircle = "assets/images/repeat_circle.svg";
 
   /// Assets for assetsImagesReturnIcon
   /// assets/images/return_icon.png
@@ -367,13 +352,11 @@ class Assets {
 
   /// Assets for assetsImagesShopForWomen
   /// assets/images/shop_for_women.png
-  static const String assetsImagesShopForWomen =
-      "assets/images/shop_for_women.png";
+  static const String assetsImagesShopForWomen = "assets/images/shop_for_women.png";
 
   /// Assets for assetsImagesSmsTracking
   /// assets/images/sms-tracking.svg
-  static const String assetsImagesSmsTracking =
-      "assets/images/sms-tracking.svg";
+  static const String assetsImagesSmsTracking = "assets/images/sms-tracking.svg";
 
   /// Assets for assetsImagesSub1
   /// assets/images/sub_1.png
@@ -389,8 +372,7 @@ class Assets {
 
   /// Assets for assetsImagesSuccessCreation
   /// assets/images/success_creation.png
-  static const String assetsImagesSuccessCreation =
-      "assets/images/success_creation.png";
+  static const String assetsImagesSuccessCreation = "assets/images/success_creation.png";
 
   /// Assets for assetsImagesUserTag
   /// assets/images/user_tag.svg
@@ -399,7 +381,5 @@ class Assets {
   /// Assets for assetsImagesWrong
   /// assets/images/wrong.svg
   static const String assetsImagesWrong = "assets/images/wrong.svg";
-
-  /// Assets for assetsNilelon (1)
-  /// assets/nilelon (1).zip
 }
+

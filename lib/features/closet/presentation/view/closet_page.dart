@@ -53,183 +53,173 @@ class _ClosetViewState extends State<ClosetPage> {
             const Divider(
               color: ColorManager.primaryG8,
             ),
-            Column(
-              children: [
-                const SizedBox(
-                  height: 16,
-                ),
-                ViewAllRow(
-                  text: lang.yourSections,
-                  onPressed: () {
-                    ClosetCubit.get(context).getAllClosetsItems();
-                    isClosetItem = !isClosetItem;
-                    setState(() {});
+            const SizedBox(
+              height: 16,
+            ),
+            ViewAllRow(
+              text: lang.yourSections,
+              onPressed: () {
+                ClosetCubit.get(context).getAllClosetsItems();
+                isClosetItem = !isClosetItem;
+                setState(() {});
+              },
+              buttonWidget: Text(
+                lang.showItems,
+                style: AppStylesManager.customTextStyleO,
+              ),
+            ),
+            BlocBuilder<ClosetCubit, ClosetState>(
+              builder: (context, state) {
+                return state.whenOrNull(
+                  loading: () {
+                    return SizedBox(
+                      height: screenHeight(context, 0.65),
+                      child: isClosetItem
+                          ? buildShimmerIndicatorGrid(context)
+                          : buildShimmerIndicator(),
+                    );
                   },
-                  buttonWidget: Text(
-                    lang.showItems,
-                    style: AppStylesManager.customTextStyleO,
-                  ),
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                BlocBuilder<ClosetCubit, ClosetState>(
-                  builder: (context, state) {
-                    return state.whenOrNull(
-                      loading: () {
-                        return SizedBox(
-                          height: screenHeight(context, 0.65),
-                          child: isClosetItem
-                              ? buildShimmerIndicatorGrid(context)
-                              : buildShimmerIndicator(),
+                  successDelete: () {
+                    if (isClosetItem) {
+                      return BlocListener<ClosetCubit, ClosetState>(
+                        listener: (context, state) {
+                          state.mapOrNull(
+                            loading: (_) {
+                              BotToast.showLoading();
+                            },
+                            successDelete: (_) {
+                              BotToast.closeAllLoading();
+                              BotToast.showText(text: 'success delete');
+                            },
+                            success: (_) {
+                              BotToast.closeAllLoading();
+                            },
+                            failure: (_) {},
+                          );
+                        },
+                        child: Column(
+                          children: [
+                            const SizedBox(
+                              height: 4,
+                              child: Divider(
+                                color: ColorManager.primaryG8,
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: BlocBuilder<ClosetCubit, ClosetState>(
+                                  builder: (context, state) {
+                                    return state.whenOrNull(
+                                      loading: () =>
+                                          buildShimmerIndicatorGrid(context),
+                                      success: () => GridView.builder(
+                                        gridDelegate: gridDelegate(context),
+                                        itemCount: ClosetCubit.get(context)
+                                            .closetsItem
+                                            .length,
+                                        itemBuilder: (context, index) {
+                                          return Container(
+                                            child: sectionSmallCard(
+                                                context: context,
+                                                product:
+                                                    ClosetCubit.get(context)
+                                                        .closetsItem[index],
+                                                closetId: ''),
+                                          );
+                                        },
+                                      ),
+                                      failure: () =>
+                                          Text(S.of(context).smothingWent),
+                                    )!;
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    }
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: ClosetCubit.get(context).closets.length,
+                      itemBuilder: (context, index) {
+                        final closet = ClosetCubit.get(context).closets[index];
+                        return ClosetsWidgetWithOptions(
+                          isPage: true,
+                          closet: closet,
+                          onTap: () {
+                            navigateTo(
+                              context: context,
+                              screen: ProductClosetPage(closet: closet),
+                            );
+                          },
                         );
                       },
-                      successDelete: () {
-                        if (isClosetItem) {
-                          return BlocListener<ClosetCubit, ClosetState>(
-                            listener: (context, state) {
-                              state.mapOrNull(
-                                loading: (_) {
-                                  BotToast.showLoading();
-                                },
-                                successDelete: (_) {
-                                  BotToast.closeAllLoading();
-                                  BotToast.showText(text: 'success delete');
-                                },
-                                success: (_) {
-                                  BotToast.closeAllLoading();
-                                },
-                                failure: (_) {},
+                    );
+                  },
+                  success: () {
+                    if (isClosetItem) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: BlocBuilder<ClosetCubit, ClosetState>(
+                          builder: (context, state) {
+                            return state.whenOrNull(
+                              loading: () => buildShimmerIndicatorGrid(context),
+                              success: () => SizedBox(
+                                width: screenWidth(context, 1),
+                                height: screenHeight(context, 0.64),
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  gridDelegate: gridDelegate(context),
+                                  itemCount: ClosetCubit.get(context)
+                                      .closetsItem
+                                      .length,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      child: sectionSmallCard(
+                                        context: context,
+                                        product: ClosetCubit.get(context)
+                                            .closetsItem[index],
+                                        closetId: '',
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              failure: () => Text(
+                                S.of(context).smothingWent,
+                              ),
+                            )!;
+                          },
+                        ),
+                      );
+                    }
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: ClosetCubit.get(context).closets.length,
+                        itemBuilder: (context, index) {
+                          final closet =
+                              ClosetCubit.get(context).closets[index];
+                          return ClosetsWidgetWithOptions(
+                            isPage: true,
+                            closet: closet,
+                            onTap: () {
+                              navigateTo(
+                                context: context,
+                                screen: ProductClosetPage(closet: closet),
                               );
                             },
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 4,
-                                  child: Divider(
-                                    color: ColorManager.primaryG8,
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child:
-                                        BlocBuilder<ClosetCubit, ClosetState>(
-                                      builder: (context, state) {
-                                        return state.whenOrNull(
-                                          loading: () =>
-                                              buildShimmerIndicatorGrid(
-                                                  context),
-                                          success: () => GridView.builder(
-                                            gridDelegate: gridDelegate(context),
-                                            itemCount: ClosetCubit.get(context)
-                                                .closetsItem
-                                                .length,
-                                            itemBuilder: (context, index) {
-                                              return Container(
-                                                child: sectionSmallCard(
-                                                    context: context,
-                                                    product:
-                                                        ClosetCubit.get(context)
-                                                            .closetsItem[index],
-                                                    closetId: ''),
-                                              );
-                                            },
-                                          ),
-                                          failure: () =>
-                                              Text(S.of(context).smothingWent),
-                                        )!;
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                           );
-                        }
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: ClosetCubit.get(context).closets.length,
-                          itemBuilder: (context, index) {
-                            final closet =
-                                ClosetCubit.get(context).closets[index];
-                            return ClosetsWidgetWithOptions(
-                              isPage: true,
-                              closet: closet,
-                              onTap: () {
-                                navigateTo(
-                                  context: context,
-                                  screen: ProductClosetPage(closet: closet),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                      success: () {
-                        if (isClosetItem) {
-                          return Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: BlocBuilder<ClosetCubit, ClosetState>(
-                              builder: (context, state) {
-                                return state.whenOrNull(
-                                  loading: () =>
-                                      buildShimmerIndicatorGrid(context),
-                                  success: () => SizedBox(
-                                    width: screenWidth(context, 1),
-                                    height: screenHeight(context, 0.64),
-                                    child: GridView.builder(
-                                      shrinkWrap: true,
-                                      gridDelegate: gridDelegate(context),
-                                      itemCount: ClosetCubit.get(context)
-                                          .closetsItem
-                                          .length,
-                                      itemBuilder: (context, index) {
-                                        return Container(
-                                          child: sectionSmallCard(
-                                            context: context,
-                                            product: ClosetCubit.get(context)
-                                                .closetsItem[index],
-                                            closetId: '',
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  failure: () => Text(
-                                    S.of(context).smothingWent,
-                                  ),
-                                )!;
-                              },
-                            ),
-                          );
-                        }
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: ClosetCubit.get(context).closets.length,
-                          itemBuilder: (context, index) {
-                            final closet =
-                                ClosetCubit.get(context).closets[index];
-                            return ClosetsWidgetWithOptions(
-                              isPage: true,
-                              closet: closet,
-                              onTap: () {
-                                navigateTo(
-                                  context: context,
-                                  screen: ProductClosetPage(closet: closet),
-                                );
-                              },
-                            );
-                          },
-                        );
-                      },
-                      failure: () {
-                        return const Icon(Icons.error);
-                      },
-                    )!;
+                        },
+                      ),
+                    );
                   },
-                ),
-              ],
+                  failure: () {
+                    return const Icon(Icons.error);
+                  },
+                )!;
+              },
             )
           ],
         ),

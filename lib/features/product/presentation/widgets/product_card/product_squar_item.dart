@@ -141,7 +141,7 @@ GestureDetector productSquarItem(
                                     fit: BoxFit.cover,
                                   ),
                                 )
-                              : SvgPicture.asset(
+                              : Image.asset(
                                   Assets.assetsImagesClosetFollowing,
                                   fit: BoxFit.cover,
                                   width: 50,

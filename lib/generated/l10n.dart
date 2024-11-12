@@ -1319,10 +1319,10 @@ class S {
   }
 
   /// `Delivered`
-  String get recevied {
+  String get delivered {
     return Intl.message(
       'Delivered',
-      name: 'recevied',
+      name: 'delivered',
       desc: '',
       args: [],
     );

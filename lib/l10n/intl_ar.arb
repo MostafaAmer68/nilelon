@@ -126,7 +126,7 @@
   "orderManagment": "إدارة الطلبات",
   "ordered": "تم الطلب",
   "shipped": "تم الشحن",
-  "recevied": "تم الاستلام",
+ "recevied": "تم الاستلام", 
   "youHaveNewOrderInProcessCheckYourOrderDetails": "لديك طلب جديد قيد المعالجة. تحقق من تفاصيل طلبك",
   "orderPrice": "سعر الطلب",
   "orderDetails": "تفاصيل الطلب",
