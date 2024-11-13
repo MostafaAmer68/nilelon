@@ -27,7 +27,7 @@ class OrderCustomerCard extends StatelessWidget {
       child: Container(
         height: 1.sw > 600 ? 110 : 90,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        margin: const EdgeInsets.symmetric(vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         width: screenWidth(context, 0.9),
         decoration: BoxDecoration(
           color: ColorManager.primaryG10,
@@ -44,13 +44,10 @@ class OrderCustomerCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(
-              width: 16,
-            ),
             Container(
-              width: 70,
-              height: 70,
-              padding: const EdgeInsets.all(8),
+              width: 50,
+              height: 50,
+              // padding: const EdgeInsets.all(8),
               decoration: const BoxDecoration(
                 color: Color(0xFFECE7FF),
                 shape: BoxShape.circle,

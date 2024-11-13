@@ -77,76 +77,74 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
         child: Column(
           children: [
             const DefaultDivider(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  TextAndFormFieldColumnNoIcon(
-                    title: lang.storeRepresentativeName,
-                    label: 'Twixi',
-                    height: 25,
-                    controller: cubit.repNameController,
-                    type: TextInputType.text,
-                  ),
-                  TextAndFormFieldColumnNoIcon(
-                    title: lang.storeRepresentativeNumber,
-                    label: '01000000000',
-                    controller: cubit.repPhoneController,
-                    height: 25,
-                    type: TextInputType.phone,
-                  ),
-                  TextAndFormFieldColumnNoIcon(
-                    title: lang.profileLink,
-                    label: 'TwixiShop',
-                    controller: cubit.websiteLinkController,
-                    height: 25,
-                    type: TextInputType.text,
-                  ),
-                  TextAndFormFieldColumnNoIcon(
-                    title: lang.websiteLink,
-                    label: 'TwixiShop',
-                    controller: cubit.websiteLinkController,
-                    height: 25,
-                    type: TextInputType.text,
-                  ),
-                ],
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    TextAndFormFieldColumnNoIcon(
+                      title: lang.storeRepresentativeName,
+                      label: 'Twixi',
+                      height: 25,
+                      controller: cubit.repNameController,
+                      type: TextInputType.text,
+                    ),
+                    TextAndFormFieldColumnNoIcon(
+                      title: lang.storeRepresentativeNumber,
+                      label: '01000000000',
+                      controller: cubit.repPhoneController,
+                      height: 25,
+                      type: TextInputType.phone,
+                    ),
+                    TextAndFormFieldColumnNoIcon(
+                      title: lang.profileLink,
+                      label: 'TwixiShop',
+                      controller: cubit.websiteLinkController,
+                      height: 25,
+                      type: TextInputType.text,
+                    ),
+                    TextAndFormFieldColumnNoIcon(
+                      title: lang.websiteLink,
+                      label: 'TwixiShop',
+                      controller: cubit.websiteLinkController,
+                      height: 25,
+                      type: TextInputType.text,
+                    ),
+                  ],
+                ),
               ),
             ),
-            SizedBox(
-              height: screenHeight(context, 0.11),
+          ],
+        ),
+      ),
+      btmBar: Container(
+        height: 100,
+        color: ColorManager.primaryW,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            OutlinedButtonBuilder(
+              text: lang.cancel,
+              width: screenWidth(context, 0.44),
+              height: screenHeight(context, 0.06),
+              ontap: () {
+                navigatePop(context: context);
+              },
             ),
-            const Spacer(),
-            Container(
-              color: ColorManager.primaryW,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  OutlinedButtonBuilder(
-                    text: lang.cancel,
-                    width: screenWidth(context, 0.44),
-                    height: screenHeight(context, 0.06),
-                    ontap: () {
-                      navigatePop(context: context);
-                    },
-                  ),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  GradientButtonBuilder(
-                    text: lang.save,
-                    width: screenWidth(context, 0.44),
-                    height: screenHeight(context, 0.06),
-                    ontap: () {
-                      ProfileCubit.get(context).updateStoreInfo(context);
-                    },
-                  ),
-                ],
-              ),
+            const SizedBox(
+              width: 12,
+            ),
+            GradientButtonBuilder(
+              text: lang.save,
+              width: screenWidth(context, 0.44),
+              height: screenHeight(context, 0.06),
+              ontap: () {
+                ProfileCubit.get(context).updateStoreInfo(context);
+              },
             ),
           ],
         ),

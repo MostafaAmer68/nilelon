@@ -22,6 +22,7 @@ import 'package:nilelon/features/product/presentation/widgets/image_banner.dart'
 import 'package:nilelon/features/product/presentation/widgets/rating_container.dart';
 import 'package:nilelon/core/widgets/rating/view/rating_dialog.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_customer.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/constants/assets.dart';
@@ -79,6 +80,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         state.mapOrNull(
           initial: (_) {},
           success: (_) {
+            setState(() {});
             BotToast.closeAllLoading();
             if (productCubit.product != ProductModel.empty()) {
               cubit.selectedColor = productCubit.product.productVariants
@@ -99,259 +101,273 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         appBar: customAppBar(
           title: lang.productDetails,
           icon: Icons.share_outlined,
-          onPressed: () {},
+          onPressed: () {
+            Share.share(
+              'http://nilelon.somee.com/Product',
+            );
+          },
           context: context,
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const DefaultDivider(),
-              Container(
-                margin:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                child: BlocBuilder<ProductsCubit, ProductsState>(
-                  builder: (context, state) {
-                    return state.whenOrNull(
-                      failure: (_) => Text(_),
-                      loading: () =>
-                          buildShimmerIndicatorSmall(height: 500, width: 600),
-                      success: () => productCubit.product ==
-                              ProductModel.empty()
-                          ? buildShimmerIndicatorRow()
-                          : Stack(
-                              children: [
-                                ImageBanner(
-                                  images: productCubit.product.productImages
-                                      .map((e) => e.url)
-                                      .toList(),
-                                ),
-                                Positioned(
-                                  top: 10,
-                                  right: 25,
-                                  child: InkWell(
-                                    onTap: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        backgroundColor: ColorManager.primaryW,
-                                        shape: const RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(30),
-                                            topRight: Radius.circular(30),
-                                          ),
-                                        ),
-                                        clipBehavior:
-                                            Clip.antiAliasWithSaveLayer,
-                                        builder: (context) =>
-                                            ClosetSheetBarView(
-                                          productId: productCubit.product.id,
-                                        ),
-                                      );
-                                    },
-                                    child: Container(
-                                      width: 35
-                                          .w, // Increased size to match the image
-                                      height: 35.w,
-                                      padding: const EdgeInsets.all(4),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.orange.shade300
-                                                .withOpacity(1),
-                                            offset: const Offset(3,
-                                                3), // Adjusted shadow to be more subtle
-                                            blurRadius: 5,
-                                          ),
-                                        ],
-                                      ),
-                                      child: !productCubit.product.isInCloset
-                                          ? SizedBox(
-                                              // width: 20,
-                                              child: SvgPicture.asset(
-                                                Assets.assetsImagesHanger,
-                                                width: 30,
-                                                // height: ,
-
-                                                fit: BoxFit.cover,
-                                              ),
-                                            )
-                                          : Image.asset(
-                                              Assets
-                                                  .assetsImagesClosetFollowing,
-                                            ),
-                                    ),
-                                  ),
-                                )
-                              ],
+        body: BlocBuilder<ProductsCubit, ProductsState>(
+          builder: (context, state) {
+            return state.whenOrNull(
+              success: () {
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const DefaultDivider(),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 20),
+                        child: Stack(
+                          children: [
+                            ImageBanner(
+                              images: productCubit.product.productImages
+                                  .map((e) => e.url)
+                                  .toList(),
                             ),
-                    )!;
-                  },
-                ),
-              ),
-              const SizedBox(height: 20),
-              Center(
-                child: SizedBox(
-                  height: screenHeight(context, 0.07),
-                  width: screenWidth(context, 0.3),
-                  child: BlocBuilder<ProductsCubit, ProductsState>(
-                    builder: (context, state) {
-                      return state.whenOrNull(
-                        failure: (_) => Text(_),
-                        loading: () => buildShimmerIndicatorRow(),
-                        success: () => productCubit.product ==
-                                ProductModel.empty()
-                            ? buildShimmerIndicatorRow()
-                            : ListView.builder(
-                                itemCount:
-                                    productCubit.product.productImages.length,
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) {
-                                  final image =
-                                      productCubit.product.productImages[index];
-                                  return imageReplacer(
-                                    url: image.url,
-                                    fit: BoxFit.cover,
-                                    width: 50,
-                                    radius: 8,
+                            Positioned(
+                              top: 10,
+                              right: 25,
+                              child: InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    backgroundColor: ColorManager.primaryW,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30),
+                                        topRight: Radius.circular(30),
+                                      ),
+                                    ),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    builder: (context) => ClosetSheetBarView(
+                                      productId: productCubit.product.id,
+                                    ),
                                   );
                                 },
-                              ),
-                      )!;
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: BlocBuilder<ProductsCubit, ProductsState>(
-                  builder: (context, state) {
-                    return state.whenOrNull(
-                        failure: (_) => Text(_),
-                        loading: () => Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    buildShimmerIndicatorSmall(height: 40),
-                                    buildShimmerIndicatorSmall(
-                                        height: 40, width: 100),
-                                  ],
-                                ),
-                                const SizedBox(height: 24),
-                                buildShimmerIndicatorSmall(
-                                    height: 100, width: 400),
-                                SizedBox(height: 20.h),
-                                Row(
-                                  children: [
-                                    buildShimmerIndicatorSmall(
-                                        height: 40, width: 100),
-                                    buildShimmerIndicatorSmall(height: 40),
-                                  ],
-                                ),
-                                SizedBox(height: 22.h),
-                                Row(
-                                  children: [
-                                    buildShimmerIndicatorSmall(
-                                        height: 40, width: 100),
-                                    buildShimmerIndicatorSmall(height: 40),
-                                  ],
-                                ),
-                                SizedBox(height: 20.h),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    buildShimmerIndicatorSmall(
-                                        height: 40, width: 80),
-                                    buildShimmerIndicatorSmall(
-                                        height: 40, width: 80),
-                                  ],
-                                ),
-                              ],
-                            ),
-                        success: () {
-                          if (productCubit.product == ProductModel.empty()) {
-                            return buildShimmerIndicatorSmall();
-                          }
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _buildNameAndPriceRow(context),
-                              const SizedBox(height: 24),
-                              _buildDescription(),
-                              SizedBox(height: 20.h),
-                              Visibility(
-                                visible: isNOtEMpty,
-                                child: InkWell(
-                                  onTap: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (c) {
-                                          return Scaffold(
-                                            appBar: AppBar(
-                                              centerTitle: true,
-                                              title: Text(lang.sizeGuide),
-                                              leading: IconButton(
-                                                onPressed: () {
-                                                  navigatePop(context: c);
-                                                },
-                                                icon: const Icon(Icons.close),
-                                              ),
-                                            ),
-                                            body: Center(
-                                              child: imageReplacer(
-                                                  height: screenHeight(
-                                                      context, 0.85),
-                                                  url: productCubit
-                                                      .product.sizeguide),
-                                            ),
-                                          );
-                                        });
-                                  },
-                                  child: Text(
-                                    lang.sizeGuide,
-                                    style: AppStylesManager.customTextStyleO4,
+                                child: Container(
+                                  width:
+                                      35.w, // Increased size to match the image
+                                  height: 35.w,
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.orange.shade300
+                                            .withOpacity(1),
+                                        offset: const Offset(3,
+                                            3), // Adjusted shadow to be more subtle
+                                        blurRadius: 5,
+                                      ),
+                                    ],
                                   ),
+                                  child: !productCubit.product.isInCloset
+                                      ? SizedBox(
+                                          // width: 20,
+                                          child: SvgPicture.asset(
+                                            Assets.assetsImagesHanger,
+                                            width: 30,
+                                            // height: ,
+
+                                            fit: BoxFit.cover,
+                                          ),
+                                        )
+                                      : Image.asset(
+                                          Assets.assetsImagesClosetFollowing,
+                                        ),
                                 ),
                               ),
-                              SizedBox(height: 20.h),
-                              _buildSizeSelector(lang),
-                              SizedBox(height: 22.h),
-                              _buildColorSelector(),
-                              SizedBox(height: 20.h),
-                              _buildStockCounter(),
-                            ],
-                          );
-                        })!;
-                  },
-                ),
-              ),
-              SizedBox(height: 6.h),
-              _buildReviewSection(lang),
-              const SizedBox(height: 15),
-              const Divider(color: ColorManager.primaryG8, height: 4),
-              const SizedBox(height: 24),
-              ReviewWidget(productId: widget.productId),
-              const SizedBox(height: 24),
-            ],
-          ),
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: SizedBox(
+                          height: screenHeight(context, 0.07),
+                          width: screenWidth(context, 0.3),
+                          child: ListView.builder(
+                            itemCount:
+                                productCubit.product.productImages.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final image =
+                                  productCubit.product.productImages[index];
+                              return imageReplacer(
+                                url: image.url,
+                                fit: BoxFit.cover,
+                                width: 50,
+                                radius: 8,
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            _buildNameAndPriceRow(context),
+                            const SizedBox(height: 24),
+                            _buildDescription(),
+                            SizedBox(height: 20.h),
+                            Visibility(
+                              visible: isNOtEMpty,
+                              child: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (c) {
+                                        return Scaffold(
+                                          appBar: AppBar(
+                                            centerTitle: true,
+                                            title: Text(lang.sizeGuide),
+                                            leading: IconButton(
+                                              onPressed: () {
+                                                navigatePop(context: c);
+                                              },
+                                              icon: const Icon(Icons.close),
+                                            ),
+                                          ),
+                                          body: Center(
+                                            child: imageReplacer(
+                                                height:
+                                                    screenHeight(context, 0.85),
+                                                url: productCubit
+                                                    .product.sizeguide),
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: Text(
+                                  lang.sizeGuide,
+                                  style: AppStylesManager.customTextStyleO4,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20.h),
+                            _buildSizeSelector(lang),
+                            SizedBox(height: 22.h),
+                            _buildColorSelector(),
+                            SizedBox(height: 20.h),
+                            _buildStockCounter(),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 6.h),
+                      _buildReviewSection(lang),
+                      const SizedBox(height: 15),
+                      const Divider(color: ColorManager.primaryG8, height: 4),
+                      const SizedBox(height: 24),
+                      ReviewWidget(productId: widget.productId),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
+                );
+              },
+              loading: () {
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const DefaultDivider(),
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 20),
+                        child:
+                            buildShimmerIndicatorSmall(height: 400, width: 400),
+                      ),
+                      const SizedBox(height: 20),
+                      Center(
+                        child: SizedBox(
+                          height: screenHeight(context, 0.07),
+                          width: screenWidth(context, 0.3),
+                          child: ListView.builder(
+                            itemCount: 4,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return buildShimmerIndicatorSmall(
+                                  width: 50, height: 100);
+                            },
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Center(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    buildShimmerIndicatorSmall(
+                                        height: 30, width: 100),
+                                    buildShimmerIndicatorSmall(
+                                        height: 30, width: 100),
+                                  ],
+                                ),
+                                buildShimmerIndicatorSmall(
+                                    height: 60, width: 100),
+                              ],
+                            )),
+                            const SizedBox(height: 24),
+                            buildShimmerIndicatorSmall(height: 40, width: 100),
+                            SizedBox(height: 20.h),
+                            buildShimmerIndicatorSmall(height: 40, width: 100),
+                            SizedBox(height: 20.h),
+                            SizedBox(
+                                height: 60, child: buildShimmerIndicatorRow()),
+                            SizedBox(height: 22.h),
+                            SizedBox(
+                                height: 60, child: buildShimmerIndicatorRow()),
+                            SizedBox(height: 20.h),
+                            Center(
+                                child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                buildShimmerIndicatorSmall(
+                                    height: 60, width: 100),
+                                buildShimmerIndicatorSmall(
+                                    height: 60, width: 100),
+                              ],
+                            )),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 6.h),
+                      Center(
+                          child: buildShimmerIndicatorSmall(
+                              height: 60, width: 400)),
+                      const SizedBox(height: 15),
+                      const Divider(color: ColorManager.primaryG8, height: 4),
+                      const SizedBox(height: 24),
+                      SizedBox(height: 200, child: buildShimmerIndicator()),
+                      const SizedBox(height: 24),
+                    ],
+                  ),
+                );
+              },
+            )!;
+          },
         ),
-        persistentFooterButtons: [
-          BlocBuilder<ProductsCubit, ProductsState>(
-            builder: (context, state) {
-              return state.whenOrNull(
-                loading: () => buildShimmerIndicatorSmall(),
-                failure: (_) => Text(_),
-                success: () =>
-                    AddToFooter(visible: true, product: productCubit.product),
-              )!;
-            },
-          ),
-        ],
+        btmBar: BlocBuilder<ProductsCubit, ProductsState>(
+          builder: (context, state) {
+            return state.whenOrNull(
+              loading: () => buildShimmerIndicatorSmall(),
+              failure: (_) => Text(_),
+              success: () =>
+                  AddToFooter(visible: true, product: productCubit.product),
+            )!;
+          },
+        ),
       ),
     );
   }
@@ -580,36 +596,21 @@ class _ReviewWidgetState extends State<ReviewWidget> {
   @override
   void initState() {
     cubit = ProductsCubit.get(context);
-    cubit.getReviews(widget.productId);
+    // cubit.getReviews(widget.productId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProductsCubit, ProductsState>(
-      listener: (context, state) {
-        state.mapOrNull(success: (_) {
-          setState(() {});
-        });
-      },
-      builder: (context, state) {
-        return state.whenOrNull(
-          failure: (_) => Text(_),
-          loading: () => buildShimmerIndicatorSmall(),
-          success: () {
-            if (cubit.review.isEmpty) {
-              return Center(child: Text(lang(context).noReviews));
-            }
-            return ListView.builder(
-              shrinkWrap: true,
-              itemCount: cubit.review.length,
-              itemBuilder: (context, index) {
-                final review = cubit.review[index];
-                return RatingContainer(review: review);
-              },
-            );
-          },
-        )!;
+    if (cubit.review.isEmpty) {
+      return Center(child: Text(lang(context).noReviews));
+    }
+    return ListView.builder(
+      shrinkWrap: true,
+      itemCount: cubit.review.length,
+      itemBuilder: (context, index) {
+        final review = cubit.review[index];
+        return RatingContainer(review: review);
       },
     );
   }

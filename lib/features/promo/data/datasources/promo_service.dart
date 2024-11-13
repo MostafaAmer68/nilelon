@@ -14,7 +14,9 @@ class PromoService {
     final response =
         await _api.post(endPoint: EndPoint.createPromo, body: model.toMap());
 
-    if (response.statusCode == HttpStatus.ok) {}
+    if (response.statusCode == HttpStatus.ok) {
+      return;
+    }
     throw response.data['errorMessages'];
   }
 

@@ -181,7 +181,8 @@ class AddProductCubit extends Cubit<AddproductState> {
       }
 
       AppLogs.infoLog(HiveStorage.get(HiveKeys.tempVarients).toString());
-      emit(const AddproductState.successChange());
+      emit(const AddproductState.successChange('handlSub'));
+      emit(const AddproductState.initial());
     } else {
       emit(const AddproductState.failure('please enter valid form'));
     }
@@ -278,7 +279,8 @@ class AddProductCubit extends Cubit<AddproductState> {
               '0x${product.product.variants[i].color.toUpperCase()}'] = true;
         }
       }
-      emit(const AddproductState.successChange());
+      emit(const AddproductState.successChange('initiVarInDraftMode'));
+      emit(const AddproductState.initial());
     } catch (e) {
       emit(AddproductState.failure(e.toString()));
     }
@@ -319,10 +321,12 @@ class AddProductCubit extends Cubit<AddproductState> {
                 text: varient.sizes[i].quantity.toString()),
             price:
                 TextEditingController(text: varient.sizes[i].price.toString()));
-        emit(const AddproductState.successChange());
+        emit(const AddproductState.successChange('initiVarInEditMode'));
+        emit(const AddproductState.initial());
       }
     }
-    emit(const AddproductState.successChange());
+    emit(const AddproductState.successChange('initiVarInEditMode'));
+    emit(const AddproductState.initial());
     for (int i = 0; i < variants.length; i++) {
       if (variants[i].sizes.every((e) => e.price != 0) ||
           variants[i].sizes.every((e) => e.quantity != 0)) {
@@ -435,7 +439,6 @@ class AddProductCubit extends Cubit<AddproductState> {
       variant.color == selectedColor.substring(2);
 
   int calculateTotalSizes() {
-    emit(const AddproductState.successChange());
     return sizes
         .map((e) => e.quantity.text)
         .fold(0, (sum, controller) => sum + (int.tryParse(controller) ?? 0));
@@ -487,9 +490,11 @@ class AddProductCubit extends Cubit<AddproductState> {
               price: TextEditingController(
                   text: variant.sizes[i].price.toString()));
         }
-        emit(const AddproductState.successChange());
+        emit(const AddproductState.successChange('initVarItem'));
+        emit(const AddproductState.initial());
       }
-      emit(const AddproductState.successChange());
+      emit(const AddproductState.successChange('initVarItem'));
+      emit(const AddproductState.initial());
     } catch (e) {
       emit(AddproductState.failure(e.toString()));
     }
@@ -547,39 +552,39 @@ class AddProductCubit extends Cubit<AddproductState> {
   Future<void> createProduct(DraftProductModel? product) async {
     emit(const AddproductState.loading());
 
-    try {
-      final sizeGuid = await convertImageToBase64(sizeGuideImage);
-      List variant;
-      if (product == null) {
-        variant = HiveStorage.get<List>(HiveKeys.tempVarients);
-      } else {
-        variant = product.product.variants;
-      }
-      final result = await _product.createProduct(
-        AddProductModel(
-          name: productNameC.text,
-          description: productDesC.text,
-          type: productType!,
-          storeId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-          categoryID: product != null ? product.product.categoryID : categoryId,
-          sizeguide: sizeGuid,
-          variants: List<Variant>.from(
-            variant.map(
-              (e) => Variant(color: e.color, images: e.images, sizes: e.sizes),
-            ),
+    // try {
+    final sizeGuid = await convertImageToBase64(sizeGuideImage);
+    List variant;
+    if (product == null) {
+      variant = HiveStorage.get<List>(HiveKeys.tempVarients);
+    } else {
+      variant = product.product.variants;
+    }
+    final result = await _product.createProduct(
+      AddProductModel(
+        name: productNameC.text,
+        description: productDesC.text,
+        type: productType!,
+        storeId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+        categoryID: product != null ? product.product.categoryID : categoryId,
+        sizeguide: sizeGuid,
+        variants: List<Variant>.from(
+          variant.map(
+            (e) => Variant(color: e.color, images: e.images, sizes: e.sizes),
           ),
         ),
-      );
-      result.fold((err) {
-        emit(AddproductState.failure(err.errorMsg));
-      }, (res) {
-        HiveStorage.set(HiveKeys.tempVarients, null);
-        HiveStorage.set(HiveKeys.draftProduct, null);
-        emit(const AddproductState.success());
-      });
-    } catch (e) {
-      emit(AddproductState.failure(e.toString()));
-    }
+      ),
+    );
+    result.fold((err) {
+      emit(AddproductState.failure(err.errorMsg));
+    }, (res) {
+      HiveStorage.set(HiveKeys.tempVarients, null);
+      HiveStorage.set(HiveKeys.draftProduct, null);
+      emit(const AddproductState.success());
+    });
+    // } catch (e) {
+    //   emit(AddproductState.failure(e.toString()));
+    // }
   }
 
   Future<void> updateProduct(ProductModel product) async {

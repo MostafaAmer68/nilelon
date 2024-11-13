@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:app_links/app_links.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +20,6 @@ import 'package:nilelon/features/product/presentation/cubit/products_cubit/produ
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/data/repos_impl/auth_repos_impl.dart';
-import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/features/promo/data/repositories/promo_repo_impl.dart';
@@ -39,7 +36,6 @@ import 'package:nilelon/features/categories/data/repo/category_repos_impl.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/generated/l10n.dart';
 
-import 'core/utils/navigation.dart';
 import 'features/notification/presentation/cubit/notification_cubit.dart';
 import 'features/search/data/repositories/search_repo_impl.dart';
 import 'features/store_flow/analytics/data/repos_impl/analytics_repos_impl.dart';
@@ -154,7 +150,17 @@ class _MyAppState extends State<MyApp> {
             key: key,
             debugShowCheckedModeBanner: false,
             // useInheritedMediaQuery: true,
-            builder: BotToastInit(),
+            builder: (context, child) {
+              return BotToastInit()(
+                context,
+                MediaQuery(
+                  data: MediaQuery.of(context).copyWith(
+                    textScaler: const TextScaler.linear(1),
+                  ),
+                  child: child!,
+                ),
+              );
+            },
             // builder: DevicePreview.appBuilder,
             locale: HiveStorage.get(HiveKeys.isArabic) != null &&
                     HiveStorage.get(HiveKeys.isArabic)

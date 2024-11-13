@@ -72,18 +72,18 @@ class _EditProfileViewState extends State<EditProfileView> {
             },
           );
         },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const DefaultDivider(),
-            Container(
-              height: screenHeight(context, 0.70),
-              padding: const EdgeInsets.all(16.0),
-              margin: const EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                  color: ColorManager.primaryW,
-                  borderRadius: BorderRadius.circular(16)),
-              child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const DefaultDivider(),
+              Container(
+                height: screenHeight(context, 0.75),
+                padding: const EdgeInsets.all(16.0),
+                margin: const EdgeInsets.all(30),
+                decoration: BoxDecoration(
+                    color: ColorManager.primaryW,
+                    borderRadius: BorderRadius.circular(16)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -185,15 +185,17 @@ class _EditProfileViewState extends State<EditProfileView> {
                     ),
                   ],
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
       btmBar: Container(
-        height: 70,
+        height: 80,
         color: ColorManager.primaryW,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -207,8 +209,8 @@ class _EditProfileViewState extends State<EditProfileView> {
             ),
             GradientButtonBuilder(
                 text: lang.save,
-                width: screenWidth(context, 0.37),
-                height: screenHeight(context, 0.05),
+                width: screenWidth(context, 0.44),
+                height: screenHeight(context, 0.06),
                 ontap: () {
                   ProfileCubit.get(context).updateCustomer(context);
                 }),

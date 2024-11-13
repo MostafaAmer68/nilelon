@@ -15,39 +15,50 @@ class TxtFieldPromo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final PromoCubit cubit = PromoCubit.get(context);
-    return Row(
-      children: [
-        TextFormFieldBuilder(
-          label: lang(context).promoCode,
-          controller: cubit.promoCode,
-          type: TextInputType.text,
-          width: screenWidth(context, 0.65),
-          noIcon: false,
-          isIcon: false,
-          prefixWidget: const Icon(Iconsax.ticket_discount),
-        ),
-        const Spacer(),
-        BlocConsumer<PromoCubit, PromoState>(
-          listener: (context, state) {
-            if (state is PromoFailure) {
-              BotToast.showText(text: 'Promocode invalid');
-            }
-            if (state is PromoSuccess) {
-              BotToast.showText(text: 'Promocode applied');
-            }
-          },
-          builder: (context, state) => state is PromoLoading
-              ? const Center(child: CircularProgressIndicator())
-              : ButtonBuilder(
-                  text: lang(context).apply,
-                  ontap: () {
-                    cubit.getPromoCodeType(context);
-                  },
-                  height: 54,
-                  width: screenWidth(context, 0.24),
-                ),
-        ),
-      ],
+    return Form(
+      key: cubit.applyOfferForm,
+      child: Row(
+        children: [
+          TextFormFieldBuilder(
+            label: lang(context).promoCode,
+            controller: cubit.promoCode,
+            type: TextInputType.text,
+            width: screenWidth(context, 0.65),
+            validator: (v) {
+              if (v!.isEmpty) {
+                return lang(context).promoCode;
+              }
+              return null;
+            },
+            noIcon: false,
+            isIcon: false,
+            prefixWidget: const Icon(Iconsax.ticket_discount),
+          ),
+          const Spacer(),
+          BlocConsumer<PromoCubit, PromoState>(
+            listener: (context, state) {
+              if (state is PromoFailure) {
+                BotToast.showText(text: 'Promocode invalid');
+              }
+              if (state is PromoSuccess) {
+                BotToast.showText(text: 'Promocode applied');
+              }
+            },
+            builder: (context, state) => state is PromoLoading
+                ? const Center(child: CircularProgressIndicator())
+                : ButtonBuilder(
+                    text: lang(context).apply,
+                    ontap: () {
+                      if (cubit.applyOfferForm.currentState!.validate()) {
+                        cubit.getPromoCodeType(context);
+                      }
+                    },
+                    height: 54,
+                    width: screenWidth(context, 0.24),
+                  ),
+          ),
+        ],
+      ),
     );
   }
 }

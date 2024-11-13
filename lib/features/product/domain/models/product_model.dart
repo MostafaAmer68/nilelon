@@ -6,7 +6,6 @@ class ProductModel extends Equatable {
   final String name;
   final String description;
   final String type;
-
   final String categoryID;
   final String sizeguide;
   final bool isInCloset;
@@ -16,7 +15,7 @@ class ProductModel extends Equatable {
   final String storeId;
   final List<ProductVariant> productVariants;
   final List<ProductImage> productImages;
-
+  
   const ProductModel({
     required this.id,
     required this.name,

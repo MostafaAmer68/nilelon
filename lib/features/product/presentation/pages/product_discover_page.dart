@@ -51,18 +51,22 @@ class _DiscoverViewState extends State<DiscoverView> {
           return state.whenOrNull(
             loading: () {
               return Center(
-                child: Column(
-                  children: [
-                    Image.asset(
-                      Assets.assetsImagesDiscover,
-                      fit: BoxFit.cover,
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      lang.discoverOurNewAndSpecialProductsFromHere,
-                      style: AppStylesManager.customTextStyleB4,
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        Assets.assetsImagesDiscover,
+                        fit: BoxFit.cover,
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        lang.discoverOurNewAndSpecialProductsFromHere,
+                        style: AppStylesManager.customTextStyleB4,
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
                 ),
               );
             },

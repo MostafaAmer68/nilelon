@@ -19,8 +19,8 @@ class Assets {
   static const String assetsImagesAddTOCart = "assets/images/addTOCart.svg";
 
   /// Assets for assetsImagesAllCategory
-  /// assets/images/allCategory.svg
-  static const String assetsImagesAllCategory = "assets/images/allCategory.svg";
+  /// assets/images/allCategory.png
+  static const String assetsImagesAllCategory = "assets/images/allCategory.png";
 
   /// Assets for assetsImagesAmico
   /// assets/images/amico.svg

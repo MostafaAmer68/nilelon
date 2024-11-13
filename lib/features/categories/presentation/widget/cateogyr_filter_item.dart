@@ -55,13 +55,17 @@ class CategoryFilterItem extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                 child: name == 'All'
-                    ? SvgPicture.asset(
+                    ? Image.asset(
                         Assets.assetsImagesAllCategory,
                         width: 50,
                         height: 50,
                       )
                     : imageReplacer(
-                        url: image, width: 50, height: 50, fit: BoxFit.fill,),
+                        url: image,
+                        width: 50,
+                        height: 50,
+                        fit: BoxFit.fill,
+                      ),
               ),
             ),
             const SizedBox(height: 10),

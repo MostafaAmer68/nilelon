@@ -28,143 +28,137 @@ class AddToFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
       visible: visible,
-      child: Column(
-        children: [
-          Container(
-            color: ColorManager.primaryW,
-            padding: EdgeInsets.all(10),
-            width: MediaQuery.of(context).size.width,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                ButtonBuilder(
-                  text: S.of(context).buyNow,
+      child: Container(
+        height: 100,
+        color: ColorManager.primaryW,
+        padding: const EdgeInsets.all(10),
+        width: MediaQuery.of(context).size.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ButtonBuilder(
+              text: S.of(context).buyNow,
+              ontap: () {
+                if (HiveStorage.get(HiveKeys.isStore)) {
+                  BotToast.showText(text: lang(context).youAreStore);
+                  return;
+                }
+                if (HiveStorage.get(HiveKeys.userModel) != null) {
+                  CartCubit.get(context).tempCartItems.clear();
+                  CartCubit.get(context).tempCartItems.add(CartItem(
+                      quantity: product.productVariants.first.quantity.toInt(),
+                      size: product.productVariants
+                          .firstWhere((e) => e.price != 0)
+                          .size,
+                      color: product.productVariants
+                          .firstWhere((e) => e.price != 0)
+                          .color,
+                      price: product.productVariants
+                          .firstWhere((e) => e.price != 0)
+                          .price,
+                      productName: product.name,
+                      productId: product.id,
+                      productImages: product.productImages,
+                      cartId: ''));
+                  PromoCubit.get(context).totalPrice = product.productVariants
+                      .firstWhere((e) => e.price != 0)
+                      .price;
+                  PromoCubit.get(context).tempTotalPrice = product
+                      .productVariants
+                      .firstWhere((e) => e.price != 0)
+                      .price;
+                  navigateTo(context: context, screen: const CheckOutView());
+                } else {
+                  navigateTo(
+                      context: context,
+                      screen: const CustomerBottomTabBar(index: 3));
+                }
+              },
+              buttonColor: ColorManager.primaryW,
+              frameColor: ColorManager.gradientColors.first,
+              style: AppStylesManager.customTextStyleB4,
+            ),
+            BlocConsumer<CartCubit, CartState>(
+              listener: (context, state) {
+                if (state is CartSuccess) {
+                  BotToast.showCustomText(
+                    duration: const Duration(seconds: 4),
+                    toastBuilder: (_) => Card(
+                      color: Colors.black87,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              S.of(context).productAddedToCart,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                            const SizedBox(width: 10),
+                            TextButton(
+                              onPressed: () {
+                                BotToast.closeAllLoading();
+
+                                navigateTo(
+                                    context: context,
+                                    screen: const CustomerBottomTabBar(
+                                      index: 1,
+                                    ));
+
+                                BotToast.cleanAll();
+                              },
+                              child: Text(
+                                S.of(context).viewCart,
+                                style: const TextStyle(color: Colors.blue),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                } else if (state is GetCartFailure) {
+                  BotToast.showText(text: state.message);
+                }
+              },
+              builder: (context, state) {
+                return GradientButtonBuilder(
+                  isIcon: true,
+                  text: state is CartLoading
+                      ? S.of(context).loading
+                      : S.of(context).addToCart,
                   ontap: () {
                     if (HiveStorage.get(HiveKeys.isStore)) {
                       BotToast.showText(text: lang(context).youAreStore);
                       return;
                     }
                     if (HiveStorage.get(HiveKeys.userModel) != null) {
-                      CartCubit.get(context).tempCartItems.clear();
-                      CartCubit.get(context).tempCartItems.add(CartItem(
-                          quantity:
-                              product.productVariants.first.quantity.toInt(),
-                          size: product.productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .size,
-                          color: product.productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .color,
-                          price: product.productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .price,
-                          productName: product.name,
-                          productId: product.id,
-                          productImages: product.productImages,
-                          cartId: ''));
-                      PromoCubit.get(context).totalPrice = product
-                          .productVariants
-                          .firstWhere((e) => e.price != 0)
-                          .price;
-                      PromoCubit.get(context).tempTotalPrice = product
-                          .productVariants
-                          .firstWhere((e) => e.price != 0)
-                          .price;
-                      navigateTo(
-                          context: context, screen: const CheckOutView());
+                      if (product.id.isNotEmpty) {
+                        CartCubit.get(context).addToCart(
+                          AddToCartModel(
+                            quantity: CartCubit.get(context).counter,
+                            size: CartCubit.get(context).selectedSize,
+                            color: CartCubit.get(context).selectedColor,
+                            productId: product.id,
+                            customerId:
+                                HiveStorage.get<UserModel>(HiveKeys.userModel)
+                                    .id,
+                          ),
+                        );
+                      } else {
+                        BotToast.showText(text: lang(context).smothingWent);
+                      }
                     } else {
                       navigateTo(
                           context: context,
                           screen: const CustomerBottomTabBar(index: 3));
                     }
                   },
-                  buttonColor: ColorManager.primaryW,
-                  frameColor: ColorManager.gradientColors.first,
-                  style: AppStylesManager.customTextStyleB4,
-                ),
-                BlocConsumer<CartCubit, CartState>(
-                  listener: (context, state) {
-                    if (state is CartSuccess) {
-                      BotToast.showCustomText(
-                        duration: const Duration(seconds: 4),
-                        toastBuilder: (_) => Card(
-                          color: Colors.black87,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  S.of(context).productAddedToCart,
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                                const SizedBox(width: 10),
-                                TextButton(
-                                  onPressed: () {
-                                    BotToast.closeAllLoading();
-
-                                    navigateTo(
-                                        context: context,
-                                        screen: const CustomerBottomTabBar(
-                                          index: 1,
-                                        ));
-
-                                    BotToast.cleanAll();
-                                  },
-                                  child: Text(
-                                    S.of(context).viewCart,
-                                    style: const TextStyle(color: Colors.blue),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    } else if (state is GetCartFailure) {
-                      BotToast.showText(text: state.message);
-                    }
-                  },
-                  builder: (context, state) {
-                    return GradientButtonBuilder(
-                      isIcon: true,
-                      text: state is CartLoading
-                          ? S.of(context).loading
-                          : S.of(context).addToCart,
-                      ontap: () {
-                        if (HiveStorage.get(HiveKeys.isStore)) {
-                          BotToast.showText(text: lang(context).youAreStore);
-                          return;
-                        }
-                        if (HiveStorage.get(HiveKeys.userModel) != null) {
-                          if (product.id.isNotEmpty) {
-                            CartCubit.get(context).addToCart(
-                              AddToCartModel(
-                                quantity: CartCubit.get(context).counter,
-                                size: CartCubit.get(context).selectedSize,
-                                color: CartCubit.get(context).selectedColor,
-                                productId: product.id,
-                                customerId: HiveStorage.get<UserModel>(
-                                        HiveKeys.userModel)
-                                    .id,
-                              ),
-                            );
-                          } else {
-                            BotToast.showText(text: lang(context).smothingWent);
-                          }
-                        } else {
-                          navigateTo(
-                              context: context,
-                              screen: const CustomerBottomTabBar(index: 3));
-                        }
-                      },
-                    );
-                  },
-                ),
-              ],
+                );
+              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

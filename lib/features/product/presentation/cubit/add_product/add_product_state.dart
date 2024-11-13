@@ -4,7 +4,7 @@ part of 'add_product_cubit.dart';
 class AddproductState with _$AddproductState {
   const factory AddproductState.initial() = _Initial;
   const factory AddproductState.success() = _Success;
-  const factory AddproductState.successChange() = _SuccessChange;
+  const factory AddproductState.successChange(String i) = _SuccessChange;
   const factory AddproductState.loading() = _Loading;
   const factory AddproductState.failure(String message) = _Failure;
 }

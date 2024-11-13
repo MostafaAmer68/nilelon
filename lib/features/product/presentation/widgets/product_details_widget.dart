@@ -107,18 +107,21 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
   }
 
   Widget _buildAddButton(String addSizes) {
-    return InkWell(
-      onTap: widget.onTapAddButton,
-      child: Padding(
-        padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 20.h),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Icon(Iconsax.edit_2, size: 22.r),
-            SizedBox(width: 8.w),
-            Text(addSizes, style: AppStylesManager.customTextStyleB),
-            const Spacer(),
-          ],
+    return Visibility(
+      visible: !cubit.isVarientActive,
+      child: InkWell(
+        onTap: widget.onTapAddButton,
+        child: Padding(
+          padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 20.h),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Icon(Iconsax.edit_2, size: 22.r),
+              SizedBox(width: 8.w),
+              Text(addSizes, style: AppStylesManager.customTextStyleB),
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );

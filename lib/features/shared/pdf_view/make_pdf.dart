@@ -510,7 +510,7 @@ Future<bool> makePdf({
       if (folder == "Android") break;
       newPath += "/" + folder;
     }
-    newPath += "/Documents";
+    newPath += "/Download";
 
     final documentsDirectory = Directory(newPath);
 
@@ -518,6 +518,7 @@ Future<bool> makePdf({
     if (!documentsDirectory.existsSync()) {
       documentsDirectory.createSync(recursive: true);
     }
+
     String path = '${documentsDirectory.path}/Nilelon Invoice($orderId).pdf';
     log(path);
     final file = File(path);

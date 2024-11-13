@@ -12,6 +12,7 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/auth/presentation/view/reset_password_page.dart';
 
+import '../../../../core/resources/color_manager.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../../core/widgets/text_form_field/text_and_form_field_column/with_icon/text_and_form_field_column_with_icon_hide.dart';
 import '../../../auth/presentation/cubit/auth_cubit.dart';
@@ -91,39 +92,43 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       )),
                 ],
               ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  OutlinedButtonBuilder(
-                      text: lang.cancel,
-                      ontap: () {
-                        navigatePop(context: context);
-                      }),
-                  GradientButtonBuilder(
-                    text: lang.next,
-                    ontap: () {
-                      if (ProfileCubit.get(context)
-                          .forgotPasswordForm
-                          .currentState!
-                          .validate()) {
-                        navigateTo(
-                          context: context,
-                          screen: ResetPassowrdView(
-                            isLogin: false,
-                            form: AuthCubit.get(context).resetPasswordForm,
-                            onTap: () {
-                              AuthCubit.get(context).changePassword(context);
-                            },
-                          ),
-                        );
-                      }
-                    },
-                  )
-                ],
+            ],
+          ),
+        ),
+        btmBar: Container(
+          color: ColorManager.primaryW,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+          ),
+          height: 100,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              OutlinedButtonBuilder(
+                text: lang.cancel,
+                ontap: () {
+                  navigatePop(context: context);
+                },
               ),
-              const SizedBox(
-                height: 16,
+              GradientButtonBuilder(
+                text: lang.next,
+                ontap: () {
+                  if (ProfileCubit.get(context)
+                      .forgotPasswordForm
+                      .currentState!
+                      .validate()) {
+                    navigateTo(
+                      context: context,
+                      screen: ResetPassowrdView(
+                        isLogin: false,
+                        form: AuthCubit.get(context).resetPasswordForm,
+                        onTap: () {
+                          AuthCubit.get(context).changePassword(context);
+                        },
+                      ),
+                    );
+                  }
+                },
               )
             ],
           ),

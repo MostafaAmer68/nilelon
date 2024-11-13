@@ -81,13 +81,10 @@ class _AddProductViewState extends State<AddProductView> {
             BotToast.showText(text: r.message);
           },
           successChange: (e) {
+            // BotToast.showText(text: e.i);
             BotToast.closeAllLoading();
           },
         );
-        log(cubit.sizes.map((e) => e.price.text).toString(),
-            name: 'price build');
-        log(cubit.sizes.map((e) => e.quantity.text).toString(),
-            name: 'qun build');
       },
       builder: (context, state) => ScaffoldImage(
         appBar: customAppBar(
@@ -274,40 +271,15 @@ class _AddProductViewState extends State<AddProductView> {
   }
 
   Widget _buildUploadButton(String uploadStr) {
-    return BlocBuilder<AddProductCubit, AddproductState>(
-      builder: (context, state) {
-        return state.whenOrNull(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          success: () => GradientButtonBuilder(
-            isActivated: !cubit.isSubmit,
-            text: uploadStr,
-            ontap: () {
-              cubit.createProduct(widget.draft);
-            },
-          ),
-          initial: () => GradientButtonBuilder(
-            isActivated: !cubit.isSubmit,
-            text: uploadStr,
-            ontap: () {
-              cubit.createProduct(widget.draft);
-            },
-          ),
-          failure: (_) => GradientButtonBuilder(
-            isActivated: !cubit.isSubmit,
-            text: uploadStr,
-            ontap: () {
-              cubit.createProduct(widget.draft);
-            },
-          ),
-          successChange: () => GradientButtonBuilder(
-            isActivated: !cubit.isSubmit,
-            text: uploadStr,
-            ontap: () {
-              cubit.createProduct(widget.draft);
-            },
-          ),
-        )!;
-      },
+    return BlocListener<AddProductCubit, AddproductState>(
+      listener: (context, state) {},
+      child: GradientButtonBuilder(
+        isActivated: !cubit.isSubmit,
+        text: uploadStr,
+        ontap: () {
+          cubit.createProduct(widget.draft);
+        },
+      ),
     );
   }
 }

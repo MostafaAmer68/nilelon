@@ -59,6 +59,7 @@ dependencies:
   app_links: ^6.3.2
   workmanager: ^0.5.2
   grouped_list: ^6.0.0
+  share_plus: ^10.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

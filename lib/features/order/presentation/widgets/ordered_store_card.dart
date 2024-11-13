@@ -42,9 +42,9 @@ class OrderStoreCard extends StatelessWidget {
               width: 16,
             ),
             Container(
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              width: 1.sw > 600 ? 100 : 70,
-              height: 1.sw > 600 ? 100 : 70,
+              width: 50,
+              height: 50,
+              // padding: const EdgeInsets.all(8),
               decoration: const BoxDecoration(
                 color: Color(0xFFECE7FF),
                 shape: BoxShape.circle,

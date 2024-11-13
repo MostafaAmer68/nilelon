@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
@@ -45,6 +47,13 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   late final ProductsCubit cubit;
   ScrollController scrollCn = ScrollController();
   List<ProductModel> products = [];
+
+  @override
+  void dispose() {
+    cubit.category = CategoryModel.empty();
+    cubit.gendar = 'All';
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -102,14 +111,11 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                       .filterListByCategory(cubit.category, products)
                       .isEmpty) {
                     return SizedBox(
-                      height: 450.h,
+                      height: screenHeight(context, 0.6),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            widget.notFoundTitle,
-                            style: AppStylesManager.customTextStyleG2,
-                          ),
+                          Text(widget.notFoundTitle),
                         ],
                       ),
                     );
@@ -174,7 +180,14 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                     );
                   }
                 }, failure: (message) {
-                  return Text(widget.notFoundTitle);
+                  return SizedBox(
+                      height: screenHeight(context, 0.6),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(widget.notFoundTitle),
+                        ],
+                      ));
                 });
               },
             ),

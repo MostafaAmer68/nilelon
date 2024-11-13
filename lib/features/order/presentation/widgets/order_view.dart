@@ -99,10 +99,13 @@ class _OrderViewState extends State<OrderView> {
                                   .parse(e.date)),
                           groupSeparatorBuilder: (String groupByValue) =>
                               Center(
-                                child: Text(
-                                  groupByValue,
-                                  style: AppStylesManager.customDateStyle
-                                      .copyWith(fontSize: 14.sp),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Text(
+                                    groupByValue,
+                                    style: AppStylesManager.customDateStyle
+                                        .copyWith(fontSize: 14.sp),
+                                  ),
                                 ),
                               ),
                           itemBuilder: (context, order) {

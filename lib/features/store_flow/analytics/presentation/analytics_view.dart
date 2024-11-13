@@ -437,30 +437,30 @@ class _AnalyticsViewState extends State<AnalyticsView> {
     );
   }
 
-  Padding textWithINfo(String text, VoidCallback onTap) {
-    return Padding(
-      padding: EdgeInsets.all(16.0.sp),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            text,
-            style: AppStylesManager.customTextStyleBl3,
-          ),
-          SizedBox(
-            width: 3.h,
-          ),
-          InkWell(
-            onTap: onTap,
-            child: const Icon(
+  textWithINfo(String text, VoidCallback onTap) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: EdgeInsets.all(16.0.sp),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              style: AppStylesManager.customTextStyleBl3,
+            ),
+            SizedBox(
+              width: 3.h,
+            ),
+            const Icon(
               Icons.info,
               size: 18,
             ),
-          ),
-          SizedBox(
-            width: 8.h,
-          ),
-        ],
+            SizedBox(
+              width: 8.h,
+            ),
+          ],
+        ),
       ),
     );
   }

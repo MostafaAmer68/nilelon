@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +14,7 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
+import '../../../categories/domain/model/result.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
 import '../../domain/models/product_model.dart';
 import '../../../../core/widgets/scaffold_image.dart';
@@ -44,6 +47,13 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
   late final ProductsCubit cubit;
   ScrollController scrollCn = ScrollController();
   List<ProductModel> products = [];
+
+  @override
+  void dispose() {
+    cubit.category = CategoryModel.empty();
+    cubit.gendar = 'All';
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -151,8 +161,8 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
                           } else {
                             final productItem = cubit.filterListByCategory(
                                 cubit.category, products)[sizeIndex];
-                            return wideCard(
-                                context: context, product: productItem);
+
+                            return WideCard(product: productItem);
                           }
                         },
                       ),

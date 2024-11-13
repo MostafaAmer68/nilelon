@@ -43,6 +43,7 @@ class CartCubit extends Cubit<CartState> {
     result.fold((failure) {
       emit(GetCartFailure(message: failure.errorMsg));
     }, (response) {
+      log(model.toMap().toString());
       emit(CartSuccess());
       emit(GetCartSuccess());
     });

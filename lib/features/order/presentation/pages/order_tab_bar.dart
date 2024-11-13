@@ -127,8 +127,15 @@ class _OrderPageState extends State<OrderPage> {
                           },
                         ),
                         OrderView(
-                          image:
-                              SvgPicture.asset(Assets.assetsImagesInProgress),
+                          image: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: SvgPicture.asset(
+                              Assets.assetsImagesInProgress,
+                              // width: 10,
+                              width: 50,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                           title: isStore
                               ? lang.orderIsShipped
                               : lang.orderHasDistance,

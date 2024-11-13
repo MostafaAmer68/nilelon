@@ -41,6 +41,7 @@ class CheckProductItem extends StatelessWidget {
             height: 100,
             child: imageReplacer(
               url: cartItem.productImages.first.url,
+              radius: 8,
             ),
           ),
           const SizedBox(
