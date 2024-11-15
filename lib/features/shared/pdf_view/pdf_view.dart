@@ -1,10 +1,14 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'package:nilelon/features/shared/pdf_view/build_table_row.dart';
@@ -13,6 +17,7 @@ import 'package:nilelon/features/shared/pdf_view/make_pdf.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NilelonPdfView extends StatefulWidget {
   const NilelonPdfView({
@@ -46,6 +51,31 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
   @override
   void initState() {
     super.initState();
+    // Listen for notification taps
+    AwesomeNotifications().setListeners(onActionReceivedMethod: (r) async {
+      // Check if the action button key is 'open'
+      if (r.buttonKeyPressed == 'open') {
+        String? filePath = r.payload?['file_path'];
+        if (filePath != null) {
+          // Open the folder containing the file
+          String folderPath = filePath.substring(0, filePath.lastIndexOf('/'));
+          await OpenFilex.open('/storage/emulated/0/Download/');
+        }
+      }
+    });
+  }
+
+  Future<void> _openFolder(String filePath) async {
+    // Open the folder containing the file
+    if (Platform.isAndroid) {
+      // Open the folder containing the file
+      String folderPath = filePath.substring(0, filePath.lastIndexOf('/'));
+      await OpenFilex.open(folderPath);
+    } else if (Platform.isIOS) {
+      // Handle iOS-specific behavior (e.g., display a custom dialog)
+      // iOS doesn't support directly opening file explorer; you can navigate in-app.
+      print("Folder opening not directly supported on iOS.");
+    }
   }
 
   @override
@@ -85,9 +115,10 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
                     .getUserData<CustomerModel>()
                     .phoneNumber,
               );
-              if (result) {
+              if (result.isNotEmpty) {
                 isLoading = false;
                 BotToast.showText(text: lang(context).pdfSaved);
+                _showNotification(result);
               } else {
                 BotToast.showText(text: lang(context).smothingWent);
                 isLoading = false;
@@ -102,6 +133,28 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
               setState(() {});
             },
           );
+  }
+
+  Future<void> _showNotification(String filePath) async {
+    AwesomeNotifications().createNotification(
+      actionButtons: [
+        NotificationActionButton(
+          key: 'open',
+          label: 'Show in Folder',
+        ),
+      ],
+      content: NotificationContent(
+        id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+        channelKey: 'basic_channel',
+        title: 'File Saved',
+        actionType: ActionType.KeepOnTop,
+        notificationLayout: NotificationLayout.Inbox,
+        badge: 1,
+        body:
+            'Your file has been saved successfully!\n${filePath.split('/').last}',
+        payload: {'file_path': filePath},
+      ),
+    );
   }
 
   void _showPermissionDeniedMessage() {

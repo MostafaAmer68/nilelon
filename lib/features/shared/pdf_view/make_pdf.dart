@@ -11,7 +11,7 @@ import 'package:pdf/widgets.dart' as pw;
 import 'dart:typed_data';
 // import 'package:flutter/services.dart';
 
-Future<bool> makePdf({
+Future<String> makePdf({
   required List<List<String>> cells,
   required String netTotal,
   required String discount,
@@ -24,7 +24,7 @@ Future<bool> makePdf({
   required String phoneNumber,
 }) async {
   if (orderId.isEmpty) {
-    return false;
+    return '';
   }
   const int maxRowsPerPage = 18;
 
@@ -519,11 +519,12 @@ Future<bool> makePdf({
       documentsDirectory.createSync(recursive: true);
     }
 
-    String path = '${documentsDirectory.path}/Nilelon Invoice($orderId).pdf';
+    String path =
+        '${documentsDirectory.path}/Nilelon Invoice(${orderId.substring(15)}).pdf';
     log(path);
     final file = File(path);
     final result = await file.writeAsBytes(await pdf.save());
-    return await result.exists();
+    return result.path;
   }
-  return false;
+  return '';
 }

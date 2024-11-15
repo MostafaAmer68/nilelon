@@ -41,8 +41,6 @@ class WideCard extends StatelessWidget {
     bool isLoading = false;
     return GestureDetector(
       onTap: () {
-        log(product.name, name: 'wide');
-        log(product.id, name: 'wide id');
         navigateTo(
           context: context,
           screen: !HiveStorage.get(HiveKeys.isStore)
@@ -86,10 +84,13 @@ class WideCard extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text(
-                        product.name,
-                        style: AppStylesManager.customTextStyleO3,
-                        overflow: TextOverflow.ellipsis,
+                      SizedBox(
+                        width: 150,
+                        child: Text(
+                          product.name,
+                          style: AppStylesManager.customTextStyleO3,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
