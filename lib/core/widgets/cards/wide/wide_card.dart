@@ -49,7 +49,7 @@ class WideCard extends StatelessWidget {
         );
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+        padding: const EdgeInsets.symmetric(horizontal: 7),
         margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
           color: const Color(0xFFF7FDFF),
@@ -66,31 +66,28 @@ class WideCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            imageReplacer(
-              url: product.productImages.first.url,
-              height: 140,
-              width: 140,
-              radius: 16,
-              fit: BoxFit.cover,
+            Expanded(
+              child: imageReplacer(
+                url: product.productImages.first.url,
+                height: 130,
+                width: 140,
+                radius: 16,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(width: 10),
             Expanded(
-              // flex: 2,
+              flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // const SizedBox(height: 5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        width: 150,
-                        child: Text(
-                          product.name,
-                          style: AppStylesManager.customTextStyleO3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Text(
+                        product.name,
+                        style: AppStylesManager.customTextStyleO3,
+                        overflow: TextOverflow.ellipsis,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 5),
@@ -137,21 +134,17 @@ class WideCard extends StatelessWidget {
                                 : Image.asset(
                                     Assets.assetsImagesClosetFollowing,
                                     fit: BoxFit.cover,
-                                    width: 40,
+                                    width: 55,
                                   ),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  // const SizedBox(
-                  //   height: 4,
-                  // ),
                   Text(
                     '${product.productVariants.first.price} ${lang(context).le}',
                     style: AppStylesManager.customTextStyleBl2,
                   ),
-
                   Row(
                     children: [
                       Text(
@@ -170,176 +163,191 @@ class WideCard extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  Row(
-                    children: [
-                      Container(
-                        height: 40.h,
-                        width: screenWidth(context, 0.12),
-                        decoration: BoxDecoration(
-                          color: ColorManager.primaryG8,
-                          borderRadius: BorderRadius.circular(7),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: ColorManager.primaryO,
-                              blurRadius: 0,
-                              offset: Offset(4, 4),
-                              spreadRadius: 0,
-                            )
-                          ],
-                        ),
-                        child: BlocConsumer<CartCubit, CartState>(
-                          listener: (context, state) {
-                            if (state is CartSuccess) {
-                              isLoading = false;
-                              BotToast.showCustomText(
-                                duration: const Duration(seconds: 4),
-                                toastBuilder: (_) => Card(
-                                  color: Colors.black87,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Text(
-                                          S.of(context).productAddedToCart,
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        TextButton(
-                                          onPressed: () {
-                                            BotToast.closeAllLoading();
+                  Visibility(
+                    visible: !HiveStorage.get(HiveKeys.isStore),
+                    child: Expanded(
+                      child: Row(
+                        children: [
+                          Container(
+                            height: 40.h,
+                            width: screenWidth(context, 0.12),
+                            decoration: BoxDecoration(
+                              color: ColorManager.primaryG8,
+                              borderRadius: BorderRadius.circular(7),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: ColorManager.primaryO,
+                                  blurRadius: 0,
+                                  offset: Offset(4, 4),
+                                  spreadRadius: 0,
+                                )
+                              ],
+                            ),
+                            child: BlocConsumer<CartCubit, CartState>(
+                              listener: (context, state) {
+                                if (state is CartSuccess) {
+                                  isLoading = false;
+                                  BotToast.showCustomText(
+                                    duration: const Duration(seconds: 4),
+                                    toastBuilder: (_) => Card(
+                                      color: Colors.black87,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Text(
+                                              S.of(context).productAddedToCart,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            TextButton(
+                                              onPressed: () {
+                                                BotToast.closeAllLoading();
 
+                                                navigateTo(
+                                                    context: context,
+                                                    screen:
+                                                        const CustomerBottomTabBar(
+                                                      index: 1,
+                                                    ));
+
+                                                BotToast.cleanAll();
+                                              },
+                                              child: Text(
+                                                S.of(context).viewCart,
+                                                style: const TextStyle(
+                                                    color: Colors.blue),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                } else if (state is GetCartFailure) {
+                                  BotToast.showText(text: state.message);
+                                }
+                              },
+                              builder: (context, state) {
+                                return isLoading
+                                    ? const Padding(
+                                        padding: EdgeInsets.all(12),
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    : IconButton(
+                                        icon: const Icon(
+                                          Iconsax.shopping_cart,
+                                          color: ColorManager.primaryB2,
+                                        ),
+                                        onPressed: () {
+                                          isLoading = true;
+                                          if (HiveStorage.get(
+                                              HiveKeys.isStore)) {
+                                            BotToast.showText(
+                                                text:
+                                                    lang(context).youAreStore);
+                                            return;
+                                          }
+                                          if (HiveStorage.get(
+                                                  HiveKeys.userModel) !=
+                                              null) {
+                                            if (product.id.isNotEmpty) {
+                                              CartCubit.get(context).addToCart(
+                                                AddToCartModel(
+                                                  quantity: 1,
+                                                  size: product.productVariants
+                                                      .firstWhere(
+                                                          (e) => e.price != 0)
+                                                      .size,
+                                                  color: product.productVariants
+                                                      .firstWhere(
+                                                          (e) => e.price != 0)
+                                                      .color,
+                                                  productId: product.id,
+                                                  customerId: HiveStorage.get<
+                                                              UserModel>(
+                                                          HiveKeys.userModel)
+                                                      .id,
+                                                ),
+                                              );
+                                            } else {
+                                              BotToast.showText(
+                                                  text: lang(context)
+                                                      .smothingWent);
+                                            }
+                                          } else {
                                             navigateTo(
                                                 context: context,
                                                 screen:
                                                     const CustomerBottomTabBar(
-                                                  index: 1,
-                                                ));
-
-                                            BotToast.cleanAll();
-                                          },
-                                          child: Text(
-                                            S.of(context).viewCart,
-                                            style: const TextStyle(
-                                                color: Colors.blue),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            } else if (state is GetCartFailure) {
-                              BotToast.showText(text: state.message);
-                            }
-                          },
-                          builder: (context, state) {
-                            return isLoading
-                                ? const Padding(
-                                    padding: EdgeInsets.all(12),
-                                    child: CircularProgressIndicator(),
-                                  )
-                                : IconButton(
-                                    icon: const Icon(
-                                      Iconsax.shopping_cart,
-                                      color: ColorManager.primaryB2,
-                                    ),
-                                    onPressed: () {
-                                      isLoading = true;
-                                      if (HiveStorage.get(HiveKeys.isStore)) {
-                                        BotToast.showText(
-                                            text: lang(context).youAreStore);
-                                        return;
-                                      }
-                                      if (HiveStorage.get(HiveKeys.userModel) !=
-                                          null) {
-                                        if (product.id.isNotEmpty) {
-                                          CartCubit.get(context).addToCart(
-                                            AddToCartModel(
-                                              quantity: 1,
-                                              size: product.productVariants
-                                                  .firstWhere(
-                                                      (e) => e.price != 0)
-                                                  .size,
-                                              color: product.productVariants
+                                                        index: 3));
+                                          }
+                                        },
+                                      );
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: ButtonBuilder(
+                              text: lang(context).buy,
+                              ontap: () {
+                                if (HiveStorage.get(HiveKeys.isStore)) {
+                                  BotToast.showText(
+                                      text: lang(context).youAreStore);
+                                  return;
+                                }
+                                if (HiveStorage.get(HiveKeys.userModel) !=
+                                    null) {
+                                  CartCubit.get(context).tempCartItems.clear();
+                                  CartCubit.get(context).tempCartItems.add(
+                                      CartItem(
+                                          quantity: product
+                                              .productVariants.first.quantity
+                                              .toInt(),
+                                          size: product.productVariants
+                                              .firstWhere((e) => e.price != 0)
+                                              .size,
+                                          color:
+                                              product.productVariants
                                                   .firstWhere(
                                                       (e) => e.price != 0)
                                                   .color,
-                                              productId: product.id,
-                                              customerId:
-                                                  HiveStorage.get<UserModel>(
-                                                          HiveKeys.userModel)
-                                                      .id,
-                                            ),
-                                          );
-                                        } else {
-                                          BotToast.showText(
-                                              text: lang(context).smothingWent);
-                                        }
-                                      } else {
-                                        navigateTo(
-                                            context: context,
-                                            screen: const CustomerBottomTabBar(
-                                                index: 3));
-                                      }
-                                    },
-                                  );
-                          },
-                        ),
+                                          price: product.productVariants
+                                              .firstWhere((e) => e.price != 0)
+                                              .price,
+                                          productName: product.name,
+                                          productId: product.id,
+                                          productImages: product.productImages,
+                                          cartId: ''));
+                                  PromoCubit.get(context).totalPrice = product
+                                      .productVariants
+                                      .firstWhere((e) => e.price != 0)
+                                      .price;
+                                  PromoCubit.get(context).tempTotalPrice =
+                                      product.productVariants
+                                          .firstWhere((e) => e.price != 0)
+                                          .price;
+                                  navigateTo(
+                                      context: context,
+                                      screen: const CheckOutView());
+                                } else {
+                                  navigateTo(
+                                      context: context,
+                                      screen:
+                                          const CustomerBottomTabBar(index: 3));
+                                }
+                              },
+                              frameColor: ColorManager.gradientBoxColors[1],
+                              // width: screenWidth(context, 0.30),
+                              height: 40.h,
+                            ),
+                          )
+                        ],
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: ButtonBuilder(
-                          text: lang(context).buy,
-                          ontap: () {
-                            if (HiveStorage.get(HiveKeys.isStore)) {
-                              BotToast.showText(
-                                  text: lang(context).youAreStore);
-                              return;
-                            }
-                            if (HiveStorage.get(HiveKeys.userModel) != null) {
-                              CartCubit.get(context).tempCartItems.clear();
-                              CartCubit.get(context).tempCartItems.add(CartItem(
-                                  quantity: product
-                                      .productVariants.first.quantity
-                                      .toInt(),
-                                  size: product.productVariants
-                                      .firstWhere((e) => e.price != 0)
-                                      .size,
-                                  color: product.productVariants
-                                      .firstWhere((e) => e.price != 0)
-                                      .color,
-                                  price: product.productVariants
-                                      .firstWhere((e) => e.price != 0)
-                                      .price,
-                                  productName: product.name,
-                                  productId: product.id,
-                                  productImages: product.productImages,
-                                  cartId: ''));
-                              PromoCubit.get(context).totalPrice = product
-                                  .productVariants
-                                  .firstWhere((e) => e.price != 0)
-                                  .price;
-                              PromoCubit.get(context).tempTotalPrice = product
-                                  .productVariants
-                                  .firstWhere((e) => e.price != 0)
-                                  .price;
-                              navigateTo(
-                                  context: context,
-                                  screen: const CheckOutView());
-                            } else {
-                              navigateTo(
-                                  context: context,
-                                  screen: const CustomerBottomTabBar(index: 3));
-                            }
-                          },
-                          frameColor: ColorManager.gradientBoxColors[1],
-                          // width: screenWidth(context, 0.30),
-                          height: 40.h,
-                        ),
-                      )
-                    ],
+                    ),
                   ),
                   SizedBox(
                     height: 2.h,
