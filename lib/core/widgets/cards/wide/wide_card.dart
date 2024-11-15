@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +9,6 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
-import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
@@ -81,65 +79,69 @@ class WideCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        product.name,
-                        style: AppStylesManager.customTextStyleO3,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Visibility(
-                          visible: !HiveStorage.get(HiveKeys.isStore),
-                          child: InkWell(
-                            onTap: () {
-                              showModalBottomSheet(
-                                context: context,
-                                backgroundColor: ColorManager.primaryW,
-                                shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(30),
-                                    topRight: Radius.circular(30),
-                                  ),
-                                ),
-                                clipBehavior: Clip.antiAliasWithSaveLayer,
-                                builder: (context) =>
-                                    ClosetSheetBarView(productId: product.id),
-                              );
-                            },
-                            child: !product.isInCloset
-                                ? Container(
-                                    width: 30.w,
-                                    height: 30.w,
-                                    padding: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.orange.shade300
-                                              .withOpacity(1),
-                                          offset: const Offset(3, 3),
-                                          blurRadius: 5,
-                                        ),
-                                      ],
-                                    ),
-                                    child: SvgPicture.asset(
-                                      Assets.assetsImagesHanger,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  )
-                                : Image.asset(
-                                    Assets.assetsImagesClosetFollowing,
-                                    fit: BoxFit.cover,
-                                    width: 55,
-                                  ),
+                  Expanded(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            product.name,
+                            style: AppStylesManager.customTextStyleO3,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                      ),
-                    ],
+                        Visibility(
+                          visible: !HiveStorage.get(HiveKeys.isStore),
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 5),
+                            child: InkWell(
+                              onTap: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: ColorManager.primaryW,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(30),
+                                      topRight: Radius.circular(30),
+                                    ),
+                                  ),
+                                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                                  builder: (context) =>
+                                      ClosetSheetBarView(productId: product.id),
+                                );
+                              },
+                              child: !product.isInCloset
+                                  ? Container(
+                                      width: 30.w,
+                                      height: 30.w,
+                                      padding: const EdgeInsets.all(5),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        shape: BoxShape.circle,
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.orange.shade300
+                                                .withOpacity(1),
+                                            offset: const Offset(3, 3),
+                                            blurRadius: 5,
+                                          ),
+                                        ],
+                                      ),
+                                      child: SvgPicture.asset(
+                                        Assets.assetsImagesHanger,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    )
+                                  : Image.asset(
+                                      Assets.assetsImagesClosetFollowing,
+                                      fit: BoxFit.cover,
+                                      width: 55,
+                                    ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                   Text(
                     '${product.productVariants.first.price} ${lang(context).le}',
@@ -166,6 +168,7 @@ class WideCard extends StatelessWidget {
                   Visibility(
                     visible: !HiveStorage.get(HiveKeys.isStore),
                     child: Expanded(
+                      flex: 2,
                       child: Row(
                         children: [
                           Container(

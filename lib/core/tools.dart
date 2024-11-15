@@ -6,12 +6,12 @@ import 'package:nilelon/generated/l10n.dart';
 import '../features/auth/domain/model/user_model.dart';
 
 SliverGridDelegateWithFixedCrossAxisCount gridDelegate(context) {
-  double screenWidth = MediaQuery.of(context).size.width;
-  int crossAxisCount = (screenWidth / 150).floor();
+  // double screenWidth = MediaQuery.of(context).size.width;
+  // int crossAxisCount = (screenWidth / 150).floor();
   return SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 1.sw > 600 ? 3 : 2,
     crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-    mainAxisExtent: 270,
+    mainAxisExtent: 245.w,
     mainAxisSpacing: 1.sw > 600 ? 16 : 12,
   );
 }

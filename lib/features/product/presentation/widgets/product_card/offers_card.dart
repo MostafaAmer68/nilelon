@@ -84,43 +84,16 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                   style: AppStylesManager.customTextStyleW4,
                 )),
               ),
-              // Padding(
-              //   padding: const EdgeInsets.symmetric(horizontal: 15),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.end,
-              //     children: colorConst
-              //         .map(
-              //           (e) => Container(
-              //             margin: const EdgeInsets.symmetric(horizontal: 3),
-              //             width: 10,
-              //             height: 10,
-              //             decoration: BoxDecoration(
-              //               color: e,
-              //               shape: BoxShape.circle,
-              //             ),
-              //           ),
-              //         )
-              //         .toList(),
-              //   ),
-              // ),
             ],
           ),
           const SizedBox(height: 10),
           Stack(
             alignment: Alignment.topRight,
             children: [
-              Center(
-                child: Container(
-                  width: screenWidth(context, 0.38),
-                  height: 130.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(12),
-                    child: imageReplacer(url: product.productImages.first.url),
-                  ),
-                ),
+              imageReplacer(
+                url: product.productImages.first.url,
+                height: 140.w,
+                fit: BoxFit.cover,
               ),
               Positioned(
                 top: 10,

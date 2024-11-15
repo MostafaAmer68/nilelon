@@ -6,7 +6,6 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/alert/empty_closets_alert.dart';
@@ -56,8 +55,7 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
               child: Image.asset(Assets.assetsImagesClosetFollowing),
             ),
             const SizedBox(width: 10),
-            SizedBox(
-              width: 200,
+            Expanded(
               child: Text(
                 closet.name,
                 overflow: TextOverflow.ellipsis,
@@ -65,8 +63,8 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            IconButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 showModalBottomSheet(
                   context: context,
                   backgroundColor:
@@ -154,7 +152,7 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                   },
                 );
               },
-              icon: Icon(
+              child: Icon(
                 Icons.more_vert_rounded,
                 size: 20.r,
               ),

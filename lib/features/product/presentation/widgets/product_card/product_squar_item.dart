@@ -60,7 +60,7 @@ GestureDetector productSquarItem(
         ],
       ),
       width: 1.sw > 600
-          ? 270
+          ? 270.w
           : 1.sw < 400
               ? 155
               : 200,
@@ -68,7 +68,7 @@ GestureDetector productSquarItem(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 10),
+          SizedBox(height: 10.w),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(
@@ -88,7 +88,7 @@ GestureDetector productSquarItem(
                   .toList(),
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.w),
           Stack(
             alignment: Alignment.topRight,
             children: [
@@ -151,8 +151,8 @@ GestureDetector productSquarItem(
               ),
             ],
           ),
-          const SizedBox(
-            height: 8,
+          SizedBox(
+            height: 8.w,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -161,8 +161,8 @@ GestureDetector productSquarItem(
               rating: product.rating.toString(),
             ),
           ),
-          const SizedBox(
-            height: 4,
+          SizedBox(
+            height: 4.w,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -178,18 +178,11 @@ GestureDetector productSquarItem(
   );
 }
 
-Container imageSection(ProductModel product) {
-  return Container(
-    height: 150.h, // Adjusted to fit the design
-    width: double.infinity,
-    decoration: const BoxDecoration(
-      borderRadius: BorderRadius.vertical(
-        top: Radius.circular(0),
-      ),
-    ),
-    child: imageReplacer(
-        url: product.productImages.isEmpty
-            ? ''
-            : product.productImages.first.url),
+imageSection(ProductModel product) {
+  return imageReplacer(
+    url: product.productImages.isEmpty ? '' : product.productImages.first.url,
+    height: 140.w,
+    width: 300,
+    fit: BoxFit.cover,
   );
 }

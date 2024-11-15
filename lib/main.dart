@@ -39,7 +39,8 @@ void main() async {
     HiveStorage.set(HiveKeys.skipOnboarding, false);
   }
 
-  runApp(
-    const MyApp(),
-  );
+  runApp(DevicePreview(
+    enabled: false,
+    builder: (_) => const MyApp(),
+  ));
 }

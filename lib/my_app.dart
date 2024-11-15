@@ -140,9 +140,9 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       child: ScreenUtilInit(
-        designSize: const Size(375, 812),
+        designSize: const Size(411, 823),
         minTextAdapt: true,
-        useInheritedMediaQuery: true,
+        // useInheritedMediaQuery: true,
         ensureScreenSize: true,
         splitScreenMode: true,
         builder: (_, child) {

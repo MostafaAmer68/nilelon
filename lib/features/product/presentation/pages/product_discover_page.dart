@@ -153,7 +153,7 @@ class ProductNewInView extends StatelessWidget {
         }, success: () {
           if (ProductsCubit.get(context).products.isEmpty) {
             return SizedBox(
-              height: 120.h,
+              height: 120.w,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -169,7 +169,7 @@ class ProductNewInView extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: SizedBox(
-              height: 290,
+              height: 270.w,
               child: ListView.builder(
                 itemBuilder: (context, index) {
                   final product = ProductsCubit.get(context).products[index];
