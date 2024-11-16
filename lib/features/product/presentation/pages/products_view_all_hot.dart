@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +15,8 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/resources/const_functions.dart';
+import '../../../../core/tools.dart';
+import '../../../../core/utils/navigation.dart';
 import '../../../categories/domain/model/result.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
 import '../../domain/models/product_model.dart';
@@ -177,9 +180,48 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
             const SizedBox(
               width: 16,
             ),
-            const Icon(
-              Icons.tune,
-              color: ColorManager.primaryW,
+            InkWell(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return SimpleDialog(
+                        contentPadding: const EdgeInsets.all(5),
+                        titlePadding: const EdgeInsets.all(20),
+                        title: TextField(
+                          controller: TextEditingController(
+                              text: cubit.limit.toString()),
+                          onChanged: (v) {
+                            cubit.limit = int.parse(v.isEmpty ? '0' : v);
+                            setState(() {});
+                          },
+                          decoration: InputDecoration(
+                            prefix: const Icon(Icons.pages),
+                            hintText: cubit.limit.toString(),
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              if (cubit.limit > 0) {
+                                navigatePop(context: context);
+                                widget.onStartPage();
+                              } else {
+                                BotToast.showText(
+                                    text: 'please enter page size above 0');
+                              }
+                            },
+                            child: Text(lang(context).ok),
+                          )
+                        ],
+                      );
+                    });
+              },
+              child: Icon(
+                Icons.tune,
+                color: ColorManager.primaryW,
+              ),
             ),
             const SizedBox(
               width: 8,
