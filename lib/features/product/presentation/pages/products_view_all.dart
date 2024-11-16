@@ -1,7 +1,12 @@
+import 'dart:developer';
+
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
@@ -14,6 +19,7 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 import '../../../../core/tools.dart';
+import '../../../../core/utils/navigation.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
 import '../../domain/models/product_model.dart';
 import '../widgets/product_card/market_small_card.dart';
@@ -41,47 +47,36 @@ class ProductsViewAll extends StatefulWidget {
 }
 
 class _ProductsViewAllState extends State<ProductsViewAll> {
-  int page = 5;
-  int pageSize = 1;
-  bool isLoadMore = false;
   late final ProductsCubit cubit;
-  ScrollController scrollCn = ScrollController();
   List<ProductModel> products = [];
-
   @override
   void dispose() {
     cubit.category = CategoryModel.empty();
     cubit.gendar = 'All';
     cubit.products.clear();
-    cubit.getFollowedProducts(page, 100);
+    // cubit.getFollowedProducts();
     cubit.productsHandpack.clear();
+    cubit.scroll.dispose();
     super.dispose();
   }
+
+  bool isPullDown = false;
 
   @override
   void initState() {
     cubit = ProductsCubit.get(context);
     widget.onStartPage();
-
-    scrollCn.addListener(() {
-      if (scrollCn.position.pixels == scrollCn.position.maxScrollExtent &&
-          !isLoadMore) {
-        getMoreHandData();
+    cubit.scroll = ScrollController();
+    cubit.scroll.addListener(() {
+      double currentPos = cubit.scroll.position.pixels;
+      double maxPos = cubit.scroll.position.maxScrollExtent;
+      if (maxPos >= currentPos) {
+        isPullDown = true;
       }
+
+      setState(() {});
     });
     super.initState();
-  }
-
-  getMoreHandData() async {
-    setState(() {
-      isLoadMore = true;
-    });
-
-    page = page + 1;
-    widget.onStartPage();
-    setState(() {
-      isLoadMore = false;
-    });
   }
 
   @override
@@ -90,44 +85,44 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
     return ScaffoldImage(
       appBar: customAppBar(title: widget.appBarTitle, context: context),
       // bgColor: ColorManager.primaryB6,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const DefaultDivider(),
-            const SizedBox(
-              height: 8,
-            ),
-            filtersColumn(context),
-            BlocBuilder<ProductsCubit, ProductsState>(
-              builder: (context, state) {
-                return state.when(initial: () {
-                  return buildShimmerIndicatorGrid(context);
-                }, loading: () {
-                  return buildShimmerIndicatorGrid(context);
-                }, success: () {
-                  if (widget.isHandpicked) {
-                    products = cubit.productsHandpack;
-                  } else {
-                    products = cubit.products;
-                  }
-                  if (cubit
-                      .filterListByCategory(cubit.category, products)
-                      .isEmpty) {
-                    return SizedBox(
-                      height: screenHeight(context, 0.6),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(widget.notFoundTitle),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Padding(
+      body: Column(
+        children: [
+          const DefaultDivider(),
+          const SizedBox(
+            height: 8,
+          ),
+          filtersColumn(context),
+          BlocBuilder<ProductsCubit, ProductsState>(
+            builder: (context, state) {
+              return state.when(initial: () {
+                return buildShimmerIndicatorGrid(context);
+              }, loading: () {
+                return Expanded(child: buildShimmerIndicatorGrid(context));
+              }, success: () {
+                if (widget.isHandpicked) {
+                  products = cubit.productsHandpack;
+                } else {
+                  products = cubit.products;
+                }
+                if (cubit
+                    .filterListByCategory(cubit.category, products)
+                    .isEmpty) {
+                  return SizedBox(
+                    height: screenHeight(context, 0.6),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(widget.notFoundTitle),
+                      ],
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: GridView.builder(
-                        controller: scrollCn,
-                        physics: const NeverScrollableScrollPhysics(),
+                        controller: cubit.scroll,
+                        // physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: widget.isOffer
                             ? SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 1.sw > 600 ? 3 : 2,
@@ -137,65 +132,72 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                               )
                             : gridDelegate(context),
                         shrinkWrap: true,
-                        itemCount: isLoadMore
-                            ? cubit
-                                    .filterListByCategory(
-                                        cubit.category, products)
-                                    .length +
-                                1
-                            : cubit
-                                .filterListByCategory(cubit.category, products)
-                                .length,
+                        itemCount: cubit
+                            .filterListByCategory(cubit.category, products)
+                            .length,
                         itemBuilder: (context, sizeIndex) {
-                          if (sizeIndex ==
-                                  cubit
-                                      .filterListByCategory(
-                                        cubit.category,
-                                        products,
-                                      )
-                                      .length &&
-                              isLoadMore) {
-                            return buildShimmerIndicatorSmall();
+                          final productItem = cubit.filterListByCategory(
+                              cubit.category, products)[sizeIndex];
+                          if (widget.isOffer) {
+                            return offersCard(
+                              context: context,
+                              product: productItem,
+                            );
                           } else {
-                            final productItem = cubit.filterListByCategory(
-                                cubit.category, products)[sizeIndex];
-                            if (widget.isOffer) {
-                              return offersCard(
+                            if (widget.isStore) {
+                              return marketSmallCard(
                                 context: context,
                                 product: productItem,
                               );
                             } else {
-                              if (widget.isStore) {
-                                return marketSmallCard(
-                                  context: context,
-                                  product: productItem,
-                                );
-                              } else {
-                                return productSquarItem(
-                                  context: context,
-                                  product: productItem,
-                                );
-                              }
+                              return productSquarItem(
+                                context: context,
+                                product: productItem,
+                              );
                             }
                           }
                         },
                       ),
-                    );
-                  }
-                }, failure: (message) {
-                  return SizedBox(
-                      height: screenHeight(context, 0.6),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(widget.notFoundTitle),
-                        ],
-                      ));
-                });
+                    ),
+                  );
+                }
+              }, failure: (message) {
+                return SizedBox(
+                    height: screenHeight(context, 0.6),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(widget.notFoundTitle),
+                      ],
+                    ));
+              });
+            },
+          ),
+          Visibility(
+            visible: isPullDown,
+            child: GestureDetector(
+              onVerticalDragEnd: (details) {
+                widget.onStartPage();
+                cubit.page += 1;
+                if (products.isEmpty || cubit.productsHandpack.isEmpty) {
+                  cubit.page = cubit.page - 1;
+                }
+                setState(() {});
               },
+              child: SizedBox(
+                // color: ColorManager.black,
+                height: 40.w,
+                width: screenWidth(context, 1),
+                child: Center(
+                  child: Text(
+                    'Load More',
+                    style: AppStylesManager.customTextStyleB,
+                  ),
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -221,7 +223,45 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
             const SizedBox(
               width: 16,
             ),
-            const Icon(Icons.tune),
+            InkWell(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return SimpleDialog(
+                          contentPadding: const EdgeInsets.all(5),
+                          titlePadding: const EdgeInsets.all(20),
+                          title: TextField(
+                            controller: TextEditingController(
+                                text: cubit.limit.toString()),
+                            onChanged: (v) {
+                              cubit.limit = int.parse(v.isEmpty ? '0' : v);
+                              setState(() {});
+                            },
+                            decoration: InputDecoration(
+                              prefix: const Icon(Icons.pages),
+                              hintText: cubit.limit.toString(),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                if (cubit.limit > 0) {
+                                  navigatePop(context: context);
+                                  widget.onStartPage();
+                                } else {
+                                  BotToast.showText(
+                                      text: 'please enter page size above 0');
+                                }
+                              },
+                              child: Text(lang(context).ok),
+                            )
+                          ],
+                        );
+                      });
+                },
+                child: Icon(Icons.tune)),
             const SizedBox(
               width: 8,
             ),

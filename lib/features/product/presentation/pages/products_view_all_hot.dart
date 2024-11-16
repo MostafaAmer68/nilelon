@@ -13,6 +13,7 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 import '../../../../core/data/hive_stroage.dart';
+import '../../../../core/resources/const_functions.dart';
 import '../../../categories/domain/model/result.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
 import '../../domain/models/product_model.dart';
@@ -40,11 +41,8 @@ class ProductsViewAllHot extends StatefulWidget {
 }
 
 class _ProductsViewAllState extends State<ProductsViewAllHot> {
-  int page = 5;
-  int pageSize = 1;
-  bool isLoadMore = false;
+  bool isPullDown = false;
   late final ProductsCubit cubit;
-  ScrollController scrollCn = ScrollController();
   List<ProductModel> products = [];
 
   @override
@@ -57,27 +55,18 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
   @override
   void initState() {
     cubit = ProductsCubit.get(context);
+    cubit.scroll = ScrollController();
     widget.onStartPage();
-
-    scrollCn.addListener(() {
-      if (scrollCn.position.pixels == scrollCn.position.maxScrollExtent &&
-          !isLoadMore) {
-        getMoreHandData();
+    cubit.scroll.addListener(() {
+      double currentPos = cubit.scroll.position.pixels;
+      double maxPos = cubit.scroll.position.maxScrollExtent;
+      if (maxPos >= currentPos) {
+        isPullDown = true;
       }
+
+      setState(() {});
     });
     super.initState();
-  }
-
-  getMoreHandData() async {
-    setState(() {
-      isLoadMore = true;
-    });
-
-    page = page + 1;
-    widget.onStartPage();
-    setState(() {
-      isLoadMore = false;
-    });
   }
 
   @override
@@ -90,47 +79,46 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
         color: ColorManager.primaryW,
       ),
       bgColor: Assets.assetsImagesBgColor,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            const DefaultDivider(),
-            const SizedBox(
-              height: 8,
-            ),
-            filtersColumn(context),
-            BlocBuilder<ProductsCubit, ProductsState>(
-              builder: (context, state) {
-                return state.when(initial: () {
-                  return buildShimmerIndicatorGrid(context);
-                }, loading: () {
-                  return buildShimmerIndicatorGrid(context);
-                }, success: () {
-                  if (widget.isHandpicked) {
-                    products = cubit.productsHandpack;
-                  } else {
-                    products = cubit.products;
-                  }
-                  if (cubit
-                      .filterListByCategory(cubit.category, products)
-                      .isEmpty) {
-                    return SizedBox(
-                      height: 450.h,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.notFoundTitle,
-                            style: AppStylesManager.customTextStyleG2,
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return Padding(
+      body: Column(
+        children: [
+          const DefaultDivider(),
+          const SizedBox(
+            height: 8,
+          ),
+          filtersColumn(context),
+          BlocBuilder<ProductsCubit, ProductsState>(
+            builder: (context, state) {
+              return state.when(initial: () {
+                return buildShimmerIndicatorGrid(context);
+              }, loading: () {
+                return Expanded(child: buildShimmerIndicatorGrid(context));
+              }, success: () {
+                if (widget.isHandpicked) {
+                  products = cubit.productsHandpack;
+                } else {
+                  products = cubit.products;
+                }
+                if (cubit
+                    .filterListByCategory(cubit.category, products)
+                    .isEmpty) {
+                  return SizedBox(
+                    height: 450.h,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          widget.notFoundTitle,
+                          style: AppStylesManager.customTextStyleG2,
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return Expanded(
+                    child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 16.w),
                       child: GridView.builder(
-                        controller: scrollCn,
-                        physics: const NeverScrollableScrollPhysics(),
+                        controller: cubit.scroll,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
                           crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
@@ -140,42 +128,49 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
                           mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                         ),
                         shrinkWrap: true,
-                        itemCount: isLoadMore
-                            ? cubit
-                                    .filterListByCategory(
-                                        cubit.category, products)
-                                    .length +
-                                1
-                            : cubit
-                                .filterListByCategory(cubit.category, products)
-                                .length,
+                        itemCount: cubit
+                            .filterListByCategory(cubit.category, products)
+                            .length,
                         itemBuilder: (context, sizeIndex) {
-                          if (sizeIndex ==
-                                  cubit
-                                      .filterListByCategory(
-                                        cubit.category,
-                                        products,
-                                      )
-                                      .length &&
-                              isLoadMore) {
-                            return buildShimmerIndicatorSmall();
-                          } else {
-                            final productItem = cubit.filterListByCategory(
-                                cubit.category, products)[sizeIndex];
+                          final productItem = cubit.filterListByCategory(
+                              cubit.category, products)[sizeIndex];
 
-                            return WideCard(product: productItem);
-                          }
+                          return WideCard(product: productItem);
                         },
                       ),
-                    );
-                  }
-                }, failure: (message) {
-                  return Text(widget.notFoundTitle);
-                });
+                    ),
+                  );
+                }
+              }, failure: (message) {
+                return Text(widget.notFoundTitle);
+              });
+            },
+          ),
+          Visibility(
+            visible: isPullDown,
+            child: GestureDetector(
+              onVerticalDragEnd: (details) {
+                widget.onStartPage();
+                cubit.page += 1;
+                if (products.isEmpty || cubit.productsHandpack.isEmpty) {
+                  cubit.page = cubit.page - 1;
+                }
+                setState(() {});
               },
+              child: SizedBox(
+                // color: ColorManager.black,
+                height: 40.w,
+                width: screenWidth(context, 1),
+                child: Center(
+                  child: Text(
+                    'Load More',
+                    style: AppStylesManager.customTextStyleW,
+                  ),
+                ),
+              ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

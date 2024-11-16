@@ -26,16 +26,13 @@ class DiscoverView extends StatefulWidget {
 }
 
 class _DiscoverViewState extends State<DiscoverView> {
-  int pageNum = 1;
   late final ProductsCubit cubit;
-
-  int pageSize = 10;
 
   @override
   void initState() {
     cubit = ProductsCubit.get(context);
-    cubit.getRandomProducts(pageNum, pageSize);
-    cubit.getNewInProducts(pageNum, pageSize);
+    cubit.getRandomProducts();
+    cubit.getNewInProducts();
 
     super.initState();
   }
@@ -96,7 +93,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                             isHandpicked: false,
                             appBarTitle: lang.newIn,
                             onStartPage: () {
-                              cubit.getNewInProducts(pageNum, pageSize);
+                              cubit.getNewInProducts();
                             },
                           ));
                     },
@@ -118,7 +115,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                           isHandpicked: true,
                           appBarTitle: lang.handPicked,
                           onStartPage: () {
-                            cubit.getRandomProducts(pageNum, pageSize);
+                            cubit.getRandomProducts();
                           },
                         ),
                       );

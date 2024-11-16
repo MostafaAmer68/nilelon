@@ -43,7 +43,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
     cubit = BlocProvider.of(context);
     cubit.getStoreById(widget.storeId);
 
-    ProductsCubit.get(context).getStoreProducts(widget.storeId, 1, 100);
+    ProductsCubit.get(context).getStoreProducts(widget.storeId);
     super.initState();
   }
 

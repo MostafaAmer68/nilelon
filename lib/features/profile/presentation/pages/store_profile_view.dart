@@ -33,10 +33,6 @@ class StoreProfileView extends StatefulWidget {
 }
 
 class _StoreProfileViewState extends State<StoreProfileView> {
-  int page = 1;
-  int pageSize = 10;
-  bool isLoadMore = false;
-  ScrollController scrollController = ScrollController();
   late final ProductsCubit pCubit;
   late final ProfileCubit cubit;
   late final StoreModel user;
@@ -48,27 +44,9 @@ class _StoreProfileViewState extends State<StoreProfileView> {
 
     pCubit = ProductsCubit.get(context);
     cubit = ProfileCubit.get(context);
-    pCubit.getStoreProducts('', page, pageSize);
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-              scrollController.position.maxScrollExtent &&
-          !isLoadMore) {
-        getMoreData();
-      }
-    });
+    pCubit.getStoreProducts('');
+
     super.initState();
-  }
-
-  getMoreData() async {
-    setState(() {
-      isLoadMore = true;
-    });
-
-    page = page + 1;
-    pCubit.getStoreProducts('', page, pageSize);
-    setState(() {
-      isLoadMore = false;
-    });
   }
 
   // String _indexName = 'All Items';
@@ -181,7 +159,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                       : Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
                           child: GridView.builder(
-                            controller: scrollController,
+                            controller: ProductsCubit.get(context).scroll,
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate: gridDelegate(context),
                             shrinkWrap: true,
@@ -190,22 +168,12 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                                     cubit.selectedCategory, pCubit.products)
                                 .length,
                             itemBuilder: (context, sizeIndex) {
-                              if (sizeIndex ==
-                                      pCubit
-                                          .filterListByCategory(
-                                              cubit.selectedCategory,
-                                              pCubit.products)
-                                          .length &&
-                                  isLoadMore) {
-                                return buildShimmerIndicatorSmall();
-                              } else {
-                                return productSquarItem(
-                                  context: context,
-                                  product: pCubit.filterListByCategory(
-                                      cubit.selectedCategory,
-                                      pCubit.products)[sizeIndex],
-                                );
-                              }
+                              return productSquarItem(
+                                context: context,
+                                product: pCubit.filterListByCategory(
+                                    cubit.selectedCategory,
+                                    pCubit.products)[sizeIndex],
+                              );
                             },
                           ),
                         );

@@ -35,8 +35,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
   void initState() {
     cubit = PromoCubit.get(context);
     pcubit = ProductsCubit.get(context);
-    pcubit.getStoreProducts(
-        HiveStorage.get<UserModel>(HiveKeys.userModel).id, 1, 20);
+    pcubit.getStoreProducts(HiveStorage.get<UserModel>(HiveKeys.userModel).id);
     super.initState();
   }
 

@@ -21,43 +21,17 @@ class FollowedProductPage extends StatefulWidget {
 }
 
 class _FollowedProductPageState extends State<FollowedProductPage> {
-  int page = 1;
-  int pageSize = 5;
-  bool isLoadMore = false;
-  ScrollController scrollController = ScrollController();
-
   @override
   void initState() {
     // if (HiveStorage.get(HiveKeys.userModel) != null) {
     ProductsCubit.get(context).products.clear();
     ProductsCubit.get(context).productsHandpack.clear();
     if (HiveStorage.get(HiveKeys.userModel) != null) {
-      ProductsCubit.get(context).getFollowedProducts(page, pageSize);
-      scrollController.addListener(() {
-        if (scrollController.position.pixels ==
-                scrollController.position.maxScrollExtent &&
-            !isLoadMore) {
-          getMoreData();
-        }
-      });
+      ProductsCubit.get(context).getFollowedProducts();
     }
     log('product');
     // }
     super.initState();
-  }
-
-  getMoreData() async {
-    setState(() {
-      isLoadMore = true;
-    });
-
-    page = page + 1;
-    if (HiveStorage.get(HiveKeys.userModel) != null) {
-      ProductsCubit.get(context).getFollowedProducts(page, pageSize);
-    }
-    setState(() {
-      isLoadMore = false;
-    });
   }
 
   @override
@@ -86,23 +60,16 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
             return Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: GridView.builder(
-                controller: scrollController,
+                controller: ProductsCubit.get(context).scroll,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: gridDelegate(context),
                 shrinkWrap: true,
-                itemCount: isLoadMore
-                    ? ProductsCubit.get(context).products.length + 1
-                    : ProductsCubit.get(context).products.length,
+                itemCount: ProductsCubit.get(context).products.length,
                 itemBuilder: (context, sizeIndex) {
-                  if (sizeIndex == ProductsCubit.get(context).products.length &&
-                      isLoadMore) {
-                    return buildShimmerIndicatorSmall();
-                  } else {
-                    return productSquarItem(
-                      context: context,
-                      product: ProductsCubit.get(context).products[sizeIndex],
-                    );
-                  }
+                  return productSquarItem(
+                    context: context,
+                    product: ProductsCubit.get(context).products[sizeIndex],
+                  );
                 },
               ),
             );

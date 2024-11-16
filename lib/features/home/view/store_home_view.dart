@@ -35,7 +35,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
   @override
   void initState() {
     cubit = BlocProvider.of(context);
-    cubit.getNewInProducts(1, 20);
+    cubit.getNewInProducts();
     super.initState();
   }
 
@@ -84,7 +84,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                       notFoundTitle: lang.noProductNewIn,
                       isHandpicked: false,
                       onStartPage: () {
-                        cubit.getNewInProducts(1, 50);
+                        cubit.getNewInProducts();
                       },
                       isStore: true,
                     ),
@@ -162,7 +162,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
             isHandpicked: false,
             appBarTitle: lang(context).offers,
             onStartPage: () {
-              ProductsCubit.get(context).getOffersProducts(1, 50);
+              ProductsCubit.get(context).getOffersProducts();
             },
           ),
         );
@@ -181,7 +181,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
             isHandpicked: false,
             appBarTitle: lang(context).hotPicks,
             onStartPage: () {
-              ProductsCubit.get(context).getNewInProducts(1, 50);
+              ProductsCubit.get(context).getNewInProducts();
             },
           ),
         );

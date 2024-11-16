@@ -118,7 +118,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
                       isHandpicked: false,
                       appBarTitle: lang.following,
                       onStartPage: () {
-                        ProductsCubit.get(context).getFollowedProducts(1, 50);
+                        ProductsCubit.get(context).getFollowedProducts();
                       },
                     ),
                   );
@@ -149,7 +149,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
             isHandpicked: false,
             appBarTitle: lang(context).offers,
             onStartPage: () {
-              ProductsCubit.get(context).getOffersProducts(1, 50);
+              ProductsCubit.get(context).getOffersProducts();
             },
           ),
         );
@@ -167,7 +167,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
             isHandpicked: true,
             appBarTitle: lang(context).hotPicks,
             onStartPage: () {
-              ProductsCubit.get(context).getRandomProducts(1, 50);
+              ProductsCubit.get(context).getRandomProducts();
             },
           ),
         );
