@@ -61,7 +61,11 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
       double currentPos = cubit.scroll.position.pixels;
       double maxPos = cubit.scroll.position.maxScrollExtent;
       if (maxPos >= currentPos) {
-        isPullDown = true;
+        widget.onStartPage();
+        cubit.page += 1;
+        if (products.isEmpty || cubit.productsHandpack.isEmpty) {
+          cubit.page = cubit.page - 1;
+        }
       }
 
       setState(() {});
@@ -145,30 +149,6 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
                 return Text(widget.notFoundTitle);
               });
             },
-          ),
-          Visibility(
-            visible: isPullDown,
-            child: GestureDetector(
-              onVerticalDragEnd: (details) {
-                widget.onStartPage();
-                cubit.page += 1;
-                if (products.isEmpty || cubit.productsHandpack.isEmpty) {
-                  cubit.page = cubit.page - 1;
-                }
-                setState(() {});
-              },
-              child: SizedBox(
-                // color: ColorManager.black,
-                height: 40.w,
-                width: screenWidth(context, 1),
-                child: Center(
-                  child: Text(
-                    'Load More',
-                    style: AppStylesManager.customTextStyleW,
-                  ),
-                ),
-              ),
-            ),
           ),
         ],
       ),
