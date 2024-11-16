@@ -27,12 +27,15 @@ GestureDetector productSquarItem(
     bool isSelectable = false,
     bool isSelected = false,
     Function(bool value)? onTap}) {
-  final price = product.productVariants
-      .firstWhere(
-        (e) => e.price != 0,
-        orElse: () => product.productVariants.first,
-      )
-      .price;
+  num price = 0;
+  if (product.productVariants.isNotEmpty) {
+    price = product.productVariants
+        .firstWhere(
+          (e) => e.price != 0,
+          orElse: () => product.productVariants.first,
+        )
+        .price;
+  }
   final PromoCubit cubit = PromoCubit.get(context);
   final ProductsCubit pcubit = ProductsCubit.get(context);
   return GestureDetector(

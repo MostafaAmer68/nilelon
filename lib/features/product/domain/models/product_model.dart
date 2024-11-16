@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:equatable/equatable.dart';
 
 class ProductModel extends Equatable {
@@ -11,11 +13,12 @@ class ProductModel extends Equatable {
   final bool isInCloset;
   final num rating;
   final num inStock;
+  final bool isReviewed;
   final String storeName;
   final String storeId;
   final List<ProductVariant> productVariants;
   final List<ProductImage> productImages;
-  
+
   const ProductModel({
     required this.id,
     required this.name,
@@ -26,6 +29,7 @@ class ProductModel extends Equatable {
     required this.isInCloset,
     required this.rating,
     required this.inStock,
+    required this.isReviewed,
     required this.storeName,
     required this.storeId,
     required this.productVariants,
@@ -43,6 +47,7 @@ class ProductModel extends Equatable {
       isInCloset: json['isInCloset'],
       rating: json['rating'],
       inStock: json['inStock'],
+      isReviewed: json['isReviewed'],
       storeName: json['storeName'] ?? '',
       storeId: json['storeId'],
       productVariants: (json['productVariants'] as List)
@@ -58,6 +63,7 @@ class ProductModel extends Equatable {
       id: '',
       name: '',
       description: '',
+      isReviewed: false,
       type: '',
       categoryID: '',
       sizeguide: '',
@@ -77,6 +83,7 @@ class ProductModel extends Equatable {
       'name': name,
       'description': description,
       'categoryID': categoryID,
+      'isReviewed': isReviewed,
       'sizeguide': sizeguide,
       'isInCloset': isInCloset,
       'rating': rating,
@@ -98,6 +105,7 @@ class ProductModel extends Equatable {
     bool? isInCloset,
     num? rating,
     num? inStock,
+    bool? isReviewed,
     String? storeName,
     String? storeId,
     List<ProductVariant>? productVariants,
@@ -106,6 +114,7 @@ class ProductModel extends Equatable {
     return ProductModel(
       id: id ?? this.id,
       name: name ?? this.name,
+      isReviewed: isReviewed ?? this.isReviewed,
       description: description ?? this.description,
       type: type ?? this.type,
       categoryID: categoryID ?? this.categoryID,

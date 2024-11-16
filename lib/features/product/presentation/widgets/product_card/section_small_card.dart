@@ -83,15 +83,11 @@ GestureDetector sectionSmallCard(
           Stack(
             alignment: Alignment.topRight,
             children: [
-              Container(
-                height: 150.h, // Adjusted to fit the design
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(0),
-                  ),
-                ),
-                child: imageReplacer(url: product.productImages.first.url),
+              imageReplacer(
+                url: product.productImages.first.url,
+                height: 140.w,
+                width: 200.w,
+                fit: BoxFit.cover,
               ),
               Visibility(
                 visible: closetId.isNotEmpty,

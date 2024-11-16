@@ -178,7 +178,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
           screen: ProductsViewAllHot(
             isStore: true,
             notFoundTitle: lang(context).noProductNewIn,
-            isHandpicked: true,
+            isHandpicked: false,
             appBarTitle: lang(context).hotPicks,
             onStartPage: () {
               ProductsCubit.get(context).getNewInProducts(1, 50);

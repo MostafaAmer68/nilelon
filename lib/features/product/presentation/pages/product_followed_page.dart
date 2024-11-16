@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,6 +29,8 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
   @override
   void initState() {
     // if (HiveStorage.get(HiveKeys.userModel) != null) {
+    ProductsCubit.get(context).products.clear();
+    ProductsCubit.get(context).productsHandpack.clear();
     if (HiveStorage.get(HiveKeys.userModel) != null) {
       ProductsCubit.get(context).getFollowedProducts(page, pageSize);
       scrollController.addListener(() {
@@ -37,6 +41,7 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
         }
       });
     }
+    log('product');
     // }
     super.initState();
   }

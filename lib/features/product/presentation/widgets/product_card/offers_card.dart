@@ -60,7 +60,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
           )
         ],
       ),
-      width: screenWidth(context, 0.42),
+      width: screenWidth(context, 0.50),
       height: 280,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,10 +93,11 @@ GestureDetector offersCard({required context, required ProductModel product}) {
               imageReplacer(
                 url: product.productImages.first.url,
                 height: 140.w,
+                width: 300.w,
                 fit: BoxFit.cover,
               ),
               Positioned(
-                top: 10,
+                top: 5,
                 right: 25,
                 child: InkWell(
                   onTap: () {

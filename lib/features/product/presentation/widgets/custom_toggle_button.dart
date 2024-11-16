@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 
@@ -20,7 +21,7 @@ class SizeToggleButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 45,
-      width: screenHeight(context, 0.38),
+      width: 300.w,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: sizes.map((size) {

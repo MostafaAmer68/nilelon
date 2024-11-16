@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -47,7 +48,7 @@ class _BrandCardState extends State<BrandCard> {
       },
       child: Container(
         width: screenWidth(context, 0.45),
-        height: HiveStorage.get(HiveKeys.isStore) ? 150 : 200,
+        height: HiveStorage.get(HiveKeys.isStore) ? 150.w : 200.w,
         padding: const EdgeInsets.only(
           top: 24,
           bottom: 12,
@@ -63,7 +64,7 @@ class _BrandCardState extends State<BrandCard> {
         child: Column(
           mainAxisAlignment: HiveStorage.get(HiveKeys.isStore)
               ? MainAxisAlignment.start
-              : MainAxisAlignment.start,
+              : MainAxisAlignment.center,
           children: [
             HiveStorage.get(HiveKeys.isStore)
                 ? imageReplacer(
@@ -83,10 +84,16 @@ class _BrandCardState extends State<BrandCard> {
               style: AppStylesManager.customTextStyleBl3
                   .copyWith(fontWeight: FontWeight.w600),
             ),
+            const SizedBox(
+              height: 8,
+            ),
             Text(
               widget.store.storeSlogan ?? '',
               style: AppStylesManager.customTextStyleBl3
-                  .copyWith(fontWeight: FontWeight.w600),
+                  .copyWith(fontWeight: FontWeight.w600), 
+            ),
+            const SizedBox(
+              height: 12,
             ),
             // const Spacer(),
             BlocBuilder<ProfileCubit, ProfileState>(

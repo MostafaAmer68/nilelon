@@ -113,6 +113,7 @@ class _OrderPageState extends State<OrderPage> {
                   ),
                   Expanded(
                     child: TabBarView(
+                      physics: const NeverScrollableScrollPhysics(),
                       children: [
                         OrderView(
                           image: SvgPicture.asset(

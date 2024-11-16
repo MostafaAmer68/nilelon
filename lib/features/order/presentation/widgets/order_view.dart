@@ -128,6 +128,7 @@ class _OrderViewState extends State<OrderView> {
                                       order.id, 'Shipped', true);
                                   OrderCubit.get(context)
                                       .getStoreOrder(widget.status);
+                                  setState(() {});
                                 },
                               );
                             }

@@ -1,6 +1,7 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/cards/brand/brand_card.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
@@ -51,8 +52,8 @@ class _SearchResultState extends State<SearchResult> {
             return Center(child: Text(lang(context).itemNotFound));
           }
           return GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisExtent: 280,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                mainAxisExtent: 230.w,
                 crossAxisCount: 2,
                 crossAxisSpacing: 20.0,
                 mainAxisSpacing: 12),

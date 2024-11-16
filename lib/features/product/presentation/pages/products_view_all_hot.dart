@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +12,7 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
+import '../../../../core/data/hive_stroage.dart';
 import '../../../categories/domain/model/result.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
 import '../../domain/models/product_model.dart';
@@ -135,7 +134,9 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 1,
                           crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                          mainAxisExtent: 175,
+                          mainAxisExtent: !HiveStorage.get(HiveKeys.isStore)
+                              ? 170.w
+                              : 150.w,
                           mainAxisSpacing: 1.sw > 600 ? 16 : 12,
                         ),
                         shrinkWrap: true,

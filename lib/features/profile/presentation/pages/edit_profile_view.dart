@@ -11,7 +11,6 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
@@ -72,122 +71,126 @@ class _EditProfileViewState extends State<EditProfileView> {
             },
           );
         },
-        child: SingleChildScrollView(
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const DefaultDivider(),
-              Container(
-                height: screenHeight(context, 0.75),
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const DefaultDivider(),
+            Expanded(
+              child: Container(
+                // height: screenHeight(context, 0.75),
                 padding: const EdgeInsets.all(16.0),
                 margin: const EdgeInsets.all(30),
                 decoration: BoxDecoration(
                     color: ColorManager.primaryW,
                     borderRadius: BorderRadius.circular(16)),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Center(child: photosStack(context)),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        lang.name,
-                        style: AppStylesManager.customTextStyleBl5,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Center(child: photosStack(context)),
+                      const SizedBox(
+                        height: 30,
                       ),
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.enterYourName,
-                      controller: cubit.nameController,
-                      type: TextInputType.text,
-                      width: screenWidth(context, 1),
-                      isIcon: false,
-                      prefixWidget: Container(
-                          width: 20,
-                          height: 20,
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(Assets.assetsImagesProfilee)),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        lang.address,
-                        style: AppStylesManager.customTextStyleBl5,
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          lang.name,
+                          style: AppStylesManager.customTextStyleBl5,
+                        ),
                       ),
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.address,
-                      controller: cubit.wareHouseAddressController,
-                      type: TextInputType.text,
-                      width: screenWidth(context, 1),
-                      isIcon: false,
-                      prefixWidget: Container(
-                          width: 20,
-                          height: 20,
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(Assets.assetsImagesLocation)),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        lang.email,
-                        style: AppStylesManager.customTextStyleBl5,
+                      TextFormFieldBuilder(
+                        label: lang.enterYourName,
+                        controller: cubit.nameController,
+                        type: TextInputType.text,
+                        width: screenWidth(context, 1),
+                        isIcon: false,
+                        prefixWidget: Container(
+                            width: 20,
+                            height: 20,
+                            padding: const EdgeInsets.all(12),
+                            child:
+                                SvgPicture.asset(Assets.assetsImagesProfilee)),
                       ),
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.email,
-                      controller: TextEditingController(
-                          text: currentUsr<CustomerModel>().email),
-                      readOnly: true,
-                      type: TextInputType.text,
-                      width: screenWidth(context, 1),
-                      isIcon: false,
-                      prefixWidget: Container(
-                          width: 20,
-                          height: 20,
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(Assets.assetsImagesEmail)),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        lang.phoneNumber,
-                        style: AppStylesManager.customTextStyleBl5,
+                      const SizedBox(
+                        height: 30,
                       ),
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.phoneNumber,
-                      controller: TextEditingController(
-                          text: currentUsr<CustomerModel>().phoneNumber),
-                      readOnly: true,
-                      type: TextInputType.text,
-                      width: screenWidth(context, 1),
-                      isIcon: false,
-                      prefixWidget: Container(
-                          width: 20,
-                          height: 20,
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(Assets.assetsImagesPhone)),
-                    ),
-                    const SizedBox(
-                      height: 40,
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          lang.address,
+                          style: AppStylesManager.customTextStyleBl5,
+                        ),
+                      ),
+                      TextFormFieldBuilder(
+                        label: lang.address,
+                        controller: cubit.wareHouseAddressController,
+                        type: TextInputType.text,
+                        width: screenWidth(context, 1),
+                        isIcon: false,
+                        prefixWidget: Container(
+                            width: 20,
+                            height: 20,
+                            padding: const EdgeInsets.all(12),
+                            child:
+                                SvgPicture.asset(Assets.assetsImagesLocation)),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          lang.email,
+                          style: AppStylesManager.customTextStyleBl5,
+                        ),
+                      ),
+                      TextFormFieldBuilder(
+                        label: lang.email,
+                        controller: TextEditingController(
+                            text: currentUsr<CustomerModel>().email),
+                        readOnly: true,
+                        type: TextInputType.text,
+                        width: screenWidth(context, 1),
+                        isIcon: false,
+                        prefixWidget: Container(
+                            width: 20,
+                            height: 20,
+                            padding: const EdgeInsets.all(12),
+                            child: SvgPicture.asset(Assets.assetsImagesEmail)),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          lang.phoneNumber,
+                          style: AppStylesManager.customTextStyleBl5,
+                        ),
+                      ),
+                      TextFormFieldBuilder(
+                        label: lang.phoneNumber,
+                        controller: TextEditingController(
+                            text: currentUsr<CustomerModel>().phoneNumber),
+                        readOnly: true,
+                        type: TextInputType.text,
+                        width: screenWidth(context, 1),
+                        isIcon: false,
+                        prefixWidget: Container(
+                            width: 20,
+                            height: 20,
+                            padding: const EdgeInsets.all(12),
+                            child: SvgPicture.asset(Assets.assetsImagesPhone)),
+                      ),
+                      const SizedBox(
+                        height: 40,
+                      ),
+                    ],
+                  ),
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
       btmBar: Container(

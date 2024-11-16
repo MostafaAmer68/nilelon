@@ -6,6 +6,7 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/alert/empty_closets_alert.dart';
@@ -29,7 +30,6 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
     final lang = S.of(context);
 
     return InkWell(
-      onTap: onTap,
       child: Container(
         // width: screenWidth(context, 0.4),
         margin: const EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 36),
@@ -49,22 +49,30 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
 
         child: Row(
           children: [
-            SizedBox(
-              width: 50.w,
-              height: 50.w,
-              child: Image.asset(Assets.assetsImagesClosetFollowing),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
-                closet.name,
-                overflow: TextOverflow.ellipsis,
-                style: AppStylesManager.customTextStyleBl6,
+            InkWell(
+              onTap: onTap,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 50.w,
+                    height: 50.w,
+                    child: Image.asset(Assets.assetsImagesClosetFollowing),
+                  ),
+                  const SizedBox(width: 10),
+                  SizedBox(
+                    width: 170,
+                    child: Text(
+                      closet.name,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppStylesManager.customTextStyleBl6,
+                    ),
+                  ),
+                  // const Spacer(),
+                ],
               ),
             ),
-            const Spacer(),
-            InkWell(
-              onTap: () {
+            IconButton(
+              onPressed: () {
                 showModalBottomSheet(
                   context: context,
                   backgroundColor:
@@ -152,7 +160,7 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                   },
                 );
               },
-              child: Icon(
+              icon: Icon(
                 Icons.more_vert_rounded,
                 size: 20.r,
               ),

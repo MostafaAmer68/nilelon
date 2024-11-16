@@ -99,7 +99,7 @@ class AddToFooter extends StatelessWidget {
                               onPressed: () {
                                 BotToast.closeAllLoading();
 
-                                navigateTo(
+                                navigateAndRemoveUntil(
                                     context: context,
                                     screen: const CustomerBottomTabBar(
                                       index: 1,

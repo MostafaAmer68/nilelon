@@ -52,6 +52,9 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   void dispose() {
     cubit.category = CategoryModel.empty();
     cubit.gendar = 'All';
+    cubit.products.clear();
+    cubit.getFollowedProducts(page, 100);
+    cubit.productsHandpack.clear();
     super.dispose();
   }
 

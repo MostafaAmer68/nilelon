@@ -72,8 +72,7 @@ class _ClosetViewState extends State<ClosetPage> {
               builder: (context, state) {
                 return state.whenOrNull(
                   loading: () {
-                    return SizedBox(
-                      height: screenHeight(context, 0.65),
+                    return SingleChildScrollView(
                       child: isClosetItem
                           ? buildShimmerIndicatorGrid(context)
                           : buildShimmerIndicator(),
@@ -105,57 +104,56 @@ class _ClosetViewState extends State<ClosetPage> {
                                 color: ColorManager.primaryG8,
                               ),
                             ),
-                            Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: BlocBuilder<ClosetCubit, ClosetState>(
-                                  builder: (context, state) {
-                                    return state.whenOrNull(
-                                      loading: () =>
-                                          buildShimmerIndicatorGrid(context),
-                                      success: () => GridView.builder(
-                                        gridDelegate: gridDelegate(context),
-                                        itemCount: ClosetCubit.get(context)
-                                            .closetsItem
-                                            .length,
-                                        itemBuilder: (context, index) {
-                                          return Container(
-                                            child: sectionSmallCard(
-                                                context: context,
-                                                product:
-                                                    ClosetCubit.get(context)
-                                                        .closetsItem[index],
-                                                closetId: ''),
-                                          );
-                                        },
-                                      ),
-                                      failure: () =>
-                                          Text(S.of(context).smothingWent),
-                                    )!;
-                                  },
-                                ),
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: BlocBuilder<ClosetCubit, ClosetState>(
+                                builder: (context, state) {
+                                  return state.whenOrNull(
+                                    loading: () =>
+                                        buildShimmerIndicatorGrid(context),
+                                    success: () => GridView.builder(
+                                      gridDelegate: gridDelegate(context),
+                                      itemCount: ClosetCubit.get(context)
+                                          .closetsItem
+                                          .length,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          child: sectionSmallCard(
+                                              context: context,
+                                              product: ClosetCubit.get(context)
+                                                  .closetsItem[index],
+                                              closetId: ''),
+                                        );
+                                      },
+                                    ),
+                                    failure: () =>
+                                        Text(S.of(context).smothingWent),
+                                  )!;
+                                },
                               ),
                             ),
                           ],
                         ),
                       );
                     }
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: ClosetCubit.get(context).closets.length,
-                      itemBuilder: (context, index) {
-                        final closet = ClosetCubit.get(context).closets[index];
-                        return ClosetsWidgetWithOptions(
-                          isPage: true,
-                          closet: closet,
-                          onTap: () {
-                            navigateTo(
-                              context: context,
-                              screen: ProductClosetPage(closet: closet),
-                            );
-                          },
-                        );
-                      },
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: ClosetCubit.get(context).closets.length,
+                        itemBuilder: (context, index) {
+                          final closet =
+                              ClosetCubit.get(context).closets[index];
+                          return ClosetsWidgetWithOptions(
+                            isPage: true,
+                            closet: closet,
+                            onTap: () {
+                              navigateTo(
+                                context: context,
+                                screen: ProductClosetPage(closet: closet),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     );
                   },
                   success: () {

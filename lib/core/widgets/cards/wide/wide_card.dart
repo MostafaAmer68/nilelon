@@ -1,4 +1,3 @@
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -78,8 +77,11 @@ class WideCard extends StatelessWidget {
               flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const SizedBox(height: 10),
                   Expanded(
+                    flex: !HiveStorage.get(HiveKeys.isStore) ? 1 : 2,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -92,77 +94,80 @@ class WideCard extends StatelessWidget {
                         ),
                         Visibility(
                           visible: !HiveStorage.get(HiveKeys.isStore),
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 5),
-                            child: InkWell(
-                              onTap: () {
-                                showModalBottomSheet(
-                                  context: context,
-                                  backgroundColor: ColorManager.primaryW,
-                                  shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(30),
-                                      topRight: Radius.circular(30),
-                                    ),
+                          child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                backgroundColor: ColorManager.primaryW,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    topRight: Radius.circular(30),
                                   ),
-                                  clipBehavior: Clip.antiAliasWithSaveLayer,
-                                  builder: (context) =>
-                                      ClosetSheetBarView(productId: product.id),
-                                );
-                              },
-                              child: !product.isInCloset
-                                  ? Container(
-                                      width: 30.w,
-                                      height: 30.w,
-                                      padding: const EdgeInsets.all(5),
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.orange.shade300
-                                                .withOpacity(1),
-                                            offset: const Offset(3, 3),
-                                            blurRadius: 5,
-                                          ),
-                                        ],
-                                      ),
-                                      child: SvgPicture.asset(
-                                        Assets.assetsImagesHanger,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    )
-                                  : Image.asset(
-                                      Assets.assetsImagesClosetFollowing,
-                                      fit: BoxFit.cover,
-                                      width: 55,
+                                ),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                builder: (context) =>
+                                    ClosetSheetBarView(productId: product.id),
+                              );
+                            },
+                            child: !product.isInCloset
+                                ? Container(
+                                    width: 30.w,
+                                    height: 30.w,
+                                    padding: const EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.orange.shade300
+                                              .withOpacity(1),
+                                          offset: const Offset(3, 3),
+                                          blurRadius: 5,
+                                        ),
+                                      ],
                                     ),
-                            ),
+                                    child: SvgPicture.asset(
+                                      Assets.assetsImagesHanger,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  )
+                                : Image.asset(
+                                    Assets.assetsImagesClosetFollowing,
+                                    fit: BoxFit.cover,
+                                    width: 45,
+                                  ),
                           ),
                         ),
                       ],
                     ),
                   ),
-                  Text(
-                    '${product.productVariants.first.price} ${lang(context).le}',
-                    style: AppStylesManager.customTextStyleBl2,
+                  Expanded(
+                    flex: !HiveStorage.get(HiveKeys.isStore) ? 1 : 1,
+                    child: Text(
+                      '${product.productVariants.first.price} ${lang(context).le}',
+                      style: AppStylesManager.customTextStyleBl2,
+                    ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        product.storeName,
-                        style: AppStylesManager.customTextStyleB4,
-                      ),
-                      Icon(
-                        Icons.star,
-                        color: ColorManager.primaryO2,
-                        size: 20.r,
-                      ),
-                      Text(
-                        product.rating.toString(),
-                        style: AppStylesManager.customTextStyleG,
-                      ),
-                    ],
+                  Expanded(
+                    flex: !HiveStorage.get(HiveKeys.isStore) ? 1 : 1,
+                    child: Row(
+                      children: [
+                        Text(
+                          product.storeName,
+                          style: AppStylesManager.customTextStyleB4,
+                        ),
+                        Icon(
+                          Icons.star,
+                          color: ColorManager.primaryO2,
+                          size: 20.r,
+                        ),
+                        Text(
+                          product.rating.toString(),
+                          style: AppStylesManager.customTextStyleG,
+                        ),
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 5),
                   Visibility(

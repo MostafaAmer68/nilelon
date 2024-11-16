@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/constants/assets.dart';
@@ -21,6 +22,7 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/search/presentation/pages/search_view.dart';
 
 import '../../layout/customer_bottom_tab_bar.dart';
+import '../../product/presentation/cubit/products_cubit/products_state.dart';
 import '../../product/presentation/pages/products_view_all_hot.dart';
 
 class CustomerHomeView extends StatefulWidget {

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,12 +57,14 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       product = response;
+      getReviews(productId);
       emit(const ProductsState.success());
     });
   }
 
   Future<void> getProductByCategory(int page, int productSize) async {
     products.clear();
+    productsHandpack.clear();
     emit(const ProductsState.loading());
     var result =
         await productsRepos.getProductByCategory(categoryId, page, productSize);
@@ -103,6 +107,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   //todo Get Followed Products Pagination
   Future<void> getFollowedProducts(int page, int productSize) async {
     products.clear();
+    productsHandpack.clear();
     emit(const ProductsState.loading());
     var result = await productsRepos.getFollowedProducts(page, productSize);
     result.fold((failure) {
@@ -120,6 +125,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   //todo Get New In Products Pagination
   Future<void> getNewInProducts(int page, int productSize) async {
     products.clear();
+    productsHandpack.clear();
     emit(const ProductsState.loading());
     late final Either<FailureService, List<ProductModel>> result;
 
@@ -135,6 +141,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       products = response;
+      log(products.length.toString());
       emit(const ProductsState.success());
     });
   }
@@ -145,6 +152,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   //todo Get Random Products
   Future<void> getRandomProducts(int page, int productSize) async {
+    products.clear();
     productsHandpack.clear();
     emit(const ProductsState.loading());
     late final Either<FailureService, List<ProductModel>> result;
@@ -162,6 +170,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     }, (response) {
       emit(const ProductsState.loading());
       productsHandpack = response;
+      log(productsHandpack.length.toString());
       emit(const ProductsState.success());
     });
   }
@@ -183,6 +192,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   Future<void> getOffersProducts(int page, int productSize) async {
     products.clear();
+    productsHandpack.clear();
     emit(const ProductsState.loading());
     late final Either<FailureService, List<ProductModel>> result;
 
@@ -206,6 +216,7 @@ class ProductsCubit extends Cubit<ProductsState> {
   Future<void> getStoreProducts(
       String storeId, int page, int productSize) async {
     products.clear();
+    productsHandpack.clear();
     emit(const ProductsState.loading());
     var result =
         await productsRepos.getStoreProfileItems(storeId, page, productSize);

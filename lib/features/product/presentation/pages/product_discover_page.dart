@@ -130,6 +130,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                 ],
               ),
             ),
+            failure: (_) => Text(_),
           )!;
         },
       ),
