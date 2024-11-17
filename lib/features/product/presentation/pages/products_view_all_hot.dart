@@ -14,7 +14,6 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 import '../../../../core/data/hive_stroage.dart';
-import '../../../../core/resources/const_functions.dart';
 import '../../../../core/tools.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../categories/domain/model/result.dart';
