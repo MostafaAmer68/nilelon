@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -19,7 +20,6 @@ class AnalyticsSmallCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: screenWidth(context, 0.45),
-      height: screenHeight(context, 0.1),
       padding: const EdgeInsets.all(16),
       decoration: ShapeDecoration(
         // color: Colors.white,
@@ -46,6 +46,7 @@ class AnalyticsSmallCard extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Text(
             title,

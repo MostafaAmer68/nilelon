@@ -227,10 +227,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                               loading: () => const CircularProgressIndicator(),
                               success: () => orderSummaryItems(
                                 lang.total,
-                                (cubit.customerOrder.total +
-                                        num.parse(
-                                            cubit.customerOrder.shippingCost))
-                                    .toString(),
+                                (cubit.customerOrder.total).toString(),
                                 AppStylesManager.customTextStyleO5,
                               ),
                             )!,

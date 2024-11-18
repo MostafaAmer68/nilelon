@@ -16,6 +16,7 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
+import '../../domain/models/product_model.dart';
 
 class DiscoverView extends StatefulWidget {
   const DiscoverView({super.key});
@@ -44,7 +45,7 @@ class _DiscoverViewState extends State<DiscoverView> {
           title: lang.discover, context: context, hasLeading: false),
       body: BlocBuilder<ProductsCubit, ProductsState>(
         builder: (context, state) {
-          return state.whenOrNull(
+          return state.maybeWhen(
             loading: () {
               return Center(
                 child: Padding(
@@ -66,7 +67,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                 ),
               );
             },
-            success: () => SingleChildScrollView(
+            newInProductSuccess: (products) => SingleChildScrollView(
               child: Column(
                 children: [
                   const DefaultDivider(),
@@ -91,8 +92,8 @@ class _DiscoverViewState extends State<DiscoverView> {
                             notFoundTitle: lang.noProductNewIn,
                             isHandpicked: false,
                             appBarTitle: lang.newIn,
-                            onStartPage: () {
-                              cubit.getNewInProducts();
+                            onStartPage: (isPage) {
+                              cubit.getNewInProducts(isPage);
                             },
                           ));
                     },
@@ -100,7 +101,9 @@ class _DiscoverViewState extends State<DiscoverView> {
                   const SizedBox(
                     height: 16,
                   ),
-                  const ProductNewInView(),
+                  ProductNewInView(
+                    products: cubit.newInProducts,
+                  ),
                   const SizedBox(height: 16),
                   ViewAllRow(
                     text: lang.handPicked,
@@ -113,15 +116,145 @@ class _DiscoverViewState extends State<DiscoverView> {
                           notFoundTitle: lang.noProductHandPicked,
                           isHandpicked: true,
                           appBarTitle: lang.handPicked,
-                          onStartPage: () {
-                            cubit.getRandomProducts();
+                          onStartPage: (isPage) {
+                            cubit.getRandomProducts(isPage);
                           },
                         ),
                       );
                     },
                   ),
                   const SizedBox(height: 16),
-                  const HandPickedView(),
+                  HandPickedView(
+                    products: cubit.randomProducts,
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+            randomProductSuccess: (products) => SingleChildScrollView(
+              child: Column(
+                children: [
+                  const DefaultDivider(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    lang.discoverOurNewAndSpecialProductsFromHere,
+                    style: AppStylesManager.customTextStyleG3,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ViewAllRow(
+                    assetName: Assets.assetsImagesNewIn,
+                    noTextIcon: false,
+                    text: lang.newIn,
+                    onPressed: () {
+                      navigateTo(
+                          context: context,
+                          screen: ProductsViewAll(
+                            notFoundTitle: lang.noProductNewIn,
+                            isHandpicked: false,
+                            appBarTitle: lang.newIn,
+                            onStartPage: (isPage) {
+                              cubit.getNewInProducts(isPage);
+                            },
+                          ));
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ProductNewInView(
+                    products: cubit.newInProducts,
+                  ),
+                  const SizedBox(height: 16),
+                  ViewAllRow(
+                    text: lang.handPicked,
+                    assetName: Assets.assetsImagesHandPicked,
+                    noTextIcon: false,
+                    onPressed: () {
+                      navigateTo(
+                        context: context,
+                        screen: ProductsViewAll(
+                          notFoundTitle: lang.noProductHandPicked,
+                          isHandpicked: true,
+                          appBarTitle: lang.handPicked,
+                          onStartPage: (isPage) {
+                            cubit.getRandomProducts(isPage);
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  HandPickedView(
+                    products: cubit.randomProducts,
+                  ),
+                  const SizedBox(height: 30),
+                ],
+              ),
+            ),
+            orElse: () => SingleChildScrollView(
+              child: Column(
+                children: [
+                  const DefaultDivider(),
+                  const SizedBox(
+                    height: 8,
+                  ),
+                  Text(
+                    lang.discoverOurNewAndSpecialProductsFromHere,
+                    style: AppStylesManager.customTextStyleG3,
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ViewAllRow(
+                    assetName: Assets.assetsImagesNewIn,
+                    noTextIcon: false,
+                    text: lang.newIn,
+                    onPressed: () {
+                      navigateTo(
+                          context: context,
+                          screen: ProductsViewAll(
+                            notFoundTitle: lang.noProductNewIn,
+                            isHandpicked: false,
+                            appBarTitle: lang.newIn,
+                            onStartPage: (isPage) {
+                              cubit.getNewInProducts(isPage);
+                            },
+                          ));
+                    },
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  ProductNewInView(
+                    products: cubit.newInProducts,
+                  ),
+                  const SizedBox(height: 16),
+                  ViewAllRow(
+                    text: lang.handPicked,
+                    assetName: Assets.assetsImagesHandPicked,
+                    noTextIcon: false,
+                    onPressed: () {
+                      navigateTo(
+                        context: context,
+                        screen: ProductsViewAll(
+                          notFoundTitle: lang.noProductHandPicked,
+                          isHandpicked: true,
+                          appBarTitle: lang.handPicked,
+                          onStartPage: (isPage) {
+                            cubit.getRandomProducts(isPage);
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  HandPickedView(
+                    products: cubit.randomProducts,
+                  ),
                   const SizedBox(height: 30),
                 ],
               ),
@@ -137,127 +270,85 @@ class _DiscoverViewState extends State<DiscoverView> {
 class ProductNewInView extends StatelessWidget {
   const ProductNewInView({
     super.key,
+    required this.products,
   });
-
+  final List<ProductModel> products;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
-        return state.when(initial: () {
-          return buildShimmerIndicatorRow();
-        }, loading: () {
-          return buildShimmerIndicatorRow();
-        }, success: () {
-          if (ProductsCubit.get(context).products.isEmpty) {
-            return SizedBox(
-              height: 120.w,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    S.of(context).noProductNewIn,
-                    style: AppStylesManager.customTextStyleG2,
-                  ),
-                ],
-              ),
-            );
-          }
-
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: SizedBox(
-              height: 270.w,
-              child: ListView.builder(
-                itemBuilder: (context, index) {
-                  final product = ProductsCubit.get(context).products[index];
-                  return Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: productSquarItem(
-                      context: context,
-                      product: product,
-                    ),
-                  );
-                },
-                itemCount: ProductsCubit.get(context).products.length,
-                scrollDirection: Axis.horizontal,
-                padding: const EdgeInsets.only(right: 8),
-              ),
-            ),
-          );
-        }, failure: (message) {
+        if (products.isEmpty) {
           return SizedBox(
-            height: 150.h,
-            child: Center(
-              child: Text(message),
+            height: 120.w,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  S.of(context).noProductNewIn,
+                  style: AppStylesManager.customTextStyleG2,
+                ),
+              ],
             ),
           );
-        });
+        }
+
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: SizedBox(
+            height: 270.w,
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                final product = products[index];
+                return Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: productSquarItem(
+                    context: context,
+                    product: product,
+                  ),
+                );
+              },
+              itemCount: products.length,
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.only(right: 8),
+            ),
+          ),
+        );
       },
     );
   }
 }
 
-class HandPickedView extends StatefulWidget {
+class HandPickedView extends StatelessWidget {
   const HandPickedView({
     super.key,
+    required this.products,
   });
-
-  @override
-  State<HandPickedView> createState() => _HandPickedViewState();
-}
-
-class _HandPickedViewState extends State<HandPickedView> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
+  final List<ProductModel> products;
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ProductsCubit, ProductsState>(
-      listener: (context, state) {
-        state.mapOrNull(success: (_) {});
-      },
-      builder: (context, state) {
-        return state.when(initial: () {
-          return buildShimmerIndicatorGrid(context);
-        }, loading: () {
-          return buildShimmerIndicatorGrid(context);
-        }, success: () {
-          if (ProductsCubit.get(context).productsHandpack.isEmpty) {
-            return Center(
-              child: Text(
-                S.of(context).noProductHandPicked,
-                style: AppStylesManager.customTextStyleG2,
-              ),
-            );
-          }
-          return Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              gridDelegate: gridDelegate(context),
-              shrinkWrap: true,
-              itemCount: ProductsCubit.get(context).productsHandpack.length,
-              itemBuilder: (context, index) {
-                final product =
-                    ProductsCubit.get(context).productsHandpack[index];
-                return productSquarItem(
-                  context: context,
-                  product: product,
-                );
-              },
-            ),
+    if (products.isEmpty) {
+      return Center(
+        child: Text(
+          S.of(context).noProductHandPicked,
+          style: AppStylesManager.customTextStyleG2,
+        ),
+      );
+    }
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
+      child: GridView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: gridDelegate(context),
+        shrinkWrap: true,
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          final product = products[index];
+          return productSquarItem(
+            context: context,
+            product: product,
           );
-        }, failure: (message) {
-          return SizedBox(
-            height: 200.h,
-            child: Center(
-              child: Text(message),
-            ),
-          );
-        });
-      },
+        },
+      ),
     );
   }
 }

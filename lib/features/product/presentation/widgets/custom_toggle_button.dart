@@ -18,67 +18,71 @@ class SizeToggleButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 45,
-      width: 300.w,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        children: sizes.map((size) {
-          final isSelected = size == selectedSize;
-          return GestureDetector(
-            onTap: () => onSizeSelected(size),
-            child: Container(
-              margin: const EdgeInsets.symmetric(horizontal: 8.0),
-              width: 45,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                gradient: !isSelected
-                    ? null
-                    : const LinearGradient(
-                        colors: [Colors.blue, Colors.orange],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                boxShadow: isSelected
-                    ? [
-                        BoxShadow(
-                          color: Colors.orange.withOpacity(0.3),
-                          blurRadius: 8,
-                          spreadRadius: 1,
-                        ),
-                        const BoxShadow(
-                          color: Color.fromRGBO(68, 201, 225, 0.40),
-                          blurRadius: 8,
-                          spreadRadius: 3,
-                        ),
-                      ]
-                    : null,
-                color:
-                    isSelected ? ColorManager.primaryW : ColorManager.primaryG,
-              ),
+    return Expanded(
+      child: SizedBox(
+        height: 45,
+        // width: 300.w,
+        child: ListView(
+          scrollDirection: Axis.horizontal,
+          children: sizes.map((size) {
+            final isSelected = size == selectedSize;
+            return GestureDetector(
+              onTap: () => onSizeSelected(size),
               child: Container(
-                width: 40,
-                height: 40,
-                // padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                width: 45,
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.white : ColorManager.primaryW,
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: !isSelected
+                      ? null
+                      : const LinearGradient(
+                          colors: [Colors.blue, Colors.orange],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                  boxShadow: isSelected
+                      ? [
+                          BoxShadow(
+                            color: Colors.orange.withOpacity(0.3),
+                            blurRadius: 8,
+                            spreadRadius: 1,
+                          ),
+                          const BoxShadow(
+                            color: Color.fromRGBO(68, 201, 225, 0.40),
+                            blurRadius: 8,
+                            spreadRadius: 3,
+                          ),
+                        ]
+                      : null,
+                  color: isSelected
+                      ? ColorManager.primaryW
+                      : ColorManager.primaryG,
                 ),
-                child: Center(
-                  child: Text(
-                    getSizeShortcut(size),
-                    style: TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.bold,
-                      color: isSelected ? Colors.orange : Colors.grey.shade400,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  // padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: isSelected ? Colors.white : ColorManager.primaryW,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Center(
+                    child: Text(
+                      getSizeShortcut(size),
+                      style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color:
+                            isSelected ? Colors.orange : Colors.grey.shade400,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          );
-        }).toList(),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

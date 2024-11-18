@@ -54,6 +54,8 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold((failure) {
       emit(LoginFailure(failure.errorMsg));
     }, (response) {
+      passwordController.clear();
+      newPasswordController.clear();
       emit(ResetPasswordSuccess());
       HiveStorage.set(HiveKeys.token, '');
     });
@@ -71,6 +73,7 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold((failure) {
       emit(LoginFailure(failure.errorMsg));
     }, (response) {
+      newPasswordController.clear();
       emit(ResetPasswordSuccess());
     });
   }

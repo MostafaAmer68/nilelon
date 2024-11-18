@@ -35,7 +35,10 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   List<ReviewModel> review = [];
   List<ProductModel> products = [];
-  List<ProductModel> productsHandpack = [];
+  List<ProductModel> newInProducts = [];
+  List<ProductModel> randomProducts = [];
+  List<ProductModel> followingProducts = [];
+  List<ProductModel> storeProducts = [];
 
   bool loadMore = false;
 
@@ -69,8 +72,6 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   Future<void> getProductByCategory() async {
-    products.clear();
-    productsHandpack.clear();
     emit(const ProductsState.loading());
     var result =
         await productsRepos.getProductByCategory(categoryId, page, limit);
@@ -111,28 +112,24 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   //todo Get Followed Products Pagination
-  Future<void> getFollowedProducts() async {
-    products.clear();
-    productsHandpack.clear();
-    emit(const ProductsState.loading());
+  Future<void> getFollowedProducts([bool isPagination = true]) async {
+    if (isPagination) {
+      emit(const ProductsState.loading());
+    }
     var result = await productsRepos.getFollowedProducts(page, limit);
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
-      products = response;
-      emit(const ProductsState.success());
+      followingProducts = response;
+      emit(ProductsState.followingProductSuccess(response));
     });
   }
 
-  //?*********************************************************************************
-  //! Get New In
-  //?*********************************************************************************
-
   //todo Get New In Products Pagination
-  Future<void> getNewInProducts() async {
-    products.clear();
-    productsHandpack.clear();
-    emit(const ProductsState.loading());
+  Future<void> getNewInProducts([bool isPagination = true]) async {
+    if (isPagination) {
+      emit(const ProductsState.loading());
+    }
     late final Either<FailureService, List<ProductModel>> result;
 
     if (HiveStorage.get(HiveKeys.userModel) != null &&
@@ -140,27 +137,25 @@ class ProductsCubit extends Cubit<ProductsState> {
       result = await productsRepos.getNewInProducts(page, limit);
     } else {
       result = await productsRepos.getNewInProductsGuest(
-          page, limit, gendar == 'All' ? 'UniSex' : gendar);
+        page,
+        limit,
+        gendar == 'All' ? 'UniSex' : gendar,
+      );
     }
 
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
-      products = response;
-      log(products.length.toString());
-      emit(const ProductsState.success());
+      newInProducts = response;
+      emit(ProductsState.newInProductSuccess(response));
     });
   }
 
-  //?*********************************************************************************
-  //! Get Random
-  //?*********************************************************************************
-
   //todo Get Random Products
-  Future<void> getRandomProducts() async {
-    products.clear();
-    productsHandpack.clear();
-    emit(const ProductsState.loading());
+  Future<void> getRandomProducts([bool isPagination = true]) async {
+    if (isPagination) {
+      emit(const ProductsState.loading());
+    }
     late final Either<FailureService, List<ProductModel>> result;
 
     if (HiveStorage.get(HiveKeys.userModel) != null) {
@@ -175,9 +170,10 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       emit(const ProductsState.loading());
-      productsHandpack = response;
-      log(productsHandpack.length.toString());
-      emit(const ProductsState.success());
+
+      randomProducts = response;
+
+      emit(ProductsState.randomProductSuccess(response));
     });
   }
 
@@ -195,10 +191,10 @@ class ProductsCubit extends Cubit<ProductsState> {
     });
   }
 
-  Future<void> getOffersProducts() async {
-    products.clear();
-    productsHandpack.clear();
-    emit(const ProductsState.loading());
+  Future<void> getOffersProducts([bool isPagination = true]) async {
+    if (isPagination) {
+      emit(const ProductsState.loading());
+    }
     late final Either<FailureService, List<ProductModel>> result;
 
     if (HiveStorage.get(HiveKeys.userModel) != null) {
@@ -213,21 +209,22 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       products = response;
-      emit(const ProductsState.success());
+      emit(ProductsState.randomProductSuccess(response));
     });
   }
 
   //todo Get Store Products Pagination
-  Future<void> getStoreProducts(String storeId) async {
-    products.clear();
-    productsHandpack.clear();
-    emit(const ProductsState.loading());
+  Future<void> getStoreProducts(String storeId,
+      [bool isPagination = true]) async {
+    if (isPagination) {
+      emit(const ProductsState.loading());
+    }
     var result = await productsRepos.getStoreProfileItems(storeId, page, limit);
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
-      products = response;
-      emit(const ProductsState.success());
+      storeProducts = response;
+      emit(ProductsState.storeProductSuccess(response));
     });
   }
 }

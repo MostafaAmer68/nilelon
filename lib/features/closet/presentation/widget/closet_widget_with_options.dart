@@ -6,8 +6,8 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
-import 'package:svg_flutter/svg.dart';
 
+import '../../../../core/resources/const_functions.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/alert/empty_closets_alert.dart';
 import '../../../../core/widgets/alert/show_delete_section_alert.dart';
@@ -31,8 +31,7 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
 
     return InkWell(
       child: Container(
-        // width: screenWidth(context, 0.4),
-        margin: const EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 36),
+        // margin: const EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 36),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         decoration: isPage
             ? BoxDecoration(
@@ -46,29 +45,30 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                 ],
               )
             : null,
-
         child: Row(
           children: [
-            InkWell(
-              onTap: onTap,
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 50.w,
-                    height: 50.w,
-                    child: Image.asset(Assets.assetsImagesClosetFollowing),
-                  ),
-                  const SizedBox(width: 10),
-                  SizedBox(
-                    width: 170,
-                    child: Text(
-                      closet.name,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppStylesManager.customTextStyleBl6,
+            Expanded(
+              child: InkWell(
+                onTap: onTap,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 50.w,
+                      height: 50.w,
+                      child: Image.asset(Assets.assetsImagesClosetFollowing),
                     ),
-                  ),
-                  // const Spacer(),
-                ],
+                    const SizedBox(width: 10),
+                    SizedBox(
+                      width: 170,
+                      child: Text(
+                        closet.name,
+                        overflow: TextOverflow.ellipsis,
+                        style: AppStylesManager.customTextStyleBl6,
+                      ),
+                    ),
+                    // const Spacer(),
+                  ],
+                ),
               ),
             ),
             IconButton(

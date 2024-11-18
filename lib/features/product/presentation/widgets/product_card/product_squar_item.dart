@@ -67,7 +67,6 @@ GestureDetector productSquarItem(
           : 1.sw < 400
               ? 155
               : 200,
-      // height: 1.sw > 600 ? 300 : 220,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -95,7 +94,14 @@ GestureDetector productSquarItem(
           Stack(
             alignment: Alignment.topRight,
             children: [
-              imageSection(product),
+              imageReplacer(
+                url: product.productImages.isEmpty
+                    ? ''
+                    : product.productImages.first.url,
+                height: 140.w,
+                width: 300,
+                fit: BoxFit.cover,
+              ),
               Positioned(
                 top: 10.h,
                 right: 10.w,
@@ -161,7 +167,7 @@ GestureDetector productSquarItem(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: PriceAndRatingRow(
               price: '$price ${lang(context).le}',
-              rating: product.rating.toString(),
+              rating: product.rating.toStringAsFixed(1).toString(),
             ),
           ),
           SizedBox(
@@ -178,14 +184,5 @@ GestureDetector productSquarItem(
         ],
       ),
     ),
-  );
-}
-
-imageSection(ProductModel product) {
-  return imageReplacer(
-    url: product.productImages.isEmpty ? '' : product.productImages.first.url,
-    height: 140.w,
-    width: 300,
-    fit: BoxFit.cover,
   );
 }

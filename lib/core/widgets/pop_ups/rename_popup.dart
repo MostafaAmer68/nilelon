@@ -36,7 +36,7 @@ Future renameSectionDialog(
           padding:
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Container(
-            height: 500.h,
+            // height: 500.h,
             width: screenWidth(context, 1),
             decoration: const BoxDecoration(
               color: Colors.white,

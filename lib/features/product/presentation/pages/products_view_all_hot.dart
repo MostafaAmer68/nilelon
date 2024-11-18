@@ -31,53 +31,70 @@ class ProductsViewAllHot extends StatefulWidget {
     required this.notFoundTitle,
     required this.isHandpicked,
   });
+
   final String appBarTitle;
   final String notFoundTitle;
   final bool isHandpicked;
   final bool isStore;
   final bool isOffer;
 
-  final VoidCallback onStartPage;
+  final Function(bool isPage) onStartPage;
+
   @override
-  State<ProductsViewAllHot> createState() => _ProductsViewAllState();
+  State<ProductsViewAllHot> createState() => _ProductsViewAllHotState();
 }
 
-class _ProductsViewAllState extends State<ProductsViewAllHot> {
-  bool isPullDown = false;
+class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
   late final ProductsCubit cubit;
-  List<ProductModel> products = [];
+  final List<ProductModel> paginationList = [];
+  bool isLoadingMore = false;
+  late ScrollController scrollController;
 
   @override
   void dispose() {
     cubit.category = CategoryModel.empty();
     cubit.gendar = 'All';
+    cubit.page = 1;
+    scrollController.dispose();
     super.dispose();
   }
 
   @override
   void initState() {
-    cubit = ProductsCubit.get(context);
-    cubit.scroll = ScrollController();
-    widget.onStartPage();
-    cubit.scroll.addListener(() {
-      double currentPos = cubit.scroll.position.pixels;
-      double maxPos = cubit.scroll.position.maxScrollExtent;
-      if (maxPos >= currentPos) {
-        widget.onStartPage();
-        cubit.page += 1;
-        if (products.isEmpty || cubit.productsHandpack.isEmpty) {
-          cubit.page = cubit.page - 1;
-        }
-      }
-
-      setState(() {});
-    });
     super.initState();
+    cubit = ProductsCubit.get(context);
+    widget.onStartPage(true);
+    scrollController = ScrollController();
+
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+              scrollController.position.maxScrollExtent - 100 &&
+          !isLoadingMore) {
+        _loadMoreProducts();
+      }
+    });
+  }
+
+  void _loadMoreProducts() async {
+    if (!isLoadingMore) {
+      setState(() => isLoadingMore = true);
+
+      final currentPosition = scrollController.position.pixels;
+
+      cubit.page += 1; // Increment page for next API call
+      widget.onStartPage(false);
+
+      setState(() {
+        isLoadingMore = false;
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          scrollController.jumpTo(currentPosition);
+        });
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // final lang = S.of(context);
     return ScaffoldImage(
       appBar: customAppBar(
         title: widget.appBarTitle,
@@ -88,69 +105,92 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
       body: Column(
         children: [
           const DefaultDivider(),
-          const SizedBox(
-            height: 8,
-          ),
+          const SizedBox(height: 8),
           filtersColumn(context),
           BlocBuilder<ProductsCubit, ProductsState>(
             builder: (context, state) {
-              return state.when(initial: () {
-                return buildShimmerIndicatorGrid(context);
-              }, loading: () {
-                return Expanded(child: buildShimmerIndicatorGrid(context));
-              }, success: () {
-                if (widget.isHandpicked) {
-                  products = cubit.productsHandpack;
-                } else {
-                  products = cubit.products;
-                }
-                if (cubit
-                    .filterListByCategory(cubit.category, products)
-                    .isEmpty) {
-                  return SizedBox(
-                    height: 450.h,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          widget.notFoundTitle,
-                          style: AppStylesManager.customTextStyleG2,
-                        ),
-                      ],
-                    ),
-                  );
-                } else {
-                  return Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: GridView.builder(
-                        controller: cubit.scroll,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-                          mainAxisExtent: !HiveStorage.get(HiveKeys.isStore)
-                              ? 170.w
-                              : 150.w,
-                          mainAxisSpacing: 1.sw > 600 ? 16 : 12,
-                        ),
-                        shrinkWrap: true,
-                        itemCount: cubit
-                            .filterListByCategory(cubit.category, products)
-                            .length,
-                        itemBuilder: (context, sizeIndex) {
-                          final productItem = cubit.filterListByCategory(
-                              cubit.category, products)[sizeIndex];
-
-                          return WideCard(product: productItem);
-                        },
+              return state.maybeWhen(
+                loading: () =>
+                    Expanded(child: buildShimmerIndicatorGrid(context)),
+                randomProductSuccess: (products) {
+                  return _buildProductGrid(products);
+                },
+                failure: (message) => _buildErrorMessage(message),
+                orElse: () => SizedBox(
+                  height: 450.h,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        widget.notFoundTitle,
+                        style: AppStylesManager.customTextStyleG2,
                       ),
-                    ),
-                  );
-                }
-              }, failure: (message) {
-                return Text(widget.notFoundTitle);
-              });
+                    ],
+                  ),
+                ),
+              );
             },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductGrid(List<ProductModel> products) {
+    if (products.isEmpty && paginationList.isEmpty) {
+      return SizedBox(
+        height: 450.h,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              widget.notFoundTitle,
+              style: AppStylesManager.customTextStyleG2,
+            ),
+          ],
+        ),
+      );
+    }
+
+    if (paginationList.isEmpty || cubit.page == 1) {
+      paginationList.clear(); // Clear on the first page or new data set
+    }
+    paginationList.addAll(products);
+
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: GridView.builder(
+          controller: scrollController,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1,
+            crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
+            mainAxisExtent: !HiveStorage.get(HiveKeys.isStore) ? 170.w : 150.w,
+            mainAxisSpacing: 1.sw > 600 ? 16 : 12,
+          ),
+          itemCount: paginationList.length + (isLoadingMore ? 1 : 0),
+          itemBuilder: (context, index) {
+            if (index == paginationList.length) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            final productItem = paginationList[index];
+            return WideCard(product: productItem);
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorMessage(String message) {
+    return SizedBox(
+      height: 450.h,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            widget.notFoundTitle,
+            style: AppStylesManager.customTextStyleG2,
           ),
         ],
       ),
@@ -167,73 +207,70 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
             selectedCategory: cubit.category,
             onSelected: (category) {
               cubit.category = category;
+              paginationList.clear(); // Clear pagination list
+              cubit.page = 1; // Reset page
+              widget.onStartPage(false);
               setState(() {});
             },
           ),
         ),
-        const SizedBox(
-          height: 16,
-        ),
+        const SizedBox(height: 16),
         Row(
           children: [
-            const SizedBox(
-              width: 16,
-            ),
+            const SizedBox(width: 16),
             InkWell(
               onTap: () {
                 showDialog(
-                    context: context,
-                    builder: (context) {
-                      return SimpleDialog(
-                        contentPadding: const EdgeInsets.all(5),
-                        titlePadding: const EdgeInsets.all(20),
-                        title: TextField(
-                          controller: TextEditingController(
-                              text: cubit.limit.toString()),
-                          onChanged: (v) {
-                            cubit.limit = int.parse(v.isEmpty ? '0' : v);
-                            setState(() {});
-                          },
-                          decoration: InputDecoration(
-                            prefix: const Icon(Icons.pages),
-                            hintText: cubit.limit.toString(),
-                          ),
-                          keyboardType: TextInputType.number,
+                  context: context,
+                  builder: (context) {
+                    return SimpleDialog(
+                      contentPadding: const EdgeInsets.all(5),
+                      titlePadding: const EdgeInsets.all(20),
+                      title: TextField(
+                        controller:
+                            TextEditingController(text: cubit.limit.toString()),
+                        onChanged: (v) {
+                          cubit.limit = int.parse(v.isEmpty ? '0' : v);
+                          setState(() {});
+                        },
+                        decoration: InputDecoration(
+                          prefix: const Icon(Icons.pages),
+                          hintText: cubit.limit.toString(),
                         ),
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              if (cubit.limit > 0) {
-                                navigatePop(context: context);
-                                widget.onStartPage();
-                              } else {
-                                BotToast.showText(
-                                    text: 'please enter page size above 0');
-                              }
-                            },
-                            child: Text(lang(context).ok),
-                          )
-                        ],
-                      );
-                    });
+                        keyboardType: TextInputType.number,
+                      ),
+                      children: [
+                        TextButton(
+                          onPressed: () {
+                            if (cubit.limit > 0) {
+                              navigatePop(context: context);
+                              widget.onStartPage(false);
+                            } else {
+                              BotToast.showText(
+                                  text: 'please enter page size above 0');
+                            }
+                          },
+                          child: Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
               },
-              child: Icon(
+              child: const Icon(
                 Icons.tune,
                 color: ColorManager.primaryW,
               ),
             ),
-            const SizedBox(
-              width: 8,
-            ),
+            const SizedBox(width: 8),
             Visibility(
-              // visible: HiveStorage.get(HiveKeys.isStore),
               child: Expanded(
                 child: GendarFilterWidget(
                   isDark: false,
                   selectedCategory: cubit.gendar,
                   onSelected: (gendar) {
                     cubit.gendar = gendar;
-                    widget.onStartPage();
+                    widget.onStartPage(false);
                     setState(() {});
                   },
                 ),
@@ -241,9 +278,7 @@ class _ProductsViewAllState extends State<ProductsViewAllHot> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 16,
-        ),
+        const SizedBox(height: 16),
       ],
     );
   }

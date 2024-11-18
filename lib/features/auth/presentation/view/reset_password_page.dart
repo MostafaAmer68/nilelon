@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:nilelon/features/shared/welcomePage/welcome_page.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
@@ -43,7 +44,8 @@ class _ResetPassowrdViewState extends State<ResetPassowrdView> {
           }
           if (state is ResetPasswordSuccess) {
             BotToast.closeAllLoading();
-            navigateAndRemoveUntil(context: context, screen: const LoginView());
+            navigateAndRemoveUntil(
+                context: context, screen: const ShopOrSellView());
           }
           if (state is LoginFailure) {
             BotToast.closeAllLoading();

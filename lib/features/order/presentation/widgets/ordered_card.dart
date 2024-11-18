@@ -25,7 +25,7 @@ class OrderCustomerCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 1.sw > 600 ? 110 : 90,
+        height: 1.sw > 600 ? 110 : 90.w,
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
         width: screenWidth(context, 0.9),

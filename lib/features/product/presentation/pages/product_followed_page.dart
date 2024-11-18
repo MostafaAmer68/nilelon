@@ -23,9 +23,6 @@ class FollowedProductPage extends StatefulWidget {
 class _FollowedProductPageState extends State<FollowedProductPage> {
   @override
   void initState() {
-    // if (HiveStorage.get(HiveKeys.userModel) != null) {
-    ProductsCubit.get(context).products.clear();
-    ProductsCubit.get(context).productsHandpack.clear();
     if (HiveStorage.get(HiveKeys.userModel) != null) {
       ProductsCubit.get(context).getFollowedProducts();
     }
@@ -38,12 +35,12 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
-        return state.when(initial: () {
+        return state.maybeWhen(initial: () {
           return Center(child: Text(lang(context).guestMsg));
         }, loading: () {
           return buildShimmerIndicatorGrid(context);
-        }, success: () {
-          if (ProductsCubit.get(context).products.isEmpty) {
+        }, followingProductSuccess: (products) {
+          if (ProductsCubit.get(context).followingProducts.isEmpty) {
             return SizedBox(
               height: 180.h,
               child: Column(
@@ -64,11 +61,12 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: gridDelegate(context),
                 shrinkWrap: true,
-                itemCount: ProductsCubit.get(context).products.length,
+                itemCount: ProductsCubit.get(context).followingProducts.length,
                 itemBuilder: (context, sizeIndex) {
                   return productSquarItem(
                     context: context,
-                    product: ProductsCubit.get(context).products[sizeIndex],
+                    product:
+                        ProductsCubit.get(context).followingProducts[sizeIndex],
                   );
                 },
               ),
@@ -78,6 +76,19 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
           return SizedBox(
               height: 100,
               child: Center(child: Text(S.of(context).noProductFollow)));
+        }, orElse: () {
+          return SizedBox(
+            height: 180.h,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  S.of(context).noFollowingAnyStore,
+                  style: AppStylesManager.customTextStyleG2,
+                ),
+              ],
+            ),
+          );
         });
       },
     );

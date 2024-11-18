@@ -83,8 +83,8 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                       appBarTitle: lang.newIn,
                       notFoundTitle: lang.noProductNewIn,
                       isHandpicked: false,
-                      onStartPage: () {
-                        cubit.getNewInProducts();
+                      onStartPage: (isPage) {
+                        cubit.getNewInProducts(isPage);
                       },
                       isStore: true,
                     ),
@@ -98,46 +98,43 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: BlocBuilder<ProductsCubit, ProductsState>(
                   builder: (context, state) {
-                    return state.whenOrNull(
-                      failure: (err) {
-                        return const Icon(Icons.error);
-                      },
-                      loading: () {
-                        return buildShimmerIndicatorGrid(context);
-                      },
-                      success: () {
-                        if (ProductsCubit.get(context).products.isEmpty) {
-                          return SizedBox(
-                            height: 120.h,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  S.of(context).noProductNewIn,
-                                  style: AppStylesManager.customTextStyleG2,
-                                ),
-                              ],
+                    return state.maybeWhen(failure: (err) {
+                      return const Icon(Icons.error);
+                    }, loading: () {
+                      return buildShimmerIndicatorGrid(context);
+                    }, newInProductSuccess: (products) {
+                      if (products.isEmpty) {
+                        return SizedBox(
+                          height: 120.h,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                S.of(context).noProductNewIn,
+                                style: AppStylesManager.customTextStyleG2,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: gridDelegate(context),
+                        shrinkWrap: true,
+                        itemCount: products.length,
+                        itemBuilder: (context, index) {
+                          final product = products[index];
+                          return Container(
+                            child: productSquarItem(
+                              context: context,
+                              product: product,
                             ),
                           );
-                        }
-                        return GridView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: gridDelegate(context),
-                          shrinkWrap: true,
-                          itemCount: ProductsCubit.get(context).products.length,
-                          itemBuilder: (context, index) {
-                            final product =
-                                ProductsCubit.get(context).products[index];
-                            return Container(
-                              child: productSquarItem(
-                                context: context,
-                                product: product,
-                              ),
-                            );
-                          },
-                        );
-                      },
-                    )!;
+                        },
+                      );
+                    }, orElse: () {
+                      return const Icon(Icons.error);
+                    });
                   },
                 ),
               ),
@@ -161,8 +158,8 @@ class _StoreMarketViewState extends State<StoreMarketView> {
             notFoundTitle: lang(context).noProductOffer,
             isHandpicked: false,
             appBarTitle: lang(context).offers,
-            onStartPage: () {
-              ProductsCubit.get(context).getOffersProducts();
+            onStartPage: (isPage) {
+              ProductsCubit.get(context).getOffersProducts(isPage);
             },
           ),
         );
@@ -180,8 +177,8 @@ class _StoreMarketViewState extends State<StoreMarketView> {
             notFoundTitle: lang(context).noProductNewIn,
             isHandpicked: false,
             appBarTitle: lang(context).hotPicks,
-            onStartPage: () {
-              ProductsCubit.get(context).getNewInProducts();
+            onStartPage: (isPage) {
+              ProductsCubit.get(context).getNewInProducts(isPage);
             },
           ),
         );

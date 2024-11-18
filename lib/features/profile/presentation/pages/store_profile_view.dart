@@ -49,6 +49,11 @@ class _StoreProfileViewState extends State<StoreProfileView> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   // String _indexName = 'All Items';
   @override
   Widget build(BuildContext context) {
@@ -133,11 +138,11 @@ class _StoreProfileViewState extends State<StoreProfileView> {
             const SizedBox(height: 20),
             BlocBuilder<ProductsCubit, ProductsState>(
               builder: (context, state) {
-                return state.when(initial: () {
+                return state.maybeWhen(initial: () {
                   return buildShimmerIndicatorGrid(context);
                 }, loading: () {
                   return buildShimmerIndicatorGrid(context);
-                }, success: () {
+                }, storeProductSuccess: (products) {
                   return pCubit
                           .filterListByCategory(
                               cubit.selectedCategory, pCubit.products)
@@ -179,6 +184,8 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                         );
                 }, failure: (message) {
                   return Text(message);
+                }, orElse: () {
+                  return Text(S.of(context).waitingToGet);
                 });
               },
             ),

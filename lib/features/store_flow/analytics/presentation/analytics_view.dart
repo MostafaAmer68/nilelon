@@ -226,13 +226,11 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                             height: 24,
                           ),
                           Expanded(
-                            // height: 1.sw > 600 ? 220 : 145,
-                            // width: screenWidth(context, 1),
                             child: Column(
                               children: [
                                 cubit.dashboardModel.storeBestseller.isEmpty
                                     ? SizedBox(
-                                        height: screenHeight(context, 0.15),
+                                        height: screenHeight(context, 0.10),
                                         child: Center(
                                           child: Text(lang.noBestSeller),
                                         ),
@@ -312,7 +310,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                           },
                         ),
                         SizedBox(
-                          height: screenHeight(context, 0.21),
+                          height: screenHeight(context, 0.30),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.sp),
                             child: Row(
@@ -324,10 +322,8 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                   average: 700,
                                   index: 0,
                                 ),
-                                const Spacer(),
+                                // const Spacer(),
                                 Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     AnalyticsSmallCard(
                                       title: lang.ofOrders,

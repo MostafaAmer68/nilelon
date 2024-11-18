@@ -33,7 +33,9 @@ class _CheckOutViewState extends State<CheckOutView> {
   void initState() {
     cubit = ProgressCubit.get(context);
     orderCubit = OrderCubit.get(context);
-
+    PromoCubit.get(context).deliveryPrice = 0;
+    PromoCubit.get(context).totalPrice = 0;
+    PromoCubit.get(context).tempTotalPrice = 0;
     cubit.resetPage();
     super.initState();
   }

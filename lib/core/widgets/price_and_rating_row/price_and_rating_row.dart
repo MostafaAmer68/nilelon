@@ -14,21 +14,24 @@ class PriceAndRatingRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Expanded(
-          child: Text(
-            price,
-            style: AppStylesManager.customTextStyleBl2,
-          ),
-        ),
-        Icon(
-          Icons.star,
-          color: ColorManager.primaryO2,
-          size: 20.r,
-        ),
         Text(
-          rating,
-          style: AppStylesManager.customTextStyleG6,
+          price,
+          style: AppStylesManager.customTextStyleBl2,
+        ),
+        Row(
+          children: [
+            Icon(
+              Icons.star,
+              color: ColorManager.primaryO2,
+              size: 20.r,
+            ),
+            Text(
+              rating,
+              style: AppStylesManager.customTextStyleG6,
+            ),
+          ],
         ),
       ],
     );

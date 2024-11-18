@@ -77,12 +77,14 @@ class _OrderViewState extends State<OrderView> {
                 },
                 success: () {
                   if (cubit.orders.isEmpty) {
-                    return SizedBox(
-                      height: screenHeight(context, 0.6),
-                      child: Center(
-                        child: Text(
-                          lang(context).noOrder,
-                          style: AppStylesManager.customTextStyleG2,
+                    return Expanded(
+                      child: SizedBox(
+                        height: screenHeight(context, 0.6),
+                        child: Center(
+                          child: Text(
+                            lang(context).noOrder,
+                            style: AppStylesManager.customTextStyleG2,
+                          ),
                         ),
                       ),
                     );
@@ -151,7 +153,7 @@ class _OrderViewState extends State<OrderView> {
                   }
                 },
                 loading: () {
-                  return buildShimmerIndicator();
+                  return Expanded(child: buildShimmerIndicator());
                 },
               )!;
             },

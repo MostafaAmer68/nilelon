@@ -50,32 +50,33 @@ class AnalyticsBigCard extends StatelessWidget {
           )
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: AppStylesManager.customTextStyleW6,
-          ),
-          const SizedBox(
-            height: 28,
-          ),
-          Center(
-            child: Text(
+      child: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Center(
+              child: Text(
+                title,
+                style: AppStylesManager.customTextStyleW6,
+              ),
+            ),
+            const SizedBox(
+              height: 13,
+            ),
+            Text(
               '$number',
               style: AppStylesManager.customTextStyleW7,
             ),
-          ),
-          const SizedBox(
-            height: 28,
-          ),
-          Center(
-            child: Text(
+            // const SizedBox(
+            //   height: 28,
+            // ),
+            Text(
               'Market Average : $average',
               style: AppStylesManager.customTextStyleW8,
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

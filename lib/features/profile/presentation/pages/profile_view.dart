@@ -31,109 +31,112 @@ class ProfileView extends StatelessWidget {
           context: context,
           hasIcon: false,
           hasLeading: false),
-      body: Column(
-        children: [
-          const DefaultDivider(),
-          Container(
-            // padding: EdgeInsets.all(16.0.sp),
-            margin: EdgeInsets.all(16.0.sp),
-            child: Column(
-              children: [
-                Container(
-                  padding: EdgeInsets.all(16.0.sp),
-                  decoration: BoxDecoration(
-                    color: ColorManager.primaryW,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(shape: BoxShape.circle),
-                        child: imageReplacer(
-                          url: currentUsr<CustomerModel>().profilePic,
-                          width: 70,
-                          height: 70,
-                          radius: 360,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const DefaultDivider(),
+            Container(
+              // padding: EdgeInsets.all(16.0.sp),
+              margin: EdgeInsets.all(16.0.sp),
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16.0.sp),
+                    decoration: BoxDecoration(
+                      color: ColorManager.primaryW,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration:
+                              const BoxDecoration(shape: BoxShape.circle),
+                          child: imageReplacer(
+                            url: currentUsr<CustomerModel>().profilePic,
+                            width: 70,
+                            height: 70,
+                            radius: 360,
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        'Hi, ${currentUsr<CustomerModel>().name}',
-                        style: AppStylesManager.customTextStyleBl8
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    ],
+                        const SizedBox(
+                          width: 12,
+                        ),
+                        Text(
+                          'Hi, ${currentUsr<CustomerModel>().name}',
+                          style: AppStylesManager.customTextStyleBl8
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(
-                  height: 10.h,
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
-                  decoration: BoxDecoration(
-                    color: ColorManager.primaryW,
-                    borderRadius: BorderRadius.circular(15),
+                  SizedBox(
+                    height: 10.h,
                   ),
-                  child: Column(
-                    children: [
-                      ProfileListTile(
-                        name: lang.ordersManagement,
-                        image: Assets.assetsImagesBag,
-                        onTap: () {
-                          navigateTo(
-                              context: context, screen: const OrderPage());
-                        },
-                      ),
-                      ProfileListTile(
-                        name: lang.myCloset,
-                        image: Assets.assetsImagesCloset,
-                        onTap: () {
-                          navigateTo(
-                              context: context, screen: const ClosetPage());
-                        },
-                      ),
-                      ProfileListTile(
-                        name: lang.recommendations,
-                        image: Assets.assetsImagesRecommendation,
-                        onTap: () {
-                          navigateTo(
-                              context: context,
-                              screen: const RecommendationProfileView());
-                        },
-                      ),
-                      ProfileListTile(
-                        name: lang.settings,
-                        image: Assets.assetsImagesSettings,
-                        onTap: () {
-                          navigateTo(
-                              context: context, screen: const SettingsView());
-                        },
-                      ),
-                    ],
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
+                    decoration: BoxDecoration(
+                      color: ColorManager.primaryW,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Column(
+                      children: [
+                        ProfileListTile(
+                          name: lang.ordersManagement,
+                          image: Assets.assetsImagesBag,
+                          onTap: () {
+                            navigateTo(
+                                context: context, screen: const OrderPage());
+                          },
+                        ),
+                        ProfileListTile(
+                          name: lang.myCloset,
+                          image: Assets.assetsImagesCloset,
+                          onTap: () {
+                            navigateTo(
+                                context: context, screen: const ClosetPage());
+                          },
+                        ),
+                        ProfileListTile(
+                          name: lang.recommendations,
+                          image: Assets.assetsImagesRecommendation,
+                          onTap: () {
+                            navigateTo(
+                                context: context,
+                                screen: const RecommendationProfileView());
+                          },
+                        ),
+                        ProfileListTile(
+                          name: lang.settings,
+                          image: Assets.assetsImagesSettings,
+                          onTap: () {
+                            navigateTo(
+                                context: context, screen: const SettingsView());
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
-                  decoration: BoxDecoration(
-                    color: ColorManager.primaryW,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: ProfileListTile(
-                    name: lang.logout,
-                    image: 'assets/images/logout.svg',
-                    isRed: true,
-                    onTap: () {
-                      logoutAlert(context);
-                    },
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0.sp),
+                    decoration: BoxDecoration(
+                      color: ColorManager.primaryW,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: ProfileListTile(
+                      name: lang.logout,
+                      image: 'assets/images/logout.svg',
+                      isRed: true,
+                      onTap: () {
+                        logoutAlert(context);
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,0 +1,133 @@
+[log] Request [POST] => PATH: /Cart/AddToCart
+[log] Request [POST] => Data: [
+    {
+        quantity: 1, 
+        size: Small, 
+        color: ffd80000, 
+        productId: 0c5dd840-0772-4215-4b2f-08dd0391d9a8,
+        customrId: 336b1548-22a8-45ce-9ad0-132201b82bbd
+        }
+    ]
+[log] Response [200] => DATA: {statusCode: 201, isSuccess: true, errorMessages: [], result: Added Successfully ✔}
+
+
+[log] Request [POST] => PATH: /Cart/AddToCart
+[log] Request [POST] => Data: [
+    {
+        quantity: 1,
+        size: XSmall, 
+        color: ff1f00df, 
+        productId: c09c80d8-ee17-46bf-0fcb-08dd0398e827,
+        customrId: 336b1548-22a8-45ce-9ad0-132201b82bbd
+    }
+]
+[log] Response [200] => DATA: {statusCode: 201, isSuccess: true, errorMessages: [], result: Added Successfully ✔}
+
+
+[log] Request [POST] => PATH: /Cart/AddToCart
+[log] Request [POST] => Data: [
+    {
+        quantity: 1,
+        size: XSmall, 
+        color: ffd80000,
+        productId: 94a46d61-0a40-46e8-0fce-08dd0398e827,
+        customrId: 336b1548-22a8-45ce-9ad0-132201b82bbd
+        }
+    ]
+[log] Response [200] => DATA: {statusCode: 201, isSuccess: true, errorMessages: [], result: Added Successfully ✔}
+
+
+[log] Request [POST] => PATH: /Cart/AddToCart
+[log] Request [POST] => Data: [
+    {
+        quantity: 1,
+        size: XSmall,
+        color: ffd80000, 
+        productId: 2112f502-c883-4c53-0fd0-08dd0398e827,
+        customrId: 336b1548-22a8-45ce-9ad0-132201b82bbd
+        }
+    ]
+[log] Response [200] => DATA: {statusCode: 201, isSuccess: true, errorMessages: [], result: Added Successfully ✔}
+
+
+
+[
+    {
+        quantity: 1,
+        size: Small, 
+        color: ffd80000,
+        price: 1795.5, 
+        productName: djddj, 
+        productId: 0c5dd840-0772-4215-4b2f-08dd0391d9a8,
+        productImages: [
+            {
+                productId: 0c5dd840-0772-4215-4b2f-08dd0391d9a8,
+                url: http://nilelon.somee.com/ProductImages/0c5dd840-0772-4215-4b2f-08dd0391d9a8_FFD80000_1.jpg,
+                description: null, 
+                color: ffd80000
+            }
+        ],
+        cartId: f38dc996-3ce0-4dce-138f-08dd0396bed3
+    }, {
+        quantity: 1,
+        size: XSmall, 
+        color: ff1f00df,
+        price: 810.0, 
+        productName: akdjf;aklsdfakdfa;skldfj, 
+        productId: c09c80d8-ee17-46bf-0fcb-08dd0398e827, 
+        productImages: [
+            {
+                productId: c09c80d8-ee17-46bf-0fcb-08dd0398e827, 
+                url: http://nilelon.somee.com/ProductImages/c09c80d8-ee17-46bf-0fcb-08dd0398e827_FF1F00DF_1.jpg, 
+                description: null, 
+                color: ff1f00df
+            }
+        ], 
+        cartId: f38dc996-3ce0-4dce-138f-08dd0396bed3
+    }, {
+        quantity: 1, 
+        size: XSmall, 
+        color: ffd80000, 
+        price: 1795.5, 
+        productName: djddj, 
+        productId: 94a46d61-0a40-46e8-0fce-08dd0398e827, 
+        productImages: [
+            {
+                productId: 0c5dd840-0772-4215-4b2f-08dd0391d9a8, 
+                url: http://nilelon.somee.com/ProductImages/0c5dd840-0772-4215-4b2f-08dd0391d9a8_FFD80000_1.jpg, 
+                description: null, 
+                color: ffd80000
+            }
+        ], 
+        cartId: f38dc996-3ce0-4dce-138f-08dd0396bed3
+    }, {
+        quantity: 1, 
+        size: XSmall, 
+        color: ffd80000, 
+        price: 1795.5, 
+        productName: djddj, 
+        productId: 2112f502-c883-4c53-0fd0-08dd0398e827, 
+        productImages: [
+            {
+                productId: 0c5dd840-0772-4215-4b2f-08dd0391d9a8, 
+                url: http://nilelon.somee.com/ProductImages/0c5dd840-0772-4215-4b2f-08dd0391d9a8_FFD80000_1.jpg, 
+                description: null, 
+                color: ffd80000
+            }
+        ], 
+        cartId: f38dc996-3ce0-4dce-138f-08dd0396bed3
+    }
+       
+
+
+     {id: 894af3b3-6037-483e-e5b9-08dd072d5171,
+      date: 2024-11-17T12:32:07.1517399, 
+      total: 12605.0, discount: 0.0, 
+      promoCodeName: null, 
+      governate: Test, 
+      status: Ordered, 
+      phoneNumber: 01090777795, 
+      shippingCost: 10000.00,
+       customerId: 336b1548-22a8-45ce-9ad0-132201b82bbd, 
+       paymentType: Cash, customerAddress: 
+       {customerId: null, addressLine1: Mehskfgajlf, addressLine2: aksdlfjaksdfj, city: kfjaskld, unitNumber: asdkflj, streetNumber: faskdfjk, nearestLandMark: asdjfajksl}, orderProductVariants: [{orderId: 894af3b3-6037-483e-e5b9-08dd072d5171, productId: 0c5dd840-0772-4215-4b2f-08dd0391d9a8, productName: djddj, productRate: 2, size: Small, color: ffd80000, quantity: 1, price: 1795.5, storeName: Mohamed aha, storeId: 27d54596-5813-40e0-bcdc-f124901e0ced, urls: [ProductImages/0c5dd840-0772-4215-4b2f-08dd0391d9a8_FFD80000_1.jpg, ProductImages/c09c80d8-ee17-46bf-0fcb-08dd0398e827_FFD80000_1.jpg, ProductImages/be0343ee-752e-4eb2-0fcd-08dd0398e827_FFD80000_1.jpg, ProductImages/94a46d61-0a40-46e8-0fce-08dd0398e827_FFD80000_1.jpg, ProductImages/7364d616-4243-443f-0fcf-08dd0398e827_FFD80000_1.jpg, ProductImages/2112f502-c883-4c53-0fd0-08dd0398e827_FFD80000_1.jpg, ProductImages/a38e1807-4f6a-45f4-0fd1-08dd0398e827_FFD80000_1.jpg, ProductImages/bead0cc9-a29a-47d9-0fd2-08dd0398e827_FFD80000_1.jpg, ProductImages/a1a1c002-6fec-4f41-0fd3-08dd0398e827_FFD80000_1.jpg, ProductImages/d414724f-76b1-4607-1fec-08dd03bdec5b_FFD80000_1.jpg, ProductImages/2f10432c-a920-481c-63de-08dd057ba5f6_FFD80000_1.jpg]}, {orderId: 894af3b3-6037-483e-e5b9-08dd072d5171, productId: c09c80d8-ee17-46bf-0fcb-08dd0398e827, productName: akdjf;aklsdfakdfa;skldfj, productRate: 3.5, size: XSmall, color: ff1f00df, quantity: 1, price: 810.0, storeName: Mohamed aha, storeId: 27d54596-5813-40e0-bcdc-f124901e0ced, urls: [ProductImages/c09c80d8-ee17-46bf-0fcb-08dd0398e827_FF1F00DF_1.jpg, ProductImages/b8f4d6b4-e852-4297-0fcc-08dd0398e827_FF1F00DF_1.jpg, ProductImages/2f10432c-a920-481c-63de-08dd057ba5f6_FF1F00DF_1.jpg]}]}}

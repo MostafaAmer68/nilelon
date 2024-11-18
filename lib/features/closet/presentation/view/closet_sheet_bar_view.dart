@@ -1,4 +1,3 @@
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,153 +61,158 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
           ),
         ],
       ),
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 16,
-          ),
-          ViewAllRow(
-            text: lang.saveToCloset,
-            onPressed: () {},
-            noButton: true,
-            buttonWidget: Text(
-              lang.showItems,
-              style: AppStylesManager.customTextStyleO,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 16,
             ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              BlocConsumer<ClosetCubit, ClosetState>(
-                listener: (context, state) {
-                  state.mapOrNull(success: (_) {
-                    BotToast.closeAllLoading();
-                  }, successDelete: (_) {
-                    BotToast.closeAllLoading();
-                    // navigatePop(context: context);
-                    ClosetCubit.get(context).getclosets();
-                  }, successAdded: (c) {
-                    BotToast.showCustomText(
-                      duration: const Duration(seconds: 4),
-                      toastBuilder: (_) => Card(
-                        color: Colors.black87,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                S.of(context).productAdded,
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                              const SizedBox(width: 10),
-                              TextButton(
-                                onPressed: () {
-                                  BotToast.closeAllLoading();
-                                  navigateTo(
-                                      context: context,
-                                      screen: ProductClosetPage(
-                                          closet: selectedCloset));
-                                },
-                                child: Text(
-                                  S.of(context).myCloset,
-                                  style: const TextStyle(color: Colors.blue),
+            ViewAllRow(
+              text: lang.saveToCloset,
+              onPressed: () {},
+              noButton: true,
+              buttonWidget: Text(
+                lang.showItems,
+                style: AppStylesManager.customTextStyleO,
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                BlocConsumer<ClosetCubit, ClosetState>(
+                  listener: (context, state) {
+                    state.mapOrNull(success: (_) {
+                      BotToast.closeAllLoading();
+                    }, successDelete: (_) {
+                      BotToast.closeAllLoading();
+                      // navigatePop(context: context);
+                      ClosetCubit.get(context).getclosets();
+                    }, successAdded: (c) {
+                      BotToast.showCustomText(
+                        duration: const Duration(seconds: 4),
+                        toastBuilder: (_) => Card(
+                          color: Colors.black87,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  S.of(context).productAdded,
+                                  style: const TextStyle(color: Colors.white),
                                 ),
-                              ),
-                            ],
+                                const SizedBox(width: 10),
+                                TextButton(
+                                  onPressed: () {
+                                    BotToast.closeAllLoading();
+                                    navigateTo(
+                                        context: context,
+                                        screen: ProductClosetPage(
+                                            closet: selectedCloset));
+                                  },
+                                  child: Text(
+                                    S.of(context).myCloset,
+                                    style: const TextStyle(color: Colors.blue),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  });
-                },
-                builder: (context, state) {
-                  return state.whenOrNull(
-                    loading: () {
-                      return const Center(child: CircularProgressIndicator());
-                    },
-                    success: () {
-                      return SizedBox(
-                        width: screenWidth(context, 1),
-                        height: screenHeight(context, 0.4),
-                        child: ListView.builder(
-                          itemCount:
-                              ClosetCubit.get(context).closets.length + 1,
-                          itemBuilder: (context, index) {
-                            if (ClosetCubit.get(context).closets.length ==
-                                index) {
-                              return Container(
-                                margin: const EdgeInsets.only(
-                                  top: 16,
-                                  bottom: 16,
-                                  left: 13,
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 8, horizontal: 12),
-                                child: ListTile(
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                      backgroundColor: ColorManager.primaryW,
-                                      isScrollControlled: true,
-                                      isDismissible: true,
-                                      shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(30),
-                                          topRight: Radius.circular(30),
-                                        ),
-                                      ),
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return const CreateNewSection();
-                                      },
-                                    );
-                                  },
-                                  leading: Container(
-                                    padding: const EdgeInsets.all(12),
-                                    decoration: BoxDecoration(
-                                      border: Border.all(),
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: const Icon(Icons.add),
-                                  ),
-                                  title: Text(lang.addNewSection),
-                                ),
-                              );
-                            } else {
-                              final closet =
-                                  ClosetCubit.get(context).closets[index];
-                              return ClosetsWidgetWithOptions(
-                                closet: closet,
-                                isPage: false,
-                                onTap: () {
-                                  if (widget.productId.isNotEmpty) {
-                                    ClosetCubit.get(context)
-                                        .addProductToClosets(
-                                      widget.productId,
-                                      closet.id,
-                                    );
-                                    selectedCloset = closet;
-                                  }
-                                },
-                              );
-                            }
-                          },
-                        ),
                       );
-                    },
-                    failure: () {
-                      return const Icon(Icons.error);
-                    },
-                  )!;
-                },
-              ),
-            ],
-          )
-        ],
+                    });
+                  },
+                  builder: (context, state) {
+                    return state.whenOrNull(
+                      loading: () {
+                        return const Center(child: CircularProgressIndicator());
+                      },
+                      success: () {
+                        return SizedBox(
+                          width: screenWidth(context, 1),
+                          height: screenHeight(context, 0.4),
+                          child: ListView.builder(
+                            itemCount:
+                                ClosetCubit.get(context).closets.length + 1,
+                            itemBuilder: (context, index) {
+                              if (ClosetCubit.get(context).closets.length ==
+                                  index) {
+                                return Container(
+                                  // margin: const EdgeInsets.only(
+                                  //   top: 16,
+                                  //   bottom: 16,
+                                  //   left: 13,
+                                  // ),
+                                  padding: const EdgeInsets.symmetric(
+                                    vertical: 8,
+                                    horizontal: 8,
+                                  ),
+                                  child: ListTile(
+                                    onTap: () {
+                                      showModalBottomSheet(
+                                        backgroundColor: ColorManager.primaryW,
+                                        isScrollControlled: true,
+                                        isDismissible: true,
+                                        shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.only(
+                                            topLeft: Radius.circular(30),
+                                            topRight: Radius.circular(30),
+                                          ),
+                                        ),
+                                        clipBehavior:
+                                            Clip.antiAliasWithSaveLayer,
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return const CreateNewSection();
+                                        },
+                                      );
+                                    },
+                                    leading: Container(
+                                      padding: const EdgeInsets.all(12),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(),
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      child: const Icon(Icons.add),
+                                    ),
+                                    title: Text(lang.addNewSection),
+                                  ),
+                                );
+                              } else {
+                                final closet =
+                                    ClosetCubit.get(context).closets[index];
+                                return ClosetsWidgetWithOptions(
+                                  closet: closet,
+                                  isPage: false,
+                                  onTap: () {
+                                    if (widget.productId.isNotEmpty) {
+                                      ClosetCubit.get(context)
+                                          .addProductToClosets(
+                                        widget.productId,
+                                        closet.id,
+                                      );
+                                      selectedCloset = closet;
+                                    }
+                                  },
+                                );
+                              }
+                            },
+                          ),
+                        );
+                      },
+                      failure: () {
+                        return const Icon(Icons.error);
+                      },
+                    )!;
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

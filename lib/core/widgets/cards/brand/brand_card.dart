@@ -90,7 +90,7 @@ class _BrandCardState extends State<BrandCard> {
             Text(
               widget.store.storeSlogan ?? '',
               style: AppStylesManager.customTextStyleBl3
-                  .copyWith(fontWeight: FontWeight.w600), 
+                  .copyWith(fontWeight: FontWeight.w600),
             ),
             const SizedBox(
               height: 12,
@@ -101,12 +101,14 @@ class _BrandCardState extends State<BrandCard> {
                 return Visibility(
                   visible: !HiveStorage.get(HiveKeys.isStore),
                   child: !cubit.validationOption['isFollow']
-                      ? GradientButtonBuilder(
-                          text: 'Follow',
-                          ontap: () {
-                            cubit.followStore(widget.store.id);
-                          },
-                          height: 45,
+                      ? Expanded(
+                          child: GradientButtonBuilder(
+                            text: 'Follow',
+                            ontap: () {
+                              cubit.followStore(widget.store.id);
+                            },
+                            height: 45,
+                          ),
                         )
                       : OutlinedButtonBuilder(
                           text: 'Following',

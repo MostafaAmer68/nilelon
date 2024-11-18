@@ -111,52 +111,49 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
               padding: const EdgeInsets.all(16.0),
               child: BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
-                  return state.when(
-                    initial: () {
-                      return Text(S.of(context).waitingToGet);
-                    },
-                    loading: () {
-                      return buildShimmerIndicatorGrid(context);
-                    },
-                    failure: (erro) {
-                      return Text(erro);
-                    },
-                    success: () {
-                      return GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 20.0,
-                                mainAxisExtent: 300,
-                                mainAxisSpacing: 12),
-                        shrinkWrap: true,
-                        itemCount: ProductsCubit.get(context)
-                            .products
-                            .where((e) =>
-                                e.categoryID ==
-                                HiveStorage.get<List<CategoryModel>>(
-                                        HiveKeys.categories)[_selectedIndex]
-                                    .id)
-                            .toList()
-                            .length,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            child: marketSmallCard(
-                                context: context,
-                                product: ProductsCubit.get(context)
-                                    .products
-                                    .where((e) =>
-                                        e.categoryID ==
-                                        localData<List<CategoryModel>>(HiveKeys
-                                                .categories)[_selectedIndex]
-                                            .id)
-                                    .toList()[index]),
-                          );
-                        },
-                      );
-                    },
-                  )!;
+                  return state.maybeWhen(initial: () {
+                    return Text(S.of(context).waitingToGet);
+                  }, loading: () {
+                    return buildShimmerIndicatorGrid(context);
+                  }, failure: (erro) {
+                    return Text(erro);
+                  }, storeProductSuccess: (products) {
+                    return GridView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 20.0,
+                              mainAxisExtent: 300,
+                              mainAxisSpacing: 12),
+                      shrinkWrap: true,
+                      itemCount: ProductsCubit.get(context)
+                          .products
+                          .where((e) =>
+                              e.categoryID ==
+                              HiveStorage.get<List<CategoryModel>>(
+                                      HiveKeys.categories)[_selectedIndex]
+                                  .id)
+                          .toList()
+                          .length,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          child: marketSmallCard(
+                              context: context,
+                              product: ProductsCubit.get(context)
+                                  .products
+                                  .where((e) =>
+                                      e.categoryID ==
+                                      localData<List<CategoryModel>>(HiveKeys
+                                              .categories)[_selectedIndex]
+                                          .id)
+                                  .toList()[index]),
+                        );
+                      },
+                    );
+                  }, orElse: () {
+                    return Text(S.of(context).waitingToGet);
+                  })!;
                 },
               ),
             ),

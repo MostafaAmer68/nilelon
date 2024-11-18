@@ -170,7 +170,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
             child: Row(
               children: [
                 Text(
-                  '$price ${lang(context).le}',
+                  '$priceAfterDiscount ${lang(context).le}',
                   style: AppStylesManager.customTextStyleO3
                       .copyWith(fontWeight: FontWeight.w700),
                 ),
@@ -179,7 +179,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                   alignment: Alignment.center,
                   children: [
                     Text(
-                      '$priceAfterDiscount ${lang(context).le}',
+                      '$price ${lang(context).le}',
                       style: AppStylesManager.customTextStyleG,
                     ),
                     const SizedBox(

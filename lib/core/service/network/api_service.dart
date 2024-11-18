@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
@@ -10,7 +9,29 @@ class ApiService {
   ApiService({
     required this.dio,
   }) {
-    dio.interceptors.add(CustomLogInterceptor());
+    dio.interceptors.add(InterceptorsWrapper(
+      onRequest: (options, handler) {
+        // Before the request is sent
+        log("Request [${options.method}] => PATH: ${options.path}");
+        log("Request [${options.method}] => Data: ${options.data}");
+        log("Request [${options.method}] => Query: ${options.queryParameters}");
+        // You can add headers or modify the request here
+        // options.headers["Authorization"] = "Bearer YOUR_TOKEN";
+
+        return handler.next(options); // Continue
+      },
+      onResponse: (response, handler) {
+        // When the response is received
+        log("Response [${response.statusCode}] => DATA: ${response.data}");
+        return handler.next(response); // Continue
+      },
+      onError: (DioException e, handler) {
+        // When an error occurs
+        log("Error [${e.response?.statusCode}] => MESSAGE: ${e.response?.data}");
+        // You can handle token refresh or other error handling here
+        return handler.next(e); // Continue
+      },
+    ));
     dio.options.copyWith(
       validateStatus: (status) {
         return getStatus(status!);
@@ -63,19 +84,5 @@ class ApiService {
       queryParameters: query,
     );
     return response;
-  }
-}
-
-class CustomLogInterceptor extends LogInterceptor {
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // Log request URL and headers
-    options.headers.forEach((key, value) {});
-
-    // Log request body if it's present
-    if (options.data != null) {
-      log(jsonEncode(options.data));
-    }
-    super.onRequest(options, handler);
   }
 }

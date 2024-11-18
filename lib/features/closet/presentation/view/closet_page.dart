@@ -142,15 +142,19 @@ class _ClosetViewState extends State<ClosetPage> {
                         itemBuilder: (context, index) {
                           final closet =
                               ClosetCubit.get(context).closets[index];
-                          return ClosetsWidgetWithOptions(
-                            isPage: true,
-                            closet: closet,
-                            onTap: () {
-                              navigateTo(
-                                context: context,
-                                screen: ProductClosetPage(closet: closet),
-                              );
-                            },
+                          return Container(
+                            margin: const EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            child: ClosetsWidgetWithOptions(
+                              isPage: true,
+                              closet: closet,
+                              onTap: () {
+                                navigateTo(
+                                  context: context,
+                                  screen: ProductClosetPage(closet: closet),
+                                );
+                              },
+                            ),
                           );
                         },
                       ),
@@ -199,15 +203,19 @@ class _ClosetViewState extends State<ClosetPage> {
                         itemBuilder: (context, index) {
                           final closet =
                               ClosetCubit.get(context).closets[index];
-                          return ClosetsWidgetWithOptions(
-                            isPage: true,
-                            closet: closet,
-                            onTap: () {
-                              navigateTo(
-                                context: context,
-                                screen: ProductClosetPage(closet: closet),
-                              );
-                            },
+                          return Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            child: ClosetsWidgetWithOptions(
+                              isPage: true,
+                              closet: closet,
+                              onTap: () {
+                                navigateTo(
+                                  context: context,
+                                  screen: ProductClosetPage(closet: closet),
+                                );
+                              },
+                            ),
                           );
                         },
                       ),
