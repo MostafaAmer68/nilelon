@@ -358,7 +358,7 @@ class WideCard extends StatelessWidget {
                     ),
                   ),
                   SizedBox(
-                    height: 2.h,
+                    height: !HiveStorage.get(HiveKeys.isStore) ? 1.w : 15.h,
                   ),
                 ],
               ),

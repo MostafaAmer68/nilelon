@@ -47,7 +47,8 @@ class _ApplyOfferPageState extends State<ApplyOfferPage> {
           } else if (state is PromoFailure) {
             BotToast.closeAllLoading();
             BotToast.showText(text: state.errMsg);
-          } else {
+          }
+          if (state is PromoSuccess) {
             BotToast.closeAllLoading();
             successCreationDialog(
               context: context,

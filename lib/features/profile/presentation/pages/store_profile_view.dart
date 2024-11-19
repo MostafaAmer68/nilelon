@@ -104,7 +104,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
               icon: SvgPicture.asset(
                 Assets.assetsImagesTag,
                 fit: BoxFit.cover,
-                height: 30.w,
+                height: 28.w,
               ),
               isIcon: true,
               ontap: () {

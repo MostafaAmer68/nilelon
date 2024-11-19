@@ -133,7 +133,35 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                         },
                       );
                     }, orElse: () {
-                      return const Icon(Icons.error);
+                      if (cubit.newInProducts.isEmpty) {
+                        return SizedBox(
+                          height: 120.h,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                S.of(context).noProductNewIn,
+                                style: AppStylesManager.customTextStyleG2,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: gridDelegate(context),
+                        shrinkWrap: true,
+                        itemCount: cubit.newInProducts.length,
+                        itemBuilder: (context, index) {
+                          final product = cubit.newInProducts[index];
+                          return Container(
+                            child: productSquarItem(
+                              context: context,
+                              product: product,
+                            ),
+                          );
+                        },
+                      );
                     });
                   },
                 ),

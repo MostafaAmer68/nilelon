@@ -92,7 +92,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                     color: ColorManager.primaryO),
                 child: Center(
                     child: Text(
-                  '${product.productVariants.first.discountRate}%',
+                  '${double.parse(('${discount * 100}')).toStringAsFixed(0)}%',
                   style: AppStylesManager.customTextStyleW4,
                 )),
               ),

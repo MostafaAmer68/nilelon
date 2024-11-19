@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
@@ -15,6 +16,8 @@ import 'package:nilelon/features/shared/pdf_view/make_pdf.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../../../generated/l10n.dart';
 
 class NilelonPdfView extends StatefulWidget {
   const NilelonPdfView({
@@ -56,7 +59,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
         if (filePath != null) {
           // Open the folder containing the file
           String folderPath = filePath.substring(0, filePath.lastIndexOf('/'));
-          await OpenFilex.open('/storage/emulated/0/Download/');
+          await OpenFilex.open(folderPath);
         }
       }
     });
@@ -114,7 +117,45 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
               );
               if (result.isNotEmpty) {
                 isLoading = false;
-                BotToast.showText(text: lang(context).pdfSaved);
+                BotToast.showCustomText(
+                  duration: const Duration(seconds: 4),
+                  toastBuilder: (_) => Card(
+                    color: Colors.black87,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            S.of(context).pdfSaved,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                          const SizedBox(width: 10),
+                          TextButton(
+                            onPressed: () {
+                              BotToast.closeAllLoading();
+
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return PDFView(
+                                      filePath: result,
+                                    );
+                                  });
+
+                              BotToast.cleanAll();
+                            },
+                            child: Text(
+                              S.of(context).viewPdf,
+                              style: const TextStyle(color: Colors.blue),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+
                 _showNotification(result);
               } else {
                 BotToast.showText(text: lang(context).smothingWent);

@@ -35,7 +35,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
   void initState() {
     cubit = PromoCubit.get(context);
     pcubit = ProductsCubit.get(context);
-    pcubit.getStoreProducts(HiveStorage.get<UserModel>(HiveKeys.userModel).id);
+    pcubit.getStoreProducts('');
     super.initState();
   }
 
@@ -61,15 +61,17 @@ class _OfferProductPageState extends State<OfferProductPage> {
                     children: [
                       GradientCheckBox(
                           value: cubit.selectedProducts.length ==
-                              pcubit.products.length,
+                              pcubit.storeProducts.length,
                           onChanged: (value) {
                             cubit.isSelectedAll = value;
                             if (value) {
                               if (cubit.selectedProducts.isNotEmpty) {
                                 cubit.selectedProducts.clear();
-                                cubit.selectedProducts.addAll(pcubit.products);
+                                cubit.selectedProducts
+                                    .addAll(pcubit.storeProducts);
                               } else {
-                                cubit.selectedProducts.addAll(pcubit.products);
+                                cubit.selectedProducts
+                                    .addAll(pcubit.storeProducts);
                               }
                             } else {
                               cubit.selectedProducts.clear();
@@ -82,7 +84,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
                   ),
                 ),
                 Text(
-                    '${lang.selected} ${cubit.selectedProducts.length} / ${pcubit.products.length}'),
+                    '${lang.selected} ${cubit.selectedProducts.length} / ${pcubit.storeProducts.length}'),
               ],
             ),
           ),
@@ -93,8 +95,8 @@ class _OfferProductPageState extends State<OfferProductPage> {
                 return Expanded(child: buildShimmerIndicatorGrid(context));
               }, loading: () {
                 return Expanded(child: buildShimmerIndicatorGrid(context));
-              }, randomProductSuccess: (products) {
-                if (pcubit.products.isEmpty) {
+              }, storeProductSuccess: (products) {
+                if (products.isEmpty) {
                   return Center(
                     child: Text(
                       S.of(context).thereNoProduct,
@@ -106,12 +108,11 @@ class _OfferProductPageState extends State<OfferProductPage> {
                     height: screenHeight(context, 0.70),
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
                     child: GridView.builder(
-                      // physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: gridDelegate(context),
                       shrinkWrap: true,
-                      itemCount: ProductsCubit.get(context).products.length,
+                      itemCount: products.length,
                       itemBuilder: (context, index) {
-                        final product = pcubit.products[index];
+                        final product = products[index];
                         return productSquarItem(
                           context: context,
                           isSelectable: true,
@@ -134,12 +135,42 @@ class _OfferProductPageState extends State<OfferProductPage> {
               }, failure: (message) {
                 return Text(message);
               }, orElse: () {
-                return Center(
-                  child: Text(
-                    S.of(context).thereNoProduct,
-                    style: AppStylesManager.customTextStyleG2,
-                  ),
-                );
+                if (pcubit.storeProducts.isEmpty) {
+                  return Center(
+                    child: Text(
+                      S.of(context).thereNoProduct,
+                      style: AppStylesManager.customTextStyleG2,
+                    ),
+                  );
+                } else {
+                  return Container(
+                    height: screenHeight(context, 0.70),
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    child: GridView.builder(
+                      gridDelegate: gridDelegate(context),
+                      shrinkWrap: true,
+                      itemCount: pcubit.storeProducts.length,
+                      itemBuilder: (context, index) {
+                        final product = pcubit.storeProducts[index];
+                        return productSquarItem(
+                          context: context,
+                          isSelectable: true,
+                          isSelected: cubit.selectedProducts.contains(product),
+                          onTap: (value) {
+                            if (value) {
+                              cubit.selectedProducts.add(product);
+                            } else {
+                              cubit.selectedProducts.remove(product);
+                              cubit.isSelectedAll = false;
+                            }
+                            setState(() {});
+                          },
+                          product: product,
+                        );
+                      },
+                    ),
+                  );
+                }
               });
             },
           ),

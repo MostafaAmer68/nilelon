@@ -19,8 +19,7 @@ class SizeToggleButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: SizedBox(
-        height: 45,
-        // width: 300.w,
+        height: 60,
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: sizes.map((size) {
@@ -28,7 +27,9 @@ class SizeToggleButtons extends StatelessWidget {
             return GestureDetector(
               onTap: () => onSizeSelected(size),
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                height: 45,
+                margin:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 7.5),
                 width: 45,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
@@ -50,7 +51,7 @@ class SizeToggleButtons extends StatelessWidget {
                           const BoxShadow(
                             color: Color.fromRGBO(68, 201, 225, 0.40),
                             blurRadius: 8,
-                            spreadRadius: 3,
+                            spreadRadius: 1,
                           ),
                         ]
                       : null,

@@ -101,14 +101,14 @@ class _EditStoreInfoViewState extends State<EditStoreInfoView> {
                     ),
                     TextAndFormFieldColumnNoIcon(
                       title: lang.profileLink,
-                      label: 'TwixiShop',
+                      label: 'https://facebook.com',
                       controller: cubit.websiteLinkController,
                       height: 25,
                       type: TextInputType.text,
                     ),
                     TextAndFormFieldColumnNoIcon(
                       title: lang.websiteLink,
-                      label: 'TwixiShop',
+                      label: 'https://web.com',
                       controller: cubit.websiteLinkController,
                       height: 25,
                       type: TextInputType.text,

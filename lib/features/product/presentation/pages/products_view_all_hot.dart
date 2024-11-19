@@ -78,17 +78,11 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
   void _loadMoreProducts() async {
     if (!isLoadingMore) {
       setState(() => isLoadingMore = true);
-
-      final currentPosition = scrollController.position.pixels;
-
-      cubit.page += 1; // Increment page for next API call
-      widget.onStartPage(false);
+      cubit.page += 1; // Increment page for the next API call
+      widget.onStartPage(false); // Trigger fetching next page
 
       setState(() {
         isLoadingMore = false;
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          scrollController.jumpTo(currentPosition);
-        });
       });
     }
   }
@@ -137,7 +131,7 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
   }
 
   Widget _buildProductGrid(List<ProductModel> products) {
-    if (products.isEmpty) {
+    if (products.isEmpty && paginationList.isEmpty) {
       return SizedBox(
         height: 450.h,
         child: Column(

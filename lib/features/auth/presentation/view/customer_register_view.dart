@@ -266,12 +266,15 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                 const SizedBox(
                   height: 32,
                 ),
-                GradientButtonBuilder(
-                  text: lang.register,
-                  ontap: () {
-                    AuthCubit.get(context).confirmRegisteration(context);
-                  },
-                  width: screenWidth(context, 0.92),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: GradientButtonBuilder(
+                    text: lang.register,
+                    ontap: () {
+                      AuthCubit.get(context).confirmRegisteration(context);
+                    },
+                    width: screenWidth(context, 0.92),
+                  ),
                 ),
                 const SizedBox(
                   height: 30,

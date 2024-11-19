@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -157,7 +156,8 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
     late final Either<FailureService, List<ProductModel>> result;
 
-    if (HiveStorage.get(HiveKeys.userModel) != null) {
+    if (HiveStorage.get(HiveKeys.userModel) != null &&
+        !HiveStorage.get(HiveKeys.isStore)) {
       result = await productsRepos.getRandomProduct(
           page, limit, gendar == 'All' ? 'UniSex' : gendar);
     } else {
@@ -196,7 +196,8 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
     late final Either<FailureService, List<ProductModel>> result;
 
-    if (HiveStorage.get(HiveKeys.userModel) != null) {
+    if (HiveStorage.get(HiveKeys.userModel) != null &&
+        !HiveStorage.get(HiveKeys.isStore)) {
       result = await productsRepos.getOffersProducts(
           page, limit, gendar == 'All' ? 'UniSex' : gendar);
     } else {

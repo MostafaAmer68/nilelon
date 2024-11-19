@@ -1468,16 +1468,6 @@ class S {
     );
   }
 
-  /// `Received`
-  String get received {
-    return Intl.message(
-      'Received',
-      name: 'received',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Edit Account`
   String get editAccount {
     return Intl.message(
@@ -4185,6 +4175,16 @@ class S {
     return Intl.message(
       'You are store you can\'t doo this action',
       name: 'youAreStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `View PDF`
+  String get viewPdf {
+    return Intl.message(
+      'View PDF',
+      name: 'viewPdf',
       desc: '',
       args: [],
     );

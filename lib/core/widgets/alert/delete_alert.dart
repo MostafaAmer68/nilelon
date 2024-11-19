@@ -52,7 +52,7 @@ Future deleteAlert(
               children: [
                 OutlinedButtonBuilder(
                     text: lang.no,
-                    width: screenWidth(context, 0.32),
+                    width: screenWidth(context, 0.34),
                     height: screenHeight(context, 0.06),
                     buttonColor: Colors.transparent,
                     frameColor: ColorManager.primaryB2,
@@ -60,14 +60,11 @@ Future deleteAlert(
                     ontap: () {
                       navigatePop(context: context);
                     }),
-                SizedBox(
-                  width: 12.w,
-                ),
                 ButtonBuilder(
                   text: lang.yes,
                   buttonColor: ColorManager.primaryR,
-                  frameColor: ColorManager.primaryR,
-                  width: screenWidth(context, 0.32),
+                  // frameColor: ColorManager.primaryR,
+                  width: screenWidth(context, 0.34),
                   height: screenHeight(context, 0.06),
                   ontap: ontap,
                 ),

@@ -468,7 +468,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateYourOrderProcessExperience":
             MessageLookupByLibrary.simpleMessage("قيم تجربتك في عملية الطلب"),
         "readyToBeShipped": MessageLookupByLibrary.simpleMessage("جاهز للشحن"),
-        "received": MessageLookupByLibrary.simpleMessage("تم الاستلام"),
         "receivedColor": MessageLookupByLibrary.simpleMessage("اللون المستلم"),
         "receivedSize": MessageLookupByLibrary.simpleMessage("الحجم المستلم"),
         "recievedDate": MessageLookupByLibrary.simpleMessage("تاريخ الاستلام"),
@@ -597,6 +596,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تحقق من كلمة المرور"),
         "viewAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "viewCart": MessageLookupByLibrary.simpleMessage("عرض العربة"),
+        "viewPdf": MessageLookupByLibrary.simpleMessage("عرض ملف PDF"),
         "waitingToGet":
             MessageLookupByLibrary.simpleMessage("ننتظر، نحاول جلب المنتجات"),
         "warehouseAddress":

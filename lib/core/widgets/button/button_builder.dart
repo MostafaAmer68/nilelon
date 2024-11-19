@@ -14,6 +14,9 @@ class ButtonBuilder extends StatelessWidget {
     this.isLoading,
     this.frameColor,
     this.isActivated = true,
+    this.icon,
+    this.isIcon = false,
+    this.shadowColor,
   });
 
   final String text;
@@ -22,10 +25,12 @@ class ButtonBuilder extends StatelessWidget {
   final double? height;
   final TextStyle? style;
   final bool? isLoading;
-
+  final bool isIcon;
   final Color? buttonColor;
   final Color? frameColor;
   final bool isActivated;
+  final Color? shadowColor;
+  final Widget? icon;
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
@@ -41,7 +46,9 @@ class ButtonBuilder extends StatelessWidget {
                       decoration: BoxDecoration(
                         boxShadow: [
                           BoxShadow(
-                              color: frameColor ?? kDefaultIconLightColor,
+                              color: shadowColor ??
+                                  frameColor ??
+                                  kDefaultIconLightColor,
                               offset: const Offset(4, 4))
                         ],
                         border: Border.all(
@@ -53,9 +60,19 @@ class ButtonBuilder extends StatelessWidget {
                         color: buttonColor ?? ColorManager.primaryB2,
                       ),
                       child: Center(
-                        child: Text(
-                          text,
-                          style: style ?? AppStylesManager.customTextStyleW2,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (isIcon) ...[
+                              icon ?? const SizedBox(),
+                            ],
+                            const SizedBox(width: 15),
+                            Text(
+                              text,
+                              style:
+                                  style ?? AppStylesManager.customTextStyleW2,
+                            ),
+                          ],
                         ),
                       ),
                     ),

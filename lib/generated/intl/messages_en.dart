@@ -473,7 +473,6 @@ class MessageLookup extends MessageLookupByLibrary {
             "Rate Your Order Process Experience"),
         "readyToBeShipped":
             MessageLookupByLibrary.simpleMessage("Ready To Be Shipped"),
-        "received": MessageLookupByLibrary.simpleMessage("Received"),
         "receivedColor": MessageLookupByLibrary.simpleMessage("Received Color"),
         "receivedSize": MessageLookupByLibrary.simpleMessage("Received Size"),
         "recievedDate": MessageLookupByLibrary.simpleMessage("Recieved Date"),
@@ -603,6 +602,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Verify Your Password"),
         "viewAll": MessageLookupByLibrary.simpleMessage("View All"),
         "viewCart": MessageLookupByLibrary.simpleMessage("View cart"),
+        "viewPdf": MessageLookupByLibrary.simpleMessage("View PDF"),
         "waitingToGet": MessageLookupByLibrary.simpleMessage(
             "Waiting we traing to get products"),
         "warehouseAddress":

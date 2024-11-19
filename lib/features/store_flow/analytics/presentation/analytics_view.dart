@@ -19,6 +19,7 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
+import '../../../../core/widgets/button/button_builder.dart';
 import '../../../../core/widgets/cards/wide/analytics_wide_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
@@ -225,28 +226,30 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                           const SizedBox(
                             height: 24,
                           ),
-                          Expanded(
-                            child: cubit.dashboardModel.storeBestseller.isEmpty
-                                ? SizedBox(
-                                    height: screenHeight(context, 0.10),
-                                    child: Center(
-                                      child: Text(lang.noBestSeller),
-                                    ),
-                                  )
-                                : ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: cubit
-                                        .dashboardModel.storeBestseller.length,
-                                    itemBuilder: (context, index) {
-                                      final bestSeller = cubit.dashboardModel
-                                          .storeBestseller[index];
-                                      return analyticsWideCard(
-                                        context: context,
-                                        product: bestSeller,
-                                      );
-                                    },
-                                  ),
-                          ),
+                          if (cubit.dashboardModel.storeBestseller.isEmpty)
+                            SizedBox(
+                              height: screenHeight(context, 0.10),
+                              child: Center(
+                                child: Text(lang.noBestSeller),
+                              ),
+                            )
+                          else
+                            SizedBox(
+                              height: 150.w,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    cubit.dashboardModel.storeBestseller.length,
+                                itemBuilder: (context, index) {
+                                  final bestSeller = cubit
+                                      .dashboardModel.storeBestseller[index];
+                                  return analyticsWideCard(
+                                    context: context,
+                                    product: bestSeller,
+                                  );
+                                },
+                              ),
+                            ),
                         ],
                       ),
                     ),
@@ -262,8 +265,11 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                         const SizedBox(
                           height: 24,
                         ),
-                        OutlinedButtonBuilder(
+                        ButtonBuilder(
                           text: lang.guideBook,
+                          buttonColor: ColorManager.primaryW,
+                          frameColor: ColorManager.primaryB,
+                          style: AppStylesManager.customTextStyleB,
                           ontap: () {
                             navigateTo(
                                 context: context,
@@ -272,9 +278,12 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                   child: const GuideBookView(),
                                 ));
                           },
-                          withIcon: true,
+                          shadowColor: ColorManager.primaryL,
+                          isIcon: true,
                           height: 55.h,
-                          iconData: Icons.book_outlined,
+                          // frameColor: ColorManager.primaryB,
+
+                          icon: const Icon(Icons.book_outlined),
                           width: screenWidth(context, 0.92),
                         ),
                         SizedBox(
@@ -318,7 +327,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                           },
                         ),
                         SizedBox(
-                          height: screenHeight(context, 0.30),
+                          height: screenHeight(context, 0.2),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.sp),
                             child: Row(
@@ -330,7 +339,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                   average: 700,
                                   index: 0,
                                 ),
-                                // const Spacer(),
+                                const SizedBox(width: 10),
                                 Column(
                                   children: [
                                     AnalyticsSmallCard(
@@ -340,6 +349,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                           .toInt(),
                                       average: 700,
                                     ),
+                                    const SizedBox(height: 15),
                                     AnalyticsSmallCard(
                                       title: lang.totalIncome,
                                       number: (cubit
@@ -383,25 +393,29 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                         }),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.sp),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AnalyticsBigCard(
-                                title: lang.ofFollowers,
-                                number: (cubit.dashboardModel.storeFollowers)
-                                    .toInt(),
-                                average: 700,
-                                index: 1,
-                              ),
-                              AnalyticsBigCard(
-                                title: lang.ofNoified,
-                                number: (cubit.dashboardModel
-                                        .storeNumberOfNotifications)
-                                    .toInt(),
-                                average: 700,
-                                index: 2,
-                              ),
-                            ],
+                          child: SizedBox(
+                            height: 180.w,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                AnalyticsBigCard(
+                                  title: lang.ofFollowers,
+                                  number: (cubit.dashboardModel.storeFollowers)
+                                      .toInt(),
+                                  average: 700,
+                                  index: 1,
+                                ),
+                                const SizedBox(width: 10),
+                                AnalyticsBigCard(
+                                  title: lang.ofNoified,
+                                  number: (cubit.dashboardModel
+                                          .storeNumberOfNotifications)
+                                      .toInt(),
+                                  average: 700,
+                                  index: 2,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(

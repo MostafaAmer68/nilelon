@@ -100,33 +100,34 @@ class _EditStoreProfileViewState extends State<EditStoreProfileView> {
               ),
             ),
             const Spacer(),
-            Container(
-              color: ColorManager.primaryW,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  OutlinedButtonBuilder(
-                    text: lang.cancel,
-                    width: screenWidth(context, 0.44),
-                    height: screenHeight(context, 0.06),
-                    ontap: () {
-                      navigatePop(context: context);
-                    },
-                  ),
-                  const SizedBox(
-                    width: 12,
-                  ),
-                  GradientButtonBuilder(
-                    text: lang.save,
-                    width: screenWidth(context, 0.44),
-                    height: screenHeight(context, 0.06),
-                    ontap: () {
-                      ProfileCubit.get(context).updateStore(context);
-                    },
-                  ),
-                ],
-              ),
+          ],
+        ),
+      ),
+      btmBar: Container(
+        height: 100,
+        color: ColorManager.primaryW,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            OutlinedButtonBuilder(
+              text: lang.cancel,
+              width: screenWidth(context, 0.44),
+              height: screenHeight(context, 0.06),
+              ontap: () {
+                navigatePop(context: context);
+              },
+            ),
+            const SizedBox(
+              width: 12,
+            ),
+            GradientButtonBuilder(
+              text: lang.save,
+              width: screenWidth(context, 0.44),
+              height: screenHeight(context, 0.06),
+              ontap: () {
+                ProfileCubit.get(context).updateStore(context);
+              },
             ),
           ],
         ),

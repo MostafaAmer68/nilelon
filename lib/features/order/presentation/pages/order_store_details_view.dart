@@ -185,7 +185,7 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
                     Text(
                       cubit.storeOrder.status == 'Shipped'
                           ? lang.shipped
-                          : lang.received,
+                          : lang.delivered,
                       style: AppStylesManager.customTextStyleG15,
                     )
                   ],

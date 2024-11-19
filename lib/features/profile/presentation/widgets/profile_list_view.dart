@@ -31,10 +31,11 @@ class ProfileListTile extends StatelessWidget {
                 )
               : AppStylesManager.customTextStyleBl9,
         ),
+        minLeadingWidth: 5,
         trailing: trailingWidget ??
             Icon(
               Icons.arrow_forward_ios_rounded,
-              size: 20,
+              size: 14,
               color: isRed ? ColorManager.primaryR : ColorManager.primaryBL2,
             ),
         leading: SizedBox(

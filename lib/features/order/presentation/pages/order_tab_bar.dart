@@ -105,7 +105,7 @@ class _OrderPageState extends State<OrderPage> {
                         ),
                         Tab(
                           child: Text(
-                            lang.received,
+                            lang.delivered,
                           ),
                         ),
                       ],

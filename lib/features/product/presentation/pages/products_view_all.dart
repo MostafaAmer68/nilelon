@@ -145,8 +145,6 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
     }
     final temp = products.toList();
     paginationList.addAll(temp);
-    log(paginationList.hashCode.toString());
-    log(products.hashCode.toString());
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),

@@ -94,7 +94,7 @@ class CheckProductItem extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(
-                  height: 24,
+                  height: 35,
                 ),
                 Row(
                   children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/features/auth/presentation/view/login_page.dart';
@@ -116,14 +117,14 @@ class StoreSettingsView extends StatelessWidget {
                 },
               );
             },
-            width: screenWidth(context, 0.42),
-            height: screenHeight(context, 0.06),
+            width: 150.w,
+            height: 45.w,
             buttonColor: ColorManager.primaryW,
             frameColor: ColorManager.primaryR,
             style: AppStylesManager.customTextStyleB4
                 .copyWith(color: ColorManager.primaryR, fontSize: 15),
           ),
-          const Spacer()
+          const SizedBox(height: 20),
         ],
       ),
     );

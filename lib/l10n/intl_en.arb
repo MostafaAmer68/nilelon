@@ -141,7 +141,6 @@
   "total": "Total",
   "totalItems": "Total Items",
   "downloadReceipt": "Download Receipt",
-  "received": "Received",
   "editAccount": "Edit Account",
   "language": "Language",
   "polices": "Polices",
@@ -412,7 +411,7 @@
   "pdfSaved": "Receipt has been saved",
   "productEdited": "Product updated successfully",
   "youAreStore": "You are store you can't doo this action",
-  "damagedItem": "d",
+  "viewPdf": "View PDF",
   "damagedItem": "d",
   "damagedItem": "d",
   "returnedHistory": "Returned History"

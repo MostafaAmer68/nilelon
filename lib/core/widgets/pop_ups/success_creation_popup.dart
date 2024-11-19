@@ -54,8 +54,11 @@ Future successCreationDialog(
                         .toList(),
                   ),
                 ),
-                const SizedBox(height: 20),
-                Image.asset('assets/images/success_creation.png'),
+                const SizedBox(height: 10),
+                Image.asset(
+                  'assets/images/success_creation.png',
+                  width: 300.w,
+                ),
                 SizedBox(height: 10.h),
                 Text(
                   highlightedText,
