@@ -3,27 +3,27 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/product/presentation/pages/product_details_store_page.dart';
+import 'package:nilelon/features/store_flow/analytics/domain/model/analytics_response_model.dart';
 
-GestureDetector analyticsWideCard({required context}) {
-  List<String> images = ['assets/images/cloth1.png'];
-  String name = 'Cream Hoodie';
-  String soldItems = '50';
-  String rating = '4.8';
-  String price = '370.90';
+GestureDetector analyticsWideCard(
+    {required context, required ProductBetSeller product}) {
   return GestureDetector(
     onTap: () {
       navigateTo(
-          context: context,
-          screen: const ProductStoreDetailsView(
-            productId: '',
-          ));
+        context: context,
+        screen: ProductStoreDetailsView(
+          productId: product.productId,
+        ),
+      );
     },
     child: SizedBox(
       width: screenWidth(context, 0.92),
-      height: 1.sw > 600 ? 100 : 100,
+      // height: 1.sw > 600 ? 100 : 100,
       child: Stack(
         children: [
           Container(
@@ -57,12 +57,10 @@ GestureDetector analyticsWideCard({required context}) {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Container(
+                  imageReplacer(
+                    url: product.productIMages,
                     width: screenWidth(context, 0.31),
                     height: 1.sw > 600 ? 220 : 145,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage(images[0]), fit: BoxFit.cover)),
                   ),
                   const SizedBox(
                     width: 4,
@@ -77,26 +75,22 @@ GestureDetector analyticsWideCard({required context}) {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            name,
+                            'Best Seller',
                             style: AppStylesManager.customTextStyleBl7,
                             overflow: TextOverflow.ellipsis,
                           ),
                           const SizedBox(
                             height: 10,
                           ),
-                          soldItemsRow(soldItems),
+                          // soldItemsRow(soldItems),
                           const SizedBox(
                             height: 4,
                           ),
-                          Text(
-                            'Lorem ipsum dolor sit amet consectetur. Lorem aeneanaeneanaenean eget dolor mattis viverra. ',
-                            style: AppStylesManager.customTextStyleG20,
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
                           const Spacer(),
                           PriceAndRatingRow(
-                              price: '$price L.E', rating: rating),
+                            price: '${product.price} ${lang(context).le}',
+                            rating: product.rating.toString(),
+                          ),
                           const SizedBox(
                             height: 4,
                           ),

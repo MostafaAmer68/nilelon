@@ -204,7 +204,7 @@ class _ClosetViewState extends State<ClosetPage> {
                           final closet =
                               ClosetCubit.get(context).closets[index];
                           return Container(
-                            margin: EdgeInsets.symmetric(
+                            margin: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 15),
                             child: ClosetsWidgetWithOptions(
                               isPage: true,

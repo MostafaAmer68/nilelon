@@ -1,10 +1,12 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/cart_item.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
@@ -74,7 +76,7 @@ class _CartViewState extends State<CartView> {
           },
           hasLeading: false,
         ),
-        body: SingleChildScrollView(
+        body: Expanded(
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -114,9 +116,7 @@ class _CartViewState extends State<CartView> {
                 },
                 builder: (context, state) {
                   if (state is CartLoading) {
-                    return Expanded(
-                        child: SingleChildScrollView(
-                            child: buildShimmerIndicator()));
+                    return Expanded(child: buildShimmerIndicator());
                   } else if (state is GetCartFailure) {
                     return Text(state.message);
                   } else if (state is GetCartSuccess ||
@@ -129,53 +129,45 @@ class _CartViewState extends State<CartView> {
                         ),
                       );
                     } else {
-                      return SizedBox(
-                        height: screenHeight(context, 0.5),
-                        // width: screenWidth(context, 0.9),5
+                      return Expanded(
                         child: ListView.builder(
                           itemCount: cubit.cart1.items.length + 1,
                           padding: const EdgeInsets.only(bottom: 5),
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             if (cubit.cart1.items.length == index) {
-                              return Column(
-                                children: [
-                                  const SizedBox(height: 20),
-                                  const DefaultDivider(),
-                                  Align(
-                                    alignment: AlignmentDirectional.bottomEnd,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 23,
-                                      ),
-                                      child: SizedBox(
-                                        width: screenWidth(context, 0.3),
-                                        child: OutlinedButton(
-                                          onPressed: () {
-                                            CartCubit.get(context).emptyCart();
-                                          },
-                                          style: OutlinedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              side: const BorderSide(
-                                                color: ColorManager.primaryR,
-                                              ),
-                                            ),
-                                            backgroundColor:
-                                                ColorManager.primaryW,
-                                          ),
-                                          child: Text(
-                                            lang.emptyCart,
+                              return Expanded(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const SizedBox(height: 20),
+                                    const DefaultDivider(),
+                                    Align(
+                                      alignment: AlignmentDirectional.bottomEnd,
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(
+                                          right: 38,
+                                          top: 15,
+                                        ),
+                                        child: SizedBox(
+                                          width: screenWidth(context, 0.3),
+                                          child: OutlinedButtonBuilder(
+                                            ontap: () {
+                                              CartCubit.get(context)
+                                                  .emptyCart();
+                                            },
+                                            frameColor: ColorManager.primaryR,
                                             style: AppStylesManager
                                                 .customTextStyleR,
+                                            height: 40.w,
+                                            text: lang.emptyCart,
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 20),
-                                ],
+                                    const SizedBox(width: 20),
+                                  ],
+                                ),
                               );
                             }
                             final item = cubit.cart1.items[index];

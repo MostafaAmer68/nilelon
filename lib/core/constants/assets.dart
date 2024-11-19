@@ -122,9 +122,13 @@ class Assets {
   /// assets/images/cloth1.png
   static const String assetsImagesCloth1 = "assets/images/cloth1.png";
 
+  /// Assets for assetsImagesDdd
+  /// assets/images/ddd.png
+  static const String assetsImagesDdd = "assets/images/ddd.png";
+
   /// Assets for assetsImagesDiscover
-  /// assets/images/discover.png
-  static const String assetsImagesDiscover = "assets/images/discover.png";
+  /// assets/images/discover.json
+  static const String assetsImagesDiscover = "assets/images/discover.json";
 
   /// Assets for assetsImagesEdit
   /// assets/images/edit.svg
@@ -373,6 +377,10 @@ class Assets {
   /// Assets for assetsImagesSuccessCreation
   /// assets/images/success_creation.png
   static const String assetsImagesSuccessCreation = "assets/images/success_creation.png";
+
+  /// Assets for assetsImagesTag
+  /// assets/images/tag.svg
+  static const String assetsImagesTag = "assets/images/tag.svg";
 
   /// Assets for assetsImagesUserTag
   /// assets/images/user_tag.svg

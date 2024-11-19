@@ -508,7 +508,7 @@ Future<String> makePdf({
     for (int i = 1; i < paths.length; i++) {
       String folder = paths[i];
       if (folder == "Android") break;
-      newPath += "/" + folder;
+      newPath += "/$folder";
     }
     newPath += "/Download";
 

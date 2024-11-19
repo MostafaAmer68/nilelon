@@ -365,7 +365,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 ),
               );
             }, initial: () {
-              return Text('init');
+              return const Text('init');
             }, failure: (_) {
               return Text(_);
             })!;

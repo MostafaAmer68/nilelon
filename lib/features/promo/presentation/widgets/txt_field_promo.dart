@@ -54,6 +54,7 @@ class TxtFieldPromo extends StatelessWidget {
                       }
                     },
                     height: 54,
+                    frameColor: Colors.transparent,
                     width: screenWidth(context, 0.24),
                   ),
           ),

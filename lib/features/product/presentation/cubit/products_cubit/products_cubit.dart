@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
@@ -187,7 +186,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       getStoreProducts(HiveStorage.get<UserModel>(HiveKeys.userModel).id);
-      emit(const ProductsState.success());
+      // emit(const ProductsState.success());
     });
   }
 

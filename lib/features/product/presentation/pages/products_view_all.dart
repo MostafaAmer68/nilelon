@@ -186,7 +186,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(message, style: TextStyle(color: Colors.red)),
+          Text(message, style: const TextStyle(color: Colors.red)),
         ],
       ),
     );
@@ -244,7 +244,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                                       'Please enter a valid page size above 0');
                             }
                           },
-                          child: Text('OK'),
+                          child: const Text('OK'),
                         ),
                       ],
                     );

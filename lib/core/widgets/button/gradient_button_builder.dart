@@ -16,6 +16,7 @@ class GradientButtonBuilder extends StatelessWidget {
     this.style,
     this.isIcon = false,
     this.isActivated = true,
+    this.icon,
   });
 
   final String text;
@@ -25,6 +26,7 @@ class GradientButtonBuilder extends StatelessWidget {
   final double? height;
   final bool? isLoading;
   final TextStyle? style;
+  final Widget? icon;
   final bool isActivated;
 
   @override
@@ -51,7 +53,7 @@ class GradientButtonBuilder extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             if (isIcon) ...[
-                              SvgPicture.asset(Assets.assetsImagesAddTOCart),
+                              icon ?? const SizedBox(),
                               const SizedBox(width: 10),
                             ],
                             Text(

@@ -178,7 +178,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
             isHandpicked: false,
             appBarTitle: lang(context).hotPicks,
             onStartPage: (isPage) {
-              ProductsCubit.get(context).getNewInProducts(isPage);
+              ProductsCubit.get(context).getRandomProducts(isPage);
             },
           ),
         );

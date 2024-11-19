@@ -50,17 +50,17 @@ Future initializeWebSocket() async {
   connection.on('ReceiveMissedNotification', (message) async {
     log(message!.toString());
     showAwesomeNotification(
-        message!.first.toString(), message.first.toString());
+        message.first.toString(), message.first.toString());
   });
   connection.on('MissYou', (message) async {
     log(message!.toString());
     showAwesomeNotification(
-        message!.first.toString(), message.first.toString());
+        message.first.toString(), message.first.toString());
   });
   connection.on('ProductTopSeller', (message) async {
     final productId = message!.first;
     final body = message[1];
-    log(message!.toString());
+    log(message.toString());
     showAwesomeNotification(body, 'Top Seller');
   });
   //END USER NOTIFICATION
@@ -77,32 +77,32 @@ Future initializeWebSocket() async {
     final productPic = message[0];
     final productName = message[2];
     final body = message[3];
-    log(message!.toString());
+    log(message.toString());
     showAwesomeNotification(body, 'Store add product');
   });
   connection.on('StoreSaleProduct', (message) async {
     final discount = message!.first;
     final body = message[1];
-    log(message!.toString());
+    log(message.toString());
     showAwesomeNotification(body, 'Big Sale');
   });
   connection.on('ChangeOrderStatus', (message) async {
     final orderId = message!.first;
     final status = message[1];
     final body = message[2];
-    log(message!.toString());
+    log(message.toString());
     showAwesomeNotification(body, 'Order Update');
   });
   connection.on('NewStoreRegister', (message) async {
     final storeName = message!.first;
     final body = message[1];
-    log(message!.toString());
+    log(message.toString());
     showAwesomeNotification(body, 'New Store');
   });
   connection.on('AdminNewStoreRegister', (message) async {
     final storeEmail = message!.first;
     final body = message[1];
-    log(message!.toString());
+    log(message.toString());
     showAwesomeNotification(body, 'New Store');
   });
   //END CUSTOMER NOTIFCATION
@@ -115,13 +115,13 @@ Future initializeWebSocket() async {
     final qun = message[3];
     final body = message[4];
 
-    log(message!.toString());
+    log(message.toString());
     showAwesomeNotification(body, 'Product Update');
   });
   connection.on('OrderCome', (message) async {
     final orderId = message!.first;
     final body = message[2];
-    log(message!.toString());
+    log(message.toString());
     showAwesomeNotification(body, 'New Order');
   });
 

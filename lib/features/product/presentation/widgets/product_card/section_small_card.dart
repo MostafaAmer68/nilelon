@@ -8,7 +8,6 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
 
-import '../../../../auth/domain/model/user_model.dart';
 import '../../pages/product_details_page.dart';
 import '../../pages/product_details_store_page.dart';
 import '../../../../../core/color_const.dart';

@@ -137,7 +137,7 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
   }
 
   Widget _buildProductGrid(List<ProductModel> products) {
-    if (products.isEmpty && paginationList.isEmpty) {
+    if (products.isEmpty) {
       return SizedBox(
         height: 450.h,
         child: Column(
@@ -250,7 +250,7 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
                                   text: 'please enter page size above 0');
                             }
                           },
-                          child: Text('OK'),
+                          child: const Text('OK'),
                         ),
                       ],
                     );

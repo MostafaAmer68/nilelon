@@ -27,7 +27,7 @@ Future logoutAlert(context) => showDialog(
           height: 90.h,
           child: Column(
             children: [
-              DontsWidget(),
+              const DontsWidget(),
               const SizedBox(
                 height: 10,
               ),

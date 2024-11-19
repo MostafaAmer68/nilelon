@@ -15,8 +15,6 @@ import 'package:nilelon/features/shared/language/language_view.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_list_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/security_page.dart';
 
-import '../../../../core/data/hive_stroage.dart';
-import '../../../../core/widgets/alert/logout_alert.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class SettingsView extends StatelessWidget {

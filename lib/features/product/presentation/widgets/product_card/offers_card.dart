@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,8 +36,18 @@ GestureDetector offersCard({required context, required ProductModel product}) {
         orElse: () => product.productVariants.first,
       )
       .price;
-  var priceAfterDiscount = product.productVariants.first.price *
-      (product.productVariants.first.discountRate / 100);
+
+  final discount = product.productVariants
+      .firstWhere(
+        (e) => e.price != 0,
+        orElse: () => product.productVariants.first,
+      )
+      .discountRate;
+  var priceAfterDiscount = price * (discount);
+
+  log(priceAfterDiscount.toString());
+  log(product.productVariants.first.discountRate.toString());
+  log(price.toString());
   return GestureDetector(
     onTap: () {
       navigateTo(

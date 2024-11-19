@@ -57,6 +57,7 @@ class ShopOrSellView extends StatelessWidget {
             const Spacer(),
             ButtonBuilder(
               text: lang.sellOnApp,
+              frameColor: Colors.transparent,
               ontap: () {
                 HiveStorage.set(HiveKeys.isStore, true);
 

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
-import 'package:nilelon/features/store_flow/notification/notification_tab_bar.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../features/notification/presentation/pages/notification_view.dart';

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
-import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/resources/color_manager.dart';
 

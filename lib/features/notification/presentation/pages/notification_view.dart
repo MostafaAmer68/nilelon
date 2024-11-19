@@ -39,7 +39,7 @@ class _NotificationViewState extends State<NotificationView> {
       appBar: customAppBar(title: lang.notification, context: context),
       body: Column(
         children: [
-          DefaultDivider(),
+          const DefaultDivider(),
           BlocBuilder<NotificationCubit, NotificationState>(
             builder: (context, state) {
               if (state is NotificationLoading) {

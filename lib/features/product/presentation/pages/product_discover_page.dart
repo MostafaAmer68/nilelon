@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
@@ -12,7 +13,6 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/product/presentation/pages/products_view_all.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
-import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
@@ -51,9 +51,11 @@ class _DiscoverViewState extends State<DiscoverView> {
                 child: Padding(
                   padding: const EdgeInsets.all(16),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
+                      Lottie.asset(
                         Assets.assetsImagesDiscover,
+                        width: 300.w,
                         fit: BoxFit.cover,
                       ),
                       const SizedBox(height: 10),

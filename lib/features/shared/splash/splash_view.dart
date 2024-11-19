@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,6 @@ import 'package:nilelon/features/shared/onboarding/onboarding_cubit/onboarding_c
 import 'package:nilelon/features/shared/onboarding/screen/onboarding_view.dart';
 
 import '../../../core/widgets/scaffold_image.dart';
-import '../../product/presentation/pages/product_details_page.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});

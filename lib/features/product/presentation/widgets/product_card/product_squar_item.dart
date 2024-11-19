@@ -12,7 +12,6 @@ import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../../core/constants/assets.dart';
-import '../../../../auth/domain/model/user_model.dart';
 import '../../../../closet/presentation/view/closet_sheet_bar_view.dart';
 import '../../../../refund/presentation/widgets/custom_check_box.dart';
 import '../../pages/product_details_store_page.dart';

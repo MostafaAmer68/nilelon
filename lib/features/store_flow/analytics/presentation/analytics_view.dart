@@ -226,18 +226,26 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                             height: 24,
                           ),
                           Expanded(
-                            child: Column(
-                              children: [
-                                cubit.dashboardModel.storeBestseller.isEmpty
-                                    ? SizedBox(
-                                        height: screenHeight(context, 0.10),
-                                        child: Center(
-                                          child: Text(lang.noBestSeller),
-                                        ),
-                                      )
-                                    : analyticsWideCard(context: context)
-                              ],
-                            ),
+                            child: cubit.dashboardModel.storeBestseller.isEmpty
+                                ? SizedBox(
+                                    height: screenHeight(context, 0.10),
+                                    child: Center(
+                                      child: Text(lang.noBestSeller),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: cubit
+                                        .dashboardModel.storeBestseller.length,
+                                    itemBuilder: (context, index) {
+                                      final bestSeller = cubit.dashboardModel
+                                          .storeBestseller[index];
+                                      return analyticsWideCard(
+                                        context: context,
+                                        product: bestSeller,
+                                      );
+                                    },
+                                  ),
                           ),
                         ],
                       ),

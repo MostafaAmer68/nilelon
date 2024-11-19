@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
@@ -19,6 +20,7 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_settings_view.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../promo/presentation/pages/offer_product_page.dart';
@@ -99,6 +101,12 @@ class _StoreProfileViewState extends State<StoreProfileView> {
             ),
             GradientButtonBuilder(
               text: lang.applyOffer,
+              icon: SvgPicture.asset(
+                Assets.assetsImagesTag,
+                fit: BoxFit.cover,
+                height: 30.w,
+              ),
+              isIcon: true,
               ontap: () {
                 navigateTo(
                   context: context,
@@ -143,45 +151,45 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                 }, loading: () {
                   return buildShimmerIndicatorGrid(context);
                 }, storeProductSuccess: (products) {
-                  return pCubit
-                          .filterListByCategory(
-                              cubit.selectedCategory, pCubit.products)
-                          .isEmpty
-                      ? SizedBox(
-                          height: 280.h,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Center(
-                                child: Text(
-                                  S.of(context).thereNoProduct,
-                                  style: AppStylesManager.customTextStyleG2,
-                                ),
-                              ),
-                            ],
+                  if (pCubit
+                      .filterListByCategory(cubit.selectedCategory, products)
+                      .isEmpty) {
+                    return SizedBox(
+                      height: 280.h,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Text(
+                              S.of(context).thereNoProduct,
+                              style: AppStylesManager.customTextStyleG2,
+                            ),
                           ),
-                        )
-                      : Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: GridView.builder(
-                            controller: ProductsCubit.get(context).scroll,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate: gridDelegate(context),
-                            shrinkWrap: true,
-                            itemCount: pCubit
-                                .filterListByCategory(
-                                    cubit.selectedCategory, pCubit.products)
-                                .length,
-                            itemBuilder: (context, sizeIndex) {
-                              return productSquarItem(
-                                context: context,
-                                product: pCubit.filterListByCategory(
-                                    cubit.selectedCategory,
-                                    pCubit.products)[sizeIndex],
-                              );
-                            },
-                          ),
-                        );
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: GridView.builder(
+                        controller: ProductsCubit.get(context).scroll,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: gridDelegate(context),
+                        shrinkWrap: true,
+                        itemCount: pCubit
+                            .filterListByCategory(
+                                cubit.selectedCategory, products)
+                            .length,
+                        itemBuilder: (context, sizeIndex) {
+                          return productSquarItem(
+                            context: context,
+                            product: pCubit.filterListByCategory(
+                                cubit.selectedCategory, products)[sizeIndex],
+                          );
+                        },
+                      ),
+                    );
+                  }
                 }, failure: (message) {
                   return Text(message);
                 }, orElse: () {

@@ -5,7 +5,7 @@ import 'package:nilelon/core/tools.dart';
 import 'package:shimmer/shimmer.dart';
 
 Widget buildShimmerIndicator() {
-  return Shim();
+  return const Shim();
 }
 
 class Shim extends StatelessWidget {

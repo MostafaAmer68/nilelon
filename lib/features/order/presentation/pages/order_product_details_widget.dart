@@ -165,7 +165,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
         child: Center(
           child: Text(
             t,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
                 color: Colors.orange),

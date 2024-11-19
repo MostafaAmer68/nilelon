@@ -1,12 +1,12 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/cart/domain/model/add_cart_request_model.dart';
 import 'package:nilelon/features/cart/domain/model/cart_item.dart';
@@ -17,8 +17,10 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../generated/l10n.dart';
+import '../../constants/assets.dart';
 
 class AddToFooter extends StatelessWidget {
   const AddToFooter({super.key, this.visible = true, required this.product});
@@ -36,7 +38,7 @@ class AddToFooter extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ButtonBuilder(
+            OutlinedButtonBuilder(
               text: S.of(context).buyNow,
               ontap: () {
                 if (HiveStorage.get(HiveKeys.isStore)) {
@@ -124,6 +126,7 @@ class AddToFooter extends StatelessWidget {
               builder: (context, state) {
                 return GradientButtonBuilder(
                   isIcon: true,
+                  icon: SvgPicture.asset(Assets.assetsImagesAddTOCart),
                   text: state is CartLoading
                       ? S.of(context).loading
                       : S.of(context).addToCart,
