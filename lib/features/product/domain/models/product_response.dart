@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 
 class ProductResponse extends Equatable {
-  final MetaData metaData;
+  final MetaDataProducts metaData;
   final List<ProductModel> data;
   const ProductResponse({
     required this.metaData,
@@ -16,7 +16,7 @@ class ProductResponse extends Equatable {
 
   factory ProductResponse.fromMap(Map<String, dynamic> map) {
     return ProductResponse(
-      metaData: MetaData.fromMap(map['metaData'] as Map<String, dynamic>),
+      metaData: MetaDataProducts.fromMap(map['metaData'] as Map<String, dynamic>),
       data: List<ProductModel>.from(
         (map['data'] as List).map<ProductModel>(
           (x) => ProductModel.fromJson(x as Map<String, dynamic>),
@@ -24,19 +24,13 @@ class ProductResponse extends Equatable {
       ),
     );
   }
-  factory ProductResponse.empty() => const ProductResponse(
-        metaData: MetaData(
-            currentPage: 0,
-            totalPages: 0,
-            pageSize: 0,
-            totalCount: 0,
-            hasPrevious: false,
-            hasNext: false),
-        data: [],
+  factory ProductResponse.empty() => ProductResponse(
+        metaData: MetaDataProducts.ampty(),
+        data: const [],
       );
 
   ProductResponse copyWith({
-    MetaData? metaData,
+    MetaDataProducts? metaData,
     List<ProductModel>? data,
   }) {
     return ProductResponse(
@@ -46,14 +40,14 @@ class ProductResponse extends Equatable {
   }
 }
 
-class MetaData extends Equatable {
+class MetaDataProducts extends Equatable {
   final num currentPage;
   final num totalPages;
   final num pageSize;
   final num totalCount;
   final bool hasPrevious;
   final bool hasNext;
-  const MetaData({
+  const MetaDataProducts({
     required this.currentPage,
     required this.totalPages,
     required this.pageSize,
@@ -61,6 +55,14 @@ class MetaData extends Equatable {
     required this.hasPrevious,
     required this.hasNext,
   });
+
+  factory MetaDataProducts.ampty() => const MetaDataProducts(
+      currentPage: 0,
+      totalPages: 0,
+      pageSize: 0,
+      totalCount: 0,
+      hasPrevious: false,
+      hasNext: false);
 
   @override
   List<Object> get props {
@@ -85,8 +87,8 @@ class MetaData extends Equatable {
     };
   }
 
-  factory MetaData.fromMap(Map<String, dynamic> map) {
-    return MetaData(
+  factory MetaDataProducts.fromMap(Map<String, dynamic> map) {
+    return MetaDataProducts(
       currentPage: map['currentPage'] as num,
       totalPages: map['totalPages'] as num,
       pageSize: map['pageSize'] as num,

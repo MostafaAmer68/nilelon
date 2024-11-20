@@ -81,12 +81,9 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
 
   /// Load the next page of products
   void _loadMoreProducts() async {
-    log(paginationList.metaData.hasNext.toString());
     if (paginationList.metaData.hasNext) {
       if (!isLoadingMore) {
         setState(() => isLoadingMore = true);
-        // currentScrollPosition =
-        //     scrollController.position.pixels; // Track current position
         cubit.page += 1; // Increment page for the next API call
         widget.onStartPage(false); // Trigger fetching next page
 
@@ -145,13 +142,14 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
 
     // Append new products to the pagination list
     if (paginationList.data.isEmpty || cubit.page == 1) {
-      paginationList =
-          paginationList.copyWith(data: []); // Clear if it's the first page
+      paginationList = paginationList.copyWith(
+          data: [],
+          metaData: MetaDataProducts.ampty()); // Clear if it's the first page
     }
     final temp = paginationList.data.toList();
     temp.addAll(products.data);
-    paginationList =
-        paginationList.copyWith(data: temp, metaData: products.metaData);
+    paginationList = paginationList.copyWith(
+        data: temp.toSet().toList(), metaData: products.metaData);
     log(paginationList.data.length.toString());
     return Expanded(
       child: Padding(

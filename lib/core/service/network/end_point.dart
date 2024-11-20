@@ -102,7 +102,7 @@ class EndPoint {
 
   //todo Customer Products Urls
   static const String getFollowedProductsUrl = '/Product/GetFollowedProducts';
-  static const String getNewProductsUrl = '/Product//GetCustomerRandomProducts';
+  static const String getNewProductsUrl = '/Product//GetCustomerNewNProducts';
   static const String getRandomProductsUrl =
       '/Product/GetCustomerRandomProducts';
   static const String getNewProductsGuestUrl = '/Product/GetNewNProductsGuest';

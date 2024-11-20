@@ -70,7 +70,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
     if (Platform.isAndroid) {
       // Open the folder containing the file
       String folderPath = filePath.substring(0, filePath.lastIndexOf('/'));
-      await OpenFilex.open(folderPath);
+      await OpenFilex.open('/storage/emulated/0/Download/');
     } else if (Platform.isIOS) {
       // Handle iOS-specific behavior (e.g., display a custom dialog)
       // iOS doesn't support directly opening file explorer; you can navigate in-app.

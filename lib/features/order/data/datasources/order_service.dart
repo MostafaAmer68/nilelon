@@ -48,7 +48,7 @@ class OrderService {
         return [];
       } else {
         return List<OrderModel>.from(
-            response.data['result'].map((e) => OrderModel.fromMap(e)));
+            response.data['result']['data'].map((e) => OrderModel.fromMap(e)));
       }
     }
     // return [];
@@ -69,7 +69,7 @@ class OrderService {
 
     if (response.statusCode == HttpStatus.ok) {
       return List<OrderModel>.from(
-          response.data['result'].map((e) => OrderModel.fromMap(e)));
+          response.data['result']['data'].map((e) => OrderModel.fromMap(e)));
     }
     throw response.data['result'];
   }

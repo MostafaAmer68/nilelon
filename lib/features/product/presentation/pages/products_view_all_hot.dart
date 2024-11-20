@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -150,14 +152,14 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
     }
 
     if (paginationList.data.isEmpty || cubit.page == 1) {
-      paginationList
-          .copyWith(data: []); // Clear on the first page or new data set
+      paginationList =
+          paginationList.copyWith(data: [], metaData: MetaDataProducts.ampty());
     }
 
     final temp = paginationList.data.toList();
     temp.addAll(products.data);
-    paginationList =
-        paginationList.copyWith(data: temp, metaData: products.metaData);
+    paginationList = paginationList.copyWith(
+        data: temp.toSet().toList(), metaData: products.metaData);
 
     return Expanded(
       child: Padding(

@@ -153,15 +153,16 @@ class _DiscoverViewState extends State<DiscoverView> {
                     text: lang.newIn,
                     onPressed: () {
                       navigateTo(
-                          context: context,
-                          screen: ProductsViewAll(
-                            notFoundTitle: lang.noProductNewIn,
-                            isHandpicked: false,
-                            appBarTitle: lang.newIn,
-                            onStartPage: (isPage) {
-                              cubit.getNewInProducts(isPage);
-                            },
-                          ));
+                        context: context,
+                        screen: ProductsViewAll(
+                          notFoundTitle: lang.noProductNewIn,
+                          isHandpicked: false,
+                          appBarTitle: lang.newIn,
+                          onStartPage: (isPage) {
+                            cubit.getNewInProducts(isPage);
+                          },
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(
@@ -217,15 +218,16 @@ class _DiscoverViewState extends State<DiscoverView> {
                     text: lang.newIn,
                     onPressed: () {
                       navigateTo(
-                          context: context,
-                          screen: ProductsViewAll(
-                            notFoundTitle: lang.noProductNewIn,
-                            isHandpicked: false,
-                            appBarTitle: lang.newIn,
-                            onStartPage: (isPage) {
-                              cubit.getNewInProducts(isPage);
-                            },
-                          ));
+                        context: context,
+                        screen: ProductsViewAll(
+                          notFoundTitle: lang.noProductNewIn,
+                          isHandpicked: false,
+                          appBarTitle: lang.newIn,
+                          onStartPage: (isPage) {
+                            cubit.getNewInProducts(isPage);
+                          },
+                        ),
+                      );
                     },
                   ),
                   const SizedBox(
