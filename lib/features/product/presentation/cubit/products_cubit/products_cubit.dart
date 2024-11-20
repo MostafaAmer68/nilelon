@@ -10,6 +10,7 @@ import 'package:nilelon/features/product/domain/repositories/products_repos.dart
 import '../../../../categories/domain/model/result.dart';
 import '../../../domain/models/create_review_model.dart';
 import '../../../domain/models/product_model.dart';
+import '../../../domain/models/product_response.dart';
 import 'products_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState> {
@@ -32,11 +33,11 @@ class ProductsCubit extends Cubit<ProductsState> {
   int limit = 10;
 
   List<ReviewModel> review = [];
-  List<ProductModel> products = [];
-  List<ProductModel> newInProducts = [];
-  List<ProductModel> randomProducts = [];
-  List<ProductModel> followingProducts = [];
-  List<ProductModel> storeProducts = [];
+  ProductResponse products = ProductResponse.empty();
+  ProductResponse newInProducts = ProductResponse.empty();
+  ProductResponse randomProducts = ProductResponse.empty();
+  ProductResponse followingProducts = ProductResponse.empty();
+  ProductResponse storeProducts = ProductResponse.empty();
 
   bool loadMore = false;
 
@@ -128,7 +129,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     if (isPagination) {
       emit(const ProductsState.loading());
     }
-    late final Either<FailureService, List<ProductModel>> result;
+    late final Either<FailureService, ProductResponse> result;
 
     if (HiveStorage.get(HiveKeys.userModel) != null &&
         !HiveStorage.get(HiveKeys.isStore)) {
@@ -154,7 +155,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     if (isPagination) {
       emit(const ProductsState.loading());
     }
-    late final Either<FailureService, List<ProductModel>> result;
+    late final Either<FailureService, ProductResponse> result;
 
     if (HiveStorage.get(HiveKeys.userModel) != null &&
         !HiveStorage.get(HiveKeys.isStore)) {
@@ -194,7 +195,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     if (isPagination) {
       emit(const ProductsState.loading());
     }
-    late final Either<FailureService, List<ProductModel>> result;
+    late final Either<FailureService, ProductResponse> result;
 
     if (HiveStorage.get(HiveKeys.userModel) != null &&
         !HiveStorage.get(HiveKeys.isStore)) {

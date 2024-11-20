@@ -21,11 +21,10 @@ mixin _$ProductsState {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(List<ProductModel> products) newInProductSuccess,
-    required TResult Function(List<ProductModel> products) randomProductSuccess,
-    required TResult Function(List<ProductModel> products)
-        followingProductSuccess,
-    required TResult Function(List<ProductModel> products) storeProductSuccess,
+    required TResult Function(ProductResponse products) newInProductSuccess,
+    required TResult Function(ProductResponse products) randomProductSuccess,
+    required TResult Function(ProductResponse products) followingProductSuccess,
+    required TResult Function(ProductResponse products) storeProductSuccess,
     required TResult Function(String msg) failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -34,10 +33,10 @@ mixin _$ProductsState {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(List<ProductModel> products)? newInProductSuccess,
-    TResult? Function(List<ProductModel> products)? randomProductSuccess,
-    TResult? Function(List<ProductModel> products)? followingProductSuccess,
-    TResult? Function(List<ProductModel> products)? storeProductSuccess,
+    TResult? Function(ProductResponse products)? newInProductSuccess,
+    TResult? Function(ProductResponse products)? randomProductSuccess,
+    TResult? Function(ProductResponse products)? followingProductSuccess,
+    TResult? Function(ProductResponse products)? storeProductSuccess,
     TResult? Function(String msg)? failure,
   }) =>
       throw _privateConstructorUsedError;
@@ -46,10 +45,10 @@ mixin _$ProductsState {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(List<ProductModel> products)? newInProductSuccess,
-    TResult Function(List<ProductModel> products)? randomProductSuccess,
-    TResult Function(List<ProductModel> products)? followingProductSuccess,
-    TResult Function(List<ProductModel> products)? storeProductSuccess,
+    TResult Function(ProductResponse products)? newInProductSuccess,
+    TResult Function(ProductResponse products)? randomProductSuccess,
+    TResult Function(ProductResponse products)? followingProductSuccess,
+    TResult Function(ProductResponse products)? storeProductSuccess,
     TResult Function(String msg)? failure,
     required TResult orElse(),
   }) =>
@@ -152,11 +151,10 @@ class _$InitialImpl implements _Initial {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(List<ProductModel> products) newInProductSuccess,
-    required TResult Function(List<ProductModel> products) randomProductSuccess,
-    required TResult Function(List<ProductModel> products)
-        followingProductSuccess,
-    required TResult Function(List<ProductModel> products) storeProductSuccess,
+    required TResult Function(ProductResponse products) newInProductSuccess,
+    required TResult Function(ProductResponse products) randomProductSuccess,
+    required TResult Function(ProductResponse products) followingProductSuccess,
+    required TResult Function(ProductResponse products) storeProductSuccess,
     required TResult Function(String msg) failure,
   }) {
     return initial();
@@ -168,10 +166,10 @@ class _$InitialImpl implements _Initial {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(List<ProductModel> products)? newInProductSuccess,
-    TResult? Function(List<ProductModel> products)? randomProductSuccess,
-    TResult? Function(List<ProductModel> products)? followingProductSuccess,
-    TResult? Function(List<ProductModel> products)? storeProductSuccess,
+    TResult? Function(ProductResponse products)? newInProductSuccess,
+    TResult? Function(ProductResponse products)? randomProductSuccess,
+    TResult? Function(ProductResponse products)? followingProductSuccess,
+    TResult? Function(ProductResponse products)? storeProductSuccess,
     TResult? Function(String msg)? failure,
   }) {
     return initial?.call();
@@ -183,10 +181,10 @@ class _$InitialImpl implements _Initial {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(List<ProductModel> products)? newInProductSuccess,
-    TResult Function(List<ProductModel> products)? randomProductSuccess,
-    TResult Function(List<ProductModel> products)? followingProductSuccess,
-    TResult Function(List<ProductModel> products)? storeProductSuccess,
+    TResult Function(ProductResponse products)? newInProductSuccess,
+    TResult Function(ProductResponse products)? randomProductSuccess,
+    TResult Function(ProductResponse products)? followingProductSuccess,
+    TResult Function(ProductResponse products)? storeProductSuccess,
     TResult Function(String msg)? failure,
     required TResult orElse(),
   }) {
@@ -291,11 +289,10 @@ class _$LoadingImpl implements _Loading {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(List<ProductModel> products) newInProductSuccess,
-    required TResult Function(List<ProductModel> products) randomProductSuccess,
-    required TResult Function(List<ProductModel> products)
-        followingProductSuccess,
-    required TResult Function(List<ProductModel> products) storeProductSuccess,
+    required TResult Function(ProductResponse products) newInProductSuccess,
+    required TResult Function(ProductResponse products) randomProductSuccess,
+    required TResult Function(ProductResponse products) followingProductSuccess,
+    required TResult Function(ProductResponse products) storeProductSuccess,
     required TResult Function(String msg) failure,
   }) {
     return loading();
@@ -307,10 +304,10 @@ class _$LoadingImpl implements _Loading {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(List<ProductModel> products)? newInProductSuccess,
-    TResult? Function(List<ProductModel> products)? randomProductSuccess,
-    TResult? Function(List<ProductModel> products)? followingProductSuccess,
-    TResult? Function(List<ProductModel> products)? storeProductSuccess,
+    TResult? Function(ProductResponse products)? newInProductSuccess,
+    TResult? Function(ProductResponse products)? randomProductSuccess,
+    TResult? Function(ProductResponse products)? followingProductSuccess,
+    TResult? Function(ProductResponse products)? storeProductSuccess,
     TResult? Function(String msg)? failure,
   }) {
     return loading?.call();
@@ -322,10 +319,10 @@ class _$LoadingImpl implements _Loading {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(List<ProductModel> products)? newInProductSuccess,
-    TResult Function(List<ProductModel> products)? randomProductSuccess,
-    TResult Function(List<ProductModel> products)? followingProductSuccess,
-    TResult Function(List<ProductModel> products)? storeProductSuccess,
+    TResult Function(ProductResponse products)? newInProductSuccess,
+    TResult Function(ProductResponse products)? randomProductSuccess,
+    TResult Function(ProductResponse products)? followingProductSuccess,
+    TResult Function(ProductResponse products)? storeProductSuccess,
     TResult Function(String msg)? failure,
     required TResult orElse(),
   }) {
@@ -430,11 +427,10 @@ class _$SuccessImpl implements _Success {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(List<ProductModel> products) newInProductSuccess,
-    required TResult Function(List<ProductModel> products) randomProductSuccess,
-    required TResult Function(List<ProductModel> products)
-        followingProductSuccess,
-    required TResult Function(List<ProductModel> products) storeProductSuccess,
+    required TResult Function(ProductResponse products) newInProductSuccess,
+    required TResult Function(ProductResponse products) randomProductSuccess,
+    required TResult Function(ProductResponse products) followingProductSuccess,
+    required TResult Function(ProductResponse products) storeProductSuccess,
     required TResult Function(String msg) failure,
   }) {
     return success();
@@ -446,10 +442,10 @@ class _$SuccessImpl implements _Success {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(List<ProductModel> products)? newInProductSuccess,
-    TResult? Function(List<ProductModel> products)? randomProductSuccess,
-    TResult? Function(List<ProductModel> products)? followingProductSuccess,
-    TResult? Function(List<ProductModel> products)? storeProductSuccess,
+    TResult? Function(ProductResponse products)? newInProductSuccess,
+    TResult? Function(ProductResponse products)? randomProductSuccess,
+    TResult? Function(ProductResponse products)? followingProductSuccess,
+    TResult? Function(ProductResponse products)? storeProductSuccess,
     TResult? Function(String msg)? failure,
   }) {
     return success?.call();
@@ -461,10 +457,10 @@ class _$SuccessImpl implements _Success {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(List<ProductModel> products)? newInProductSuccess,
-    TResult Function(List<ProductModel> products)? randomProductSuccess,
-    TResult Function(List<ProductModel> products)? followingProductSuccess,
-    TResult Function(List<ProductModel> products)? storeProductSuccess,
+    TResult Function(ProductResponse products)? newInProductSuccess,
+    TResult Function(ProductResponse products)? randomProductSuccess,
+    TResult Function(ProductResponse products)? followingProductSuccess,
+    TResult Function(ProductResponse products)? storeProductSuccess,
     TResult Function(String msg)? failure,
     required TResult orElse(),
   }) {
@@ -534,7 +530,7 @@ abstract class _$$NewInProductSuccessImplCopyWith<$Res> {
           $Res Function(_$NewInProductSuccessImpl) then) =
       __$$NewInProductSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ProductModel> products});
+  $Res call({ProductResponse products});
 }
 
 /// @nodoc
@@ -552,9 +548,9 @@ class __$$NewInProductSuccessImplCopyWithImpl<$Res>
   }) {
     return _then(_$NewInProductSuccessImpl(
       null == products
-          ? _value._products
+          ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>,
+              as ProductResponse,
     ));
   }
 }
@@ -562,16 +558,10 @@ class __$$NewInProductSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$NewInProductSuccessImpl implements _NewInProductSuccess {
-  const _$NewInProductSuccessImpl(final List<ProductModel> products)
-      : _products = products;
+  const _$NewInProductSuccessImpl(this.products);
 
-  final List<ProductModel> _products;
   @override
-  List<ProductModel> get products {
-    if (_products is EqualUnmodifiableListView) return _products;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_products);
-  }
+  final ProductResponse products;
 
   @override
   String toString() {
@@ -583,12 +573,12 @@ class _$NewInProductSuccessImpl implements _NewInProductSuccess {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$NewInProductSuccessImpl &&
-            const DeepCollectionEquality().equals(other._products, _products));
+            (identical(other.products, products) ||
+                other.products == products));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_products));
+  int get hashCode => Object.hash(runtimeType, products);
 
   @JsonKey(ignore: true)
   @override
@@ -603,11 +593,10 @@ class _$NewInProductSuccessImpl implements _NewInProductSuccess {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(List<ProductModel> products) newInProductSuccess,
-    required TResult Function(List<ProductModel> products) randomProductSuccess,
-    required TResult Function(List<ProductModel> products)
-        followingProductSuccess,
-    required TResult Function(List<ProductModel> products) storeProductSuccess,
+    required TResult Function(ProductResponse products) newInProductSuccess,
+    required TResult Function(ProductResponse products) randomProductSuccess,
+    required TResult Function(ProductResponse products) followingProductSuccess,
+    required TResult Function(ProductResponse products) storeProductSuccess,
     required TResult Function(String msg) failure,
   }) {
     return newInProductSuccess(products);
@@ -619,10 +608,10 @@ class _$NewInProductSuccessImpl implements _NewInProductSuccess {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(List<ProductModel> products)? newInProductSuccess,
-    TResult? Function(List<ProductModel> products)? randomProductSuccess,
-    TResult? Function(List<ProductModel> products)? followingProductSuccess,
-    TResult? Function(List<ProductModel> products)? storeProductSuccess,
+    TResult? Function(ProductResponse products)? newInProductSuccess,
+    TResult? Function(ProductResponse products)? randomProductSuccess,
+    TResult? Function(ProductResponse products)? followingProductSuccess,
+    TResult? Function(ProductResponse products)? storeProductSuccess,
     TResult? Function(String msg)? failure,
   }) {
     return newInProductSuccess?.call(products);
@@ -634,10 +623,10 @@ class _$NewInProductSuccessImpl implements _NewInProductSuccess {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(List<ProductModel> products)? newInProductSuccess,
-    TResult Function(List<ProductModel> products)? randomProductSuccess,
-    TResult Function(List<ProductModel> products)? followingProductSuccess,
-    TResult Function(List<ProductModel> products)? storeProductSuccess,
+    TResult Function(ProductResponse products)? newInProductSuccess,
+    TResult Function(ProductResponse products)? randomProductSuccess,
+    TResult Function(ProductResponse products)? followingProductSuccess,
+    TResult Function(ProductResponse products)? storeProductSuccess,
     TResult Function(String msg)? failure,
     required TResult orElse(),
   }) {
@@ -698,10 +687,10 @@ class _$NewInProductSuccessImpl implements _NewInProductSuccess {
 }
 
 abstract class _NewInProductSuccess implements ProductsState {
-  const factory _NewInProductSuccess(final List<ProductModel> products) =
+  const factory _NewInProductSuccess(final ProductResponse products) =
       _$NewInProductSuccessImpl;
 
-  List<ProductModel> get products;
+  ProductResponse get products;
   @JsonKey(ignore: true)
   _$$NewInProductSuccessImplCopyWith<_$NewInProductSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -713,7 +702,7 @@ abstract class _$$RandomProductSuccessImplCopyWith<$Res> {
           $Res Function(_$RandomProductSuccessImpl) then) =
       __$$RandomProductSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ProductModel> products});
+  $Res call({ProductResponse products});
 }
 
 /// @nodoc
@@ -731,9 +720,9 @@ class __$$RandomProductSuccessImplCopyWithImpl<$Res>
   }) {
     return _then(_$RandomProductSuccessImpl(
       null == products
-          ? _value._products
+          ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>,
+              as ProductResponse,
     ));
   }
 }
@@ -741,16 +730,10 @@ class __$$RandomProductSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$RandomProductSuccessImpl implements _RandomProductSuccess {
-  const _$RandomProductSuccessImpl(final List<ProductModel> products)
-      : _products = products;
+  const _$RandomProductSuccessImpl(this.products);
 
-  final List<ProductModel> _products;
   @override
-  List<ProductModel> get products {
-    if (_products is EqualUnmodifiableListView) return _products;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_products);
-  }
+  final ProductResponse products;
 
   @override
   String toString() {
@@ -762,12 +745,12 @@ class _$RandomProductSuccessImpl implements _RandomProductSuccess {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RandomProductSuccessImpl &&
-            const DeepCollectionEquality().equals(other._products, _products));
+            (identical(other.products, products) ||
+                other.products == products));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_products));
+  int get hashCode => Object.hash(runtimeType, products);
 
   @JsonKey(ignore: true)
   @override
@@ -783,11 +766,10 @@ class _$RandomProductSuccessImpl implements _RandomProductSuccess {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(List<ProductModel> products) newInProductSuccess,
-    required TResult Function(List<ProductModel> products) randomProductSuccess,
-    required TResult Function(List<ProductModel> products)
-        followingProductSuccess,
-    required TResult Function(List<ProductModel> products) storeProductSuccess,
+    required TResult Function(ProductResponse products) newInProductSuccess,
+    required TResult Function(ProductResponse products) randomProductSuccess,
+    required TResult Function(ProductResponse products) followingProductSuccess,
+    required TResult Function(ProductResponse products) storeProductSuccess,
     required TResult Function(String msg) failure,
   }) {
     return randomProductSuccess(products);
@@ -799,10 +781,10 @@ class _$RandomProductSuccessImpl implements _RandomProductSuccess {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(List<ProductModel> products)? newInProductSuccess,
-    TResult? Function(List<ProductModel> products)? randomProductSuccess,
-    TResult? Function(List<ProductModel> products)? followingProductSuccess,
-    TResult? Function(List<ProductModel> products)? storeProductSuccess,
+    TResult? Function(ProductResponse products)? newInProductSuccess,
+    TResult? Function(ProductResponse products)? randomProductSuccess,
+    TResult? Function(ProductResponse products)? followingProductSuccess,
+    TResult? Function(ProductResponse products)? storeProductSuccess,
     TResult? Function(String msg)? failure,
   }) {
     return randomProductSuccess?.call(products);
@@ -814,10 +796,10 @@ class _$RandomProductSuccessImpl implements _RandomProductSuccess {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(List<ProductModel> products)? newInProductSuccess,
-    TResult Function(List<ProductModel> products)? randomProductSuccess,
-    TResult Function(List<ProductModel> products)? followingProductSuccess,
-    TResult Function(List<ProductModel> products)? storeProductSuccess,
+    TResult Function(ProductResponse products)? newInProductSuccess,
+    TResult Function(ProductResponse products)? randomProductSuccess,
+    TResult Function(ProductResponse products)? followingProductSuccess,
+    TResult Function(ProductResponse products)? storeProductSuccess,
     TResult Function(String msg)? failure,
     required TResult orElse(),
   }) {
@@ -878,10 +860,10 @@ class _$RandomProductSuccessImpl implements _RandomProductSuccess {
 }
 
 abstract class _RandomProductSuccess implements ProductsState {
-  const factory _RandomProductSuccess(final List<ProductModel> products) =
+  const factory _RandomProductSuccess(final ProductResponse products) =
       _$RandomProductSuccessImpl;
 
-  List<ProductModel> get products;
+  ProductResponse get products;
   @JsonKey(ignore: true)
   _$$RandomProductSuccessImplCopyWith<_$RandomProductSuccessImpl>
       get copyWith => throw _privateConstructorUsedError;
@@ -893,7 +875,7 @@ abstract class _$$FollowingSuccessImplCopyWith<$Res> {
           $Res Function(_$FollowingSuccessImpl) then) =
       __$$FollowingSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ProductModel> products});
+  $Res call({ProductResponse products});
 }
 
 /// @nodoc
@@ -911,9 +893,9 @@ class __$$FollowingSuccessImplCopyWithImpl<$Res>
   }) {
     return _then(_$FollowingSuccessImpl(
       null == products
-          ? _value._products
+          ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>,
+              as ProductResponse,
     ));
   }
 }
@@ -921,16 +903,10 @@ class __$$FollowingSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$FollowingSuccessImpl implements _FollowingSuccess {
-  const _$FollowingSuccessImpl(final List<ProductModel> products)
-      : _products = products;
+  const _$FollowingSuccessImpl(this.products);
 
-  final List<ProductModel> _products;
   @override
-  List<ProductModel> get products {
-    if (_products is EqualUnmodifiableListView) return _products;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_products);
-  }
+  final ProductResponse products;
 
   @override
   String toString() {
@@ -942,12 +918,12 @@ class _$FollowingSuccessImpl implements _FollowingSuccess {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$FollowingSuccessImpl &&
-            const DeepCollectionEquality().equals(other._products, _products));
+            (identical(other.products, products) ||
+                other.products == products));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_products));
+  int get hashCode => Object.hash(runtimeType, products);
 
   @JsonKey(ignore: true)
   @override
@@ -962,11 +938,10 @@ class _$FollowingSuccessImpl implements _FollowingSuccess {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(List<ProductModel> products) newInProductSuccess,
-    required TResult Function(List<ProductModel> products) randomProductSuccess,
-    required TResult Function(List<ProductModel> products)
-        followingProductSuccess,
-    required TResult Function(List<ProductModel> products) storeProductSuccess,
+    required TResult Function(ProductResponse products) newInProductSuccess,
+    required TResult Function(ProductResponse products) randomProductSuccess,
+    required TResult Function(ProductResponse products) followingProductSuccess,
+    required TResult Function(ProductResponse products) storeProductSuccess,
     required TResult Function(String msg) failure,
   }) {
     return followingProductSuccess(products);
@@ -978,10 +953,10 @@ class _$FollowingSuccessImpl implements _FollowingSuccess {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(List<ProductModel> products)? newInProductSuccess,
-    TResult? Function(List<ProductModel> products)? randomProductSuccess,
-    TResult? Function(List<ProductModel> products)? followingProductSuccess,
-    TResult? Function(List<ProductModel> products)? storeProductSuccess,
+    TResult? Function(ProductResponse products)? newInProductSuccess,
+    TResult? Function(ProductResponse products)? randomProductSuccess,
+    TResult? Function(ProductResponse products)? followingProductSuccess,
+    TResult? Function(ProductResponse products)? storeProductSuccess,
     TResult? Function(String msg)? failure,
   }) {
     return followingProductSuccess?.call(products);
@@ -993,10 +968,10 @@ class _$FollowingSuccessImpl implements _FollowingSuccess {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(List<ProductModel> products)? newInProductSuccess,
-    TResult Function(List<ProductModel> products)? randomProductSuccess,
-    TResult Function(List<ProductModel> products)? followingProductSuccess,
-    TResult Function(List<ProductModel> products)? storeProductSuccess,
+    TResult Function(ProductResponse products)? newInProductSuccess,
+    TResult Function(ProductResponse products)? randomProductSuccess,
+    TResult Function(ProductResponse products)? followingProductSuccess,
+    TResult Function(ProductResponse products)? storeProductSuccess,
     TResult Function(String msg)? failure,
     required TResult orElse(),
   }) {
@@ -1057,10 +1032,10 @@ class _$FollowingSuccessImpl implements _FollowingSuccess {
 }
 
 abstract class _FollowingSuccess implements ProductsState {
-  const factory _FollowingSuccess(final List<ProductModel> products) =
+  const factory _FollowingSuccess(final ProductResponse products) =
       _$FollowingSuccessImpl;
 
-  List<ProductModel> get products;
+  ProductResponse get products;
   @JsonKey(ignore: true)
   _$$FollowingSuccessImplCopyWith<_$FollowingSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1072,7 +1047,7 @@ abstract class _$$StoreProductSuccessImplCopyWith<$Res> {
           $Res Function(_$StoreProductSuccessImpl) then) =
       __$$StoreProductSuccessImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ProductModel> products});
+  $Res call({ProductResponse products});
 }
 
 /// @nodoc
@@ -1090,9 +1065,9 @@ class __$$StoreProductSuccessImplCopyWithImpl<$Res>
   }) {
     return _then(_$StoreProductSuccessImpl(
       null == products
-          ? _value._products
+          ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>,
+              as ProductResponse,
     ));
   }
 }
@@ -1100,16 +1075,10 @@ class __$$StoreProductSuccessImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$StoreProductSuccessImpl implements _StoreProductSuccess {
-  const _$StoreProductSuccessImpl(final List<ProductModel> products)
-      : _products = products;
+  const _$StoreProductSuccessImpl(this.products);
 
-  final List<ProductModel> _products;
   @override
-  List<ProductModel> get products {
-    if (_products is EqualUnmodifiableListView) return _products;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_products);
-  }
+  final ProductResponse products;
 
   @override
   String toString() {
@@ -1121,12 +1090,12 @@ class _$StoreProductSuccessImpl implements _StoreProductSuccess {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StoreProductSuccessImpl &&
-            const DeepCollectionEquality().equals(other._products, _products));
+            (identical(other.products, products) ||
+                other.products == products));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_products));
+  int get hashCode => Object.hash(runtimeType, products);
 
   @JsonKey(ignore: true)
   @override
@@ -1141,11 +1110,10 @@ class _$StoreProductSuccessImpl implements _StoreProductSuccess {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(List<ProductModel> products) newInProductSuccess,
-    required TResult Function(List<ProductModel> products) randomProductSuccess,
-    required TResult Function(List<ProductModel> products)
-        followingProductSuccess,
-    required TResult Function(List<ProductModel> products) storeProductSuccess,
+    required TResult Function(ProductResponse products) newInProductSuccess,
+    required TResult Function(ProductResponse products) randomProductSuccess,
+    required TResult Function(ProductResponse products) followingProductSuccess,
+    required TResult Function(ProductResponse products) storeProductSuccess,
     required TResult Function(String msg) failure,
   }) {
     return storeProductSuccess(products);
@@ -1157,10 +1125,10 @@ class _$StoreProductSuccessImpl implements _StoreProductSuccess {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(List<ProductModel> products)? newInProductSuccess,
-    TResult? Function(List<ProductModel> products)? randomProductSuccess,
-    TResult? Function(List<ProductModel> products)? followingProductSuccess,
-    TResult? Function(List<ProductModel> products)? storeProductSuccess,
+    TResult? Function(ProductResponse products)? newInProductSuccess,
+    TResult? Function(ProductResponse products)? randomProductSuccess,
+    TResult? Function(ProductResponse products)? followingProductSuccess,
+    TResult? Function(ProductResponse products)? storeProductSuccess,
     TResult? Function(String msg)? failure,
   }) {
     return storeProductSuccess?.call(products);
@@ -1172,10 +1140,10 @@ class _$StoreProductSuccessImpl implements _StoreProductSuccess {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(List<ProductModel> products)? newInProductSuccess,
-    TResult Function(List<ProductModel> products)? randomProductSuccess,
-    TResult Function(List<ProductModel> products)? followingProductSuccess,
-    TResult Function(List<ProductModel> products)? storeProductSuccess,
+    TResult Function(ProductResponse products)? newInProductSuccess,
+    TResult Function(ProductResponse products)? randomProductSuccess,
+    TResult Function(ProductResponse products)? followingProductSuccess,
+    TResult Function(ProductResponse products)? storeProductSuccess,
     TResult Function(String msg)? failure,
     required TResult orElse(),
   }) {
@@ -1236,10 +1204,10 @@ class _$StoreProductSuccessImpl implements _StoreProductSuccess {
 }
 
 abstract class _StoreProductSuccess implements ProductsState {
-  const factory _StoreProductSuccess(final List<ProductModel> products) =
+  const factory _StoreProductSuccess(final ProductResponse products) =
       _$StoreProductSuccessImpl;
 
-  List<ProductModel> get products;
+  ProductResponse get products;
   @JsonKey(ignore: true)
   _$$StoreProductSuccessImplCopyWith<_$StoreProductSuccessImpl> get copyWith =>
       throw _privateConstructorUsedError;
@@ -1312,11 +1280,10 @@ class _$FailureImpl implements _Failure {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function() success,
-    required TResult Function(List<ProductModel> products) newInProductSuccess,
-    required TResult Function(List<ProductModel> products) randomProductSuccess,
-    required TResult Function(List<ProductModel> products)
-        followingProductSuccess,
-    required TResult Function(List<ProductModel> products) storeProductSuccess,
+    required TResult Function(ProductResponse products) newInProductSuccess,
+    required TResult Function(ProductResponse products) randomProductSuccess,
+    required TResult Function(ProductResponse products) followingProductSuccess,
+    required TResult Function(ProductResponse products) storeProductSuccess,
     required TResult Function(String msg) failure,
   }) {
     return failure(msg);
@@ -1328,10 +1295,10 @@ class _$FailureImpl implements _Failure {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function()? success,
-    TResult? Function(List<ProductModel> products)? newInProductSuccess,
-    TResult? Function(List<ProductModel> products)? randomProductSuccess,
-    TResult? Function(List<ProductModel> products)? followingProductSuccess,
-    TResult? Function(List<ProductModel> products)? storeProductSuccess,
+    TResult? Function(ProductResponse products)? newInProductSuccess,
+    TResult? Function(ProductResponse products)? randomProductSuccess,
+    TResult? Function(ProductResponse products)? followingProductSuccess,
+    TResult? Function(ProductResponse products)? storeProductSuccess,
     TResult? Function(String msg)? failure,
   }) {
     return failure?.call(msg);
@@ -1343,10 +1310,10 @@ class _$FailureImpl implements _Failure {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function()? success,
-    TResult Function(List<ProductModel> products)? newInProductSuccess,
-    TResult Function(List<ProductModel> products)? randomProductSuccess,
-    TResult Function(List<ProductModel> products)? followingProductSuccess,
-    TResult Function(List<ProductModel> products)? storeProductSuccess,
+    TResult Function(ProductResponse products)? newInProductSuccess,
+    TResult Function(ProductResponse products)? randomProductSuccess,
+    TResult Function(ProductResponse products)? followingProductSuccess,
+    TResult Function(ProductResponse products)? storeProductSuccess,
     TResult Function(String msg)? failure,
     required TResult orElse(),
   }) {

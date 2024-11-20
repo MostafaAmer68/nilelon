@@ -235,7 +235,7 @@ class ProductStoreWidget extends StatelessWidget {
             shrinkWrap: true,
             itemCount: ProductsCubit.get(context)
                 .filterListByCategory(profileCubit.selectedCategory,
-                    ProductsCubit.get(context).products)
+                    ProductsCubit.get(context).products.data)
                 .length,
             itemBuilder: (context, sizeIndex) {
               log('test');
@@ -243,7 +243,7 @@ class ProductStoreWidget extends StatelessWidget {
                 context: context,
                 product: ProductsCubit.get(context)
                     .filterListByCategory(profileCubit.selectedCategory,
-                        ProductsCubit.get(context).products)
+                        ProductsCubit.get(context).products.data)
                     .toList()[sizeIndex],
               );
             },

@@ -9,29 +9,30 @@ import 'package:nilelon/features/product/domain/models/update_variant_model.dart
 
 import '../models/add_product/add_product_model.dart';
 import '../models/product_model.dart';
+import '../models/product_response.dart';
 import '../models/update_product.dart';
 
 abstract class ProductsRepos {
-  Future<Either<FailureService, List<ProductModel>>> getProductByCategory(
+  Future<Either<FailureService, ProductResponse>> getProductByCategory(
       String categoryId, int page, int productSize);
   Future<Either<FailureService, ProductModel>> getProductDetails(
       String productId);
 
-  Future<Either<FailureService, List<ProductModel>>> getFollowedProducts(
+  Future<Either<FailureService, ProductResponse>> getFollowedProducts(
       int page, int productSize);
-  Future<Either<FailureService, List<ProductModel>>> getNewInProducts(
+  Future<Either<FailureService, ProductResponse>> getNewInProducts(
       int page, int productSize);
-  Future<Either<FailureService, List<ProductModel>>> getRandomProduct(
+  Future<Either<FailureService, ProductResponse>> getRandomProduct(
       int page, int productSize, String productType);
-  Future<Either<FailureService, List<ProductModel>>> getNewInProductsGuest(
+  Future<Either<FailureService, ProductResponse>> getNewInProductsGuest(
       int page, int productSize, String productType);
-  Future<Either<FailureService, List<ProductModel>>> getRandomProductsGuest(
+  Future<Either<FailureService, ProductResponse>> getRandomProductsGuest(
       int page, int productSize, String productType);
-  Future<Either<FailureService, List<ProductModel>>> getStoreProfileItems(
+  Future<Either<FailureService, ProductResponse>> getStoreProfileItems(
       String storeId, int page, int productSize);
-  Future<Either<FailureService, List<ProductModel>>> getOffersProducts(
+  Future<Either<FailureService, ProductResponse>> getOffersProducts(
       int page, int productSize, String productTypes);
-  Future<Either<FailureService, List<ProductModel>>> getOffersProductsGuest(
+  Future<Either<FailureService, ProductResponse>> getOffersProductsGuest(
       int page, int productSize, String productType);
   Future<Either<FailureService, void>> createProduct(AddProductModel model);
   Future<Either<FailureService, void>> updateProduct(UpdateProduct model);

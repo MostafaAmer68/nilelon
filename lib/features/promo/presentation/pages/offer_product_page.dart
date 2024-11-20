@@ -61,17 +61,17 @@ class _OfferProductPageState extends State<OfferProductPage> {
                     children: [
                       GradientCheckBox(
                           value: cubit.selectedProducts.length ==
-                              pcubit.storeProducts.length,
+                              pcubit.storeProducts.data.length,
                           onChanged: (value) {
                             cubit.isSelectedAll = value;
                             if (value) {
                               if (cubit.selectedProducts.isNotEmpty) {
                                 cubit.selectedProducts.clear();
                                 cubit.selectedProducts
-                                    .addAll(pcubit.storeProducts);
+                                    .addAll(pcubit.storeProducts.data);
                               } else {
                                 cubit.selectedProducts
-                                    .addAll(pcubit.storeProducts);
+                                    .addAll(pcubit.storeProducts.data);
                               }
                             } else {
                               cubit.selectedProducts.clear();
@@ -84,7 +84,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
                   ),
                 ),
                 Text(
-                    '${lang.selected} ${cubit.selectedProducts.length} / ${pcubit.storeProducts.length}'),
+                    '${lang.selected} ${cubit.selectedProducts.length} / ${pcubit.storeProducts.data.length}'),
               ],
             ),
           ),
@@ -96,7 +96,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
               }, loading: () {
                 return Expanded(child: buildShimmerIndicatorGrid(context));
               }, storeProductSuccess: (products) {
-                if (products.isEmpty) {
+                if (products.data.isEmpty) {
                   return Center(
                     child: Text(
                       S.of(context).thereNoProduct,
@@ -110,9 +110,9 @@ class _OfferProductPageState extends State<OfferProductPage> {
                     child: GridView.builder(
                       gridDelegate: gridDelegate(context),
                       shrinkWrap: true,
-                      itemCount: products.length,
+                      itemCount: products.data.length,
                       itemBuilder: (context, index) {
-                        final product = products[index];
+                        final product = products.data[index];
                         return productSquarItem(
                           context: context,
                           isSelectable: true,
@@ -135,7 +135,7 @@ class _OfferProductPageState extends State<OfferProductPage> {
               }, failure: (message) {
                 return Text(message);
               }, orElse: () {
-                if (pcubit.storeProducts.isEmpty) {
+                if (pcubit.storeProducts.data.isEmpty) {
                   return Center(
                     child: Text(
                       S.of(context).thereNoProduct,
@@ -149,9 +149,9 @@ class _OfferProductPageState extends State<OfferProductPage> {
                     child: GridView.builder(
                       gridDelegate: gridDelegate(context),
                       shrinkWrap: true,
-                      itemCount: pcubit.storeProducts.length,
+                      itemCount: pcubit.storeProducts.data.length,
                       itemBuilder: (context, index) {
-                        final product = pcubit.storeProducts[index];
+                        final product = pcubit.storeProducts.data[index];
                         return productSquarItem(
                           context: context,
                           isSelectable: true,

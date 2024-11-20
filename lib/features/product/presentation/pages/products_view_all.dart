@@ -8,6 +8,7 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
+import 'package:nilelon/features/product/domain/models/product_response.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_card/offers_card.dart';
@@ -46,7 +47,7 @@ class ProductsViewAll extends StatefulWidget {
 
 class _ProductsViewAllState extends State<ProductsViewAll> {
   late final ProductsCubit cubit;
-  final List<ProductModel> paginationList = [];
+  ProductResponse paginationList = ProductResponse.empty();
   bool isLoadingMore = false;
   late ScrollController scrollController;
 
@@ -80,16 +81,19 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
 
   /// Load the next page of products
   void _loadMoreProducts() async {
-    if (!isLoadingMore) {
-      setState(() => isLoadingMore = true);
-      // currentScrollPosition =
-      //     scrollController.position.pixels; // Track current position
-      cubit.page += 1; // Increment page for the next API call
-      widget.onStartPage(false); // Trigger fetching next page
+    log(paginationList.metaData.hasNext.toString());
+    if (paginationList.metaData.hasNext) {
+      if (!isLoadingMore) {
+        setState(() => isLoadingMore = true);
+        // currentScrollPosition =
+        //     scrollController.position.pixels; // Track current position
+        cubit.page += 1; // Increment page for the next API call
+        widget.onStartPage(false); // Trigger fetching next page
 
-      setState(() {
-        isLoadingMore = false;
-      });
+        setState(() {
+          isLoadingMore = false;
+        });
+      }
     }
   }
 
@@ -131,8 +135,8 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   }
 
   /// Build the product grid with pagination
-  Widget _buildProductGrid(List<ProductModel> products) {
-    if (products.isEmpty && paginationList.isEmpty) {
+  Widget _buildProductGrid(ProductResponse products) {
+    if (products.data.isEmpty && paginationList.data.isEmpty) {
       return SizedBox(
         height: screenHeight(context, 0.6),
         child: Center(child: Text(widget.notFoundTitle)),
@@ -140,11 +144,15 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
     }
 
     // Append new products to the pagination list
-    if (paginationList.isEmpty || cubit.page == 1) {
-      paginationList.clear(); // Clear if it's the first page
+    if (paginationList.data.isEmpty || cubit.page == 1) {
+      paginationList =
+          paginationList.copyWith(data: []); // Clear if it's the first page
     }
-    final temp = products.toList();
-    paginationList.addAll(temp);
+    final temp = paginationList.data.toList();
+    temp.addAll(products.data);
+    paginationList =
+        paginationList.copyWith(data: temp, metaData: products.metaData);
+    log(paginationList.data.length.toString());
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -158,14 +166,14 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                   mainAxisSpacing: 12.0,
                 )
               : gridDelegate(context),
-          itemCount: paginationList.length + (isLoadingMore ? 1 : 0),
+          itemCount: paginationList.data.length + (isLoadingMore ? 1 : 0),
           itemBuilder: (context, index) {
-            if (index == paginationList.length) {
+            if (index == paginationList.data.length) {
               // Show loading indicator at the bottom
               return const Center(child: CircularProgressIndicator());
             }
 
-            final product = paginationList[index];
+            final product = paginationList.data[index];
             return widget.isOffer
                 ? offersCard(context: context, product: product)
                 : widget.isStore
@@ -199,7 +207,8 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
             selectedCategory: cubit.category,
             onSelected: (category) {
               cubit.category = category;
-              paginationList.clear(); // Clear pagination when filter changes
+              paginationList
+                  .copyWith(data: []); // Clear pagination when filter changes
               cubit.page = 1; // Reset to the first page
               widget.onStartPage(true); // Trigger new API call
               setState(() {}); // Update UI
@@ -257,7 +266,8 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                 selectedCategory: cubit.gendar,
                 onSelected: (gendar) {
                   cubit.gendar = gendar;
-                  paginationList.clear(); // Reset pagination on filter change
+                  paginationList
+                      .copyWith(data: []); // Reset pagination on filter change
                   cubit.page = 1; // Reset page number
                   widget.onStartPage(true);
                   setState(() {});

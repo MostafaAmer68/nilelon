@@ -152,7 +152,7 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                   return buildShimmerIndicatorGrid(context);
                 }, storeProductSuccess: (products) {
                   if (pCubit
-                      .filterListByCategory(cubit.selectedCategory, products)
+                      .filterListByCategory(cubit.selectedCategory, products.data)
                       .isEmpty) {
                     return SizedBox(
                       height: 280.h,
@@ -178,13 +178,13 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                         shrinkWrap: true,
                         itemCount: pCubit
                             .filterListByCategory(
-                                cubit.selectedCategory, products)
+                                cubit.selectedCategory, products.data)
                             .length,
                         itemBuilder: (context, sizeIndex) {
                           return productSquarItem(
                             context: context,
                             product: pCubit.filterListByCategory(
-                                cubit.selectedCategory, products)[sizeIndex],
+                                cubit.selectedCategory, products.data)[sizeIndex],
                           );
                         },
                       ),

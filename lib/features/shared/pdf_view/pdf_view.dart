@@ -117,45 +117,13 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
               );
               if (result.isNotEmpty) {
                 isLoading = false;
-                BotToast.showCustomText(
-                  duration: const Duration(seconds: 4),
-                  toastBuilder: (_) => Card(
-                    color: Colors.black87,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            S.of(context).pdfSaved,
-                            style: const TextStyle(color: Colors.white),
-                          ),
-                          const SizedBox(width: 10),
-                          TextButton(
-                            onPressed: () {
-                              BotToast.closeAllLoading();
-
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return PDFView(
-                                      filePath: result,
-                                    );
-                                  });
-
-                              BotToast.cleanAll();
-                            },
-                            child: Text(
-                              S.of(context).viewPdf,
-                              style: const TextStyle(color: Colors.blue),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) {
+                      return PDFView(
+                        filePath: result,
+                      );
+                    });
                 _showNotification(result);
               } else {
                 BotToast.showText(text: lang(context).smothingWent);

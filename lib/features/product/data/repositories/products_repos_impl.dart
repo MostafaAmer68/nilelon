@@ -6,6 +6,7 @@ import 'package:nilelon/features/product/domain/models/delete_image_variant.dart
 import 'package:nilelon/features/product/domain/models/delete_variant_model.dart';
 import 'package:nilelon/features/product/data/datasources/products_service.dart';
 import 'package:nilelon/core/service/failure_service.dart';
+import 'package:nilelon/features/product/domain/models/product_response.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
 import 'package:nilelon/features/product/domain/models/update_product.dart';
 import 'package:nilelon/features/product/domain/models/update_variant_model.dart';
@@ -18,44 +19,47 @@ class ProductsReposImpl extends ProductsRepos {
   final ProductsService _productService;
   ProductsReposImpl(this._productService);
   @override
-  Future<Either<FailureService, List<ProductModel>>> getFollowedProducts(
+  Future<Either<FailureService, ProductResponse>> getFollowedProducts(
       int page, int productSize) async {
     return exe(() => _productService.getFollowedProducts(page, productSize));
   }
 
   @override
-  Future<Either<FailureService, List<ProductModel>>> getProductByCategory(
+  Future<Either<FailureService, ProductResponse>> getProductByCategory(
       String categoryId, int page, int productSize) async {
     return exe(() =>
         _productService.getProductByCategory(categoryId, page, productSize));
   }
 
   @override
-  Future<Either<FailureService, List<ProductModel>>> getNewInProducts(
+  Future<Either<FailureService, ProductResponse>> getNewInProducts(
       int page, int productSize) async {
     return exe(() => _productService.getNewInProducts(page, productSize));
   }
 
   @override
-  Future<Either<FailureService, List<ProductModel>>> getRandomProduct(
-      int page, int productSize,String productType) async {
-    return exe(() => _productService.getRandomProducts(page, productSize,productType));
-  }
-
-  @override
-  Future<Either<FailureService, List<ProductModel>>> getNewInProductsGuest(
+  Future<Either<FailureService, ProductResponse>> getRandomProduct(
       int page, int productSize, String productType) async {
-    return exe(() => _productService.getNewInProductsGuest(page, productSize,productType));
+    return exe(() =>
+        _productService.getRandomProducts(page, productSize, productType));
   }
 
   @override
-  Future<Either<FailureService, List<ProductModel>>> getRandomProductsGuest(
+  Future<Either<FailureService, ProductResponse>> getNewInProductsGuest(
       int page, int productSize, String productType) async {
-    return exe(() => _productService.getRandomProductsGuest(page, productSize,productType));
+    return exe(() =>
+        _productService.getNewInProductsGuest(page, productSize, productType));
   }
 
   @override
-  Future<Either<FailureService, List<ProductModel>>> getStoreProfileItems(
+  Future<Either<FailureService, ProductResponse>> getRandomProductsGuest(
+      int page, int productSize, String productType) async {
+    return exe(() =>
+        _productService.getRandomProductsGuest(page, productSize, productType));
+  }
+
+  @override
+  Future<Either<FailureService, ProductResponse>> getStoreProfileItems(
       String storeId, int page, int productSize) async {
     return exe(
         () => _productService.getStoreProfileItems(storeId, page, productSize));
@@ -104,14 +108,14 @@ class ProductsReposImpl extends ProductsRepos {
   }
 
   @override
-  Future<Either<FailureService, List<ProductModel>>> getOffersProducts(
+  Future<Either<FailureService, ProductResponse>> getOffersProducts(
       int page, int productSize, String productType) async {
     return exe(() => _productService.getCustomersOffersProducts(
         page, productSize, productType));
   }
 
   @override
-  Future<Either<FailureService, List<ProductModel>>> getOffersProductsGuest(
+  Future<Either<FailureService, ProductResponse>> getOffersProductsGuest(
       int page, int productSize, String productType) async {
     return exe(() =>
         _productService.getOffersProductsGuest(page, productSize, productType));

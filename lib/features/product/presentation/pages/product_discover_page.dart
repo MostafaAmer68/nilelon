@@ -104,7 +104,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                     height: 16,
                   ),
                   ProductNewInView(
-                    products: cubit.newInProducts,
+                    products: cubit.newInProducts.data,
                   ),
                   const SizedBox(height: 16),
                   ViewAllRow(
@@ -127,7 +127,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                   ),
                   const SizedBox(height: 16),
                   HandPickedView(
-                    products: cubit.randomProducts,
+                    products: cubit.randomProducts.data,
                   ),
                   const SizedBox(height: 30),
                 ],
@@ -168,7 +168,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                     height: 16,
                   ),
                   ProductNewInView(
-                    products: cubit.newInProducts,
+                    products: cubit.newInProducts.data,
                   ),
                   const SizedBox(height: 16),
                   ViewAllRow(
@@ -191,7 +191,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                   ),
                   const SizedBox(height: 16),
                   HandPickedView(
-                    products: cubit.randomProducts,
+                    products: cubit.randomProducts.data,
                   ),
                   const SizedBox(height: 30),
                 ],
@@ -231,9 +231,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                   const SizedBox(
                     height: 16,
                   ),
-                  ProductNewInView(
-                    products: cubit.newInProducts,
-                  ),
+                  ProductNewInView(products: cubit.newInProducts.data),
                   const SizedBox(height: 16),
                   ViewAllRow(
                     text: lang.handPicked,
@@ -255,7 +253,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                   ),
                   const SizedBox(height: 16),
                   HandPickedView(
-                    products: cubit.randomProducts,
+                    products: cubit.randomProducts.data,
                   ),
                   const SizedBox(height: 30),
                 ],

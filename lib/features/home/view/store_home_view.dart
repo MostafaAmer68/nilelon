@@ -103,7 +103,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                     }, loading: () {
                       return buildShimmerIndicatorGrid(context);
                     }, newInProductSuccess: (products) {
-                      if (products.isEmpty) {
+                      if (products.data.isEmpty) {
                         return SizedBox(
                           height: 120.h,
                           child: Column(
@@ -121,9 +121,9 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: gridDelegate(context),
                         shrinkWrap: true,
-                        itemCount: products.length,
+                        itemCount: products.data.length,
                         itemBuilder: (context, index) {
-                          final product = products[index];
+                          final product = products.data[index];
                           return Container(
                             child: productSquarItem(
                               context: context,
@@ -133,7 +133,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                         },
                       );
                     }, orElse: () {
-                      if (cubit.newInProducts.isEmpty) {
+                      if (cubit.newInProducts.data.isEmpty) {
                         return SizedBox(
                           height: 120.h,
                           child: Column(
@@ -151,9 +151,9 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: gridDelegate(context),
                         shrinkWrap: true,
-                        itemCount: cubit.newInProducts.length,
+                        itemCount: cubit.newInProducts.data.length,
                         itemBuilder: (context, index) {
-                          final product = cubit.newInProducts[index];
+                          final product = cubit.newInProducts.data[index];
                           return Container(
                             child: productSquarItem(
                               context: context,

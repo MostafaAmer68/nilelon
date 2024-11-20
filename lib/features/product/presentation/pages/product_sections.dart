@@ -62,14 +62,18 @@ class _SectionsProductViewState extends State<SectionsProductView> {
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate: gridDelegate(context),
                       shrinkWrap: true,
-                      itemCount:
-                          ProductsCubit.get(context).products.toList().length,
+                      itemCount: ProductsCubit.get(context)
+                          .products
+                          .data
+                          .toList()
+                          .length,
                       itemBuilder: (context, sizeIndex) {
                         return Container(
                           child: productSquarItem(
                             context: context,
                             product: ProductsCubit.get(context)
                                 .products
+                                .data
                                 .toList()[sizeIndex],
                           ),
                         );

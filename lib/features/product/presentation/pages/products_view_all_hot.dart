@@ -6,6 +6,7 @@ import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/cards/wide/wide_card.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
+import 'package:nilelon/features/product/domain/models/product_response.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -46,7 +47,7 @@ class ProductsViewAllHot extends StatefulWidget {
 
 class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
   late final ProductsCubit cubit;
-  final List<ProductModel> paginationList = [];
+  ProductResponse paginationList = ProductResponse.empty();
   bool isLoadingMore = false;
   late ScrollController scrollController;
 
@@ -76,14 +77,16 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
   }
 
   void _loadMoreProducts() async {
-    if (!isLoadingMore) {
-      setState(() => isLoadingMore = true);
-      cubit.page += 1; // Increment page for the next API call
-      widget.onStartPage(false); // Trigger fetching next page
+    if (paginationList.metaData.hasNext) {
+      if (!isLoadingMore) {
+        setState(() => isLoadingMore = true);
+        cubit.page += 1; // Increment page for the next API call
+        widget.onStartPage(false); // Trigger fetching next page
 
-      setState(() {
-        isLoadingMore = false;
-      });
+        setState(() {
+          isLoadingMore = false;
+        });
+      }
     }
   }
 
@@ -130,8 +133,8 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
     );
   }
 
-  Widget _buildProductGrid(List<ProductModel> products) {
-    if (products.isEmpty && paginationList.isEmpty) {
+  Widget _buildProductGrid(ProductResponse products) {
+    if (products.data.isEmpty && paginationList.data.isEmpty) {
       return SizedBox(
         height: 450.h,
         child: Column(
@@ -146,10 +149,15 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
       );
     }
 
-    if (paginationList.isEmpty || cubit.page == 1) {
-      paginationList.clear(); // Clear on the first page or new data set
+    if (paginationList.data.isEmpty || cubit.page == 1) {
+      paginationList
+          .copyWith(data: []); // Clear on the first page or new data set
     }
-    paginationList.addAll(products);
+
+    final temp = paginationList.data.toList();
+    temp.addAll(products.data);
+    paginationList =
+        paginationList.copyWith(data: temp, metaData: products.metaData);
 
     return Expanded(
       child: Padding(
@@ -162,13 +170,13 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
             mainAxisExtent: !HiveStorage.get(HiveKeys.isStore) ? 170.w : 150.w,
             mainAxisSpacing: 1.sw > 600 ? 16 : 12,
           ),
-          itemCount: paginationList.length + (isLoadingMore ? 1 : 0),
+          itemCount: paginationList.data.length + (isLoadingMore ? 1 : 0),
           itemBuilder: (context, index) {
-            if (index == paginationList.length) {
+            if (index == paginationList.data.length) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            final productItem = paginationList[index];
+            final productItem = paginationList.data[index];
             return WideCard(product: productItem);
           },
         ),
@@ -201,7 +209,7 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
             selectedCategory: cubit.category,
             onSelected: (category) {
               cubit.category = category;
-              paginationList.clear(); // Clear pagination list
+              paginationList.data.clear(); // Clear pagination list
               cubit.page = 1; // Reset page
               widget.onStartPage(false);
               setState(() {});

@@ -15,6 +15,7 @@ import 'package:nilelon/core/service/network/end_point.dart';
 import 'package:nilelon/features/product/domain/models/review_model.dart';
 import 'package:nilelon/features/product/domain/models/update_variant_model.dart';
 
+import '../../domain/models/product_response.dart';
 import '../../domain/models/update_product.dart';
 
 class ProductsService {
@@ -22,7 +23,7 @@ class ProductsService {
 
   ProductsService({required this.apiService});
 
-  Future<List<ProductModel>> getFollowedProducts(int page, int pageSize) async {
+  Future<ProductResponse> getFollowedProducts(int page, int pageSize) async {
     final data =
         await apiService.get(endPoint: EndPoint.getFollowedProductsUrl, query: {
       'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
@@ -30,14 +31,13 @@ class ProductsService {
       'pagesize': pageSize,
     });
     if (data.statusCode == 200) {
-      return List<ProductModel>.from(
-          data.data['result'].map((e) => ProductModel.fromJson(e)));
+      return ProductResponse.fromMap(data.data['result']);
     } else {
       throw Exception('Unexpected error ${data.data.first}');
     }
   }
 
-  Future<List<ProductModel>> getNewInProducts(int page, int pageSize) async {
+  Future<ProductResponse> getNewInProducts(int page, int pageSize) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getNewProductsUrl, query: {
       'CustomerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
@@ -45,14 +45,13 @@ class ProductsService {
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {
-      return List<ProductModel>.from(
-          data.data['result'].map((e) => ProductModel.fromJson(e)));
+      return ProductResponse.fromMap(data.data['result']);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
-  Future<List<ProductModel>> getProductByCategory(
+  Future<ProductResponse> getProductByCategory(
       String categoryId, int page, int pageSize) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getProductByCategory, query: {
@@ -61,14 +60,13 @@ class ProductsService {
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {
-      return List<ProductModel>.from(
-          data.data['result'].map((e) => ProductModel.fromJson(e)));
+      return ProductResponse.fromMap(data.data['result']);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
-  Future<List<ProductModel>> getRandomProducts(
+  Future<ProductResponse> getRandomProducts(
       int page, int pageSize, String productType) async {
     final data = await apiService.get(
       endPoint: EndPoint.getRandomProductsUrl,
@@ -80,14 +78,13 @@ class ProductsService {
       },
     );
     if (data.statusCode == 200) {
-      return List<ProductModel>.from(
-          data.data['result'].map((e) => ProductModel.fromJson(e)));
+      return ProductResponse.fromMap(data.data['result']);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
-  Future<List<ProductModel>> getStoreProfileItems(
+  Future<ProductResponse> getStoreProfileItems(
       String storeId, int page, int pageSize) async {
     final data = await apiService.get(
       endPoint: EndPoint.getStoreProductsUrl,
@@ -100,8 +97,7 @@ class ProductsService {
       },
     );
     if (data.statusCode == 200) {
-      return List<ProductModel>.from(
-          data.data['result'].map((e) => ProductModel.fromJson(e)));
+      return ProductResponse.fromMap(data.data['result']);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
@@ -125,7 +121,7 @@ class ProductsService {
     }
   }
 
-  Future<List<ProductModel>> getNewInProductsGuest(
+  Future<ProductResponse> getNewInProductsGuest(
       int page, int pageSize, String productType) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getNewProductsGuestUrl, query: {
@@ -134,14 +130,13 @@ class ProductsService {
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {
-      return List<ProductModel>.from(
-          data.data['result'].map((e) => ProductModel.fromJson(e)));
+      return ProductResponse.fromMap(data.data['result']);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
-  Future<List<ProductModel>> getRandomProductsGuest(
+  Future<ProductResponse> getRandomProductsGuest(
       int page, int pageSize, String productType) async {
     final data = await apiService.get(
       endPoint: EndPoint.getRandomProductsGuestUrl,
@@ -152,14 +147,13 @@ class ProductsService {
       },
     );
     if (data.statusCode == 200) {
-      return List<ProductModel>.from(
-          data.data['result'].map((e) => ProductModel.fromJson(e)));
+      return ProductResponse.fromMap(data.data['result']);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
-  Future<List<ProductModel>> getCustomersOffersProducts(
+  Future<ProductResponse> getCustomersOffersProducts(
       int page, int pageSize, String productType) async {
     final data = await apiService.get(
       endPoint: EndPoint.getOffers,
@@ -171,14 +165,13 @@ class ProductsService {
       },
     );
     if (data.statusCode == 200) {
-      return List<ProductModel>.from(
-          data.data['result'].map((e) => ProductModel.fromJson(e)));
+      return ProductResponse.fromMap(data.data['result']);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }
   }
 
-  Future<List<ProductModel>> getOffersProductsGuest(
+  Future<ProductResponse> getOffersProductsGuest(
       int page, int pageSize, String productType) async {
     final data = await apiService.get(
       endPoint: EndPoint.getStoreOffersUrl,
@@ -189,8 +182,7 @@ class ProductsService {
       },
     );
     if (data.statusCode == 200) {
-      return List<ProductModel>.from(
-          data.data['result'].map((e) => ProductModel.fromJson(e)));
+      return ProductResponse.fromMap(data.data['result']);
     } else {
       throw Exception('Unexpected error ${data.data["errorMessages"]}');
     }

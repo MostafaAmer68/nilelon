@@ -40,7 +40,7 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
         }, loading: () {
           return buildShimmerIndicatorGrid(context);
         }, followingProductSuccess: (products) {
-          if (ProductsCubit.get(context).followingProducts.isEmpty) {
+          if (ProductsCubit.get(context).followingProducts.data.isEmpty) {
             return SizedBox(
               height: 180.h,
               child: Column(
@@ -61,12 +61,14 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: gridDelegate(context),
                 shrinkWrap: true,
-                itemCount: ProductsCubit.get(context).followingProducts.length,
+                itemCount:
+                    ProductsCubit.get(context).followingProducts.data.length,
                 itemBuilder: (context, sizeIndex) {
                   return productSquarItem(
                     context: context,
-                    product:
-                        ProductsCubit.get(context).followingProducts[sizeIndex],
+                    product: ProductsCubit.get(context)
+                        .followingProducts
+                        .data[sizeIndex],
                   );
                 },
               ),

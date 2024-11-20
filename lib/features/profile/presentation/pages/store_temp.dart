@@ -129,6 +129,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                       shrinkWrap: true,
                       itemCount: ProductsCubit.get(context)
                           .products
+                          .data
                           .where((e) =>
                               e.categoryID ==
                               HiveStorage.get<List<CategoryModel>>(
@@ -142,6 +143,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                               context: context,
                               product: ProductsCubit.get(context)
                                   .products
+                                  .data
                                   .where((e) =>
                                       e.categoryID ==
                                       localData<List<CategoryModel>>(HiveKeys
