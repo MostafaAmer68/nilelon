@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -20,7 +21,7 @@ class AnalyticsBigCard extends StatelessWidget {
     return Expanded(
       child: Container(
         width: screenWidth(context, 0.45),
-        height: screenHeight(context, 0.3),
+        height: 180.w,
         padding: const EdgeInsets.all(16),
         decoration: ShapeDecoration(
           // color: Colors.white,

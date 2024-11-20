@@ -236,6 +236,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                           else
                             SizedBox(
                               height: 150.w,
+                              width: screenWidth(context, 1),
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount:
@@ -327,7 +328,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                           },
                         ),
                         SizedBox(
-                          height: screenHeight(context, 0.2),
+                          height: 200.w,
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.sp),
                             child: Row(
@@ -340,25 +341,32 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                   index: 0,
                                 ),
                                 const SizedBox(width: 10),
-                                Column(
-                                  children: [
-                                    AnalyticsSmallCard(
-                                      title: lang.ofOrders,
-                                      number: (cubit
-                                              .dashboardModel.storeOrdersNumber)
-                                          .toInt(),
-                                      average: 700,
-                                    ),
-                                    const SizedBox(height: 15),
-                                    AnalyticsSmallCard(
-                                      title: lang.totalIncome,
-                                      number: (cubit
-                                              .dashboardModel.storeTotalIncome)
-                                          .toInt(),
-                                      average: 700,
-                                      isOrange: true,
-                                    ),
-                                  ],
+                                SizedBox(
+                                  height: 185.w,
+                                  child: Column(
+                                    children: [
+                                      Expanded(
+                                        child: AnalyticsSmallCard(
+                                          title: lang.ofOrders,
+                                          number: (cubit.dashboardModel
+                                                  .storeOrdersNumber)
+                                              .toInt(),
+                                          average: 700,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 15),
+                                      Expanded(
+                                        child: AnalyticsSmallCard(
+                                          title: lang.totalIncome,
+                                          number: (cubit.dashboardModel
+                                                  .storeTotalIncome)
+                                              .toInt(),
+                                          average: 700,
+                                          isOrange: true,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 )
                               ],
                             ),

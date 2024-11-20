@@ -149,7 +149,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
           label: 'Show in Folder',
         ),
       ],
-      content: NotificationContent(
+    content: NotificationContent(
         id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
         channelKey: 'basic_channel',
         title: 'File Saved',
