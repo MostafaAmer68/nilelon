@@ -8,9 +8,11 @@ class PriceAndRatingRow extends StatelessWidget {
     super.key,
     required this.price,
     required this.rating,
+    this.style,
   });
   final String price;
   final String rating;
+  final TextStyle? style;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -18,7 +20,7 @@ class PriceAndRatingRow extends StatelessWidget {
       children: [
         Text(
           price,
-          style: AppStylesManager.customTextStyleBl2,
+          style: style ?? AppStylesManager.customTextStyleBl2,
         ),
         Row(
           children: [

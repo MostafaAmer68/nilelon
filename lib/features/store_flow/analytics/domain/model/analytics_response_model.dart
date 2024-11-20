@@ -64,7 +64,10 @@ class ProductBetSeller extends Equatable {
   final String productId;
   final num price;
   final String size;
+  final String productName;
+  final String description;
   final int quantity;
+  final int soledItems;
   final num rating;
   final String color;
   final String productIMages;
@@ -72,7 +75,10 @@ class ProductBetSeller extends Equatable {
     required this.productId,
     required this.price,
     required this.size,
+    required this.productName,
+    required this.description,
     required this.quantity,
+    required this.soledItems,
     required this.rating,
     required this.color,
     required this.productIMages,
@@ -84,7 +90,10 @@ class ProductBetSeller extends Equatable {
       productId,
       price,
       size,
+      productName,
+      description,
       quantity,
+      soledItems,
       rating,
       color,
       productIMages,
@@ -96,7 +105,10 @@ class ProductBetSeller extends Equatable {
       'productId': productId,
       'price': price,
       'size': size,
+      'productName': productName,
+      'description': description,
       'quantity': quantity,
+      'soledItems': soledItems,
       'rating': rating,
       'color': color,
       'productIMages': productIMages,
@@ -108,10 +120,44 @@ class ProductBetSeller extends Equatable {
       productId: map['productId'] as String,
       price: map['price'] as num,
       size: map['size'] as String,
+      productName: map['productName'] as String,
+      description: map['description'] as String,
       quantity: map['quantity'] as int,
+      soledItems: map['soledItems'] as int,
       rating: map['rating'] as num,
       color: map['color'] as String,
       productIMages: (map['productIMages'] as String?) ?? '',
     );
   }
+
+  ProductBetSeller copyWith({
+    String? productId,
+    num? price,
+    String? size,
+    String? productName,
+    String? description,
+    int? quantity,
+    int? soledItems,
+    num? rating,
+    String? color,
+    String? productIMages,
+  }) {
+    return ProductBetSeller(
+      productId: productId ?? this.productId,
+      price: price ?? this.price,
+      size: size ?? this.size,
+      productName: productName ?? this.productName,
+      description: description ?? this.description,
+      quantity: quantity ?? this.quantity,
+      soledItems: soledItems ?? this.soledItems,
+      rating: rating ?? this.rating,
+      color: color ?? this.color,
+      productIMages: productIMages ?? this.productIMages,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ProductBetSeller.fromJson(String source) =>
+      ProductBetSeller.fromMap(json.decode(source) as Map<String, dynamic>);
 }
