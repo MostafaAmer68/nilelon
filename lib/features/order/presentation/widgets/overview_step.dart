@@ -48,133 +48,138 @@ class _OverViewStepState extends State<OverViewStep> {
     final lang = S.of(context);
     return SizedBox(
       width: MediaQuery.of(context).size.width,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 150,
-              child: ListView.builder(
-                padding: const EdgeInsetsDirectional.symmetric(
-                  vertical: 16,
-                  horizontal: 16,
+      child: BlocListener<PromoCubit, PromoState>(
+        listener: (context, state) {
+          setState(() {});
+          // TODO: implement listener
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 150,
+                child: ListView.builder(
+                  padding: const EdgeInsetsDirectional.symmetric(
+                    vertical: 16,
+                    horizontal: 16,
+                  ),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: CheckProductItem(
+                        cartItem: CartCubit.get(context).tempCartItems[index],
+                      ),
+                    );
+                  },
+                  itemCount: CartCubit.get(context).tempCartItems.length,
+                  scrollDirection: Axis.horizontal,
                 ),
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 16),
-                    child: CheckProductItem(
-                      cartItem: CartCubit.get(context).tempCartItems[index],
-                    ),
-                  );
-                },
-                itemCount: CartCubit.get(context).tempCartItems.length,
-                scrollDirection: Axis.horizontal,
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 12,
-                  ),
-                  const TxtFieldPromo(),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    lang.orderSummary,
-                    style: AppStylesManager.customTextStyleBl8
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  Container(
-                    width: screenWidth(context, 1),
-                    height: 280,
-                    decoration: ShapeDecoration(
-                      color: ColorManager.primaryW,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      shadows: const [
-                        BoxShadow(
-                          color: ColorManager.primaryBL4,
-                          blurRadius: 8,
-                          offset: Offset(0, 2),
-                          spreadRadius: 0,
-                        )
-                      ],
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16, bottom: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 12,
                     ),
-                    child: Column(children: [
-                      const SizedBox(
-                        height: 16,
+                    const TxtFieldPromo(),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Text(
+                      lang.orderSummary,
+                      style: AppStylesManager.customTextStyleBl8
+                          .copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Container(
+                      width: screenWidth(context, 1),
+                      height: 280,
+                      decoration: ShapeDecoration(
+                        color: ColorManager.primaryW,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        shadows: const [
+                          BoxShadow(
+                            color: ColorManager.primaryBL4,
+                            blurRadius: 8,
+                            offset: Offset(0, 2),
+                            spreadRadius: 0,
+                          )
+                        ],
                       ),
-                      BlocBuilder<CartCubit, CartState>(
-                        builder: (context, state) {
-                          if (state is GetCartSuccess) {
-                            if (promoCubit.totalPrice == 0) {
-                              for (var item
-                                  in CartCubit.get(context).cart1.items) {
-                                promoCubit.totalPrice +=
-                                    item.price * item.quantity;
-                                promoCubit.tempTotalPrice +=
-                                    item.price * item.quantity;
+                      child: Column(children: [
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        BlocBuilder<CartCubit, CartState>(
+                          builder: (context, state) {
+                            if (state is GetCartSuccess) {
+                              if (promoCubit.totalPrice == 0) {
+                                for (var item
+                                    in CartCubit.get(context).cart1.items) {
+                                  promoCubit.totalPrice +=
+                                      item.price * item.quantity;
+                                  promoCubit.orderTotal +=
+                                      item.price * item.quantity;
+                                  promoCubit.tempTotalPrice +=
+                                      item.price * item.quantity;
+                                }
                               }
                             }
-                          }
-                          return Column(
-                            children: [
-                              BlocBuilder<OrderCubit, OrderState>(
-                                builder: (context, state) {
-                                  return orderSummaryItems(
-                                      lang.order,
-                                      (promoCubit.totalPrice -
-                                              promoCubit.deliveryPrice)
-                                          .toString());
-                                },
-                              ),
-                              BlocBuilder<OrderCubit, OrderState>(
-                                builder: (context, state) {
-                                  return orderSummaryItemsWithDropList(
-                                      lang.delivery,
-                                      '${promoCubit.deliveryPrice} ${lang.le}',
-                                      lang);
-                                },
-                              ),
-                              BlocBuilder<OrderCubit, OrderState>(
-                                builder: (context, state) {
-                                  return orderSummaryItems(
-                                    lang.discount,
-                                    '${promoCubit.discount} ${lang.le}',
-                                  );
-                                },
-                              ),
-                              BlocBuilder<OrderCubit, OrderState>(
-                                builder: (context, state) {
-                                  return orderSummaryItems(
-                                      lang.total,
-                                      '${promoCubit.totalPrice} ${lang.le}',
-                                      AppStylesManager.customTextStyleO5
-                                          .copyWith(
-                                              fontWeight: FontWeight.w600));
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ]),
-                  ),
-                  const SizedBox(
-                    height: 60,
-                  ),
-                ],
+                            return Column(
+                              children: [
+                                BlocBuilder<OrderCubit, OrderState>(
+                                  builder: (context, state) {
+                                    return orderSummaryItems(lang.order,
+                                        (promoCubit.orderTotal).toString());
+                                  },
+                                ),
+                                BlocBuilder<OrderCubit, OrderState>(
+                                  builder: (context, state) {
+                                    return orderSummaryItemsWithDropList(
+                                        lang.delivery,
+                                        '${promoCubit.deliveryPrice} ${lang.le}',
+                                        lang);
+                                  },
+                                ),
+                                BlocBuilder<OrderCubit, OrderState>(
+                                  builder: (context, state) {
+                                    return orderSummaryItems(
+                                      lang.discount,
+                                      '${(promoCubit.discount * 100).toStringAsFixed(0)} %',
+                                    );
+                                  },
+                                ),
+                                BlocBuilder<OrderCubit, OrderState>(
+                                  builder: (context, state) {
+                                    return orderSummaryItems(
+                                        lang.total,
+                                        '${promoCubit.totalPrice} ${lang.le}',
+                                        AppStylesManager.customTextStyleO5
+                                            .copyWith(
+                                                fontWeight: FontWeight.w600));
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ]),
+                    ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

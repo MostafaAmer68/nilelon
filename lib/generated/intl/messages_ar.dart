@@ -428,6 +428,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المتجر"),
         "plsEnterwareHouse":
             MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المستودع"),
+        "plsFollowStore":
+            MessageLookupByLibrary.simpleMessage("يرجى متابعة المتجر أولاً"),
         "plsSelectMethod":
             MessageLookupByLibrary.simpleMessage("رجاءً اختر طريقة الدفع"),
         "polices": MessageLookupByLibrary.simpleMessage("السياسات"),
@@ -532,6 +534,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "shopOnApp": MessageLookupByLibrary.simpleMessage("تسوق على التطبيق"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "showItems": MessageLookupByLibrary.simpleMessage("عرض العناصر"),
+        "showSections": MessageLookupByLibrary.simpleMessage("عرض القسم"),
         "signIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "signUpSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم التسجيل بنجاح"),

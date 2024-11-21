@@ -68,6 +68,7 @@ class SettingsView extends StatelessWidget {
               ],
             ),
           ),
+          const Spacer(),
           OutlinedButtonBuilder(
             text: lang.deleteAccount,
             ontap: () {
@@ -83,10 +84,10 @@ class SettingsView extends StatelessWidget {
             height: 50,
             buttonColor: ColorManager.primaryW,
             frameColor: ColorManager.primaryR,
-            style: AppStylesManager.customTextStyleB4
+            style: AppStylesManager.customTextStyleB3
                 .copyWith(color: ColorManager.primaryR, fontSize: 15),
           ),
-          const Spacer(),
+          const SizedBox(height: 30)
         ],
       ),
     );

@@ -58,7 +58,7 @@ Future initializeWebSocket() async {
         message.first.toString(), message.first.toString());
   });
   connection.on('ProductTopSeller', (message) async {
-    final productId = message!.first;
+    final productIdr = message!.first;
     final body = message[1];
     log(message.toString());
     showAwesomeNotification(body, 'Top Seller');

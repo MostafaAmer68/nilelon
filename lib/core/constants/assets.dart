@@ -279,12 +279,12 @@ class Assets {
   static const String assetsImagesNotification = "assets/images/Notification.svg";
 
   /// Assets for assetsImagesNotifications
-  /// assets/images/notifications.png
-  static const String assetsImagesNotifications = "assets/images/notifications.png";
+  /// assets/images/notifications.svg
+  static const String assetsImagesNotifications = "assets/images/notifications.svg";
 
   /// Assets for assetsImagesNotificationsActive
-  /// assets/images/notifications_active.png
-  static const String assetsImagesNotificationsActive = "assets/images/notifications_active.png";
+  /// assets/images/notifications_active.svg
+  static const String assetsImagesNotificationsActive = "assets/images/notifications_active.svg";
 
   /// Assets for assetsImagesOnboarding1
   /// assets/images/onboarding1.png

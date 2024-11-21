@@ -33,7 +33,7 @@ Future showEmptyClosetAlert(context, ClosetModel closetId) => showDialog(
               ),
               const DefaultDivider(),
               SizedBox(
-                height: 16.h,
+                height: 5.h,
               ),
               Text.rich(
                 TextSpan(
@@ -47,7 +47,7 @@ Future showEmptyClosetAlert(context, ClosetModel closetId) => showDialog(
                       style: AppStylesManager.customTextStyleO3,
                     ),
                     TextSpan(
-                      text: 'Closet?',
+                      text: ' Closet?',
                       style: AppStylesManager.customTextStyleBl8,
                     ),
                   ],
@@ -78,6 +78,7 @@ Future showEmptyClosetAlert(context, ClosetModel closetId) => showDialog(
                   height: screenHeight(context, 0.06),
                   ontap: () {
                     ClosetCubit.get(context).emptyCloset(closetId.id);
+                    navigatePop(context: context);
                   }),
             ],
           ),

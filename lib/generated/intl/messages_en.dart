@@ -433,6 +433,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter a valid number"),
         "plsEnterwareHouse":
             MessageLookupByLibrary.simpleMessage("please enter wareHouse"),
+        "plsFollowStore":
+            MessageLookupByLibrary.simpleMessage("please follow store first"),
         "plsSelectMethod":
             MessageLookupByLibrary.simpleMessage("please select pay method"),
         "polices": MessageLookupByLibrary.simpleMessage("Polices"),
@@ -537,6 +539,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "shopOnApp": MessageLookupByLibrary.simpleMessage("Shop On App"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
         "showItems": MessageLookupByLibrary.simpleMessage("Show Items"),
+        "showSections": MessageLookupByLibrary.simpleMessage("Show Section"),
         "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
         "signUpSuccessfully":
             MessageLookupByLibrary.simpleMessage("Sign Up Successfully"),
@@ -604,7 +607,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "viewCart": MessageLookupByLibrary.simpleMessage("View cart"),
         "viewPdf": MessageLookupByLibrary.simpleMessage("View PDF"),
         "waitingToGet": MessageLookupByLibrary.simpleMessage(
-            "Waiting we traing to get products"),
+            "please wait while we are trying to get products"),
         "warehouseAddress":
             MessageLookupByLibrary.simpleMessage("Warehouse Address"),
         "weHaveSent6DigitsVerificationCodeTo":

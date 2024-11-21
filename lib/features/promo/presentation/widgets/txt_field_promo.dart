@@ -53,6 +53,7 @@ class TxtFieldPromo extends StatelessWidget {
                         cubit.getPromoCodeType(context);
                       }
                     },
+                    isActivated: cubit.discount == 0,
                     height: 54,
                     frameColor: Colors.transparent,
                     width: screenWidth(context, 0.24),

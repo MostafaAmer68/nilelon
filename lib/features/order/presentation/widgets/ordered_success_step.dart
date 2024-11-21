@@ -41,7 +41,7 @@ class _OrderedSuccessPageState extends State<OrderedSuccessPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 100),
+                const SizedBox(height: 50),
                 Image.asset(
                   Assets.assetsImagesInvoice,
                   width: screenWidth(context, 0.5),

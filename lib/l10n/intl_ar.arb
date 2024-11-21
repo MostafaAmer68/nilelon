@@ -411,5 +411,7 @@
 "productEdited": "تم تحديث المنتج",
 "youAreStore": "أنت متجر، لا يمكنك تنفيذ هذا الإجراء",
 "viewPdf": "عرض ملف PDF",
+ "showSections": "عرض القسم",
+  "plsFollowStore": "يرجى متابعة المتجر أولاً",
 "returnedHistory": "تاريخ الإرجاع"
 }

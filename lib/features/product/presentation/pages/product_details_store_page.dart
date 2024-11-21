@@ -90,222 +90,246 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
               .toList();
         });
       },
-      child: ScaffoldImage(
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-                onPressed: () => navigatePop(context: context),
-                icon: const Icon(Icons.arrow_back)),
-            title: Text(
-              lang.productDetails,
-              style: AppStylesManager.customTextStyleBl6,
-            ),
-            centerTitle: true,
-            actions: [
-              PopupMenuButton<String>(
-                itemBuilder: (context) {
-                  return [
-                    PopupMenuItem(
-                      value: 'delete',
-                      child: Text(lang.delete),
-                    ),
-                    PopupMenuItem(
-                      value: 'update',
-                      child: Text(lang.updateDraft),
-                    ),
-                  ];
-                },
-                onSelected: (value) {
-                  if (value == 'delete') {
-                    deleteAlert(
-                        context, lang.areYouSureYouWantToDeleteThisDraft, () {
-                      productCubit.deleteProduct(widget.productId);
-                      navigatePop(context: context);
-                      navigatePop(context: context);
-                    });
-                  } else if (value == 'update') {
-                    navigateTo(
-                        context: context,
-                        screen: EditProductpage(product: productCubit.product));
-                  }
-                },
-              ),
-            ],
-          ),
-          body: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const DefaultDivider(),
-                Container(
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-                  child: BlocBuilder<ProductsCubit, ProductsState>(
-                    builder: (context, state) {
-                      return state.whenOrNull(
-                        loading: () =>
-                            buildShimmerIndicatorSmall(height: 500, width: 600),
-                        success: () => ImageBanner(
-                          images: productCubit.product.productImages
-                              .map((e) => e.url)
-                              .toList(),
+      child: BlocBuilder<ProductsCubit, ProductsState>(
+        builder: (context, state) {
+          return ScaffoldImage(
+              appBar: productCubit.product.storeId ==
+                      HiveStorage.get<UserModel>(HiveKeys.userModel).id
+                  ? AppBar(
+                      backgroundColor: Colors.transparent,
+                      leading: IconButton(
+                          onPressed: () => navigatePop(context: context),
+                          icon: const Icon(Icons.arrow_back)),
+                      title: Text(
+                        lang.productDetails,
+                        style: AppStylesManager.customTextStyleBl6,
+                      ),
+                      centerTitle: true,
+                      actions: [
+                        PopupMenuButton<String>(
+                          itemBuilder: (context) {
+                            return [
+                              PopupMenuItem(
+                                value: 'delete',
+                                child: Text(lang.delete),
+                              ),
+                              PopupMenuItem(
+                                value: 'update',
+                                child: Text(lang.updateDraft),
+                              ),
+                            ];
+                          },
+                          onSelected: (value) {
+                            if (value == 'delete') {
+                              deleteAlert(context,
+                                  lang.areYouSureYouWantToDeleteThisDraft, () {
+                                productCubit.deleteProduct(widget.productId);
+                                navigatePop(context: context);
+                                navigatePop(context: context);
+                              });
+                            } else if (value == 'update') {
+                              navigateTo(
+                                  context: context,
+                                  screen: EditProductpage(
+                                      product: productCubit.product));
+                            }
+                          },
                         ),
-                      )!;
-                    },
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: SizedBox(
-                    height: screenHeight(context, 0.07),
-                    width: screenWidth(context, 0.3),
-                    child: BlocBuilder<ProductsCubit, ProductsState>(
+                      ],
+                    )
+                  : AppBar(
+                      backgroundColor: Colors.transparent,
+                      leading: IconButton(
+                          onPressed: () => navigatePop(context: context),
+                          icon: const Icon(Icons.arrow_back)),
+                      title: Text(
+                        lang.productDetails,
+                        style: AppStylesManager.customTextStyleBl6,
+                      ),
+                      centerTitle: true,
+                    ),
+              body: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const DefaultDivider(),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 20),
+                      child: BlocBuilder<ProductsCubit, ProductsState>(
+                        builder: (context, state) {
+                          return state.whenOrNull(
+                            loading: () => buildShimmerIndicatorSmall(
+                                height: 500, width: 600),
+                            success: () => ImageBanner(
+                              images: productCubit.product.productImages
+                                  .map((e) => e.url)
+                                  .toList(),
+                            ),
+                          )!;
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: SizedBox(
+                        height: screenHeight(context, 0.07),
+                        width: screenWidth(context, 0.3),
+                        child: BlocBuilder<ProductsCubit, ProductsState>(
+                          builder: (context, state) {
+                            return state.whenOrNull(
+                              failure: (_) => Text(_),
+                              loading: () => buildShimmerIndicatorRow(),
+                              success: () =>
+                                  productCubit.product == ProductModel.empty()
+                                      ? buildShimmerIndicatorRow()
+                                      : ListView.builder(
+                                          itemCount: productCubit
+                                              .product.productImages.length,
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            final image = productCubit
+                                                .product.productImages[index];
+                                            return imageReplacer(
+                                              url: image.url,
+                                              fit: BoxFit.cover,
+                                              width: 50,
+                                              radius: 8,
+                                            );
+                                          },
+                                        ),
+                            )!;
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: BlocBuilder<ProductsCubit, ProductsState>(
+                        builder: (context, state) {
+                          return state.whenOrNull(
+                              loading: () => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          buildShimmerIndicatorSmall(
+                                              height: 40),
+                                          buildShimmerIndicatorSmall(
+                                              height: 40, width: 100),
+                                        ],
+                                      ),
+                                      const SizedBox(height: 24),
+                                      buildShimmerIndicatorSmall(
+                                          height: 100, width: 400),
+                                      SizedBox(height: 20.h),
+                                      Row(
+                                        children: [
+                                          buildShimmerIndicatorSmall(
+                                              height: 40, width: 100),
+                                          buildShimmerIndicatorSmall(
+                                              height: 40),
+                                        ],
+                                      ),
+                                      SizedBox(height: 22.h),
+                                      Row(
+                                        children: [
+                                          buildShimmerIndicatorSmall(
+                                              height: 40, width: 100),
+                                          buildShimmerIndicatorSmall(
+                                              height: 40),
+                                        ],
+                                      ),
+                                      SizedBox(height: 20.h),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          buildShimmerIndicatorSmall(
+                                              height: 40, width: 80),
+                                          buildShimmerIndicatorSmall(
+                                              height: 40, width: 80),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                              success: () => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _buildNameAndPriceRow(context),
+                                      const SizedBox(height: 24),
+                                      _buildDescription(),
+                                      SizedBox(height: 20.h),
+                                      _buildSizeSelector(lang),
+                                      SizedBox(height: 22.h),
+                                      _buildColorSelector(),
+                                      SizedBox(height: 20.h),
+                                      // _buildStockCounter(),
+                                    ],
+                                  ))!;
+                        },
+                      ),
+                    ),
+                    SizedBox(height: 6.h),
+                    _buildReviewSection(lang),
+                    const Divider(color: ColorManager.primaryG8, height: 4),
+                    const SizedBox(height: 24),
+                    BlocBuilder<ProductsCubit, ProductsState>(
                       builder: (context, state) {
                         return state.whenOrNull(
-                          failure: (_) => Text(_),
-                          loading: () => buildShimmerIndicatorRow(),
-                          success: () =>
-                              productCubit.product == ProductModel.empty()
-                                  ? buildShimmerIndicatorRow()
-                                  : ListView.builder(
-                                      itemCount: productCubit
-                                          .product.productImages.length,
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder: (context, index) {
-                                        final image = productCubit
-                                            .product.productImages[index];
-                                        return imageReplacer(
-                                          url: image.url,
-                                          fit: BoxFit.cover,
-                                          width: 50,
-                                          radius: 8,
-                                        );
-                                      },
-                                    ),
+                          loading: () => buildShimmerIndicatorSmall(),
+                          success: () {
+                            if (productCubit.review.isEmpty) {
+                              return Center(child: Text(lang.noReviews));
+                            }
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: productCubit.review.length,
+                              itemBuilder: (context, index) {
+                                final review = productCubit.review[index];
+                                return RatingContainer(review: review);
+                              },
+                            );
+                          },
                         )!;
                       },
                     ),
-                  ),
+                    const SizedBox(height: 24),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: BlocBuilder<ProductsCubit, ProductsState>(
-                    builder: (context, state) {
-                      return state.whenOrNull(
-                          loading: () => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildShimmerIndicatorSmall(height: 40),
-                                      buildShimmerIndicatorSmall(
-                                          height: 40, width: 100),
-                                    ],
-                                  ),
-                                  const SizedBox(height: 24),
-                                  buildShimmerIndicatorSmall(
-                                      height: 100, width: 400),
-                                  SizedBox(height: 20.h),
-                                  Row(
-                                    children: [
-                                      buildShimmerIndicatorSmall(
-                                          height: 40, width: 100),
-                                      buildShimmerIndicatorSmall(height: 40),
-                                    ],
-                                  ),
-                                  SizedBox(height: 22.h),
-                                  Row(
-                                    children: [
-                                      buildShimmerIndicatorSmall(
-                                          height: 40, width: 100),
-                                      buildShimmerIndicatorSmall(height: 40),
-                                    ],
-                                  ),
-                                  SizedBox(height: 20.h),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      buildShimmerIndicatorSmall(
-                                          height: 40, width: 80),
-                                      buildShimmerIndicatorSmall(
-                                          height: 40, width: 80),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                          success: () => Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  _buildNameAndPriceRow(context),
-                                  const SizedBox(height: 24),
-                                  _buildDescription(),
-                                  SizedBox(height: 20.h),
-                                  _buildSizeSelector(lang),
-                                  SizedBox(height: 22.h),
-                                  _buildColorSelector(),
-                                  SizedBox(height: 20.h),
-                                  // _buildStockCounter(),
-                                ],
-                              ))!;
-                    },
-                  ),
-                ),
-                SizedBox(height: 6.h),
-                _buildReviewSection(lang),
-                const Divider(color: ColorManager.primaryG8, height: 4),
-                const SizedBox(height: 24),
-                BlocBuilder<ProductsCubit, ProductsState>(
-                  builder: (context, state) {
-                    return state.whenOrNull(
-                      loading: () => buildShimmerIndicatorSmall(),
-                      success: () {
-                        if (productCubit.review.isEmpty) {
-                          return Center(child: Text(lang.noReviews));
-                        }
-                        return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: productCubit.review.length,
-                          itemBuilder: (context, index) {
-                            final review = productCubit.review[index];
-                            return RatingContainer(review: review);
-                          },
+              ),
+              btmBar: BlocBuilder<ProductsCubit, ProductsState>(
+                builder: (context, state) {
+                  return productCubit.product.storeId !=
+                          HiveStorage.get<UserModel>(HiveKeys.userModel).id
+                      ? const SizedBox()
+                      : Container(
+                          height: 100,
+                          color: ColorManager.primaryW,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 16),
+                          child: GradientButtonBuilder(
+                            text: S.of(context).applyOffer,
+                            width: screenWidth(context, 1),
+                            ontap: () {
+                              PromoCubit.get(context).selectedProducts.clear();
+                              PromoCubit.get(context)
+                                  .selectedProducts
+                                  .add(productCubit.product);
+                              navigateTo(
+                                  context: context,
+                                  screen: const ApplyOfferPage());
+                            },
+                          ),
                         );
-                      },
-                    )!;
-                  },
-                ),
-                const SizedBox(height: 24),
-              ],
-            ),
-          ),
-          btmBar: BlocBuilder<ProductsCubit, ProductsState>(
-            builder: (context, state) {
-              return productCubit.product.storeId !=
-                      HiveStorage.get<UserModel>(HiveKeys.userModel).id
-                  ? const SizedBox()
-                  : Container(
-                      height: 100,
-                      color: ColorManager.primaryW,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 16),
-                      child: GradientButtonBuilder(
-                        text: S.of(context).applyOffer,
-                        width: screenWidth(context, 1),
-                        ontap: () {
-                          PromoCubit.get(context).selectedProducts.clear();
-                          PromoCubit.get(context)
-                              .selectedProducts
-                              .add(productCubit.product);
-                          navigateTo(
-                              context: context, screen: const ApplyOfferPage());
-                        },
-                      ),
-                    );
-            },
-          )),
+                },
+              ));
+        },
+      ),
     );
   }
 
@@ -391,6 +415,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
         Text('${lang.size} :', style: AppStylesManager.customTextStyleG10),
         SizeToggleButtons(
           sizes: productCubit.product.productVariants
+              .where((e) => e.quantity != 0)
               .map((e) => e.size)
               .toList()
               .toSet()

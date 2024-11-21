@@ -36,7 +36,7 @@ GestureDetector productSquarItem(
         .price;
   }
   final PromoCubit cubit = PromoCubit.get(context);
-  final ProductsCubit pcubit = ProductsCubit.get(context);
+  // final ProductsCubit pcubit = ProductsCubit.get(context);
   return GestureDetector(
     onTap: () {
       navigateTo(

@@ -17,6 +17,7 @@ import 'package:nilelon/features/product/presentation/widgets/product_card/produ
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
+import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/tools.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
@@ -160,7 +161,8 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
               ? SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 1.sw > 600 ? 3 : 2,
                   crossAxisSpacing: 16.0,
-                  mainAxisExtent: 295.w,
+                  mainAxisExtent:
+                      HiveStorage.get(HiveKeys.isStore) ? 250.w : 295.w,
                   mainAxisSpacing: 12.0,
                 )
               : gridDelegate(context),

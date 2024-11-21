@@ -23,13 +23,10 @@ GestureDetector analyticsWideCard(
     },
     child: SizedBox(
       width: screenWidth(context, 0.92),
-      // height: 1.sw > 600 ? 100 : 100,
       child: Container(
-        // clipBehavior: Clip.antiAlias,
         margin: const EdgeInsets.all(10),
         decoration: BoxDecoration(
-          borderRadius:
-              BorderRadius.circular(10), // Updated to match rounded corners
+          borderRadius: BorderRadius.circular(10),
           color: Colors.white,
           boxShadow: const [
             BoxShadow(

@@ -31,7 +31,7 @@ class ProfileListTile extends StatelessWidget {
                 )
               : AppStylesManager.customTextStyleBl9,
         ),
-        minLeadingWidth: 5,
+        horizontalTitleGap: 7,
         trailing: trailingWidget ??
             Icon(
               Icons.arrow_forward_ios_rounded,

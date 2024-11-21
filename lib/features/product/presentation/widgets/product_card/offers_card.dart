@@ -108,57 +108,60 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                 width: 300.w,
                 fit: BoxFit.cover,
               ),
-              Positioned(
-                top: 5,
-                right: 25,
-                child: InkWell(
-                  onTap: () {
-                    showModalBottomSheet(
-                      context: context,
-                      // isScrollControlled: true,
+              Visibility(
+                visible: !HiveStorage.get(HiveKeys.isStore),
+                child: Positioned(
+                  top: 0,
+                  right: 15,
+                  child: InkWell(
+                    onTap: () {
+                      showModalBottomSheet(
+                        context: context,
+                        // isScrollControlled: true,
 
-                      backgroundColor: ColorManager.primaryW,
-                      shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
-                      ),
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      builder: (context) =>
-                          ClosetSheetBarView(productId: product.id),
-                    );
-                  },
-                  child: Container(
-                    width: 35.w, // Increased size to match the image
-                    height: 35.w,
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      shape: BoxShape.circle,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.orange.shade300.withOpacity(1),
-                          offset: const Offset(
-                              3, 3), // Adjusted shadow to be more subtle
-                          blurRadius: 5,
-                        ),
-                      ],
-                    ),
-                    child: !product.isInCloset
-                        ? SizedBox(
-                            // width: 20,
-                            child: SvgPicture.asset(
-                              Assets.assetsImagesHanger,
-                              width: 30,
-                              // height: ,
-
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        : Image.asset(
-                            Assets.assetsImagesClosetFollowing,
+                        backgroundColor: ColorManager.primaryW,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
                           ),
+                        ),
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        builder: (context) =>
+                            ClosetSheetBarView(productId: product.id),
+                      );
+                    },
+                    child: Container(
+                      width: 35.w, // Increased size to match the image
+                      height: 35.w,
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.shade300.withOpacity(1),
+                            offset: const Offset(
+                                3, 3), // Adjusted shadow to be more subtle
+                            blurRadius: 5,
+                          ),
+                        ],
+                      ),
+                      child: !product.isInCloset
+                          ? SizedBox(
+                              // width: 20,
+                              child: SvgPicture.asset(
+                                Assets.assetsImagesHanger,
+                                width: 30,
+                                // height: ,
+
+                                fit: BoxFit.cover,
+                              ),
+                            )
+                          : Image.asset(
+                              Assets.assetsImagesClosetFollowing,
+                            ),
+                    ),
                   ),
                 ),
               )
@@ -210,134 +213,138 @@ GestureDetector offersCard({required context, required ProductModel product}) {
           const SizedBox(
             height: 8,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Container(
-                height: 30.h,
-                width: 30.h,
-                decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 233, 242, 245),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: BlocConsumer<CartCubit, CartState>(
-                  listener: (context, state) {
-                    if (state is CartSuccess) {
-                      BotToast.showCustomText(
-                        duration: const Duration(seconds: 4),
-                        toastBuilder: (_) => Card(
-                          color: Colors.black87,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  S.of(context).productAddedToCart,
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                                const SizedBox(width: 10),
-                                TextButton(
-                                  onPressed: () {
-                                    BotToast.closeAllLoading();
-                                    // BotToast.remove()
-
-                                    navigateTo(
-                                        context: context,
-                                        screen: const CustomerBottomTabBar(
-                                          index: 1,
-                                        ));
-
-                                    BotToast.cleanAll();
-                                  },
-                                  child: Text(
-                                    S.of(context).viewCart,
-                                    style: const TextStyle(color: Colors.blue),
+          Visibility(
+            visible: !HiveStorage.get(HiveKeys.isStore),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  height: 30.h,
+                  width: 30.h,
+                  decoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 233, 242, 245),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: BlocConsumer<CartCubit, CartState>(
+                    listener: (context, state) {
+                      if (state is CartSuccess) {
+                        BotToast.showCustomText(
+                          duration: const Duration(seconds: 4),
+                          toastBuilder: (_) => Card(
+                            color: Colors.black87,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    S.of(context).productAddedToCart,
+                                    style: const TextStyle(color: Colors.white),
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(width: 10),
+                                  TextButton(
+                                    onPressed: () {
+                                      BotToast.closeAllLoading();
+                                      // BotToast.remove()
+
+                                      navigateTo(
+                                          context: context,
+                                          screen: const CustomerBottomTabBar(
+                                            index: 1,
+                                          ));
+
+                                      BotToast.cleanAll();
+                                    },
+                                    child: Text(
+                                      S.of(context).viewCart,
+                                      style:
+                                          const TextStyle(color: Colors.blue),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    } else if (state is GetCartFailure) {
-                      BotToast.showText(text: state.message);
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is CartLoading) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    return IconButton(
-                      icon: Icon(
-                        Iconsax.shopping_cart,
-                        color: ColorManager.primaryB,
-                        size: 14.r,
-                      ),
-                      onPressed: () {
-                        CartCubit.get(context).addToCart(
-                          AddToCartModel(
-                            quantity: 1,
-                            size: product.productVariants.first.size,
-                            color: product.productVariants.first.color,
-                            productId: product.id,
-                            customerId:
-                                HiveStorage.get<UserModel>(HiveKeys.userModel)
-                                    .id,
-                          ),
                         );
-                      },
-                    );
-                  },
+                      } else if (state is GetCartFailure) {
+                        BotToast.showText(text: state.message);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is CartLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      return IconButton(
+                        icon: Icon(
+                          Iconsax.shopping_cart,
+                          color: ColorManager.primaryB,
+                          size: 14.r,
+                        ),
+                        onPressed: () {
+                          CartCubit.get(context).addToCart(
+                            AddToCartModel(
+                              quantity: 1,
+                              size: product.productVariants.first.size,
+                              color: product.productVariants.first.color,
+                              productId: product.id,
+                              customerId:
+                                  HiveStorage.get<UserModel>(HiveKeys.userModel)
+                                      .id,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: GradientButtonBuilder(
-                  text: lang(context).buy,
-                  ontap: () {
-                    if (HiveStorage.get(HiveKeys.isStore)) {
-                      BotToast.showText(text: lang(context).youAreStore);
-                      return;
-                    }
-                    if (HiveStorage.get(HiveKeys.userModel) != null) {
-                      CartCubit.get(context).tempCartItems.clear();
-                      CartCubit.get(context).tempCartItems.add(CartItem(
-                          quantity:
-                              product.productVariants.first.quantity.toInt(),
-                          size: product.productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .size,
-                          color: product.productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .color,
-                          price: product.productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .price,
-                          productName: product.name,
-                          productId: product.id,
-                          productImages: product.productImages,
-                          cartId: ''));
-                      PromoCubit.get(context).totalPrice = product
-                          .productVariants
-                          .firstWhere((e) => e.price != 0)
-                          .price;
-                      PromoCubit.get(context).tempTotalPrice = product
-                          .productVariants
-                          .firstWhere((e) => e.price != 0)
-                          .price;
-                      navigateTo(
-                          context: context, screen: const CheckOutView());
-                    } else {
-                      navigateTo(
-                          context: context,
-                          screen: const CustomerBottomTabBar(index: 3));
-                    }
-                  },
-                  width: 110.h,
-                  height: 30.h,
-                ),
-              )
-            ],
+                Expanded(
+                  child: GradientButtonBuilder(
+                    text: lang(context).buy,
+                    ontap: () {
+                      if (HiveStorage.get(HiveKeys.isStore)) {
+                        BotToast.showText(text: lang(context).youAreStore);
+                        return;
+                      }
+                      if (HiveStorage.get(HiveKeys.userModel) != null) {
+                        CartCubit.get(context).tempCartItems.clear();
+                        CartCubit.get(context).tempCartItems.add(CartItem(
+                            quantity:
+                                product.productVariants.first.quantity.toInt(),
+                            size: product.productVariants
+                                .firstWhere((e) => e.price != 0)
+                                .size,
+                            color: product.productVariants
+                                .firstWhere((e) => e.price != 0)
+                                .color,
+                            price: product.productVariants
+                                .firstWhere((e) => e.price != 0)
+                                .price,
+                            productName: product.name,
+                            productId: product.id,
+                            productImages: product.productImages,
+                            cartId: ''));
+                        PromoCubit.get(context).totalPrice = product
+                            .productVariants
+                            .firstWhere((e) => e.price != 0)
+                            .price;
+                        PromoCubit.get(context).tempTotalPrice = product
+                            .productVariants
+                            .firstWhere((e) => e.price != 0)
+                            .price;
+                        navigateTo(
+                            context: context, screen: const CheckOutView());
+                      } else {
+                        navigateTo(
+                            context: context,
+                            screen: const CustomerBottomTabBar(index: 3));
+                      }
+                    },
+                    width: 110.h,
+                    height: 30.h,
+                  ),
+                )
+              ],
+            ),
           )
         ],
       ),

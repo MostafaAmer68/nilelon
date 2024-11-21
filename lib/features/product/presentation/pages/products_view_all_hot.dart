@@ -213,7 +213,7 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
               cubit.category = category;
               paginationList.data.clear(); // Clear pagination list
               cubit.page = 1; // Reset page
-              widget.onStartPage(false);
+              widget.onStartPage(true);
               setState(() {});
             },
           ),
@@ -248,7 +248,7 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
                           onPressed: () {
                             if (cubit.limit > 0) {
                               navigatePop(context: context);
-                              widget.onStartPage(false);
+                              widget.onStartPage(true);
                             } else {
                               BotToast.showText(
                                   text: 'please enter page size above 0');

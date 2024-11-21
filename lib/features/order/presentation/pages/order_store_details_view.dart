@@ -58,9 +58,11 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  buildShimmerIndicatorSmall(
-                      height: screenHeight(context, 0.3),
-                      width: screenWidth(context, 0.9)),
+                  Expanded(
+                    child: buildShimmerIndicatorSmall(
+                        height: screenHeight(context, 0.3),
+                        width: screenWidth(context, 0.9)),
+                  ),
                   Column(
                     children: [
                       Row(
@@ -106,7 +108,8 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
                               height: 40, width: 100))
                     ],
                   ),
-                  buildShimmerIndicatorSmall(height: 40, width: 50),
+                  Expanded(
+                      child: buildShimmerIndicatorSmall(height: 40, width: 50)),
                   const SizedBox(height: 15),
                 ],
               );
@@ -137,22 +140,17 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
                     itemCount: cubit.storeOrder.orderProductVariants.length,
                   ),
                 ),
-                Positioned(
-                  top: 1.sw > 600
-                      ? screenHeight(context, 0.82)
-                      : screenHeight(context, 0.75),
-                  child: SmoothPageIndicator(
-                    controller: controller,
-                    effect: WormEffect(
-                      dotColor: ColorManager.primaryG.withOpacity(0.8),
-                      activeDotColor: ColorManager.primaryO.withOpacity(0.9),
-                      dotHeight: 10,
-                      dotWidth: 10,
-                      spacing: 5.0,
-                      type: WormType.underground,
-                    ),
-                    count: cubit.storeOrder.orderProductVariants.length,
+                SmoothPageIndicator(
+                  controller: controller,
+                  effect: WormEffect(
+                    dotColor: ColorManager.primaryG.withOpacity(0.8),
+                    activeDotColor: ColorManager.primaryO.withOpacity(0.9),
+                    dotHeight: 10,
+                    dotWidth: 10,
+                    spacing: 5.0,
+                    type: WormType.underground,
                   ),
+                  count: cubit.storeOrder.orderProductVariants.length,
                 ),
                 const SizedBox(height: 15),
               ],

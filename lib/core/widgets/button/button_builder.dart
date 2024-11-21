@@ -65,8 +65,8 @@ class ButtonBuilder extends StatelessWidget {
                           children: [
                             if (isIcon) ...[
                               icon ?? const SizedBox(),
+                              const SizedBox(width: 15),
                             ],
-                            const SizedBox(width: 15),
                             Text(
                               text,
                               style:

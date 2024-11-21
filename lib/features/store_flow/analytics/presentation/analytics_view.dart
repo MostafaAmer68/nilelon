@@ -328,7 +328,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                           },
                         ),
                         SizedBox(
-                          height: 200.w,
+                          height: 205.w,
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.sp),
                             child: Row(
@@ -342,7 +342,7 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                                 ),
                                 const SizedBox(width: 10),
                                 SizedBox(
-                                  height: 185.w,
+                                  height: 189.w,
                                   child: Column(
                                     children: [
                                       Expanded(

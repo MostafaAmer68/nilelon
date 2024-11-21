@@ -91,64 +91,64 @@ class _OrderViewState extends State<OrderView> {
                   } else {
                     return Expanded(
                       child: GroupedListView<OrderModel, String>(
-                          // shrinkWrap: true,
-                          elements: cubit.orders
-                              .where((e) => e.status == widget.status)
-                              .toList(),
-                          order: GroupedListOrder.ASC,
-                          groupBy: (OrderModel e) => DateFormat('dd-MM-yyyy')
-                              .format(DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
-                                  .parse(e.date)),
-                          groupSeparatorBuilder: (String groupByValue) =>
-                              Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top: 10),
-                                  child: Text(
-                                    groupByValue,
-                                    style: AppStylesManager.customDateStyle
-                                        .copyWith(fontSize: 14.sp),
-                                  ),
-                                ),
-                              ),
-                          itemBuilder: (context, order) {
-                            if (HiveStorage.get(HiveKeys.isStore)) {
-                              return OrderStoreCard(
-                                image: widget.image,
-                                title: widget.title,
-                                order: order,
-                                onTap: () {
-                                  navigateTo(
-                                      context: context,
-                                      screen: OrderStoreDetailsView(
-                                        index: 2,
-                                        // recievedDate: order.date,
-                                        id: order.id,
-                                      ));
-                                },
-                                shippedOnTap: () {
-                                  OrderCubit.get(context).changeOrderStatus(
-                                      order.id, 'Shipped', true);
-                                  OrderCubit.get(context)
-                                      .getStoreOrder(widget.status);
-                                  setState(() {});
-                                },
-                              );
-                            }
-                            return OrderCustomerCard(
+                        // shrinkWrap: true,
+                        elements: cubit.orders
+                            .where((e) => e.status == widget.status)
+                            .toList(),
+                        order: GroupedListOrder.ASC,
+                        groupBy: (OrderModel e) => DateFormat('dd-MM-yyyy')
+                            .format(DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
+                                .parse(e.date)),
+                        groupSeparatorBuilder: (String groupByValue) => Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              groupByValue,
+                              style: AppStylesManager.customDateStyle
+                                  .copyWith(fontSize: 14.sp),
+                            ),
+                          ),
+                        ),
+                        itemBuilder: (context, order) {
+                          if (HiveStorage.get(HiveKeys.isStore)) {
+                            return OrderStoreCard(
+                              image: widget.image,
+                              title: widget.title,
                               order: order,
                               onTap: () {
                                 navigateTo(
                                     context: context,
-                                    screen: OrderDetailsView(
+                                    screen: OrderStoreDetailsView(
                                       index: 2,
-                                      recievedDate: order.date,
+                                      // recievedDate: order.date,
                                       id: order.id,
                                     ));
                               },
-                              name: widget.title,
-                              icon: widget.image,
+                              shippedOnTap: () {
+                                OrderCubit.get(context).changeOrderStatus(
+                                    order.id, 'Shipped', true);
+                                OrderCubit.get(context)
+                                    .getStoreOrder(widget.status);
+                                setState(() {});
+                              },
                             );
-                          }),
+                          }
+                          return OrderCustomerCard(
+                            order: order,
+                            onTap: () {
+                              navigateTo(
+                                  context: context,
+                                  screen: OrderDetailsView(
+                                    index: 2,
+                                    recievedDate: order.date,
+                                    id: order.id,
+                                  ));
+                            },
+                            name: widget.title,
+                            icon: widget.image,
+                          );
+                        },
+                      ),
                     );
                   }
                 },

@@ -88,7 +88,7 @@ class _OtpViewState extends State<OtpView> {
       },
       child: ScaffoldImage(
         appBar: AppBar(
-          backgroundColor: ColorManager.primaryW,
+          backgroundColor: Colors.transparent,
         ),
         body: SingleChildScrollView(
           reverse: true,
@@ -133,56 +133,54 @@ class _OtpViewState extends State<OtpView> {
               ),
               Directionality(
                 textDirection: TextDirection.ltr,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    PinCodeView(
-                      onCompleted: (code) {
-                        AuthCubit.get(context).code = code;
-                      },
-                      length: 6,
-                    ),
-                  ],
+                child: PinCodeView(
+                  onCompleted: (code) {
+                    AuthCubit.get(context).code = code;
+                  },
+                  length: 6,
                 ),
               ),
-              isValid
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                            onPressed: () {
-                              widget.resend();
-                              resendTime = 59;
-                              startTimer();
-                              setState(() {});
-                            },
-                            child: Text(
-                              lang.resend,
-                              style: AppStylesManager.customTextStyleO2,
-                            )),
-                      ],
-                    )
-                  : Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          lang.resendIn,
-                          style: AppStylesManager.customTextStyleG,
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Text(
-                          resendTime < 10
-                              ? '00:0${resendTime.toString()}'
-                              : '00:${resendTime.toString()}',
-                          style: AppStylesManager.customTextStyleG,
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        ),
-                      ],
-                    ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: isValid
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                              onPressed: () {
+                                widget.resend();
+                                resendTime = 59;
+                                startTimer();
+                                setState(() {});
+                              },
+                              child: Text(
+                                lang.resend,
+                                style: AppStylesManager.customTextStyleO2,
+                              )),
+                        ],
+                      )
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            lang.resendIn,
+                            style: AppStylesManager.customTextStyleG,
+                          ),
+                          const SizedBox(
+                            width: 8,
+                          ),
+                          Text(
+                            resendTime < 10
+                                ? '00:0${resendTime.toString()}'
+                                : '00:${resendTime.toString()}',
+                            style: AppStylesManager.customTextStyleG,
+                          ),
+                          const SizedBox(
+                            width: 16,
+                          ),
+                        ],
+                      ),
+              ),
               const SizedBox(
                 height: 80,
               ),

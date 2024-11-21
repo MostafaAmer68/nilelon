@@ -152,7 +152,8 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                   return buildShimmerIndicatorGrid(context);
                 }, storeProductSuccess: (products) {
                   if (pCubit
-                      .filterListByCategory(cubit.selectedCategory, products.data)
+                      .filterListByCategory(
+                          cubit.selectedCategory, products.data)
                       .isEmpty) {
                     return SizedBox(
                       height: 280.h,
@@ -184,7 +185,8 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                           return productSquarItem(
                             context: context,
                             product: pCubit.filterListByCategory(
-                                cubit.selectedCategory, products.data)[sizeIndex],
+                                cubit.selectedCategory,
+                                products.data)[sizeIndex],
                           );
                         },
                       ),
@@ -193,7 +195,47 @@ class _StoreProfileViewState extends State<StoreProfileView> {
                 }, failure: (message) {
                   return Text(message);
                 }, orElse: () {
-                  return Text(S.of(context).waitingToGet);
+                  if (pCubit
+                      .filterListByCategory(
+                          cubit.selectedCategory, pCubit.storeProducts.data)
+                      .isEmpty) {
+                    return SizedBox(
+                      height: 280.h,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: Text(
+                              S.of(context).thereNoProduct,
+                              style: AppStylesManager.customTextStyleG2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: GridView.builder(
+                        controller: ProductsCubit.get(context).scroll,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate: gridDelegate(context),
+                        shrinkWrap: true,
+                        itemCount: pCubit
+                            .filterListByCategory(cubit.selectedCategory,
+                                pCubit.storeProducts.data)
+                            .length,
+                        itemBuilder: (context, sizeIndex) {
+                          return productSquarItem(
+                            context: context,
+                            product: pCubit.filterListByCategory(
+                                cubit.selectedCategory,
+                                pCubit.storeProducts.data)[sizeIndex],
+                          );
+                        },
+                      ),
+                    );
+                  }
                 });
               },
             ),

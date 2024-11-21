@@ -90,7 +90,9 @@ class ProductsService {
       endPoint: EndPoint.getStoreProductsUrl,
       query: {
         'storeId': HiveStorage.get(HiveKeys.isStore)
-            ? HiveStorage.get<UserModel>(HiveKeys.userModel).id
+            ? storeId.isEmpty
+                ? HiveStorage.get<UserModel>(HiveKeys.userModel).id
+                : storeId
             : storeId,
         'page': page,
         'pageSize': pageSize,

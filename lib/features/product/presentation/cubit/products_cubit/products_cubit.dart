@@ -56,16 +56,21 @@ class ProductsCubit extends Cubit<ProductsState> {
     ).toList();
   }
 
-  Future<void> getProductDetails(String productId) async {
-    emit(const ProductsState.initial());
-    product = ProductModel.empty();
-    emit(const ProductsState.loading());
+  Future<void> getProductDetails(String productId,
+      [bool isSearch = true]) async {
+    if (isSearch) {
+      emit(const ProductsState.initial());
+      product = ProductModel.empty();
+    }
+      emit(const ProductsState.loading());
     var result = await productsRepos.getProductDetails(productId);
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       product = response;
-      getReviews(productId);
+      if (isSearch) {
+        getReviews(productId);
+      }
       emit(const ProductsState.success());
     });
   }

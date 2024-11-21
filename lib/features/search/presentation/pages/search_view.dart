@@ -180,11 +180,12 @@ class _SearchPageState extends State<SearchPage> {
       // clipBehavior: Clip.none,
       leadingWidth: 30,
       elevation: 0,
-
-      backgroundColor: ColorManager.primaryW,
+      toolbarHeight: 60,
+      backgroundColor: Colors.transparent,
       title: TextFormFieldBuilder(
         label: lang(context).searchForAnything,
         controller: SearchCubit.get(context).searchC,
+
         type: TextInputType.text,
         isIcon: false,
         onchanged: (v) {

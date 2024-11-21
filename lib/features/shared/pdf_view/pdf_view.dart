@@ -102,7 +102,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
               final result = await makePdf(
                 cells: widget.cells,
                 netTotal: widget.netTotal,
-                discount: widget.discount,
+                discount: '${double.parse(widget.discount) * 100}',
                 delivery: widget.delivery,
                 total: widget.total,
                 name: HiveStorage.get<UserModel>(HiveKeys.userModel)
@@ -119,6 +119,9 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
                 isLoading = false;
                 showModalBottomSheet(
                     context: context,
+                    useSafeArea: true,
+                    isScrollControlled: false,
+                    enableDrag: false,
                     builder: (context) {
                       return PDFView(
                         filePath: result,
@@ -149,7 +152,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
           label: 'Show in Folder',
         ),
       ],
-    content: NotificationContent(
+      content: NotificationContent(
         id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
         channelKey: 'basic_channel',
         title: 'File Saved',

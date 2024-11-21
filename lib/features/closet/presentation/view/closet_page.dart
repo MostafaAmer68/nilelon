@@ -57,14 +57,14 @@ class _ClosetViewState extends State<ClosetPage> {
               height: 16,
             ),
             ViewAllRow(
-              text: lang.yourSections,
+              text: isClosetItem ? lang.section : lang.yourSections,
               onPressed: () {
                 ClosetCubit.get(context).getAllClosetsItems();
                 isClosetItem = !isClosetItem;
                 setState(() {});
               },
               buttonWidget: Text(
-                lang.showItems,
+                !isClosetItem ? lang.showItems : lang.showSections,
                 style: AppStylesManager.customTextStyleO,
               ),
             ),
@@ -72,11 +72,9 @@ class _ClosetViewState extends State<ClosetPage> {
               builder: (context, state) {
                 return state.whenOrNull(
                   loading: () {
-                    return SingleChildScrollView(
-                      child: isClosetItem
-                          ? buildShimmerIndicatorGrid(context)
-                          : buildShimmerIndicator(),
-                    );
+                    return isClosetItem
+                        ? Expanded(child: buildShimmerIndicatorGrid(context))
+                        : buildShimmerIndicator();
                   },
                   successDelete: () {
                     if (isClosetItem) {

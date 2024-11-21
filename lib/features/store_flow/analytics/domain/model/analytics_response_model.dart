@@ -25,9 +25,11 @@ class DashboardModel {
   factory DashboardModel.fromJson(Map<String, dynamic> json) {
     return DashboardModel(
       storeFollowers: json['storeFollowers'],
-      storeBestseller: (json['storeBestseller'] as List)
-          .map((e) => ProductBetSeller.fromMap(e))
-          .toList(),
+      storeBestseller: json['storeBestseller'] != null
+          ? (json['storeBestseller'] as List)
+              .map((e) => ProductBetSeller.fromMap(e))
+              .toList()
+          : [],
       storeNumberOfItemsSold: json['storeNumberOfItemsSold'],
       storeNumberOfNotifications: json['storeNumberOfNotifications'],
       storeOrdersNumber: json['storeOrdersNumber'],

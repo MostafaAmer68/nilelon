@@ -20,7 +20,7 @@ class AnalyticsBigCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        width: screenWidth(context, 0.45),
+        width: screenWidth(context, 0.47),
         height: 180.w,
         padding: const EdgeInsets.all(16),
         decoration: ShapeDecoration(

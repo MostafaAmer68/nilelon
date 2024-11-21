@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gradient_borders/input_borders/gradient_outline_input_border.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 
 class PinCodeView extends StatefulWidget {
   final int length;
@@ -44,8 +46,8 @@ class _PinCodeViewState extends State<PinCodeView> {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 4.0),
           child: SizedBox(
-            height: 100,
-            width: 52,
+            height: screenWidth(context, 0.13),
+            width: screenWidth(context, 0.13),
             child: KeyboardListener(
               focusNode: _focusNodes[index], // Use the unique FocusNode
               onKeyEvent: (KeyEvent event) {

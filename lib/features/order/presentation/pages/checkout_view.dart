@@ -35,6 +35,7 @@ class _CheckOutViewState extends State<CheckOutView> {
     orderCubit = OrderCubit.get(context);
     PromoCubit.get(context).deliveryPrice = 0;
     PromoCubit.get(context).totalPrice = 0;
+    PromoCubit.get(context).orderTotal = 0;
     PromoCubit.get(context).tempTotalPrice = 0;
     cubit.resetPage();
     super.initState();
@@ -124,9 +125,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                           num.parse(orderCubit.customerOrder.shippingCost))
                       .toString(),
                   discount: orderCubit.customerOrder.discount.toString(),
-                  total: (orderCubit.customerOrder.total +
-                          num.parse(orderCubit.customerOrder.shippingCost))
-                      .toString(),
+                  total: (orderCubit.customerOrder.total).toString(),
                   delivery: orderCubit.customerOrder.shippingCost,
                 ),
               )

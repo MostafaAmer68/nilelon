@@ -323,8 +323,8 @@ class ProfileService {
     );
     if (response.statusCode == 200) {
       log(response.data['result'].toString());
-      return List<StoreProfileModel>.from(
-          response.data['result'].map((e) => StoreProfileModel.fromMap(e)));
+      return List<StoreProfileModel>.from(response.data['result']['data']
+          .map((e) => StoreProfileModel.fromMap(e)));
     } else {
       // Handle other status codes if necessary
       final errorMessage = response.data;

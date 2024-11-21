@@ -26,7 +26,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           child: ImageBanner(
             images: product.urls,
-            height: screenHeight(context, 0.4),
+            height: 200.w,
           ),
         ),
         Padding(
@@ -72,7 +72,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 30.h,
+                height: 30,
               ),
               Row(
                 children: [
@@ -106,7 +106,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 20.h,
+                height: 20,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,

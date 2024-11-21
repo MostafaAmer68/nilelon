@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:developer';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/constants/assets.dart';
@@ -22,6 +23,7 @@ import 'package:nilelon/features/product/presentation/cubit/products_cubit/produ
 import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:nilelon/features/profile/presentation/widgets/profile_avater_widget.dart';
 import 'package:nilelon/generated/l10n.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../product/presentation/cubit/products_cubit/products_state.dart';
@@ -225,17 +227,35 @@ class ProductStoreWidget extends StatelessWidget {
     var profileCubit = ProfileCubit.get(context);
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
-        return state.whenOrNull(
+        return state.maybeWhen(
           // initial: () => const SizedBox(),
           failure: (_) => Text(_),
           loading: () => buildShimmerIndicatorGrid(context),
-          success: () => GridView.builder(
+          storeProductSuccess: (products) => GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: gridDelegate(context),
             shrinkWrap: true,
             itemCount: ProductsCubit.get(context)
                 .filterListByCategory(profileCubit.selectedCategory,
-                    ProductsCubit.get(context).products.data)
+                    ProductsCubit.get(context).storeProducts.data)
+                .length,
+            itemBuilder: (context, sizeIndex) {
+              return productSquarItem(
+                context: context,
+                product: ProductsCubit.get(context)
+                    .filterListByCategory(profileCubit.selectedCategory,
+                        ProductsCubit.get(context).storeProducts.data)
+                    .toList()[sizeIndex],
+              );
+            },
+          ),
+          orElse: () => GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: gridDelegate(context),
+            shrinkWrap: true,
+            itemCount: ProductsCubit.get(context)
+                .filterListByCategory(profileCubit.selectedCategory,
+                    ProductsCubit.get(context).storeProducts.data)
                 .length,
             itemBuilder: (context, sizeIndex) {
               log('test');
@@ -243,12 +263,12 @@ class ProductStoreWidget extends StatelessWidget {
                 context: context,
                 product: ProductsCubit.get(context)
                     .filterListByCategory(profileCubit.selectedCategory,
-                        ProductsCubit.get(context).products.data)
+                        ProductsCubit.get(context).storeProducts.data)
                     .toList()[sizeIndex],
               );
             },
           ),
-        )!;
+        );
       },
     );
   }
@@ -323,7 +343,7 @@ class _FollowAndNotifyWidgetState extends State<FollowAndNotifyWidget> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: IconButton(
-                          icon: Image.asset(
+                          icon: SvgPicture.asset(
                             !cubit.validationOption['isNotify']
                                 ? Assets.assetsImagesNotifications
                                 : Assets.assetsImagesNotificationsActive,
@@ -331,7 +351,12 @@ class _FollowAndNotifyWidgetState extends State<FollowAndNotifyWidget> {
                           ),
                           iconSize: 50,
                           onPressed: () {
-                            cubit.notifyStore(widget.storeId);
+                            if (cubit.validationOption['isFollow']) {
+                              cubit.notifyStore(widget.storeId);
+                            } else {
+                              BotToast.showText(
+                                  text: lang(context).plsFollowStore);
+                            }
                           },
                         ),
                       ),

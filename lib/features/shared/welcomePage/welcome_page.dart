@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:nilelon/features/shared/recommendation/presentation/view/recommendation_view.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -69,7 +70,7 @@ class ShopOrSellView extends StatelessWidget {
             TextButton(
               onPressed: () {
                 HiveStorage.set(HiveKeys.isStore, false);
-
+                CategoryCubit.get(context).getCategories();
                 navigateTo(
                     context: context, screen: const RecommendationView());
               },

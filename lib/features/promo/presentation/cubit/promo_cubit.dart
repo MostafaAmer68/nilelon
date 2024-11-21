@@ -16,6 +16,7 @@ class PromoCubit extends Cubit<PromoState> {
   PromoCubit(this._promoRepo) : super(PromoInitial());
   bool isFreeShipping = false;
   num totalPrice = 0;
+  num orderTotal = 0;
   num tempTotalPrice = 0;
   num deliveryPrice = 0;
   num discount = 0;
@@ -74,15 +75,17 @@ class PromoCubit extends Cubit<PromoState> {
 
   Future getOrderDiscount(context, promoCodeId) async {
     emit(PromoLoading());
-    final result = await _promoRepo.getOrderDiscount(promoCodeId, totalPrice);
+    final result = await _promoRepo.getOrderDiscount(
+        promoCodeId, totalPrice - deliveryPrice);
 
     result.fold(
       (failrue) {
         emit(PromoFailure(failrue.errorMsg));
       },
       (response) {
-        totalPrice = response['newPrice'];
+        totalPrice = response['newPrice'] + deliveryPrice;
         discount = response['discount'];
+        promoCode.clear();
         emit(PromoSuccess());
       },
     );

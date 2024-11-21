@@ -3590,10 +3590,10 @@ class S {
     );
   }
 
-  /// `Waiting we traing to get products`
+  /// `please wait while we are trying to get products`
   String get waitingToGet {
     return Intl.message(
-      'Waiting we traing to get products',
+      'please wait while we are trying to get products',
       name: 'waitingToGet',
       desc: '',
       args: [],
@@ -4185,6 +4185,26 @@ class S {
     return Intl.message(
       'View PDF',
       name: 'viewPdf',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show Section`
+  String get showSections {
+    return Intl.message(
+      'Show Section',
+      name: 'showSections',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please follow store first`
+  String get plsFollowStore {
+    return Intl.message(
+      'please follow store first',
+      name: 'plsFollowStore',
       desc: '',
       args: [],
     );

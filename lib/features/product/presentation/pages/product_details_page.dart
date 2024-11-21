@@ -373,12 +373,15 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         ),
         btmBar: BlocBuilder<ProductsCubit, ProductsState>(
           builder: (context, state) {
-            return state.whenOrNull(
-              loading: () => buildShimmerIndicatorSmall(),
-              failure: (_) => Text(_),
-              success: () =>
-                  AddToFooter(visible: true, product: productCubit.product),
-            )!;
+            return state.maybeWhen(
+                loading: () => buildShimmerIndicatorSmall(),
+                failure: (_) => Text(_),
+                success: () =>
+                    AddToFooter(visible: true, product: productCubit.product),
+                orElse: () {
+                  return AddToFooter(
+                      visible: true, product: productCubit.product);
+                });
           },
         ),
       ),

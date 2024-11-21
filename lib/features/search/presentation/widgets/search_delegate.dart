@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -74,16 +76,21 @@ class _SearchResultState extends State<SearchResult> {
                   },
                 );
               }
-              ProductsCubit.get(context).getProductDetails(item.id);
+              ProductsCubit.get(context).getProductDetails(item.id, false);
               return BlocBuilder<ProductsCubit, ProductsState>(
                 builder: (context, state) {
-                  return state.whenOrNull(
-                    loading: () =>
-                        const Center(child: CircularProgressIndicator()),
-                    success: () => productSquarItem(
-                        context: context,
-                        product: ProductsCubit.get(context).product),
-                  )!;
+                  return state.maybeWhen(
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                      success: () {
+                        log(item.name);
+                        return productSquarItem(
+                            context: context,
+                            product: ProductsCubit.get(context).product);
+                      },
+                      orElse: () => productSquarItem(
+                          context: context,
+                          product: ProductsCubit.get(context).product));
                 },
               );
             },
