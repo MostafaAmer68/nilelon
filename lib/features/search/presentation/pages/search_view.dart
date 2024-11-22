@@ -185,7 +185,7 @@ class _SearchPageState extends State<SearchPage> {
       title: TextFormFieldBuilder(
         label: lang(context).searchForAnything,
         controller: SearchCubit.get(context).searchC,
-
+        
         type: TextInputType.text,
         isIcon: false,
         onchanged: (v) {

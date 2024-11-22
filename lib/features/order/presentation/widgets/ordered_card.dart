@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -22,6 +24,10 @@ class OrderCustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    log(order.date);
+    log(DateFormat('dd-MM-yyyy').format(DateFormat(
+      'yyyy-MM-ddTHH:mm:ss.sss',
+    ).parse(order.date.substring(0, 26))));
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -92,7 +98,7 @@ class OrderCustomerCard extends StatelessWidget {
                         Text(
                           DateFormat('dd-MM-yyyy').format(
                             DateFormat(
-                              'yyyy-MM-ddTHH:mm:ss.ssssss',
+                              'yyyy-MM-dd',
                             ).parse(order.date),
                           ),
                           style: AppStylesManager.customTextStyleG7,

@@ -149,7 +149,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                             lang.recievedDate,
                             Text(
                               DateFormat('dd-MM-yyyy').format(
-                                  DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
+                                  DateFormat('yyyy-MM-ddTHH:mm:ss.sss')
                                       .parse(widget.recievedDate)),
                               style: AppStylesManager.customTextStyleG,
                             )),

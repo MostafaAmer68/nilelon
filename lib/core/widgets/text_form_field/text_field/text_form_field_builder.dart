@@ -59,7 +59,12 @@ class TextFormFieldBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: decorationWithFade(),
+      decoration: ShapeDecoration(
+        color: const Color(0xFFFBF9F9),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
       width: width,
       height: height,
       child: TextFormField(

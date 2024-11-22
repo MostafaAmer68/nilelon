@@ -131,24 +131,28 @@ GestureDetector offersCard({required context, required ProductModel product}) {
                             ClosetSheetBarView(productId: product.id),
                       );
                     },
-                    child: Container(
-                      width: 35.w, // Increased size to match the image
-                      height: 35.w,
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.orange.shade300.withOpacity(1),
-                            offset: const Offset(
-                                3, 3), // Adjusted shadow to be more subtle
-                            blurRadius: 5,
-                          ),
-                        ],
-                      ),
-                      child: !product.isInCloset
-                          ? SizedBox(
+                    child: product.isInCloset
+                        ? Image.asset(
+                            Assets.assetsImagesClosetFollowing,
+                            width: 50,
+                          )
+                        : Container(
+                            width: 35.w, // Increased size to match the image
+                            height: 35.w,
+                            padding: const EdgeInsets.all(4),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.orange.shade300.withOpacity(1),
+                                  offset: const Offset(3,
+                                      3), // Adjusted shadow to be more subtle
+                                  blurRadius: 5,
+                                ),
+                              ],
+                            ),
+                            child: SizedBox(
                               // width: 20,
                               child: SvgPicture.asset(
                                 Assets.assetsImagesHanger,
@@ -157,11 +161,8 @@ GestureDetector offersCard({required context, required ProductModel product}) {
 
                                 fit: BoxFit.cover,
                               ),
-                            )
-                          : Image.asset(
-                              Assets.assetsImagesClosetFollowing,
                             ),
-                    ),
+                          ),
                   ),
                 ),
               )
@@ -218,6 +219,7 @@ GestureDetector offersCard({required context, required ProductModel product}) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                const SizedBox(width: 13),
                 Container(
                   height: 30.h,
                   width: 30.h,

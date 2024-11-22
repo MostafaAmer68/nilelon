@@ -122,7 +122,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         ),
         body: BlocBuilder<ProductsCubit, ProductsState>(
           builder: (context, state) {
-            return state.whenOrNull(success: () {
+            return state.maybeWhen(success: () {
               return SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -368,6 +368,164 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               return const Text('init');
             }, failure: (_) {
               return Text(_);
+            }, orElse: () {
+              return SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const DefaultDivider(),
+                    Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 20),
+                      child: Stack(
+                        children: [
+                          ImageBanner(
+                            images: productCubit.product.productImages
+                                .where((e) => e.color == cubit.selectedColor)
+                                .map((e) => e.url)
+                                .toList(),
+                          ),
+                          Positioned(
+                            top: 10,
+                            right: 25,
+                            child: Visibility(
+                              visible: !HiveStorage.get(HiveKeys.isStore),
+                              child: InkWell(
+                                onTap: () {
+                                  showModalBottomSheet(
+                                    context: context,
+                                    backgroundColor: ColorManager.primaryW,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(30),
+                                        topRight: Radius.circular(30),
+                                      ),
+                                    ),
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    builder: (context) => ClosetSheetBarView(
+                                        productId: widget.productId),
+                                  );
+                                },
+                                child: !productCubit.product.isInCloset
+                                    ? Container(
+                                        width: 30.w,
+                                        height: 30.w,
+                                        padding: const EdgeInsets.all(5),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          shape: BoxShape.circle,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color: Colors.orange.shade300
+                                                  .withOpacity(1),
+                                              offset: const Offset(3, 3),
+                                              blurRadius: 5,
+                                            ),
+                                          ],
+                                        ),
+                                        child: SvgPicture.asset(
+                                          Assets.assetsImagesHanger,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                    : Image.asset(
+                                        Assets.assetsImagesClosetFollowing,
+                                        fit: BoxFit.cover,
+                                        width: 60,
+                                      ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Center(
+                      child: SizedBox(
+                        height: screenHeight(context, 0.07),
+                        width: screenWidth(context, 0.3),
+                        child: ListView.builder(
+                          itemCount: productCubit.product.productImages
+                              .where((e) => e.color == cubit.selectedColor)
+                              .length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            final image = productCubit.product.productImages
+                                .where((e) => e.color == cubit.selectedColor)
+                                .toList()[index];
+
+                            return imageReplacer(
+                              url: image.url,
+                              fit: BoxFit.cover,
+                              width: 50,
+                              radius: 8,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildNameAndPriceRow(context),
+                          const SizedBox(height: 24),
+                          _buildDescription(),
+                          SizedBox(height: 20.h),
+                          Visibility(
+                            visible: isNOtEMpty,
+                            child: InkWell(
+                              onTap: () {
+                                showDialog(
+                                    context: context,
+                                    builder: (c) {
+                                      return Scaffold(
+                                        appBar: AppBar(
+                                          centerTitle: true,
+                                          title: Text(lang.sizeGuide),
+                                          leading: IconButton(
+                                            onPressed: () {
+                                              navigatePop(context: c);
+                                            },
+                                            icon: const Icon(Icons.close),
+                                          ),
+                                        ),
+                                        body: Center(
+                                          child: imageReplacer(
+                                              height:
+                                                  screenHeight(context, 0.85),
+                                              url: productCubit
+                                                  .product.sizeguide),
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Text(
+                                lang.sizeGuide,
+                                style: AppStylesManager.customTextStyleO4,
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 20.h),
+                          _buildSizeSelector(lang),
+                          SizedBox(height: 22.h),
+                          _buildColorSelector(),
+                          SizedBox(height: 20.h),
+                          _buildStockCounter(),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 6.h),
+                    _buildReviewSection(lang),
+                    const SizedBox(height: 15),
+                    const Divider(color: ColorManager.primaryG8, height: 4),
+                    const SizedBox(height: 24),
+                    ReviewWidget(productId: widget.productId),
+                    const SizedBox(height: 24),
+                  ],
+                ),
+              );
             })!;
           },
         ),
@@ -473,13 +631,15 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         Row(
           children: [
             GestureDetector(
-              onTap: () {
-                navigateTo(
-                  context: context,
-                  screen: StoreProfileCustomer(
-                    storeId: productCubit.product.storeId,
-                  ),
-                );
+              onTap: () async {
+                await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => StoreProfileCustomer(
+                              storeId: productCubit.product.storeId,
+                            ))).then((v) {
+                  productCubit.getProductDetails(widget.productId);
+                });
               },
               child: Text(
                 productCubit.product.storeName,

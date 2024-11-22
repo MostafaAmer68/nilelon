@@ -79,8 +79,7 @@ class OrderStoreCard extends StatelessWidget {
                       children: [
                         Text(
                           DateFormat('dd-MM-yyyy').format(
-                              DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
-                                  .parse(order.date)),
+                              DateFormat('yyyy-MM-dd').parse(order.date)),
                           style: AppStylesManager.customTextStyleG7,
                         ),
                         const Spacer(),

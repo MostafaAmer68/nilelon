@@ -68,7 +68,7 @@ class _SeeMoreStoresViewState extends State<SeeMoreStoresView> {
     return AppBar(
       clipBehavior: Clip.none,
       leadingWidth: 30,
-      backgroundColor: ColorManager.primaryW,
+      backgroundColor: Colors.transparent,
       title: TextFormFieldBuilder(
         label: lang(context).searchByItemBrand,
         controller: SearchCubit.get(context).searchC,

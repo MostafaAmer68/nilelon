@@ -148,13 +148,18 @@ class _OrderPageState extends State<OrderPage> {
                           },
                         ),
                         OrderView(
-                          image: Image.asset(Assets.assetsImagesArrived2),
+                          image: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child:
+                                SvgPicture.asset(Assets.assetsImagesArrived2),
+                          ),
                           title: lang.orderHasArrived,
                           status: 'Delivered',
                           onTapHistory: () {
                             navigateTo(
-                                context: context,
-                                screen: const ReturnHistoryPage());
+                              context: context,
+                              screen: const ReturnHistoryPage(),
+                            );
                           },
                         ),
                       ],

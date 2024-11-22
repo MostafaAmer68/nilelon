@@ -257,7 +257,7 @@ class AddProductCubit extends Cubit<AddproductState> {
       isNotFirstTimeActivated = true;
       isSubmit = false;
       productType = product.product.type;
-      sizeGuideImage = await convertBase64ToImage(product.product.sizeguide);
+      sizeGuideImage = File(product.product.sizeguide);
       final varient = product.product.variants.firstWhere(
         (e) => e.color == selectedColor.substring(2),
         orElse: () => Variant(

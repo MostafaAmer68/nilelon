@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -97,8 +99,7 @@ class _OrderViewState extends State<OrderView> {
                             .toList(),
                         order: GroupedListOrder.ASC,
                         groupBy: (OrderModel e) => DateFormat('dd-MM-yyyy')
-                            .format(DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss')
-                                .parse(e.date)),
+                            .format(DateFormat('yyyy-MM-dd').parse(e.date)),
                         groupSeparatorBuilder: (String groupByValue) => Center(
                           child: Padding(
                             padding: const EdgeInsets.only(top: 10),
@@ -110,6 +111,8 @@ class _OrderViewState extends State<OrderView> {
                           ),
                         ),
                         itemBuilder: (context, order) {
+                          log(DateFormat('dd-MM-yyyy').format(
+                              DateFormat('yyyy-MM-dd').parse(order.date)));
                           if (HiveStorage.get(HiveKeys.isStore)) {
                             return OrderStoreCard(
                               image: widget.image,

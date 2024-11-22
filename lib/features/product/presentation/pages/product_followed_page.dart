@@ -26,8 +26,6 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
     if (HiveStorage.get(HiveKeys.userModel) != null) {
       ProductsCubit.get(context).getFollowedProducts();
     }
-    log('product');
-    // }
     super.initState();
   }
 
@@ -79,18 +77,40 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
               height: 100,
               child: Center(child: Text(S.of(context).noProductFollow)));
         }, orElse: () {
-          return SizedBox(
-            height: 180.h,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  S.of(context).noFollowingAnyStore,
-                  style: AppStylesManager.customTextStyleG2,
-                ),
-              ],
-            ),
-          );
+          if (ProductsCubit.get(context).followingProducts.data.isEmpty) {
+            return SizedBox(
+              height: 180.h,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    S.of(context).noFollowingAnyStore,
+                    style: AppStylesManager.customTextStyleG2,
+                  ),
+                ],
+              ),
+            );
+          } else {
+            return Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: GridView.builder(
+                controller: ProductsCubit.get(context).scroll,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: gridDelegate(context),
+                shrinkWrap: true,
+                itemCount:
+                    ProductsCubit.get(context).followingProducts.data.length,
+                itemBuilder: (context, sizeIndex) {
+                  return productSquarItem(
+                    context: context,
+                    product: ProductsCubit.get(context)
+                        .followingProducts
+                        .data[sizeIndex],
+                  );
+                },
+              ),
+            );
+          }
         });
       },
     );

@@ -29,7 +29,7 @@ class OrderModel extends Equatable {
   factory OrderModel.fromMap(Map<String, dynamic> map) {
     return OrderModel(
       id: map['id'] as String,
-      date: map['date'] as String,
+      date: (map['date'] as String).substring(0, 26),
       status: map['status'] as String,
       governate: map['governate'] as String,
       total: map['total'] as num,

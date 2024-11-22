@@ -39,8 +39,8 @@ class Assets {
   static const String assetsImagesArrived = "assets/images/Arrived.png";
 
   /// Assets for assetsImagesArrived2
-  /// assets/images/arrived2.png
-  static const String assetsImagesArrived2 = "assets/images/arrived2.png";
+  /// assets/images/arrived2.svg
+  static const String assetsImagesArrived2 = "assets/images/arrived2.svg";
 
   /// Assets for assetsImagesBackground
   /// assets/images/background.png
