@@ -115,7 +115,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           icon: Icons.share_outlined,
           onPressed: () {
             Share.share(
-              'http://nilelon.somee.com/Product',
+              'http://nilelon.somee.com/share/Product/${widget.productId}',
             );
           },
           context: context,

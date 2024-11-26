@@ -31,7 +31,7 @@ class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
   void initState() {
     selectedIndex = widget.index;
     final sub = appLinks.uriLinkStream.listen((uri) {
-      log(uri.toString());
+      log(uri.path);
       navigateTo(
           context: context,
           screen: ProductDetailsView(

@@ -14,8 +14,12 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/shared/onboarding/onboarding_cubit/onboarding_cubit.dart';
 import 'package:nilelon/features/shared/onboarding/screen/onboarding_view.dart';
+import 'package:signalr_core/signalr_core.dart';
 
 import '../../../core/widgets/scaffold_image.dart';
+import '../../auth/domain/model/user_model.dart';
+
+late HubConnection connection;
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -28,6 +32,18 @@ class _SplashViewState extends State<SplashView> {
   final appLinks = AppLinks();
   @override
   void initState() {
+    connection = HubConnectionBuilder()
+        .withUrl(
+          'http://192.168.1.10:5167/NileonHub',
+          HttpConnectionOptions(
+              transport: HttpTransportType.longPolling,
+              logging: (level, message) {},
+              accessTokenFactory: () async {
+                return HiveStorage.get<UserModel>(HiveKeys.userModel).token;
+              }),
+        )
+        .withAutomaticReconnect()
+        .build();
     super.initState();
     // BlocProvider.of(context)
 

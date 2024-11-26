@@ -22,8 +22,8 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
   // GlobalKey<FormState> formKey = GlobalKey();
   String _tempSelectedOption = '';
   List<String> options = [
-    'Visa Card',
-    'Credit Card',
+    // 'Visa Card',
+    'Credit',
     'Cash',
   ];
   late final OrderCubit cubit;

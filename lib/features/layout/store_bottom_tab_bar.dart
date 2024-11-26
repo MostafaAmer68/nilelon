@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:nilelon/features/order/presentation/pages/order_tab_bar.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
@@ -9,6 +12,9 @@ import 'package:nilelon/features/categories/presentation/view/category_view.dart
 import 'package:nilelon/features/home/view/store_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_view.dart';
 
+import '../../core/utils/navigation.dart';
+import '../product/presentation/pages/product_details_page.dart';
+
 class StoreBottomTabBar extends StatefulWidget {
   const StoreBottomTabBar({super.key});
 
@@ -18,6 +24,18 @@ class StoreBottomTabBar extends StatefulWidget {
 
 class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
   int selectedIndex = 0;
+  final appLinks = AppLinks();
+  @override
+  void initState() {
+    final sub = appLinks.uriLinkStream.listen((uri) {
+      
+      navigateTo(
+          context: context,
+          screen: ProductDetailsView(
+              productId: uri.path.split('/').last.toString()));
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

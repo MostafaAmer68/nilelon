@@ -3,7 +3,12 @@ import 'dart:developer';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:signalr_core/signalr_core.dart';
+
+import '../../features/auth/presentation/cubit/auth_cubit.dart';
+import '../../features/shared/splash/splash_view.dart';
 
 Future initializeService() async {
   final service = FlutterBackgroundService();
@@ -23,39 +28,35 @@ Future initializeService() async {
   await service.startService();
 }
 
-final HubConnection connection = HubConnectionBuilder()
-    .withUrl(
-      'http://nilelon.somee.com/NileonHub',
-      HttpConnectionOptions(
-        transport: HttpTransportType.longPolling,
-        logging: (level, message) {},
-      ),
-    )
-    .withAutomaticReconnect()
-    .build();
-
 Future initializeWebSocket() async {
-  connection.serverTimeoutInMilliseconds = 60000;
-  await connection
-      .start()
-      ?.catchError(
-        (error) {},
+  connection = HubConnectionBuilder()
+      .withUrl(
+        'http://192.168.1.10:5167/NileonHub',
+        HttpConnectionOptions(
+          transport: HttpTransportType.longPolling,
+          logging: (level, message) {},
+        ),
       )
-      .whenComplete(
+      .withAutomaticReconnect()
+      .build();
+  connection.serverTimeoutInMilliseconds = 60000;
+  await connection.start()?.catchError(
+    (error) {
+      log(error.toString());
+    },
+  ).whenComplete(
     () {
       // HiveStorage.set(HiveKeys.connectionId, connection.connectionId);
     },
   );
-  //USER NOTIFICATION
+  //!USER NOTIFICATION
   connection.on('ReceiveMissedNotification', (message) async {
     log(message!.toString());
-    showAwesomeNotification(
-        message.first.toString(), message.first.toString());
+    showAwesomeNotification(message.first.toString(), message.first.toString());
   });
   connection.on('MissYou', (message) async {
     log(message!.toString());
-    showAwesomeNotification(
-        message.first.toString(), message.first.toString());
+    showAwesomeNotification(message.first.toString(), message.first.toString());
   });
   connection.on('ProductTopSeller', (message) async {
     final productIdr = message!.first;
@@ -63,9 +64,9 @@ Future initializeWebSocket() async {
     log(message.toString());
     showAwesomeNotification(body, 'Top Seller');
   });
-  //END USER NOTIFICATION
+  //!END USER NOTIFICATION
 
-  //CUSTOMER NOTIFCATION
+  //~CUSTOMER NOTIFCATION
   connection.on('FillFeedback', (message) async {
     log(message!.toString());
     final url = message.first;
@@ -105,9 +106,9 @@ Future initializeWebSocket() async {
     log(message.toString());
     showAwesomeNotification(body, 'New Store');
   });
-  //END CUSTOMER NOTIFCATION
+  //~END CUSTOMER NOTIFCATION
 
-  //STORE NOTIFCATION
+  //^STORE NOTIFCATION
   connection.on('ProductWillEmpty', (message) async {
     final id = message![0];
     final color = message[1];
@@ -121,11 +122,10 @@ Future initializeWebSocket() async {
   connection.on('OrderCome', (message) async {
     final orderId = message!.first;
     final body = message[2];
-    log(message.toString());
     showAwesomeNotification(body, 'New Order');
   });
 
-  //END STORE NOTIFCATION
+  //^END STORE NOTIFCATION
 
   connection.onclose((error) {
     print('Connection closed: $error');

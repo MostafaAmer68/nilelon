@@ -43,11 +43,13 @@ GestureDetector offersCard({required context, required ProductModel product}) {
         orElse: () => product.productVariants.first,
       )
       .discountRate;
-  var priceAfterDiscount = price * (discount);
+  var priceAfterDiscount = product.productVariants
+      .firstWhere(
+        (e) => e.price != 0,
+        orElse: () => product.productVariants.first,
+      )
+      .newPrice;
 
-  log(priceAfterDiscount.toString());
-  log(product.productVariants.first.discountRate.toString());
-  log(price.toString());
   return GestureDetector(
     onTap: () {
       navigateTo(

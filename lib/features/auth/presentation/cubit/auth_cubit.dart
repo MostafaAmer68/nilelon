@@ -7,8 +7,12 @@ import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
 import 'package:nilelon/features/auth/domain/repos/auth_repos.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
+import 'package:signalr_core/signalr_core.dart';
+
+import '../../domain/model/user_model.dart';
 
 part 'auth_state.dart';
+
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepos authRepos;

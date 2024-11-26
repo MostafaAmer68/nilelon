@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -53,6 +54,7 @@ class _CheckOutViewState extends State<CheckOutView> {
   Widget build(BuildContext context) {
     final lang = S.of(context);
     // cubit.previousStep();
+    // BotToast.closeAllLoading();
     return BlocListener<OrderCubit, OrderState>(
       listener: (context, state) {
         state.mapOrNull(success: (_) {

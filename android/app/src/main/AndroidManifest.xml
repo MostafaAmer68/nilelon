@@ -62,6 +62,7 @@
               <intent-filter>
                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+                  <!-- <data android:scheme="nilelon" android:host="nilelonapp" /> -->
              
              </intent-filter>
                <meta-data android:name="flutter_deeplinking_enabled" android:value="true" />
@@ -70,8 +71,8 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="http" android:host="nilelon.somee.com"/>
-                <data android:pathPrefix="/product" />
+                <data android:scheme="nilelon" android:host="nilelonapp"/>
+               
                 <!-- <data android:pathPrefix="/store" /> -->
                   <!-- <data android:pathPrefix="/product" />   -->
             </intent-filter>
