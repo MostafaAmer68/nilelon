@@ -45,7 +45,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
         title: widget.storeName,
         context: context,
         onPressed: () {
-          customerStoreDialog(context);
+          customerStoreDialog(context, '');
         },
         icon: Icons.more_vert_rounded,
       ),

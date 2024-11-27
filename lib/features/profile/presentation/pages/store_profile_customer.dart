@@ -71,7 +71,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                 : cubit.storeProfile!.name,
             context: context,
             onPressed: () {
-              customerStoreDialog(context);
+              customerStoreDialog(context, widget.storeId);
             },
             icon: Icons.more_vert_rounded,
           ),

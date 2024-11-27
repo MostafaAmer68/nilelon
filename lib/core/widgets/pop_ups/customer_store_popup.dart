@@ -3,9 +3,11 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
+import 'package:share_plus/share_plus.dart';
 
 Future customerStoreDialog(
   BuildContext context,
+  String id,
 ) {
   return showCupertinoModalPopup(
     barrierDismissible: false,
@@ -24,7 +26,11 @@ Future customerStoreDialog(
               ),
             ),
             CupertinoActionSheetAction(
-              onPressed: () async {},
+              onPressed: () async {
+                Share.share(
+                  'http://nilelon.somee.com/Share/Store/$id',
+                );
+              },
               child: Text(
                 'Share Store Profile',
                 style: AppStylesManager.customTextStyleB4,

@@ -16,6 +16,7 @@ import 'package:nilelon/features/profile/presentation/pages/profile_view.dart';
 import '../../core/data/hive_stroage.dart';
 import '../../core/utils/navigation.dart';
 import '../product/presentation/pages/product_details_page.dart';
+import '../profile/presentation/pages/store_profile_customer.dart';
 
 class CustomerBottomTabBar extends StatefulWidget {
   const CustomerBottomTabBar({super.key, this.index = 0});
@@ -32,10 +33,19 @@ class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
     selectedIndex = widget.index;
     final sub = appLinks.uriLinkStream.listen((uri) {
       log(uri.path);
-      navigateTo(
+      if (uri.path.contains('Product')) {
+        navigateTo(
+            context: context,
+            screen: ProductDetailsView(
+                productId: uri.path.split('/').last.toString()));
+      } else if (uri.path.contains('Store')) {
+        navigateTo(
           context: context,
-          screen: ProductDetailsView(
-              productId: uri.path.split('/').last.toString()));
+          screen: StoreProfileCustomer(
+            storeId: uri.path.split('/').last.toString(),
+          ),
+        );
+      }
     });
     super.initState();
   }
