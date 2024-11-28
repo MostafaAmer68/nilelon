@@ -73,7 +73,7 @@ class _OrderViewState extends State<OrderView> {
           ),
           BlocBuilder<OrderCubit, OrderState>(
             builder: (context, state) {
-              return state.whenOrNull(
+              return state.maybeWhen(
                 failure: (e) {
                   return const Icon(Icons.error);
                 },
@@ -97,7 +97,7 @@ class _OrderViewState extends State<OrderView> {
                         elements: cubit.orders
                             .where((e) => e.status == widget.status)
                             .toList(),
-                        order: GroupedListOrder.ASC,
+                        order: GroupedListOrder.DESC,
                         groupBy: (OrderModel e) => DateFormat('dd-MM-yyyy')
                             .format(DateFormat('yyyy-MM-dd').parse(e.date)),
                         groupSeparatorBuilder: (String groupByValue) => Center(
@@ -111,8 +111,81 @@ class _OrderViewState extends State<OrderView> {
                           ),
                         ),
                         itemBuilder: (context, order) {
-                          log(DateFormat('dd-MM-yyyy').format(
-                              DateFormat('yyyy-MM-dd').parse(order.date)));
+                          if (HiveStorage.get(HiveKeys.isStore)) {
+                            return OrderStoreCard(
+                              image: widget.image,
+                              title: widget.title,
+                              order: order,
+                              onTap: () {
+                                navigateTo(
+                                    context: context,
+                                    screen: OrderStoreDetailsView(
+                                      index: 2,
+                                      // recievedDate: order.date,
+                                      id: order.id,
+                                    ));
+                              },
+                              shippedOnTap: () {
+                                OrderCubit.get(context).changeOrderStatus(
+                                    order.id, 'Shipped', true);
+
+                                setState(() {});
+                              },
+                            );
+                          }
+                          return OrderCustomerCard(
+                            order: order,
+                            onTap: () {
+                              navigateTo(
+                                  context: context,
+                                  screen: OrderDetailsView(
+                                    index: 2,
+                                    recievedDate: order.date,
+                                    id: order.id,
+                                  ));
+                            },
+                            name: widget.title,
+                            icon: widget.image,
+                          );
+                        },
+                      ),
+                    );
+                  }
+                },
+                orElse: () {
+                  if (cubit.orders.isEmpty) {
+                    return Expanded(
+                      child: SizedBox(
+                        height: screenHeight(context, 0.6),
+                        child: Center(
+                          child: Text(
+                            lang(context).noOrder,
+                            style: AppStylesManager.customTextStyleG2,
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return Expanded(
+                      child: GroupedListView<OrderModel, String>(
+                        // shrinkWrap: true,
+                        elements: cubit.orders
+                            .where((e) => e.status == widget.status)
+                            .toList(),
+                        order: GroupedListOrder.DESC,
+                        groupBy: (OrderModel e) => DateFormat('dd-MM-yyyy')
+                            .format(DateFormat('yyyy-MM-dd').parse(e.date)),
+                        groupSeparatorBuilder: (String groupByValue) => Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 10),
+                            child: Text(
+                              groupByValue,
+                              style: AppStylesManager.customDateStyle
+                                  .copyWith(fontSize: 14.sp),
+                            ),
+                          ),
+                        ),
+                        itemBuilder: (context, order) {
                           if (HiveStorage.get(HiveKeys.isStore)) {
                             return OrderStoreCard(
                               image: widget.image,

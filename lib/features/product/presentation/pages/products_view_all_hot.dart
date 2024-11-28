@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,11 +15,9 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 import '../../../../core/data/hive_stroage.dart';
-import '../../../../core/tools.dart';
 import '../../../../core/utils/navigation.dart';
 import '../../../categories/domain/model/result.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
-import '../../domain/models/product_model.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class ProductsViewAllHot extends StatefulWidget {
@@ -111,8 +107,8 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
               return state.maybeWhen(
                 loading: () =>
                     Expanded(child: buildShimmerIndicatorGrid(context)),
-                randomProductSuccess: (products) {
-                  return _buildProductGrid(products);
+                success: () {
+                  return _buildProductGrid(cubit.randomProducts);
                 },
                 failure: (message) => _buildErrorMessage(message),
                 orElse: () => SizedBox(
@@ -172,13 +168,17 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
             mainAxisExtent: !HiveStorage.get(HiveKeys.isStore) ? 170.w : 150.w,
             mainAxisSpacing: 1.sw > 600 ? 16 : 12,
           ),
-          itemCount: paginationList.data.length + (isLoadingMore ? 1 : 0),
+          itemCount: cubit
+                  .filterListByCategory(cubit.category, paginationList.data)
+                  .length +
+              (isLoadingMore ? 1 : 0),
           itemBuilder: (context, index) {
             if (index == paginationList.data.length) {
               return const Center(child: CircularProgressIndicator());
             }
 
-            final productItem = paginationList.data[index];
+            final productItem = cubit.filterListByCategory(
+                cubit.category, paginationList.data)[index];
             return WideCard(product: productItem);
           },
         ),

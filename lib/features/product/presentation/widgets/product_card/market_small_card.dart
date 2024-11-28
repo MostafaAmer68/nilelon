@@ -13,8 +13,10 @@ import '../../../../../core/resources/color_manager.dart';
 import '../../pages/product_details_page.dart';
 import '../../../../../core/data/hive_stroage.dart';
 
-GestureDetector marketSmallCard(
-    {required context, required ProductModel product}) {
+GestureDetector marketSmallCard({
+  required context,
+  required ProductModel product,
+}) {
   final price = product.productVariants
       .firstWhere(
         (e) => e.price != 0,
@@ -26,7 +28,9 @@ GestureDetector marketSmallCard(
       navigateTo(
         context: context,
         screen: !HiveStorage.get(HiveKeys.isStore)
-            ? ProductDetailsView(productId: product.id)
+            ? ProductDetailsView(
+                productId: product.id,
+              )
             : ProductStoreDetailsView(productId: product.id),
       );
     },

@@ -48,7 +48,7 @@ void main() async {
   // Testing info do not use in your app
 
   runApp(DevicePreview(
-    enabled: true,
+    enabled: false,
     builder: (_) => const MyApp(),
   ));
 }

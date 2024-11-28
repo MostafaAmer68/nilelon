@@ -161,34 +161,30 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
       persistentFooterButtons: [
         if (cubit.storeOrder.status == 'Shipped' ||
             cubit.storeOrder.status == 'Delivered')
-          Positioned(
-              top: 1.sw > 600
-                  ? screenHeight(context, 0.85)
-                  : screenHeight(context, 0.81),
-              child: Center(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: 50,
-                      height: 50,
-                      child: cubit.storeOrder.status != 'Shipped'
-                          ? Image.asset(Assets.assetsImagesArrived2)
-                          : SvgPicture.asset(
-                              Assets.assetsImagesInProgress,
-                            ),
-                    ),
-                    const SizedBox(
-                      height: 2,
-                    ),
-                    Text(
-                      cubit.storeOrder.status == 'Shipped'
-                          ? lang.shipped
-                          : lang.delivered,
-                      style: AppStylesManager.customTextStyleG15,
-                    )
-                  ],
+          Center(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: cubit.storeOrder.status != 'Shipped'
+                      ? SvgPicture.asset(Assets.assetsImagesArrived2)
+                      : SvgPicture.asset(
+                          Assets.assetsImagesInProgress,
+                        ),
                 ),
-              ))
+                const SizedBox(
+                  height: 2,
+                ),
+                Text(
+                  cubit.storeOrder.status == 'Shipped'
+                      ? lang.shipped
+                      : lang.delivered,
+                  style: AppStylesManager.customTextStyleG15,
+                )
+              ],
+            ),
+          )
         else
           BlocBuilder<OrderCubit, OrderState>(
             builder: (context, state) {

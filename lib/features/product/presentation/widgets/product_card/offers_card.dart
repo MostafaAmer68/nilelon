@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,7 +27,10 @@ import '../../../../../core/data/hive_stroage.dart';
 import '../../../../../core/tools.dart';
 import '../../../../../core/utils/navigation.dart';
 
-GestureDetector offersCard({required context, required ProductModel product}) {
+GestureDetector offersCard({
+  required context,
+  required ProductModel product,
+}) {
   final price = product.productVariants
       .firstWhere(
         (e) => e.price != 0,

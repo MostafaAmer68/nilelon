@@ -202,10 +202,15 @@ class OrderCubit extends Cubit<OrderState> {
       (failure) {
         emit(OrderState.failure(failure.errorMsg));
       },
-      (response) {
-        if (!isList) {
-          getStoreOrderDetailsById(orderId);
-        }
+      (response) async {
+        emit(const OrderState.initial());
+        await Future.delayed(const Duration(seconds: 1), () {
+          if (!isList) {
+            getStoreOrderDetailsById(orderId);
+          } else {
+            getStoreOrder('Ordered');
+          }
+        });
       },
     );
   }

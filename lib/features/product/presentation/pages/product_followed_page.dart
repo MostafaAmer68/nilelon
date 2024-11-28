@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,7 +35,7 @@ class _FollowedProductPageState extends State<FollowedProductPage> {
           return Center(child: Text(lang(context).guestMsg));
         }, loading: () {
           return buildShimmerIndicatorGrid(context);
-        }, followingProductSuccess: (products) {
+        }, success: () {
           if (ProductsCubit.get(context).followingProducts.data.isEmpty) {
             return SizedBox(
               height: 180.h,

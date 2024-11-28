@@ -113,7 +113,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
                     context: context,
                     screen: ProductsViewAll(
                       notFoundTitle: lang.noProductFollow,
-                      isHandpicked: false,
+                      type: productTypes.following,
                       appBarTitle: lang.following,
                       onStartPage: (isPage) {
                         ProductsCubit.get(context).getFollowedProducts(isPage);
@@ -144,7 +144,7 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
           screen: ProductsViewAll(
             isOffer: true,
             notFoundTitle: lang(context).noProductOffer,
-            isHandpicked: false,
+            type: productTypes.offer,
             appBarTitle: lang(context).offers,
             onStartPage: (isPage) {
               ProductsCubit.get(context).getOffersProducts(isPage);

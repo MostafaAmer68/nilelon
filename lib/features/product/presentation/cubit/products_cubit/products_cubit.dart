@@ -42,7 +42,9 @@ class ProductsCubit extends Cubit<ProductsState> {
   bool loadMore = false;
 
   List<ProductModel> filterListByCategory(
-      CategoryModel selectedCategory, List<ProductModel> filteredProducts) {
+    CategoryModel selectedCategory,
+    List<ProductModel> filteredProducts,
+  ) {
     if (selectedCategory.id.isEmpty) {
       return filteredProducts;
     }
@@ -62,7 +64,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(const ProductsState.initial());
       product = ProductModel.empty();
     }
-      emit(const ProductsState.loading());
+    emit(const ProductsState.loading());
     var result = await productsRepos.getProductDetails(productId);
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
@@ -125,7 +127,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       followingProducts = response;
-      emit(ProductsState.followingProductSuccess(response));
+      emit(const ProductsState.success());
     });
   }
 
@@ -151,7 +153,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       newInProducts = response;
-      emit(ProductsState.newInProductSuccess(response));
+      emit(const ProductsState.success());
     });
   }
 
@@ -178,7 +180,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
       randomProducts = response;
 
-      emit(ProductsState.randomProductSuccess(response));
+      emit(const ProductsState.success());
     });
   }
 
@@ -215,7 +217,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       products = response;
-      emit(ProductsState.randomProductSuccess(response));
+      emit(const ProductsState.success());
     });
   }
 
@@ -230,7 +232,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       storeProducts = response;
-      emit(ProductsState.storeProductSuccess(response));
+      emit(const ProductsState.success());
     });
   }
 }

@@ -18,9 +18,12 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 
 import '../../../core/constants/assets.dart';
+import '../../../core/data/hive_stroage.dart';
 import '../../../core/resources/appstyles_manager.dart';
 import '../../../core/widgets/scaffold_image.dart';
 import '../../product/presentation/cubit/products_cubit/products_state.dart';
+import '../../product/presentation/pages/product_details_page.dart';
+import '../../product/presentation/pages/product_details_store_page.dart';
 import '../../search/presentation/pages/search_view.dart';
 
 class StoreMarketView extends StatefulWidget {
@@ -82,7 +85,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                     screen: ProductsViewAll(
                       appBarTitle: lang.newIn,
                       notFoundTitle: lang.noProductNewIn,
-                      isHandpicked: false,
+                      type: productTypes.newIn,
                       onStartPage: (isPage) {
                         cubit.getNewInProducts(isPage);
                       },
@@ -102,8 +105,8 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                       return const Icon(Icons.error);
                     }, loading: () {
                       return buildShimmerIndicatorGrid(context);
-                    }, newInProductSuccess: (products) {
-                      if (products.data.isEmpty) {
+                    }, success: () {
+                      if (cubit.newInProducts.data.isEmpty) {
                         return SizedBox(
                           height: 120.h,
                           child: Column(
@@ -121,9 +124,9 @@ class _StoreMarketViewState extends State<StoreMarketView> {
                         physics: const NeverScrollableScrollPhysics(),
                         gridDelegate: gridDelegate(context),
                         shrinkWrap: true,
-                        itemCount: products.data.length,
+                        itemCount: cubit.newInProducts.data.length,
                         itemBuilder: (context, index) {
-                          final product = products.data[index];
+                          final product = cubit.newInProducts.data[index];
                           return Container(
                             child: productSquarItem(
                               context: context,
@@ -184,7 +187,7 @@ class _StoreMarketViewState extends State<StoreMarketView> {
           screen: ProductsViewAll(
             isOffer: true,
             notFoundTitle: lang(context).noProductOffer,
-            isHandpicked: false,
+            type: productTypes.offer,
             appBarTitle: lang(context).offers,
             onStartPage: (isPage) {
               ProductsCubit.get(context).getOffersProducts(isPage);

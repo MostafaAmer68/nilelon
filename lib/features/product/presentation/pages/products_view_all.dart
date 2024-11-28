@@ -7,7 +7,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
-import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/features/product/domain/models/product_response.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
@@ -32,11 +31,11 @@ class ProductsViewAll extends StatefulWidget {
     this.isStore = false,
     this.isOffer = false,
     required this.notFoundTitle,
-    required this.isHandpicked,
+    required this.type,
   });
   final String appBarTitle;
   final String notFoundTitle;
-  final bool isHandpicked;
+  final productTypes type;
   final bool isStore;
   final bool isOffer;
 
@@ -109,13 +108,17 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
               return state.maybeWhen(
                 loading: () =>
                     Expanded(child: buildShimmerIndicatorGrid(context)),
-                randomProductSuccess: (products) {
-                  return _buildProductGrid(products);
-                },
-                newInProductSuccess: (products) {
-                  return _buildProductGrid(products);
-                },
-                followingProductSuccess: (products) {
+                success: () {
+                  ProductResponse products = ProductResponse.empty();
+                  if (widget.type == productTypes.newIn) {
+                    products = cubit.newInProducts;
+                  }
+                  if (widget.type == productTypes.random) {
+                    products = cubit.randomProducts;
+                  }
+                  if (widget.type == productTypes.offer) {
+                    products = cubit.products;
+                  }
                   return _buildProductGrid(products);
                 },
                 failure: (message) => _buildErrorMessage(message),
@@ -162,23 +165,38 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                   crossAxisCount: 1.sw > 600 ? 3 : 2,
                   crossAxisSpacing: 16.0,
                   mainAxisExtent:
-                      HiveStorage.get(HiveKeys.isStore) ? 260.w : 295.w,
+                      HiveStorage.get(HiveKeys.isStore) ? 270.w : 295.w,
                   mainAxisSpacing: 12.0,
                 )
               : gridDelegate(context),
-          itemCount: paginationList.data.length + (isLoadingMore ? 1 : 0),
+          itemCount: cubit
+                  .filterListByCategory(cubit.category, paginationList.data)
+                  .length +
+              (isLoadingMore ? 1 : 0),
           itemBuilder: (context, index) {
-            if (index == paginationList.data.length) {
+            if (index ==
+                cubit
+                    .filterListByCategory(cubit.category, paginationList.data)
+                    .length) {
               // Show loading indicator at the bottom
               return const Center(child: CircularProgressIndicator());
             }
 
             final product = paginationList.data[index];
             return widget.isOffer
-                ? offersCard(context: context, product: product)
+                ? offersCard(
+                    context: context,
+                    product: product,
+                  )
                 : widget.isStore
-                    ? marketSmallCard(context: context, product: product)
-                    : productSquarItem(context: context, product: product);
+                    ? marketSmallCard(
+                        context: context,
+                        product: product,
+                      )
+                    : productSquarItem(
+                        context: context,
+                        product: product,
+                      );
           },
         ),
       ),
@@ -210,7 +228,8 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
               paginationList
                   .copyWith(data: []); // Clear pagination when filter changes
               cubit.page = 1; // Reset to the first page
-              widget.onStartPage(true); // Trigger new API call
+              // widget.onStartPage(true); // Trigger new API call
+              cubit.category = category;
               setState(() {}); // Update UI
             },
           ),

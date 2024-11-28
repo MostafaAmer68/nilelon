@@ -46,7 +46,10 @@ class _OrderPageState extends State<OrderPage> {
         length: 3,
         child: ScaffoldImage(
             appBar: customAppBar(
-                title: lang.ordersManagement, context: context, hasIcon: false),
+                hasLeading: false,
+                title: lang.ordersManagement,
+                context: context,
+                hasIcon: false),
             body: Padding(
               padding: const EdgeInsetsDirectional.symmetric(
                   vertical: 12, horizontal: 10),

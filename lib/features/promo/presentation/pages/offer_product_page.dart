@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+// ignore: unused_import
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
@@ -9,7 +10,6 @@ import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
-import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:nilelon/features/promo/presentation/pages/apply_offer_page.dart';
@@ -95,8 +95,8 @@ class _OfferProductPageState extends State<OfferProductPage> {
                 return Expanded(child: buildShimmerIndicatorGrid(context));
               }, loading: () {
                 return Expanded(child: buildShimmerIndicatorGrid(context));
-              }, storeProductSuccess: (products) {
-                if (products.data.isEmpty) {
+              }, success: () {
+                if (ProductsCubit.get(context).storeProducts.data.isEmpty) {
                   return Center(
                     child: Text(
                       S.of(context).thereNoProduct,
@@ -110,9 +110,12 @@ class _OfferProductPageState extends State<OfferProductPage> {
                     child: GridView.builder(
                       gridDelegate: gridDelegate(context),
                       shrinkWrap: true,
-                      itemCount: products.data.length,
+                      itemCount:
+                          ProductsCubit.get(context).storeProducts.data.length,
                       itemBuilder: (context, index) {
-                        final product = products.data[index];
+                        final product = ProductsCubit.get(context)
+                            .storeProducts
+                            .data[index];
                         return productSquarItem(
                           context: context,
                           isSelectable: true,

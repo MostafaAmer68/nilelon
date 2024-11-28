@@ -6,7 +6,6 @@ import 'package:nilelon/features/product/domain/models/product_model.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/core/widgets/price_and_rating_row/price_and_rating_row.dart';
-import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:svg_flutter/svg.dart';
@@ -42,7 +41,9 @@ GestureDetector productSquarItem(
       navigateTo(
         context: context,
         screen: !HiveStorage.get(HiveKeys.isStore)
-            ? ProductDetailsView(productId: product.id)
+            ? ProductDetailsView(
+                productId: product.id,
+              )
             : ProductStoreDetailsView(productId: product.id),
       );
     },

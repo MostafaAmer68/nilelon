@@ -117,7 +117,7 @@ class _StoreProfileStoreState extends State<StoreProfileStore> {
                     return buildShimmerIndicatorGrid(context);
                   }, failure: (erro) {
                     return Text(erro);
-                  }, storeProductSuccess: (products) {
+                  }, success: () {
                     return GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       gridDelegate:

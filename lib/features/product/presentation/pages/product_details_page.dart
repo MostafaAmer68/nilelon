@@ -41,7 +41,9 @@ class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({
     super.key,
     required this.productId,
+     this.onBack,
   });
+  final VoidCallback? onBack;
   final String productId;
 
   @override
@@ -113,6 +115,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
         appBar: customAppBar(
           title: lang.productDetails,
           icon: Icons.share_outlined,
+          leadingOnPressed: widget.onBack,
           onPressed: () {
             Share.share(
               'http://nilelon.somee.com/Share/Product/${widget.productId}',

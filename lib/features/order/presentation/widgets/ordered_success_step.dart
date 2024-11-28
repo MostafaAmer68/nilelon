@@ -58,7 +58,7 @@ class _OrderedSuccessPageState extends State<OrderedSuccessPage> {
                   style: AppStylesManager.customTextStyleG,
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 200),
+                const SizedBox(height: 150),
               ],
             ),
           ),

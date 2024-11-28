@@ -88,12 +88,20 @@ class OrderStoreCard extends StatelessWidget {
                               order.status != 'Delivered',
                           child: BlocBuilder<OrderCubit, OrderState>(
                             builder: (context, state) {
-                              return state.whenOrNull(
+                              return state.maybeWhen(
                                 loading: () =>
                                     const CircularProgressIndicator(),
                                 success: () => GradientButtonBuilder(
                                   text: lang(context).shipped,
                                   ontap: shippedOnTap,
+                                  style: AppStylesManager.customTextStyleW4,
+                                  width: 120.w,
+                                  height: 35.h,
+                                ),
+                                orElse: () => GradientButtonBuilder(
+                                  text: lang(context).shipped,
+                                  ontap: shippedOnTap,
+                                  isLoading: true,
                                   style: AppStylesManager.customTextStyleW4,
                                   width: 120.w,
                                   height: 35.h,

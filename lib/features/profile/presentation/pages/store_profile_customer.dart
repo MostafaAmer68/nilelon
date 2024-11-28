@@ -231,7 +231,7 @@ class ProductStoreWidget extends StatelessWidget {
           // initial: () => const SizedBox(),
           failure: (_) => Text(_),
           loading: () => buildShimmerIndicatorGrid(context),
-          storeProductSuccess: (products) => GridView.builder(
+          success: () => GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: gridDelegate(context),
             shrinkWrap: true,

@@ -11,7 +11,7 @@ SliverGridDelegateWithFixedCrossAxisCount gridDelegate(context) {
   return SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 1.sw > 600 ? 3 : 2,
     crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-    mainAxisExtent: 255.w,
+    mainAxisExtent: 270.w,
     mainAxisSpacing: 1.sw > 600 ? 16 : 12,
   );
 }
@@ -26,3 +26,10 @@ T localData<T>(String key) => HiveStorage.get<T>(key);
 
 T currentUsr<T>() =>
     HiveStorage.get<UserModel>(HiveKeys.userModel).getUserData<T>();
+
+enum productTypes {
+  newIn,
+  random,
+  following,
+  offer,
+}

@@ -9,8 +9,10 @@ void navigateAndRemoveUntil(
   );
 }
 
-void navigateTo(
-    {required BuildContext context, required Widget screen, var argument}) {
+Future<void> navigateTo(
+    {required BuildContext context,
+    required Widget screen,
+    var argument}) async {
   Navigator.push(
     context,
     MaterialPageRoute(

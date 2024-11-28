@@ -30,6 +30,15 @@ class _CheckOutViewState extends State<CheckOutView> {
   int index = 0;
   late final ProgressCubit cubit;
   late final OrderCubit orderCubit;
+
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   @override
   void initState() {
     cubit = ProgressCubit.get(context);

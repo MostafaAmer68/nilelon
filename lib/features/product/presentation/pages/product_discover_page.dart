@@ -69,7 +69,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                 ),
               );
             },
-            newInProductSuccess: (products) => SingleChildScrollView(
+            success: () => SingleChildScrollView(
               child: Column(
                 children: [
                   const DefaultDivider(),
@@ -92,7 +92,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                           context: context,
                           screen: ProductsViewAll(
                             notFoundTitle: lang.noProductNewIn,
-                            isHandpicked: false,
+                            type: productTypes.newIn,
                             appBarTitle: lang.newIn,
                             onStartPage: (isPage) {
                               cubit.getNewInProducts(isPage);
@@ -116,72 +116,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                         context: context,
                         screen: ProductsViewAll(
                           notFoundTitle: lang.noProductHandPicked,
-                          isHandpicked: true,
-                          appBarTitle: lang.handPicked,
-                          onStartPage: (isPage) {
-                            cubit.getRandomProducts(isPage);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  HandPickedView(
-                    products: cubit.randomProducts.data,
-                  ),
-                  const SizedBox(height: 30),
-                ],
-              ),
-            ),
-            randomProductSuccess: (products) => SingleChildScrollView(
-              child: Column(
-                children: [
-                  const DefaultDivider(),
-                  const SizedBox(
-                    height: 8,
-                  ),
-                  Text(
-                    lang.discoverOurNewAndSpecialProductsFromHere,
-                    style: AppStylesManager.customTextStyleG3,
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  ViewAllRow(
-                    assetName: Assets.assetsImagesNewIn,
-                    noTextIcon: false,
-                    text: lang.newIn,
-                    onPressed: () {
-                      navigateTo(
-                        context: context,
-                        screen: ProductsViewAll(
-                          notFoundTitle: lang.noProductNewIn,
-                          isHandpicked: false,
-                          appBarTitle: lang.newIn,
-                          onStartPage: (isPage) {
-                            cubit.getNewInProducts(isPage);
-                          },
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  ProductNewInView(
-                    products: cubit.newInProducts.data,
-                  ),
-                  const SizedBox(height: 16),
-                  ViewAllRow(
-                    text: lang.handPicked,
-                    assetName: Assets.assetsImagesHandPicked,
-                    noTextIcon: false,
-                    onPressed: () {
-                      navigateTo(
-                        context: context,
-                        screen: ProductsViewAll(
-                          notFoundTitle: lang.noProductHandPicked,
-                          isHandpicked: true,
+                          type: productTypes.random,
                           appBarTitle: lang.handPicked,
                           onStartPage: (isPage) {
                             cubit.getRandomProducts(isPage);
@@ -221,7 +156,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                         context: context,
                         screen: ProductsViewAll(
                           notFoundTitle: lang.noProductNewIn,
-                          isHandpicked: false,
+                          type: productTypes.newIn,
                           appBarTitle: lang.newIn,
                           onStartPage: (isPage) {
                             cubit.getNewInProducts(isPage);
@@ -244,7 +179,7 @@ class _DiscoverViewState extends State<DiscoverView> {
                         context: context,
                         screen: ProductsViewAll(
                           notFoundTitle: lang.noProductHandPicked,
-                          isHandpicked: true,
+                          type: productTypes.random,
                           appBarTitle: lang.handPicked,
                           onStartPage: (isPage) {
                             cubit.getRandomProducts(isPage);
