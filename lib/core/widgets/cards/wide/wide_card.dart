@@ -153,9 +153,11 @@ class WideCard extends StatelessWidget {
                     flex: !HiveStorage.get(HiveKeys.isStore) ? 1 : 1,
                     child: Row(
                       children: [
-                        Text(
-                          product.storeName,
-                          style: AppStylesManager.customTextStyleB4,
+                        Expanded(
+                          child: Text(
+                            product.storeName,
+                            style: AppStylesManager.customTextStyleB4,
+                          ),
                         ),
                         Icon(
                           Icons.star,

@@ -639,6 +639,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                               storeId: productCubit.product.storeId,
                             ))).then((v) {
                   productCubit.getProductDetails(widget.productId);
+                  productCubit.getReviews(widget.productId);
                 });
               },
               child: Text(

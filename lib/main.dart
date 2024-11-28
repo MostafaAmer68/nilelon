@@ -19,7 +19,7 @@ void main() async {
       integrationID: 4884340,
       iFrameID: 883051,
     );
-    await initializeService();
+    // await initializeService();
     final result = await Permission.notification.request();
     if (result.isGranted) {
       await NotificatoinService().initializeNotification();

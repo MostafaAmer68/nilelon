@@ -158,15 +158,21 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                           horizontal: 16, vertical: 20),
                       child: BlocBuilder<ProductsCubit, ProductsState>(
                         builder: (context, state) {
-                          return state.whenOrNull(
-                            loading: () => buildShimmerIndicatorSmall(
-                                height: 500, width: 600),
-                            success: () => ImageBanner(
-                              images: productCubit.product.productImages
-                                  .map((e) => e.url)
-                                  .toList(),
-                            ),
-                          )!;
+                          return state.maybeWhen(
+                              loading: () => buildShimmerIndicatorSmall(
+                                  height: 500, width: 600),
+                              success: () => ImageBanner(
+                                    images: productCubit.product.productImages
+                                        .map((e) => e.url)
+                                        .toList(),
+                                  ),
+                              orElse: () {
+                                return ImageBanner(
+                                  images: productCubit.product.productImages
+                                      .map((e) => e.url)
+                                      .toList(),
+                                );
+                              })!;
                         },
                       ),
                     ),
@@ -177,10 +183,28 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                         width: screenWidth(context, 0.3),
                         child: BlocBuilder<ProductsCubit, ProductsState>(
                           builder: (context, state) {
-                            return state.whenOrNull(
+                            return state.maybeWhen(
                               failure: (_) => Text(_),
                               loading: () => buildShimmerIndicatorRow(),
                               success: () =>
+                                  productCubit.product == ProductModel.empty()
+                                      ? buildShimmerIndicatorRow()
+                                      : ListView.builder(
+                                          itemCount: productCubit
+                                              .product.productImages.length,
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            final image = productCubit
+                                                .product.productImages[index];
+                                            return imageReplacer(
+                                              url: image.url,
+                                              fit: BoxFit.cover,
+                                              width: 50,
+                                              radius: 8,
+                                            );
+                                          },
+                                        ),
+                              orElse: () =>
                                   productCubit.product == ProductModel.empty()
                                       ? buildShimmerIndicatorRow()
                                       : ListView.builder(
@@ -207,7 +231,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                       padding: const EdgeInsets.all(20.0),
                       child: BlocBuilder<ProductsCubit, ProductsState>(
                         builder: (context, state) {
-                          return state.whenOrNull(
+                          return state.maybeWhen(
                               loading: () => Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -270,6 +294,21 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                                       SizedBox(height: 20.h),
                                       // _buildStockCounter(),
                                     ],
+                                  ),
+                              orElse: () => Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      _buildNameAndPriceRow(context),
+                                      const SizedBox(height: 24),
+                                      _buildDescription(),
+                                      SizedBox(height: 20.h),
+                                      _buildSizeSelector(lang),
+                                      SizedBox(height: 22.h),
+                                      _buildColorSelector(),
+                                      SizedBox(height: 20.h),
+                                      // _buildStockCounter(),
+                                    ],
                                   ))!;
                         },
                       ),
@@ -280,9 +319,22 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
                     const SizedBox(height: 24),
                     BlocBuilder<ProductsCubit, ProductsState>(
                       builder: (context, state) {
-                        return state.whenOrNull(
+                        return state.maybeWhen(
                           loading: () => buildShimmerIndicatorSmall(),
                           success: () {
+                            if (productCubit.review.isEmpty) {
+                              return Center(child: Text(lang.noReviews));
+                            }
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: productCubit.review.length,
+                              itemBuilder: (context, index) {
+                                final review = productCubit.review[index];
+                                return RatingContainer(review: review);
+                              },
+                            );
+                          },
+                          orElse: () {
                             if (productCubit.review.isEmpty) {
                               return Center(child: Text(lang.noReviews));
                             }

@@ -162,7 +162,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                   crossAxisCount: 1.sw > 600 ? 3 : 2,
                   crossAxisSpacing: 16.0,
                   mainAxisExtent:
-                      HiveStorage.get(HiveKeys.isStore) ? 250.w : 295.w,
+                      HiveStorage.get(HiveKeys.isStore) ? 260.w : 295.w,
                   mainAxisSpacing: 12.0,
                 )
               : gridDelegate(context),
