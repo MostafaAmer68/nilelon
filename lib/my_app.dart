@@ -1,13 +1,18 @@
+import 'dart:developer';
+
 import 'package:app_links/app_links.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/cart/data/repos_impl/cart_repos_impl.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/notification/data/repositories/notifiy_repo_impl.dart';
+import 'package:nilelon/features/order/presentation/pages/order_customer_details.dart';
 import 'package:nilelon/features/order/presentation/progress_cubit/progress_cubit.dart';
 import 'package:nilelon/features/closet/data/repo_impl/closet_repo_impl.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
@@ -64,10 +69,11 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
 // Subscribe to all events (initial link and further)
-
+    
     super.initState();
   }
 
+ 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

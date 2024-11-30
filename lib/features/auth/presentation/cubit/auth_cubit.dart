@@ -1,7 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/service/background_service.dart';
 import 'package:nilelon/features/auth/domain/model/customer_register_model.dart';
 import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
@@ -9,10 +11,10 @@ import 'package:nilelon/features/auth/domain/repos/auth_repos.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
 import 'package:signalr_core/signalr_core.dart';
 
+import '../../../shared/splash/splash_view.dart';
 import '../../domain/model/user_model.dart';
 
 part 'auth_state.dart';
-
 
 class AuthCubit extends Cubit<AuthState> {
   final AuthRepos authRepos;
@@ -137,7 +139,10 @@ class AuthCubit extends Cubit<AuthState> {
       emit(const LoginSuccess('Login Successfully'));
       emailController.clear();
       passwordController.clear();
-
+      FlutterBackgroundService().invoke('stop');
+      initializeWebSocket();
+      initializeService();
+      service.startService();
       BlocProvider.of<CategoryCubit>(context).getCategories();
     });
   }

@@ -1,3 +1,4 @@
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -35,6 +36,8 @@ class AuthService {
         userData = UserModel<StoreModel>.fromMap(data.data);
       }
       HiveStorage.set(HiveKeys.userModel, userData);
+      final token = FlutterSecureStorage();
+      token.write(key: 'token', value: userData.token);
     } else {
       // Handle other status codes if necessary
       throw Exception(

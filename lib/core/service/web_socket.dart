@@ -6,10 +6,6 @@ class WebSocketNilelon {
   final connection = HubConnectionBuilder()
       .withUrl(
         'http://nilelon.somee.com/NileonHub',
-        HttpConnectionOptions(
-          transport: HttpTransportType.longPolling,
-          logging: (level, message) {},
-        ),
       )
       .withAutomaticReconnect()
       .build();

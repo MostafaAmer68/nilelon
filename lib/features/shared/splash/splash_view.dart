@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:app_links/app_links.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,6 +20,7 @@ import 'package:signalr_core/signalr_core.dart';
 
 import '../../../core/widgets/scaffold_image.dart';
 import '../../auth/domain/model/user_model.dart';
+import '../../order/presentation/pages/order_customer_details.dart';
 
 late HubConnection connection;
 
@@ -32,18 +35,6 @@ class _SplashViewState extends State<SplashView> {
   final appLinks = AppLinks();
   @override
   void initState() {
-    connection = HubConnectionBuilder()
-        .withUrl(
-          'http://192.168.1.10:5167/NileonHub',
-          HttpConnectionOptions(
-              transport: HttpTransportType.longPolling,
-              logging: (level, message) {},
-              accessTokenFactory: () async {
-                return HiveStorage.get<UserModel>(HiveKeys.userModel).token;
-              }),
-        )
-        .withAutomaticReconnect()
-        .build();
     super.initState();
     // BlocProvider.of(context)
 
@@ -106,10 +97,11 @@ class _AnimationExampleState extends State<AnimationExample>
   late Animation<double> _rotationAnimation;
   late Animation<double> _translationAnimation;
   late Animation<double> _opacityAnimation;
-
+ 
   @override
   void initState() {
     super.initState();
+  
     _controller = AnimationController(
       duration: const Duration(seconds: 3),
       vsync: this,

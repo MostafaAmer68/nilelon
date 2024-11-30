@@ -3,16 +3,13 @@ import 'dart:developer';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:nilelon/core/data/hive_stroage.dart';
-import 'package:nilelon/features/auth/domain/model/user_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:signalr_core/signalr_core.dart';
 
-import '../../features/auth/presentation/cubit/auth_cubit.dart';
 import '../../features/shared/splash/splash_view.dart';
 
+final service = FlutterBackgroundService();
 Future initializeService() async {
-  final service = FlutterBackgroundService();
-
   await service.configure(
     androidConfiguration: AndroidConfiguration(
       onStart: onStart,
@@ -31,98 +28,150 @@ Future initializeService() async {
 Future initializeWebSocket() async {
   connection = HubConnectionBuilder()
       .withUrl(
-        'http://192.168.1.10:5167/NileonHub',
+        'http://nilelon.somee.com/NileonHub',
         HttpConnectionOptions(
           transport: HttpTransportType.longPolling,
-          logging: (level, message) {},
+          accessTokenFactory: () async {
+            final token = await const FlutterSecureStorage().read(key: 'token');
+            return token ?? '';
+          },
         ),
       )
       .withAutomaticReconnect()
       .build();
+
   connection.serverTimeoutInMilliseconds = 60000;
   await connection.start()?.catchError(
     (error) {
       log(error.toString());
     },
   ).whenComplete(
-    () {
-      // HiveStorage.set(HiveKeys.connectionId, connection.connectionId);
-    },
+    () {},
   );
+}
+
+void setupListen() {
+  connection.on('NewStoreRegister', (message) async {
+    if (message == null) return;
+    final body = message.first['message'];
+    showAwesomeNotification(body, 'New Store', null);
+  });
   //!USER NOTIFICATION
   connection.on('ReceiveMissedNotification', (message) async {
     log(message!.toString());
-    showAwesomeNotification(message.first.toString(), message.first.toString());
+    showAwesomeNotification(
+        message.first.toString(), message.first.toString(), null);
   });
   connection.on('MissYou', (message) async {
-    log(message!.toString());
-    showAwesomeNotification(message.first.toString(), message.first.toString());
+    if (message == null) return;
+    log(message.toString());
+    showAwesomeNotification(
+        message.first.toString(), message.first.toString(), null);
   });
   connection.on('ProductTopSeller', (message) async {
-    final productIdr = message!.first;
-    final body = message[1];
+    if (message == null) return;
+    final productId = message[0]['productId'];
+    final productName = message[0]['productName'];
+    final body = message[0]['message'];
     log(message.toString());
-    showAwesomeNotification(body, 'Top Seller');
+    showAwesomeNotification(body, 'Top Seller', {
+      'productId': productId,
+      'productName': productName,
+      'type': 'ProductTopSeller',
+    });
   });
   //!END USER NOTIFICATION
 
   //~CUSTOMER NOTIFCATION
   connection.on('FillFeedback', (message) async {
-    log(message!.toString());
-    final url = message.first;
-    final body = message[1];
-    showAwesomeNotification(body, 'Feedback');
+    if (message == null) return;
+    log(message.toString());
+    final url = message.first['url'];
+    final body = message[0]['message'];
+    showAwesomeNotification(body, 'Feedback', {
+      'url': url,
+    });
   });
   connection.on('StoreAddProduct', (message) async {
-    final productId = message![1];
-    final productPic = message[0];
-    final productName = message[2];
-    final body = message[3];
+    if (message == null) return;
+    final productId = message.first['productId'];
+    final storePic = message.first['storePic'];
+    final productName = message.first['productName'];
+    final storeName = message.first['storeName'];
+    final body = message.first['message'];
     log(message.toString());
-    showAwesomeNotification(body, 'Store add product');
+    showAwesomeNotification(body, 'Store add product', {
+      'productId': productId,
+      'productName': productName,
+      'storePic': storePic,
+      'storeName': storeName,
+      'type': 'StoreAddProduct',
+    });
   });
   connection.on('StoreSaleProduct', (message) async {
-    final discount = message!.first;
-    final body = message[1];
+    if (message == null) return;
+    final discount = message.first['discount'];
+    final product = message.first['producdt'];
+    final body = message.first['message'];
     log(message.toString());
-    showAwesomeNotification(body, 'Big Sale');
+    showAwesomeNotification(body, 'Big Sale', {
+      'discount': discount,
+      'product': product,
+      'productSize': product['size'],
+      'productId': product['productId'],
+      'ProductColor': product['color'],
+      'type': 'StoreSaleProduct',
+    });
   });
   connection.on('ChangeOrderStatus', (message) async {
-    final orderId = message!.first;
-    final status = message[1];
-    final body = message[2];
+    if (message == null) return;
+    final orderId = message.first['orderId'];
+    final status = message.first['status'];
+    final body = message.first['message'];
     log(message.toString());
-    showAwesomeNotification(body, 'Order Update');
+    showAwesomeNotification(body, 'Order Update', {
+      'orderId': orderId,
+      'status': status,
+      'type': 'order',
+    });
   });
-  connection.on('NewStoreRegister', (message) async {
-    final storeName = message!.first;
-    final body = message[1];
-    log(message.toString());
-    showAwesomeNotification(body, 'New Store');
-  });
-  connection.on('AdminNewStoreRegister', (message) async {
-    final storeEmail = message!.first;
-    final body = message[1];
-    log(message.toString());
-    showAwesomeNotification(body, 'New Store');
-  });
+
+  // connection.on('AdminNewStoreRegister', (message) async {
+  //   if (message == null) return;
+  //   final storeEmail = message.first;
+  //   final body = message.first;
+  //   log(message.toString());
+  //   showAwesomeNotification(body, 'New Store',{
+  //     'storeEmail'
+  //   });
+  // });
   //~END CUSTOMER NOTIFCATION
 
   //^STORE NOTIFCATION
   connection.on('ProductWillEmpty', (message) async {
-    final id = message![0];
-    final color = message[1];
-    final size = message[2];
-    final qun = message[3];
-    final body = message[4];
+    if (message == null) return;
+    final id = message.first['id'];
+    final color = message.first['color'];
+    final size = message.first['size'];
+    final qun = message.first['quantity'];
+    final body = message.first['message'];
 
-    log(message.toString());
-    showAwesomeNotification(body, 'Product Update');
+    showAwesomeNotification(body, 'Product Rare', {
+      'id': id,
+      'color': color,
+      'size': size,
+      'qun': qun,
+      'type': 'ProductWillEmpty',
+    });
   });
   connection.on('OrderCome', (message) async {
-    final orderId = message!.first;
-    final body = message[2];
-    showAwesomeNotification(body, 'New Order');
+    if (message == null) return;
+    final orderId = message.first['orderId'];
+    final body = message.first;
+    showAwesomeNotification(body, 'New Order', {
+      'orderId': orderId,
+      'type': 'order',
+    });
   });
 
   //^END STORE NOTIFCATION
@@ -144,21 +193,25 @@ void onStart(ServiceInstance service) async {
   if (service is AndroidServiceInstance) {
     service.setAsForegroundService();
     initializeWebSocket();
+    setupListen();
   }
 }
 
 bool onIosBackground(ServiceInstance service) {
   WidgetsFlutterBinding.ensureInitialized();
   initializeWebSocket();
+  setupListen();
   return true;
 }
 
-Future<void> showAwesomeNotification(String message, String title) async {
+Future<void> showAwesomeNotification(
+    String message, String title, Map<String, String?>? payload) async {
   AwesomeNotifications().createNotification(
     content: NotificationContent(
       id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
       channelKey: 'basic_channel',
       title: title,
+      payload: payload,
       // icon: Assets.assetsImagesLogo,
       body: message,
       notificationLayout: NotificationLayout.Default,

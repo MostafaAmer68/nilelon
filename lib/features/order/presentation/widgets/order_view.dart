@@ -139,8 +139,6 @@ class _OrderViewState extends State<OrderView> {
                               navigateTo(
                                   context: context,
                                   screen: OrderDetailsView(
-                                    index: 2,
-                                    recievedDate: order.date,
                                     id: order.id,
                                   ));
                             },
@@ -215,8 +213,6 @@ class _OrderViewState extends State<OrderView> {
                               navigateTo(
                                   context: context,
                                   screen: OrderDetailsView(
-                                    index: 2,
-                                    recievedDate: order.date,
                                     id: order.id,
                                   ));
                             },

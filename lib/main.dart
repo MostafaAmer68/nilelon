@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
-import 'package:nilelon/core/service/background_service.dart';
 import 'package:nilelon/my_app.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/service/simple_bloc_observer.dart';
 import 'package:paymob_payment/paymob_payment.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:device_preview/device_preview.dart';
+import 'core/service/background_service.dart';
 import 'core/service/notification_service.dart';
 
 void main() async {
@@ -19,7 +20,7 @@ void main() async {
       integrationID: 4884340,
       iFrameID: 883051,
     );
-    // await initializeService();
+
     final result = await Permission.notification.request();
     if (result.isGranted) {
       await NotificatoinService().initializeNotification();
@@ -45,8 +46,10 @@ void main() async {
       HiveStorage.set(HiveKeys.skipOnboarding, false);
     }
   });
-  // Testing info do not use in your app
-
+  if (!(await FlutterBackgroundService().isRunning())) {
+    await initializeWebSocket();
+    await initializeService();
+  }
   runApp(DevicePreview(
     enabled: false,
     builder: (_) => const MyApp(),

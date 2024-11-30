@@ -20,13 +20,8 @@ import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/order_cubit.dart';
 
 class OrderDetailsView extends StatefulWidget {
-  const OrderDetailsView(
-      {super.key,
-      required this.index,
-      required this.recievedDate,
-      required this.id});
-  final int index;
-  final String recievedDate;
+  const OrderDetailsView({super.key, required this.id});
+  // final int index;
   final String id;
 
   @override
@@ -115,7 +110,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                           lang.orderState,
                           BlocBuilder<OrderCubit, OrderState>(
                             builder: (context, state) {
-                              return state.whenOrNull(
+                              return state.maybeWhen(
                                 loading: () =>
                                     const CircularProgressIndicator(),
                                 success: () => Container(
@@ -141,6 +136,21 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                                     ],
                                   ),
                                 ),
+                                orElse: () => Container(
+                                  height: 35,
+                                  width: 100,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        cubit.customerOrder.status,
+                                        style: const TextStyle(
+                                            color: ColorManager.primaryW),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               )!;
                             },
                           ),
@@ -148,9 +158,8 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                         orderSummaryItems2(
                             lang.recievedDate,
                             Text(
-                              DateFormat('dd-MM-yyyy').format(
-                                  DateFormat('yyyy-MM-ddTHH:mm:ss.sss')
-                                      .parse(widget.recievedDate)),
+                              DateFormat('dd-MM-yyyy')
+                                  .format(cubit.customerOrder.date),
                               style: AppStylesManager.customTextStyleG,
                             )),
                         BlocBuilder<OrderCubit, OrderState>(
@@ -209,23 +218,36 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                         return Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            state.whenOrNull(
+                            state.maybeWhen(
                               loading: () => const CircularProgressIndicator(),
                               success: () => orderSummaryItems(
                                 S.of(context).order,
                                 (cubit.customerOrder.total).toString(),
                               ),
+                              orElse: () => orderSummaryItems(
+                                S.of(context).order,
+                                (cubit.customerOrder.total).toString(),
+                              ),
                             )!,
-                            state.whenOrNull(
+                            state.maybeWhen(
                               loading: () => const CircularProgressIndicator(),
                               success: () => orderSummaryItems(
                                 S.of(context).delivery,
                                 cubit.customerOrder.shippingCost,
                               ),
+                              orElse: () => orderSummaryItems(
+                                S.of(context).delivery,
+                                cubit.customerOrder.shippingCost,
+                              ),
                             )!,
-                            state.whenOrNull(
+                            state.maybeWhen(
                               loading: () => const CircularProgressIndicator(),
                               success: () => orderSummaryItems(
+                                lang.total,
+                                (cubit.customerOrder.total).toString(),
+                                AppStylesManager.customTextStyleO5,
+                              ),
+                              orElse: () => orderSummaryItems(
                                 lang.total,
                                 (cubit.customerOrder.total).toString(),
                                 AppStylesManager.customTextStyleO5,
@@ -300,12 +322,16 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              '${cubit.customerOrder.orderProductVariants.length} ${S.of(context).items}',
-              style: AppStylesManager.customTextStyleBl8,
-            ),
+          BlocBuilder<OrderCubit, OrderState>(
+            builder: (context, state) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  '${cubit.customerOrder.orderProductVariants.length} ${S.of(context).items}',
+                  style: AppStylesManager.customTextStyleBl8,
+                ),
+              );
+            },
           ),
           const SizedBox(
             height: 8,
@@ -316,9 +342,25 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
               height: 120,
               child: BlocBuilder<OrderCubit, OrderState>(
                 builder: (context, state) {
-                  return state.whenOrNull(
+                  return state.maybeWhen(
                     loading: () => buildShimmerIndicatorRow(),
                     success: () => ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      clipBehavior: Clip.none,
+                      itemBuilder: (context, index) {
+                        final product =
+                            cubit.customerOrder.orderProductVariants[index];
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 8),
+                          child: OrderDetailsCard(
+                            product: product,
+                          ),
+                        );
+                      },
+                      itemCount:
+                          cubit.customerOrder.orderProductVariants.length,
+                    ),
+                    orElse: () => ListView.builder(
                       scrollDirection: Axis.horizontal,
                       clipBehavior: Clip.none,
                       itemBuilder: (context, index) {
