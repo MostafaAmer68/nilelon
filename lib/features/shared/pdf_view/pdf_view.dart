@@ -52,17 +52,20 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
   void initState() {
     super.initState();
     // Listen for notification taps
-    AwesomeNotifications().setListeners(onActionReceivedMethod: (r) async {
-      // Check if the action button key is 'open'
-      if (r.buttonKeyPressed == 'open') {
-        String? filePath = r.payload?['file_path'];
-        if (filePath != null) {
-          // Open the folder containing the file
-          String folderPath = filePath.substring(0, filePath.lastIndexOf('/'));
-          await OpenFilex.open(folderPath);
+    AwesomeNotifications().setListeners(
+      onActionReceivedMethod: (r) async {
+        // Check if the action button key is 'open'
+        if (r.buttonKeyPressed == 'open') {
+          String? filePath = r.payload?['file_path'];
+          if (filePath != null) {
+            // Open the folder containing the file
+            String folderPath =
+                filePath.substring(0, filePath.lastIndexOf('/'));
+            await OpenFilex.open('/storage/emulated/0/Download/');
+          }
         }
-      }
-    });
+      },
+    );
   }
 
   Future<void> _openFolder(String filePath) async {

@@ -612,6 +612,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مرحبًا بعودتك إلى نايلون"),
         "welcomeToNilelon":
             MessageLookupByLibrary.simpleMessage("مرحبًا بك في نايلون"),
+        "whatsappNumber": MessageLookupByLibrary.simpleMessage("رقم الواتساب"),
         "whichItem": MessageLookupByLibrary.simpleMessage("أي عنصر؟"),
         "whydoyouwanttoreturnthisitem": MessageLookupByLibrary.simpleMessage(
             "لماذا تريد إرجاع هذا العنصر؟"),

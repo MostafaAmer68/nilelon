@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/features/notification/data/models/notification_data.dart';
 
 class NotifyGradientCard extends StatelessWidget {
   const NotifyGradientCard({
     super.key,
     required this.image,
-    required this.title,
-    required this.time,
+    required this.notify,
   });
   final String image;
-  final String title;
-  final String time;
+  final NotificationData notify;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -81,14 +81,14 @@ class NotifyGradientCard extends StatelessWidget {
                             height: 4,
                           ),
                           Text(
-                            title,
+                            notify.message,
                             style: AppStylesManager.customTextStyleBl7,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 4,
                           ),
                           const Spacer(),
                           Text(
-                            time,
+                            formatDate(notify.date),
                             style: AppStylesManager.customTextStyleG7,
                           ),
                         ],

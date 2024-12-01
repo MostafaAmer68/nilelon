@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
@@ -256,28 +258,40 @@ class _OverViewStepState extends State<OverViewStep> {
                           // menuMaxHeight: 30,
                           onChanged: (selectedValue) {
                             cubit.selectedCity = selectedValue ?? '';
-                            promoCubit.deliveryPrice = OrderCubit.get(context)
+                            final newDeliveryPrice = OrderCubit.get(context)
                                 .shippingMethods
                                 .first
                                 .shippingCosts
                                 .firstWhere((e) => e.governate == selectedValue)
                                 .price;
-                            promoCubit.totalPrice = promoCubit.deliveryPrice +
-                                promoCubit.tempTotalPrice;
-                            OrderCubit.get(context).selectedShippingMethodId =
-                                OrderCubit.get(context)
-                                    .shippingMethods
-                                    .first
-                                    .id;
-                            OrderCubit.get(context).selectedGovernate =
-                                OrderCubit.get(context)
-                                    .shippingMethods
-                                    .first
-                                    .shippingCosts
-                                    .firstWhere(
-                                        (e) => e.governate == selectedValue)
-                                    .governate;
-                            setState(() {});
+                            if (newDeliveryPrice != promoCubit.deliveryPrice) {
+                              promoCubit.deliveryPrice = newDeliveryPrice;
+
+                              if (promoCubit.newPrice == 0) {
+                                promoCubit.totalPrice =
+                                    promoCubit.deliveryPrice +
+                                        promoCubit.totalPrice;
+                              } else {
+                                promoCubit.totalPrice =
+                                    promoCubit.deliveryPrice +
+                                        promoCubit.newPrice;
+                              }
+
+                              OrderCubit.get(context).selectedShippingMethodId =
+                                  OrderCubit.get(context)
+                                      .shippingMethods
+                                      .first
+                                      .id;
+                              OrderCubit.get(context).selectedGovernate =
+                                  OrderCubit.get(context)
+                                      .shippingMethods
+                                      .first
+                                      .shippingCosts
+                                      .firstWhere(
+                                          (e) => e.governate == selectedValue)
+                                      .governate;
+                              setState(() {});
+                            }
                           });
                     });
                   },

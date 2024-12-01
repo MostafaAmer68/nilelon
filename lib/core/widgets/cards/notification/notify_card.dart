@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/features/notification/data/models/notification_data.dart';
+import 'package:svg_flutter/svg.dart';
 
 class NotifyCard extends StatelessWidget {
   const NotifyCard({
     super.key,
     required this.image,
-    required this.title,
-    required this.time,
+    required this.notify,
   });
   final String image;
-  final String title;
-  final String time;
+  final NotificationData notify;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -45,7 +46,7 @@ class NotifyCard extends StatelessWidget {
               color: Color(0xFFECE7FF),
               shape: BoxShape.circle,
             ),
-            child: Image.asset(image, fit: BoxFit.cover),
+            child: SvgPicture.asset(image, fit: BoxFit.cover),
           ),
           const SizedBox(
             width: 4,
@@ -64,14 +65,14 @@ class NotifyCard extends StatelessWidget {
                     height: 4,
                   ),
                   Text(
-                    title,
+                    notify.message,
                     style: AppStylesManager.customTextStyleBl7,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 4,
                   ),
                   const Spacer(),
                   Text(
-                    time,
+                    formatDate(notify.date),
                     style: AppStylesManager.customTextStyleG7,
                   ),
                 ],

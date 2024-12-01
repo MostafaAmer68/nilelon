@@ -1,29 +1,53 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/tools.dart';
+import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:nilelon/features/order/presentation/pages/order_customer_details.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
+import 'package:svg_flutter/svg.dart';
+
+import '../../../../features/notification/data/models/notification_data.dart';
 
 class NotifyViewedCard extends StatelessWidget {
   const NotifyViewedCard({
     super.key,
     required this.image,
-    required this.title,
-    required this.time,
-    required this.type,
+    required this.notify,
   });
   final String image;
-  final String title;
-  final String time;
-  final String type;
+  final NotificationData notify;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap:(){
-        switch(type){
-          
+      onTap: () {
+        switch (notify.type) {
+          case 'Order':
+            navigateTo(
+                context: context,
+                screen: OrderDetailsView(id: notify.targetId));
+            break;
+          case 'ProductRare':
+            navigateTo(
+              context: context,
+              screen: ProductDetailsView(
+                  size: notify.targetId.split(' ')[1],
+                  color: notify.targetId.split(' ').last,
+                  productId: notify.targetId.split(' ').first),
+            );
+            break;
+          case 'Product':
+            navigateTo(
+              context: context,
+              screen: ProductDetailsView(productId: notify.targetId),
+            );
+            break;
         }
       },
       child: Container(
@@ -57,7 +81,7 @@ class NotifyViewedCard extends StatelessWidget {
                 color: Color(0xFFECE7FF),
                 shape: BoxShape.circle,
               ),
-              child: Image.asset(image, fit: BoxFit.cover),
+              child: SvgPicture.asset(image, fit: BoxFit.cover),
             ),
             const SizedBox(
               width: 4,
@@ -76,15 +100,14 @@ class NotifyViewedCard extends StatelessWidget {
                       height: 4,
                     ),
                     Text(
-                      title,
+                      notify.message,
                       style: AppStylesManager.customTextStyleG3,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 4,
                     ),
                     const Spacer(),
                     Text(
-                      DateFormat('dd-MM-yyyy').format(
-                          DateFormat('yyyy-MM-ddTHH:mm:ss.ssssss').parse(time)),
+                      formatDate(notify.date),
                       style: AppStylesManager.customTextStyleG5,
                     ),
                   ],

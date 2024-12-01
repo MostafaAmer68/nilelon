@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/generated/l10n.dart';
 
@@ -15,6 +16,9 @@ SliverGridDelegateWithFixedCrossAxisCount gridDelegate(context) {
     mainAxisSpacing: 1.sw > 600 ? 16 : 12,
   );
 }
+
+formatDate(date) => DateFormat('dd-MM-yyyy hh:mm a')
+    .format(DateFormat('yyyy-MM-ddTHH:mm:ss').parse(date));
 
 S lang(context) => S.of(context);
 

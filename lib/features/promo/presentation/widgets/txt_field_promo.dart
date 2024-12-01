@@ -9,9 +9,14 @@ import '../../../../core/resources/const_functions.dart';
 import '../../../../core/widgets/button/button_builder.dart';
 import '../../../../core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 
-class TxtFieldPromo extends StatelessWidget {
+class TxtFieldPromo extends StatefulWidget {
   const TxtFieldPromo({super.key});
 
+  @override
+  State<TxtFieldPromo> createState() => _TxtFieldPromoState();
+}
+
+class _TxtFieldPromoState extends State<TxtFieldPromo> {
   @override
   Widget build(BuildContext context) {
     final PromoCubit cubit = PromoCubit.get(context);

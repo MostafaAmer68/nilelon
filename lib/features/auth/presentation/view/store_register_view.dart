@@ -178,6 +178,12 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   cubit.phoneController,
                   TextInputType.phone,
                 ),
+                phoneNumber(
+                  lang.whatsappNumber,
+                  '01234567899',
+                  cubit.whatsappNum,
+                  TextInputType.phone,
+                ),
                 TextAndFormFieldColumnWithIcon(
                     title: lang.storeRepresentativeName,
                     label: lang.storeRepresentativeName,

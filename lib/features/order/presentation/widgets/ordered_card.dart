@@ -24,10 +24,6 @@ class OrderCustomerCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log(order.date);
-    log(DateFormat('dd-MM-yyyy').format(DateFormat(
-      'yyyy-MM-ddTHH:mm:ss.sss',
-    ).parse(order.date.substring(0, 26))));
     return GestureDetector(
       onTap: onTap,
       child: Container(

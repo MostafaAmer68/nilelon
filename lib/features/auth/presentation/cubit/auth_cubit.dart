@@ -23,6 +23,7 @@ class AuthCubit extends Cubit<AuthState> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController newPasswordController = TextEditingController();
+  TextEditingController whatsappNum = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController profileLinkController = TextEditingController();
@@ -184,6 +185,7 @@ class AuthCubit extends Cubit<AuthState> {
         email: emailController.text,
         phoneNumber: '+2${phoneController.text}',
         profileLink: profileLinkController.text,
+        whatsappNumber: '+2${whatsappNum.text}',
         websiteLink: websiteLinkController.text,
         repName: repNameController.text,
         repPhone: repPhoneController.text,

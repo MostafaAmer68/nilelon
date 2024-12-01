@@ -41,10 +41,14 @@ class ProductDetailsView extends StatefulWidget {
   const ProductDetailsView({
     super.key,
     required this.productId,
-     this.onBack,
+    this.onBack,
+    this.color,
+    this.size,
   });
   final VoidCallback? onBack;
   final String productId;
+  final String? color;
+  final String? size;
 
   @override
   State<ProductDetailsView> createState() => _ProductDetailsViewState();
@@ -59,6 +63,11 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   void initState() {
     super.initState();
     cubit = CartCubit.get(context);
+    if (widget.color != null && widget.size != null) {
+      cubit.selectedColor = widget.color!;
+      cubit.selectedSize = widget.size!;
+    }
+
     productCubit = ProductsCubit.get(context);
     productCubit.getProductDetails(widget.productId);
   }

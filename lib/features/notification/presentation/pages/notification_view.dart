@@ -5,12 +5,8 @@ import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
-import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
-import 'package:nilelon/core/widgets/cards/notification/notify_gradient_card.dart';
 import 'package:nilelon/core/widgets/cards/notification/notify_viewed_card.dart';
-import 'package:nilelon/core/widgets/cards/notification/notify_card.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 
@@ -28,7 +24,9 @@ class _NotificationViewState extends State<NotificationView> {
   @override
   void initState() {
     cubit = NotificationCubit.get(context);
-    cubit.getAllNotification();
+    if (cubit.notificatios.isEmpty) {
+      cubit.getAllNotification();
+    }
     super.initState();
   }
 
@@ -57,10 +55,8 @@ class _NotificationViewState extends State<NotificationView> {
                     itemBuilder: (context, index) {
                       final notification = cubit.notificatios[index];
                       return NotifyViewedCard(
-                        image: Assets.assetsImagesArrived2,
-                        title: notification.message,
-                        type: notification.type,
-                        time: notification.date,
+                        image: Assets.assetsImagesNotificationsActive,
+                        notify: notification,
                       );
                     },
                   ),

@@ -1,18 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/closet/presentation/view/closet_sheet_bar_view.dart';
+import 'package:nilelon/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:nilelon/features/notification/presentation/pages/notification_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_guest_page.dart';
 import 'package:svg_flutter/svg.dart';
 
-class HomeCustomAppBar extends StatelessWidget {
+class HomeCustomAppBar extends StatefulWidget {
   const HomeCustomAppBar({
     super.key,
   });
+
+  @override
+  State<HomeCustomAppBar> createState() => _HomeCustomAppBarState();
+}
+
+class _HomeCustomAppBarState extends State<HomeCustomAppBar> {
+  @override
+  void initState() {
+    NotificationCubit.get(context).getAllNotification();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +50,7 @@ class HomeCustomAppBar extends StatelessWidget {
               navigateTo(
                   context: context,
                   screen: HiveStorage.get(HiveKeys.userModel) != null
-                      ? const NotificationView(
-                        )
+                      ? const NotificationView()
                       : const ProfileGuestPage(
                           hasLeading: true,
                         ));
@@ -60,6 +72,7 @@ class HomeCustomAppBar extends StatelessWidget {
               ),
               child: Stack(
                 alignment: Alignment.topCenter,
+                clipBehavior: Clip.none,
                 children: [
                   Center(
                     child: SizedBox(
@@ -68,21 +81,29 @@ class HomeCustomAppBar extends StatelessWidget {
                       child: SvgPicture.asset(Assets.assetsImagesNotification),
                     ),
                   ),
-                  Positioned(
-                    left: 4,
-                    child: Container(
-                      width: 1.sw > 600 ? 16 : 14,
-                      height: 1.sw > 600 ? 16 : 14,
-                      decoration: BoxDecoration(
-                          color: ColorManager.primaryR,
-                          borderRadius: BorderRadius.circular(16)),
-                      child: const Center(
-                        child: Text(
-                          '0',
-                          style: TextStyle(color: Colors.white, fontSize: 8),
+                  BlocBuilder<NotificationCubit, NotificationState>(
+                    builder: (context, state) {
+                      return Positioned(
+                        left: -5,
+                        top: -5,
+                        child: Center(
+                          child: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: ColorManager.primaryR,
+                            child: Text(
+                              NotificationCubit.get(context)
+                                  .notificatios
+                                  .length
+                                  .toString(),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 8,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    },
                   )
                 ],
               ),

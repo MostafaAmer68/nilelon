@@ -18,6 +18,7 @@ class PromoCubit extends Cubit<PromoState> {
   num totalPrice = 0;
   num orderTotal = 0;
   num tempTotalPrice = 0;
+  num newPrice = 0;
   num deliveryPrice = 0;
   num discount = 0;
   String selectedGov = '';
@@ -84,6 +85,7 @@ class PromoCubit extends Cubit<PromoState> {
       },
       (response) {
         totalPrice = response['newPrice'] + deliveryPrice;
+        newPrice = response['newPrice'] + deliveryPrice;
         discount = response['discount'];
         promoCode.clear();
         emit(PromoSuccess());

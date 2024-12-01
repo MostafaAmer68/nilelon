@@ -4210,6 +4210,16 @@ class S {
     );
   }
 
+  /// `WhatsApp number`
+  String get whatsappNumber {
+    return Intl.message(
+      'WhatsApp number',
+      name: 'whatsappNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
   String get returnedHistory {
     return Intl.message(
