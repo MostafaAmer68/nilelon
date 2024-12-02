@@ -9,11 +9,13 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
+import 'package:nilelon/features/profile/data/models/address_model.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
 
 import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/helper.dart';
+import '../../../auth/domain/model/user_model.dart';
 
 part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';
@@ -32,6 +34,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   TextEditingController websiteLinkController = TextEditingController();
   TextEditingController repNameController = TextEditingController();
   TextEditingController repPhoneController = TextEditingController();
+  TextEditingController addressLine1 = TextEditingController();
+  TextEditingController addressLine2 = TextEditingController();
+  TextEditingController streetAddress = TextEditingController();
+  TextEditingController unitNumber = TextEditingController();
+  TextEditingController landmark = TextEditingController();
+  TextEditingController city = TextEditingController();
   TextEditingController wareHouseAddressController =
       TextEditingController(text: 'Ciaro');
   TextEditingController sloganController = TextEditingController();
@@ -45,9 +53,18 @@ class ProfileCubit extends Cubit<ProfileState> {
     'isNotify': false,
   };
   CategoryModel selectedCategory = CategoryModel.empty();
+  AddressModel address = AddressModel(
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    unitNumber: '',
+    streetNumber: '',
+    nearestLandMark: '',
+  );
   File image = File('');
   String base64Image = '';
   GlobalKey<FormState> forgotPasswordForm = GlobalKey();
+  GlobalKey<FormState> formKey = GlobalKey();
   GlobalKey<FormState> formEmail = GlobalKey();
   final picker = ImagePicker();
   Future<void> getStoreById(String storeId) async {
@@ -57,6 +74,41 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(ProfileState.failure(er.errorMsg));
     }, (response) {
       storeProfile = response;
+      emit(const ProfileState.success());
+    });
+  }
+
+  Future<void> setCustomerAddress() async {
+    emit(const ProfileState.loading());
+    final result = await _profileRepoIMpl.setCustomerAddress({
+      "customerId": HiveStorage.get<UserModel>(HiveKeys.userModel).id,
+      "addressLine1": addressLine1.text,
+      "addressLine2": addressLine2.text,
+      "city": city.text,
+      "unitNumber": unitNumber.text,
+      "streetNumber": streetAddress.text,
+      "nearestLandMark": landmark.text,
+    });
+    result.fold((er) {
+      emit(ProfileState.failure(er.errorMsg));
+    }, (response) {
+      emit(const ProfileState.success());
+    });
+  }
+
+  Future<void> getCustomerAddress() async {
+    emit(const ProfileState.loading());
+    final result = await _profileRepoIMpl.getCustomerAddress();
+    result.fold((er) {
+      emit(ProfileState.failure(er.errorMsg));
+    }, (response) {
+      address = response;
+      addressLine1 = TextEditingController(text: address.addressLine1);
+      addressLine2 = TextEditingController(text: address.addressLine2);
+      streetAddress = TextEditingController(text: address.streetNumber);
+      unitNumber = TextEditingController(text: address.unitNumber);
+      landmark = TextEditingController(text: address.nearestLandMark);
+      city = TextEditingController(text: address.city);
       emit(const ProfileState.success());
     });
   }

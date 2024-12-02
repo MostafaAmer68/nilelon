@@ -156,6 +156,7 @@ class AuthCubit extends Cubit<AuthState> {
           fullName: nameController.text,
           email: emailController.text,
           phoneNumber: phoneController.text,
+          whatsappNumber: whatsappNum.text,
           birthDate: date!.toIso8601String(),
           gender: gender,
           password: passwordController.text,

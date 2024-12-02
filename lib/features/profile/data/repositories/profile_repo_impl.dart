@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:nilelon/features/profile/data/models/address_model.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 
 import '../../../../core/service/catch_func.dart';
@@ -183,5 +184,16 @@ class ProfileRepoIMpl implements ProfileRepo {
   Future<Either<FailureService, String>> updateCustomer(
       String profilePic, String name, context) async {
     return exe(() => _profile.updateCustomer(profilePic, name, context));
+  }
+
+  @override
+  Future<Either<FailureService, AddressModel>> getCustomerAddress() {
+    return exe(() => _profile.getCustomerAddress());
+  }
+
+  @override
+  Future<Either<FailureService, void>> setCustomerAddress(
+      Map<String, dynamic> data) {
+    return exe(() => _profile.setCustomerAddress(data));
   }
 }

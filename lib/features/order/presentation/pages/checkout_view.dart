@@ -137,7 +137,8 @@ class _CheckOutViewState extends State<CheckOutView> {
                   netTotal: (orderCubit.customerOrder.total -
                           num.parse(orderCubit.customerOrder.shippingCost))
                       .toString(),
-                  discount: orderCubit.customerOrder.discount.toString(),
+                  discount:
+                      '${(orderCubit.customerOrder.discount.toStringAsFixed(0))}%',
                   total: (orderCubit.customerOrder.total).toString(),
                   delivery: orderCubit.customerOrder.shippingCost,
                 ),

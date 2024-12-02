@@ -51,14 +51,6 @@ class _StoreBrandCardState extends State<StoreBrandCard> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
-                shadows: const [
-                  BoxShadow(
-                    color: Color(0x33726363),
-                    blurRadius: 16,
-                    offset: Offset(0, 4),
-                    spreadRadius: 0,
-                  )
-                ],
               ),
               child: CircleAvatar(
                 radius: 30,

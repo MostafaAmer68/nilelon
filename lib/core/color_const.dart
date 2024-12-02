@@ -14,3 +14,13 @@ final colorProducts = [
   '0xFF170048',
   '0xFF165A11',
 ];
+
+final colroName = {
+  '0xFFD80000': 'Red',
+  '0xFF1F00DF': 'Blue',
+  '0xFFFFCD1C': 'Yellow',
+  '0xFFFFFFFF': 'White',
+  '0xFF101010': 'Black',
+  '0xFF170048': 'Dark Purple',
+  '0xFF165A11': 'Green',
+};

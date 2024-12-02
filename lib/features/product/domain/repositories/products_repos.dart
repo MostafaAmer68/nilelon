@@ -19,9 +19,9 @@ abstract class ProductsRepos {
       String productId);
 
   Future<Either<FailureService, ProductResponse>> getFollowedProducts(
-      int page, int productSize);
+      int page, int productSize, String productType);
   Future<Either<FailureService, ProductResponse>> getNewInProducts(
-      int page, int productSize);
+      int page, int productSize, String productType);
   Future<Either<FailureService, ProductResponse>> getRandomProduct(
       int page, int productSize, String productType);
   Future<Either<FailureService, ProductResponse>> getNewInProductsGuest(

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 
 import '../../../../core/service/failure_service.dart';
+import '../../data/models/address_model.dart';
 
 abstract class ProfileRepo {
   Future<Either<FailureService, String>> updateStoreInfo(
@@ -18,6 +19,9 @@ abstract class ProfileRepo {
     String newPassword,
     context,
   );
+  Future<Either<FailureService, void>> setCustomerAddress(
+      Map<String, dynamic> data);
+  Future<Either<FailureService, AddressModel>> getCustomerAddress();
   Future<Either<FailureService, String>> updateStore(
     String profilePic,
     String name,

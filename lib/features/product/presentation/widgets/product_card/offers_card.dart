@@ -134,38 +134,37 @@ GestureDetector offersCard({
                             ClosetSheetBarView(productId: product.id),
                       );
                     },
-                    child: product.isInCloset
-                        ? Image.asset(
-                            Assets.assetsImagesClosetFollowing,
-                            width: 50,
-                          )
-                        : Container(
-                            width: 35.w, // Increased size to match the image
-                            height: 35.w,
-                            padding: const EdgeInsets.all(4),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.orange.shade300.withOpacity(1),
-                                  offset: const Offset(3,
-                                      3), // Adjusted shadow to be more subtle
-                                  blurRadius: 5,
-                                ),
-                              ],
-                            ),
-                            child: SizedBox(
-                              // width: 20,
-                              child: SvgPicture.asset(
-                                Assets.assetsImagesHanger,
-                                width: 30,
-                                // height: ,
-
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                    child: Container(
+                      clipBehavior: Clip.none,
+                      width: 35.w,
+                      height: 35.w,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        color: product.isInCloset ? null : Colors.white,
+                        gradient: product.isInCloset
+                            ? const LinearGradient(
+                                colors: ColorManager.gradientColors)
+                            : null,
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.orange.shade300.withOpacity(1),
+                            offset: const Offset(3, 3),
+                            blurRadius: 5,
                           ),
+                        ],
+                      ),
+                      child: !product.isInCloset
+                          ? SvgPicture.asset(
+                              Assets.assetsImagesHanger,
+                              fit: BoxFit.cover,
+                            )
+                          : SvgPicture.asset(
+                              Assets.assetsImagesActiveCloset,
+                              fit: BoxFit.cover,
+                              width: 60,
+                            ),
+                    ),
                   ),
                 ),
               )

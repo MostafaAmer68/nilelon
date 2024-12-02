@@ -265,18 +265,23 @@ class _OverViewStepState extends State<OverViewStep> {
                                 .firstWhere((e) => e.governate == selectedValue)
                                 .price;
                             if (newDeliveryPrice != promoCubit.deliveryPrice) {
+                              promoCubit.totalPrice = promoCubit.totalPrice -
+                                  promoCubit.deliveryPrice;
                               promoCubit.deliveryPrice = newDeliveryPrice;
 
                               if (promoCubit.newPrice == 0) {
                                 promoCubit.totalPrice =
                                     promoCubit.deliveryPrice +
                                         promoCubit.totalPrice;
+                                log('t2');
                               } else {
+                                log('t1');
                                 promoCubit.totalPrice =
                                     promoCubit.deliveryPrice +
                                         promoCubit.newPrice;
                               }
-
+                              log(promoCubit.totalPrice.toString());
+                              log(promoCubit.totalPrice.toString());
                               OrderCubit.get(context).selectedShippingMethodId =
                                   OrderCubit.get(context)
                                       .shippingMethods

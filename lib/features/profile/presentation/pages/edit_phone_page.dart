@@ -30,6 +30,10 @@ class EditPhoneNumPage extends StatefulWidget {
 
 class _EditPhoneNumPageState extends State<EditPhoneNumPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
     return ScaffoldImage(

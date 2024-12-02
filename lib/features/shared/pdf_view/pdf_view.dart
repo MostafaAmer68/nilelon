@@ -105,7 +105,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
               final result = await makePdf(
                 cells: widget.cells,
                 netTotal: widget.netTotal,
-                discount: '${double.parse(widget.discount) * 100}',
+                discount: '${double.parse(widget.discount) * 100}%',
                 delivery: widget.delivery,
                 total: widget.total,
                 name: HiveStorage.get<UserModel>(HiveKeys.userModel)

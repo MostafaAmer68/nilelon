@@ -119,6 +119,9 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
                   if (widget.type == productTypes.offer) {
                     products = cubit.products;
                   }
+                  if (widget.type == productTypes.following) {
+                    products = cubit.followingProducts;
+                  }
                   return _buildProductGrid(products);
                 },
                 failure: (message) => _buildErrorMessage(message),
@@ -147,8 +150,9 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
     // Append new products to the pagination list
     if (paginationList.data.isEmpty || cubit.page == 1) {
       paginationList = paginationList.copyWith(
-          data: [],
-          metaData: MetaDataProducts.ampty()); // Clear if it's the first page
+        data: [],
+        metaData: MetaDataProducts.ampty(),
+      ); // Clear if it's the first page
     }
     final temp = paginationList.data.toList();
     temp.addAll(products.data);

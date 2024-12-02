@@ -113,49 +113,53 @@ GestureDetector productSquarItem(
                     : Visibility(
                         visible: !HiveStorage.get(HiveKeys.isStore),
                         child: InkWell(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              backgroundColor: ColorManager.primaryW,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight: Radius.circular(30),
+                            onTap: () {
+                              showModalBottomSheet(
+                                context: context,
+                                backgroundColor: ColorManager.primaryW,
+                                shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    topRight: Radius.circular(30),
+                                  ),
                                 ),
+                                clipBehavior: Clip.antiAliasWithSaveLayer,
+                                builder: (context) =>
+                                    ClosetSheetBarView(productId: product.id),
+                              );
+                            },
+                            child: Container(
+                              clipBehavior: Clip.none,
+                              width: 35.w,
+                              height: 35.w,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: product.isInCloset ? null : Colors.white,
+                                gradient: product.isInCloset
+                                    ? const LinearGradient(
+                                        colors: ColorManager.gradientColors)
+                                    : null,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        Colors.orange.shade300.withOpacity(1),
+                                    offset: const Offset(3, 3),
+                                    blurRadius: 5,
+                                  ),
+                                ],
                               ),
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              builder: (context) =>
-                                  ClosetSheetBarView(productId: product.id),
-                            );
-                          },
-                          child: !product.isInCloset
-                              ? Container(
-                                  width: 35.w,
-                                  height: 35.w,
-                                  padding: const EdgeInsets.all(5),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.orange.shade300
-                                            .withOpacity(1),
-                                        offset: const Offset(3, 3),
-                                        blurRadius: 5,
-                                      ),
-                                    ],
-                                  ),
-                                  child: SvgPicture.asset(
-                                    Assets.assetsImagesHanger,
-                                    fit: BoxFit.cover,
-                                  ),
-                                )
-                              : Image.asset(
-                                  Assets.assetsImagesClosetFollowing,
-                                  fit: BoxFit.cover,
-                                  width: 50,
-                                ),
-                        ),
+                              child: !product.isInCloset
+                                  ? SvgPicture.asset(
+                                      Assets.assetsImagesHanger,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : SvgPicture.asset(
+                                      Assets.assetsImagesActiveCloset,
+                                      fit: BoxFit.cover,
+                                      width: 60,
+                                    ),
+                            )),
                       ),
               ),
             ],

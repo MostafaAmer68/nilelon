@@ -20,8 +20,8 @@ class ProductsReposImpl extends ProductsRepos {
   ProductsReposImpl(this._productService);
   @override
   Future<Either<FailureService, ProductResponse>> getFollowedProducts(
-      int page, int productSize) async {
-    return exe(() => _productService.getFollowedProducts(page, productSize));
+      int page, int productSize, String productType) async {
+    return exe(() => _productService.getFollowedProducts(page, productSize, productType));
   }
 
   @override
@@ -33,8 +33,8 @@ class ProductsReposImpl extends ProductsRepos {
 
   @override
   Future<Either<FailureService, ProductResponse>> getNewInProducts(
-      int page, int productSize) async {
-    return exe(() => _productService.getNewInProducts(page, productSize));
+      int page, int productSize, String productType) async {
+    return exe(() => _productService.getNewInProducts(page, productSize, productType));
   }
 
   @override

@@ -10,37 +10,8 @@ class ServerFailure extends FailureService {
   ServerFailure(super.errorMsg);
 
   factory ServerFailure.fromDioException(DioException dioException) {
-    switch (dioException.type) {
-      case DioExceptionType.connectionTimeout:
-        return ServerFailure('Connection timeout with Api Server');
-      case DioExceptionType.sendTimeout:
-        return ServerFailure('Send timeout with Api Server');
-
-      case DioExceptionType.receiveTimeout:
-        return ServerFailure('Receive timeout with Api Server');
-
-      case DioExceptionType.badCertificate:
-        return ServerFailure('Bad certificate from Api Server');
-
-      case DioExceptionType.badResponse:
-        return ServerFailure.fromResponse(
-          dioException.response!.statusCode,
-          dioException.response!.data is Map
-              ? dioException.response!.data['errorMessages'].toString()
-              : dioException.response!.data,
-        );
-
-      case DioExceptionType.cancel:
-        return ServerFailure('Request with Api Server was cancelled');
-
-      case DioExceptionType.connectionError:
-        return ServerFailure('No Internet Connection');
-
-      case DioExceptionType.unknown:
-        return ServerFailure('Unexpected error, try again later!');
-      default:
-        return ServerFailure('Opps there was an error, try again later!');
-    }
+    return ServerFailure(
+        dioException.response!.data['errorMessages'].toString());
   }
 
   factory ServerFailure.fromResponse(int? statusCode, String response) {

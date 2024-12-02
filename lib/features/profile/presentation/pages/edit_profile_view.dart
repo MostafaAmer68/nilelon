@@ -22,6 +22,7 @@ import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../auth/domain/model/user_model.dart';
+import '../../../auth/presentation/cubit/auth_cubit.dart';
 import '../cubit/profile_cubit.dart';
 
 class EditProfileView extends StatefulWidget {
@@ -36,6 +37,7 @@ class _EditProfileViewState extends State<EditProfileView> {
   @override
   void initState() {
     cubit = ProfileCubit.get(context);
+    cubit.getCustomerAddress();
     cubit.nameController =
         TextEditingController(text: currentUsr<CustomerModel>().name);
     super.initState();
@@ -91,6 +93,36 @@ class _EditProfileViewState extends State<EditProfileView> {
                     const SizedBox(
                       height: 30,
                     ),
+                    textAndTextField(
+                        title: lang.addressLine1,
+                        label: lang.enterYourStreetAddress,
+                        controller: cubit.addressLine1,
+                        type: TextInputType.text),
+                    textAndTextField(
+                        title: lang.addressLine2,
+                        label: lang.enterYourStreetAddress,
+                        controller: cubit.addressLine2,
+                        type: TextInputType.text),
+                    textAndTextField(
+                        title: lang.streetAddress,
+                        label: lang.enterYourStreetAddress,
+                        controller: cubit.streetAddress,
+                        type: TextInputType.text),
+                    textAndTextField(
+                        title: lang.unitNumber,
+                        label: lang.enterYourUnitNumber,
+                        controller: cubit.unitNumber,
+                        type: TextInputType.text),
+                    textAndTextField(
+                        title: lang.landmark,
+                        label: lang.enterLandmark,
+                        controller: cubit.landmark,
+                        type: TextInputType.text),
+                    textAndTextField(
+                        title: lang.city,
+                        label: lang.enterYourCity,
+                        controller: cubit.city,
+                        type: TextInputType.text),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
@@ -214,6 +246,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                 height: screenHeight(context, 0.06),
                 ontap: () {
                   ProfileCubit.get(context).updateCustomer(context);
+                  ProfileCubit.get(context).setCustomerAddress();
                 }),
           ],
         ),
@@ -277,6 +310,48 @@ class _EditProfileViewState extends State<EditProfileView> {
               )),
         ],
       ),
+    );
+  }
+
+  Column textAndTextField({
+    required String title,
+    required String label,
+    required controller,
+    required type,
+    String? Function(String? v)? validate,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: AppStylesManager.customTextStyleBl8
+              .copyWith(fontWeight: FontWeight.w600),
+        ),
+        const SizedBox(
+          height: 12,
+        ),
+        TextFormFieldBuilder(
+          label: label,
+          onchanged: (v) {
+            cubit.formKey.currentState!.validate();
+          },
+          controller: controller,
+          validator: validate ??
+              (v) {
+                if (v!.isEmpty) {
+                  return 'required';
+                }
+                return null;
+              },
+          type: type,
+          width: screenWidth(context, 1),
+          noIcon: true,
+        ),
+        const SizedBox(
+          height: 16,
+        ),
+      ],
     );
   }
 }

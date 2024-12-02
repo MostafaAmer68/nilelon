@@ -6,6 +6,7 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
+import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/alert/empty_closets_alert.dart';
@@ -54,7 +55,27 @@ class ClosetsWidgetWithOptions extends StatelessWidget {
                     SizedBox(
                       width: 50.w,
                       height: 50.w,
-                      child: Image.asset(Assets.assetsImagesClosetFollowing),
+                      child: Container(
+                        clipBehavior: Clip.none,
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                              colors: ColorManager.gradientColors),
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.orange.shade300.withOpacity(1),
+                              offset: const Offset(3, 3),
+                              blurRadius: 5,
+                            ),
+                          ],
+                        ),
+                        child: SvgPicture.asset(
+                          Assets.assetsImagesActiveCloset,
+                          fit: BoxFit.cover,
+                          width: 60,
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 10),
                     SizedBox(

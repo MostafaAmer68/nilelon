@@ -14,6 +14,10 @@ class Assets {
   /// assets/fonts/Poppins-Regular.ttf
   static const String assetsFontsPoppinsRegular = "assets/fonts/Poppins-Regular.ttf";
 
+  /// Assets for assetsImagesActiveCloset
+  /// assets/images/activeCloset.svg
+  static const String assetsImagesActiveCloset = "assets/images/activeCloset.svg";
+
   /// Assets for assetsImagesAddTOCart
   /// assets/images/addTOCart.svg
   static const String assetsImagesAddTOCart = "assets/images/addTOCart.svg";
@@ -113,10 +117,6 @@ class Assets {
   /// Assets for assetsImagesCloset
   /// assets/images/Closet.svg
   static const String assetsImagesCloset = "assets/images/Closet.svg";
-
-  /// Assets for assetsImagesClosetFollowing
-  /// assets/images/closet_following.png
-  static const String assetsImagesClosetFollowing = "assets/images/closet_following.png";
 
   /// Assets for assetsImagesCloth1
   /// assets/images/cloth1.png

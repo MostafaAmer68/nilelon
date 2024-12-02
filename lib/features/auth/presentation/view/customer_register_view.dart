@@ -171,6 +171,12 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   AuthCubit.get(context).phoneController,
                   TextInputType.phone,
                 ),
+                phoneNumber(
+                  lang.whatsappNumber,
+                  '01234567899',
+                  AuthCubit.get(context).whatsappNum,
+                  TextInputType.phone,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Align(

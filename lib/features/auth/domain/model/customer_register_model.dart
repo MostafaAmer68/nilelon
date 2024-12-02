@@ -4,6 +4,7 @@ class CustomerRegisterModel extends Equatable {
   final String? fullName;
   final String? email;
   final String? phoneNumber;
+  final String? whatsappNumber;
   final String? birthDate;
   final bool? gender;
   final String? password;
@@ -13,6 +14,7 @@ class CustomerRegisterModel extends Equatable {
     this.fullName,
     this.email,
     this.phoneNumber,
+    this.whatsappNumber,
     this.birthDate,
     this.gender,
     this.password,
@@ -24,6 +26,7 @@ class CustomerRegisterModel extends Equatable {
         fullName: json["fullName"],
         email: json['email'],
         phoneNumber: json["phoneNumber"],
+        whatsappNumber: json["whatsappNumber"],
         birthDate: json['birthDate'],
         gender: json["gender"],
         password: json['password'],
@@ -35,6 +38,7 @@ class CustomerRegisterModel extends Equatable {
         'email': email,
         'phoneNumber': phoneNumber,
         'birthDate': birthDate,
+        'whatsappNumber': whatsappNumber,
         'gender': gender,
         'password': password,
         'confirmPassword': confirmPassword,
@@ -45,6 +49,7 @@ class CustomerRegisterModel extends Equatable {
         fullName,
         email,
         phoneNumber,
+        whatsappNumber,
         birthDate,
         gender,
         password,

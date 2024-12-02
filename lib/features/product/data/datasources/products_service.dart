@@ -23,25 +23,27 @@ class ProductsService {
 
   ProductsService({required this.apiService});
 
-  Future<ProductResponse> getFollowedProducts(int page, int pageSize) async {
+  Future<ProductResponse> getFollowedProducts(int page, int pageSize,String productType) async {
     final data =
         await apiService.get(endPoint: EndPoint.getFollowedProductsUrl, query: {
       'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'page': page,
+      'productType': productType,
       'pagesize': pageSize,
     });
     if (data.statusCode == 200) {
-      return ProductResponse.fromMap(data.data['result']);
+      return ProductResponse.fromMap(data.data['result'] ?? []);
     } else {
       throw Exception('Unexpected error ${data.data.first}');
     }
   }
 
-  Future<ProductResponse> getNewInProducts(int page, int pageSize) async {
+  Future<ProductResponse> getNewInProducts(int page, int pageSize, String productType) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getNewProductsUrl, query: {
       'CustomerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'page': page,
+      'productType': productType,
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {

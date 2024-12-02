@@ -46,7 +46,7 @@ class WideCard extends StatelessWidget {
         );
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 7),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
         margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: BoxDecoration(
           color: const Color(0xFFF7FDFF),
@@ -66,7 +66,7 @@ class WideCard extends StatelessWidget {
             Expanded(
               child: imageReplacer(
                 url: product.productImages.first.url,
-                height: 130,
+                height: 125,
                 width: 140,
                 radius: 16,
                 fit: BoxFit.cover,
@@ -110,33 +110,38 @@ class WideCard extends StatelessWidget {
                                     ClosetSheetBarView(productId: product.id),
                               );
                             },
-                            child: !product.isInCloset
-                                ? Container(
-                                    width: 30.w,
-                                    height: 30.w,
-                                    padding: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.orange.shade300
-                                              .withOpacity(1),
-                                          offset: const Offset(3, 3),
-                                          blurRadius: 5,
-                                        ),
-                                      ],
-                                    ),
-                                    child: SvgPicture.asset(
+                            child: Container(
+                              clipBehavior: Clip.none,
+                              width: 30.w,
+                              height: 30.w,
+                              padding: const EdgeInsets.all(5),
+                              decoration: BoxDecoration(
+                                color: product.isInCloset ? null : Colors.white,
+                                gradient: product.isInCloset
+                                    ? const LinearGradient(
+                                        colors: ColorManager.gradientColors)
+                                    : null,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color:
+                                        Colors.orange.shade300.withOpacity(1),
+                                    offset: const Offset(3, 3),
+                                    blurRadius: 5,
+                                  ),
+                                ],
+                              ),
+                              child: !product.isInCloset
+                                  ? SvgPicture.asset(
                                       Assets.assetsImagesHanger,
                                       fit: BoxFit.cover,
+                                    )
+                                  : SvgPicture.asset(
+                                      Assets.assetsImagesActiveCloset,
+                                      fit: BoxFit.cover,
+                                      width: 60,
                                     ),
-                                  )
-                                : Image.asset(
-                                    Assets.assetsImagesClosetFollowing,
-                                    fit: BoxFit.cover,
-                                    width: 45,
-                                  ),
+                            ),
                           ),
                         ),
                       ],

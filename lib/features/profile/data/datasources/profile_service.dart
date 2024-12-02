@@ -9,6 +9,7 @@ import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/service/network/end_point.dart';
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/alert/error_alert.dart';
+import '../models/address_model.dart';
 
 class ProfileService {
   final ApiService _apiService;
@@ -287,6 +288,33 @@ class ProfileService {
     );
     if (response.statusCode == 200) {
       return response.data['result'];
+    } else {
+      // Handle other status codes if necessary
+      final errorMessage = response.data;
+      // errorAlert(context, errorMessage);
+      throw Exception(' $errorMessage');
+    }
+  }
+
+  Future<void> setCustomerAddress(Map<String, dynamic> data) async {
+    final response = await _apiService.post(
+        endPoint: EndPoint.setCustomerAddressUrl, body: data);
+    if (response.statusCode == 200) {
+      // return response.data['result'];
+    } else {
+      // Handle other status codes if necessary
+      final errorMessage = response.data;
+      // errorAlert(context, errorMessage);
+      throw Exception(' $errorMessage');
+    }
+  }
+
+  Future<AddressModel> getCustomerAddress() async {
+    final response = await _apiService.post(
+        endPoint: EndPoint.getCustomerAddressUrl,
+        query: {'id': HiveStorage.get<UserModel>(HiveKeys.userModel).id});
+    if (response.statusCode == 200) {
+      return AddressModel.fromMap(response.data['result']);
     } else {
       // Handle other status codes if necessary
       final errorMessage = response.data;

@@ -172,33 +172,40 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                         productId: widget.productId),
                                   );
                                 },
-                                child: !productCubit.product.isInCloset
-                                    ? Container(
-                                        width: 30.w,
-                                        height: 30.w,
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.orange.shade300
-                                                  .withOpacity(1),
-                                              offset: const Offset(3, 3),
-                                              blurRadius: 5,
-                                            ),
-                                          ],
-                                        ),
-                                        child: SvgPicture.asset(
+                                child: Container(
+                                  // clipBehavior: Clip.none,
+                                  width: 35.w,
+                                  height: 35.w,
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: productCubit.product.isInCloset
+                                        ? null
+                                        : Colors.white,
+                                    gradient: productCubit.product.isInCloset
+                                        ? const LinearGradient(
+                                            colors: ColorManager.gradientColors)
+                                        : null,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.orange.shade300
+                                            .withOpacity(1),
+                                        offset: const Offset(3, 3),
+                                        blurRadius: 5,
+                                      ),
+                                    ],
+                                  ),
+                                  child: !productCubit.product.isInCloset
+                                      ? SvgPicture.asset(
                                           Assets.assetsImagesHanger,
                                           fit: BoxFit.cover,
+                                        )
+                                      : SvgPicture.asset(
+                                          Assets.assetsImagesActiveCloset,
+                                          fit: BoxFit.cover,
+                                          // width: 60,
                                         ),
-                                      )
-                                    : Image.asset(
-                                        Assets.assetsImagesClosetFollowing,
-                                        fit: BoxFit.cover,
-                                        width: 60,
-                                      ),
+                                ),
                               ),
                             ),
                           )
@@ -418,33 +425,40 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                         productId: widget.productId),
                                   );
                                 },
-                                child: !productCubit.product.isInCloset
-                                    ? Container(
-                                        width: 30.w,
-                                        height: 30.w,
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          shape: BoxShape.circle,
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.orange.shade300
-                                                  .withOpacity(1),
-                                              offset: const Offset(3, 3),
-                                              blurRadius: 5,
-                                            ),
-                                          ],
-                                        ),
-                                        child: SvgPicture.asset(
+                                child: Container(
+                                  // clipBehavior: Clip.none,
+                                  width: 35.w,
+                                  height: 35.w,
+                                  padding: const EdgeInsets.all(5),
+                                  decoration: BoxDecoration(
+                                    color: productCubit.product.isInCloset
+                                        ? null
+                                        : Colors.white,
+                                    gradient: productCubit.product.isInCloset
+                                        ? const LinearGradient(
+                                            colors: ColorManager.gradientColors)
+                                        : null,
+                                    shape: BoxShape.circle,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.orange.shade300
+                                            .withOpacity(1),
+                                        offset: const Offset(3, 3),
+                                        blurRadius: 5,
+                                      ),
+                                    ],
+                                  ),
+                                  child: !productCubit.product.isInCloset
+                                      ? SvgPicture.asset(
                                           Assets.assetsImagesHanger,
                                           fit: BoxFit.cover,
+                                        )
+                                      : SvgPicture.asset(
+                                          Assets.assetsImagesActiveCloset,
+                                          fit: BoxFit.cover,
+                                          // width: 60,
                                         ),
-                                      )
-                                    : Image.asset(
-                                        Assets.assetsImagesClosetFollowing,
-                                        fit: BoxFit.cover,
-                                        width: 60,
-                                      ),
+                                ),
                               ),
                             ),
                           )

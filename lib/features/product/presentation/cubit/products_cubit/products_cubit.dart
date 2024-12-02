@@ -77,6 +77,21 @@ class ProductsCubit extends Cubit<ProductsState> {
     });
   }
 
+  Future<void> getProductDetailsSearch(String productId,
+      [bool isSearch = true]) async {
+    emit(const ProductsState.loading());
+    var result = await productsRepos.getProductDetails(productId);
+    result.fold((failure) {
+      emit(ProductsState.failure(failure.errorMsg));
+    }, (response) {
+      product = response;
+      if (isSearch) {
+        getReviews(productId);
+      }
+      emit(const ProductsState.success());
+    });
+  }
+
   Future<void> getProductByCategory() async {
     emit(const ProductsState.loading());
     var result =
@@ -122,7 +137,11 @@ class ProductsCubit extends Cubit<ProductsState> {
     if (isPagination) {
       emit(const ProductsState.loading());
     }
-    var result = await productsRepos.getFollowedProducts(page, limit);
+    var result = await productsRepos.getFollowedProducts(
+      page,
+      limit,
+      gendar == 'All' ? 'UniSex' : gendar,
+    );
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
@@ -140,7 +159,11 @@ class ProductsCubit extends Cubit<ProductsState> {
 
     if (HiveStorage.get(HiveKeys.userModel) != null &&
         !HiveStorage.get(HiveKeys.isStore)) {
-      result = await productsRepos.getNewInProducts(page, limit);
+      result = await productsRepos.getNewInProducts(
+        page,
+        limit,
+        gendar == 'All' ? 'UniSex' : gendar,
+      );
     } else {
       result = await productsRepos.getNewInProductsGuest(
         page,
