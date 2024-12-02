@@ -70,6 +70,8 @@ class AuthService {
       HiveStorage.set(HiveKeys.shopFor, false);
 
       HiveStorage.set(HiveKeys.userModel, userData);
+      final token = FlutterSecureStorage();
+      token.write(key: 'token', value: data.data);
       return data.data as String;
     } else if (data.statusCode == 400) {
       // Handle the bad request response
@@ -109,6 +111,8 @@ class AuthService {
       HiveStorage.set(HiveKeys.shopFor, false);
 
       HiveStorage.set(HiveKeys.userModel, userData);
+      final token = FlutterSecureStorage();
+      token.write(key: 'token', value: data.data);
       return data.data as String;
     } else if (data.statusCode == 400) {
       // Handle the bad request response

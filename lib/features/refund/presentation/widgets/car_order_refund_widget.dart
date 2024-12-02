@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 
 import 'package:nilelon/generated/l10n.dart';
@@ -49,14 +50,10 @@ class _OrderRefundDetailsCardState extends State<OrderRefundDetailsCard> {
       padding: const EdgeInsets.all(8),
       child: Row(
         children: [
-          Container(
-            width: 90,
-            height: 110,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                image: const DecorationImage(
-                    image: AssetImage('assets/images/cloth1.png'),
-                    fit: BoxFit.cover)),
+          imageReplacer(
+            url: widget.product.urls.first,
+            radius: 15,
+            width: 100,
           ),
           const SizedBox(
             width: 8,

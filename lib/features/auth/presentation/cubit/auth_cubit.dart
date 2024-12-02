@@ -137,13 +137,30 @@ class AuthCubit extends Cubit<AuthState> {
     result.fold((failure) {
       emit(LoginFailure(failure.errorMsg));
     }, (response) {
-      emit(const LoginSuccess('Login Successfully'));
       emailController.clear();
       passwordController.clear();
       FlutterBackgroundService().invoke('stop');
       initializeWebSocket();
       initializeService();
       service.startService();
+      final bool isStore =
+          HiveStorage.get<UserModel>(HiveKeys.userModel).role == 'Store';
+      final bool isCustomer =
+          HiveStorage.get<UserModel>(HiveKeys.userModel).role == 'Customer';
+      if (isStore && HiveStorage.get(HiveKeys.isStore) || isCustomer) {
+        emit(const LoginSuccess('Login Successfully'));
+      } else {
+        HiveStorage.set(HiveKeys.userModel, null);
+        emit(const LoginFailure('this account not found'));
+        return;
+      }
+      // if () {
+      //   emit(const LoginSuccess('Login Successfully'));
+      // } else {
+      //   HiveStorage.set(HiveKeys.userModel, null);
+      //   emit(const LoginFailure('this account not found'));
+      //   return;
+      // }
       BlocProvider.of<CategoryCubit>(context).getCategories();
     });
   }

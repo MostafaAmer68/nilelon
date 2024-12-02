@@ -13,6 +13,7 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
+import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/categories/presentation/widget/category_filter_widget.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
@@ -143,9 +144,10 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                           ),
                         ],
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.all(16.0),
-                        child: ProductStoreWidget(),
+                        child: ProductStoreWidget(
+                            categoryId: cubit.selectedCategory),
                       ),
                     ],
                   ),
@@ -194,15 +196,17 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                                 selectedCategory: cubit.selectedCategory,
                                 onSelected: (category) {
                                   cubit.selectedCategory = category;
+                                  log(category.name);
                                   setState(() {});
                                 },
                               ),
                             ),
                           ],
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.all(16.0),
-                          child: ProductStoreWidget(),
+                          child: ProductStoreWidget(
+                              categoryId: cubit.selectedCategory),
                         ),
                       ],
                     );
@@ -220,11 +224,11 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
 class ProductStoreWidget extends StatelessWidget {
   const ProductStoreWidget({
     super.key,
+    required this.categoryId,
   });
-
+  final CategoryModel categoryId;
   @override
   Widget build(BuildContext context) {
-    var profileCubit = ProfileCubit.get(context);
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
         return state.maybeWhen(
@@ -236,14 +240,14 @@ class ProductStoreWidget extends StatelessWidget {
             gridDelegate: gridDelegate(context),
             shrinkWrap: true,
             itemCount: ProductsCubit.get(context)
-                .filterListByCategory(profileCubit.selectedCategory,
-                    ProductsCubit.get(context).storeProducts.data)
+                .filterListByCategory(
+                    categoryId, ProductsCubit.get(context).storeProducts.data)
                 .length,
             itemBuilder: (context, sizeIndex) {
               return productSquarItem(
                 context: context,
                 product: ProductsCubit.get(context)
-                    .filterListByCategory(profileCubit.selectedCategory,
+                    .filterListByCategory(categoryId,
                         ProductsCubit.get(context).storeProducts.data)
                     .toList()[sizeIndex],
               );
@@ -254,15 +258,15 @@ class ProductStoreWidget extends StatelessWidget {
             gridDelegate: gridDelegate(context),
             shrinkWrap: true,
             itemCount: ProductsCubit.get(context)
-                .filterListByCategory(profileCubit.selectedCategory,
-                    ProductsCubit.get(context).storeProducts.data)
+                .filterListByCategory(
+                    categoryId, ProductsCubit.get(context).storeProducts.data)
                 .length,
             itemBuilder: (context, sizeIndex) {
               log('test');
               return productSquarItem(
                 context: context,
                 product: ProductsCubit.get(context)
-                    .filterListByCategory(profileCubit.selectedCategory,
+                    .filterListByCategory(categoryId,
                         ProductsCubit.get(context).storeProducts.data)
                     .toList()[sizeIndex],
               );
@@ -320,6 +324,8 @@ class _FollowAndNotifyWidgetState extends State<FollowAndNotifyWidget> {
                               text: lang(context).follow,
                               ontap: () {
                                 cubit.followStore(widget.storeId);
+                                ProductsCubit.get(context)
+                                    .getFollowedProducts();
                               },
                               width: screenWidth(context, 0.55),
                               height: 38,

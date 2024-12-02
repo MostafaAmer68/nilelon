@@ -13,6 +13,7 @@ AppBar customAppBar(
     void Function()? leadingOnPressed,
     bool hasLeading = true,
     Color color = ColorManager.black,
+    Color iconColor = ColorManager.black,
     bool hasIcon = true}) {
   return AppBar(
     backgroundColor: Colors.transparent,
@@ -39,7 +40,7 @@ AppBar customAppBar(
                   },
               icon: Icon(
                 icon ?? Iconsax.search_normal,
-                color: color,
+                color: iconColor,
               ),
             )
           : Container(),

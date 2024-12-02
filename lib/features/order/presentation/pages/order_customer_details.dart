@@ -37,8 +37,13 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
     super.initState();
   }
 
+  num price = 0;
   @override
   Widget build(BuildContext context) {
+    price = 0;
+    for (var item in cubit.customerOrder.orderProductVariants) {
+      price += item.price;
+    }
     Map<String, dynamic> orderState = {
       'Ordered': {
         'title': 'Ordered',
@@ -62,7 +67,8 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
           title: lang.orderDetails,
           context: context,
           hasIcon: cubit.customerOrder.status == 'Delivered',
-          icon: Icons.error,
+          icon: Icons.error_outline,
+          iconColor: ColorManager.primaryR,
           onPressed: () {
             navigateTo(
                 context: context, screen: RefundPage(orderId: widget.id));
@@ -222,7 +228,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                               loading: () => const CircularProgressIndicator(),
                               success: () => orderSummaryItems(
                                 S.of(context).order,
-                                (cubit.customerOrder.total).toString(),
+                                (price).toString(),
                               ),
                               orElse: () => orderSummaryItems(
                                 S.of(context).order,

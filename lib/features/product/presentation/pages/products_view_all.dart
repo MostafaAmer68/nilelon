@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
 import 'package:nilelon/features/product/domain/models/product_response.dart';
@@ -54,7 +55,10 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   @override
   void dispose() {
     cubit.category = CategoryModel.empty();
-    cubit.gendar = 'All';
+    cubit.gendar = HiveStorage.get<UserModel>(HiveKeys.userModel)
+        .getUserData<CustomerModel>()
+        .productsChoice;
+    widget.onStartPage(true);
     scrollController.dispose();
     cubit.page = 1;
     widget.onStartPage(true);
@@ -65,9 +69,8 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   @override
   void initState() {
     cubit = ProductsCubit.get(context);
+    cubit.gendar = 'All';
     widget.onStartPage(true);
-    // paginationList.clear();
-
     scrollController = ScrollController(keepScrollOffset: true);
     scrollController.addListener(() {
       if (scrollController.position.pixels ==

@@ -31,10 +31,14 @@ class PromoService {
     );
 
     if (response.statusCode == HttpStatus.ok) {
-      return {
-        'promotionId': response.data['result']['promotionId'],
-        'type': response.data['result']['type'],
-      };
+      if ((response.data['result'] as Map).containsKey('promotionId')) {
+        return {
+          'promotionId': response.data['result']['promotionId'],
+          'type': response.data['result']['type'],
+        };
+      } else {
+        throw response.data['result'];
+      }
     }
     throw response.data['errorMessages'];
   }

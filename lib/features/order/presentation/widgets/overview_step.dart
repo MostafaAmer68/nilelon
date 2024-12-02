@@ -48,6 +48,7 @@ class _OverViewStepState extends State<OverViewStep> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
+    log(promoCubit.totalPrice.toString());
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: BlocListener<PromoCubit, PromoState>(

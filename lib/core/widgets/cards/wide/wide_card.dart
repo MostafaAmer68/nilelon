@@ -316,28 +316,42 @@ class WideCard extends StatelessWidget {
                                 }
                                 if (HiveStorage.get(HiveKeys.userModel) !=
                                     null) {
+                                  PromoCubit.get(context).deliveryPrice = 0;
+                                  PromoCubit.get(context).totalPrice = 0;
+                                  PromoCubit.get(context).orderTotal = 0;
+                                  PromoCubit.get(context).discount = 0;
+                                  PromoCubit.get(context).newPrice = 0;
+                                  PromoCubit.get(context).tempTotalPrice = 0;
                                   CartCubit.get(context).tempCartItems.clear();
                                   CartCubit.get(context).tempCartItems.add(
-                                      CartItem(
-                                          quantity: product
-                                              .productVariants.first.quantity
-                                              .toInt(),
-                                          size: product.productVariants
-                                              .firstWhere((e) => e.price != 0)
-                                              .size,
-                                          color:
-                                              product.productVariants
-                                                  .firstWhere(
-                                                      (e) => e.price != 0)
-                                                  .color,
-                                          price: product.productVariants
-                                              .firstWhere((e) => e.price != 0)
-                                              .price,
-                                          productName: product.name,
-                                          productId: product.id,
-                                          productImages: product.productImages,
-                                          cartId: ''));
+                                        CartItem(
+                                            quantity: product
+                                                .productVariants.first.quantity
+                                                .toInt(),
+                                            size: product.productVariants
+                                                .firstWhere((e) => e.price != 0)
+                                                .size,
+                                            color: product.productVariants
+                                                .firstWhere((e) => e.price != 0)
+                                                .color,
+                                            price: product.productVariants
+                                                .firstWhere((e) => e.price != 0)
+                                                .price,
+                                            productName: product.name,
+                                            productId: product.id,
+                                            productImages:
+                                                product.productImages,
+                                            cartId: ''),
+                                      );
                                   PromoCubit.get(context).totalPrice = product
+                                      .productVariants
+                                      .firstWhere((e) => e.price != 0)
+                                      .price;
+                                  PromoCubit.get(context).newPrice = product
+                                      .productVariants
+                                      .firstWhere((e) => e.price != 0)
+                                      .price;
+                                  PromoCubit.get(context).orderTotal = product
                                       .productVariants
                                       .firstWhere((e) => e.price != 0)
                                       .price;
@@ -345,9 +359,14 @@ class WideCard extends StatelessWidget {
                                       product.productVariants
                                           .firstWhere((e) => e.price != 0)
                                           .price;
-                                  navigateTo(
-                                      context: context,
-                                      screen: const CheckOutView());
+                                  if (PromoCubit.get(context).totalPrice > 0 &&
+                                      PromoCubit.get(context).tempTotalPrice >
+                                          0) {
+                                    navigateTo(
+                                        context: context,
+                                        screen:
+                                            const CheckOutView(isBuNow: true));
+                                  }
                                 } else {
                                   navigateTo(
                                       context: context,

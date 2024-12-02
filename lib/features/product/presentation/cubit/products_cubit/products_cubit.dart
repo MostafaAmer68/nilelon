@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -48,6 +50,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     if (selectedCategory.id.isEmpty) {
       return filteredProducts;
     }
+    log(filteredProducts.map((e) => e.name).toString());
     return filteredProducts.where(
       (product) {
         final matchesCategory = selectedCategory.id.isEmpty ||
@@ -114,6 +117,8 @@ class ProductsCubit extends Cubit<ProductsState> {
     result.fold((failure) {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
+      comment.clear();
+      rate = 0;
       emit(const ProductsState.success());
     });
   }

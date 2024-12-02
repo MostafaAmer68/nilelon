@@ -91,38 +91,38 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                       // navigatePop(context: context);
                       ClosetCubit.get(context).getclosets();
                     }, successAdded: (c) {
-                      BotToast.showCustomText(
-                        duration: const Duration(seconds: 4),
-                        toastBuilder: (_) => Card(
-                          color: Colors.black87,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  S.of(context).productAdded,
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                                const SizedBox(width: 10),
-                                TextButton(
-                                  onPressed: () {
-                                    BotToast.closeAllLoading();
-                                    navigateTo(
-                                        context: context,
-                                        screen: ProductClosetPage(
-                                            closet: selectedCloset));
-                                  },
-                                  child: Text(
-                                    S.of(context).myCloset,
-                                    style: const TextStyle(color: Colors.blue),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
+                      navigateTo(
+                          context: context,
+                          screen: ProductClosetPage(closet: selectedCloset));
+                      // BotToast.showCustomText(
+                      //   duration: const Duration(seconds: 4),
+                      //   toastBuilder: (_) => Card(
+                      //     color: Colors.black87,
+                      //     child: Padding(
+                      //       padding: const EdgeInsets.all(16.0),
+                      //       child: Row(
+                      //         mainAxisSize: MainAxisSize.min,
+                      //         children: [
+                      //           Text(
+                      //             S.of(context).productAdded,
+                      //             style: const TextStyle(color: Colors.white),
+                      //           ),
+                      //           const SizedBox(width: 10),
+                      //           TextButton(
+                      //             onPressed: () {
+                      //               BotToast.closeAllLoading();
+
+                      //             },
+                      //             child: Text(
+                      //               S.of(context).myCloset,
+                      //               style: const TextStyle(color: Colors.blue),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // );
                     });
                   },
                   builder: (context, state) {
@@ -195,7 +195,7 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                                         closet.id,
                                       );
                                       selectedCloset = closet;
-                                    }
+                                    } else {}
                                   },
                                 );
                               }

@@ -2,6 +2,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:nilelon/core/color_const.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -20,8 +21,8 @@ import '../../../../core/widgets/scaffold_image.dart';
 import '../../../shared/pdf_view/pdf_view.dart';
 
 class CheckOutView extends StatefulWidget {
-  const CheckOutView({super.key});
-
+  const CheckOutView({super.key, this.isBuNow = false});
+  final bool isBuNow;
   @override
   State<CheckOutView> createState() => _CheckOutViewState();
 }
@@ -43,12 +44,14 @@ class _CheckOutViewState extends State<CheckOutView> {
   void initState() {
     cubit = ProgressCubit.get(context);
     orderCubit = OrderCubit.get(context);
-    PromoCubit.get(context).deliveryPrice = 0;
-    PromoCubit.get(context).totalPrice = 0;
-    PromoCubit.get(context).orderTotal = 0;
-    PromoCubit.get(context).discount = 0;
-    PromoCubit.get(context).newPrice = 0;
-    PromoCubit.get(context).tempTotalPrice = 0;
+    if (!widget.isBuNow) {
+      PromoCubit.get(context).deliveryPrice = 0;
+      PromoCubit.get(context).totalPrice = 0;
+      PromoCubit.get(context).orderTotal = 0;
+      PromoCubit.get(context).discount = 0;
+      PromoCubit.get(context).newPrice = 0;
+      PromoCubit.get(context).tempTotalPrice = 0;
+    }
     cubit.resetPage();
     super.initState();
   }
@@ -61,11 +64,16 @@ class _CheckOutViewState extends State<CheckOutView> {
     super.dispose();
   }
 
+  num price = 0;
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
     // cubit.previousStep();
     // BotToast.closeAllLoading();
+    price = 0;
+    for (var item in orderCubit.customerOrder.orderProductVariants) {
+      price += item.price;
+    }
     return BlocListener<OrderCubit, OrderState>(
       listener: (context, state) {
         state.mapOrNull(success: (_) {
@@ -129,16 +137,14 @@ class _CheckOutViewState extends State<CheckOutView> {
                             e.productName,
                             e.storeName,
                             e.quantity.toString(),
-                            e.color,
+                            colroName['0x${e.color.toUpperCase()}']!,
                             e.size.toString(),
                             e.price.toString()
                           ])
                       .toList(),
-                  netTotal: (orderCubit.customerOrder.total -
-                          num.parse(orderCubit.customerOrder.shippingCost))
-                      .toString(),
+                  netTotal: price.toString(),
                   discount:
-                      '${(orderCubit.customerOrder.discount.toStringAsFixed(0))}%',
+                      (orderCubit.customerOrder.discount.toStringAsFixed(0)),
                   total: (orderCubit.customerOrder.total).toString(),
                   delivery: orderCubit.customerOrder.shippingCost,
                 ),

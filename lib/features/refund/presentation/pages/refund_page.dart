@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -53,7 +54,7 @@ class _RefundPageState extends State<RefundPage> {
                   children: [
                     ProfileListTile(
                       name: lang.returnItem,
-                      image: 'assets/images/repeat-circle.svg',
+                      image: Assets.assetsImagesRepeatCircle,
                       onTap: () {
                         navigateTo(
                             context: context, screen: const ReturnItemPage());
@@ -61,7 +62,7 @@ class _RefundPageState extends State<RefundPage> {
                     ),
                     ProfileListTile(
                       name: lang.missingItem,
-                      image: 'assets/images/missing.svg',
+                      image: Assets.assetsImagesMissing,
                       onTap: () {
                         navigateTo(
                             context: context, screen: const ReturnItemPage());
@@ -70,7 +71,7 @@ class _RefundPageState extends State<RefundPage> {
                     ),
                     ProfileListTile(
                       name: lang.wrongItem,
-                      image: 'assets/images/wrong.svg',
+                      image: Assets.assetsImagesWrong,
                       onTap: () {
                         navigateTo(
                             context: context, screen: const ReturnItemPage());
@@ -81,7 +82,7 @@ class _RefundPageState extends State<RefundPage> {
                     ),
                     ProfileListTile(
                       name: lang.contactUs,
-                      image: 'assets/images/call.svg',
+                      image: Assets.assetsImagesCall,
                       onTap: () {
                         // navigateTo(context: context, screen: const SettingsView());
                       },

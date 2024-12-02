@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
@@ -61,7 +62,8 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
             // Open the folder containing the file
             String folderPath =
                 filePath.substring(0, filePath.lastIndexOf('/'));
-            await OpenFilex.open('/storage/emulated/0/Download/');
+            log(filePath);
+            await OpenFilex.open(filePath);
           }
         }
       },

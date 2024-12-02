@@ -36,21 +36,23 @@ class PromoCubit extends Cubit<PromoState> {
 
   Future getFreeShipping(context, promoCodeId) async {
     emit(PromoLoading());
-    final result = await _promoRepo.getFreeShipping(promoCodeId, selectedGov);
+    if(selectedGov.isNotEmpty){
+       final result = await _promoRepo.getFreeShipping(promoCodeId, selectedGov);
 
-    result.fold(
-      (failrue) {
-        emit(PromoFailure(failrue.errorMsg));
-      },
-      (response) {
-        isFreeShipping = response;
-        if (response) {
-          totalPrice -= deliveryPrice;
-          deliveryPrice = 0;
-        }
-        emit(PromoSuccess());
-      },
-    );
+      result.fold(
+        (failrue) {
+          emit(PromoFailure(failrue.errorMsg));
+        },
+        (response) {
+          isFreeShipping = response;
+          if (response) {
+            totalPrice -= deliveryPrice;
+            deliveryPrice = 0;
+          }
+          emit(PromoSuccess());
+        },
+      );
+    }
   }
 
   Future getPromoCodeType(context) async {
