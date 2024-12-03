@@ -49,9 +49,11 @@ class _TxtFieldPromoState extends State<TxtFieldPromo> {
                 BotToast.showText(text: 'Promocode applied');
               }
             },
-            builder: (context, state) => state is PromoLoading
-                ? const Center(child: CircularProgressIndicator())
-                : ButtonBuilder(
+            builder: (context, state) {
+              if (state is PromoLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                return ButtonBuilder(
                     text: lang(context).apply,
                     ontap: () {
                       if (cubit.applyOfferForm.currentState!.validate()) {
@@ -62,7 +64,9 @@ class _TxtFieldPromoState extends State<TxtFieldPromo> {
                     height: 54,
                     frameColor: Colors.transparent,
                     width: screenWidth(context, 0.24),
-                  ),
+                  );
+              }
+            },
           ),
         ],
       ),

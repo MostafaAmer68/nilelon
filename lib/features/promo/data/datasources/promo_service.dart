@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:nilelon/core/service/network/api_service.dart';
@@ -32,10 +33,8 @@ class PromoService {
 
     if (response.statusCode == HttpStatus.ok) {
       if ((response.data['result'] as Map).containsKey('promotionId')) {
-        return {
-          'promotionId': response.data['result']['promotionId'],
-          'type': response.data['result']['type'],
-        };
+        log('test');
+        return response.data['result'];
       } else {
         throw response.data['result'];
       }
@@ -70,7 +69,7 @@ class PromoService {
         body: {'promotionId': code, 'governate': governate});
 
     if (response.statusCode == HttpStatus.ok) {
-      return response.data['result'] as bool;
+      return (response.data['result']);
     }
     throw response.data['errorMessages'];
   }

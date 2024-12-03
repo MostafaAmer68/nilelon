@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,45 +37,60 @@ class PromoCubit extends Cubit<PromoState> {
   CategoryModel category = CategoryModel.empty();
 
   Future getFreeShipping(context, promoCodeId) async {
-    emit(PromoLoading());
-    if(selectedGov.isNotEmpty){
-       final result = await _promoRepo.getFreeShipping(promoCodeId, selectedGov);
+    try {
+      emit(PromoLoading());
+      if (selectedGov.isNotEmpty) {
+        final result =
+            await _promoRepo.getFreeShipping(promoCodeId, selectedGov);
+        log('ts');
+        result.fold(
+          (failrue) {
+            emit(PromoFailure(failrue.errorMsg));
+          },
+          (response) {
+            isFreeShipping = response;
+            if (response) {
+              totalPrice -= deliveryPrice;
+              deliveryPrice = 0;
+            }
+            emit(PromoSuccess());
+          },
+        );
+      } else {
+        emit(const PromoFailure('please select governate'));
+      }
+    } catch (e) {
+      log(e.toString());
+      emit(PromoFailure(e.toString()));
+    }
+  }
+
+  Future getPromoCodeType(context) async {
+    try {
+      emit(PromoLoading());
+      if (promoCode.text.isEmpty) {
+        emit(const PromoFailure('Please enter promo code'));
+      }
+      final result = await _promoRepo.getPromoType(promoCode.text);
 
       result.fold(
         (failrue) {
           emit(PromoFailure(failrue.errorMsg));
         },
         (response) {
-          isFreeShipping = response;
-          if (response) {
-            totalPrice -= deliveryPrice;
-            deliveryPrice = 0;
+          if (response['type'] == 'OrderDiscount') {
+            log('te');
+            getOrderDiscount(context, response['promotionId']);
           }
-          emit(PromoSuccess());
+          if (response['type'] == 'FreeShipping') {
+            log('t2e');
+            getFreeShipping(context, response['promotionId']);
+          }
         },
       );
+    } catch (e) {
+      emit(PromoFailure(e.toString()));
     }
-  }
-
-  Future getPromoCodeType(context) async {
-    emit(PromoLoading());
-    if (promoCode.text.isEmpty) {
-      emit(const PromoFailure('Please enter promo code'));
-    }
-    final result = await _promoRepo.getPromoType(promoCode.text);
-
-    result.fold(
-      (failrue) {
-        emit(PromoFailure(failrue.errorMsg));
-      },
-      (response) {
-        if (response['type'] == 'OrderDiscount') {
-          getOrderDiscount(context, response['promotionId']);
-        } else if (response['type'] == 'FreeShipping') {
-          getFreeShipping(context, response['promotionId']);
-        }
-      },
-    );
   }
 
   Future getOrderDiscount(context, promoCodeId) async {

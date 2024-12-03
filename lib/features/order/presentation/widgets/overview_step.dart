@@ -266,6 +266,7 @@ class _OverViewStepState extends State<OverViewStep> {
                                 .firstWhere((e) => e.governate == selectedValue)
                                 .price;
                             if (newDeliveryPrice != promoCubit.deliveryPrice) {
+                              promoCubit.selectedGov = selectedValue!;
                               promoCubit.totalPrice = promoCubit.totalPrice -
                                   promoCubit.deliveryPrice;
                               promoCubit.deliveryPrice = newDeliveryPrice;
