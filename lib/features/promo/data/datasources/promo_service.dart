@@ -32,11 +32,16 @@ class PromoService {
     );
 
     if (response.statusCode == HttpStatus.ok) {
-      if ((response.data['result'] as Map).containsKey('promotionId')) {
-        log('test');
+      if (response.data['result'] == null) {
+        throw response.data['errorMessages'][0];
+      }
+      if ((response.data['result'] as Map).containsKey('promotionId') ||
+          response.data['isSuccess']) {
+        log('message');
         return response.data['result'];
       } else {
-        throw response.data['result'];
+        log('message1');
+        throw response.data['errorMessages'];
       }
     }
     throw response.data['errorMessages'];
@@ -69,7 +74,11 @@ class PromoService {
         body: {'promotionId': code, 'governate': governate});
 
     if (response.statusCode == HttpStatus.ok) {
-      return (response.data['result']);
+      if (response.data['result'] is String) {
+        throw response.data['result'];
+      } else {
+        return (response.data['result']);
+      }
     }
     throw response.data['errorMessages'];
   }

@@ -33,6 +33,7 @@ class CustomerHomeView extends StatefulWidget {
 class _CustomerHomeViewState extends State<CustomerHomeView> {
   @override
   Widget build(BuildContext context) {
+    ProductsCubit.get(context).getFollowedProducts();
     final lang = S.of(context);
     return ScaffoldImage(
       body: SafeArea(

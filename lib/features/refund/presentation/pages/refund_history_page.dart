@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/order/presentation/widgets/returned_customer_card.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
@@ -69,8 +70,8 @@ class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: ReturnedCustomerCard(
-                          image: SvgPicture.asset(
-                              'assets/images/repeat-circle.svg'),
+                          image:
+                              SvgPicture.asset(Assets.assetsImagesRepeatCircle),
                           title: refundItem.reason,
                           time: formattedDate
                               .format(DateTime.parse(refundItem.date)),

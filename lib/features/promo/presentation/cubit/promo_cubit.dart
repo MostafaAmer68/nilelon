@@ -75,6 +75,7 @@ class PromoCubit extends Cubit<PromoState> {
 
       result.fold(
         (failrue) {
+          log(failrue.errorMsg);
           emit(PromoFailure(failrue.errorMsg));
         },
         (response) {
@@ -85,6 +86,9 @@ class PromoCubit extends Cubit<PromoState> {
           if (response['type'] == 'FreeShipping') {
             log('t2e');
             getFreeShipping(context, response['promotionId']);
+          }
+          if (response['type'] == 'StoreDiscount') {
+            emit(const PromoFailure('Promo code not supported yet'));
           }
         },
       );

@@ -25,11 +25,11 @@ class ReturnDetailsModel {
 
   factory ReturnDetailsModel.fromJson(Map<String, dynamic> json) {
     return ReturnDetailsModel(
-      returnedSize: json['returnedSize'],
-      returnedColor: json['returnedColor'],
+      returnedSize: json['returnedSize'] ?? '',
+      returnedColor: json['returnedColor'] ?? '',
       frontImage: json['frontImage'],
       backImage: json['backImage'],
-      damageImage: json['damageImage'],
+      damageImage: json['damageImage'] ?? '',
       productName: json['productName'],
       productImage: json['productImage'],
       price: json['price'],

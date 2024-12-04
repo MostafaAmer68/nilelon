@@ -62,225 +62,234 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
       }
     };
     final lang = S.of(context);
-    return ScaffoldImage(
-      appBar: customAppBar(
-          title: lang.orderDetails,
-          context: context,
-          hasIcon: cubit.customerOrder.status == 'Delivered',
-          icon: Icons.error_outline,
-          iconColor: ColorManager.primaryR,
-          onPressed: () {
-            navigateTo(
-                context: context, screen: RefundPage(orderId: widget.id));
-          }),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const DefaultDivider(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Container(
-                    width: screenWidth(context, 1),
-                    height: 290,
-                    decoration: ShapeDecoration(
-                      color: ColorManager.primaryW,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      shadows: const [
-                        BoxShadow(
-                          color: ColorManager.primaryBL4,
-                          blurRadius: 8,
-                          offset: Offset(0, 2),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        BlocBuilder<OrderCubit, OrderState>(
-                          builder: (context, state) {
-                            return orderSummaryItems2(
-                                lang.orderDate,
+    return BlocBuilder<OrderCubit, OrderState>(
+      builder: (context, state) {
+        return ScaffoldImage(
+          appBar: customAppBar(
+            title: lang.orderDetails,
+            context: context,
+            hasIcon: cubit.customerOrder.status == 'Delivered',
+            icon: Icons.error_outline,
+            iconColor: ColorManager.primaryR,
+            onPressed: () {
+              navigateTo(
+                  context: context, screen: RefundPage(orderId: widget.id));
+            },
+          ),
+          body: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const DefaultDivider(),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: screenWidth(context, 1),
+                        height: 290,
+                        decoration: ShapeDecoration(
+                          color: ColorManager.primaryW,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          shadows: const [
+                            BoxShadow(
+                              color: ColorManager.primaryBL4,
+                              blurRadius: 8,
+                              offset: Offset(0, 2),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            BlocBuilder<OrderCubit, OrderState>(
+                              builder: (context, state) {
+                                return orderSummaryItems2(
+                                    lang.orderDate,
+                                    Text(
+                                      DateFormat('dd-MM-yyyy')
+                                          .format(cubit.customerOrder.date),
+                                    ));
+                              },
+                            ),
+                            orderSummaryItems2(
+                              lang.orderState,
+                              BlocBuilder<OrderCubit, OrderState>(
+                                builder: (context, state) {
+                                  return state.maybeWhen(
+                                    loading: () =>
+                                        const CircularProgressIndicator(),
+                                    success: () => Container(
+                                      height: 35,
+                                      width: 100,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(16),
+                                          color: orderState[cubit
+                                              .customerOrder.status]['color']),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          SvgPicture.asset(orderState[cubit
+                                              .customerOrder.status]['icon']),
+                                          Text(
+                                            cubit.customerOrder.status,
+                                            style: const TextStyle(
+                                                color: ColorManager.primaryW),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    orElse: () => Container(
+                                      height: 35,
+                                      width: 100,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            cubit.customerOrder.status,
+                                            style: const TextStyle(
+                                                color: ColorManager.primaryW),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )!;
+                                },
+                              ),
+                            ),
+                            orderSummaryItems2(
+                                lang.recievedDate,
                                 Text(
                                   DateFormat('dd-MM-yyyy')
                                       .format(cubit.customerOrder.date),
-                                ));
-                          },
-                        ),
-                        orderSummaryItems2(
-                          lang.orderState,
-                          BlocBuilder<OrderCubit, OrderState>(
-                            builder: (context, state) {
-                              return state.maybeWhen(
-                                loading: () =>
-                                    const CircularProgressIndicator(),
-                                success: () => Container(
-                                  height: 35,
-                                  width: 100,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color:
-                                          orderState[cubit.customerOrder.status]
-                                              ['color']),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      SvgPicture.asset(
-                                          orderState[cubit.customerOrder.status]
-                                              ['icon']),
-                                      Text(
-                                        cubit.customerOrder.status,
-                                        style: const TextStyle(
-                                            color: ColorManager.primaryW),
-                                      ),
-                                    ],
+                                  style: AppStylesManager.customTextStyleG,
+                                )),
+                            BlocBuilder<OrderCubit, OrderState>(
+                              builder: (context, state) {
+                                return orderSummaryItems2(
+                                  lang.paymentMethod,
+                                  Text(
+                                    cubit.customerOrder.paymentType,
+                                    style: AppStylesManager.customTextStyleBl8,
                                   ),
-                                ),
-                                orElse: () => Container(
-                                  height: 35,
-                                  width: 100,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(
-                                        cubit.customerOrder.status,
-                                        style: const TextStyle(
-                                            color: ColorManager.primaryW),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              )!;
-                            },
-                          ),
-                        ),
-                        orderSummaryItems2(
-                            lang.recievedDate,
-                            Text(
-                              DateFormat('dd-MM-yyyy')
-                                  .format(cubit.customerOrder.date),
-                              style: AppStylesManager.customTextStyleG,
-                            )),
-                        BlocBuilder<OrderCubit, OrderState>(
-                          builder: (context, state) {
-                            return orderSummaryItems2(
-                              lang.paymentMethod,
+                                );
+                              },
+                            ),
+                            orderSummaryItems2(
+                              lang.promoCodeApplied,
                               Text(
-                                cubit.customerOrder.paymentType,
-                                style: AppStylesManager.customTextStyleBl8,
+                                cubit.customerOrder.promoCodeName != null
+                                    ? lang.yes
+                                    : lang.no,
+                                style:
+                                    AppStylesManager.customTextStyleG.copyWith(
+                                  color:
+                                      cubit.customerOrder.promoCodeName != null
+                                          ? ColorManager.primaryGR
+                                          : ColorManager.primaryR,
+                                ),
                               ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: screenWidth(context, 1),
+                        height: 180,
+                        decoration: ShapeDecoration(
+                          color: ColorManager.primaryW,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          shadows: const [
+                            BoxShadow(
+                              color: ColorManager.primaryBL4,
+                              blurRadius: 8,
+                              offset: Offset(0, 2),
+                              spreadRadius: 0,
+                            )
+                          ],
+                        ),
+                        child: BlocBuilder<OrderCubit, OrderState>(
+                          builder: (context, state) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                state.maybeWhen(
+                                  loading: () =>
+                                      const CircularProgressIndicator(),
+                                  success: () => orderSummaryItems(
+                                    S.of(context).order,
+                                    (price).toString(),
+                                  ),
+                                  orElse: () => orderSummaryItems(
+                                    S.of(context).order,
+                                    (cubit.customerOrder.total).toString(),
+                                  ),
+                                )!,
+                                state.maybeWhen(
+                                  loading: () =>
+                                      const CircularProgressIndicator(),
+                                  success: () => orderSummaryItems(
+                                    S.of(context).delivery,
+                                    cubit.customerOrder.shippingCost,
+                                  ),
+                                  orElse: () => orderSummaryItems(
+                                    S.of(context).delivery,
+                                    cubit.customerOrder.shippingCost,
+                                  ),
+                                )!,
+                                state.maybeWhen(
+                                  loading: () =>
+                                      const CircularProgressIndicator(),
+                                  success: () => orderSummaryItems(
+                                    lang.total,
+                                    (cubit.customerOrder.total).toString(),
+                                    AppStylesManager.customTextStyleO5,
+                                  ),
+                                  orElse: () => orderSummaryItems(
+                                    lang.total,
+                                    (cubit.customerOrder.total).toString(),
+                                    AppStylesManager.customTextStyleO5,
+                                  ),
+                                )!,
+                              ],
                             );
                           },
                         ),
-                        orderSummaryItems2(
-                          lang.promoCodeApplied,
-                          Text(
-                            cubit.customerOrder.promoCodeName != null
-                                ? lang.yes
-                                : lang.no,
-                            style: AppStylesManager.customTextStyleG.copyWith(
-                              color: cubit.customerOrder.promoCodeName != null
-                                  ? ColorManager.primaryGR
-                                  : ColorManager.primaryR,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  Container(
-                    width: screenWidth(context, 1),
-                    height: 180,
-                    decoration: ShapeDecoration(
-                      color: ColorManager.primaryW,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
                       ),
-                      shadows: const [
-                        BoxShadow(
-                          color: ColorManager.primaryBL4,
-                          blurRadius: 8,
-                          offset: Offset(0, 2),
-                          spreadRadius: 0,
-                        )
-                      ],
-                    ),
-                    child: BlocBuilder<OrderCubit, OrderState>(
-                      builder: (context, state) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            state.maybeWhen(
-                              loading: () => const CircularProgressIndicator(),
-                              success: () => orderSummaryItems(
-                                S.of(context).order,
-                                (price).toString(),
-                              ),
-                              orElse: () => orderSummaryItems(
-                                S.of(context).order,
-                                (cubit.customerOrder.total).toString(),
-                              ),
-                            )!,
-                            state.maybeWhen(
-                              loading: () => const CircularProgressIndicator(),
-                              success: () => orderSummaryItems(
-                                S.of(context).delivery,
-                                cubit.customerOrder.shippingCost,
-                              ),
-                              orElse: () => orderSummaryItems(
-                                S.of(context).delivery,
-                                cubit.customerOrder.shippingCost,
-                              ),
-                            )!,
-                            state.maybeWhen(
-                              loading: () => const CircularProgressIndicator(),
-                              success: () => orderSummaryItems(
-                                lang.total,
-                                (cubit.customerOrder.total).toString(),
-                                AppStylesManager.customTextStyleO5,
-                              ),
-                              orElse: () => orderSummaryItems(
-                                lang.total,
-                                (cubit.customerOrder.total).toString(),
-                                AppStylesManager.customTextStyleO5,
-                              ),
-                            )!,
-                          ],
-                        );
-                      },
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+                itemsRow(),
+              ],
             ),
-            itemsRow(),
+          ),
+          persistentFooterButtons: [
+            BlocBuilder<OrderCubit, OrderState>(
+              builder: (context, state) {
+                return OrderDetailsFooter(
+                  visible: cubit.customerOrder != OrderCustomerModel.empty(),
+                  order: cubit.customerOrder,
+                );
+              },
+            ),
           ],
-        ),
-      ),
-      persistentFooterButtons: [
-        BlocBuilder<OrderCubit, OrderState>(
-          builder: (context, state) {
-            return OrderDetailsFooter(
-              visible: cubit.customerOrder != OrderCustomerModel.empty(),
-              order: cubit.customerOrder,
-            );
-          },
-        ),
-      ],
+        );
+      },
     );
   }
 

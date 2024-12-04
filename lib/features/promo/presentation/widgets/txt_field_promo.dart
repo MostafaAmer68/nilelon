@@ -43,7 +43,7 @@ class _TxtFieldPromoState extends State<TxtFieldPromo> {
           BlocConsumer<PromoCubit, PromoState>(
             listener: (context, state) {
               if (state is PromoFailure) {
-                BotToast.showText(text: 'Promocode invalid');
+                BotToast.showText(text: state.errMsg);
               }
               if (state is PromoSuccess) {
                 BotToast.showText(text: 'Promocode applied');
@@ -54,17 +54,17 @@ class _TxtFieldPromoState extends State<TxtFieldPromo> {
                 return const Center(child: CircularProgressIndicator());
               } else {
                 return ButtonBuilder(
-                    text: lang(context).apply,
-                    ontap: () {
-                      if (cubit.applyOfferForm.currentState!.validate()) {
-                        cubit.getPromoCodeType(context);
-                      }
-                    },
-                    isActivated: cubit.discount == 0,
-                    height: 54,
-                    frameColor: Colors.transparent,
-                    width: screenWidth(context, 0.24),
-                  );
+                  text: lang(context).apply,
+                  ontap: () {
+                    if (cubit.applyOfferForm.currentState!.validate()) {
+                      cubit.getPromoCodeType(context);
+                    }
+                  },
+                  isActivated: cubit.discount == 0,
+                  height: 54,
+                  frameColor: Colors.transparent,
+                  width: screenWidth(context, 0.24),
+                );
               }
             },
           ),

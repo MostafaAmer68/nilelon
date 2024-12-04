@@ -21,7 +21,7 @@ class EndPoint {
   static const String getCustomerReturensUrl =
       '/ReturnedVariants/GetCustomerReturns';
   static const String getCReturnDetailsUrl =
-      '/ReturnedVariants/GetCustomerReturnDetails';
+      '/ReturnedVariants/GetReturnDetails';
   static const String getStoreReturensUrl = '/ReturnedVariants/GetStoreReturns';
   static const String getCustomerWrongItemDetailsUrl =
       '/ReturnedVariants/GetCustomerWrongItemDetails';

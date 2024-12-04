@@ -70,19 +70,6 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
     );
   }
 
-  Future<void> _openFolder(String filePath) async {
-    // Open the folder containing the file
-    if (Platform.isAndroid) {
-      // Open the folder containing the file
-      String folderPath = filePath.substring(0, filePath.lastIndexOf('/'));
-      await OpenFilex.open('/storage/emulated/0/Download/');
-    } else if (Platform.isIOS) {
-      // Handle iOS-specific behavior (e.g., display a custom dialog)
-      // iOS doesn't support directly opening file explorer; you can navigate in-app.
-      print("Folder opening not directly supported on iOS.");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return isLoading
@@ -92,7 +79,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
             width: screenWidth(context, 1),
             ontap: () async {
               // requestStoragePermission();
-
+              requestStoragePermission();
               isLoading = true;
               setState(() {});
               rows.add(
@@ -130,6 +117,9 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
                     builder: (context) {
                       return PDFView(
                         filePath: result,
+                        onError: (v) {
+                          isLoading = false;
+                        },
                       );
                     });
                 _showNotification(result);
@@ -184,7 +174,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
               child: Text(lang(context).confirm),
               onPressed: () async {
                 Navigator.of(context).pop();
-                await _requestStoragePermission();
+                requestStoragePermission();
               },
             ),
             TextButton(
@@ -206,26 +196,21 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
   //   Permission.storage.onDeniedCallback(() async {});
   //   return status.isGranted;
   // }
-
-  Future<bool> _requestStoragePermission() async {
-    await Permission.storage.request().then((_) async {});
-    var status = await Permission.storage.status;
-    if (status.isDenied) {
-      // Request permission
-      if (await Permission.storage.request().isGranted) {
-        // Permission granted
-        print("Storage permission granted.");
-      } else {
-        // Permission denied
-        _showPermissionDeniedMessage();
-      }
-    } else if (status.isPermanentlyDenied) {
-      // Open app settings if permission is permanently denied
-      await openAppSettings();
+  Future<void> requestStoragePermission() async {
+    // Request the appropriate permission based on the type of file you're accessing
+    if (await Permission.storage.request().isGranted) {
+      // Permission granted, proceed with accessing the file
+      print("Permission granted");
+    } else if (await Permission.photos.request().isGranted) {
+      // Permission granted for image access
+      print("Image permission granted");
+    } else if (await Permission.videos.request().isGranted) {
+      // Permission granted for video access
+      print("Video permission granted");
     } else {
-      // Permission already granted
-      print("Storage permission already granted.");
+      // Handle denial case
+      print("Permission denied");
+      openAppSettings(); // Prompt user to manually enable permission from settings
     }
-    return status.isGranted;
   }
 }

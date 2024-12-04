@@ -126,6 +126,28 @@ class _EditProfileViewState extends State<EditProfileView> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
+                        lang.address,
+                        style: AppStylesManager.customTextStyleBl5,
+                      ),
+                    ),
+                    TextFormFieldBuilder(
+                      label: lang.address,
+                      controller: cubit.wareHouseAddressController,
+                      type: TextInputType.text,
+                      width: screenWidth(context, 0.8),
+                      isIcon: false,
+                      prefixWidget: Container(
+                          width: 20,
+                          height: 20,
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(Assets.assetsImagesLocation)),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
                         lang.name,
                         style: AppStylesManager.customTextStyleBl5,
                       ),
@@ -142,28 +164,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                         padding: const EdgeInsets.all(12),
                         child: SvgPicture.asset(Assets.assetsImagesProfilee),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        lang.address,
-                        style: AppStylesManager.customTextStyleBl5,
-                      ),
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.address,
-                      controller: cubit.wareHouseAddressController,
-                      type: TextInputType.text,
-                      width: screenWidth(context, 0.8),
-                      isIcon: false,
-                      prefixWidget: Container(
-                          width: 20,
-                          height: 20,
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(Assets.assetsImagesLocation)),
                     ),
                     const SizedBox(
                       height: 30,

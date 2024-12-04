@@ -142,14 +142,6 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                         ),
-                        shadows: const [
-                          BoxShadow(
-                            color: Color(0x33726363),
-                            blurRadius: 16,
-                            offset: Offset(0, 4),
-                            spreadRadius: 0,
-                          )
-                        ],
                       ),
                       child: Center(
                         child: RadioListTile(

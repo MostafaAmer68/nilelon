@@ -16,6 +16,7 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/utils/navigation.dart';
+import '../../../auth/domain/model/user_model.dart';
 import '../../../categories/domain/model/result.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
 import '../../../../core/widgets/scaffold_image.dart';
@@ -52,7 +53,7 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
   @override
   void dispose() {
     cubit.category = CategoryModel.empty();
-    cubit.gendar = 'All';
+    cubit.gendar = '';
     cubit.page = 1;
     scrollController.dispose();
     super.dispose();
@@ -62,6 +63,9 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
   void initState() {
     super.initState();
     cubit = ProductsCubit.get(context);
+    cubit.gendar = HiveStorage.get<UserModel>(HiveKeys.userModel)
+        .getUserData<CustomerModel>()
+        .productsChoice;
     widget.onStartPage(true);
     scrollController = ScrollController();
 

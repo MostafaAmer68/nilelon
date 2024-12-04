@@ -68,6 +68,7 @@ dependencies:
   paymob_payment: ^0.0.1+1
   signalr_core: ^1.1.2
   flutter_secure_storage: ^4.2.1
+  tutorial_coach_mark: ^1.2.12
 dev_dependencies:
   flutter_test:
     sdk: flutter

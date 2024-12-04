@@ -28,7 +28,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   ProductModel product = ProductModel.empty();
   CategoryModel category = CategoryModel.empty();
-  String gendar = 'All';
+  String gendar = '';
   String categoryId = '';
 
   int page = 1;
@@ -50,7 +50,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     if (selectedCategory.id.isEmpty) {
       return filteredProducts;
     }
-    log(filteredProducts.map((e) => e.name).toString());
+
     return filteredProducts.where(
       (product) {
         final matchesCategory = selectedCategory.id.isEmpty ||
@@ -139,15 +139,25 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   //todo Get Followed Products Pagination
   Future<void> getFollowedProducts([bool isPagination = true]) async {
+    followingProducts.data.clear();
     if (isPagination) {
       emit(const ProductsState.loading());
     }
     var result = await productsRepos.getFollowedProducts(
       page,
       limit,
-      gendar == 'All' ? 'UniSex' : gendar,
+      gendar.isEmpty
+          ? gendar
+          : gendar == 'All'
+              ? 'UniSex'
+              : gendar,
     );
     result.fold((failure) {
+      if (failure.errorMsg ==
+          "this Customer doesn't have any Followed Stores") {
+        emit(const ProductsState.success());
+        return;
+      }
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       followingProducts = response;
@@ -167,13 +177,21 @@ class ProductsCubit extends Cubit<ProductsState> {
       result = await productsRepos.getNewInProducts(
         page,
         limit,
-        gendar == 'All' ? 'UniSex' : gendar,
+        gendar.isEmpty
+            ? gendar
+            : gendar == 'All'
+                ? 'UniSex'
+                : gendar,
       );
     } else {
       result = await productsRepos.getNewInProductsGuest(
         page,
         limit,
-        gendar == 'All' ? 'UniSex' : gendar,
+        gendar.isEmpty
+            ? gendar
+            : gendar == 'All'
+                ? 'UniSex'
+                : gendar,
       );
     }
 
@@ -195,10 +213,24 @@ class ProductsCubit extends Cubit<ProductsState> {
     if (HiveStorage.get(HiveKeys.userModel) != null &&
         !HiveStorage.get(HiveKeys.isStore)) {
       result = await productsRepos.getRandomProduct(
-          page, limit, gendar == 'All' ? 'UniSex' : gendar);
+        page,
+        limit,
+        gendar.isEmpty
+            ? gendar
+            : gendar == 'All'
+                ? 'UniSex'
+                : gendar,
+      );
     } else {
       result = await productsRepos.getRandomProductsGuest(
-          page, limit, gendar == 'All' ? 'UniSex' : gendar);
+        page,
+        limit,
+        gendar.isEmpty
+            ? gendar
+            : gendar == 'All'
+                ? 'UniSex'
+                : gendar,
+      );
     }
 
     result.fold((failure) {
@@ -235,10 +267,24 @@ class ProductsCubit extends Cubit<ProductsState> {
     if (HiveStorage.get(HiveKeys.userModel) != null &&
         !HiveStorage.get(HiveKeys.isStore)) {
       result = await productsRepos.getOffersProducts(
-          page, limit, gendar == 'All' ? 'UniSex' : gendar);
+        page,
+        limit,
+        gendar.isEmpty
+            ? gendar
+            : gendar == 'All'
+                ? 'UniSex'
+                : gendar,
+      );
     } else {
       result = await productsRepos.getOffersProductsGuest(
-          page, limit, gendar == 'All' ? 'UniSex' : gendar);
+        page,
+        limit,
+        gendar.isEmpty
+            ? gendar
+            : gendar == 'All'
+                ? 'UniSex'
+                : gendar,
+      );
     }
 
     result.fold((failure) {

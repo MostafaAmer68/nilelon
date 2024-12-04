@@ -334,6 +334,8 @@ class _FollowAndNotifyWidgetState extends State<FollowAndNotifyWidget> {
                               text: lang(context).following,
                               ontap: () {
                                 cubit.followStore(widget.storeId);
+                                ProductsCubit.get(context)
+                                    .getFollowedProducts();
                               },
                               width: screenWidth(context, 0.55),
                               height: 38,

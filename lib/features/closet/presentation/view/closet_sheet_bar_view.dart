@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -10,6 +11,7 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/features/closet/presentation/widget/closet_widget_with_options.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../../../core/color_const.dart';
 import '../../../../core/utils/navigation.dart';
@@ -31,6 +33,7 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
   }
 
   ClosetModel selectedCloset = const ClosetModel(id: '', name: '');
+
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
@@ -91,38 +94,38 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                       // navigatePop(context: context);
                       ClosetCubit.get(context).getclosets();
                     }, successAdded: (c) {
-                      navigateTo(
-                          context: context,
-                          screen: ProductClosetPage(closet: selectedCloset));
-                      // BotToast.showCustomText(
-                      //   duration: const Duration(seconds: 4),
-                      //   toastBuilder: (_) => Card(
-                      //     color: Colors.black87,
-                      //     child: Padding(
-                      //       padding: const EdgeInsets.all(16.0),
-                      //       child: Row(
-                      //         mainAxisSize: MainAxisSize.min,
-                      //         children: [
-                      //           Text(
-                      //             S.of(context).productAdded,
-                      //             style: const TextStyle(color: Colors.white),
-                      //           ),
-                      //           const SizedBox(width: 10),
-                      //           TextButton(
-                      //             onPressed: () {
-                      //               BotToast.closeAllLoading();
-
-                      //             },
-                      //             child: Text(
-                      //               S.of(context).myCloset,
-                      //               style: const TextStyle(color: Colors.blue),
-                      //             ),
-                      //           ),
-                      //         ],
-                      //       ),
-                      //     ),
-                      //   ),
-                      // );
+                      BotToast.showCustomText(
+                        duration: const Duration(seconds: 4),
+                        toastBuilder: (_) => Card(
+                          color: Colors.black87,
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  S.of(context).productAdded,
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                const SizedBox(width: 10),
+                                TextButton(
+                                  onPressed: () {
+                                     navigateTo(
+                                        context: context,
+                                        screen: ProductClosetPage(
+                                            closet: selectedCloset));
+                                    BotToast.closeAllLoading();
+                                  },
+                                  child: Text(
+                                    S.of(context).myCloset,
+                                    style: const TextStyle(color: Colors.blue),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
                     });
                   },
                   builder: (context, state) {
@@ -141,11 +144,6 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                               if (ClosetCubit.get(context).closets.length ==
                                   index) {
                                 return Container(
-                                  // margin: const EdgeInsets.only(
-                                  //   top: 16,
-                                  //   bottom: 16,
-                                  //   left: 13,
-                                  // ),
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 8,
                                     horizontal: 8,
@@ -170,13 +168,16 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                                         },
                                       );
                                     },
-                                    leading: Container(
-                                      padding: const EdgeInsets.all(12),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(),
-                                        borderRadius: BorderRadius.circular(5),
+                                    leading: InkWell(
+                                      child: Container(
+                                        padding: const EdgeInsets.all(12),
+                                        decoration: BoxDecoration(
+                                          border: Border.all(),
+                                          borderRadius:
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: const Icon(Icons.add),
                                       ),
-                                      child: const Icon(Icons.add),
                                     ),
                                     title: Text(lang.addNewSection),
                                   ),

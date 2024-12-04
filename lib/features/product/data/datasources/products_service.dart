@@ -23,12 +23,17 @@ class ProductsService {
 
   ProductsService({required this.apiService});
 
-  Future<ProductResponse> getFollowedProducts(int page, int pageSize,String productType) async {
+  Future<ProductResponse> getFollowedProducts(
+      int page, int pageSize, String productType) async {
     final data =
         await apiService.get(endPoint: EndPoint.getFollowedProductsUrl, query: {
       'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'page': page,
-      'productType': productType,
+      'productType': productType.isEmpty
+          ? HiveStorage.get<UserModel>(HiveKeys.userModel)
+              .getUserData<CustomerModel>()
+              .productsChoice
+          : productType,
       'pagesize': pageSize,
     });
     if (data.statusCode == 200) {
@@ -38,12 +43,17 @@ class ProductsService {
     }
   }
 
-  Future<ProductResponse> getNewInProducts(int page, int pageSize, String productType) async {
+  Future<ProductResponse> getNewInProducts(
+      int page, int pageSize, String productType) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getNewProductsUrl, query: {
       'CustomerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'page': page,
-      'productType': productType,
+      'productType': productType.isEmpty
+          ? HiveStorage.get<UserModel>(HiveKeys.userModel)
+              .getUserData<CustomerModel>()
+              .productsChoice
+          : productType,
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {
@@ -74,7 +84,11 @@ class ProductsService {
       endPoint: EndPoint.getRandomProductsUrl,
       query: {
         'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-        'productType': productType,
+        'productType': productType.isEmpty
+            ? HiveStorage.get<UserModel>(HiveKeys.userModel)
+                .getUserData<CustomerModel>()
+                .productsChoice
+            : productType,
         'page': page,
         'pageSize': pageSize,
       },
@@ -163,7 +177,11 @@ class ProductsService {
       endPoint: EndPoint.getOffers,
       query: {
         'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-        'productType': productType,
+        'productType': productType.isEmpty
+            ? HiveStorage.get<UserModel>(HiveKeys.userModel)
+                .getUserData<CustomerModel>()
+                .productsChoice
+            : productType,
         'page': page,
         'pageSize': pageSize,
       },

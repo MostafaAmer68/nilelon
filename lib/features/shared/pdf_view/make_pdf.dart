@@ -521,9 +521,8 @@ Future<String> makePdf({
 
     String path =
         '${documentsDirectory.path}/Nilelon Invoice(${orderId.substring(15)}).pdf';
-    log(path);
     final file = File(path);
-    final result = await file.writeAsBytes(await pdf.save());
+    final result = await file.writeAsBytes((await pdf.save()));
     return result.path;
   }
   return '';

@@ -55,9 +55,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   @override
   void dispose() {
     cubit.category = CategoryModel.empty();
-    cubit.gendar = HiveStorage.get<UserModel>(HiveKeys.userModel)
-        .getUserData<CustomerModel>()
-        .productsChoice;
+    cubit.gendar = '';
     widget.onStartPage(true);
     scrollController.dispose();
     cubit.page = 1;
@@ -69,7 +67,9 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   @override
   void initState() {
     cubit = ProductsCubit.get(context);
-    cubit.gendar = 'All';
+    cubit.gendar = HiveStorage.get<UserModel>(HiveKeys.userModel)
+        .getUserData<CustomerModel>()
+        .productsChoice;
     widget.onStartPage(true);
     scrollController = ScrollController(keepScrollOffset: true);
     scrollController.addListener(() {
@@ -161,7 +161,6 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
     temp.addAll(products.data);
     paginationList = paginationList.copyWith(
         data: temp.toSet().toList(), metaData: products.metaData);
-    log(paginationList.data.length.toString());
     return Expanded(
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -189,7 +188,8 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            final product = paginationList.data[index];
+            final product = cubit.filterListByCategory(
+                cubit.category, paginationList.data)[index];
             return widget.isOffer
                 ? offersCard(
                     context: context,
@@ -237,6 +237,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
               cubit.page = 1; // Reset to the first page
               // widget.onStartPage(true); // Trigger new API call
               cubit.category = category;
+              log(cubit.category.name);
               setState(() {}); // Update UI
             },
           ),

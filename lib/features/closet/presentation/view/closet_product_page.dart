@@ -22,7 +22,6 @@ class ProductClosetPage extends StatefulWidget {
 }
 
 class _ProductClosetPageState extends State<ProductClosetPage> {
-
   @override
   void initState() {
     ClosetCubit.get(context).getClosetsItems(widget.closet.id);
@@ -31,7 +30,6 @@ class _ProductClosetPageState extends State<ProductClosetPage> {
 
   @override
   Widget build(BuildContext context) {
-   
     return ScaffoldImage(
       appBar: customAppBar(title: widget.closet.name, context: context),
       body: BlocListener<ClosetCubit, ClosetState>(
@@ -59,19 +57,24 @@ class _ProductClosetPageState extends State<ProductClosetPage> {
                 color: ColorManager.primaryG8,
               ),
             ),
-            Visibility(
-              visible: ClosetCubit.get(context).closetsItem.isNotEmpty,
-              child: Align(
-                alignment: AlignmentDirectional.topEnd,
-                child: TextButton(
-                    onPressed: () {
-                      ClosetCubit.get(context).emptyCloset(widget.closet.id);
-                    },
-                    child: Text(
-                      lang(context).emptyCloset,
-                      style: AppStylesManager.customTextStyleR,
-                    )),
-              ),
+            BlocBuilder<ClosetCubit, ClosetState>(
+              builder: (context, state) {
+                return Visibility(
+                  visible: ClosetCubit.get(context).closetsItem.isNotEmpty,
+                  child: Align(
+                    alignment: AlignmentDirectional.topEnd,
+                    child: TextButton(
+                        onPressed: () {
+                          ClosetCubit.get(context)
+                              .emptyCloset(widget.closet.id);
+                        },
+                        child: Text(
+                          lang(context).emptyCloset,
+                          style: AppStylesManager.customTextStyleR,
+                        )),
+                  ),
+                );
+              },
             ),
             Expanded(
               child: Padding(

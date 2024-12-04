@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -60,7 +61,12 @@ class _ReturnHistoryDetailsPageState extends State<ReturnHistoryDetailsPage> {
         hasIcon: false,
         hasLeading: true,
       ),
-      body: BlocBuilder<RefundCubit, RefundState>(
+      body: BlocConsumer<RefundCubit, RefundState>(
+        listener: (context, state) {
+          if (state is RefundFailure) {
+            BotToast.showText(text: state.erroMsg);
+          }
+        },
         builder: (context, state) {
           if (state is RefundLoading) {
             return const CircularProgressIndicator();
@@ -93,7 +99,7 @@ class _ReturnHistoryDetailsPageState extends State<ReturnHistoryDetailsPage> {
                           price: cubit.returnDetails.price,
                           storeName: '',
                           storeId: '',
-                          urls: [],
+                          urls: [cubit.returnDetails.productImage],
                         ),
                       ),
                       SizedBox(
@@ -118,7 +124,7 @@ class _ReturnHistoryDetailsPageState extends State<ReturnHistoryDetailsPage> {
                         child: Text(widget.returnType),
                       ),
 
-                      if (widget.returnType == 'ChangeMind')
+                      if (widget.returnType == 'ChangedMind')
                         const ChangeMindWidget(),
                       if (widget.returnType == 'WrongItem')
                         const WrongItemWidget(),

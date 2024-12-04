@@ -3,6 +3,12 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 
+/**
+ * @introduction This is introduction
+ *
+ * @description This is description\n this sentences will show next row
+ */
+
 class ApiService {
   final Dio dio;
 

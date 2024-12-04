@@ -59,6 +59,9 @@ class RefundService {
       body: model.toJson(),
     );
     if (data.statusCode == HttpStatus.ok) {
+      if (!data.data['isSuccess']) {
+        throw data.data['errorMessages'][0];
+      }
     } else {
       // Handle other status codes if necessary
       throw Exception(
@@ -72,6 +75,9 @@ class RefundService {
       body: model.toJson(),
     );
     if (data.statusCode == HttpStatus.ok) {
+      if (!data.data['isSuccess']) {
+        throw data.data['errorMessages'][0];
+      }
     } else {
       // Handle other status codes if necessary
       throw Exception(
@@ -83,6 +89,9 @@ class RefundService {
     final Response data = await _apiService.post(
         endPoint: EndPoint.createReturnedChangeMindItem, body: model.toJson());
     if (data.statusCode == HttpStatus.ok) {
+      if (!data.data['isSuccess']) {
+        throw data.data['errorMessages'][0];
+      }
     } else {
       // Handle other status codes if necessary
       throw Exception(
