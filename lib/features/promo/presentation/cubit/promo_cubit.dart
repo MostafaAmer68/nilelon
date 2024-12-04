@@ -78,7 +78,6 @@ class PromoCubit extends Cubit<PromoState> {
 
       result.fold(
         (failrue) {
-          log(failrue.errorMsg);
           emit(PromoFailure(failrue.errorMsg));
         },
         (response) {
