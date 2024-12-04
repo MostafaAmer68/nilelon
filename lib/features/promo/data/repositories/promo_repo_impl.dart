@@ -32,4 +32,10 @@ class PromoRepoImpl implements PromoRepo {
       String code) async {
     return exe(() => _service.getPromoCodeType(code));
   }
+
+  @override
+  Future<Either<ServerFailure,num>> getStoreDiscount(
+      Map<String, dynamic> data) {
+    return exe(() => _service.getStoreDiscount(data));
+  }
 }

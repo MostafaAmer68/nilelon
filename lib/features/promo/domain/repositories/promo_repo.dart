@@ -13,6 +13,8 @@ abstract class PromoRepo {
     String promotionId,
     num oldPrice,
   );
+  Future<Either<ServerFailure, num>> getStoreDiscount(
+      Map<String, dynamic> data);
   Future<Either<ServerFailure, bool>> getFreeShipping(
     String promotionId,
     String governate,

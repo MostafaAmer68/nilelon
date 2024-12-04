@@ -82,4 +82,20 @@ class PromoService {
     }
     throw response.data['errorMessages'];
   }
+
+  Future<num> getStoreDiscount(Map<String, dynamic> data) async {
+    final response = await _api.post(
+      endPoint: EndPoint.getStoreDiscount,
+      body: data,
+    );
+
+    if (response.statusCode == HttpStatus.ok) {
+      if (response.data['result'] is String) {
+        throw response.data['result'];
+      } else {
+        return (response.data['result']);
+      }
+    }
+    throw response.data['errorMessages'];
+  }
 }

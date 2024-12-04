@@ -8,6 +8,7 @@ import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/promo/data/models/create_promo_model.dart';
 import 'package:nilelon/features/promo/data/repositories/promo_repo_impl.dart';
 
+import '../../../cart/presentation/cubit/cart_cubit.dart';
 import '../../../product/domain/models/product_model.dart';
 
 part 'promo_state.dart';
@@ -52,8 +53,10 @@ class PromoCubit extends Cubit<PromoState> {
             if (response) {
               totalPrice -= deliveryPrice;
               deliveryPrice = 0;
+              emit(PromoSuccess());
+            } else {
+              emit(PromoFailure('Promocode not available for this city'));
             }
-            emit(PromoSuccess());
           },
         );
       } else {
@@ -88,7 +91,8 @@ class PromoCubit extends Cubit<PromoState> {
             getFreeShipping(context, response['promotionId']);
           }
           if (response['type'] == 'StoreDiscount') {
-            emit(const PromoFailure('Promo code not supported yet'));
+            // emit(const PromoFailure('Promo code not supported yet'));
+            getStoreDiscount(context, response['promotionId']);
           }
         },
       );
@@ -110,6 +114,38 @@ class PromoCubit extends Cubit<PromoState> {
         totalPrice = response['newPrice'] + deliveryPrice;
         newPrice = response['newPrice'] + deliveryPrice;
         discount = response['discount'];
+        promoCode.clear();
+        emit(PromoSuccess());
+      },
+    );
+  }
+
+  Future getStoreDiscount(context, promoCodeId) async {
+    emit(PromoLoading());
+    final result = await _promoRepo.getStoreDiscount(
+      {
+        "promotionId": promoCodeId,
+        "variantIds": CartCubit.get(context)
+            .tempCartItems
+            .map(
+              (e) => {
+                "size": e.size,
+                "color": e.color,
+                "productId": e.productId,
+              },
+            )
+            .toList()
+      },
+    );
+
+    result.fold(
+      (failrue) {
+        emit(PromoFailure(failrue.errorMsg));
+      },
+      (response) {
+        discount = response;
+        totalPrice = totalPrice * discount;
+        newPrice = totalPrice * discount;
         promoCode.clear();
         emit(PromoSuccess());
       },
