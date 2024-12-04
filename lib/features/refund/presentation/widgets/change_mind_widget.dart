@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/core/widgets/replacer/image_replacer.dart';
 import 'package:nilelon/features/product/presentation/widgets/image_container.dart';
 import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
+import '../../../../core/resources/const_functions.dart';
+import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/pop_ups/camera_popup.dart';
 import '../../../product/presentation/widgets/add_container.dart';
 
 class ChangeMindWidget extends StatefulWidget {
-  const ChangeMindWidget({super.key});
-
+  const ChangeMindWidget({super.key, this.isPreview = false});
+  final bool isPreview;
   @override
   State<ChangeMindWidget> createState() => _ChangeMindWidgetState();
 }
@@ -37,23 +40,57 @@ class _ChangeMindWidgetState extends State<ChangeMindWidget> {
           children: [
             Column(
               children: [
-                cubit.fronImage == null
-                    ? addContainer(
-                        () async {
-                          cubit.fronImage = await cameraDialog(context);
-                          setState(() {});
+                if (widget.isPreview)
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (c) {
+                          return Scaffold(
+                            appBar: AppBar(
+                              centerTitle: true,
+                              title: Text(lang.front),
+                              leading: IconButton(
+                                onPressed: () {
+                                  navigatePop(context: c);
+                                },
+                                icon: const Icon(Icons.close),
+                              ),
+                            ),
+                            body: Center(
+                              child: imageReplacer(
+                                  height: screenHeight(context, 0.85),
+                                  url: cubit.returnDetails.frontImage),
+                            ),
+                          );
                         },
-                        context,
-                        null,
-                        null,
-                      )
-                    : imageContainer(
-                        () {},
-                        cubit.fronImage!.path,
-                        context,
-                        null,
-                        null,
-                      ),
+                      );
+                    },
+                    child: imageReplacer(
+                      url: cubit.returnDetails.frontImage,
+                      radius: 16,
+                      width: screenWidth(context, 0.25),
+                      height: screenWidth(context, 0.20),
+                    ),
+                  )
+                else
+                  cubit.fronImage == null
+                      ? addContainer(
+                          () async {
+                            cubit.fronImage = await cameraDialog(context);
+                            setState(() {});
+                          },
+                          context,
+                          null,
+                          null,
+                        )
+                      : imageContainer(
+                          () {},
+                          cubit.fronImage!.path,
+                          context,
+                          null,
+                          null,
+                        ),
                 SizedBox(
                   height: 8.sp,
                 ),
@@ -65,23 +102,57 @@ class _ChangeMindWidgetState extends State<ChangeMindWidget> {
             ),
             Column(
               children: [
-                cubit.backImage == null
-                    ? addContainer(
-                        () async {
-                          cubit.backImage = await cameraDialog(context);
-                          setState(() {});
+                if (widget.isPreview)
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (c) {
+                          return Scaffold(
+                            appBar: AppBar(
+                              centerTitle: true,
+                              title: Text(lang.back),
+                              leading: IconButton(
+                                onPressed: () {
+                                  navigatePop(context: c);
+                                },
+                                icon: const Icon(Icons.close),
+                              ),
+                            ),
+                            body: Center(
+                              child: imageReplacer(
+                                  height: screenHeight(context, 0.85),
+                                  url: cubit.returnDetails.backImage),
+                            ),
+                          );
                         },
-                        context,
-                        null,
-                        null,
-                      )
-                    : imageContainer(
-                        () {},
-                        cubit.backImage!.path,
-                        context,
-                        null,
-                        null,
-                      ),
+                      );
+                    },
+                    child: imageReplacer(
+                      url: cubit.returnDetails.backImage,
+                      radius: 16,
+                      width: screenWidth(context, 0.25),
+                      height: screenWidth(context, 0.20),
+                    ),
+                  )
+                else
+                  cubit.backImage == null
+                      ? addContainer(
+                          () async {
+                            cubit.backImage = await cameraDialog(context);
+                            setState(() {});
+                          },
+                          context,
+                          null,
+                          null,
+                        )
+                      : imageContainer(
+                          () {},
+                          cubit.backImage!.path,
+                          context,
+                          null,
+                          null,
+                        ),
                 SizedBox(
                   height: 8.sp,
                 ),

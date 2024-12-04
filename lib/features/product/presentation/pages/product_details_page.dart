@@ -32,6 +32,7 @@ import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../closet/presentation/view/closet_sheet_bar_view.dart';
+import '../../../profile/presentation/cubit/profile_cubit.dart';
 import '../../domain/models/product_model.dart';
 import '../cubit/products_cubit/products_state.dart';
 import '../widgets/color_selector.dart';
@@ -658,6 +659,8 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           children: [
             GestureDetector(
               onTap: () async {
+                ProfileCubit.get(context)
+                    .getStoreForCustomer(productCubit.product.storeId);
                 await Navigator.push(
                     context,
                     MaterialPageRoute(

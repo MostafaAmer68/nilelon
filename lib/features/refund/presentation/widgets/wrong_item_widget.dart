@@ -5,17 +5,20 @@ import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/color_const.dart';
 import '../../../../core/resources/appstyles_manager.dart';
+import '../../../../core/resources/const_functions.dart';
 import '../../../../core/sizes_consts.dart';
+import '../../../../core/utils/navigation.dart';
 import '../../../../core/widgets/drop_down_menu/drop_down_menu.dart';
 import '../../../../core/widgets/pop_ups/camera_popup.dart';
+import '../../../../core/widgets/replacer/image_replacer.dart';
 import '../../../product/presentation/widgets/add_container.dart';
 import '../../../product/presentation/widgets/color_selector.dart';
 import '../../../product/presentation/widgets/custom_toggle_button.dart';
 import '../../../product/presentation/widgets/image_container.dart';
 
 class WrongItemWidget extends StatefulWidget {
-  const WrongItemWidget({super.key});
-
+  const WrongItemWidget({super.key, this.isPreview = false});
+  final bool isPreview;
   @override
   State<WrongItemWidget> createState() => _WrongItemWidgetState();
 }
@@ -114,7 +117,7 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
     );
   }
 
-  _buildDamageWidget(lang) {
+  _buildDamageWidget(S lang) {
     return Column(
       children: [
         Text(
@@ -129,23 +132,57 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
           children: [
             Column(
               children: [
-                cubit.fronImage == null
-                    ? addContainer(
-                        () async {
-                          cubit.fronImage = await cameraDialog(context);
-                          setState(() {});
+                if (widget.isPreview)
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (c) {
+                          return Scaffold(
+                            appBar: AppBar(
+                              centerTitle: true,
+                              title: Text(lang.damagedItem),
+                              leading: IconButton(
+                                onPressed: () {
+                                  navigatePop(context: c);
+                                },
+                                icon: const Icon(Icons.close),
+                              ),
+                            ),
+                            body: Center(
+                              child: imageReplacer(
+                                  height: screenHeight(context, 0.85),
+                                  url: cubit.returnDetails.damageImage),
+                            ),
+                          );
                         },
-                        context,
-                        null,
-                        null,
-                      )
-                    : imageContainer(
-                        () {},
-                        cubit.fronImage!.path,
-                        context,
-                        null,
-                        null,
-                      ),
+                      );
+                    },
+                    child: imageReplacer(
+                      url: cubit.returnDetails.damageImage,
+                      radius: 16,
+                      width: screenWidth(context, 0.25),
+                      height: screenWidth(context, 0.20),
+                    ),
+                  )
+                else
+                  cubit.fronImage == null
+                      ? addContainer(
+                          () async {
+                            cubit.fronImage = await cameraDialog(context);
+                            setState(() {});
+                          },
+                          context,
+                          null,
+                          null,
+                        )
+                      : imageContainer(
+                          () {},
+                          cubit.fronImage!.path,
+                          context,
+                          null,
+                          null,
+                        ),
                 SizedBox(
                   height: 8.sp,
                 ),

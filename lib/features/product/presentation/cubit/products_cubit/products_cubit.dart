@@ -139,7 +139,9 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   //todo Get Followed Products Pagination
   Future<void> getFollowedProducts([bool isPagination = true]) async {
-    followingProducts.data.clear();
+    final tempList = followingProducts.data.toList();
+    tempList.clear();
+    followingProducts = followingProducts.copyWith(data: tempList);
     if (isPagination) {
       emit(const ProductsState.loading());
     }
