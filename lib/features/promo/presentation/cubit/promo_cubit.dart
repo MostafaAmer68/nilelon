@@ -83,15 +83,12 @@ class PromoCubit extends Cubit<PromoState> {
         },
         (response) {
           if (response['type'] == 'OrderDiscount') {
-            log('te');
             getOrderDiscount(context, response['promotionId']);
           }
           if (response['type'] == 'FreeShipping') {
-            log('t2e');
             getFreeShipping(context, response['promotionId']);
           }
           if (response['type'] == 'StoreDiscount') {
-            // emit(const PromoFailure('Promo code not supported yet'));
             getStoreDiscount(context, response['promotionId']);
           }
         },
