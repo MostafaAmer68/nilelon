@@ -163,6 +163,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(ProductsState.failure(failure.errorMsg));
     }, (response) {
       followingProducts = response;
+
       emit(const ProductsState.success());
     });
   }

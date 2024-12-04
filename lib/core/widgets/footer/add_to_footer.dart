@@ -48,7 +48,7 @@ class AddToFooter extends StatelessWidget {
                   return;
                 }
                 if (HiveStorage.get(HiveKeys.userModel) != null) {
-                     PromoCubit.get(context).deliveryPrice = 0;
+                  PromoCubit.get(context).deliveryPrice = 0;
                   PromoCubit.get(context).totalPrice = 0;
                   PromoCubit.get(context).orderTotal = 0;
                   PromoCubit.get(context).discount = 0;
@@ -160,17 +160,22 @@ class AddToFooter extends StatelessWidget {
                     }
                     if (HiveStorage.get(HiveKeys.userModel) != null) {
                       if (product.id.isNotEmpty) {
-                        CartCubit.get(context).addToCart(
-                          AddToCartModel(
-                            quantity: CartCubit.get(context).counter,
-                            size: CartCubit.get(context).selectedSize,
-                            color: CartCubit.get(context).selectedColor,
-                            productId: product.id,
-                            customerId:
-                                HiveStorage.get<UserModel>(HiveKeys.userModel)
-                                    .id,
-                          ),
-                        );
+                        if (CartCubit.get(context).selectedSize.isNotEmpty &&
+                            CartCubit.get(context).selectedColor.isNotEmpty) {
+                          CartCubit.get(context).addToCart(
+                            AddToCartModel(
+                              quantity: CartCubit.get(context).counter,
+                              size: CartCubit.get(context).selectedSize,
+                              color: CartCubit.get(context).selectedColor,
+                              productId: product.id,
+                              customerId:
+                                  HiveStorage.get<UserModel>(HiveKeys.userModel)
+                                      .id,
+                            ),
+                          );
+                        } else {
+                          BotToast.showText(text: lang(context).smothingWent);
+                        }
                       } else {
                         BotToast.showText(text: lang(context).smothingWent);
                       }

@@ -105,12 +105,25 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             log((productCubit.product == ProductModel.empty()).toString());
             BotToast.closeAllLoading();
             if (productCubit.product != ProductModel.empty()) {
-              cubit.selectedColor = productCubit.product.productVariants
-                  .firstWhere((e) => e.price != 0)
-                  .color;
-              cubit.selectedSize = productCubit.product.productVariants
-                  .firstWhere((e) => e.price != 0)
-                  .size;
+              if (productCubit.product.productVariants
+                  .every((e) => e.price > 0 && e.quantity > 0)) {
+                cubit.selectedColor = productCubit.product.productVariants
+                    .firstWhere((e) => e.price > 0 && e.quantity > 0)
+                    .color;
+                cubit.selectedSize = productCubit.product.productVariants
+                    .firstWhere((e) => e.price > 0 && e.quantity > 0)
+                    .size;
+                log(
+                    productCubit.product.productVariants
+                        .firstWhere((e) => e.price > 0 && e.quantity > 0)
+                        .size,
+                    name: 'test');
+              } else {
+                cubit.selectedColor = '';
+                cubit.selectedSize = '';
+              }
+              log('test case: ${productCubit.product.productVariants.every((e) => e.price > 0 && e.quantity > 0)}',
+                  name: 'test case');
               sizes = productCubit.product.productVariants
                   .where((e) => e.quantity != 0 && e.quantity > 0)
                   .map((e) => e.size)
