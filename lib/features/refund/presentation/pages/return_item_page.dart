@@ -27,6 +27,12 @@ class ReturnItemPage extends StatefulWidget {
 
 class _ReturnItemPageState extends State<ReturnItemPage> {
   @override
+  void dispose() {
+    RefundCubit.get(context).selectedProducts.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
     var cubit = BlocProvider.of<RefundCubit>(context);

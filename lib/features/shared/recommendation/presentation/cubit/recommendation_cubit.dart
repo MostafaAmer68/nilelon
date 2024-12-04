@@ -33,7 +33,7 @@ class RecommendationCubit extends Cubit<RecommendationState> {
       ProductsCubit.get(context).gendar = '';
 
       ProductsCubit.get(context).getFollowedProducts();
-      MyApp.restartApp(context);
+      // MyApp.restartApp(context);
       emit(RecommendationSuccess());
     });
     // emit(RecommendationSuccess());

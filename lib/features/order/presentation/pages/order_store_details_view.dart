@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -42,7 +44,7 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-
+    log(cubit.storeOrder.orderProductVariants.length.toString());
     return ScaffoldImage(
       appBar: customAppBar(
           title: lang.orderDetails, hasIcon: false, context: context),
@@ -53,7 +55,8 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
           });
         },
         builder: (context, state) {
-          return state.whenOrNull(
+          return state.maybeWhen(
+            orElse: () => const Icon(Icons.error),
             loading: () {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -155,7 +158,7 @@ class _OrderStoreDetailsViewState extends State<OrderStoreDetailsView> {
                 const SizedBox(height: 15),
               ],
             ),
-          )!;
+          );
         },
       ),
       persistentFooterButtons: [

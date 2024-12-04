@@ -37,7 +37,7 @@ class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
     final lang = S.of(context);
     return ScaffoldImage(
       appBar: customAppBar(
-        title: lang.returnedHistory,
+        title: lang.returnedHsistory,
         context: context,
         hasIcon: false,
         // hasLeading: false,

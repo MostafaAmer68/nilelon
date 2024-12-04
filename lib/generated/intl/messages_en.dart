@@ -36,6 +36,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "PlsEnterPrice":
             MessageLookupByLibrary.simpleMessage("please enter price"),
         "Skip": MessageLookupByLibrary.simpleMessage("Skip"),
+        "TEmp": MessageLookupByLibrary.simpleMessage("d"),
         "ToKnowHowItWorksYouOnlyNeedToImagineThatWeareClusteringTheBrandsBasedOnComparingTheirNumbersToTheMarketAverageNumbersInEveryFactorInThisPage":
             MessageLookupByLibrary.simpleMessage(
                 "To Know How It Works You Only Need To Imagine That We’re Clustering The Brands Based On Comparing Their Numbers To The Market Average Numbers In Every Factor In This Page"),
@@ -141,7 +142,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create Store Account"),
         "currentPassword":
             MessageLookupByLibrary.simpleMessage("Current Password"),
-        "damagedItem": MessageLookupByLibrary.simpleMessage("d"),
+        "damagedItem": MessageLookupByLibrary.simpleMessage("Damaged item"),
         "damagedPart": MessageLookupByLibrary.simpleMessage("Damaged Part"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "dateOfBirth": MessageLookupByLibrary.simpleMessage("Date Of Birth"),
@@ -499,7 +500,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resend": MessageLookupByLibrary.simpleMessage("Resend"),
         "resendIn": MessageLookupByLibrary.simpleMessage("Resend In"),
         "returnItem": MessageLookupByLibrary.simpleMessage("Return Item"),
-        "returnedHistory":
+        "returnedHsistory":
             MessageLookupByLibrary.simpleMessage("Returned History"),
         "reviews": MessageLookupByLibrary.simpleMessage("Reviews"),
         "save": MessageLookupByLibrary.simpleMessage("Save"),

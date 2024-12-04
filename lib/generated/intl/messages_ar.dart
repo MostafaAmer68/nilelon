@@ -494,8 +494,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "resend": MessageLookupByLibrary.simpleMessage("إعادة الإرسال"),
         "resendIn": MessageLookupByLibrary.simpleMessage("إعادة الإرسال في"),
         "returnItem": MessageLookupByLibrary.simpleMessage("إرجاع العنصر"),
-        "returnedHistory":
-            MessageLookupByLibrary.simpleMessage("تاريخ الإرجاع"),
         "reviews": MessageLookupByLibrary.simpleMessage("المراجعات"),
         "save": MessageLookupByLibrary.simpleMessage("حفظ"),
         "saveToCloset": MessageLookupByLibrary.simpleMessage("احفظ في الخزانة"),

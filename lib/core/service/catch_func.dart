@@ -7,6 +7,10 @@ Future<Either<ServerFailure, T>> exe<T>(Future<T> Function() function) async {
     final result = await function();
     return Right(result);
   } on DioException catch (e) {
+    if (e.response!.statusCode == 401) {
+      return left(ServerFailure(e.response!.data));
+    }
+
     return left(ServerFailure.fromResponse(
         e.response!.data['statusCode'], e.response!.data['errorMessages'][0]));
   } catch (e) {

@@ -3530,10 +3530,10 @@ class S {
     );
   }
 
-  /// `d`
+  /// `Damaged item`
   String get damagedItem {
     return Intl.message(
-      'd',
+      'Damaged item',
       name: 'damagedItem',
       desc: '',
       args: [],
@@ -4220,11 +4220,21 @@ class S {
     );
   }
 
+  /// `d`
+  String get TEmp {
+    return Intl.message(
+      'd',
+      name: 'TEmp',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Returned History`
-  String get returnedHistory {
+  String get returnedHsistory {
     return Intl.message(
       'Returned History',
-      name: 'returnedHistory',
+      name: 'returnedHsistory',
       desc: '',
       args: [],
     );

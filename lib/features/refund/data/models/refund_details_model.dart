@@ -27,8 +27,8 @@ class ReturnDetailsModel {
     return ReturnDetailsModel(
       returnedSize: json['returnedSize'] ?? '',
       returnedColor: json['returnedColor'] ?? '',
-      frontImage: json['frontImage'],
-      backImage: json['backImage'],
+      frontImage: json['frontImage'] ?? '',
+      backImage: json['backImage'] ?? '',
       damageImage: json['damageImage'] ?? '',
       productName: json['productName'],
       productImage: json['productImage'],

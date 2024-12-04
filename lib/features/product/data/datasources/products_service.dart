@@ -29,8 +29,13 @@ class ProductsService {
         await apiService.get(endPoint: EndPoint.getFollowedProductsUrl, query: {
       'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'page': page,
-      'productType':
-          productType.isEmpty ? HiveStorage.get(HiveKeys.shopFor) : productType,
+      'productType': HiveStorage.get(HiveKeys.isStore)
+          ? productType.isEmpty
+              ? 'UniSex'
+              : productType
+          : productType.isEmpty
+              ? HiveStorage.get(HiveKeys.shopFor)
+              : productType,
       'pagesize': pageSize,
     });
     if (data.statusCode == 200) {
@@ -46,8 +51,13 @@ class ProductsService {
         await apiService.get(endPoint: EndPoint.getNewProductsUrl, query: {
       'CustomerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       'page': page,
-      'productType':
-          productType.isEmpty ? HiveStorage.get(HiveKeys.shopFor) : productType,
+      'productType': HiveStorage.get(HiveKeys.isStore)
+          ? productType.isEmpty
+              ? 'UniSex'
+              : productType
+          : productType.isEmpty
+              ? HiveStorage.get(HiveKeys.shopFor)
+              : productType,
       'pageSize': pageSize,
     });
     if (data.statusCode == 200) {
@@ -78,11 +88,13 @@ class ProductsService {
       endPoint: EndPoint.getRandomProductsUrl,
       query: {
         'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-        'productType': productType.isEmpty
-            ? HiveStorage.get<UserModel>(HiveKeys.userModel)
-                .getUserData<CustomerModel>()
-                .productsChoice
-            : productType,
+        'productType': HiveStorage.get(HiveKeys.isStore)
+            ? productType.isEmpty
+                ? 'UniSex'
+                : productType
+            : productType.isEmpty
+                ? HiveStorage.get(HiveKeys.shopFor)
+                : productType,
         'page': page,
         'pageSize': pageSize,
       },
@@ -137,7 +149,13 @@ class ProductsService {
       int page, int pageSize, String productType) async {
     final Response data =
         await apiService.get(endPoint: EndPoint.getNewProductsGuestUrl, query: {
-      'productType': productType,
+      'productType': HiveStorage.get(HiveKeys.isStore)
+          ? productType.isEmpty
+              ? 'UniSex'
+              : productType
+          : productType.isEmpty
+              ? HiveStorage.get(HiveKeys.shopFor)
+              : productType,
       'page': page,
       'pageSize': pageSize,
     });
@@ -153,7 +171,13 @@ class ProductsService {
     final data = await apiService.get(
       endPoint: EndPoint.getRandomProductsGuestUrl,
       query: {
-        'productType': productType,
+        'productType': HiveStorage.get(HiveKeys.isStore)
+            ? productType.isEmpty
+                ? 'UniSex'
+                : productType
+            : productType.isEmpty
+                ? HiveStorage.get(HiveKeys.shopFor)
+                : productType,
         'page': page,
         'pageSize': pageSize,
       },
@@ -171,11 +195,13 @@ class ProductsService {
       endPoint: EndPoint.getOffers,
       query: {
         'customerId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
-        'productType': productType.isEmpty
-            ? HiveStorage.get<UserModel>(HiveKeys.userModel)
-                .getUserData<CustomerModel>()
-                .productsChoice
-            : productType,
+        'productType': HiveStorage.get(HiveKeys.isStore)
+            ? productType.isEmpty
+                ? 'UniSex'
+                : productType
+            : productType.isEmpty
+                ? HiveStorage.get(HiveKeys.shopFor)
+                : productType,
         'page': page,
         'pageSize': pageSize,
       },
@@ -192,7 +218,13 @@ class ProductsService {
     final data = await apiService.get(
       endPoint: EndPoint.getStoreOffersUrl,
       query: {
-        'productType': productType,
+        'productType': HiveStorage.get(HiveKeys.isStore)
+            ? productType.isEmpty
+                ? 'UniSex'
+                : productType
+            : productType.isEmpty
+                ? HiveStorage.get(HiveKeys.shopFor)
+                : productType,
         'page': page,
         'pageSize': pageSize,
       },
