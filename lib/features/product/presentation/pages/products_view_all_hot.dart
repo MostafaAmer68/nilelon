@@ -63,9 +63,7 @@ class _ProductsViewAllHotState extends State<ProductsViewAllHot> {
   void initState() {
     super.initState();
     cubit = ProductsCubit.get(context);
-    cubit.gendar = HiveStorage.get<UserModel>(HiveKeys.userModel)
-        .getUserData<CustomerModel>()
-        .productsChoice;
+    cubit.gendar = HiveStorage.get(HiveKeys.shopFor);
     widget.onStartPage(true);
     scrollController = ScrollController();
 

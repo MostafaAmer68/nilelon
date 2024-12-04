@@ -1,4 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+import 'dart:developer';
+
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
@@ -22,6 +25,15 @@ class RecommendationService extends RecommendationRemoteDataSource {
     );
     if (data.statusCode == 200) {
       print(data.data['result']);
+      final usr = HiveStorage.get<UserModel>(HiveKeys.userModel);
+      final customer = HiveStorage.get<UserModel>(HiveKeys.userModel)
+          .getUserData<CustomerModel>();
+
+      HiveStorage.set(HiveKeys.userModel,
+          usr.copyWith(userData: customer.copyWith(gender: gender)));
+      log(HiveStorage.get<UserModel>(HiveKeys.userModel)
+          .getUserData<CustomerModel>()
+          .gender);
       return 'Updated successfully';
     } else if (data.statusCode == 400) {
       // Handle the bad request response

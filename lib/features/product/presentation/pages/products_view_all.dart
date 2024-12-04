@@ -66,10 +66,11 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
   double currentScrollPosition = 0;
   @override
   void initState() {
-    cubit = ProductsCubit.get(context);
-    cubit.gendar = HiveStorage.get<UserModel>(HiveKeys.userModel)
+    log(HiveStorage.get<UserModel>(HiveKeys.userModel)
         .getUserData<CustomerModel>()
-        .productsChoice;
+        .gender);
+    cubit = ProductsCubit.get(context);
+    cubit.gendar = HiveStorage.get(HiveKeys.shopFor);
     widget.onStartPage(true);
     scrollController = ScrollController(keepScrollOffset: true);
     scrollController.addListener(() {
