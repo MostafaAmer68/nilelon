@@ -8,7 +8,6 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/search/presentation/pages/view_all_store_page.dart';
 import 'package:nilelon/features/search/presentation/cubit/search_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
-import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/search/presentation/widgets/search_section_items.dart';
@@ -110,12 +109,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                   Expanded(
                     child: GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1.sw > 600 ? 3 : 2,
-                        crossAxisSpacing: 16,
-                        mainAxisExtent: 190,
-                        mainAxisSpacing: 12,
-                      ),
+                      gridDelegate: gridDelegateSearch(context),
                       itemCount: HiveStorage.get<List>(HiveKeys.categories)
                           .where((e) => e.id != '')
                           .length,
@@ -185,7 +179,7 @@ class _SearchPageState extends State<SearchPage> {
       title: TextFormFieldBuilder(
         label: lang(context).searchForAnything,
         controller: SearchCubit.get(context).searchC,
-        
+
         type: TextInputType.text,
         isIcon: false,
         onchanged: (v) {

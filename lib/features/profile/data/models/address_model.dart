@@ -10,7 +10,7 @@ class AddressModel extends Equatable {
   final String unitNumber;
   final String streetNumber;
   final String nearestLandMark;
-  AddressModel({
+  const AddressModel({
     required this.addressLine1,
     required this.addressLine2,
     required this.city,

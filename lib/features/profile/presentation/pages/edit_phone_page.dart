@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
@@ -11,13 +10,11 @@ import 'package:nilelon/core/widgets/button/outlined_button_builder.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/pop_ups/success_creation_popup.dart';
-import 'package:nilelon/core/widgets/text_form_field/text_and_form_field_column/without_icon/text_and_form_field_column_no_icon.dart';
 import 'package:nilelon/features/auth/presentation/view/otp_page.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/resources/const_functions.dart';
 import '../../../../core/widgets/scaffold_image.dart';
-import '../../../../core/widgets/text_form_field/text_field/const_text_form_field.dart';
 import '../../../../core/widgets/text_form_field/text_field/text_form_field_builder.dart';
 import '../cubit/profile_cubit.dart';
 

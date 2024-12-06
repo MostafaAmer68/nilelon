@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
@@ -9,9 +11,7 @@ import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
 import 'package:nilelon/features/auth/domain/repos/auth_repos.dart';
 import 'package:nilelon/features/categories/presentation/cubit/category_cubit.dart';
-import 'package:signalr_core/signalr_core.dart';
 
-import '../../../shared/splash/splash_view.dart';
 import '../../domain/model/user_model.dart';
 
 part 'auth_state.dart';
@@ -147,12 +147,20 @@ class AuthCubit extends Cubit<AuthState> {
           HiveStorage.get<UserModel>(HiveKeys.userModel).role == 'Store';
       final bool isCustomer =
           HiveStorage.get<UserModel>(HiveKeys.userModel).role == 'Customer';
-      if (isStore && HiveStorage.get(HiveKeys.isStore) || isCustomer) {
-        emit(const LoginSuccess('Login Successfully'));
-      } else {
-        HiveStorage.set(HiveKeys.userModel, null);
-        emit(const LoginFailure('this account not found'));
-        return;
+      if (HiveStorage.get(HiveKeys.isStore)) {
+        log('store');
+        if (isStore) {
+          emit(const LoginSuccess('Login Successfully'));
+        } else if (!isStore) {
+          emit(const LoginFailure('this account not found'));
+        }
+      } else if (!HiveStorage.get(HiveKeys.isStore)) {
+        log('customer');
+        if (isCustomer) {
+          emit(const LoginSuccess('Login Successfully'));
+        } else {
+          emit(const LoginFailure('this account not found'));
+        }
       }
       // if () {
       //   emit(const LoginSuccess('Login Successfully'));

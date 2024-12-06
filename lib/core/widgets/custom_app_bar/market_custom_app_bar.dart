@@ -8,7 +8,6 @@ import 'package:nilelon/features/notification/presentation/pages/notification_ta
 import 'package:svg_flutter/svg.dart';
 
 import '../../../features/notification/presentation/cubit/notification_cubit.dart';
-import '../../../features/notification/presentation/pages/notification_view.dart';
 import '../../../features/profile/presentation/pages/profile_guest_page.dart';
 import '../../data/hive_stroage.dart';
 

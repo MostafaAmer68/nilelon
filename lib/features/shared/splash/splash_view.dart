@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:app_links/app_links.dart';
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,8 +17,6 @@ import 'package:nilelon/features/shared/onboarding/screen/onboarding_view.dart';
 import 'package:signalr_core/signalr_core.dart';
 
 import '../../../core/widgets/scaffold_image.dart';
-import '../../auth/domain/model/user_model.dart';
-import '../../order/presentation/pages/order_customer_details.dart';
 
 late HubConnection connection;
 

@@ -54,7 +54,7 @@ class _ClosetsWidgetWithOptionsState extends State<ClosetsWidgetWithOptions> {
         contents: [
           TargetContent(
             align: ContentAlign.bottom,
-            child: Text(
+            child: const Text(
               'click here to show closet items',
               style: TextStyle(
                   color: ColorManager.primaryW,

@@ -16,7 +16,6 @@ import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 
 import '../../../../core/data/hive_stroage.dart';
 import '../../../../core/utils/navigation.dart';
-import '../../../auth/domain/model/user_model.dart';
 import '../../../categories/domain/model/result.dart';
 import '../../../categories/presentation/widget/category_filter_widget.dart';
 import '../../../../core/widgets/scaffold_image.dart';

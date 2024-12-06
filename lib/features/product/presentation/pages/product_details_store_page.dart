@@ -84,10 +84,8 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
           cubit.selectedColor =
               productCubit.product.productVariants.first.color;
           cubit.selectedSize = productCubit.product.productVariants.first.size;
-          sizes = productCubit.product.productVariants
-              .where((e) => e.quantity != 0 && e.quantity > 0)
-              .map((e) => e.size)
-              .toList();
+          sizes =
+              productCubit.product.productVariants.map((e) => e.size).toList();
         });
       },
       child: BlocBuilder<ProductsCubit, ProductsState>(
@@ -467,9 +465,7 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
         Text('${lang.size} :', style: AppStylesManager.customTextStyleG10),
         SizeToggleButtons(
           sizes: productCubit.product.productVariants
-              .where((e) => e.quantity != 0)
               .map((e) => e.size)
-              .toList()
               .toSet()
               .toList(),
           selectedSize: cubit.selectedSize,
@@ -490,7 +486,6 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
         ColorSelector(
           colors: productCubit.product.productVariants
               .map((e) => e.color)
-              .toList()
               .toSet()
               .toList(),
           selectedColor: cubit.selectedColor,
@@ -501,39 +496,6 @@ class _ProductStoreDetailsViewState extends State<ProductStoreDetailsView> {
         ),
       ],
     );
-  }
-
-  Widget _buildStockCounter() {
-    return productCubit.product.inStock > 0
-        ? Row(
-            children: [
-              Text(S.of(context).inStock,
-                  style: AppStylesManager.customTextStyleL3),
-              const Spacer(),
-              SmallButton(
-                icon: Iconsax.minus,
-                color: CartCubit.get(context).counter == 1
-                    ? ColorManager.primaryG3
-                    : null,
-                onTap: () => CartCubit.get(context).counter == 1
-                    ? null
-                    : decrementCounter,
-              ),
-              const SizedBox(width: 8),
-              Text(CartCubit.get(context).counter.toString()),
-              const SizedBox(width: 8),
-              SmallButton(
-                icon: Iconsax.add,
-                onTap: incrementCounter,
-              ),
-            ],
-          )
-        : Text(
-            S.of(context).outOfStock,
-            style: AppStylesManager.customTextStyleL3.copyWith(
-              color: ColorManager.primaryR,
-            ),
-          );
   }
 
   Widget _buildReviewSection(S lang) {

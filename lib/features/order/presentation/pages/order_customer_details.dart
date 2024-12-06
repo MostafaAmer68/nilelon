@@ -87,7 +87,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                     children: [
                       Container(
                         width: screenWidth(context, 1),
-                        height: 290,
+                        height: screenHeight(context, 1) > 769 ? 320 : 290,
                         decoration: ShapeDecoration(
                           color: ColorManager.primaryW,
                           shape: RoundedRectangleBorder(
@@ -144,7 +144,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                                         ],
                                       ),
                                     ),
-                                    orElse: () => Container(
+                                    orElse: () => SizedBox(
                                       height: 35,
                                       width: 100,
                                       child: Row(
@@ -208,7 +208,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                     children: [
                       Container(
                         width: screenWidth(context, 1),
-                        height: 180,
+                        height: screenHeight(context, 1) > 769 ? 200 : 180,
                         decoration: ShapeDecoration(
                           color: ColorManager.primaryW,
                           shape: RoundedRectangleBorder(
@@ -333,7 +333,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
 
   SizedBox itemsRow() {
     return SizedBox(
-      height: 190,
+      height: screenHeight(context, 1) > 769 ? 225 : 190,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -354,7 +354,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
           Padding(
             padding: const EdgeInsets.only(left: 16),
             child: SizedBox(
-              height: 120,
+              height: screenHeight(context, 1) > 769 ? 130 : 120,
               child: BlocBuilder<OrderCubit, OrderState>(
                 builder: (context, state) {
                   return state.maybeWhen(

@@ -235,7 +235,8 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                             )
                           else
                             SizedBox(
-                              height: 150.w,
+                              height:
+                                  screenHeight(context, 1) > 769 ? 190 : 150.w,
                               width: screenWidth(context, 1),
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,

@@ -86,7 +86,7 @@ class _CartViewState extends State<CartView> {
             BlocBuilder<CartCubit, CartState>(
               builder: (context, state) {
                 return Container(
-                  margin: EdgeInsets.only(left: 23),
+                  margin: const EdgeInsets.only(left: 23),
                   child: ViewAllRow(
                     isStyled: false,
                     text: cubit.cart1.items.isEmpty
@@ -214,7 +214,7 @@ class CartItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = CartCubit.get(context);
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(horizontal: 15),
       child: Slidable(
         key: ValueKey(index),
         endActionPane: ActionPane(

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:nilelon/features/shared/pdf_view/build_table_row.dart';
@@ -8,7 +7,6 @@ import 'package:nilelon/features/shared/pdf_view/pdf_footer.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'dart:typed_data';
 // import 'package:flutter/services.dart';
 
 Future<String> makePdf({

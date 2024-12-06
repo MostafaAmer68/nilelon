@@ -125,9 +125,9 @@ class _ReturnHistoryDetailsPageState extends State<ReturnHistoryDetailsPage> {
                       ),
 
                       if (widget.returnType == 'ChangedMind')
-                        ChangeMindWidget(isPreview: true),
+                        const ChangeMindWidget(isPreview: true),
                       if (widget.returnType == 'WrongItem')
-                        WrongItemWidget(isPreview: true),
+                        const WrongItemWidget(isPreview: true),
                       // if (cubit.selectedValue == lang.missingItem)
                       //   const MissingItemWidget(),
                     ],

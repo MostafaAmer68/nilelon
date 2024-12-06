@@ -16,7 +16,6 @@ import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/layout/customer_bottom_tab_bar.dart';
 import 'package:nilelon/features/order/presentation/pages/checkout_view.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
-import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:svg_flutter/svg.dart';
@@ -42,66 +41,94 @@ class AddToFooter extends StatelessWidget {
           children: [
             OutlinedButtonBuilder(
               text: S.of(context).buyNow,
-              ontap: () {
-                if (HiveStorage.get(HiveKeys.isStore)) {
-                  BotToast.showText(text: lang(context).youAreStore);
-                  return;
-                }
-                if (HiveStorage.get(HiveKeys.userModel) != null) {
-                  PromoCubit.get(context).deliveryPrice = 0;
-                  PromoCubit.get(context).totalPrice = 0;
-                  PromoCubit.get(context).orderTotal = 0;
-                  PromoCubit.get(context).discount = 0;
-                  PromoCubit.get(context).newPrice = 0;
-                  PromoCubit.get(context).tempTotalPrice = 0;
-                  CartCubit.get(context).tempCartItems.clear();
-                  CartCubit.get(context).tempCartItems.add(
-                        CartItem(
-                            quantity:
-                                product.productVariants.first.quantity.toInt(),
-                            size: product.productVariants
-                                .firstWhere((e) => e.price != 0)
-                                .size,
-                            color: product.productVariants
-                                .firstWhere((e) => e.price != 0)
-                                .color,
-                            price: product.productVariants
-                                .firstWhere((e) => e.price != 0)
-                                .price,
-                            productName: product.name,
-                            productId: product.id,
-                            productImages: product.productImages,
-                            cartId: ''),
-                      );
-                  PromoCubit.get(context).totalPrice = product.productVariants
-                      .firstWhere((e) => e.price != 0)
-                      .price;
-                  PromoCubit.get(context).newPrice = product.productVariants
-                      .firstWhere((e) => e.price != 0)
-                      .price;
-                  PromoCubit.get(context).orderTotal = product.productVariants
-                      .firstWhere((e) => e.price != 0)
-                      .price;
-                  PromoCubit.get(context).tempTotalPrice = product
-                      .productVariants
-                      .firstWhere((e) => e.price != 0)
-                      .price;
-                  log(PromoCubit.get(context).totalPrice.toString());
-                  if (PromoCubit.get(context).totalPrice > 0 &&
-                      PromoCubit.get(context).tempTotalPrice > 0) {
-                    navigateTo(
-                        context: context,
-                        screen: const CheckOutView(isBuNow: true));
-                  }
-                } else {
-                  navigateTo(
-                      context: context,
-                      screen: const CustomerBottomTabBar(index: 3));
-                }
-              },
-              buttonColor: ColorManager.primaryW,
-              frameColor: ColorManager.gradientColors.first,
-              style: AppStylesManager.customTextStyleB4,
+              ontap: product.productVariants
+                          .firstWhere((e) =>
+                              e.size == CartCubit.get(context).selectedSize)
+                          .quantity ==
+                      0
+                  ? () {}
+                  : () {
+                      if (HiveStorage.get(HiveKeys.isStore)) {
+                        BotToast.showText(text: lang(context).youAreStore);
+                        return;
+                      }
+                      if (HiveStorage.get(HiveKeys.userModel) != null) {
+                        PromoCubit.get(context).deliveryPrice = 0;
+                        PromoCubit.get(context).totalPrice = 0;
+                        PromoCubit.get(context).orderTotal = 0;
+                        PromoCubit.get(context).discount = 0;
+                        PromoCubit.get(context).newPrice = 0;
+                        PromoCubit.get(context).tempTotalPrice = 0;
+                        CartCubit.get(context).tempCartItems.clear();
+                        CartCubit.get(context).tempCartItems.add(
+                              CartItem(
+                                  quantity: product
+                                      .productVariants.first.quantity
+                                      .toInt(),
+                                  size: product.productVariants
+                                      .firstWhere((e) => e.price != 0)
+                                      .size,
+                                  color: product.productVariants
+                                      .firstWhere((e) => e.price != 0)
+                                      .color,
+                                  price: product.productVariants
+                                      .firstWhere((e) => e.price != 0)
+                                      .price,
+                                  productName: product.name,
+                                  productId: product.id,
+                                  productImages: product.productImages,
+                                  cartId: ''),
+                            );
+                        PromoCubit.get(context).totalPrice = product
+                            .productVariants
+                            .firstWhere((e) => e.price != 0)
+                            .price;
+                        PromoCubit.get(context).newPrice = product
+                            .productVariants
+                            .firstWhere((e) => e.price != 0)
+                            .price;
+                        PromoCubit.get(context).orderTotal = product
+                            .productVariants
+                            .firstWhere((e) => e.price != 0)
+                            .price;
+                        PromoCubit.get(context).tempTotalPrice = product
+                            .productVariants
+                            .firstWhere((e) => e.price != 0)
+                            .price;
+                        log(PromoCubit.get(context).totalPrice.toString());
+                        if (PromoCubit.get(context).totalPrice > 0 &&
+                            PromoCubit.get(context).tempTotalPrice > 0) {
+                          navigateTo(
+                              context: context,
+                              screen: const CheckOutView(isBuNow: true));
+                        }
+                      } else {
+                        navigateTo(
+                            context: context,
+                            screen: const CustomerBottomTabBar(index: 3));
+                      }
+                    },
+              buttonColor: product.productVariants
+                          .firstWhere((e) =>
+                              e.size == CartCubit.get(context).selectedSize)
+                          .quantity ==
+                      0
+                  ? ColorManager.primaryG3
+                  : ColorManager.primaryW,
+              frameColor: product.productVariants
+                          .firstWhere((e) =>
+                              e.size == CartCubit.get(context).selectedSize)
+                          .quantity ==
+                      0
+                  ? ColorManager.primaryG3
+                  : ColorManager.gradientColors.first,
+              style: product.productVariants
+                          .firstWhere((e) =>
+                              e.size == CartCubit.get(context).selectedSize)
+                          .quantity ==
+                      0
+                  ? AppStylesManager.customTextStyleG4
+                  : AppStylesManager.customTextStyleB4,
             ),
             BlocConsumer<CartCubit, CartState>(
               listener: (context, state) {
@@ -149,6 +176,11 @@ class AddToFooter extends StatelessWidget {
               builder: (context, state) {
                 return GradientButtonBuilder(
                   isIcon: true,
+                  isActivated: product.productVariants
+                          .firstWhere((e) =>
+                              e.size == CartCubit.get(context).selectedSize)
+                          .quantity !=
+                      0,
                   icon: SvgPicture.asset(Assets.assetsImagesAddTOCart),
                   text: state is CartLoading
                       ? S.of(context).loading

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,12 +6,10 @@ import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/widgets/cards/brand/brand_card.dart';
 import 'package:nilelon/features/product/data/repositories/products_repos_impl.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
-import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
-import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
 import 'package:nilelon/features/product/presentation/widgets/product_card/product_squar_item.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';
-import 'package:nilelon/features/profile/presentation/cubit/profile_cubit.dart';
 
+import '../../../../core/resources/const_functions.dart';
 import '../../../../core/service/set_up_locator_service.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
 import '../../../profile/data/models/store_profile_model.dart';
@@ -61,7 +57,7 @@ class _SearchResultState extends State<SearchResult> {
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisExtent: 230.w,
-                crossAxisCount: 2,
+                crossAxisCount: 1.w < 769 ? 3 : 2,
                 crossAxisSpacing: 20.0,
                 mainAxisSpacing: 12),
             itemCount: filterResult.length,

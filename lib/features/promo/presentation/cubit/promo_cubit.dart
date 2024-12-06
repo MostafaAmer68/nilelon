@@ -36,7 +36,6 @@ class PromoCubit extends Cubit<PromoState> {
   TextEditingController promoCode = TextEditingController();
   TextEditingController amount = TextEditingController();
   CategoryModel category = CategoryModel.empty();
-
   Future getFreeShipping(context, promoCodeId) async {
     try {
       emit(PromoLoading());
@@ -53,9 +52,10 @@ class PromoCubit extends Cubit<PromoState> {
             if (response) {
               totalPrice -= deliveryPrice;
               deliveryPrice = 0;
+              promoCode.clear();
               emit(PromoSuccess());
             } else {
-              emit(PromoFailure('Promocode not available for this city'));
+              emit(const PromoFailure('Promocode not available for this city'));
             }
           },
         );

@@ -1,6 +1,5 @@
 import 'dart:developer';
 
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -11,7 +10,6 @@ import 'package:nilelon/features/order/data/models/order_model.dart';
 import 'package:nilelon/features/order/data/models/order_store_model.dart';
 import 'package:nilelon/features/order/data/models/shipping_method.dart';
 import 'package:nilelon/features/order/domain/repositories/order_repo.dart';
-import 'package:nilelon/features/payments/presentation/cubit/payment_cubit.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:paymob_payment/paymob_payment.dart';
 
@@ -51,7 +49,7 @@ class OrderCubit extends Cubit<OrderState> {
     // emit(const OrderState.loading());
     try {
       // customerOrder = OrderCustomerModel.empty();
-      if (selectedOption == 'Credit') {
+      if (selectedOption == 'Visa Card') {
         await PaymobPayment.instance.pay(
           context: context,
           currency: "EGP",

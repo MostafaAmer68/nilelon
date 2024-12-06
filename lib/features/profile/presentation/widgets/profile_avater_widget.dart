@@ -12,14 +12,6 @@ class ProfileAvater extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(500),
         ),
-        shadows: const [
-          BoxShadow(
-            color: Color(0x33726363),
-            blurRadius: 16,
-            offset: Offset(0, 1),
-            spreadRadius: 0,
-          )
-        ],
       ),
       child: CircleAvatar(
         radius: radius,

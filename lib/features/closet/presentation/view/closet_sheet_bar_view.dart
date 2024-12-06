@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/closet/domain/model/closet_model.dart';
 import 'package:nilelon/features/closet/presentation/cubit/closet_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -11,7 +10,6 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/features/closet/presentation/widget/closet_widget_with_options.dart';
 import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
-import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 import '../../../../core/color_const.dart';
 import '../../../../core/utils/navigation.dart';

@@ -5,7 +5,6 @@ import 'package:gradient_borders/input_borders/gradient_outline_input_border.dar
 import 'package:gradient_icon/gradient_icon.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
-import 'package:nilelon/core/widgets/decoration/decoration_with_fade.dart';
 
 class TextFormFieldBuilder extends StatelessWidget {
   const TextFormFieldBuilder({

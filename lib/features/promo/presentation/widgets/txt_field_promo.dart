@@ -60,7 +60,7 @@ class _TxtFieldPromoState extends State<TxtFieldPromo> {
                       cubit.getPromoCodeType(context);
                     }
                   },
-                  isActivated: cubit.discount == 0,
+                  isActivated: !cubit.isFreeShipping && cubit.discount == 0,
                   height: 54,
                   frameColor: Colors.transparent,
                   width: screenWidth(context, 0.24),

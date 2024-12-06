@@ -145,7 +145,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                         ],
                       ),
                       Padding(
-                        padding: EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: ProductStoreWidget(
                             categoryId: cubit.selectedCategory),
                       ),
@@ -204,7 +204,7 @@ class _StoreProfileCustomerState extends State<StoreProfileCustomer> {
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.all(16.0),
+                          padding: const EdgeInsets.all(16.0),
                           child: ProductStoreWidget(
                               categoryId: cubit.selectedCategory),
                         ),

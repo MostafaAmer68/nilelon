@@ -9,7 +9,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nilelon/core/service/failure_service.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
-import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/profile/data/models/address_model.dart';
 import 'package:nilelon/features/profile/data/models/store_profile_model.dart';
 import 'package:nilelon/features/profile/data/repositories/profile_repo_impl.dart';

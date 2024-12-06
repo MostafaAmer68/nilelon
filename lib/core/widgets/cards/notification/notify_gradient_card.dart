@@ -6,7 +6,6 @@ import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/notification/data/models/notification_data.dart';
 import 'package:nilelon/features/order/presentation/pages/order_store_details_view.dart';
 
-import '../../../../features/order/presentation/pages/order_customer_details.dart';
 import '../../../utils/navigation.dart';
 
 class NotifyGradientCard extends StatelessWidget {

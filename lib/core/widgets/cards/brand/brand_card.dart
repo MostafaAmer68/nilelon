@@ -51,7 +51,6 @@ class _BrandCardState extends State<BrandCard> {
         height: HiveStorage.get(HiveKeys.isStore) ? 150.w : 200.w,
         padding: const EdgeInsets.only(
           top: 10,
-          // bottom: 5,
           left: 12,
           right: 12,
         ),
@@ -66,20 +65,23 @@ class _BrandCardState extends State<BrandCard> {
               ? MainAxisAlignment.start
               : MainAxisAlignment.center,
           children: [
-            HiveStorage.get(HiveKeys.isStore)
-                ? Expanded(
-                    child: imageReplacer(
-                      url: widget.store.profilePic ?? '',
-                      height: 135.w,
-                      width: 300,
-                      radius: 8,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : ProfileAvater(
-                    image: widget.store.profilePic ?? '',
-                    radius: 40,
-                  ),
+            if (HiveStorage.get(HiveKeys.isStore))
+              Expanded(
+                child: imageReplacer(
+                  url: widget.store.profilePic ?? '',
+                  height: 135.w,
+                  width: 300,
+                  radius: 8,
+                  fit: BoxFit.cover,
+                ),
+              )
+            else
+              Expanded(
+                child: ProfileAvater(
+                  image: widget.store.profilePic ?? '',
+                  radius: 40,
+                ),
+              ),
             const SizedBox(
               height: 10,
             ),

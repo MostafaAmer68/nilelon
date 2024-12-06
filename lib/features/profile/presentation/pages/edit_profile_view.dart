@@ -22,7 +22,6 @@ import 'package:svg_flutter/svg_flutter.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../../auth/domain/model/user_model.dart';
-import '../../../auth/presentation/cubit/auth_cubit.dart';
 import '../cubit/profile_cubit.dart';
 
 class EditProfileView extends StatefulWidget {

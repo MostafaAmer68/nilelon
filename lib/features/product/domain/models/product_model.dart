@@ -51,6 +51,8 @@ class ProductModel extends Equatable {
       storeId: json['storeId'],
       productVariants: (json['productVariants'] as List)
           .map((i) => ProductVariant.fromJson(i))
+          .toList()
+          .where((e) => e.price > 0.1)
           .toList(),
       productImages: (json['productImages'] as List)
           .map((i) => ProductImage.fromJson(i))

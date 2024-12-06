@@ -71,7 +71,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 30,
               ),
               Row(
@@ -105,7 +105,7 @@ class OrderProductDetailsWidget extends StatelessWidget {
                   // const Spacer(),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(

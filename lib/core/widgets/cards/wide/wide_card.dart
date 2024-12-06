@@ -66,7 +66,7 @@ class WideCard extends StatelessWidget {
             Expanded(
               child: imageReplacer(
                 url: product.productImages.first.url,
-                height: 125,
+                // height: 125,
                 width: 140,
                 radius: 16,
                 fit: BoxFit.cover,
@@ -187,7 +187,11 @@ class WideCard extends StatelessWidget {
                             height: 40.h,
                             width: screenWidth(context, 0.12),
                             decoration: BoxDecoration(
-                              color: ColorManager.primaryG8,
+                              color: product.productVariants.isEmpty
+                                  ? ColorManager.primaryG4
+                                  : product.productVariants.first.quantity == 0
+                                      ? ColorManager.primaryG4
+                                      : ColorManager.primaryG8,
                               borderRadius: BorderRadius.circular(7),
                               boxShadow: const [
                                 BoxShadow(
@@ -257,6 +261,11 @@ class WideCard extends StatelessWidget {
                                           color: ColorManager.primaryB2,
                                         ),
                                         onPressed: () {
+                                          if (product.productVariants.first
+                                                  .quantity ==
+                                              0) {
+                                            return;
+                                          }
                                           isLoading = true;
                                           if (HiveStorage.get(
                                               HiveKeys.isStore)) {
@@ -307,8 +316,14 @@ class WideCard extends StatelessWidget {
                           const SizedBox(width: 10),
                           Expanded(
                             child: ButtonBuilder(
+                              isActivated:
+                                  product.productVariants.first.quantity != 0,
                               text: lang(context).buy,
                               ontap: () {
+                                if (product.productVariants.first.quantity ==
+                                    0) {
+                                  return;
+                                }
                                 if (HiveStorage.get(HiveKeys.isStore)) {
                                   BotToast.showText(
                                       text: lang(context).youAreStore);

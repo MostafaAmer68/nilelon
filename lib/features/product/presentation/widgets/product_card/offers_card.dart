@@ -52,6 +52,7 @@ GestureDetector offersCard({
         orElse: () => product.productVariants.first,
       )
       .newPrice;
+  log(priceAfterDiscount.toString());
   return GestureDetector(
     onTap: () {
       navigateTo(
@@ -199,7 +200,7 @@ GestureDetector offersCard({
                   children: [
                     Text(
                       '$price ${lang(context).le}',
-                      style: AppStylesManager.customTextStyleG,
+                      style: AppStylesManager.customTextStyleG5,
                     ),
                     const SizedBox(
                       width: 50,
@@ -286,6 +287,15 @@ GestureDetector offersCard({
                           size: 14.r,
                         ),
                         onPressed: () {
+                          if (product.productVariants
+                                  .firstWhere(
+                                    (e) => e.price != 0,
+                                    orElse: () => product.productVariants.first,
+                                  )
+                                  .quantity ==
+                              0) {
+                            return;
+                          }
                           CartCubit.get(context).addToCart(
                             AddToCartModel(
                               quantity: 1,
@@ -304,6 +314,13 @@ GestureDetector offersCard({
                 ),
                 Expanded(
                   child: GradientButtonBuilder(
+                    isActivated: product.productVariants
+                            .firstWhere(
+                              (e) => e.price != 0,
+                              orElse: () => product.productVariants.first,
+                            )
+                            .quantity !=
+                        0,
                     text: lang(context).buy,
                     ontap: () {
                       if (HiveStorage.get(HiveKeys.isStore)) {

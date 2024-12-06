@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:bot_toast/bot_toast.dart';
@@ -17,8 +16,6 @@ import 'package:nilelon/features/shared/pdf_view/make_pdf.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../../../generated/l10n.dart';
 
 class NilelonPdfView extends StatefulWidget {
   const NilelonPdfView({
@@ -72,6 +69,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
 
   @override
   Widget build(BuildContext context) {
+    log(widget.discount);
     return isLoading
         ? const Center(child: CircularProgressIndicator())
         : GradientButtonBuilder(
@@ -94,7 +92,8 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
               final result = await makePdf(
                 cells: widget.cells,
                 netTotal: widget.netTotal,
-                discount: '${double.parse(widget.discount) * 100}%',
+                discount:
+                    '${(double.parse(widget.discount) * 100).toStringAsFixed(0)}%',
                 delivery: widget.delivery,
                 total: widget.total,
                 name: HiveStorage.get<UserModel>(HiveKeys.userModel)

@@ -64,6 +64,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   void initState() {
     super.initState();
     cubit = CartCubit.get(context);
+    cubit.counter = 1;
     if (widget.color != null && widget.size != null) {
       cubit.selectedColor = widget.color!;
       cubit.selectedSize = widget.size!;
@@ -102,32 +103,18 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           initial: (_) {},
           success: (_) {
             setState(() {});
-            log((productCubit.product == ProductModel.empty()).toString());
             BotToast.closeAllLoading();
             if (productCubit.product != ProductModel.empty()) {
-              if (productCubit.product.productVariants
-                  .every((e) => e.price > 0 && e.quantity > 0)) {
-                cubit.selectedColor = productCubit.product.productVariants
-                    .firstWhere((e) => e.price > 0 && e.quantity > 0)
-                    .color;
-                cubit.selectedSize = productCubit.product.productVariants
-                    .firstWhere((e) => e.price > 0 && e.quantity > 0)
-                    .size;
-                log(
-                    productCubit.product.productVariants
-                        .firstWhere((e) => e.price > 0 && e.quantity > 0)
-                        .size,
-                    name: 'test');
-              } else {
-                cubit.selectedColor = '';
-                cubit.selectedSize = '';
+              if (productCubit.product.productVariants.isNotEmpty) {
+                cubit.selectedColor =
+                    productCubit.product.productVariants.first.color;
+                cubit.selectedSize =
+                    productCubit.product.productVariants.first.size;
+
+                sizes = productCubit.product.productVariants
+                    .map((e) => e.size)
+                    .toList();
               }
-              log('test case: ${productCubit.product.productVariants.every((e) => e.price > 0 && e.quantity > 0)}',
-                  name: 'test case');
-              sizes = productCubit.product.productVariants
-                  .where((e) => e.quantity != 0 && e.quantity > 0)
-                  .map((e) => e.size)
-                  .toList();
               setState(() {});
             }
             setState(() {});
@@ -708,16 +695,17 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   }
 
   Widget _buildSizeSelector(S lang) {
+    log(productCubit.product.productVariants
+        .map((e) => e.size)
+        .toSet()
+        .toList()
+        .toString());
     return Row(
       children: [
         Text('${lang.size} :', style: AppStylesManager.customTextStyleG10),
         SizeToggleButtons(
           sizes: productCubit.product.productVariants
-              .where((e) => e.color == cubit.selectedColor)
-              .toList()
-              .where((e) => e.quantity > 0 && e.price != 0)
               .map((e) => e.size)
-              .toList()
               .toSet()
               .toList(),
           selectedSize: cubit.selectedSize,
@@ -737,9 +725,7 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             style: AppStylesManager.customTextStyleG10),
         ColorSelector(
           colors: productCubit.product.productVariants
-              .where((e) => e.quantity != 0 && e.price != 0)
               .map((e) => e.color)
-              .toList()
               .toSet()
               .toList(),
           selectedColor: cubit.selectedColor,
@@ -753,36 +739,57 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
   }
 
   Widget _buildStockCounter() {
-    return productCubit.product.inStock > 0
-        ? Row(
-            children: [
-              Text(S.of(context).inStock,
-                  style: AppStylesManager.customTextStyleL3),
-              const Spacer(),
-              SmallButton(
-                icon: Iconsax.minus,
-                color: CartCubit.get(context).counter == 1
-                    ? ColorManager.primaryG3
-                    : null,
-                onTap: () => CartCubit.get(context).counter > 1
-                    ? decrementCounter()
-                    : null,
-              ),
-              const SizedBox(width: 8),
-              Text(CartCubit.get(context).counter.toString()),
-              const SizedBox(width: 8),
-              SmallButton(
-                icon: Iconsax.add,
-                onTap: incrementCounter,
-              ),
-            ],
-          )
-        : Text(
-            S.of(context).outOfStock,
-            style: AppStylesManager.customTextStyleL3.copyWith(
-              color: ColorManager.primaryR,
-            ),
-          );
+    if (productCubit.product.productVariants
+            .firstWhere((e) => e.size == cubit.selectedSize)
+            .quantity >
+        0) {
+      if (cubit.counter >
+          productCubit.product.productVariants
+              .firstWhere((e) => e.size == cubit.selectedSize)
+              .quantity) {
+        cubit.counter = productCubit.product.productVariants
+            .firstWhere((e) => e.size == cubit.selectedSize)
+            .quantity
+            .toInt();
+      }
+      return Row(
+        children: [
+          Text(S.of(context).inStock,
+              style: AppStylesManager.customTextStyleL3),
+          const Spacer(),
+          SmallButton(
+            icon: Iconsax.minus,
+            color: cubit.counter == 1 ? ColorManager.primaryG3 : null,
+            onTap: () => cubit.counter > 1 ? decrementCounter() : null,
+          ),
+          const SizedBox(width: 8),
+          Text(cubit.counter.toString()),
+          const SizedBox(width: 8),
+          SmallButton(
+            icon: Iconsax.add,
+            color: productCubit.product.productVariants
+                        .firstWhere((e) => e.size == cubit.selectedSize)
+                        .quantity ==
+                    cubit.counter
+                ? ColorManager.primaryG3
+                : null,
+            onTap: productCubit.product.productVariants
+                        .firstWhere((e) => e.size == cubit.selectedSize)
+                        .quantity ==
+                    cubit.counter
+                ? () {}
+                : incrementCounter,
+          ),
+        ],
+      );
+    } else {
+      return Text(
+        S.of(context).outOfStock,
+        style: AppStylesManager.customTextStyleL3.copyWith(
+          color: ColorManager.primaryR,
+        ),
+      );
+    }
   }
 
   Widget _buildReviewSection(S lang) {

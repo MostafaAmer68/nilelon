@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/features/product/domain/models/product_model.dart';
 
 import 'package:nilelon/core/resources/appstyles_manager.dart';
@@ -62,11 +63,11 @@ GestureDetector productSquarItem(
           )
         ],
       ),
-      width: 1.sw > 600
-          ? 270.w
+      width: screenHeight(context, 1) > 769
+          ? 150.w
           : 1.sw < 400
               ? 155
-              : 200,
+              : 100,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

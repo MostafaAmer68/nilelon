@@ -60,7 +60,7 @@ class _OverViewStepState extends State<OverViewStep> {
           child: Column(
             children: [
               SizedBox(
-                height: 150,
+                height: screenHeight(context, 1) > 769 ? 170 : 150,
                 child: ListView.builder(
                   padding: const EdgeInsetsDirectional.symmetric(
                     vertical: 16,
@@ -101,7 +101,7 @@ class _OverViewStepState extends State<OverViewStep> {
                     ),
                     Container(
                       width: screenWidth(context, 1),
-                      height: 280,
+                      height: screenHeight(context, 1) > 769 ? 310 : 280,
                       decoration: ShapeDecoration(
                         color: ColorManager.primaryW,
                         shape: RoundedRectangleBorder(
@@ -116,64 +116,66 @@ class _OverViewStepState extends State<OverViewStep> {
                           )
                         ],
                       ),
-                      child: Column(children: [
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        BlocBuilder<CartCubit, CartState>(
-                          builder: (context, state) {
-                            if (state is GetCartSuccess) {
-                              if (promoCubit.totalPrice == 0) {
-                                for (var item
-                                    in CartCubit.get(context).cart1.items) {
-                                  promoCubit.totalPrice +=
-                                      item.price * item.quantity;
-                                  promoCubit.orderTotal +=
-                                      item.price * item.quantity;
-                                  promoCubit.tempTotalPrice +=
-                                      item.price * item.quantity;
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          BlocBuilder<CartCubit, CartState>(
+                            builder: (context, state) {
+                              if (state is GetCartSuccess) {
+                                if (promoCubit.totalPrice == 0) {
+                                  for (var item
+                                      in CartCubit.get(context).cart1.items) {
+                                    promoCubit.totalPrice +=
+                                        item.price * item.quantity;
+                                    promoCubit.orderTotal +=
+                                        item.price * item.quantity;
+                                    promoCubit.tempTotalPrice +=
+                                        item.price * item.quantity;
+                                  }
                                 }
                               }
-                            }
-                            return Column(
-                              children: [
-                                BlocBuilder<OrderCubit, OrderState>(
-                                  builder: (context, state) {
-                                    return orderSummaryItems(lang.order,
-                                        (promoCubit.orderTotal).toString());
-                                  },
-                                ),
-                                BlocBuilder<OrderCubit, OrderState>(
-                                  builder: (context, state) {
-                                    return orderSummaryItemsWithDropList(
-                                        lang.delivery,
-                                        '${promoCubit.deliveryPrice} ${lang.le}',
-                                        lang);
-                                  },
-                                ),
-                                BlocBuilder<OrderCubit, OrderState>(
-                                  builder: (context, state) {
-                                    return orderSummaryItems(
-                                      lang.discount,
-                                      '${(promoCubit.discount * 100).toStringAsFixed(0)} %',
-                                    );
-                                  },
-                                ),
-                                BlocBuilder<OrderCubit, OrderState>(
-                                  builder: (context, state) {
-                                    return orderSummaryItems(
-                                        lang.total,
-                                        '${promoCubit.totalPrice} ${lang.le}',
-                                        AppStylesManager.customTextStyleO5
-                                            .copyWith(
-                                                fontWeight: FontWeight.w600));
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ]),
+                              return Column(
+                                children: [
+                                  BlocBuilder<OrderCubit, OrderState>(
+                                    builder: (context, state) {
+                                      return orderSummaryItems(lang.order,
+                                          (promoCubit.orderTotal).toString());
+                                    },
+                                  ),
+                                  BlocBuilder<OrderCubit, OrderState>(
+                                    builder: (context, state) {
+                                      return orderSummaryItemsWithDropList(
+                                          lang.delivery,
+                                          '${promoCubit.deliveryPrice} ${lang.le}',
+                                          lang);
+                                    },
+                                  ),
+                                  BlocBuilder<OrderCubit, OrderState>(
+                                    builder: (context, state) {
+                                      return orderSummaryItems(
+                                        lang.discount,
+                                        '${(promoCubit.discount * 100).toStringAsFixed(0)} %',
+                                      );
+                                    },
+                                  ),
+                                  BlocBuilder<OrderCubit, OrderState>(
+                                    builder: (context, state) {
+                                      return orderSummaryItems(
+                                          lang.total,
+                                          '${promoCubit.totalPrice} ${lang.le}',
+                                          AppStylesManager.customTextStyleO5
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w600));
+                                    },
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 60,

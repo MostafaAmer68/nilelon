@@ -23,7 +23,7 @@ class _GendarFilterWidgetState extends State<GendarFilterWidget> {
     return Visibility(
       // visible: HiveStorage.get(HiveKeys.isStore),
       child: SizedBox(
-        height: 52,
+        height: 56,
         width: MediaQuery.of(context).size.width,
         child: ListView.builder(
           shrinkWrap: true,
@@ -32,7 +32,7 @@ class _GendarFilterWidgetState extends State<GendarFilterWidget> {
           itemBuilder: (context, index) {
             final ganderItem = gander[index];
             return GanderFilterItem(
-              isDark:widget.isDark,
+              isDark: widget.isDark,
               name: ganderItem,
               isSelected: widget.selectedCategory == ganderItem,
               onTap: () {

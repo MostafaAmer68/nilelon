@@ -26,7 +26,7 @@ class AuthService {
         endPoint: EndPoint.loginUrl, body: entity.toJson());
     if (data.statusCode == 200) {
       UserModel userData;
-      HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
+      // HiveStorage.set(HiveKeys.isStore, data.data['role'] == 'Store');
       // HiveStorage.set(HiveKeys.token, data.data['token']);
       if (data.data['role'] != 'Store') {
         userData = UserModel<CustomerModel>.fromMap(data.data);
@@ -36,7 +36,7 @@ class AuthService {
         userData = UserModel<StoreModel>.fromMap(data.data);
       }
       HiveStorage.set(HiveKeys.userModel, userData);
-      final token = FlutterSecureStorage();
+      final token = const FlutterSecureStorage();
       token.write(key: 'token', value: userData.token);
     } else {
       // Handle other status codes if necessary
@@ -70,7 +70,7 @@ class AuthService {
       HiveStorage.set(HiveKeys.shopFor, false);
 
       HiveStorage.set(HiveKeys.userModel, userData);
-      final token = FlutterSecureStorage();
+      final token = const FlutterSecureStorage();
       token.write(key: 'token', value: data.data);
       return data.data as String;
     } else if (data.statusCode == 400) {
@@ -111,7 +111,7 @@ class AuthService {
       HiveStorage.set(HiveKeys.shopFor, false);
 
       HiveStorage.set(HiveKeys.userModel, userData);
-      final token = FlutterSecureStorage();
+      final token = const FlutterSecureStorage();
       token.write(key: 'token', value: data.data);
       return data.data as String;
     } else if (data.statusCode == 400) {

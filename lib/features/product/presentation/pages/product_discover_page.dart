@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_state.dart';
@@ -232,7 +233,7 @@ class ProductNewInView extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: SizedBox(
-            height: 270.w,
+            height: screenHeight(context, 1) > 769 ? 230.w : 270.w,
             child: ListView.builder(
               itemBuilder: (context, index) {
                 final product = products[index];

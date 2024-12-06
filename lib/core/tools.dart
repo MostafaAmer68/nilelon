@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 import '../features/auth/domain/model/user_model.dart';
@@ -12,8 +13,36 @@ SliverGridDelegateWithFixedCrossAxisCount gridDelegate(context) {
   return SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 1.sw > 600 ? 3 : 2,
     crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-    mainAxisExtent: 270.w,
+    mainAxisExtent: screenHeight(context, 1) < 769 ? 270.w : 220.w,
     mainAxisSpacing: 1.sw > 600 ? 16 : 12,
+  );
+}
+
+SliverGridDelegateWithFixedCrossAxisCount gridDelegateOffer(context) {
+  // double screenWidth = MediaQuery.of(context).size.width;
+  // int crossAxisCount = (screenWidth / 150).floor();
+  return SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 1.sw > 600 ? 3 : 2,
+    crossAxisSpacing: 16.0,
+    mainAxisExtent: HiveStorage.get(HiveKeys.isStore)
+        ? screenHeight(context, 1) < 769
+            ? 270.w
+            : 220.w
+        : screenHeight(context, 1) < 769
+            ? 295.w
+            : 245.w,
+    mainAxisSpacing: 12.0,
+  );
+}
+
+SliverGridDelegateWithFixedCrossAxisCount gridDelegateSearch(context) {
+  // double screenWidth = MediaQuery.of(context).size.width;
+  // int crossAxisCount = (screenWidth / 150).floor();
+  return SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 1.sw > 600 ? 3 : 2,
+    crossAxisSpacing: 16,
+    mainAxisExtent: screenHeight(context, 1) > 769 ? 200 : 190,
+    mainAxisSpacing: 12,
   );
 }
 

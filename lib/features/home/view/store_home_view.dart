@@ -18,12 +18,9 @@ import 'package:nilelon/core/widgets/view_all_row/view_all_row.dart';
 import 'package:nilelon/features/product/presentation/cubit/products_cubit/products_cubit.dart';
 
 import '../../../core/constants/assets.dart';
-import '../../../core/data/hive_stroage.dart';
 import '../../../core/resources/appstyles_manager.dart';
 import '../../../core/widgets/scaffold_image.dart';
 import '../../product/presentation/cubit/products_cubit/products_state.dart';
-import '../../product/presentation/pages/product_details_page.dart';
-import '../../product/presentation/pages/product_details_store_page.dart';
 import '../../search/presentation/pages/search_view.dart';
 
 class StoreMarketView extends StatefulWidget {

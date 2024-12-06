@@ -143,8 +143,7 @@ class _CheckOutViewState extends State<CheckOutView> {
                           ])
                       .toList(),
                   netTotal: price.toString(),
-                  discount:
-                      (orderCubit.customerOrder.discount.toStringAsFixed(0)),
+                  discount: orderCubit.customerOrder.discount.toString(),
                   total: (orderCubit.customerOrder.total).toString(),
                   delivery: orderCubit.customerOrder.shippingCost,
                 ),
@@ -183,10 +182,14 @@ class _CheckOutViewState extends State<CheckOutView> {
                         //     curve: Curves.easeInOut);
                         if (OrderCubit.get(context).formKey.currentState ==
                             null) {
-                          cubit.nextStep();
-                          cubit.pageController.nextPage(
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeInOut);
+                          if (PromoCubit.get(context).selectedGov.isNotEmpty) {
+                            cubit.nextStep();
+                            cubit.pageController.nextPage(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInOut);
+                          } else {
+                            BotToast.showText(text: 'Please Select City');
+                          }
                         } else {
                           if (OrderCubit.get(context)
                               .formKey

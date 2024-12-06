@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
+import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
@@ -23,7 +26,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
   String _tempSelectedOption = '';
   List<String> options = [
     // 'Visa Card',
-    'Credit',
+    'Visa Card',
     'Cash',
   ];
   late final OrderCubit cubit;
@@ -36,6 +39,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
   @override
   Widget build(BuildContext context) {
     final progressCubit = BlocProvider.of<ProgressCubit>(context);
+    log(PromoCubit.get(context).discount.toString());
     final lang = S.of(context);
     return BlocListener<OrderCubit, OrderState>(
       listener: (context, state) {
@@ -98,14 +102,17 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
                     controller: cubit.unitNumber,
                     type: TextInputType.text),
                 textAndTextField(
-                    title: lang.landmark,
-                    label: lang.enterLandmark,
-                    controller: cubit.landmark,
-                    type: TextInputType.text),
+                  title: lang.landmark,
+                  label: lang.enterLandmark,
+                  controller: cubit.landmark,
+                  type: TextInputType.text,
+                ),
                 textAndTextField(
                     title: lang.city,
                     label: lang.enterYourCity,
-                    controller: cubit.city,
+                    readOnly: true,
+                    controller: TextEditingController(
+                        text: PromoCubit.get(context).selectedGov),
                     type: TextInputType.text),
                 const SizedBox(
                   height: 16,
@@ -184,6 +191,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
     required String title,
     required String label,
     required controller,
+    bool readOnly = false,
     required type,
     String? Function(String? v)? validate,
   }) {
@@ -199,6 +207,7 @@ class _BillingDetailsStepState extends State<BillingDetailsStep> {
           height: 12,
         ),
         TextFormFieldBuilder(
+          readOnly: readOnly,
           label: label,
           onchanged: (v) {
             cubit.formKey.currentState!.validate();

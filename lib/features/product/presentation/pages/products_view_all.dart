@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
-import 'package:nilelon/features/auth/domain/model/user_model.dart';
 import 'package:nilelon/features/categories/domain/model/result.dart';
 import 'package:nilelon/features/categories/presentation/widget/gander_filter_widget.dart';
 import 'package:nilelon/features/product/domain/models/product_response.dart';
@@ -165,13 +164,7 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
         child: GridView.builder(
           controller: scrollController, // Use the custom ScrollController
           gridDelegate: widget.isOffer
-              ? SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1.sw > 600 ? 3 : 2,
-                  crossAxisSpacing: 16.0,
-                  mainAxisExtent:
-                      HiveStorage.get(HiveKeys.isStore) ? 270.w : 295.w,
-                  mainAxisSpacing: 12.0,
-                )
+              ? gridDelegateOffer(context)
               : gridDelegate(context),
           itemCount: cubit
                   .filterListByCategory(cubit.category, paginationList.data)
@@ -186,21 +179,21 @@ class _ProductsViewAllState extends State<ProductsViewAll> {
               return const Center(child: CircularProgressIndicator());
             }
 
-            final product = cubit.filterListByCategory(
+            final productItem = cubit.filterListByCategory(
                 cubit.category, paginationList.data)[index];
             return widget.isOffer
                 ? offersCard(
                     context: context,
-                    product: product,
+                    product: productItem,
                   )
                 : widget.isStore
                     ? marketSmallCard(
                         context: context,
-                        product: product,
+                        product: productItem,
                       )
                     : productSquarItem(
                         context: context,
-                        product: product,
+                        product: productItem,
                       );
           },
         ),

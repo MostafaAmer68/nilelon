@@ -80,7 +80,7 @@ class _NotificationTabBarState extends State<NotificationTabBar> {
                             ],
                           );
                         }
-                        return TabBarView(
+                        return const TabBarView(
                           children: [
                             RequestsView(),
                             UpdatesView(),
