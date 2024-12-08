@@ -13,7 +13,7 @@ SliverGridDelegateWithFixedCrossAxisCount gridDelegate(context) {
   return SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 1.sw > 600 ? 3 : 2,
     crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-    mainAxisExtent: screenHeight(context, 1) < 769 ? 270.w : 220.w,
+    mainAxisExtent: screenHeight(context, 1) > 769 ? 270.w : 220.w,
     mainAxisSpacing: 1.sw > 600 ? 16 : 12,
   );
 }
@@ -25,10 +25,10 @@ SliverGridDelegateWithFixedCrossAxisCount gridDelegateOffer(context) {
     crossAxisCount: 1.sw > 600 ? 3 : 2,
     crossAxisSpacing: 16.0,
     mainAxisExtent: HiveStorage.get(HiveKeys.isStore)
-        ? screenHeight(context, 1) < 769
+        ? screenHeight(context, 1) > 769
             ? 270.w
             : 220.w
-        : screenHeight(context, 1) < 769
+        : screenHeight(context, 1) > 769
             ? 295.w
             : 245.w,
     mainAxisSpacing: 12.0,

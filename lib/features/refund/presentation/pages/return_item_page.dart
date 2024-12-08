@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
+import 'package:nilelon/core/utils/navigation.dart';
 import 'package:nilelon/features/refund/presentation/widgets/car_order_refund_widget.dart';
 import 'package:nilelon/features/refund/presentation/widgets/wrong_item_widget.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -41,7 +42,6 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
       lang.wrongItem,
       lang.missingItem,
     ];
-
     return BlocListener<RefundCubit, RefundState>(
       listener: (context, state) {
         if (state is RefundLoading) {
@@ -50,6 +50,7 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
         if (state is RefundSuccess) {
           BotToast.closeAllLoading();
           BotToast.showText(text: S.of(context).reportSubmited);
+          navigatePop(context: context);
         }
         if (state is RefundFailure) {
           BotToast.closeAllLoading();

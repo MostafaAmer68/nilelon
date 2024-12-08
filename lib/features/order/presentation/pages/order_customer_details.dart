@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/features/order/data/models/order_customer_model.dart';
+import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/resources/color_manager.dart';
@@ -34,6 +35,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
   void initState() {
     cubit = OrderCubit.get(context);
     cubit.getCustomerOrderDetailsById(widget.id);
+    RefundCubit.get(context).getRefunds();
     super.initState();
   }
 
@@ -68,7 +70,11 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
           appBar: customAppBar(
             title: lang.orderDetails,
             context: context,
-            hasIcon: cubit.customerOrder.status == 'Delivered',
+            hasIcon: cubit.customerOrder.status == 'Delivered' &&
+                !RefundCubit.get(context)
+                    .refunds
+                    .map((e) => e.orderId)
+                    .contains(widget.id),
             icon: Icons.error_outline,
             iconColor: ColorManager.primaryR,
             onPressed: () {
@@ -181,20 +187,25 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                                 );
                               },
                             ),
-                            orderSummaryItems2(
-                              lang.promoCodeApplied,
-                              Text(
-                                cubit.customerOrder.promoCodeName != null
-                                    ? lang.yes
-                                    : lang.no,
-                                style:
-                                    AppStylesManager.customTextStyleG.copyWith(
-                                  color:
-                                      cubit.customerOrder.promoCodeName != null
-                                          ? ColorManager.primaryGR
-                                          : ColorManager.primaryR,
-                                ),
-                              ),
+                            BlocBuilder<OrderCubit, OrderState>(
+                              builder: (context, state) {
+                                return orderSummaryItems2(
+                                  lang.promoCodeApplied,
+                                  Text(
+                                    cubit.customerOrder.promoCodeName != null
+                                        ? lang.yes
+                                        : lang.no,
+                                    style: AppStylesManager.customTextStyleG
+                                        .copyWith(
+                                      color:
+                                          cubit.customerOrder.promoCodeName !=
+                                                  null
+                                              ? ColorManager.primaryGR
+                                              : ColorManager.primaryR,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),

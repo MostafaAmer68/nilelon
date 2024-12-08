@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nilelon/features/refund/data/models/refund_details_model.dart';
 import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 
 import '../../../../core/color_const.dart';
 import '../../../../core/resources/appstyles_manager.dart';
+import '../../../../core/resources/color_manager.dart';
 import '../../../../core/resources/const_functions.dart';
 import '../../../../core/sizes_consts.dart';
 import '../../../../core/utils/navigation.dart';
@@ -52,15 +56,29 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
         SizedBox(
           height: 16.sp,
         ),
-        dropDownMenu(
-            hint: lang.chooseAnswer,
-            selectedValue: cubit.wrongSelectedValue,
-            items: wrongItems,
-            context: context,
-            onChanged: (item) {
-              cubit.wrongSelectedValue = item!;
-              setState(() {});
-            }),
+        if (!widget.isPreview)
+          dropDownMenu(
+              hint: lang.chooseAnswer,
+              selectedValue: cubit.wrongSelectedValue,
+              items: wrongItems,
+              context: context,
+              onChanged: (item) {
+                cubit.wrongSelectedValue = item!;
+                setState(() {});
+              })
+        else
+          Container(
+            height: 70,
+            padding: const EdgeInsets.all(20),
+            width: screenWidth(context, 0.9),
+            decoration: BoxDecoration(
+              color: ColorManager.primaryW,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Text(cubit.returnDetails.returnedColor.isNotEmpty
+                ? "Color"
+                : 'Size'),
+          ),
         SizedBox(
           height: 16.sp,
         ),
@@ -74,6 +92,7 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
   }
 
   Widget _buildColorSelector(RefundCubit cubit, S lang) {
+    log(cubit.returnDetails.returnedColor);
     return Row(
       children: [
         Text(
@@ -83,14 +102,26 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
         SizedBox(
           height: 16.sp,
         ),
-        ColorSelector(
-          colors: colorProducts.map((e) => e.replaceRange(0, 3, '')).toList(),
-          selectedColor: cubit.selectedColor,
-          onColorSelected: (color) {
-            cubit.selectedColor = color;
-            setState(() {});
-          },
-        ),
+        if (widget.isPreview) ...[
+          ColorSelector(
+            colors: colorProducts
+                .where((e) =>
+                    e.substring(2).toLowerCase() ==
+                    cubit.returnDetails.returnedColor)
+                .map((e) => e.substring(2))
+                .toList(),
+            selectedColor: cubit.selectedColor,
+            onColorSelected: (color) {},
+          ),
+        ] else
+          ColorSelector(
+            colors: colorProducts.map((e) => e.substring(2)).toList(),
+            selectedColor: cubit.selectedColor,
+            onColorSelected: (color) {
+              cubit.selectedColor = color;
+              setState(() {});
+            },
+          ),
       ],
     );
   }
@@ -105,14 +136,24 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
         SizedBox(
           height: 16.sp,
         ),
-        SizeToggleButtons(
-          sizes: SizeTypes.values.map((e) => e.name).toList(),
-          selectedSize: cubit.selectedSize,
-          onSizeSelected: (size) {
-            cubit.selectedSize = size;
-            setState(() {});
-          },
-        ),
+        if (widget.isPreview) ...[
+          SizeToggleButtons(
+            sizes: SizeTypes.values
+                .where((e) => e.name == cubit.returnDetails.returnedSize)
+                .map((e) => e.name)
+                .toList(),
+            selectedSize: cubit.selectedSize,
+            onSizeSelected: (size) {},
+          ),
+        ] else
+          SizeToggleButtons(
+            sizes: SizeTypes.values.map((e) => e.name).toList(),
+            selectedSize: cubit.selectedSize,
+            onSizeSelected: (size) {
+              cubit.selectedSize = size;
+              setState(() {});
+            },
+          ),
       ],
     );
   }
@@ -141,7 +182,7 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
                           return Scaffold(
                             appBar: AppBar(
                               centerTitle: true,
-                              title: Text(lang.damagedItem),
+                              title: Text(lang.front),
                               leading: IconButton(
                                 onPressed: () {
                                   navigatePop(context: c);
@@ -152,14 +193,14 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
                             body: Center(
                               child: imageReplacer(
                                   height: screenHeight(context, 0.85),
-                                  url: cubit.returnDetails.damageImage),
+                                  url: cubit.returnDetails.frontImage),
                             ),
                           );
                         },
                       );
                     },
                     child: imageReplacer(
-                      url: cubit.returnDetails.damageImage,
+                      url: cubit.returnDetails.frontImage,
                       radius: 16,
                       width: screenWidth(context, 0.25),
                       height: screenWidth(context, 0.20),
@@ -194,23 +235,57 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
             ),
             Column(
               children: [
-                cubit.backImage == null
-                    ? addContainer(
-                        () async {
-                          cubit.backImage = await cameraDialog(context);
-                          setState(() {});
+                if (widget.isPreview)
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (c) {
+                          return Scaffold(
+                            appBar: AppBar(
+                              centerTitle: true,
+                              title: Text(lang.back),
+                              leading: IconButton(
+                                onPressed: () {
+                                  navigatePop(context: c);
+                                },
+                                icon: const Icon(Icons.close),
+                              ),
+                            ),
+                            body: Center(
+                              child: imageReplacer(
+                                  height: screenHeight(context, 0.85),
+                                  url: cubit.returnDetails.backImage),
+                            ),
+                          );
                         },
-                        context,
-                        null,
-                        null,
-                      )
-                    : imageContainer(
-                        () {},
-                        cubit.backImage!.path,
-                        context,
-                        null,
-                        null,
-                      ),
+                      );
+                    },
+                    child: imageReplacer(
+                      url: cubit.returnDetails.backImage,
+                      radius: 16,
+                      width: screenWidth(context, 0.25),
+                      height: screenWidth(context, 0.20),
+                    ),
+                  )
+                else
+                  cubit.backImage == null
+                      ? addContainer(
+                          () async {
+                            cubit.backImage = await cameraDialog(context);
+                            setState(() {});
+                          },
+                          context,
+                          null,
+                          null,
+                        )
+                      : imageContainer(
+                          () {},
+                          cubit.backImage!.path,
+                          context,
+                          null,
+                          null,
+                        ),
                 SizedBox(
                   height: 8.sp,
                 ),
@@ -222,23 +297,57 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
             ),
             Column(
               children: [
-                cubit.damageImage == null
-                    ? addContainer(
-                        () async {
-                          cubit.damageImage = await cameraDialog(context);
-                          setState(() {});
+                if (widget.isPreview)
+                  InkWell(
+                    onTap: () {
+                      showDialog(
+                        context: context,
+                        builder: (c) {
+                          return Scaffold(
+                            appBar: AppBar(
+                              centerTitle: true,
+                              title: Text(lang.damagedPart),
+                              leading: IconButton(
+                                onPressed: () {
+                                  navigatePop(context: c);
+                                },
+                                icon: const Icon(Icons.close),
+                              ),
+                            ),
+                            body: Center(
+                              child: imageReplacer(
+                                  height: screenHeight(context, 0.85),
+                                  url: cubit.returnDetails.damageImage),
+                            ),
+                          );
                         },
-                        context,
-                        null,
-                        null,
-                      )
-                    : imageContainer(
-                        () {},
-                        cubit.damageImage!.path,
-                        context,
-                        null,
-                        null,
-                      ),
+                      );
+                    },
+                    child: imageReplacer(
+                      url: cubit.returnDetails.damageImage,
+                      radius: 16,
+                      width: screenWidth(context, 0.25),
+                      height: screenWidth(context, 0.20),
+                    ),
+                  )
+                else
+                  cubit.damageImage == null
+                      ? addContainer(
+                          () async {
+                            cubit.damageImage = await cameraDialog(context);
+                            setState(() {});
+                          },
+                          context,
+                          null,
+                          null,
+                        )
+                      : imageContainer(
+                          () {},
+                          cubit.damageImage!.path,
+                          context,
+                          null,
+                          null,
+                        ),
                 SizedBox(
                   height: 8.sp,
                 ),
@@ -256,9 +365,14 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
 
   _buildVariantWrogngWidget(lang) {
     return Column(children: [
-      cubit.wrongSelectedValue == lang.size
-          ? _buildSizeSelector(cubit, lang)
-          : _buildColorSelector(cubit, lang),
+      if (widget.isPreview) ...[
+        cubit.returnDetails.returnedColor.isEmpty
+            ? _buildSizeSelector(cubit, lang)
+            : _buildColorSelector(cubit, lang),
+      ] else
+        cubit.wrongSelectedValue == lang.size
+            ? _buildSizeSelector(cubit, lang)
+            : _buildColorSelector(cubit, lang),
       SizedBox(
         height: 16.sp,
       ),
@@ -274,23 +388,57 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
         children: [
           Column(
             children: [
-              cubit.fronImage == null
-                  ? addContainer(
-                      () async {
-                        cubit.fronImage = await cameraDialog(context);
-                        setState(() {});
+              if (widget.isPreview)
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (c) {
+                        return Scaffold(
+                          appBar: AppBar(
+                            centerTitle: true,
+                            title: Text(lang.front),
+                            leading: IconButton(
+                              onPressed: () {
+                                navigatePop(context: c);
+                              },
+                              icon: const Icon(Icons.close),
+                            ),
+                          ),
+                          body: Center(
+                            child: imageReplacer(
+                                height: screenHeight(context, 0.85),
+                                url: cubit.returnDetails.frontImage),
+                          ),
+                        );
                       },
-                      context,
-                      null,
-                      null,
-                    )
-                  : imageContainer(
-                      () {},
-                      cubit.fronImage!.path,
-                      context,
-                      null,
-                      null,
-                    ),
+                    );
+                  },
+                  child: imageReplacer(
+                    url: cubit.returnDetails.frontImage,
+                    radius: 16,
+                    width: screenWidth(context, 0.25),
+                    height: screenWidth(context, 0.20),
+                  ),
+                )
+              else
+                cubit.fronImage == null
+                    ? addContainer(
+                        () async {
+                          cubit.fronImage = await cameraDialog(context);
+                          setState(() {});
+                        },
+                        context,
+                        null,
+                        null,
+                      )
+                    : imageContainer(
+                        () {},
+                        cubit.fronImage!.path,
+                        context,
+                        null,
+                        null,
+                      ),
               SizedBox(
                 height: 8.sp,
               ),
@@ -302,23 +450,57 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
           ),
           Column(
             children: [
-              cubit.backImage == null
-                  ? addContainer(
-                      () async {
-                        cubit.backImage = await cameraDialog(context);
-                        setState(() {});
+              if (widget.isPreview)
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (c) {
+                        return Scaffold(
+                          appBar: AppBar(
+                            centerTitle: true,
+                            title: Text(lang.front),
+                            leading: IconButton(
+                              onPressed: () {
+                                navigatePop(context: c);
+                              },
+                              icon: const Icon(Icons.close),
+                            ),
+                          ),
+                          body: Center(
+                            child: imageReplacer(
+                                height: screenHeight(context, 0.85),
+                                url: cubit.returnDetails.backImage),
+                          ),
+                        );
                       },
-                      context,
-                      null,
-                      null,
-                    )
-                  : imageContainer(
-                      () {},
-                      cubit.backImage!.path,
-                      context,
-                      null,
-                      null,
-                    ),
+                    );
+                  },
+                  child: imageReplacer(
+                    url: cubit.returnDetails.backImage,
+                    radius: 16,
+                    width: screenWidth(context, 0.25),
+                    height: screenWidth(context, 0.20),
+                  ),
+                )
+              else
+                cubit.backImage == null
+                    ? addContainer(
+                        () async {
+                          cubit.backImage = await cameraDialog(context);
+                          setState(() {});
+                        },
+                        context,
+                        null,
+                        null,
+                      )
+                    : imageContainer(
+                        () {},
+                        cubit.backImage!.path,
+                        context,
+                        null,
+                        null,
+                      ),
               SizedBox(
                 height: 8.sp,
               ),

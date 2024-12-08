@@ -229,10 +229,22 @@ class RefundCubit extends Cubit<RefundState> {
 
       result.fold(
         (err) {
+          fronImage = null;
+          backImage = null;
+          damageImage = null;
+          selectedProducts.clear();
+          selectedColor = '';
+          selectedSize = '';
           emit(RefundFailure(err.errorMsg));
         },
         (result) {
           // refunds = result;
+          fronImage = null;
+          backImage = null;
+          damageImage = null;
+          selectedProducts.clear();
+          selectedColor = '';
+          selectedSize = '';
           emit(RefundSuccess());
         },
       );
@@ -347,6 +359,7 @@ class RefundCubit extends Cubit<RefundState> {
       },
       (result) {
         returnDetails = result;
+        selectedColor = returnDetails.color;
         emit(RefundSuccess());
       },
     );

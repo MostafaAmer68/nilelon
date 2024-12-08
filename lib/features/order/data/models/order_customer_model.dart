@@ -4,7 +4,7 @@ class OrderCustomerModel {
   final DateTime date;
   final num total;
   final num discount;
-  final String? promoCodeName; // Nullable, since it's null in the JSON
+  final String? promoCodeName;
   final String governate;
   final String status;
   final String paymentType;

@@ -12,6 +12,7 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/features/order/data/models/order_customer_model.dart';
+import 'package:nilelon/features/refund/data/models/refund_details_model.dart';
 import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/features/refund/presentation/widgets/car_order_refund_widget.dart';
 import 'package:nilelon/features/refund/presentation/widgets/wrong_item_widget.dart';
@@ -39,6 +40,7 @@ class _ReturnHistoryDetailsPageState extends State<ReturnHistoryDetailsPage> {
   @override
   void initState() {
     cubit = RefundCubit.get(context);
+    cubit.returnDetails = ReturnDetailsModel.empty();
     cubit.getReturnDetails(widget.refundId, widget.returnType);
 
     super.initState();
@@ -74,6 +76,10 @@ class _ReturnHistoryDetailsPageState extends State<ReturnHistoryDetailsPage> {
           if (state is RefundSuccess) {
             cubit.selectedColor = cubit.returnDetails.color;
             cubit.selectedSize = cubit.returnDetails.size;
+            cubit.wrongSelectedValue =
+                cubit.returnDetails.color == '' ? '' : 'Color';
+            cubit.wrongSelectedValue =
+                cubit.returnDetails.size == '' ? '' : 'Size';
             return Column(
               children: [
                 const DefaultDivider(),
