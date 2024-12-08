@@ -87,6 +87,13 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const DefaultDivider(),
+                Visibility(
+                    visible: RefundCubit.get(context)
+                        .refunds
+                        .map((e) => e.orderId)
+                        .contains(widget.id),
+                    child: Text('Returned',
+                        style: AppStylesManager.customTextStyleB3)),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
