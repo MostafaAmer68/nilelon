@@ -65,6 +65,9 @@ class _BrandCardState extends State<BrandCard> {
               ? MainAxisAlignment.start
               : MainAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             if (HiveStorage.get(HiveKeys.isStore))
               Expanded(
                 child: imageReplacer(
@@ -76,11 +79,9 @@ class _BrandCardState extends State<BrandCard> {
                 ),
               )
             else
-              Expanded(
-                child: ProfileAvater(
-                  image: widget.store.profilePic ?? '',
-                  radius: 40,
-                ),
+              ProfileAvater(
+                image: widget.store.profilePic ?? '',
+                radius: 40,
               ),
             const SizedBox(
               height: 10,
@@ -90,17 +91,17 @@ class _BrandCardState extends State<BrandCard> {
               style: AppStylesManager.customTextStyleBl3
                   .copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(
-              height: 8,
-            ),
+            // const SizedBox(
+            //   height: 8,
+            // ),
             Text(
               widget.store.storeSlogan ?? '',
               style: AppStylesManager.customTextStyleBl3
                   .copyWith(fontWeight: FontWeight.w600),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            // const SizedBox(
+            //   height: 10,
+            // ),
             // const Spacer(),
             BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {

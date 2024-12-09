@@ -15,6 +15,7 @@ import 'package:nilelon/core/widgets/drop_down_menu/drop_down_menu.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 
+import '../../../../core/resources/color_manager.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
 import '../../../order/presentation/cubit/order_cubit.dart';
 import '../widgets/change_mind_widget.dart';
@@ -75,7 +76,11 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
                 children: [
                   Text(
                     lang.whichItem,
-                    style: AppStylesManager.customTextStyleBl4,
+                    style: TextStyle(
+                      color: ColorManager.primaryBL2,
+                      fontSize: 1.sw > 600 ? 30 : 20, // Reduced by 2
+                      fontFamily: 'Nunito Sans',
+                    ),
                   ),
                   SizedBox(
                     height: 16.sp,
@@ -94,7 +99,11 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
                   //! card
                   Text(
                     lang.whydoyouwanttoreturnthisitem,
-                    style: AppStylesManager.customTextStyleBl5,
+                    style: TextStyle(
+                      color: ColorManager.primaryBL2,
+                      fontSize: 1.sw > 600 ? 30 : 20, // Reduced by 2
+                      fontFamily: 'Nunito Sans',
+                    ),
                   ),
                   SizedBox(
                     height: 16.sp,
@@ -120,98 +129,106 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
                   SizedBox(
                     height: 8.sp,
                   ),
-                  Row(
-                    children: [
-                      GradientCheckBox(
-                        value: cubit.isChecked,
-                        onChanged: (v) {
-                          cubit.isChecked = v;
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(width: 5),
-                      Expanded(
-                        child: RichText(
-                          text: TextSpan(
-                            style: AppStylesManager.customTextStyleBl7,
-                            children: [
-                              TextSpan(text: lang.checkReturn3),
-                              TextSpan(
-                                  text: lang.policy,
-                                  style: AppStylesManager.customTextStyleO),
-                              TextSpan(text: lang.checkReturn1),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 8.sp,
-                  ),
-                  GradientButtonBuilder(
-                    text: lang.returnItem,
-                    ontap: () {
-                      if (!cubit.isChecked) {
-                        BotToast.showText(
-                            text: 'please check our return policy');
-                        return;
-                      }
-                      if (cubit.selectedValue == lang.ChangedMyMind) {
-                        cubit.createRetChangeMindModel();
-                      }
-                      if (cubit.selectedValue == lang.wrongItem) {
-                        cubit.createWrongItem();
-                      }
-                      if (cubit.selectedValue == lang.missingItem) {
-                        cubit.createRetMissingItem();
-                      }
-                    },
-                    width: screenWidth(context, 1),
-                  ),
                 ],
               ),
             ),
           ],
         ),
+        btmBar: Container(
+          height: 130,
+          // color: ColorManager.primaryW,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 16,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  GradientCheckBox(
+                    value: cubit.isChecked,
+                    onChanged: (v) {
+                      cubit.isChecked = v;
+                      setState(() {});
+                    },
+                  ),
+                  const SizedBox(width: 5),
+                  Expanded(
+                    child: RichText(
+                      text: TextSpan(
+                        style: AppStylesManager.customTextStyleBl7,
+                        children: [
+                          TextSpan(text: lang.checkReturn3),
+                          TextSpan(
+                              text: lang.policy,
+                              style: AppStylesManager.customTextStyleO),
+                          TextSpan(text: lang.checkReturn1),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 8.sp,
+              ),
+              GradientButtonBuilder(
+                text: lang.returnItem,
+                ontap: () {
+                  if (!cubit.isChecked) {
+                    BotToast.showText(text: 'please check our return policy');
+                    return;
+                  }
+                  if (cubit.selectedValue == lang.ChangedMyMind) {
+                    cubit.createRetChangeMindModel();
+                  }
+                  if (cubit.selectedValue == lang.wrongItem) {
+                    cubit.createWrongItem();
+                  }
+                  if (cubit.selectedValue == lang.missingItem) {
+                    cubit.createRetMissingItem();
+                  }
+                },
+                width: screenWidth(context, 1),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
 
-  Padding _buildItems() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 16),
-      child: SizedBox(
-        height: 120,
-        child: BlocBuilder<OrderCubit, OrderState>(
-          builder: (context, state) {
-            return state.whenOrNull(
-              loading: () => buildShimmerIndicatorRow(),
-              success: () => ListView.builder(
-                scrollDirection: Axis.horizontal,
-                clipBehavior: Clip.none,
-                itemBuilder: (context, index) {
-                  final product = OrderCubit.get(context)
-                      .customerOrder
-                      .orderProductVariants[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(right: 8),
-                    child: OrderRefundDetailsCard(
-                      product: product,
-                      onSelected: () {
-                        setState(() {});
-                      },
-                    ),
-                  );
-                },
-                itemCount: OrderCubit.get(context)
+  _buildItems() {
+    return SizedBox(
+      height: 120,
+      child: BlocBuilder<OrderCubit, OrderState>(
+        builder: (context, state) {
+          return state.whenOrNull(
+            loading: () => buildShimmerIndicatorRow(),
+            success: () => ListView.builder(
+              scrollDirection: Axis.horizontal,
+              clipBehavior: Clip.none,
+              itemBuilder: (context, index) {
+                final product = OrderCubit.get(context)
                     .customerOrder
-                    .orderProductVariants
-                    .length,
-              ),
-            )!;
-          },
-        ),
+                    .orderProductVariants[index];
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: OrderRefundDetailsCard(
+                    product: product,
+                    onSelected: () {
+                      setState(() {});
+                    },
+                  ),
+                );
+              },
+              itemCount: OrderCubit.get(context)
+                  .customerOrder
+                  .orderProductVariants
+                  .length,
+            ),
+          )!;
+        },
       ),
     );
   }

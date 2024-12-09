@@ -12,12 +12,12 @@ GestureDetector addContainer(
           screenWidth(context, 0.21), //height ?? screenWidth(context, 0.45),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: ColorManager.primaryB5,
+        color: ColorManager.primaryW,
         borderRadius: BorderRadius.circular(16),
       ),
       child: const Icon(
         Icons.add,
-        color: ColorManager.primaryW,
+        color: ColorManager.primaryB5,
         size: 40,
       ),
     ),

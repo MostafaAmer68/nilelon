@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -84,6 +83,7 @@ class OrderCustomerCard extends StatelessWidget {
                           '${lang(context).orderPrice}: ',
                           style: AppStylesManager.customTextStyleB3,
                         ),
+                        const SizedBox(width: 5),
                         Text(
                           '${order.total} ${lang(context).le}',
                           style: AppStylesManager.customTextStyleO

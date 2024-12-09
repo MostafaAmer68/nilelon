@@ -121,8 +121,10 @@ class _OrderPageState extends State<OrderPage> {
                         OrderView(
                           image: SvgPicture.asset(
                               Assets.assetsImagesPackageAccept),
-                          title:
-                              isStore ? lang.newOrder : lang.orderHasDelivered,
+                          title: isStore
+                              ? lang.newOrder
+                              : lang
+                                  .youHaveNewOrderInProcessCheckYourOrderDetails,
                           status: 'Ordered',
                           onTapHistory: () {
                             navigateTo(
@@ -142,7 +144,7 @@ class _OrderPageState extends State<OrderPage> {
                           ),
                           title: isStore
                               ? lang.orderIsShipped
-                              : lang.orderHasDistance,
+                              : lang.orderHasDelivered,
                           status: 'Shipped',
                           onTapHistory: () {
                             navigateTo(
@@ -156,7 +158,9 @@ class _OrderPageState extends State<OrderPage> {
                             child:
                                 SvgPicture.asset(Assets.assetsImagesArrived2),
                           ),
-                          title: lang.orderHasArrived,
+                          title: isStore
+                              ? lang.orderHasArrived
+                              : lang.orderHasDistance,
                           status: 'Delivered',
                           onTapHistory: () {
                             navigateTo(

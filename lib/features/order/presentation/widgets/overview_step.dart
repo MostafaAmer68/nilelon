@@ -239,7 +239,7 @@ class _OverViewStepState extends State<OverViewStep> {
                         return const Icon(Icons.error);
                       }
                       return dropDownMenu(
-                          width: screenWidth(context, 0.2),
+                          width: screenWidth(context, 0.3),
                           // height: screenWidth(context, 0.),
                           hint: lang.city,
                           style: AppStylesManager.customTextStyleBl.copyWith(
@@ -277,15 +277,11 @@ class _OverViewStepState extends State<OverViewStep> {
                                 promoCubit.totalPrice =
                                     promoCubit.deliveryPrice +
                                         promoCubit.totalPrice;
-                                log('t2');
                               } else {
-                                log('t1');
                                 promoCubit.totalPrice =
                                     promoCubit.deliveryPrice +
                                         promoCubit.newPrice;
                               }
-                              log(promoCubit.totalPrice.toString());
-                              log(promoCubit.totalPrice.toString());
                               OrderCubit.get(context).selectedShippingMethodId =
                                   OrderCubit.get(context)
                                       .shippingMethods

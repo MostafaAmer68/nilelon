@@ -112,9 +112,9 @@ class WideCard extends StatelessWidget {
                             },
                             child: Container(
                               clipBehavior: Clip.none,
-                              width: 30.w,
-                              height: 35,
-                              padding: const EdgeInsets.all(4),
+                              // width: 100,
+                              height: 100,
+                              padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
                                 color: product.isInCloset ? null : Colors.white,
                                 gradient: product.isInCloset
@@ -132,15 +132,13 @@ class WideCard extends StatelessWidget {
                                 ],
                               ),
                               child: !product.isInCloset
-                                  ? SvgPicture.asset(
-                                      Assets.assetsImagesHanger,
-                                      fit: BoxFit.cover,
-                                    )
+                                  ? SvgPicture.asset(Assets.assetsImagesHanger,
+                                      fit: BoxFit.contain)
                                   : SvgPicture.asset(
                                       Assets.assetsImagesActiveCloset,
-                                      fit: BoxFit.cover,
-                                      width: 40,
-                                    ),
+                                      fit: BoxFit.contain
+                                      // width: 40,
+                                      ),
                             ),
                           ),
                         ),

@@ -233,7 +233,7 @@ class ProductNewInView extends StatelessWidget {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: SizedBox(
-            height: screenHeight(context, 1) > 769 ? 230.w : 270.w,
+            height: 1.sw > 769 ? 230.w : 255.w,
             child: ListView.builder(
               itemBuilder: (context, index) {
                 final product = products[index];
