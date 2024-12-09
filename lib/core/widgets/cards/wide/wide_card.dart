@@ -340,9 +340,7 @@ class WideCard extends StatelessWidget {
                                   CartCubit.get(context).tempCartItems.clear();
                                   CartCubit.get(context).tempCartItems.add(
                                         CartItem(
-                                            quantity: product
-                                                .productVariants.first.quantity
-                                                .toInt(),
+                                            quantity: 1,
                                             size: product.productVariants
                                                 .firstWhere((e) => e.price != 0)
                                                 .size,
