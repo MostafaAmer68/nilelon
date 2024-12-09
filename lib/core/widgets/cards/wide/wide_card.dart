@@ -113,8 +113,8 @@ class WideCard extends StatelessWidget {
                             child: Container(
                               clipBehavior: Clip.none,
                               width: 30.w,
-                              height: 30.w,
-                              padding: const EdgeInsets.all(5),
+                              height: 35,
+                              padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(
                                 color: product.isInCloset ? null : Colors.white,
                                 gradient: product.isInCloset
@@ -139,7 +139,7 @@ class WideCard extends StatelessWidget {
                                   : SvgPicture.asset(
                                       Assets.assetsImagesActiveCloset,
                                       fit: BoxFit.cover,
-                                      width: 60,
+                                      width: 40,
                                     ),
                             ),
                           ),

@@ -115,8 +115,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "category": MessageLookupByLibrary.simpleMessage("الفئة"),
         "change": MessageLookupByLibrary.simpleMessage("تغيير"),
         "checkOut": MessageLookupByLibrary.simpleMessage("الدفع"),
-        "checkReturn": MessageLookupByLibrary.simpleMessage(
-            "يرجى مراجعة سياسة الإرجاع قبل إرجاع هذا العنصر"),
+        "checkReturn1":
+            MessageLookupByLibrary.simpleMessage("قبل إرجاع هذه السلعة"),
+        "checkReturn3": MessageLookupByLibrary.simpleMessage(
+            "يرجى التحقق من سياسة الإرجاع لدينا"),
         "chooseAnswer": MessageLookupByLibrary.simpleMessage("اختر إجابة"),
         "chooseCategory": MessageLookupByLibrary.simpleMessage("اختر الفئة"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
@@ -433,6 +435,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "plsSelectMethod":
             MessageLookupByLibrary.simpleMessage("رجاءً اختر طريقة الدفع"),
         "polices": MessageLookupByLibrary.simpleMessage("السياسات"),
+        "policy": MessageLookupByLibrary.simpleMessage("السياسة"),
         "pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails":
             MessageLookupByLibrary.simpleMessage(
                 "اضغط على إرسال لتأكيد تفاصيل هذا اللون فقط، وتحميل تفاصيل جميع الألوان"),

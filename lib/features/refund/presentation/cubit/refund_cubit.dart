@@ -38,7 +38,9 @@ class RefundCubit extends Cubit<RefundState> {
   String selectedColor = '';
   String selectedSize = '';
   File? backImage;
+  File? size;
   File? fronImage;
+  bool isChecked = false;
   File? damageImage;
   ReturnDetailsModel returnDetails = ReturnDetailsModel.empty();
   Future<File> cameraDialog(BuildContext context) async {

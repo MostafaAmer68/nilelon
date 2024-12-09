@@ -57,7 +57,7 @@ class _SearchResultState extends State<SearchResult> {
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 mainAxisExtent: 230.w,
-                crossAxisCount: 1.w < 769 ? 3 : 2,
+                crossAxisCount: 1.w > 769 ? 3 : 2,
                 crossAxisSpacing: 20.0,
                 mainAxisSpacing: 12),
             itemCount: filterResult.length,

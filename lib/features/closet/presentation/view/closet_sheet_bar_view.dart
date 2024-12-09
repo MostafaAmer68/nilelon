@@ -108,7 +108,7 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                                 const SizedBox(width: 10),
                                 TextButton(
                                   onPressed: () {
-                                     navigateTo(
+                                    navigateTo(
                                         context: context,
                                         screen: ProductClosetPage(
                                             closet: selectedCloset));
@@ -144,7 +144,7 @@ class _ClosetViewState extends State<ClosetSheetBarView> {
                                 return Container(
                                   padding: const EdgeInsets.symmetric(
                                     vertical: 8,
-                                    horizontal: 8,
+                                    // horizontal: 8,
                                   ),
                                   child: ListTile(
                                     onTap: () {

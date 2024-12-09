@@ -312,6 +312,7 @@ GestureDetector offersCard({
                     },
                   ),
                 ),
+                const SizedBox(width: 5),
                 Expanded(
                   child: GradientButtonBuilder(
                     isActivated: product.productVariants

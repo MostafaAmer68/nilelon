@@ -16,9 +16,10 @@ class OrderRefundDetailsCard extends StatefulWidget {
   const OrderRefundDetailsCard({
     super.key,
     required this.product,
+    this.onSelected,
   });
   final OrderProductVariant product;
-
+  final VoidCallback? onSelected;
   @override
   State<OrderRefundDetailsCard> createState() => _OrderRefundDetailsCardState();
 }
@@ -41,9 +42,9 @@ class _OrderRefundDetailsCardState extends State<OrderRefundDetailsCard> {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         shadows: const [
           BoxShadow(
-            color: Color(0x38006577),
-            blurRadius: 8,
-            offset: Offset(0, 2),
+            color: ColorManager.primaryO3,
+            blurRadius: 0,
+            offset: Offset(3, 3),
             spreadRadius: 0,
           ),
         ],
@@ -103,6 +104,9 @@ class _OrderRefundDetailsCardState extends State<OrderRefundDetailsCard> {
                           } else {
                             cubit.selectedProducts.remove(widget.product);
                           }
+                          if(widget.onSelected != null){
+                              widget.onSelected!();
+                          }
                           setState(() {});
                         },
                       ),
@@ -121,6 +125,7 @@ class _OrderRefundDetailsCardState extends State<OrderRefundDetailsCard> {
                       lang.size,
                       style: AppStylesManager.customTextStyleG13,
                     ),
+                    const SizedBox(width: 5),
                     Container(
                       height: 30,
                       width: 30,

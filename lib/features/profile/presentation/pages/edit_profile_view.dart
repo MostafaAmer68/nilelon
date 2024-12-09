@@ -92,6 +92,53 @@ class _EditProfileViewState extends State<EditProfileView> {
                     const SizedBox(
                       height: 30,
                     ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        lang.name,
+                        style: AppStylesManager.customTextStyleBl5,
+                      ),
+                    ),
+                    TextFormFieldBuilder(
+                      label: lang.enterYourName,
+                      controller: cubit.nameController,
+                      type: TextInputType.text,
+                      width: screenWidth(context, 0.8),
+                      isIcon: false,
+                      prefixWidget: Container(
+                        width: 20,
+                        height: 20,
+                        padding: const EdgeInsets.all(12),
+                        child: SvgPicture.asset(Assets.assetsImagesProfilee),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        lang.email,
+                        style: AppStylesManager.customTextStyleBl5,
+                      ),
+                    ),
+                    TextFormFieldBuilder(
+                      label: lang.email,
+                      controller: TextEditingController(
+                          text: currentUsr<CustomerModel>().email),
+                      readOnly: true,
+                      type: TextInputType.text,
+                      width: screenWidth(context, 0.8),
+                      isIcon: false,
+                      prefixWidget: Container(
+                          width: 20,
+                          height: 20,
+                          padding: const EdgeInsets.all(12),
+                          child: SvgPicture.asset(Assets.assetsImagesEmail)),
+                    ),
+                    const SizedBox(
+                      height: 30,
+                    ),
                     textAndTextField(
                         title: lang.addressLine1,
                         label: lang.enterYourStreetAddress,
@@ -140,53 +187,6 @@ class _EditProfileViewState extends State<EditProfileView> {
                           height: 20,
                           padding: const EdgeInsets.all(12),
                           child: SvgPicture.asset(Assets.assetsImagesLocation)),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        lang.name,
-                        style: AppStylesManager.customTextStyleBl5,
-                      ),
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.enterYourName,
-                      controller: cubit.nameController,
-                      type: TextInputType.text,
-                      width: screenWidth(context, 0.8),
-                      isIcon: false,
-                      prefixWidget: Container(
-                        width: 20,
-                        height: 20,
-                        padding: const EdgeInsets.all(12),
-                        child: SvgPicture.asset(Assets.assetsImagesProfilee),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        lang.email,
-                        style: AppStylesManager.customTextStyleBl5,
-                      ),
-                    ),
-                    TextFormFieldBuilder(
-                      label: lang.email,
-                      controller: TextEditingController(
-                          text: currentUsr<CustomerModel>().email),
-                      readOnly: true,
-                      type: TextInputType.text,
-                      width: screenWidth(context, 0.8),
-                      isIcon: false,
-                      prefixWidget: Container(
-                          width: 20,
-                          height: 20,
-                          padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(Assets.assetsImagesEmail)),
                     ),
                     const SizedBox(
                       height: 30,

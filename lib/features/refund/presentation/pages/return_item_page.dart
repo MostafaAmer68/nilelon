@@ -18,6 +18,7 @@ import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import '../../../../core/widgets/shimmer_indicator/build_shimmer.dart';
 import '../../../order/presentation/cubit/order_cubit.dart';
 import '../widgets/change_mind_widget.dart';
+import '../widgets/custom_check_box.dart';
 
 class ReturnItemPage extends StatefulWidget {
   const ReturnItemPage({super.key});
@@ -74,16 +75,26 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
                 children: [
                   Text(
                     lang.whichItem,
-                    style: AppStylesManager.customTextStyleBl12,
+                    style: AppStylesManager.customTextStyleBl4,
+                  ),
+                  SizedBox(
+                    height: 16.sp,
                   ),
                   _buildItems(),
+                  SizedBox(
+                    height: 16.sp,
+                  ),
+                  Align(
+                      alignment: AlignmentDirectional.topEnd,
+                      child: Text(
+                          '${cubit.selectedProducts.length} ${lang.selected}')),
                   SizedBox(
                     height: 16.sp,
                   ),
                   //! card
                   Text(
                     lang.whydoyouwanttoreturnthisitem,
-                    style: AppStylesManager.customTextStyleBl12,
+                    style: AppStylesManager.customTextStyleBl5,
                   ),
                   SizedBox(
                     height: 16.sp,
@@ -109,9 +120,31 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
                   SizedBox(
                     height: 8.sp,
                   ),
-                  Text(
-                    lang.checkReturn,
-                    style: AppStylesManager.customTextStyleBl12,
+                  Row(
+                    children: [
+                      GradientCheckBox(
+                        value: cubit.isChecked,
+                        onChanged: (v) {
+                          cubit.isChecked = v;
+                          setState(() {});
+                        },
+                      ),
+                      const SizedBox(width: 5),
+                      Expanded(
+                        child: RichText(
+                          text: TextSpan(
+                            style: AppStylesManager.customTextStyleBl7,
+                            children: [
+                              TextSpan(text: lang.checkReturn3),
+                              TextSpan(
+                                  text: lang.policy,
+                                  style: AppStylesManager.customTextStyleO),
+                              TextSpan(text: lang.checkReturn1),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
                     height: 8.sp,
@@ -119,6 +152,11 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
                   GradientButtonBuilder(
                     text: lang.returnItem,
                     ontap: () {
+                      if (!cubit.isChecked) {
+                        BotToast.showText(
+                            text: 'please check our return policy');
+                        return;
+                      }
                       if (cubit.selectedValue == lang.ChangedMyMind) {
                         cubit.createRetChangeMindModel();
                       }
@@ -160,6 +198,9 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
                     padding: const EdgeInsets.only(right: 8),
                     child: OrderRefundDetailsCard(
                       product: product,
+                      onSelected: () {
+                        setState(() {});
+                      },
                     ),
                   );
                 },

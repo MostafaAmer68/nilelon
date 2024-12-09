@@ -363,7 +363,7 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
     );
   }
 
-  _buildVariantWrogngWidget(lang) {
+  _buildVariantWrogngWidget(S lang) {
     return Column(children: [
       if (widget.isPreview) ...[
         cubit.returnDetails.returnedColor.isEmpty
@@ -506,6 +506,68 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
               ),
               Text(
                 lang.back,
+                style: AppStylesManager.customTextStyleBl12,
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              if (widget.isPreview)
+                InkWell(
+                  onTap: () {
+                    showDialog(
+                      context: context,
+                      builder: (c) {
+                        return Scaffold(
+                          appBar: AppBar(
+                            centerTitle: true,
+                            title: Text(lang.size),
+                            leading: IconButton(
+                              onPressed: () {
+                                navigatePop(context: c);
+                              },
+                              icon: const Icon(Icons.close),
+                            ),
+                          ),
+                          body: Center(
+                            child: imageReplacer(
+                                height: screenHeight(context, 0.85),
+                                url: cubit.returnDetails.backImage),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: imageReplacer(
+                    url: cubit.returnDetails.damageImage,
+                    radius: 16,
+                    width: screenWidth(context, 0.25),
+                    height: screenWidth(context, 0.20),
+                  ),
+                )
+              else
+                cubit.size == null
+                    ? addContainer(
+                        () async {
+                          cubit.damageImage = await cameraDialog(context);
+                          setState(() {});
+                        },
+                        context,
+                        null,
+                        null,
+                      )
+                    : imageContainer(
+                        () {},
+                        cubit.damageImage!.path,
+                        context,
+                        null,
+                        null,
+                      ),
+              SizedBox(
+                height: 8.sp,
+              ),
+              Text(
+                lang.size,
                 style: AppStylesManager.customTextStyleBl12,
               ),
             ],

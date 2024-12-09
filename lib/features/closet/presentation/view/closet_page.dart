@@ -228,8 +228,13 @@ class _ClosetViewState extends State<ClosetPage> {
           ],
         ),
       ),
-      persistentFooterButtons: [
-        GradientButtonBuilder(
+      btmBar: Container(
+        height: 100,
+        color: ColorManager.primaryW,
+        padding: const EdgeInsets.symmetric(
+          horizontal: 16,
+        ),
+        child: GradientButtonBuilder(
             text: lang.addNewSection,
             width: screenWidth(context, 0.94),
             ontap: () {
@@ -249,8 +254,8 @@ class _ClosetViewState extends State<ClosetPage> {
                   return const CreateNewSection();
                 },
               );
-            })
-      ],
+            }),
+      ),
     );
   }
 

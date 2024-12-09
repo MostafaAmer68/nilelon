@@ -117,8 +117,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "category": MessageLookupByLibrary.simpleMessage("Category"),
         "change": MessageLookupByLibrary.simpleMessage("Change"),
         "checkOut": MessageLookupByLibrary.simpleMessage("Check Out"),
-        "checkReturn": MessageLookupByLibrary.simpleMessage(
-            "Please Check our return Policy before returning this item"),
+        "checkReturn1":
+            MessageLookupByLibrary.simpleMessage(" before returning this item"),
+        "checkReturn3":
+            MessageLookupByLibrary.simpleMessage("Please Check our return "),
         "chooseAnswer": MessageLookupByLibrary.simpleMessage("Choose Answer"),
         "chooseCategory":
             MessageLookupByLibrary.simpleMessage("Choose Category"),
@@ -439,6 +441,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "plsSelectMethod":
             MessageLookupByLibrary.simpleMessage("please select pay method"),
         "polices": MessageLookupByLibrary.simpleMessage("Polices"),
+        "policy": MessageLookupByLibrary.simpleMessage(" Policy "),
         "pressSubmitToConfirmOnlyThisColorDetailsAndUploadForAllColorsDetails":
             MessageLookupByLibrary.simpleMessage(
                 "Press Submit To Confirm Only This Color Details, And Upload For All Colors Details"),

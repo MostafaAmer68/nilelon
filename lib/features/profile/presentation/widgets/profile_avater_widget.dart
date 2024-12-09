@@ -9,9 +9,14 @@ class ProfileAvater extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: ShapeDecoration(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(500),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(500)),
+        shadows: [
+          BoxShadow(
+            spreadRadius: 2,
+            blurRadius: 10,
+            color: Colors.black12,
+          )
+        ],
       ),
       child: CircleAvatar(
         radius: radius,

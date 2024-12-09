@@ -3440,11 +3440,31 @@ class S {
     );
   }
 
-  /// `Please Check our return Policy before returning this item`
-  String get checkReturn {
+  /// `Please Check our return `
+  String get checkReturn3 {
     return Intl.message(
-      'Please Check our return Policy before returning this item',
-      name: 'checkReturn',
+      'Please Check our return ',
+      name: 'checkReturn3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` before returning this item`
+  String get checkReturn1 {
+    return Intl.message(
+      ' before returning this item',
+      name: 'checkReturn1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` Policy `
+  String get policy {
+    return Intl.message(
+      ' Policy ',
+      name: 'policy',
       desc: '',
       args: [],
     );

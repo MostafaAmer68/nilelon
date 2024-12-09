@@ -57,7 +57,7 @@ class _BrandCardState extends State<BrandCard> {
         decoration: BoxDecoration(
           color: HiveStorage.get(HiveKeys.isStore)
               ? ColorManager.primaryW
-              : ColorManager.primaryB5,
+              : ColorManager.primaryW,
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
