@@ -13,7 +13,7 @@ SliverGridDelegateWithFixedCrossAxisCount gridDelegate(context) {
   return SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 1.sw > 600 ? 3 : 2,
     crossAxisSpacing: 1.sw > 600 ? 14 : 16.0,
-    mainAxisExtent: screenHeight(context, 1) > 769 ? 270.w : 220.w,
+    mainAxisExtent: 1.sw > 769 ? 280.w : 240.w,
     mainAxisSpacing: 1.sw > 600 ? 16 : 12,
   );
 }

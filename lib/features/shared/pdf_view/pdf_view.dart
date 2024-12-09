@@ -7,6 +7,7 @@ import 'package:flutter_pdfview/flutter_pdfview.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/auth/domain/model/user_model.dart';
+import 'package:nilelon/features/order/presentation/cubit/order_cubit.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -102,9 +103,7 @@ class _NilelonPdfViewState extends State<NilelonPdfView> {
                 location: widget.location,
                 orderId: widget.orderId,
                 orderDate: widget.orderDate,
-                phoneNumber: HiveStorage.get<UserModel>(HiveKeys.userModel)
-                    .getUserData<CustomerModel>()
-                    .phoneNumber,
+                phoneNumber: OrderCubit.get(context).customerOrder.phoneNumber,
               );
               if (result.isNotEmpty) {
                 isLoading = false;
