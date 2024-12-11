@@ -51,7 +51,13 @@ class _NotificationViewState extends State<NotificationView> {
 
               if (state is NotificationSuccess) {
                 if (cubit.notificatios.isEmpty) {
-                  return Image.asset(Assets.assetsImagesNoNotification);
+                  return SizedBox(
+                    height: 800,
+                    child: Image.asset(
+                      Assets.assetsImagesNoNotification,
+                      width: 300,
+                    ),
+                  );
                 }
                 return Expanded(
                   child: GroupedListView<NotificationData, String>(
@@ -72,6 +78,7 @@ class _NotificationViewState extends State<NotificationView> {
                     // itemCount: NotificationCubit.get(context).notificatios.length,
                     itemBuilder: (context, notify) {
                       return NotifyViewedCard(
+                        
                         image: Assets.assetsImagesNotificationsActive,
                         notify: notify,
                       );

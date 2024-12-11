@@ -199,7 +199,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                                 return orderSummaryItems2(
                                   lang.promoCodeApplied,
                                   Text(
-                                    cubit.customerOrder.promoCodeName != null
+                                    cubit.customerOrder.isPromoApplied
                                         ? lang.yes
                                         : lang.no,
                                     style: AppStylesManager.customTextStyleG

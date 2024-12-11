@@ -10,6 +10,7 @@ class OrderCustomerModel {
   final String paymentType;
   final String phoneNumber;
   final String shippingCost;
+  final bool isPromoApplied;
   final String customerId;
   final List<OrderProductVariant> orderProductVariants;
 
@@ -21,6 +22,7 @@ class OrderCustomerModel {
         paymentType: '',
         governate: '',
         status: '',
+        isPromoApplied: false,
         phoneNumber: '',
         shippingCost: '0',
         customerId: '',
@@ -35,6 +37,7 @@ class OrderCustomerModel {
     this.promoCodeName,
     required this.governate,
     required this.status,
+    required this.isPromoApplied,
     required this.paymentType,
     required this.phoneNumber,
     required this.shippingCost,
@@ -51,6 +54,7 @@ class OrderCustomerModel {
       promoCodeName: json['promoCodeName'],
       paymentType: json['paymentType'],
       governate: json['governate'],
+      isPromoApplied: json['isPromoApplied'],
       status: json['status'],
       phoneNumber: json['phoneNumber'],
       shippingCost: json['shippingCost'],

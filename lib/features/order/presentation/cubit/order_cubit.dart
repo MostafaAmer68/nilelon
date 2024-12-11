@@ -105,6 +105,9 @@ class OrderCubit extends Cubit<OrderState> {
       phoneNum: phoneController.text,
       discount: PromoCubit.get(context).discount,
       type: selectedOption,
+      isPromoApplied: PromoCubit.get(context).isFreeShipping
+          ? PromoCubit.get(context).isFreeShipping
+          : PromoCubit.get(context).discount != 0,
       shippingMethodId: selectedShippingMethodId,
       customerId: HiveStorage.get<UserModel>(HiveKeys.userModel).id,
       governate: selectedGovernate,

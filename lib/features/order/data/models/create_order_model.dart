@@ -11,6 +11,7 @@ class CreateOrderModel extends Equatable {
   final String shippingMethodId;
   final String customerId;
   final String governate;
+  final bool isPromoApplied;
   final String transactionId;
   final Map<String, dynamic> customerAddressDTO;
   final List<Map<String, dynamic>> orderProductVeriants;
@@ -22,6 +23,7 @@ class CreateOrderModel extends Equatable {
     required this.shippingMethodId,
     required this.customerId,
     required this.governate,
+    required this.isPromoApplied,
     required this.transactionId,
     required this.customerAddressDTO,
     required this.orderProductVeriants,
@@ -37,6 +39,7 @@ class CreateOrderModel extends Equatable {
       shippingMethodId,
       customerId,
       governate,
+      isPromoApplied,
       transactionId,
       customerAddressDTO,
       orderProductVeriants,
@@ -52,6 +55,7 @@ class CreateOrderModel extends Equatable {
       'shippingMethodId': shippingMethodId,
       'customerId': customerId,
       'governate': governate,
+      'isPromoApplied': isPromoApplied,
       'transactionId': transactionId,
       'customerAddressDTO': customerAddressDTO,
       'orderProductVariants': orderProductVeriants,
@@ -66,6 +70,7 @@ class CreateOrderModel extends Equatable {
       type: map['type'] as String,
       shippingMethodId: map['shippingMethodId'] as String,
       customerId: map['customerId'] as String,
+      isPromoApplied: map['isPromoApplied'] as bool,
       governate: map['governate'] as String,
       transactionId: map['transactionId'] as String,
       customerAddressDTO: Map<String, dynamic>.from(
@@ -89,6 +94,7 @@ class CreateOrderModel extends Equatable {
     String? shippingMethodId,
     String? customerId,
     String? governate,
+    bool? isPromoApplied,
     String? transactionId,
     Map<String, dynamic>? customerAddressDTO,
     List<Map<String, dynamic>>? orderProductVeriants,
@@ -101,6 +107,7 @@ class CreateOrderModel extends Equatable {
       shippingMethodId: shippingMethodId ?? this.shippingMethodId,
       customerId: customerId ?? this.customerId,
       governate: governate ?? this.governate,
+      isPromoApplied: isPromoApplied ?? this.isPromoApplied,
       transactionId: transactionId ?? this.transactionId,
       customerAddressDTO: customerAddressDTO ?? this.customerAddressDTO,
       orderProductVeriants: orderProductVeriants ?? this.orderProductVeriants,

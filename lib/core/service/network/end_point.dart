@@ -14,6 +14,7 @@ class EndPoint {
   static const String follow = '/Customer/Follow';
   static const String isNotify = '/Customer/isNotify';
   static const String getAllNotification = '/Notification/GetAllNotifications';
+  static const String markNotifyAsRead = '/Notification/MarkAs';
 
   // search url
   static const String searchUrl = '/Search/Search';

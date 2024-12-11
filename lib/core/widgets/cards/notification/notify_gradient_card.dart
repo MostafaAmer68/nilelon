@@ -6,6 +6,7 @@ import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/notification/data/models/notification_data.dart';
 import 'package:nilelon/features/order/presentation/pages/order_store_details_view.dart';
 
+import '../../../../features/notification/presentation/cubit/notification_cubit.dart';
 import '../../../utils/navigation.dart';
 
 class NotifyGradientCard extends StatelessWidget {
@@ -20,27 +21,13 @@ class NotifyGradientCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        NotificationCubit.get(context).markNotifyAsRead(notify.id);
         switch (notify.type) {
           case 'Order':
             navigateTo(
                 context: context,
                 screen: OrderStoreDetailsView(id: notify.targetId, index: 0));
             break;
-          // case 'ProductRare':
-          //   navigateTo(
-          //     context: context,
-          //     screen: ProductDetailsView(
-          //         size: notify.targetId.split(' ')[1],
-          //         color: notify.targetId.split(' ').last,
-          //         productId: notify.targetId.split(' ').first),
-          //   );
-          //   break;
-          // case 'Product':
-          //   navigateTo(
-          //     context: context,
-          //     screen: ProductDetailsView(productId: notify.targetId),
-          //   );
-          //   break;
         }
       },
       child: SizedBox(
@@ -108,11 +95,23 @@ class NotifyGradientCard extends StatelessWidget {
                             const SizedBox(
                               height: 4,
                             ),
-                            Text(
-                              notify.message,
-                              style: AppStylesManager.customTextStyleBl7,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 4,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  notify.message,
+                                  style: AppStylesManager.customTextStyleBl7,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 4,
+                                ),
+                                Visibility(
+                                  visible: !notify.isRead,
+                                  child: const CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: ColorManager.primaryO,
+                                  ),
+                                )
+                              ],
                             ),
                             const Spacer(),
                             Text(

@@ -15,4 +15,9 @@ class NotifyRepoImpl implements NotifyRepo {
       getAllNotification() async {
     return exe(() => _remote.getAllNotification());
   }
+
+  @override
+  Future<Either<ServerFailure, void>> markNotifyAsRead(String id) {
+    return exe(() => _remote.markNotifyAsRead(id));
+  }
 }

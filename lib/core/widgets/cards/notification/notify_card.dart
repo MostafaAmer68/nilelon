@@ -6,6 +6,7 @@ import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/notification/data/models/notification_data.dart';
 import 'package:svg_flutter/svg.dart';
 
+import '../../../../features/notification/presentation/cubit/notification_cubit.dart';
 import '../../../../features/order/presentation/pages/order_store_details_view.dart';
 import '../../../utils/navigation.dart';
 
@@ -21,6 +22,7 @@ class NotifyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        NotificationCubit.get(context).markNotifyAsRead(notify.id);
         switch (notify.type) {
           case 'Order':
             navigateTo(
@@ -77,11 +79,23 @@ class NotifyCard extends StatelessWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    Text(
-                      notify.message,
-                      style: AppStylesManager.customTextStyleBl7,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 4,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          notify.message,
+                          style: AppStylesManager.customTextStyleBl7,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
+                        ),
+                        Visibility(
+                          visible: !notify.isRead,
+                          child: const CircleAvatar(
+                            radius: 15,
+                            backgroundColor: ColorManager.primaryO,
+                          ),
+                        )
+                      ],
                     ),
                     const Spacer(),
                     Text(

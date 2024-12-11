@@ -546,7 +546,7 @@ class _WrongItemWidgetState extends State<WrongItemWidget> {
                   ),
                 )
               else
-                cubit.size == null
+                cubit.damageImage == null
                     ? addContainer(
                         () async {
                           cubit.damageImage = await cameraDialog(context);

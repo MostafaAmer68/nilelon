@@ -30,4 +30,22 @@ class NotificationCubit extends Cubit<NotificationState> {
       emit(Notificationfailure(e.toString()));
     }
   }
+
+  Future<void> markNotifyAsRead(String id) async {
+    emit(NotificationLoading());
+    try {
+      final result = await _impl.markNotifyAsRead(id);
+
+      result.fold(
+        (err) {
+          emit(Notificationfailure(err.errorMsg));
+        },
+        (res) {
+          getAllNotification();
+        },
+      );
+    } catch (e) {
+      emit(Notificationfailure(e.toString()));
+    }
+  }
 }

@@ -6,6 +6,7 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/core/utils/navigation.dart';
+import 'package:nilelon/features/notification/presentation/cubit/notification_cubit.dart';
 import 'package:nilelon/features/order/presentation/pages/order_customer_details.dart';
 import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
 import 'package:svg_flutter/svg.dart';
@@ -24,6 +25,7 @@ class NotifyViewedCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+        NotificationCubit.get(context).markNotifyAsRead(notify.id);
         switch (notify.type) {
           case 'Order':
             navigateTo(
@@ -96,11 +98,23 @@ class NotifyViewedCard extends StatelessWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    Text(
-                      notify.message,
-                      style: AppStylesManager.customTextStyleG3,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 4,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          notify.message,
+                          style: AppStylesManager.customTextStyleBl7,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 4,
+                        ),
+                        Visibility(
+                          visible: !notify.isRead,
+                          child: const CircleAvatar(
+                            radius: 15,
+                            backgroundColor: ColorManager.primaryO,
+                          ),
+                        )
+                      ],
                     ),
                     const Spacer(),
                     Text(
