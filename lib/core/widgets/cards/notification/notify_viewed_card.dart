@@ -98,23 +98,11 @@ class NotifyViewedCard extends StatelessWidget {
                     const SizedBox(
                       height: 4,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          notify.message,
-                          style: AppStylesManager.customTextStyleBl7,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 4,
-                        ),
-                        Visibility(
-                          visible: !notify.isRead,
-                          child: const CircleAvatar(
-                            radius: 15,
-                            backgroundColor: ColorManager.primaryO,
-                          ),
-                        )
-                      ],
+                    Text(
+                      notify.message,
+                      style: AppStylesManager.customTextStyleBl7,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 4,
                     ),
                     const Spacer(),
                     Text(

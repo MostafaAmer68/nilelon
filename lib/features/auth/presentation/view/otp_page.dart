@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -47,11 +48,12 @@ class _OtpViewState extends State<OtpView> {
       (timer) {
         setState(
           () {
+            log('tes 22');
             resendTime = resendTime - 1;
           },
         );
-        if (resendTime < 1) {
-          countDownTimer.cancel();
+        if (resendTime == 0) {
+          stopTimer();
           isValid = true;
           setState(() {});
         }
@@ -149,6 +151,7 @@ class _OtpViewState extends State<OtpView> {
                               onPressed: () {
                                 widget.resend();
                                 resendTime = 59;
+                                isValid = false;
                                 startTimer();
                                 setState(() {});
                               },

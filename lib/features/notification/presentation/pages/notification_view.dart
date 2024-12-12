@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/widgets/cards/notification/notify_card.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
 import 'package:nilelon/features/notification/presentation/cubit/notification_cubit.dart';
@@ -77,8 +78,13 @@ class _NotificationViewState extends State<NotificationView> {
                     ),
                     // itemCount: NotificationCubit.get(context).notificatios.length,
                     itemBuilder: (context, notify) {
-                      return NotifyViewedCard(
-                        
+                      if (notify.isRead) {
+                        return NotifyViewedCard(
+                          image: Assets.assetsImagesNotificationsActive,
+                          notify: notify,
+                        );
+                      }
+                      return NotifyCard(
                         image: Assets.assetsImagesNotificationsActive,
                         notify: notify,
                       );

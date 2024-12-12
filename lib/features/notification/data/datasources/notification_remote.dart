@@ -27,13 +27,13 @@ class NotificationRemote {
   }
 
   Future<void> markNotifyAsRead(String id) async {
-    final response = await _apiService.get(
+    final response = await _apiService.put(
       endPoint: EndPoint.markNotifyAsRead,
       query: {
         'id': id,
       },
     );
     if (response.statusCode == HttpStatus.ok) {}
-    throw Exception(response.data['errorMessages']);
+    // throw Exception(response.data['errorMessages']);
   }
 }

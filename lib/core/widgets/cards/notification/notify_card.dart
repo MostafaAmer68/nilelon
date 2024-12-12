@@ -4,9 +4,11 @@ import 'package:nilelon/core/resources/const_functions.dart';
 import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/notification/data/models/notification_data.dart';
+import 'package:nilelon/features/product/presentation/pages/product_details_page.dart';
 import 'package:svg_flutter/svg.dart';
 
 import '../../../../features/notification/presentation/cubit/notification_cubit.dart';
+import '../../../../features/order/presentation/pages/order_customer_details.dart';
 import '../../../../features/order/presentation/pages/order_store_details_view.dart';
 import '../../../utils/navigation.dart';
 
@@ -27,7 +29,22 @@ class NotifyCard extends StatelessWidget {
           case 'Order':
             navigateTo(
                 context: context,
-                screen: OrderStoreDetailsView(id: notify.targetId, index: 0));
+                screen: OrderDetailsView(id: notify.targetId));
+            break;
+          case 'ProductRare':
+            navigateTo(
+              context: context,
+              screen: ProductDetailsView(
+                  size: notify.targetId.split(' ')[1],
+                  color: notify.targetId.split(' ').last,
+                  productId: notify.targetId.split(' ').first),
+            );
+            break;
+          case 'Product':
+            navigateTo(
+              context: context,
+              screen: ProductDetailsView(productId: notify.targetId),
+            );
             break;
         }
       },
@@ -91,7 +108,7 @@ class NotifyCard extends StatelessWidget {
                         Visibility(
                           visible: !notify.isRead,
                           child: const CircleAvatar(
-                            radius: 15,
+                            radius: 7,
                             backgroundColor: ColorManager.primaryO,
                           ),
                         )

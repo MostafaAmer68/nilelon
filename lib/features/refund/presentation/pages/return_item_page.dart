@@ -66,73 +66,76 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
           hasIcon: false,
           hasLeading: true,
         ),
-        body: Column(
-          children: [
-            const DefaultDivider(),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.sp, vertical: 24.sp),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    lang.whichItem,
-                    style: TextStyle(
-                      color: ColorManager.primaryBL2,
-                      fontSize: 1.sw > 600 ? 30 : 20, // Reduced by 2
-                      fontFamily: 'Nunito Sans',
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              const DefaultDivider(),
+              Padding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 16.sp, vertical: 24.sp),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      lang.whichItem,
+                      style: TextStyle(
+                        color: ColorManager.primaryBL2,
+                        fontSize: 1.sw > 600 ? 30 : 17, // Reduced by 2
+                        fontFamily: 'Nunito Sans',
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 16.sp,
-                  ),
-                  _buildItems(),
-                  SizedBox(
-                    height: 16.sp,
-                  ),
-                  Align(
-                      alignment: AlignmentDirectional.topEnd,
-                      child: Text(
-                          '${cubit.selectedProducts.length} ${lang.selected}')),
-                  SizedBox(
-                    height: 16.sp,
-                  ),
-                  //! card
-                  Text(
-                    lang.whydoyouwanttoreturnthisitem,
-                    style: TextStyle(
-                      color: ColorManager.primaryBL2,
-                      fontSize: 1.sw > 600 ? 30 : 20, // Reduced by 2
-                      fontFamily: 'Nunito Sans',
+                    SizedBox(
+                      height: 16.sp,
                     ),
-                  ),
-                  SizedBox(
-                    height: 16.sp,
-                  ),
-                  dropDownMenu(
-                    hint: lang.chooseAnswer,
-                    selectedValue: cubit.selectedValue,
-                    items: items,
-                    context: context,
-                    onChanged: (item) {
-                      cubit.selectedValue = item!;
-                      setState(() {});
-                    },
-                  ),
+                    _buildItems(),
+                    SizedBox(
+                      height: 16.sp,
+                    ),
+                    Align(
+                        alignment: AlignmentDirectional.topEnd,
+                        child: Text(
+                            '${cubit.selectedProducts.length} ${lang.selected}')),
+                    SizedBox(
+                      height: 16.sp,
+                    ),
+                    //! card
+                    Text(
+                      lang.whydoyouwanttoreturnthisitem,
+                      style: TextStyle(
+                        color: ColorManager.primaryBL2,
+                        fontSize: 1.sw > 600 ? 30 : 17, // Reduced by 2
+                        fontFamily: 'Nunito Sans',
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16.sp,
+                    ),
+                    dropDownMenu(
+                      hint: lang.chooseAnswer,
+                      selectedValue: cubit.selectedValue,
+                      items: items,
+                      context: context,
+                      onChanged: (item) {
+                        cubit.selectedValue = item!;
+                        setState(() {});
+                      },
+                    ),
 
-                  if (cubit.selectedValue == lang.ChangedMyMind)
-                    const ChangeMindWidget(),
-                  if (cubit.selectedValue == lang.wrongItem)
-                    const WrongItemWidget(),
-                  // if (cubit.selectedValue == lang.missingItem)
-                  //   const MissingItemWidget(),
+                    if (cubit.selectedValue == lang.ChangedMyMind)
+                      const ChangeMindWidget(),
+                    if (cubit.selectedValue == lang.wrongItem)
+                      const WrongItemWidget(),
+                    // if (cubit.selectedValue == lang.missingItem)
+                    //   const MissingItemWidget(),
 
-                  SizedBox(
-                    height: 8.sp,
-                  ),
-                ],
+                    SizedBox(
+                      height: 8.sp,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         btmBar: Container(
           height: 130,

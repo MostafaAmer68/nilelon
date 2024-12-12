@@ -11,8 +11,7 @@ Future<Either<ServerFailure, T>> exe<T>(Future<T> Function() function) async {
       return left(ServerFailure(e.response!.data));
     }
 
-    return left(ServerFailure.fromResponse(
-        e.response!.data['statusCode'], e.response!.data['errorMessages'][0]));
+    return left(e.response!.data);
   } catch (e) {
     return left(ServerFailure(e.toString()));
   }

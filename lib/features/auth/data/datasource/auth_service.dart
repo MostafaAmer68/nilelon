@@ -2,6 +2,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/service/background_service.dart';
 import 'package:nilelon/features/auth/domain/model/customer_register_model.dart';
 import 'package:nilelon/features/auth/domain/model/login_model.dart';
 import 'package:nilelon/features/auth/domain/model/store_register_model.dart';
@@ -38,6 +39,8 @@ class AuthService {
       HiveStorage.set(HiveKeys.userModel, userData);
       final token = const FlutterSecureStorage();
       token.write(key: 'token', value: userData.token);
+      initializeWebSocket();
+      initializeService();
     } else {
       // Handle other status codes if necessary
       throw Exception(
@@ -71,7 +74,9 @@ class AuthService {
 
       HiveStorage.set(HiveKeys.userModel, userData);
       final token = const FlutterSecureStorage();
-      token.write(key: 'token', value: data.data);
+      token.write(key: 'token', value: userData.token);
+      initializeWebSocket();
+      initializeService();
       return data.data as String;
     } else if (data.statusCode == 400) {
       // Handle the bad request response
@@ -112,7 +117,9 @@ class AuthService {
 
       HiveStorage.set(HiveKeys.userModel, userData);
       final token = const FlutterSecureStorage();
-      token.write(key: 'token', value: data.data);
+      token.write(key: 'token', value: userData.token);
+      initializeWebSocket();
+      initializeService();
       return data.data as String;
     } else if (data.statusCode == 400) {
       // Handle the bad request response

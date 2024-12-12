@@ -63,15 +63,17 @@ class AddToFooter extends StatelessWidget {
                           CartCubit.get(context).tempCartItems.clear();
                           CartCubit.get(context).tempCartItems.add(
                                 CartItem(
-                                    quantity: 1,
-                                    size: product.productVariants
-                                        .firstWhere((e) => e.price != 0)
-                                        .size,
-                                    color: product.productVariants
-                                        .firstWhere((e) => e.price != 0)
-                                        .color,
+                                    quantity: CartCubit.get(context).counter,
+                                    size: CartCubit.get(context).selectedSize,
+                                    color: CartCubit.get(context).selectedColor,
                                     price: product.productVariants
-                                        .firstWhere((e) => e.price != 0)
+                                        .firstWhere((e) =>
+                                            CartCubit.get(context)
+                                                    .selectedSize ==
+                                                e.size &&
+                                            e.color ==
+                                                CartCubit.get(context)
+                                                    .selectedColor)
                                         .price,
                                     productName: product.name,
                                     productId: product.id,

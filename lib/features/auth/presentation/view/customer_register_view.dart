@@ -74,7 +74,9 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   AuthCubit.get(context).authCustomerRegister(context);
                 }
               },
-              resend: () {},
+              resend: () {
+                AuthCubit.get(context).confirmRegisteration(context);
+              },
             ),
           );
         }
