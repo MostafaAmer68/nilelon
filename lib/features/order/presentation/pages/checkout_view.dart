@@ -72,7 +72,7 @@ class _CheckOutViewState extends State<CheckOutView> {
     // BotToast.closeAllLoading();
     price = 0;
     for (var item in orderCubit.customerOrder.orderProductVariants) {
-      price += item.price;
+      price += item.price * item.quantity;
     }
     return BlocListener<OrderCubit, OrderState>(
       listener: (context, state) {

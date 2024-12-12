@@ -100,6 +100,7 @@ class OrderDetailsCard extends StatelessWidget {
                       lang.size,
                       style: AppStylesManager.customTextStyleG13,
                     ),
+                    const SizedBox(width: 5),
                     Container(
                       height: 30,
                       width: 30,

@@ -139,7 +139,7 @@ class _ReturnItemPageState extends State<ReturnItemPage> {
         ),
         btmBar: Container(
           height: 130,
-          // color: ColorManager.primaryW,
+          color: ColorManager.primaryW,
           padding: const EdgeInsets.symmetric(
             horizontal: 16,
           ),

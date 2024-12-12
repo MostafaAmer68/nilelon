@@ -296,8 +296,13 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
               ],
             ),
           ),
-          persistentFooterButtons: [
-            BlocBuilder<OrderCubit, OrderState>(
+          btmBar: Container(
+            height: 100,
+            color: ColorManager.primaryW,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+            ),
+            child: BlocBuilder<OrderCubit, OrderState>(
               builder: (context, state) {
                 return OrderDetailsFooter(
                   visible: cubit.customerOrder != OrderCustomerModel.empty(),
@@ -305,7 +310,7 @@ class _OrderDetailsViewState extends State<OrderDetailsView> {
                 );
               },
             ),
-          ],
+          ),
         );
       },
     );

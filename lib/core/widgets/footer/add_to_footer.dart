@@ -81,22 +81,41 @@ class AddToFooter extends StatelessWidget {
                                     cartId: ''),
                               );
                           PromoCubit.get(context).totalPrice = product
-                              .productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .price;
+                                  .productVariants
+                                  .firstWhere((e) =>
+                                      CartCubit.get(context).selectedSize ==
+                                          e.size &&
+                                      e.color ==
+                                          CartCubit.get(context).selectedColor)
+                                  .price *
+                              CartCubit.get(context).counter;
                           PromoCubit.get(context).newPrice = product
-                              .productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .price;
+                                  .productVariants
+                                  .firstWhere((e) =>
+                                      CartCubit.get(context).selectedSize ==
+                                          e.size &&
+                                      e.color ==
+                                          CartCubit.get(context).selectedColor)
+                                  .price *
+                              CartCubit.get(context).counter;
                           PromoCubit.get(context).orderTotal = product
-                              .productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .price;
+                                  .productVariants
+                                  .firstWhere((e) =>
+                                      CartCubit.get(context).selectedSize ==
+                                          e.size &&
+                                      e.color ==
+                                          CartCubit.get(context).selectedColor)
+                                  .price *
+                              CartCubit.get(context).counter;
                           PromoCubit.get(context).tempTotalPrice = product
-                              .productVariants
-                              .firstWhere((e) => e.price != 0)
-                              .price;
-                          log(PromoCubit.get(context).totalPrice.toString());
+                                  .productVariants
+                                  .firstWhere((e) =>
+                                      CartCubit.get(context).selectedSize ==
+                                          e.size &&
+                                      e.color ==
+                                          CartCubit.get(context).selectedColor)
+                                  .price *
+                              CartCubit.get(context).counter;
                           if (PromoCubit.get(context).totalPrice > 0 &&
                               PromoCubit.get(context).tempTotalPrice > 0) {
                             navigateTo(
