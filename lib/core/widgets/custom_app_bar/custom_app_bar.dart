@@ -9,6 +9,7 @@ AppBar customAppBar(
     {required String title,
     required BuildContext context,
     IconData? icon,
+    GlobalKey? key,
     void Function()? onPressed,
     void Function()? leadingOnPressed,
     bool hasLeading = true,
@@ -34,6 +35,7 @@ AppBar customAppBar(
     actions: [
       hasIcon
           ? IconButton(
+              key: key,
               onPressed: onPressed ??
                   () {
                     navigateTo(context: context, screen: const SearchPage());

@@ -53,7 +53,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     'isNotify': false,
   };
   CategoryModel selectedCategory = CategoryModel.empty();
-  AddressModel address = AddressModel(
+  AddressModel address = const AddressModel(
     addressLine1: '',
     addressLine2: '',
     city: '',

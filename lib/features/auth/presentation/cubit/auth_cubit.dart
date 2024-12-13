@@ -139,10 +139,6 @@ class AuthCubit extends Cubit<AuthState> {
     }, (response) {
       emailController.clear();
       passwordController.clear();
-      FlutterBackgroundService().invoke('stop');
-      initializeWebSocket();
-      initializeService();
-      service.startService();
       final bool isStore =
           HiveStorage.get<UserModel>(HiveKeys.userModel).role == 'Store';
       final bool isCustomer =

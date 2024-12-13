@@ -21,7 +21,9 @@ class NotifyGradientCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        NotificationCubit.get(context).markNotifyAsRead(notify.id);
+        if (!notify.isRead) {
+          NotificationCubit.get(context).markNotifyAsRead(notify.id);
+        }
         switch (notify.type) {
           case 'Order':
             navigateTo(

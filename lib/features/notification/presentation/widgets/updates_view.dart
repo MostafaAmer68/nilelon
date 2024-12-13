@@ -4,7 +4,6 @@ import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/widgets/cards/notification/notify_card.dart';
-import 'package:nilelon/core/widgets/cards/notification/notify_viewed_card.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
 import '../../../../core/widgets/scaffold_image.dart';

@@ -1,7 +1,11 @@
+import 'dart:developer';
+
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/my_app.dart';
 import 'package:nilelon/core/service/set_up_locator_service.dart';
 import 'package:nilelon/core/service/simple_bloc_observer.dart';
@@ -20,6 +24,8 @@ void main() async {
       integrationID: 4884340,
       iFrameID: 883051,
     );
+
+    await requestPermissions();
 
     final result = await Permission.notification.request();
     if (result.isGranted) {
@@ -44,6 +50,23 @@ void main() async {
     setUpLocatorService();
     if (HiveStorage.get(HiveKeys.skipOnboarding) == null) {
       HiveStorage.set(HiveKeys.skipOnboarding, false);
+    }
+  });
+
+  Connectivity().onConnectivityChanged.listen((v) async {
+    if (v.first == ConnectivityResult.none) {
+      service.invoke('stop');
+      FlutterBackgroundService().invoke('stop');
+      service.on('stop').listen((v) {
+        log('background stopped');
+        print(v);
+      });
+      log('test');
+    } else {
+      log('test 23');
+      if (!(await FlutterBackgroundService().isRunning())) {
+        service.startService();
+      }
     }
   });
   if (!(await FlutterBackgroundService().isRunning())) {

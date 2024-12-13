@@ -151,7 +151,7 @@ class AddToFooter extends StatelessWidget {
                     : AppStylesManager.customTextStyleB4,
               ),
             ),
-            SizedBox(width: 10),
+            const SizedBox(width: 10),
             Expanded(
               child: BlocConsumer<CartCubit, CartState>(
                 listener: (context, state) {

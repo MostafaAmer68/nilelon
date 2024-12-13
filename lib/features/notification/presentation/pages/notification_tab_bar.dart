@@ -8,7 +8,6 @@ import 'package:nilelon/core/resources/color_manager.dart';
 import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/features/notification/presentation/widgets/requests_view.dart';
 import 'package:nilelon/features/notification/presentation/widgets/updates_view.dart';
-import 'package:svg_flutter/svg.dart';
 
 import '../../../../core/widgets/scaffold_image.dart';
 import '../cubit/notification_cubit.dart';

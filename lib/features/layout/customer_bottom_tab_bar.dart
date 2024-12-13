@@ -1,9 +1,13 @@
 import 'dart:developer';
+import 'dart:io';
 
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:app_links/app_links.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:disable_battery_optimization/disable_battery_optimization.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:nilelon/core/widgets/button/button_builder.dart';
 import 'package:nilelon/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_guest_page.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -16,6 +20,7 @@ import 'package:nilelon/features/home/view/customer_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/profile_view.dart';
 
 import '../../core/data/hive_stroage.dart';
+import '../../core/tools.dart';
 import '../../core/utils/navigation.dart';
 import '../order/presentation/pages/order_customer_details.dart';
 import '../product/presentation/pages/product_details_page.dart';
@@ -91,6 +96,7 @@ class _CustomerBottomTabBarState extends State<CustomerBottomTabBar> {
 
   @override
   void initState() {
+    checkIfBatterServerEnabled(context);
     AwesomeNotifications().setListeners(onActionReceivedMethod: (notify) async {
       handleNotificationAction(notify);
     });

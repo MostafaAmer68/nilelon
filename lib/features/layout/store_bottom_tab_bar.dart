@@ -1,4 +1,3 @@
-
 import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:nilelon/features/order/presentation/pages/order_tab_bar.dart';
@@ -11,6 +10,7 @@ import 'package:nilelon/features/categories/presentation/view/category_view.dart
 import 'package:nilelon/features/home/view/store_home_view.dart';
 import 'package:nilelon/features/profile/presentation/pages/store_profile_view.dart';
 
+import '../../core/tools.dart';
 import '../../core/utils/navigation.dart';
 import '../product/presentation/pages/product_details_page.dart';
 
@@ -26,8 +26,8 @@ class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
   final appLinks = AppLinks();
   @override
   void initState() {
+    checkIfBatterServerEnabled(context);
     final sub = appLinks.uriLinkStream.listen((uri) {
-      
       navigateTo(
           context: context,
           screen: ProductDetailsView(

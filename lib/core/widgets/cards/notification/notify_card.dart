@@ -9,7 +9,6 @@ import 'package:svg_flutter/svg.dart';
 
 import '../../../../features/notification/presentation/cubit/notification_cubit.dart';
 import '../../../../features/order/presentation/pages/order_customer_details.dart';
-import '../../../../features/order/presentation/pages/order_store_details_view.dart';
 import '../../../utils/navigation.dart';
 
 class NotifyCard extends StatelessWidget {
@@ -24,7 +23,9 @@ class NotifyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        NotificationCubit.get(context).markNotifyAsRead(notify.id);
+        if (!notify.isRead) {
+          NotificationCubit.get(context).markNotifyAsRead(notify.id);
+        }
         switch (notify.type) {
           case 'Order':
             navigateTo(

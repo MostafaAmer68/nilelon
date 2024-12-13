@@ -1,4 +1,3 @@
-
 import 'package:app_links/app_links.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
@@ -65,11 +64,10 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
 // Subscribe to all events (initial link and further)
-    
+
     super.initState();
   }
 
- 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(

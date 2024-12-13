@@ -10,7 +10,7 @@ class ProfileAvater extends StatelessWidget {
     return Container(
       decoration: ShapeDecoration(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(500)),
-        shadows: [
+        shadows: const [
           BoxShadow(
             spreadRadius: 2,
             blurRadius: 10,
