@@ -14,6 +14,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:device_preview/device_preview.dart';
 import 'core/service/background_service.dart';
 import 'core/service/notification_service.dart';
+import 'core/service/web_socket.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -70,8 +71,8 @@ void main() async {
     }
   });
   if (!(await FlutterBackgroundService().isRunning())) {
-    await initializeWebSocket();
-    await initializeService();
+    initializeService();
+    WebSocketNilelon().connect();
   }
   runApp(DevicePreview(
     enabled: false,

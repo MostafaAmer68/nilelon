@@ -81,21 +81,26 @@ class _MarketCustomAppBarState extends State<MarketCustomAppBar> {
                   ),
                   BlocBuilder<NotificationCubit, NotificationState>(
                     builder: (context, state) {
-                      return Positioned(
-                        left: -5,
-                        top: -5,
-                        child: Center(
-                          child: CircleAvatar(
-                            radius: 10,
-                            backgroundColor: ColorManager.primaryR,
-                            child: Text(
-                              NotificationCubit.get(context)
-                                  .notificatios
-                                  .length
-                                  .toString(),
-                              style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 8,
+                      return Visibility(
+                        visible: NotificationCubit.get(context)
+                            .notificatios
+                            .every((e) => !e.isRead),
+                        child: Positioned(
+                          left: -5,
+                          top: -5,
+                          child: Center(
+                            child: CircleAvatar(
+                              radius: 10,
+                              backgroundColor: ColorManager.primaryR,
+                              child: Text(
+                                NotificationCubit.get(context)
+                                    .notificatios
+                                    .where((e) => !e.isRead)
+                                    .toString(),
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 8,
+                                ),
                               ),
                             ),
                           ),

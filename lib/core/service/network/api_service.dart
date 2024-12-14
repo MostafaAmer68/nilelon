@@ -1,7 +1,9 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:nilelon/core/service/failure_service.dart';
 
 /// @introduction This is introduction
 ///
@@ -43,7 +45,17 @@ class ApiService {
     );
   }
 
+  Stream<bool> isConnected() {
+    return Connectivity()
+        .onConnectivityChanged
+        .map((e) => e.first == ConnectivityResult.none);
+  }
+
   Future<Response> get({required String endPoint, body, query}) async {
+    if ((await Connectivity().checkConnectivity()).first ==
+        ConnectivityResult.none) {
+      throw 'no internet';
+    }
     var response = await dio.get(
       endPoint,
       data: body,
@@ -54,6 +66,10 @@ class ApiService {
 
   Future<Response> post(
       {required String endPoint, dynamic body, dynamic query}) async {
+    if ((await Connectivity().checkConnectivity()).first ==
+        ConnectivityResult.none) {
+      throw 'no internet';
+    }
     final response = await dio.post(
       endPoint,
       data: body,
@@ -73,6 +89,11 @@ class ApiService {
   }
 
   Future<Response> put({required endPoint, dynamic body, dynamic query}) async {
+    if ((await Connectivity().checkConnectivity()).first ==
+        ConnectivityResult.none) {
+      throw 'no internet';
+    }
+
     var response = await dio.put(endPoint, data: body, queryParameters: query);
     return response;
   }
@@ -82,6 +103,10 @@ class ApiService {
     dynamic body,
     dynamic query,
   }) async {
+    if ((await Connectivity().checkConnectivity()).first ==
+        ConnectivityResult.none) {
+      throw 'no internet';
+    }
     var response = await dio.delete(
       endPoint,
       data: body,

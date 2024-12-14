@@ -11,6 +11,8 @@ import 'package:nilelon/core/service/network/api_service.dart';
 import 'package:nilelon/core/service/network/end_point.dart';
 import 'package:nilelon/core/widgets/alert/error_alert.dart';
 
+import '../../../../core/service/web_socket.dart';
+
 class AuthService {
   final ApiService apiService;
   final GoogleSignIn _googleSignIn = GoogleSignIn(
@@ -36,11 +38,13 @@ class AuthService {
       } else {
         userData = UserModel<StoreModel>.fromMap(data.data);
       }
+
       HiveStorage.set(HiveKeys.userModel, userData);
+
       final token = const FlutterSecureStorage();
       token.write(key: 'token', value: userData.token);
-      initializeWebSocket();
       initializeService();
+      WebSocketNilelon().connect();
     } else {
       // Handle other status codes if necessary
       throw Exception(
@@ -75,8 +79,8 @@ class AuthService {
       HiveStorage.set(HiveKeys.userModel, userData);
       final token = const FlutterSecureStorage();
       token.write(key: 'token', value: userData.token);
-      initializeWebSocket();
       initializeService();
+      WebSocketNilelon().connect();
       return data.data as String;
     } else if (data.statusCode == 400) {
       // Handle the bad request response
@@ -118,8 +122,8 @@ class AuthService {
       HiveStorage.set(HiveKeys.userModel, userData);
       final token = const FlutterSecureStorage();
       token.write(key: 'token', value: userData.token);
-      initializeWebSocket();
       initializeService();
+      WebSocketNilelon().connect();
       return data.data as String;
     } else if (data.statusCode == 400) {
       // Handle the bad request response

@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:android_intent_plus/android_intent.dart';
 import 'package:disable_battery_optimization/disable_battery_optimization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
@@ -92,14 +90,6 @@ Future<void> requestPermissions() async {
 
 void _openBatterySaverSettings() {
   if (Platform.isAndroid) {
-    final intent = AndroidIntent(
-      action: 'android.settings.BATTERY_SAVER_SETTINGS',
-    );
-    intent.launch().catchError(
-      (e) {
-        print('Could not open Battery Saver settings: $e');
-      },
-    );
   } else if (Platform.isIOS) {
     // iOS does not have a Battery Saver mode, but you can direct users to relevant settings if needed
     // For example, you can open the app's settings
@@ -135,7 +125,7 @@ checkIfBatterServerEnabled(context) async {
             children: [
               Text(
                 'the battery saver is enabled please disbable battery sever to turn on notification, \n after disable this battery optimization or sever restart the app',
-                style: AppStylesManager.customTextStyleL4,
+                style: AppStylesManager.customTextStyleB4,
               ),
               ButtonBuilder(
                 text: 'Disable battery sever',
@@ -150,8 +140,5 @@ checkIfBatterServerEnabled(context) async {
         );
       },
     );
-  } else {
-    initializeWebSocket();
-    initializeService();
-  }
+  } else {}
 }

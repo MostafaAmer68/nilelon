@@ -91,6 +91,7 @@ class _NotificationViewState extends State<NotificationView> {
         key: markAll,
         title: lang.notification,
         context: context,
+        hasIcon: cubit.notificatios.every((e) => !e.isRead),
         icon: Icons.all_inbox,
         onPressed: () {
           NotificationCubit.get(context).markNotifyAsRead('');

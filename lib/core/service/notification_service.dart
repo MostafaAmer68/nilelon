@@ -47,6 +47,21 @@ class NotificatoinService {
   }
 }
 
+Future<void> showAwesomeNotification(
+    String message, String title, Map<String, String?>? payload) async {
+  AwesomeNotifications().createNotification(
+    content: NotificationContent(
+      id: DateTime.now().millisecondsSinceEpoch.remainder(100000),
+      channelKey: 'basic_channel',
+      title: title,
+      payload: payload,
+      // icon: Assets.assetsImagesLogo,
+      body: message,
+      notificationLayout: NotificationLayout.Default,
+    ),
+  );
+}
+
 class NotificationController {
   /// Use this method to detect when a new notification or a schedule is created
   @pragma("vm:entry-point")
