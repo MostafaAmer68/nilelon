@@ -134,7 +134,7 @@ class _EditProfileViewState extends State<EditProfileView> {
                           width: 20,
                           height: 20,
                           padding: const EdgeInsets.all(12),
-                          child: SvgPicture.asset(Assets.assetsImagesEmail)),
+                          child: Image.asset(Assets.assetsImagesEmail2)),
                     ),
                     const SizedBox(
                       height: 30,

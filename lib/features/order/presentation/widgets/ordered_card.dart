@@ -65,11 +65,8 @@ class OrderCustomerCard extends StatelessWidget {
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      height: 4,
-                    ),
                     Text(
                       name,
                       style: AppStylesManager.customTextStyleBl7,

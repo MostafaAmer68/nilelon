@@ -247,6 +247,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Enter Your Warehouse Address"),
         "enterYourWebsiteLink":
             MessageLookupByLibrary.simpleMessage("Enter Your Website Link"),
+        "estimatedDelivery":
+            MessageLookupByLibrary.simpleMessage("Estimated Delivery"),
         "expDate": MessageLookupByLibrary.simpleMessage("Exp Date"),
         "exploreAVastCollectionOfProductsFromLocalBrandsGetEverythingYouNeedInOnePlace":
             MessageLookupByLibrary.simpleMessage(

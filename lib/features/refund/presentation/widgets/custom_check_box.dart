@@ -17,8 +17,8 @@ class GradientCheckBox extends StatelessWidget {
         onChanged(!value); // Toggle the checkbox state
       },
       child: Container(
-        width: 30,
-        height: 30,
+        width: 25,
+        height: 25,
         decoration: BoxDecoration(
           gradient: value
               ? const LinearGradient(

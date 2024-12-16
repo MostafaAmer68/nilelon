@@ -4240,6 +4240,16 @@ class S {
     );
   }
 
+  /// `Estimated Delivery`
+  String get estimatedDelivery {
+    return Intl.message(
+      'Estimated Delivery',
+      name: 'estimatedDelivery',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `d`
   String get TEmp {
     return Intl.message(

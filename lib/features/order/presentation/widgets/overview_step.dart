@@ -1,7 +1,9 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nilelon/features/promo/presentation/cubit/promo_cubit.dart';
 import 'package:nilelon/features/promo/presentation/widgets/txt_field_promo.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -48,7 +50,6 @@ class _OverViewStepState extends State<OverViewStep> {
   @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
-    log(promoCubit.totalPrice.toString());
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: BlocListener<PromoCubit, PromoState>(
@@ -60,7 +61,7 @@ class _OverViewStepState extends State<OverViewStep> {
           child: Column(
             children: [
               SizedBox(
-                height: screenHeight(context, 1) > 769 ? 170 : 150,
+                height: 1.sw > 769 ? 170 : 150,
                 child: ListView.builder(
                   padding: const EdgeInsetsDirectional.symmetric(
                     vertical: 16,
@@ -101,7 +102,7 @@ class _OverViewStepState extends State<OverViewStep> {
                     ),
                     Container(
                       width: screenWidth(context, 1),
-                      height: screenHeight(context, 1) > 769 ? 310 : 280,
+                      height: 1.sw > 769 ? 410 : 380,
                       decoration: ShapeDecoration(
                         color: ColorManager.primaryW,
                         shape: RoundedRectangleBorder(
@@ -142,6 +143,12 @@ class _OverViewStepState extends State<OverViewStep> {
                                     builder: (context, state) {
                                       return orderSummaryItems(lang.order,
                                           (promoCubit.orderTotal).toString());
+                                    },
+                                  ),
+                                  BlocBuilder<OrderCubit, OrderState>(
+                                    builder: (context, state) {
+                                      return orderDeliveryDetails(
+                                          lang.estimatedDelivery, lang);
                                     },
                                   ),
                                   BlocBuilder<OrderCubit, OrderState>(
@@ -238,8 +245,9 @@ class _OverViewStepState extends State<OverViewStep> {
                       if (OrderCubit.get(context).shippingMethods.isEmpty) {
                         return const Icon(Icons.error);
                       }
+
                       return dropDownMenu(
-                          width: screenWidth(context, 0.3),
+                          width: screenWidth(context, 0.2),
                           // height: screenWidth(context, 0.),
                           hint: lang.city,
                           style: AppStylesManager.customTextStyleBl.copyWith(
@@ -250,21 +258,19 @@ class _OverViewStepState extends State<OverViewStep> {
                             fontSize: 10,
                             fontWeight: FontWeightManager.regular400,
                           ),
-                          selectedValue: cubit.selectedCity,
-                          items: OrderCubit.get(context)
-                              .shippingMethods
-                              .first
-                              .shippingCosts
+                          selectedValue: cubit.selectedCity.governate,
+                          items: cubit.selectedShippingMethod.shippingCosts
                               .map((e) => e.governate)
                               .toList(),
                           context: context,
                           // menuMaxHeight: 30,
                           onChanged: (selectedValue) {
-                            cubit.selectedCity = selectedValue ?? '';
-                            final newDeliveryPrice = OrderCubit.get(context)
-                                .shippingMethods
-                                .first
-                                .shippingCosts
+                            cubit.selectedCity = cubit
+                                .selectedShippingMethod.shippingCosts
+                                .firstWhere(
+                                    (e) => e.governate == selectedValue!);
+                            final newDeliveryPrice = cubit
+                                .selectedShippingMethod.shippingCosts
                                 .firstWhere((e) => e.governate == selectedValue)
                                 .price;
                             if (newDeliveryPrice != promoCubit.deliveryPrice) {
@@ -283,18 +289,12 @@ class _OverViewStepState extends State<OverViewStep> {
                                         promoCubit.newPrice;
                               }
                               OrderCubit.get(context).selectedShippingMethodId =
-                                  OrderCubit.get(context)
-                                      .shippingMethods
-                                      .first
-                                      .id;
-                              OrderCubit.get(context).selectedGovernate =
-                                  OrderCubit.get(context)
-                                      .shippingMethods
-                                      .first
-                                      .shippingCosts
-                                      .firstWhere(
-                                          (e) => e.governate == selectedValue)
-                                      .governate;
+                                  cubit.selectedShippingMethod.id;
+                              OrderCubit.get(context).selectedGovernate = cubit
+                                  .selectedShippingMethod.shippingCosts
+                                  .firstWhere(
+                                      (e) => e.governate == selectedValue)
+                                  .governate;
                               setState(() {});
                             }
                           });
@@ -304,6 +304,72 @@ class _OverViewStepState extends State<OverViewStep> {
                 const Spacer(),
                 Text(
                   content,
+                  style: AppStylesManager.customTextStyleBl8,
+                )
+              ],
+            ),
+    );
+  }
+
+  Padding orderDeliveryDetails(String title, lang) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: promoCubit.isFreeShipping
+          ? Text(lang.freeShipping)
+          : Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style: AppStylesManager.customTextStyleBl8
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                BlocBuilder<OrderCubit, OrderState>(
+                  builder: (context, state) {
+                    return state.maybeWhen(orElse: () {
+                      return const SizedBox();
+                    }, loading: () {
+                      return const Center(child: CircularProgressIndicator());
+                    }, success: () {
+                      if (OrderCubit.get(context).shippingMethods.isEmpty) {
+                        return const Icon(Icons.error);
+                      }
+
+                      return dropDownMenu(
+                          width: screenWidth(context, 0.2),
+                          // height: screenWidth(context, 0.),
+                          hint: lang.city,
+                          style: AppStylesManager.customTextStyleBl.copyWith(
+                            fontSize: 8,
+                            fontWeight: FontWeightManager.regular400,
+                          ),
+                          style2: AppStylesManager.customTextStyleBl.copyWith(
+                            fontSize: 10,
+                            fontWeight: FontWeightManager.regular400,
+                          ),
+                          selectedValue: cubit.selectedShippingMethod.name,
+                          items: OrderCubit.get(context)
+                              .shippingMethods
+                              .map((e) => e.name)
+                              .toList(),
+                          context: context,
+                          // menuMaxHeight: 30,
+                          onChanged: (selectedValue) {
+                            cubit.selectedShippingMethod = cubit.shippingMethods
+                                .firstWhere((e) => e.name == selectedValue!);
+                            cubit.selectedCity = cubit
+                                .selectedShippingMethod.shippingCosts.first;
+                            setState(() {});
+                          });
+                    });
+                  },
+                ),
+                const Spacer(),
+                Text(
+                  cubit.selectedShippingMethod.estimatedDelivery,
                   style: AppStylesManager.customTextStyleBl8,
                 )
               ],

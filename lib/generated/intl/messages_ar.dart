@@ -243,6 +243,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "أدخل عنوان المستودع الخاص بك"),
         "enterYourWebsiteLink":
             MessageLookupByLibrary.simpleMessage("أدخل رابط موقعك"),
+        "estimatedDelivery":
+            MessageLookupByLibrary.simpleMessage("تاريخ التسليم المتوقع"),
         "expDate": MessageLookupByLibrary.simpleMessage("تاريخ الانتهاء"),
         "exploreAVastCollectionOfProductsFromLocalBrandsGetEverythingYouNeedInOnePlace":
             MessageLookupByLibrary.simpleMessage(

@@ -416,5 +416,6 @@
  "showSections": "عرض القسم",
   "plsFollowStore": "يرجى متابعة المتجر أولاً",
 "returnedHistory": "تاريخ الإرجاع",
-"whatsappNumber": "رقم الواتساب"
+"whatsappNumber": "رقم الواتساب",
+  "estimatedDelivery": "تاريخ التسليم المتوقع"
 }
