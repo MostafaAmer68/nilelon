@@ -6,7 +6,9 @@ import 'package:nilelon/core/widgets/cards/notification/notify_gradient_card.dar
 import 'package:nilelon/features/notification/data/models/notification_data.dart';
 import 'package:nilelon/features/notification/presentation/cubit/notification_cubit.dart';
 
+import '../../../../core/constants/assets.dart';
 import '../../../../core/resources/appstyles_manager.dart';
+import '../../../../core/widgets/cards/notification/notify_viewed_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class RequestsView extends StatelessWidget {
@@ -34,6 +36,12 @@ class RequestsView extends StatelessWidget {
           ),
           // itemCount: NotificationCubit.get(context).notificatios.length,
           itemBuilder: (context, notify) {
+            if (notify.isRead) {
+              return NotifyViewedCard(
+                image: Assets.assetsImagesNotificationsActive,
+                notify: notify,
+              );
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: NotifyGradientCard(

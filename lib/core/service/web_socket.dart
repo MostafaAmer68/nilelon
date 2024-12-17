@@ -1,9 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter_background_service/flutter_background_service.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:nilelon/core/service/background_service.dart';
 import 'package:nilelon/core/service/notification_service.dart';
 import 'package:signalr_core/signalr_core.dart';
 
@@ -156,10 +153,13 @@ class WebSocketNilelon {
         'type': 'ProductWillEmpty',
       });
     });
+
     connection.on('OrderCome', (message) async {
+      log('message');
+      log(message!.first.toString());
       if (message == null) return;
       final orderId = message.first['orderId'];
-      final body = message.first;
+      final body = message.first['message'];
       showAwesomeNotification(body, 'New Order', {
         'orderId': orderId,
         'type': 'order',

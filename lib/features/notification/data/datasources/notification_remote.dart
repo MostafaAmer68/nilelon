@@ -30,6 +30,7 @@ class NotificationRemote {
     final response = await _apiService.put(
       endPoint: EndPoint.markNotifyAsRead,
       query: {
+        'userId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
         'id': id,
       },
     );

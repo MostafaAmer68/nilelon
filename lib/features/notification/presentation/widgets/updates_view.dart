@@ -6,6 +6,7 @@ import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/widgets/cards/notification/notify_card.dart';
 
 import '../../../../core/resources/appstyles_manager.dart';
+import '../../../../core/widgets/cards/notification/notify_viewed_card.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 import '../../data/models/notification_data.dart';
 import '../cubit/notification_cubit.dart';
@@ -35,6 +36,12 @@ class UpdatesView extends StatelessWidget {
           ),
           // itemCount: NotificationCubit.get(context).notificatios.length,
           itemBuilder: (context, notify) {
+            if (notify.isRead) {
+              return NotifyViewedCard(
+                image: Assets.assetsImagesPackageAccept,
+                notify: notify,
+              );
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: NotifyCard(

@@ -109,7 +109,7 @@ class NotifyGradientCard extends StatelessWidget {
                                 Visibility(
                                   visible: !notify.isRead,
                                   child: const CircleAvatar(
-                                    radius: 15,
+                                    radius: 10,
                                     backgroundColor: ColorManager.primaryO,
                                   ),
                                 )

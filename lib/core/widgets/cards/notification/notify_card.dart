@@ -52,6 +52,7 @@ class NotifyCard extends StatelessWidget {
       child: Container(
         height: 100,
         width: screenWidth(context, 0.9),
+        margin: EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: ColorManager.primaryG10,
           borderRadius: BorderRadius.circular(12),

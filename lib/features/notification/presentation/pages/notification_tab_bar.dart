@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nilelon/core/constants/assets.dart';
@@ -85,7 +87,7 @@ class _NotificationTabBarState extends State<NotificationTabBar> {
             context: context,
             hasIcon: NotificationCubit.get(context)
                 .notificatios
-                .every((e) => !e.isRead),
+                .any((e) => !e.isRead),
             icon: Icons.all_inbox,
             onPressed: () {
               NotificationCubit.get(context).markNotifyAsRead('');

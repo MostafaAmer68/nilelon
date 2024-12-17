@@ -1,5 +1,9 @@
+import 'dart:developer';
+
 import 'package:app_links/app_links.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:nilelon/features/order/presentation/pages/order_store_details_view.dart';
 import 'package:nilelon/features/order/presentation/pages/order_tab_bar.dart';
 import 'package:nilelon/features/store_flow/analytics/presentation/analytics_view.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -12,6 +16,8 @@ import 'package:nilelon/features/profile/presentation/pages/store_profile_view.d
 
 import '../../core/tools.dart';
 import '../../core/utils/navigation.dart';
+import '../cart/presentation/cubit/cart_cubit.dart';
+import '../order/presentation/pages/order_customer_details.dart';
 import '../product/presentation/pages/product_details_page.dart';
 
 class StoreBottomTabBar extends StatefulWidget {
@@ -24,9 +30,39 @@ class StoreBottomTabBar extends StatefulWidget {
 class _StoreBottomTabBarState extends State<StoreBottomTabBar> {
   int selectedIndex = 0;
   final appLinks = AppLinks();
+
+  void handleNotificationAction(ReceivedNotification receivedNotification) {
+    // Extract the payload data (if any)
+    if (receivedNotification.payload != null) {
+      var data = receivedNotification.payload;
+
+      // Print or log the payload data for debugging
+      log('Notification tapped with data: $data');
+
+      // Perform any actions based on the payload or notification ID
+      if (data != null) {
+        // Navigate to a specific screen or perform any task with the data
+        if (data['type'] == 'order') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OrderStoreDetailsView(
+                id: data['orderId'] ?? '',
+                index: 0,
+              ),
+            ),
+          );
+        }
+      }
+    }
+  }
+
   @override
   void initState() {
     checkIfBatterServerEnabled(context);
+    AwesomeNotifications().setListeners(onActionReceivedMethod: (notify) async {
+      handleNotificationAction(notify);
+    });
     final sub = appLinks.uriLinkStream.listen((uri) {
       navigateTo(
           context: context,
