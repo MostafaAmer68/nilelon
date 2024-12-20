@@ -86,7 +86,7 @@ class _HomeCustomAppBarState extends State<HomeCustomAppBar> {
                       return Visibility(
                         visible: NotificationCubit.get(context)
                             .notificatios
-                            .every((e) => !e.isRead),
+                            .any((e) => !e.isRead),
                         child: Positioned(
                           left: -5,
                           top: -5,
@@ -96,7 +96,8 @@ class _HomeCustomAppBarState extends State<HomeCustomAppBar> {
                               backgroundColor: ColorManager.primaryR,
                               child: Text(
                                 NotificationCubit.get(context)
-                                    .notificatios.where((e)=> !e.isRead)
+                                    .notificatios
+                                    .where((e) => !e.isRead)
                                     .length
                                     .toString(),
                                 style: const TextStyle(

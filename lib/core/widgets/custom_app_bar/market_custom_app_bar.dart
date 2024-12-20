@@ -84,7 +84,7 @@ class _MarketCustomAppBarState extends State<MarketCustomAppBar> {
                       return Visibility(
                         visible: NotificationCubit.get(context)
                             .notificatios
-                            .every((e) => !e.isRead),
+                            .any((e) => !e.isRead),
                         child: Positioned(
                           left: -5,
                           top: -5,
