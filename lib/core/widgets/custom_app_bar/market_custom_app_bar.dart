@@ -96,10 +96,11 @@ class _MarketCustomAppBarState extends State<MarketCustomAppBar> {
                                 NotificationCubit.get(context)
                                     .notificatios
                                     .where((e) => !e.isRead)
+                                    .length
                                     .toString(),
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 8,
+                                  fontSize: 10,
                                 ),
                               ),
                             ),

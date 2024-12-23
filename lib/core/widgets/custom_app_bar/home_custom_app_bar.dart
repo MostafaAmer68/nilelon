@@ -102,7 +102,7 @@ class _HomeCustomAppBarState extends State<HomeCustomAppBar> {
                                     .toString(),
                                 style: const TextStyle(
                                   color: Colors.white,
-                                  fontSize: 8,
+                                  fontSize: 10,
                                 ),
                               ),
                             ),
