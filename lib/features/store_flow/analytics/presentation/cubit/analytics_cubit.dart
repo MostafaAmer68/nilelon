@@ -14,7 +14,7 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
   DashboardModel dashboardModel = DashboardModel.empty();
   List<num> chart = [];
   DateTime endDate = DateTime.now();
-  DateTime startDate = DateTime.now();
+  DateTime startDate = DateTime.now().subtract(Duration(days: 31));
 
   Future<void> getDashboardData() async {
     emit(const AnalyticsState.loading());

@@ -36,7 +36,7 @@ class OrderCubit extends Cubit<OrderState> {
   String selectedGovernate = '';
   String selectedShippingMethodId = '';
   String selectedOption = '';
-  ShippingCost selectedCity = ShippingCost(governate: '', price: 0);
+  String selectedCity = '';
   ShippingMethod selectedShippingMethod = ShippingMethod(
       id: '',
       name: '',
@@ -48,7 +48,6 @@ class OrderCubit extends Cubit<OrderState> {
   List<OrderModel> orders = [];
   String selectedStatus = '';
   List<ShippingMethod> shippingMethods = [];
-
   OrderCustomerModel customerOrder = OrderCustomerModel.empty();
   OrderStoreModel storeOrder = OrderStoreModel.empty();
 
@@ -154,8 +153,8 @@ class OrderCubit extends Cubit<OrderState> {
         shippingMethods = response;
         selectedGovernate = response.first.name;
         selectedShippingMethodId = response.first.id;
-        selectedCity = response.first.shippingCosts.first;
-        selectedShippingMethod = response.first;
+        selectedCity = response.first.shippingCosts.first.governate;
+
         emit(const OrderState.success());
       },
     );

@@ -202,6 +202,17 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                   SizedBox(
                     height: 30.h,
                   ),
+                  BlocBuilder<ReservationDateCubit, ReservationDateState>(
+                    builder: (context, state) {
+                      return DateRow(
+                        dateEnd: cubit.endDate,
+                        dateStart: cubit.startDate,
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: 30.h,
+                  ),
                   SizedBox(
                     width: screenWidth(context, 0.8),
                     child: const LineChartSample(),
@@ -291,14 +302,6 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                         SizedBox(
                           height: 30.h,
                         ),
-                        BlocBuilder<ReservationDateCubit, ReservationDateState>(
-                          builder: (context, state) {
-                            return DateRow(
-                              dateEnd: cubit.endDate,
-                              dateStart: cubit.startDate,
-                            );
-                          },
-                        ),
                         SizedBox(
                           height: 16.h,
                         ),
@@ -336,7 +339,8 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                               children: [
                                 AnalyticsBigCard(
                                   title: lang.ofItemsSold,
-                                  number: (cubit.dashboardModel.storeFollowers)
+                                  number: (cubit.dashboardModel
+                                          .storeNumberOfItemsSold)
                                       .toInt(),
                                   average: 700,
                                   index: 0,

@@ -19,7 +19,7 @@ class ApiService {
       onRequest: (options, handler) {
         // Before the request is sent
         log("Request [${options.method}] => PATH: ${options.baseUrl}${options.path}");
-        log("Request [${options.method}] => Data: ${options.data}");
+        log("Request [${options.method}] => Data: ${(options.data)}");
         log("Request [${options.method}] => Query: ${options.queryParameters}");
         // You can add headers or modify the request here
         // options.headers["Authorization"] = "Bearer YOUR_TOKEN";

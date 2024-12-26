@@ -145,12 +145,12 @@ class _OverViewStepState extends State<OverViewStep> {
                                           (promoCubit.orderTotal).toString());
                                     },
                                   ),
-                                  BlocBuilder<OrderCubit, OrderState>(
-                                    builder: (context, state) {
-                                      return orderDeliveryDetails(
-                                          lang.estimatedDelivery, lang);
-                                    },
-                                  ),
+                                  // BlocBuilder<OrderCubit, OrderState>(
+                                  //   builder: (context, state) {
+                                  //     return orderDeliveryDetails(
+                                  //         lang.estimatedDelivery, lang);
+                                  //   },
+                                  // ),
                                   BlocBuilder<OrderCubit, OrderState>(
                                     builder: (context, state) {
                                       return orderSummaryItemsWithDropList(
@@ -258,19 +258,20 @@ class _OverViewStepState extends State<OverViewStep> {
                             fontSize: 10,
                             fontWeight: FontWeightManager.regular400,
                           ),
-                          selectedValue: cubit.selectedCity.governate,
-                          items: cubit.selectedShippingMethod.shippingCosts
+                          selectedValue: cubit.selectedCity,
+                          items: cubit.shippingMethods.first.shippingCosts
                               .map((e) => e.governate)
                               .toList(),
                           context: context,
                           // menuMaxHeight: 30,
                           onChanged: (selectedValue) {
                             cubit.selectedCity = cubit
-                                .selectedShippingMethod.shippingCosts
+                                .shippingMethods.first.shippingCosts
                                 .firstWhere(
-                                    (e) => e.governate == selectedValue!);
+                                    (e) => e.governate == selectedValue!)
+                                .governate;
                             final newDeliveryPrice = cubit
-                                .selectedShippingMethod.shippingCosts
+                                .shippingMethods.first.shippingCosts
                                 .firstWhere((e) => e.governate == selectedValue)
                                 .price;
                             if (newDeliveryPrice != promoCubit.deliveryPrice) {
@@ -289,9 +290,9 @@ class _OverViewStepState extends State<OverViewStep> {
                                         promoCubit.newPrice;
                               }
                               OrderCubit.get(context).selectedShippingMethodId =
-                                  cubit.selectedShippingMethod.id;
+                                  cubit.shippingMethods.first.id;
                               OrderCubit.get(context).selectedGovernate = cubit
-                                  .selectedShippingMethod.shippingCosts
+                                  .shippingMethods.first.shippingCosts
                                   .firstWhere(
                                       (e) => e.governate == selectedValue)
                                   .governate;
@@ -311,69 +312,69 @@ class _OverViewStepState extends State<OverViewStep> {
     );
   }
 
-  Padding orderDeliveryDetails(String title, lang) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: promoCubit.isFreeShipping
-          ? Text(lang.freeShipping)
-          : Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style: AppStylesManager.customTextStyleBl8
-                      .copyWith(fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                BlocBuilder<OrderCubit, OrderState>(
-                  builder: (context, state) {
-                    return state.maybeWhen(orElse: () {
-                      return const SizedBox();
-                    }, loading: () {
-                      return const Center(child: CircularProgressIndicator());
-                    }, success: () {
-                      if (OrderCubit.get(context).shippingMethods.isEmpty) {
-                        return const Icon(Icons.error);
-                      }
+  // Padding orderDeliveryDetails(String title, lang) {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(16.0),
+  //     child: promoCubit.isFreeShipping
+  //         ? Text(lang.freeShipping)
+  //         : Row(
+  //             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //             children: [
+  //               Text(
+  //                 title,
+  //                 style: AppStylesManager.customTextStyleBl8
+  //                     .copyWith(fontWeight: FontWeight.w600),
+  //               ),
+  //               const SizedBox(
+  //                 width: 8,
+  //               ),
+  //               BlocBuilder<OrderCubit, OrderState>(
+  //                 builder: (context, state) {
+  //                   return state.maybeWhen(orElse: () {
+  //                     return const SizedBox();
+  //                   }, loading: () {
+  //                     return const Center(child: CircularProgressIndicator());
+  //                   }, success: () {
+  //                     if (OrderCubit.get(context).shippingMethods.isEmpty) {
+  //                       return const Icon(Icons.error);
+  //                     }
 
-                      return dropDownMenu(
-                          width: screenWidth(context, 0.2),
-                          // height: screenWidth(context, 0.),
-                          hint: lang.city,
-                          style: AppStylesManager.customTextStyleBl.copyWith(
-                            fontSize: 8,
-                            fontWeight: FontWeightManager.regular400,
-                          ),
-                          style2: AppStylesManager.customTextStyleBl.copyWith(
-                            fontSize: 10,
-                            fontWeight: FontWeightManager.regular400,
-                          ),
-                          selectedValue: cubit.selectedShippingMethod.name,
-                          items: OrderCubit.get(context)
-                              .shippingMethods
-                              .map((e) => e.name)
-                              .toList(),
-                          context: context,
-                          // menuMaxHeight: 30,
-                          onChanged: (selectedValue) {
-                            cubit.selectedShippingMethod = cubit.shippingMethods
-                                .firstWhere((e) => e.name == selectedValue!);
-                            cubit.selectedCity = cubit
-                                .selectedShippingMethod.shippingCosts.first;
-                            setState(() {});
-                          });
-                    });
-                  },
-                ),
-                const Spacer(),
-                Text(
-                  cubit.selectedShippingMethod.estimatedDelivery,
-                  style: AppStylesManager.customTextStyleBl8,
-                )
-              ],
-            ),
-    );
-  }
+  //                     return dropDownMenu(
+  //                         width: screenWidth(context, 0.2),
+  //                         // height: screenWidth(context, 0.),
+  //                         hint: lang.city,
+  //                         style: AppStylesManager.customTextStyleBl.copyWith(
+  //                           fontSize: 8,
+  //                           fontWeight: FontWeightManager.regular400,
+  //                         ),
+  //                         style2: AppStylesManager.customTextStyleBl.copyWith(
+  //                           fontSize: 10,
+  //                           fontWeight: FontWeightManager.regular400,
+  //                         ),
+  //                         selectedValue: cubit.selectedShippingMethod.name,
+  //                         items: OrderCubit.get(context)
+  //                             .shippingMethods
+  //                             .map((e) => e.name)
+  //                             .toList(),
+  //                         context: context,
+  //                         // menuMaxHeight: 30,
+  //                         onChanged: (selectedValue) {
+  //                           cubit.selectedShippingMethod = cubit.shippingMethods
+  //                               .firstWhere((e) => e.name == selectedValue!);
+  //                           cubit.selectedCity = cubit
+  //                               .selectedShippingMethod.shippingCosts.first;
+  //                           setState(() {});
+  //                         });
+  //                   });
+  //                 },
+  //               ),
+  //               const Spacer(),
+  //               Text(
+  //                 cubit.selectedShippingMethod.estimatedDelivery,
+  //                 style: AppStylesManager.customTextStyleBl8,
+  //               )
+  //             ],
+  //           ),
+  //   );
+  // }
 }

@@ -29,6 +29,7 @@ class _LineChartSampleState extends State<LineChartSample> {
   }
 
   LineChartData mainData() {
+    AnalyticsCubit.get(context).chart.sort();
     return LineChartData(
       gridData: const FlGridData(
         show: false,
@@ -61,9 +62,13 @@ class _LineChartSampleState extends State<LineChartSample> {
         // border: Border.all(color: AppStyles.primaryB),
       ),
       minX: 0,
-      maxX: 11,
+      maxX: AnalyticsCubit.get(context).chart.isEmpty
+          ? 10000
+          : AnalyticsCubit.get(context).chart.last.toDouble(),
       minY: 0,
-      maxY: 6,
+      maxY: AnalyticsCubit.get(context).chart.isEmpty
+          ? 10000
+          : AnalyticsCubit.get(context).chart.last.toDouble(),
       lineBarsData: [
         LineChartBarData(
           spots: AnalyticsCubit.get(context).chart.isEmpty ||

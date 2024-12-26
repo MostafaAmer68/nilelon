@@ -56,7 +56,7 @@ class _ProductDetailsWidgetState extends State<ProductDetailsWidget> {
             ),
           )
           .toList();
-      log('init state');
+      log('init state', name: 'init test');
     }
     super.initState();
   }

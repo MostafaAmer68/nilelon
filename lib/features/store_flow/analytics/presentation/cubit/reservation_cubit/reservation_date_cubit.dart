@@ -4,7 +4,7 @@ part 'reservation_date_state.dart';
 
 class ReservationDateCubit extends Cubit<ReservationDateState> {
   ReservationDateCubit() : super(ReservationDateInitial());
-  DateTime? rangeStart = DateTime.now();
+  DateTime? rangeStart = DateTime.now().subtract(Duration(days: 31));
   DateTime? rangeEnd = DateTime.now();
   DateTime? timeStart;
   DateTime? timeEnd;
