@@ -740,15 +740,19 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 
   Widget _buildStockCounter() {
     if (productCubit.product.productVariants
-            .firstWhere((e) => e.size == cubit.selectedSize)
+            .firstWhere((e) =>
+                e.size == cubit.selectedSize && e.color == cubit.selectedColor)
             .quantity >
         0) {
       if (cubit.counter >
           productCubit.product.productVariants
-              .firstWhere((e) => e.size == cubit.selectedSize)
+              .firstWhere((e) =>
+                  e.size == cubit.selectedSize &&
+                  e.color == cubit.selectedColor)
               .quantity) {
         cubit.counter = productCubit.product.productVariants
-            .firstWhere((e) => e.size == cubit.selectedSize)
+            .firstWhere((e) =>
+                e.size == cubit.selectedSize && e.color == cubit.selectedColor)
             .quantity
             .toInt();
       }

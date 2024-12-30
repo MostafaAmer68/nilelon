@@ -346,6 +346,7 @@ class RefundCubit extends Cubit<RefundState> {
       },
       (result) {
         refunds = result;
+        
         emit(RefundSuccess());
       },
     );

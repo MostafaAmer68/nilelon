@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:grouped_list/grouped_list.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/core/constants/assets.dart';
 import 'package:nilelon/core/utils/navigation.dart';
@@ -9,10 +10,12 @@ import 'package:nilelon/core/widgets/custom_app_bar/custom_app_bar.dart';
 import 'package:nilelon/core/widgets/divider/default_divider.dart';
 import 'package:nilelon/core/widgets/scaffold_image.dart';
 import 'package:nilelon/core/widgets/shimmer_indicator/build_shimmer.dart';
+import 'package:nilelon/features/refund/data/models/refund_model.dart';
 import 'package:nilelon/features/refund/presentation/cubit/refund_cubit.dart';
 import 'package:nilelon/generated/l10n.dart';
 import 'package:svg_flutter/svg.dart';
 
+import '../../../../core/resources/appstyles_manager.dart';
 import 'return_details_page.dart';
 
 class ReturnHistoryPage extends StatefulWidget {
@@ -62,11 +65,23 @@ class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
                   if (cubit.refunds.isEmpty) {
                     return Text(S.of(context).noReturnItems);
                   }
-                  return ListView.builder(
+                  return GroupedListView<RefundModel, String>(
+                    elements: cubit.refunds,
+                    order: GroupedListOrder.DESC,
+                    groupBy: (RefundModel e) => DateFormat('dd-MM-yyyy')
+                        .format(DateFormat('yyyy-MM-dd').parse(e.date)),
                     shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      final refundItem = cubit.refunds[index];
-
+                    groupSeparatorBuilder: (String groupByValue) => Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 10),
+                        child: Text(
+                          groupByValue,
+                          style: AppStylesManager.customDateStyle
+                              .copyWith(fontSize: 14.sp),
+                        ),
+                      ),
+                    ),
+                    itemBuilder: (context, refundItem) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: ReturnedCustomerCard(
@@ -87,7 +102,6 @@ class _ReturnHistoryPageState extends State<ReturnHistoryPage> {
                         ),
                       );
                     },
-                    itemCount: cubit.refunds.length,
                   );
                 }
                 return Text(S.of(context).noReturnItems);

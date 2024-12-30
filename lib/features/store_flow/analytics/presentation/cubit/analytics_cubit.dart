@@ -15,7 +15,7 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
   List<num> chart = [];
   DateTime endDate = DateTime.now();
   DateTime startDate = DateTime.now().subtract(Duration(days: 31));
-
+  num maxValue = 0;
   Future<void> getDashboardData() async {
     emit(const AnalyticsState.loading());
     final result = await _analyticsReposImpl.getDashboardData();
@@ -35,6 +35,9 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
       emit(AnalyticsState.failure(er.errorMsg));
     }, (response) {
       chart = response;
+      maxValue =
+          response.reduce((current, next) => current > next ? current : next) +
+              1000;
       emit(const AnalyticsState.success());
     });
   }

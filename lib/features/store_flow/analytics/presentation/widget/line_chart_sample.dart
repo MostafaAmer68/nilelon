@@ -37,23 +37,27 @@ class _LineChartSampleState extends State<LineChartSample> {
       titlesData: const FlTitlesData(
         show: false,
         rightTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+          sideTitles: SideTitles(
+            showTitles: false,
+            // interval: 1,
+            reservedSize: 22,
+          ),
         ),
         topTitles: AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+          sideTitles: SideTitles(
+            showTitles: false,
+          ),
         ),
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: false,
-            // reservedSize: 30,
-            // interval: 1,
           ),
         ),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: false,
-            // interval: 1,
-            // reservedSize: 42,
+            interval: 4,
+            reservedSize: 42,
           ),
         ),
       ),
@@ -62,13 +66,9 @@ class _LineChartSampleState extends State<LineChartSample> {
         // border: Border.all(color: AppStyles.primaryB),
       ),
       minX: 0,
-      maxX: AnalyticsCubit.get(context).chart.isEmpty
-          ? 10000
-          : AnalyticsCubit.get(context).chart.last.toDouble(),
+      maxX: AnalyticsCubit.get(context).chart.length.toDouble(),
       minY: 0,
-      maxY: AnalyticsCubit.get(context).chart.isEmpty
-          ? 10000
-          : AnalyticsCubit.get(context).chart.last.toDouble(),
+      maxY: AnalyticsCubit.get(context).maxValue.toDouble(),
       lineBarsData: [
         LineChartBarData(
           spots: AnalyticsCubit.get(context).chart.isEmpty ||
@@ -87,7 +87,12 @@ class _LineChartSampleState extends State<LineChartSample> {
                 ]
               : AnalyticsCubit.get(context)
                   .chart
-                  .map((e) => FlSpot(e.toDouble(), e.toDouble()))
+                  .map((e) => FlSpot(
+                      AnalyticsCubit.get(context)
+                          .chart
+                          .indexWhere((i) => i == e)
+                          .toDouble(),
+                      e.toDouble()))
                   .toList(),
 
           isCurved: true,
@@ -98,7 +103,7 @@ class _LineChartSampleState extends State<LineChartSample> {
           barWidth: 5,
           isStrokeCapRound: true,
           dotData: const FlDotData(
-            show: false,
+            show: true,
           ),
           belowBarData: BarAreaData(
             show: true,
