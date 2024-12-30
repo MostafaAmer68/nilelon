@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:nilelon/core/data/hive_stroage.dart';
 import 'package:nilelon/core/service/background_service.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -65,6 +66,7 @@ Future logoutAlert(context) => showDialog(
                 ontap: () {
                   service.invoke('stop');
                   HiveStorage.clear();
+                  const FlutterSecureStorage().deleteAll();
                   HiveStorage.set(HiveKeys.skipOnboarding, true);
                   navigateAndRemoveUntil(
                       context: context, screen: const ShopOrSellView());
