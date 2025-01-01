@@ -215,7 +215,21 @@ class _AnalyticsViewState extends State<AnalyticsView> {
                   ),
                   SizedBox(
                     width: screenWidth(context, 0.8),
-                    child: const LineChartSample(),
+                    child: BlocConsumer<AnalyticsCubit, AnalyticsState>(
+                      listener: (context, state) {
+                        state.maybeMap(
+                          success: (v) {
+                            setState(() {});
+                          },
+                          orElse: () {},
+                        );
+                      },
+                      builder: (context, state) {
+                        return state.maybeWhen(orElse: () {
+                          return const LineChartSample();
+                        });
+                      },
+                    ),
                   ),
                   SizedBox(
                     height: screenHeight(context, 0.33),

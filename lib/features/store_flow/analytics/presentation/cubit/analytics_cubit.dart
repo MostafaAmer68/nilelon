@@ -24,7 +24,6 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
     }, (response) {
       dashboardModel = response;
       getChartData();
-      emit(const AnalyticsState.success());
     });
   }
 
@@ -38,6 +37,7 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
       maxValue =
           response.reduce((current, next) => current > next ? current : next) +
               1000;
+      chart.sort();
       emit(const AnalyticsState.success());
     });
   }

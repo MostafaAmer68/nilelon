@@ -29,7 +29,6 @@ class _LineChartSampleState extends State<LineChartSample> {
   }
 
   LineChartData mainData() {
-    AnalyticsCubit.get(context).chart.sort();
     return LineChartData(
       gridData: const FlGridData(
         show: false,
@@ -71,8 +70,7 @@ class _LineChartSampleState extends State<LineChartSample> {
       maxY: AnalyticsCubit.get(context).maxValue.toDouble(),
       lineBarsData: [
         LineChartBarData(
-          spots: AnalyticsCubit.get(context).chart.isEmpty ||
-                  AnalyticsCubit.get(context).chart.every((e) => e == 0)
+          spots: AnalyticsCubit.get(context).chart.isEmpty
               ? const [
                   FlSpot(1, 0),
                   FlSpot(2, 0),
