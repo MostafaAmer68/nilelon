@@ -390,7 +390,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ConstTextFieldBuilder(
-                label: '+2',
+                label: '+20',
                 width: screenWidth(context, 0.15),
                 style: AppStylesManager.customTextStyleBl3,
               ),
