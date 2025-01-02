@@ -409,9 +409,9 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   return null;
                 },
                 onchanged: (value) {
-                  // if (value.length == 11) {
-                  //   controller.text = value.substring(1);
-                  // }
+                  if (value.length == 11) {
+                    controller.text = value.substring(1);
+                  }
                   AuthCubit.get(context).regFormCuts.currentState!.validate();
                 },
                 width: screenWidth(context, 0.75),

@@ -47,7 +47,7 @@ class AuthCubit extends Cubit<AuthState> {
       r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&\'*+/=?^_`{|}~-]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
   final RegExp passwordRegex = RegExp(
       r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
-  final RegExp phoneRegex = RegExp(r"^01[0125]\d{8}$");
+  final RegExp phoneRegex = RegExp(r"^1[0125]\d{8}$");
 
   Future<void> changePassword(context) async {
     emit(ResetPasswordLoading());

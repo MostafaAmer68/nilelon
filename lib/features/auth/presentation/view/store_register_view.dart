@@ -375,9 +375,9 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   return null;
                 },
                 onchanged: (value) {
-                  // if (value.length == 11) {
-                  //   controller.text = value.substring(1);
-                  // }
+                  if (value.length == 11) {
+                    controller.text = value.substring(1);
+                  }
                   AuthCubit.get(context).regFormSto.currentState!.validate();
                 },
                 inputFormater: [
