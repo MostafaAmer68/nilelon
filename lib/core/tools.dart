@@ -25,6 +25,12 @@ SliverGridDelegateWithFixedCrossAxisCount gridDelegate(context) {
   );
 }
 
+String formatDuration(Duration duration) {
+  // Extract hours and minutes
+
+  return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+}
+
 SliverGridDelegateWithFixedCrossAxisCount gridDelegateOffer(context) {
   // double screenWidth = MediaQuery.of(context).size.width;
   // int crossAxisCount = (screenWidth / 150).floor();

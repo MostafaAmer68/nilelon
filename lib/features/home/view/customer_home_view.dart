@@ -76,7 +76,9 @@ class _CustomerHomeViewState extends State<CustomerHomeView> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        HiveStorage.get(HiveKeys.shopFor),
+                        HiveStorage.get(HiveKeys.shopFor) == 'Male'
+                            ? lang.shopForMen
+                            : lang.shopForWomen,
                         style: AppStylesManager.customTextStyleBl6,
                       ),
                       const SizedBox(

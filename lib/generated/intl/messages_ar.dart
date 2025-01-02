@@ -213,6 +213,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("أدخل اسم المتجر"),
         "enterStoreRepresentativeName":
             MessageLookupByLibrary.simpleMessage("أدخل اسم ممثل المحل"),
+        "enterValideEmail": MessageLookupByLibrary.simpleMessage(
+            "يجب أن يكون بريدك الإلكتروني مثل example@gmail.com"),
+        "enterValidePass": MessageLookupByLibrary.simpleMessage(
+            "يجب أن تحتوي كلمة المرور على الأقل 6 أحرف وتشتمل على حرف كبير، حرف صغير، رقم، ورمز خاص"),
         "enterYourCity": MessageLookupByLibrary.simpleMessage("أدخل مدينتك"),
         "enterYourEmail":
             MessageLookupByLibrary.simpleMessage("أدخل بريدك الإلكتروني"),
@@ -518,6 +522,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeFeedback": MessageLookupByLibrary.simpleMessage("شاهد الملاحظات"),
         "seeMore": MessageLookupByLibrary.simpleMessage("شاهد المزيد"),
         "selectAll": MessageLookupByLibrary.simpleMessage("تحديد الكل"),
+        "selectGender":
+            MessageLookupByLibrary.simpleMessage("يرجى اختيار الجنس"),
         "selectType": MessageLookupByLibrary.simpleMessage("اختر النوع"),
         "selected": MessageLookupByLibrary.simpleMessage("تم تحديد"),
         "sellOnApp": MessageLookupByLibrary.simpleMessage("بيع على التطبيق"),

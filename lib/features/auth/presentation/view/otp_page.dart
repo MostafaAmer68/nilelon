@@ -11,6 +11,7 @@ import 'package:nilelon/core/resources/appstyles_manager.dart';
 import 'package:nilelon/core/widgets/button/gradient_button_builder.dart';
 import 'package:nilelon/core/widgets/text_form_field/text_field/text_field_pin.dart';
 
+import '../../../../core/tools.dart';
 import '../../../../core/widgets/scaffold_image.dart';
 
 class OtpView extends StatefulWidget {
@@ -32,7 +33,7 @@ class OtpView extends StatefulWidget {
 
 class _OtpViewState extends State<OtpView> {
   bool invalidOTP = false;
-  int resendTime = 59;
+  int resendTime = 180;
   late Timer countDownTimer;
   bool isValid = false;
   @override
@@ -84,6 +85,24 @@ class _OtpViewState extends State<OtpView> {
           widget.onSuccess();
         }
         if (state is LoginFailure) {
+          BotToast.showText(text: state.errorMessage);
+          stopTimer();
+          isValid = true;
+          setState(() {});
+          BotToast.closeAllLoading();
+        }
+        if (state is CustomerRegisterFailure) {
+          BotToast.showText(text: state.errorMessage);
+          stopTimer();
+          isValid = true;
+          setState(() {});
+          BotToast.closeAllLoading();
+        }
+        if (state is StoreRegisterFailure) {
+          BotToast.showText(text: state.errorMessage);
+          stopTimer();
+          isValid = true;
+          setState(() {});
           BotToast.closeAllLoading();
         }
       },
@@ -150,7 +169,7 @@ class _OtpViewState extends State<OtpView> {
                           TextButton(
                               onPressed: () {
                                 widget.resend();
-                                resendTime = 59;
+                                resendTime = 180;
                                 isValid = false;
                                 startTimer();
                                 setState(() {});
@@ -172,9 +191,7 @@ class _OtpViewState extends State<OtpView> {
                             width: 8,
                           ),
                           Text(
-                            resendTime < 10
-                                ? '00:0${resendTime.toString()}'
-                                : '00:${resendTime.toString()}',
+                            formatDuration(Duration(seconds: resendTime)),
                             style: AppStylesManager.customTextStyleG,
                           ),
                           const SizedBox(

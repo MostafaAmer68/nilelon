@@ -4250,6 +4250,36 @@ class S {
     );
   }
 
+  /// `Your email should be example@gmail.com`
+  String get enterValideEmail {
+    return Intl.message(
+      'Your email should be example@gmail.com',
+      name: 'enterValideEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your password should be at least 6 characters &\n contain Capital letter, small letter, number and special character`
+  String get enterValidePass {
+    return Intl.message(
+      'your password should be at least 6 characters &\n contain Capital letter, small letter, number and special character',
+      name: 'enterValidePass',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please select gender`
+  String get selectGender {
+    return Intl.message(
+      'Please select gender',
+      name: 'selectGender',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `d`
   String get TEmp {
     return Intl.message(

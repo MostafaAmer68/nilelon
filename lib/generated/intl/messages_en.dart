@@ -215,6 +215,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter Store Name"),
         "enterStoreRepresentativeName": MessageLookupByLibrary.simpleMessage(
             "Enter Store Representative Name"),
+        "enterValideEmail": MessageLookupByLibrary.simpleMessage(
+            "Your email should be example@gmail.com"),
+        "enterValidePass": MessageLookupByLibrary.simpleMessage(
+            "your password should be at least 6 characters &\n contain Capital letter, small letter, number and special character"),
         "enterYourCity":
             MessageLookupByLibrary.simpleMessage("Enter Your City"),
         "enterYourEmail":
@@ -526,6 +530,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "seeFeedback": MessageLookupByLibrary.simpleMessage("See Feedback"),
         "seeMore": MessageLookupByLibrary.simpleMessage("See More"),
         "selectAll": MessageLookupByLibrary.simpleMessage("Select All"),
+        "selectGender":
+            MessageLookupByLibrary.simpleMessage("Please select gender"),
         "selectType": MessageLookupByLibrary.simpleMessage("Select Type"),
         "selected": MessageLookupByLibrary.simpleMessage("selected Items"),
         "sellOnApp": MessageLookupByLibrary.simpleMessage("Sell On App"),

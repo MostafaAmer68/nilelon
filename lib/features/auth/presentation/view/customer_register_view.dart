@@ -148,6 +148,12 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                     controller: AuthCubit.get(context).nameController,
                     type: TextInputType.text,
                     image: Assets.assetsImagesProfilee,
+                    onChange: (value) {
+                      AuthCubit.get(context)
+                          .regFormCuts
+                          .currentState!
+                          .validate();
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return S.of(context).enterYourName;
@@ -158,10 +164,16 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   title: lang.email,
                   label: lang.enterYourEmail,
                   validator: (value) {
-                    if (!AuthCubit.get(context).emailRegex.hasMatch(value!)) {
-                      return S.of(context).enterYourEmailToVerification;
+                    if (value!.isEmpty) {
+                      return S.of(context).enterYourEmail;
+                    }
+                    if (!AuthCubit.get(context).emailRegex.hasMatch(value)) {
+                      return S.of(context).enterValideEmail;
                     }
                     return null;
+                  },
+                  onChange: (value) {
+                    AuthCubit.get(context).regFormCuts.currentState!.validate();
                   },
                   controller: AuthCubit.get(context).emailController,
                   type: TextInputType.emailAddress,
@@ -184,8 +196,14 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      lang.gender,
-                      style: AppStylesManager.customTextStyleBl5,
+                      _tempSelectedOption.isEmpty
+                          ? lang.selectGender
+                          : lang.gender,
+                      style: AppStylesManager.customTextStyleBl5.copyWith(
+                        color: _tempSelectedOption.isEmpty
+                            ? ColorManager.primaryR
+                            : null,
+                      ),
                     ),
                   ),
                 ),
@@ -212,10 +230,11 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   title: lang.password,
                   label: lang.enterYourPassowrd,
                   validator: (value) {
-                    if (!AuthCubit.get(context)
-                        .passwordRegex
-                        .hasMatch(value!)) {
+                    if (value!.isEmpty) {
                       return S.of(context).enterYourPassowrd;
+                    }
+                    if (!AuthCubit.get(context).passwordRegex.hasMatch(value)) {
+                      return S.of(context).enterValidePass;
                     }
                     return null;
                   },
@@ -230,9 +249,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   title: lang.confirmPassword,
                   label: lang.confirmYourPassword,
                   validator: (value) {
-                    if (!AuthCubit.get(context)
-                        .passwordRegex
-                        .hasMatch(value!)) {
+                    if (value!.isEmpty) {
                       return S.of(context).enterYourPassowrd;
                     } else if (value !=
                         AuthCubit.get(context).passwordController.text) {
@@ -373,7 +390,7 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ConstTextFieldBuilder(
-                label: '+20',
+                label: '+2',
                 width: screenWidth(context, 0.15),
                 style: AppStylesManager.customTextStyleBl3,
               ),
@@ -392,6 +409,9 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   return null;
                 },
                 onchanged: (value) {
+                  // if (value.length == 11) {
+                  //   controller.text = value.substring(1);
+                  // }
                   AuthCubit.get(context).regFormCuts.currentState!.validate();
                 },
                 width: screenWidth(context, 0.75),

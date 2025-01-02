@@ -160,8 +160,11 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   title: lang.email,
                   label: lang.enterYourEmail,
                   validator: (value) {
-                    if (!AuthCubit.get(context).emailRegex.hasMatch(value!)) {
-                      return S.of(context).enterYourEmailToVerification;
+                    if (value!.isEmpty) {
+                      return S.of(context).enterYourEmail;
+                    }
+                    if (!AuthCubit.get(context).emailRegex.hasMatch(value)) {
+                      return S.of(context).enterValideEmail;
                     }
                     return null;
                   },
@@ -255,10 +258,11 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   title: lang.password,
                   label: lang.enterYourPassowrd,
                   validator: (value) {
-                    if (!AuthCubit.get(context)
-                        .passwordRegex
-                        .hasMatch(value!)) {
+                    if (value!.isEmpty) {
                       return S.of(context).enterYourPassowrd;
+                    }
+                    if (!AuthCubit.get(context).passwordRegex.hasMatch(value)) {
+                      return S.of(context).enterValidePass;
                     }
                     return null;
                   },
@@ -273,11 +277,11 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   title: lang.confirmPassword,
                   label: lang.confirmYourPassword,
                   validator: (value) {
-                    if (!AuthCubit.get(context)
-                            .passwordRegex
-                            .hasMatch(value!) &&
-                        AuthCubit.get(context).passwordController.text !=
-                            value) {
+                    if (value!.isEmpty) {
+                      return S.of(context).enterYourPassowrd;
+                    }
+                    if (AuthCubit.get(context).passwordController.text !=
+                        value) {
                       return S.of(context).enterYourPassowrd;
                     }
                     return null;
@@ -356,7 +360,7 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ConstTextFieldBuilder(
-                label: '+20',
+                label: '+2',
                 width: screenWidth(context, 0.15),
                 style: AppStylesManager.customTextStyleBl3,
               ),
@@ -371,6 +375,9 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                   return null;
                 },
                 onchanged: (value) {
+                  // if (value.length == 11) {
+                  //   controller.text = value.substring(1);
+                  // }
                   AuthCubit.get(context).regFormSto.currentState!.validate();
                 },
                 inputFormater: [

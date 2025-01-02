@@ -10,6 +10,12 @@ Future<Either<ServerFailure, T>> exe<T>(Future<T> Function() function) async {
     if (e.response!.statusCode == 401) {
       return left(ServerFailure(e.response!.data));
     }
+    if (e.response!.statusCode == 409) {
+      return left(ServerFailure(e.response!.data));
+    }
+    if (e.response!.statusCode == 500) {
+      return left(ServerFailure(e.response!.data));
+    }
 
     return left(e.response!.data);
   } catch (e) {

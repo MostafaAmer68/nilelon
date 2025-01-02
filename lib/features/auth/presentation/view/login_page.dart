@@ -100,8 +100,11 @@ class _LoginViewState extends State<LoginView> {
                 title: lang.email,
                 label: lang.enterYourEmail,
                 validator: (value) {
-                  if (!authCubit.emailRegex.hasMatch(value!)) {
-                    return lang.enterEmail;
+                  if (value!.isEmpty) {
+                    return S.of(context).enterYourEmail;
+                  }
+                  if (!AuthCubit.get(context).emailRegex.hasMatch(value)) {
+                    return S.of(context).enterValideEmail;
                   }
                   return null;
                 },
@@ -116,8 +119,11 @@ class _LoginViewState extends State<LoginView> {
                 title: lang.password,
                 label: lang.enterYourPassowrd,
                 validator: (value) {
-                  if (!authCubit.passwordRegex.hasMatch(value!)) {
-                    return lang.enterYourPassowrd;
+                  if (value!.isEmpty) {
+                    return S.of(context).enterYourPassowrd;
+                  }
+                  if (!AuthCubit.get(context).passwordRegex.hasMatch(value)) {
+                    return S.of(context).enterValidePass;
                   }
                   return null;
                 },
