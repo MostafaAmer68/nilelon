@@ -8,7 +8,8 @@ import 'package:nilelon/core/service/network/end_point.dart';
 
 abstract class AnalyticsRemoteDataSource {
   Future<DashboardModel> getDashboardData();
-  Future<List<num>> getChartData(DateTime endDate, DateTime startDate);
+  Future<List<Map<String, dynamic>>> getChartData(
+      DateTime endDate, DateTime startDate);
 }
 
 class AnalyticsService extends AnalyticsRemoteDataSource {
@@ -32,7 +33,8 @@ class AnalyticsService extends AnalyticsRemoteDataSource {
   }
 
   @override
-  Future<List<num>> getChartData(DateTime endDate, DateTime startDate) async {
+  Future<List<Map<String, dynamic>>> getChartData(
+      DateTime endDate, DateTime startDate) async {
     final data =
         await apiService.get(endPoint: EndPoint.getChartDataUrl, query: {
       'storeId': HiveStorage.get<UserModel>(HiveKeys.userModel).id,
@@ -41,7 +43,8 @@ class AnalyticsService extends AnalyticsRemoteDataSource {
     });
     if (data.statusCode == 200) {
       if (data.data['result'] != null) {
-        return List<num>.from(data.data['result'].map((e) => e));
+        return List<Map<String, dynamic>>.from(
+            data.data['result'].map((e) => e));
       }
       throw data.data['errorMessages'].first;
     }

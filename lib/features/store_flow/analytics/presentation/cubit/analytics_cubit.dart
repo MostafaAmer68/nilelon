@@ -12,7 +12,7 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
   AnalyticsCubit(this._analyticsReposImpl)
       : super(const AnalyticsState.initial());
   DashboardModel dashboardModel = DashboardModel.empty();
-  List<num> chart = [];
+  List<Map<String, dynamic>> chart = [];
   DateTime endDate = DateTime.now();
   DateTime startDate = DateTime.now().subtract(const Duration(days: 31));
   num maxValue = 0;
@@ -34,10 +34,15 @@ class AnalyticsCubit extends Cubit<AnalyticsState> {
       emit(AnalyticsState.failure(er.errorMsg));
     }, (response) {
       chart = response;
+      var incoms = response.map((e) => e['totalIncome']).toList();
       maxValue =
-          response.reduce((current, next) => current > next ? current : next) +
+          incoms.reduce((current, next) => current > next ? current : next) +
               1000;
-      chart.sort();
+      chart.sort((a, b) {
+        double incomeA = a['totalIncome'];
+        double incomeB = b['totalIncome'];
+        return incomeA.compareTo(incomeB); // Ascending order
+      });
       emit(const AnalyticsState.success());
     });
   }

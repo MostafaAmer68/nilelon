@@ -55,6 +55,21 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
   }
 
   @override
+  void dispose() {
+    AuthCubit.get(context).nameController.clear();
+    AuthCubit.get(context).emailController.clear();
+    AuthCubit.get(context).phoneController.clear();
+    AuthCubit.get(context).passwordController.clear();
+    AuthCubit.get(context).confirmPasswordController.clear();
+    AuthCubit.get(context).profileLinkController.clear();
+    AuthCubit.get(context).websiteLinkController.clear();
+    AuthCubit.get(context).repNameController.clear();
+    AuthCubit.get(context).repPhoneController.clear();
+    AuthCubit.get(context).wareHouseAddressController.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
     return BlocListener<AuthCubit, AuthState>(
@@ -177,13 +192,13 @@ class _StoreRegisterViewState extends State<StoreRegisterView> {
                 ),
                 phoneNumber(
                   lang.phoneNumber,
-                  '01234567899',
+                  '100000000',
                   cubit.phoneController,
                   TextInputType.phone,
                 ),
                 phoneNumber(
                   lang.whatsappNumber,
-                  '01234567899',
+                  '100000000',
                   cubit.whatsappNum,
                   TextInputType.phone,
                 ),

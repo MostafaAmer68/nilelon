@@ -171,6 +171,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> authCustomerRegister(context) async {
     if (!regFormCuts.currentState!.validate()) return;
+    if (date == null) return;
     emit(CustomerRegisterLoading());
     var result = await authRepos.customerRegisterRepos(
         CustomerRegisterModel(
@@ -200,6 +201,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> authStoreRegister(context) async {
     // if (!regFormSto.currentState!.validate()) return;
+
     emit(StoreRegisterLoading());
     var result = await authRepos.storeRegisterRepos(
       StoreRegisterModel(

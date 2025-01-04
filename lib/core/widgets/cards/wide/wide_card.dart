@@ -65,7 +65,9 @@ class WideCard extends StatelessWidget {
           children: [
             Expanded(
               child: imageReplacer(
-                url: product.productImages.first.url,
+                url: product.productImages.isEmpty
+                    ? ''
+                    : product.productImages.first.url,
                 // height: 125,
                 width: 140,
                 radius: 16,

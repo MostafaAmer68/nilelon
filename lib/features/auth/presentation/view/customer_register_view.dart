@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:nilelon/core/constants/assets.dart';
+import 'package:nilelon/core/tools.dart';
 import 'package:nilelon/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:nilelon/features/auth/presentation/view/otp_page.dart';
 import 'package:nilelon/generated/l10n.dart';
@@ -54,6 +55,21 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
         showRePassword = !showRePassword;
       },
     );
+  }
+
+  @override
+  void dispose() {
+    AuthCubit.get(context).nameController.clear();
+    AuthCubit.get(context).emailController.clear();
+    AuthCubit.get(context).phoneController.clear();
+    AuthCubit.get(context).passwordController.clear();
+    AuthCubit.get(context).confirmPasswordController.clear();
+    AuthCubit.get(context).profileLinkController.clear();
+    AuthCubit.get(context).websiteLinkController.clear();
+    AuthCubit.get(context).repNameController.clear();
+    AuthCubit.get(context).repPhoneController.clear();
+    AuthCubit.get(context).wareHouseAddressController.clear();
+    super.dispose();
   }
 
   @override
@@ -181,13 +197,13 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                 ),
                 phoneNumber(
                   lang.phoneNumber,
-                  '01234567899',
+                  '100000000',
                   AuthCubit.get(context).phoneController,
                   TextInputType.phone,
                 ),
                 phoneNumber(
                   lang.whatsappNumber,
-                  '01234567899',
+                  '100000000',
                   AuthCubit.get(context).whatsappNum,
                   TextInputType.phone,
                 ),
@@ -296,6 +312,10 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                   child: GradientButtonBuilder(
                     text: lang.register,
                     ontap: () {
+                      if (_tempSelectedOption.isEmpty) {
+                        BotToast.showText(text: lang.selectGender);
+                        return;
+                      }
                       AuthCubit.get(context).confirmRegisteration(context);
                     },
                     width: screenWidth(context, 0.92),
@@ -437,9 +457,14 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            title,
-            style: AppStylesManager.customTextStyleBl5,
-          ),
+              AuthCubit.get(context).dateFormatted == null
+                  ? lang(context).plsSelectDate
+                  : title,
+              style: AppStylesManager.customTextStyleBl5.copyWith(
+                color: AuthCubit.get(context).dateFormatted == null
+                    ? ColorManager.primaryR
+                    : null,
+              )),
           const SizedBox(
             height: 12,
           ),
@@ -504,7 +529,8 @@ class _CustomerRegisterViewState extends State<CustomerRegisterView> {
                 border: Border.all(color: const Color(0xFFFBF9F9))),
         child: Center(
           child: RadioListTile(
-            title: Text(option),
+            title: Text(
+                option == 'Male' ? lang(context).male : lang(context).female),
             value: option,
             activeColor: ColorManager.primaryO,
             groupValue: _tempSelectedOption,

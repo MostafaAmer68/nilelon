@@ -420,5 +420,8 @@
   "estimatedDelivery": "تاريخ التسليم المتوقع",
   "enterValideEmail": "يجب أن يكون بريدك الإلكتروني مثل example@gmail.com",
   "enterValidePass": "يجب أن تحتوي كلمة المرور على الأقل 6 أحرف وتشتمل على حرف كبير، حرف صغير، رقم، ورمز خاص",
-  "selectGender": "يرجى اختيار الجنس"
+  "selectGender": "يرجى اختيار الجنس",
+  "male": "ذكر",
+  "female": "انثي",
+  "plsSelectDate": "يرجى اختيار تاريخ الميلاد"
 }

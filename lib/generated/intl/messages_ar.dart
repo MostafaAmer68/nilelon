@@ -258,6 +258,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "failedRegister":
             MessageLookupByLibrary.simpleMessage("فشل في التسجيل"),
         "feedback": MessageLookupByLibrary.simpleMessage("ملاحظات"),
+        "female": MessageLookupByLibrary.simpleMessage("انثي"),
         "fillThisSurveyToEnhanceYourNextOrderExperience":
             MessageLookupByLibrary.simpleMessage(
                 "املأ هذا الاستبيان لتحسين تجربتك في الطلبات المقبلة"),
@@ -320,6 +321,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "letsStart": MessageLookupByLibrary.simpleMessage("لنبدأ"),
         "loading": MessageLookupByLibrary.simpleMessage("جارٍ التحميل..."),
         "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+        "male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "market": MessageLookupByLibrary.simpleMessage("السوق"),
         "measureOfSuccess":
             MessageLookupByLibrary.simpleMessage("مقياس النجاح"),
@@ -438,6 +440,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يرجى إدخال اسم المستودع"),
         "plsFollowStore":
             MessageLookupByLibrary.simpleMessage("يرجى متابعة المتجر أولاً"),
+        "plsSelectDate":
+            MessageLookupByLibrary.simpleMessage("يرجى اختيار تاريخ الميلاد"),
         "plsSelectMethod":
             MessageLookupByLibrary.simpleMessage("رجاءً اختر طريقة الدفع"),
         "polices": MessageLookupByLibrary.simpleMessage("السياسات"),

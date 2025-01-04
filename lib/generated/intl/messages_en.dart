@@ -262,6 +262,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "failedRegister":
             MessageLookupByLibrary.simpleMessage("Failed to register "),
         "feedback": MessageLookupByLibrary.simpleMessage("Feedback"),
+        "female": MessageLookupByLibrary.simpleMessage("Female"),
         "fillThisSurveyToEnhanceYourNextOrderExperience":
             MessageLookupByLibrary.simpleMessage(
                 "Fill This Survey To Enhance Your Next Order Experience"),
@@ -324,6 +325,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "letsStart": MessageLookupByLibrary.simpleMessage("let’sStart"),
         "loading": MessageLookupByLibrary.simpleMessage("Loading..."),
         "logout": MessageLookupByLibrary.simpleMessage("Log Out"),
+        "male": MessageLookupByLibrary.simpleMessage("Male"),
         "market": MessageLookupByLibrary.simpleMessage("Market"),
         "measureOfSuccess":
             MessageLookupByLibrary.simpleMessage("Measure Of Success"),
@@ -444,6 +446,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("please enter wareHouse"),
         "plsFollowStore":
             MessageLookupByLibrary.simpleMessage("please follow store first"),
+        "plsSelectDate":
+            MessageLookupByLibrary.simpleMessage("please select date of birth"),
         "plsSelectMethod":
             MessageLookupByLibrary.simpleMessage("please select pay method"),
         "polices": MessageLookupByLibrary.simpleMessage("Polices"),

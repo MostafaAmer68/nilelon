@@ -68,34 +68,31 @@ class _TextAndFormFieldColumnWithIconHideState
           const SizedBox(
             height: 12,
           ),
-          Directionality(
-            textDirection: TextDirection.ltr,
-            child: TextFormFieldBuilder(
-              label: widget.label,
-              validator: widget.validator,
-              controller: widget.controller,
-              type: widget.type,
-              onchanged: widget.onChange,
-              width: screenWidth(context, 0.92),
-              isIcon: false,
-              obsecure: showPassword,
-              prefixWidget: Container(
-                  width: 20.sp,
-                  height: 20.sp,
-                  padding: const EdgeInsets.all(12),
-                  child: SvgPicture.asset(widget.image)),
-              suffix: IconButton(
-                onPressed: onpressed,
-                icon: showPassword
-                    ? const Icon(
-                        Iconsax.eye,
-                        color: ColorManager.primaryG,
-                      )
-                    : const Icon(
-                        Iconsax.eye_slash,
-                        color: ColorManager.primaryG,
-                      ),
-              ),
+          TextFormFieldBuilder(
+            label: widget.label,
+            validator: widget.validator,
+            controller: widget.controller,
+            type: widget.type,
+            onchanged: widget.onChange,
+            width: screenWidth(context, 0.92),
+            isIcon: false,
+            obsecure: showPassword,
+            prefixWidget: Container(
+                width: 20.sp,
+                height: 20.sp,
+                padding: const EdgeInsets.all(12),
+                child: SvgPicture.asset(widget.image)),
+            suffix: IconButton(
+              onPressed: onpressed,
+              icon: showPassword
+                  ? const Icon(
+                      Iconsax.eye,
+                      color: ColorManager.primaryG,
+                    )
+                  : const Icon(
+                      Iconsax.eye_slash,
+                      color: ColorManager.primaryG,
+                    ),
             ),
           ),
           SizedBox(

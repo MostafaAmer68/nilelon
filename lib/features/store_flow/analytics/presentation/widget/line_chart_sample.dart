@@ -33,30 +33,51 @@ class _LineChartSampleState extends State<LineChartSample> {
       gridData: const FlGridData(
         show: false,
       ),
-      titlesData: const FlTitlesData(
-        show: false,
-        rightTitles: AxisTitles(
+      titlesData: FlTitlesData(
+        show: true,
+        rightTitles: const AxisTitles(
           sideTitles: SideTitles(
             showTitles: false,
             // interval: 1,
             reservedSize: 22,
           ),
         ),
-        topTitles: AxisTitles(
+        topTitles: const AxisTitles(
           sideTitles: SideTitles(
             showTitles: false,
           ),
         ),
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
-            showTitles: false,
+            showTitles: true,
+            interval: 1, // Adjust interval as needed
+            getTitlesWidget: (value, meta) {
+              // Convert x value (index) to date or label
+              final index = value.toInt();
+              if (index >= 0 &&
+                  index < AnalyticsCubit.get(context).chart.length) {
+                final date = DateTime.parse(
+                    AnalyticsCubit.get(context).chart[index]['date']);
+                return Text(
+                  '${date.month}/${date.day}', // Format: MM/DD
+                  style: const TextStyle(fontSize: 10),
+                );
+              }
+              return const Text('');
+            },
           ),
         ),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
-            showTitles: false,
-            interval: 4,
-            reservedSize: 42,
+            showTitles: true,
+            interval: 1000, // Adjust interval based on your data range
+            getTitlesWidget: (value, meta) {
+              return Text(
+                value.toInt().toString(), // Format the income as an integer
+                style: const TextStyle(fontSize: 10),
+                textAlign: TextAlign.center,
+              );
+            },
           ),
         ),
       ),
@@ -83,15 +104,11 @@ class _LineChartSampleState extends State<LineChartSample> {
                   FlSpot(9, 0),
                   FlSpot(10, 0),
                 ]
-              : AnalyticsCubit.get(context)
-                  .chart
-                  .map((e) => FlSpot(
-                      AnalyticsCubit.get(context)
-                          .chart
-                          .indexWhere((i) => i == e)
-                          .toDouble(),
-                      e.toDouble()))
-                  .toList(),
+              : AnalyticsCubit.get(context).chart.asMap().entries.map((entry) {
+                  final index = entry.key.toDouble();
+                  final income = entry.value['totalIncome'] as double;
+                  return FlSpot(index, income);
+                }).toList(),
 
           isCurved: true,
           gradient: LinearGradient(

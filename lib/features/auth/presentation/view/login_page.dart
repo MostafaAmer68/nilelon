@@ -50,6 +50,13 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
+  void dispose() {
+    AuthCubit.get(context).emailController.clear();
+    AuthCubit.get(context).passwordController.clear();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final lang = S.of(context);
     final authCubit = AuthCubit.get(context);

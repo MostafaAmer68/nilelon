@@ -4280,6 +4280,36 @@ class S {
     );
   }
 
+  /// `Male`
+  String get male {
+    return Intl.message(
+      'Male',
+      name: 'male',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Female`
+  String get female {
+    return Intl.message(
+      'Female',
+      name: 'female',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please select date of birth`
+  String get plsSelectDate {
+    return Intl.message(
+      'please select date of birth',
+      name: 'plsSelectDate',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `d`
   String get TEmp {
     return Intl.message(
